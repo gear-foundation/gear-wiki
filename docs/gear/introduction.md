@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-sidebar_label: 'Owerview'
+sidebar_label: 'Оverview'
 ---
 
 # Gear Network

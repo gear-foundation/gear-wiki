@@ -1,6 +1,6 @@
 ---
-sidebar_label: 'GEAR Idea'
+sidebar_label: 'Gear IDEA'
 sidebar_position: 1
 ---
 
-# GEAR Idea online
+# Gear IDEA online
