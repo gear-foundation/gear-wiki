@@ -13,6 +13,9 @@ module.exports = {
   organizationName: 'Gear Tecnical',
   projectName: 'docs',
   themeConfig: {
+    colorMode: {
+      defaultMode: 'dark'
+    },
     navbar: {
       title: 'use std::gear_docs',
       logo: {
