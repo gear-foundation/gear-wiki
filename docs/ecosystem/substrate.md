@@ -5,9 +5,9 @@ sidebar_label: 'Substrate'
 
 # Substrate
 
-Substrate is a modular framework that enables to create unique blockchains by composing custom or pre-built components.
+Substrate is a modular framework that enables the creation of unique blockchains by composing custom or pre-built components.
 
-It`s easy to understand the functions of Substrate by its name. Substrate is a template that provides extensive functionality «out-of-the-box», which includes consensus mechanisms, governance features, WASM, and more. Substrate features are the following:
+It`s easy to understand the functions of Substrate by its name. Substrate is a template that provides extensive functionality out-of-the-box, including consensus mechanisms, governance features, WASM, and more. Substrate features are the following:
 
 - Forkless Update
 - Built-in Coordination
