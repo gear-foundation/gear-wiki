@@ -28,6 +28,8 @@ yarn add @polkadot/api
 This simple example describes how to subscribe to a new blocks and get chain spec
 
 ```js
+import { ApiPromise, WsProvider } from '@polkadot/api';
+
 async function connect() {
   const wsProvider = new WsProvider('ws://127.0.0.1:9944');
   const api = await ApiPromise.create({ provider: wsProvider });
