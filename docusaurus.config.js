@@ -3,21 +3,21 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
-  title: 'Gear Network documentation portal',
-  tagline: 'Dinosaurs are cool',
-  url: 'https://gear-tech.io/docs',
+  title: 'Gear documentation portal',
+  tagline: 'The place to start developing with Gear',
+  url: 'https://wiki.gear.rs/',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: '/img/favicon-32x32.png',
-  organizationName: 'Gear Tecnical',
+  organizationName: 'Gear Technologies',
   projectName: 'docs',
   themeConfig: {
     colorMode: {
       defaultMode: 'dark'
     },
     navbar: {
-      title: 'use std::gear_docs',
+      title: 'Gear Wiki',
       logo: {
         alt: 'Gear documentation portal',
         src: 'img/logo-black.svg',
@@ -25,7 +25,7 @@ module.exports = {
       },
       items: [
         {
-          href: 'https://github.com/gear-tech/docs',
+          href: 'https://github.com/gear-tech/wiki',
           label: 'GitHub',
           position: 'right',
         },
@@ -45,7 +45,7 @@ module.exports = {
           routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars.js'),
           editUrl:
-            'https://github.com/gear-tech/docs/edit/master/',
+            'https://github.com/gear-tech/wiki/edit/master/',
         },
         blog: false,
         theme: {
