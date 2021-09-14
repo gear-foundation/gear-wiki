@@ -18,32 +18,44 @@ Below are a few entry points for interact with Gear:
 
 ## Installation
 
-Install Poladot packange with npm or yarn 
-
 ```sh
-yarn add @polkadot/api
+npm install @gear-js/api 
 ```
 
-## Example
-This simple example describes how to subscribe to a new blocks and get chain spec
+## Getting started
 
-```js
-import { ApiPromise, WsProvider } from '@polkadot/api';
+Start an API connection to a running node on localhost
 
-async function connect() {
-  const wsProvider = new WsProvider('ws://127.0.0.1:9944');
-  const api = await ApiPromise.create({ provider: wsProvider });
+```javascript
+import { GearApi } from '@gear-js/api';
 
-  const [chain, nodeName, nodeVersion] = await Promise.all([
-    api.rpc.system.chain(),
-    api.rpc.system.name(),
-    api.rpc.system.version(),
-  ]);
-  console.log(`You are connected to chain ${chain} using ${nodeName} v${nodeVersion}`);
+const gearApi = await GearApi.create();
+```
 
-  api.rpc.chain.subscribeNewHeads(async (header) => {
-    console.log(`Block number #${header.number}`);
-  });
-}
-connect().catch(console.error);
+You can also connect to a different node
+
+```javascript
+const gearApi = await GearApi.create({ provider: 'wss://someIP:somePort' });
+```
+
+Registering custom types
+
+```javascript
+const yourCustomTypesExample = {
+  Person: {
+    surname: 'String',
+    name: 'String',
+    patronymic: 'Option<String>'
+  },
+  Id: {
+    decimal: 'u64',
+    hex: 'Vec<u8>'
+  },
+  Data: {
+    id: 'Id',
+    person: 'Person',
+    data: 'Vec<String>'
+  }
+};
+const gearApi = await GearApi.create({ customTypes: { ...yourCustomTypesExample } });
 ```
