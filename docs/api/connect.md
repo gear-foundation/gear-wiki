@@ -59,3 +59,25 @@ const yourCustomTypesExample = {
 };
 const gearApi = await GearApi.create({ customTypes: { ...yourCustomTypesExample } });
 ```
+
+## Example
+
+This simple example describes how to subscribe to a new blocks and get chain spec:
+
+```js
+async function connect() {
+  const gearApi = await GearApi.create();
+
+  const [chain, nodeName, nodeVersion] = await Promise.all([
+    gearApi.api.rpc.system.chain(),
+    gearApi.api.rpc.system.name(),
+    gearApi.api.rpc.system.version(),
+  ]);
+  console.log(`You are connected to chain ${chain} using ${nodeName} v${nodeVersion}`);
+
+  gearApi.gearEvents.subscribeNewBlocks((header) => {
+    console.log(`New block with number: ${header.number.toNumber()} and hash: ${header.hash.toHex()}`);
+  });
+}
+connect().catch(console.error);
+```
