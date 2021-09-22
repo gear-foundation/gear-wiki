@@ -5,7 +5,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 module.exports = {
   title: 'Gear documentation portal',
   tagline: 'The place to start developing with Gear',
-  url: 'https://wiki.gear.rs/',
+  url: 'https://wiki.gear-tech.io/',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',

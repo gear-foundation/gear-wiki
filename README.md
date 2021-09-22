@@ -5,7 +5,7 @@
 
 This is the Gear documentation portal for developers. The information you find here is your start point when developing using the Gear ecosystem. Contributions are welcome!
 
-🕸️ https://wiki.gear.rs
+🕸️ https://wiki.gear-tech.io
 
 ## Build Locally
 
