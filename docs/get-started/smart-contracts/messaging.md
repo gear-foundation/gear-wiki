@@ -21,6 +21,7 @@ value
 
 `value` is a value to be transferred to target account. In the special message of the initial program upload, value will be transferred to a balance of the newly created account for the program.
 
+## Types of massages
 
 In the case of the program, there are the following types of messages:
 
@@ -33,8 +34,7 @@ network. Payload must contain Wasm file of the program itself. Target account mu
 
 ## Gas
 
-Gear node charges gas fee during message processing.
-<!-- Describe gas charging process -->
+Gear node charges gas fee during message processing. Gas fee is linear - 64000 gas per allocated memory page of size 64KB and 1000 gas per instrumented Wasm instruction. Messages from transactions with the highest fee are taken first. In this case, messages from transactions with the lowest fee can be delayed or even never end up in the processing queue. If a transaction is processed before the limit is reached, the rest of the gas will be returned to the sending account.
 
 ## Message process module
 
@@ -42,7 +42,8 @@ Depending on the context the program interprets messages differently. To process
 
 <!-- TODO describe msg module functions -->
 
+## Understandble messages. Encode/Decode
 
+Gear uses the `parity-scale-codec`, a Rust implementation of the SCALE Codec. SCALE is a light-weight format which allows encoding (and decoding) which makes it highly suitable for resource-constrained execution environments like blockchain runtimes and low-power, low-memory devices. 
 
-
-
+[Learn more about SCALE Codec](https://substrate.dev/docs/en/knowledgebase/advanced/codec)
