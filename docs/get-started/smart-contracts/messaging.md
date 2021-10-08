@@ -37,12 +37,50 @@ Gear node charges a gas fee during message processing. The gas fee is linear - 6
 
 ## Message process module
 
-Depending on the context the program interprets messages differently. To process messages in Gear programs, the proprietary `gstd` standart library and the `::msg` module is used.
+Depending on the context the program interprets messages differently. To process messages in Gear programs, the proprietary `gstd` standart library and the `::msg` module is used. All available functions described in msg.rs in gstd:
 
-<!-- TODO describe msg module functions -->
+[github link](https://github.com/gear-tech/gear/blob/master/gstd/src/msg.rs)
+
+```c
+pub fn load<D: Decode>() -> Result<D, codec::Error> {
+    D::decode(&mut load_bytes().as_ref())
+}
+```
+Load bytes and try to decode to the specified type with `codec`
+
+```c
+pub fn load_bytes() -> Vec<u8> {
+    let mut result = vec![0u8; gcore::msg::size()];
+    gcore::msg::load(&mut result[..]);
+    result
+}
+```
+Load bytes
+
+```c
+pub fn reply<E: Encode>(payload: E, gas_limit: u64, value: u128) -> MessageId {
+    reply_bytes(&payload.encode(), gas_limit, value)
+}
+```
+
+Reply to a message and try to decode to the specified type with `codec`. Returns `MessageId`.
+
+
+```c
+pub fn reply_bytes<T: AsRef<[u8]>>(payload: T, gas_limit: u64, value: u128) -> MessageId {
+    gcore::msg::reply(payload.as_ref(), gas_limit, value)
+}
+```
+Reply to a message with bytes in `payload`. Returns `MessageId`.
+
 
 ## Understandble messages. Encode/Decode
 
 Gear uses the `parity-scale-codec`, a Rust implementation of the SCALE Codec. SCALE is a lightweight format that allows encoding (and decoding) which makes it highly suitable for resource-constrained execution environments like blockchain runtimes and low-power, low-memory devices.
+
+```c
+#[derive(Encode, Decode)]
+```
+
 
 [Learn more about SCALE Codec](https://substrate.dev/docs/en/knowledgebase/advanced/codec)
