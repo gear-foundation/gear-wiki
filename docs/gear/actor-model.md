@@ -1,6 +1,6 @@
 ---
 sidebar_label: 'Actor model'
-sidebar_position: 0
+sidebar_position: 3
 ---
 
 # Gear Actor model for communications
