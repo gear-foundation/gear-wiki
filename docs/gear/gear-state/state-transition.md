@@ -30,7 +30,7 @@ End-users interact with programs and as a result, send messages to Gear network.
 
 ### Dequeue messages
 
-Validators can choose which messages to dequeue when it's their turn to produce the next block. It eliminates the need of each particular validator to maintain the full memory state. Dequeuing occurs only at the end of each block. During dequeuing, new messages can be generated. They can also be processed in this phase, but also can stay in the queue for the next block (and another validator).
+Validators can choose which messages to dequeue when it's their turn to produce the next block. It eliminates the need for each particular validator to maintain the full memory state. Dequeuing occurs only at the end of each block. During dequeuing, new messages can be generated. They can also be processed in this phase, but also can stay in the queue for the next block (and another validator).
 
 ### Balance transfers
 
@@ -38,6 +38,6 @@ Regular balance transfers are performed inside Substrate Balances module.
 
 ### Messages, blocks and events lifecycle
 
-The picture below illustrates eternal lifecycle of Gear machinery. As actor model for communications dictates, nothing is shared, there are only messages. Messages with destination "system" end up in the event log to be inspected in the user space.
+The picture below illustrates the eternal lifecycle of Gear machinery. As the actor model for communications dictates, nothing is shared, there are only messages. Messages with destination "system" end up in the event log to be inspected in the user space.
 
 ![alt text](/assets/mq.jpg)
