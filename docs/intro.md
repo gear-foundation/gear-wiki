@@ -4,7 +4,7 @@ sidebar_label: 'Welcome!'
 slug: /
 ---
 
-# Overview
+## Overview
 
 Welcome to Gear network documentation portal. The central source for everyone looking for guides and developer's documentation in the Gear ecosystem. While our project is developing and growing, it is a modern knowledge base at the moment. Contributions are welcome!
 
