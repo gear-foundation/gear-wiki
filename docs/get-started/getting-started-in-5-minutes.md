@@ -12,7 +12,7 @@ In this article, we are going to write and deploy our first smart contract to a 
 (Optional) For your convenience, it'd be best to create a dedicated directory for everything GEAR-related.
 
 ```bash
-mkdir ~/GEAR
+mkdir -p ~/GEAR
 cd ~/GEAR
 ```
 
@@ -42,14 +42,14 @@ rustup target add wasm32-unknown-unknown --toolchain nightly
 Now, it's time to get the source code for GEAR itself by cloning our public [github repo](https://github.com/gear-tech/gear).
 
 ```bash
-git clone git@github.com:gear-tech/gear.git
+git clone https://github.com/gear-tech/gear.git
 ```
 
 ## Creating your first GEAR smart contract
 Let's create a `contracts` directory inside `GEAR` and `cd` to it.
 
 ```bash
-mkdir ~/GEAR/contracts
+mkdir -p ~/GEAR/contracts
 cd ~/GEAR/contracts
 ```
 
@@ -160,7 +160,7 @@ target
             ├── build
             │   └── ...
             ├── deps
-            │   ├── ...
+            │   └── ...
             ├── examples
             ├── first_gear_app.d
             ├── first_gear_app.wasm <---- this is our .wasm file
