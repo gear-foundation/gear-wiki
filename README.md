@@ -2,8 +2,7 @@
 
 [![Publish Status](https://github.com/gear-tech/wiki/workflows/Publish/badge.svg)](https://github.com/gear-tech/wiki/actions/workflows/publish.yml?query=branch%3Amaster)
 
-
-This is the Gear documentation portal for developers. The information you find here is your start point when developing using the Gear ecosystem. Contributions are welcome!
+Welcome to Gear network documentation portal for developers. It provides guides and documentation for everyone who wants to start developing using the Gear ecosystem. While our project is developing and growing, it is a modern knowledge base at the moment. Contributions are welcome!
 
 🕸️ https://wiki.gear-tech.io
 
@@ -11,7 +10,7 @@ This is the Gear documentation portal for developers. The information you find h
 
 0. Install [Node.js](https://nodejs.org) and [Yarn](https://yarnpkg.com).
 
-1. Clone:
+1. Make a local clone of Wiki repository:
 
     ```bash
     git clone https://github.com/gear-tech/wiki.git
@@ -24,10 +23,16 @@ This is the Gear documentation portal for developers. The information you find h
     yarn install
     ```
 
-3. Serve and open in the browser (http://localhost:3000/):
+3. Start your local Wiki copy and instantly track changes you've made. Open it in your default browser - http://localhost:3000/:
 
     ```bash
     yarn run start
+    ```
+    
+    alternatively
+    
+    ```bash
+    npm run start
     ```
 
 ## Contribute
