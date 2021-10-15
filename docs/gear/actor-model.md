@@ -29,3 +29,13 @@ When an actor receives and processes a message, the response can be the followin
 Actors are independent, they never share any state and just exchange messages with each other. 
 
 Using the Actor model approach gives a way to implement Actor-based concurrency inside programs (smart-contracts) logic. It can utilize various language constructs for asynchronous programming (Futures and async-await in Rust).
+
+## Async/await support
+
+Unlike classes, actors allow only one task to access their mutable state at a time, which makes it safe for code in multiple tasks to interact with the same instance of an actor.
+
+Asynchronous functions significantly streamline concurrency management, but they do not handle the possibility of deadlocks or state corruption. To avoid deadlocks or state corruption, async functions should avoid calling functions that may block their thread. To achieve it, they use an await expression.
+
+Currently, the lack of normal support of async/await pattern in the typical smart contracts code brings a lot of problems for smart contract developers. Actually, achieving better control in a smart contract program flow is actually more or less possible by adding handmade functions (in Solidity smart contracts). But the problem with many functions in a contract is that one can easily get confused - which function can be called at which stage in the contract's lifetime.
+
+Gear natively provides arbitrary async/await syntax for any programs. It greatly simplifies development and testing and reduces the likelihood of errors in smart contract development. Gear API also allows to use synchronous messages by simply not using await expression if the logic of the program requires it.
