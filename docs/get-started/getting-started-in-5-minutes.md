@@ -174,7 +174,7 @@ All we need is the `first_gear_app.wasm` file in `target/wasm32-unknown-unknown/
 
 ## Deploy your Smart Contract to the TestNet
 
-GEAR provides a GUI via [idea.gear-tech.io](www.idea.gear-tech.io).
+GEAR provides a GUI via [idea.gear-tech.io](https://idea.gear-tech.io).
 
 First, log in using the most suitable method.
 
