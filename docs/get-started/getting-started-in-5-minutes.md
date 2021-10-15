@@ -9,15 +9,7 @@ In this article, we are going to write and deploy our first smart contract to a 
 
 ## Prerequesites
 
-First of all, we need to install all the tools required to build our first contract in Rust. 
-
-We will use [Rustup](https://rustup.rs/) to get our Rust compiler ready.
-
-```bash
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-```
-
-(Optional) For your convenience, it'd be best to create a dedicated directory for everything GEAR-related. 
+(Optional) For your convenience, it'd be best to create a dedicated directory for everything GEAR-related.
 
 ```bash
 mkdir ~/GEAR
@@ -26,10 +18,25 @@ cd ~/GEAR
 
 The rest of the article will assume that you are using the paths suggested, so make sure you make adjustments according to your directory tree.
 
+First of all, we need to install all the tools required to build our first contract in Rust.
+
+We will use [Rustup](https://rustup.rs/) to get our Rust compiler ready.
+
+```bash
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```
+
+Now, let's install a `nightly` build for `rustup`, since `GEAR` uses the most up-to-date features `rustup` provides.
+
+```bash
+rustup update
+rustup update nightly
+```
+
 As we will be compiling our Rust smart contract to WASM, we will need a WASM compiler. Let's add it to the toolchain.
 
 ```bash
-rustup target add wasm32-unknown-unknown
+rustup target add wasm32-unknown-unknown --toolchain nightly
 ```
 
 Now, it's time to get the source code for GEAR itself by cloning our public [github repo](https://github.com/gear-tech/gear).
@@ -81,27 +88,50 @@ license = "GPL-3.0"
 crate-type = ["cdylib"]
 
 [dependencies]
-gcore = { path = "~/GEAR/gcore", features = ["debug"] }
-gstd = { path = "~/GEAR/gstd", features = ["debug"] }
-```
-:::caution
+gcore = { path = "https://github.com/gear-tech/gear.git", features = ["debug"] }
+gstd = { path = "https://github.com/gear-tech/gear.git", features = ["debug"] }
 
-Make sure that you use the correct path for `gcore` and `gstd` in `Cargo.toml`.
+[profile.release]
+lto = true
+opt-level = 's'
+```
 
 Now, it's time to replace the default contents of `lib.rs` with the code for our first smart contract.
 
 In order to do that, you should open `src/lib.rs` in your editor and paste the following code:
 
 ```rust
-use gstd::{ext, msg};
+#![no_std]
+
+use gcore::{ext, msg};
+use gstd::prelude::*;
+
+static mut MESSAGE_LOG: Vec<String> = vec![];
 
 #[no_mangle]
 pub unsafe extern "C" fn handle() {
-    let new_msg = String::from_utf8(msg::load_bytes()).expect("Invalid message: should be utf-8");
+    let new_msg =
+        String::from_utf8(gstd::msg::load_bytes()).expect("Invalid message: should be utf-8");
 
-    if &new_msg == "PING" {
-        msg::send(msg::source(), b"PONG", 10_000_000);
+    if new_msg == "PING" {
+        msg::reply(b"PONG", 10_000_000, 0);
     }
+
+    MESSAGE_LOG.push(new_msg);
+
+    ext::debug(&format!(
+        "{:?} total message(s) stored: ",
+        MESSAGE_LOG.len()
+    ));
+
+    for log in MESSAGE_LOG.iter() {
+        ext::debug(log);
+    }
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn handle_reply() {
+    msg::reply(b"PONG", 10_000_000, 0);
 }
 
 #[no_mangle]
@@ -113,9 +143,67 @@ We will not dive into the specifics behind the smart contract implementation in 
 Now, it's time to compile the contract.
 
 ```bash
-cargo build --target wasm32-unknown-unknown --release
+cargo +nightly build --target wasm32-unknown-unknown --release
 ```
 
 If everything goes well, your working directory should now have a `target` directory that looks like this:
 
+
+```bash
+target
+    ├── CACHEDIR.TAG
+    ├── release
+    │   ├── ...
+    └── wasm32-unknown-unknown
+        ├── CACHEDIR.TAG
+        └── release
+            ├── build
+            │   └── ...
+            ├── deps
+            │   ├── ...
+            ├── examples
+            ├── first_gear_app.d
+            ├── first_gear_app.wasm <---- this is our .wasm file
+            ├── incremental
+            ├── libfirst_gear_app.d
+            └── libfirst_gear_app.rlib
+
+```
+
+All we need is the `first_gear_app.wasm` file in `target/wasm32-unknown-unknown/release` directory. Now that you know where it is, let's move to the next step.
+
 ## Deploy your Smart Contract to the TestNet
+
+GEAR provides a GUI via [idea.gear-tech.io](www.idea.gear-tech.io).
+
+First, log in using the most suitable method.
+
+Second, in the top right corner, you should create an account.
+
+![img alt](./img/account.png)
+
+Next, you will need to top up your account balance in order to have enough [gas](smart-contracts/messaging.md) to upload your contract.
+
+When you your account balance is sufficient, click `Upload program` and navigate to the `.wasm` file we have pointed to above.
+
+![img upload](./img/upload.png)
+
+You should now see the following interface:
+
+![img interface](./img/interface.png)
+
+You can now upload the program and wait until IDEA uploads it to the `TestNet`.
+
+Once your program is uploaded, head to the `Recently uploaded programs` section and find your program.
+
+![img recent](./img/recent.png)
+
+You can interact with your program via these action buttons:
+
+![img actions](./img/actions.png)
+
+Now, try sending your newly uploaded program a `PING` message too see how it responds!
+
+This concludes our tutorial on uploading your first contract.
+
+To learn more, you can deep dive to the `Smart Contracts` section of the `GEAR Wiki`.
