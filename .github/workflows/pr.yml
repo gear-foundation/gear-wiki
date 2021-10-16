@@ -12,6 +12,11 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Patch URL
+        run: |
+          sed -i "s#baseUrl: '/'#baseUrl: '/pr-${{ github.event.number }}/'#" docusaurus.config.js
+          cat docusaurus.config.js | grep baseUrl
+
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
