@@ -5,7 +5,7 @@ sidebar_position: 5
 
 # `cargo-program` utility
 
-`cargo-program` it the `cargo` expanding utility to simplify Gear programs development.
+`cargo-program` is the Rust's `cargo` expanding utility aimed to simplify Gear programs development.
 
 GitHub repo: https://github.com/gear-tech/cargo-program
 
@@ -51,7 +51,7 @@ In release mode:
 cargo program build --release
 ```
 
-You find three output WASM files in `target/wasm32-unknown-unknown/release` directory:
+Then you find three output WASM files in `target/wasm32-unknown-unknown/release` directory:
 
 - Primary compiled program with `.wasm` extension
 - Optimized program with `.opt.wasm` extension
