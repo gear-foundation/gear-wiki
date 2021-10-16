@@ -12,6 +12,11 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Patch URL
+        run: |
+          sed -i "s#url: 'https://wiki.gear-tech.io/'#url: 'https://wiki.gear-tech.io/pr-${{ github.event.number }}/'#" docusaurus.config.js
+          cat docusaurus.config.js | grep url
+
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
