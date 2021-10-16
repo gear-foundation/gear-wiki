@@ -1,6 +1,7 @@
 ---
+title: Gear Wiki
 sidebar_position: 1
-sidebar_label: 'Welcome!'
+sidebar_label: Welcome!
 slug: /
 ---
 
@@ -26,6 +27,6 @@ Projects building on Gear can seamlessly integrate their solutions into the whol
 
 ## Contributing
 
-All code, libraries, and tools are available on Github with a permissive Apache-2.0 license. Feel free to use the tools and libraries, log issues as you find them, or create pull requests for your bug-bears or features. 
+All code, libraries, and tools are available on Github with a permissive Apache-2.0 license. Feel free to use the tools and libraries, log issues as you find them, or create pull requests for your bug-bears or features.
 
 Go ahead!
