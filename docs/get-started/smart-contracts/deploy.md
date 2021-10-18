@@ -5,7 +5,7 @@ sidebar_position: 2
 
 # Deploy Smart contracts
 
-As noted earlier, creating a program is just one of the specific types of transactions that contains a WASM file as a payload.
+As noted earlier, creating a program is just one of the specific types of transactions that contain a WASM file as a payload.
 
 Uploading a new program to the blockchain takes place by calling the custom extrinsic `gear.submitProgram(code, salt, initPayload, gasLimit, value)`. Where:
 
@@ -31,6 +31,8 @@ They appear this way:
 
 2. Block producer of Gear network posts the message into the block
 
+3. Gear network reserve a maximum amount of gas specified by the user to be spent on program initialization.
+
 3. Program creation and an init message enqueue:
 
 ```sh
@@ -52,7 +54,7 @@ There are several ways to create a program:
 
 ### Via Gear GUI
 
-The easiest way to download the program is to use the official website https://idea.gear-tech.io
+The easiest way to download the program is to use the official website [idea.gear-tech.io](https://idea.gear-tech.io)
 
 ### Via Polkadot.js.org
 
@@ -60,16 +62,6 @@ Also to submit a program you can use the standard GUI for substrate-based projec
 
 ![img alt](./img/polkadot-gui.png)
 
-### Via gear-js libery
+### Via gear-js library
 
 Gear-js library that provides a simple and intuitive way to connect GEAR Component APIs, includes interaction with programs. More details [Gear API](https://wiki.gear-tech.io/api/connect)
-
-
-
-
-
-
-
-
-
-
