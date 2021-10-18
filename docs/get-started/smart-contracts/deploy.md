@@ -33,7 +33,7 @@ They appear this way:
 
 3. Gear network reserve a maximum amount of gas specified by the user to be spent on program initialization.
 
-3. Program creation and an init message enqueue:
+4. Program creation and an init message enqueue:
 
 ```sh
 MessageInfo example:
@@ -44,7 +44,7 @@ MessageInfo example:
   origin: 0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d
 }
 ```
-4. `gear.InitSuccess` or `gear.InitFailure` events. 
+5. `gear.InitSuccess` or `gear.InitFailure` events. 
 
 > `programId` it's the unique address of the program
 
