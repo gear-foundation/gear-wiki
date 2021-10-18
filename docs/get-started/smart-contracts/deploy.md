@@ -9,15 +9,15 @@ As noted earlier, creating a program is just one of the specific types of transa
 
 Uploading a new program to the blockchain takes place by calling the custom extrinsic `gear.submitProgram(code, salt, initPayload, gasLimit, value)`. Where:
 
-`code: Bytes` - binary WASM code
+`code: Bytes` - binary WASM code.
 
-`salt: Bytes` - the random data that's added to the hashing process to force their uniqueness
+`salt: Bytes` - the random data that's added to the hashing process to force their uniqueness.
 
-`initPayload: Bytes`- the initial payload of which will be processed by the init() function during contract initialization
+`initPayload: Bytes`- the init message payload that will be processed by the init() function during contract initialization.
 
 `gasLimit: u64` -  is the amount of gas that users are willing to spend to process upload a new program.
 
-`value: u128` - the value that will be transferred to the program address
+`value: u128` - the value that will be transferred to the program address.
 
 ## Program submit events
 
@@ -29,7 +29,7 @@ They appear this way:
 
 1. Gear network tries to post a message into the queue that aims to verify the source account has enough balance to cover sending of value and gas_limit and paying of small processing fee that linearly depends on payload size (this is the standard inclusion fee for Substrate framework, refer to Substrate Documentation for details).
 
-2. Block producer of Gear network posts the message into the block
+2. Block producer of Gear network posts the message into the block.
 
 3. Gear network reserve a maximum amount of gas specified by the user to be spent on program initialization.
 
@@ -44,9 +44,9 @@ MessageInfo example:
   origin: 0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d
 }
 ```
-5. `gear.InitSuccess` or `gear.InitFailure` events. 
+5. `gear.InitSuccess` or `gear.InitFailure` events.
 
-> `programId` it's the unique address of the program
+> `programId` is the unique address of the program.
 
 ## How to deploy
 
@@ -54,14 +54,14 @@ There are several ways to create a program:
 
 ### Via Gear GUI
 
-The easiest way to download the program is to use the official website [idea.gear-tech.io](https://idea.gear-tech.io)
+The easiest way to submit the program is to use the official website [idea.gear-tech.io](https://idea.gear-tech.io).
 
 ### Via Polkadot.js.org
 
-Also to submit a program you can use the standard GUI for substrate-based projects. It's [polkadot{.js}](https://polkadot.js.org) app. Use `gear.submitProgram` extrinsic in Developer -> Extrinsic menu.
+Also, you can use the standard GUI for substrate-based projects to submit a program. It's the [polkadot{.js}](https://polkadot.js.org) app. Use `gear.submitProgram` extrinsic in Developer -> Extrinsic menu.
 
 ![img alt](./img/polkadot-gui.png)
 
 ### Via gear-js library
 
-Gear-js library that provides a simple and intuitive way to connect GEAR Component APIs, includes interaction with programs. More details [Gear API](https://wiki.gear-tech.io/api/connect)
+Gear-js library that provides a simple and intuitive way to connect GEAR Component APIs, includes interaction with programs. More details [Gear API](https://wiki.gear-tech.io/api/connect).
