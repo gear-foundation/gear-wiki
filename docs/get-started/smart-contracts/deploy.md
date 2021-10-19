@@ -5,33 +5,31 @@ sidebar_position: 2
 
 # Deploy Smart contracts
 
-As noted earlier, creating a program is just one of the specific types of transactions that contain a WASM file as a payload.
+Following the principles of Actor model for communication, creating a program is just one of the specific types of transactions that contain a WASM file as a payload.
 
-Uploading a new program to the blockchain takes place by calling the custom extrinsic `gear.submitProgram(code, salt, initPayload, gasLimit, value)`. Where:
+Uploading a new program (smart-contract) to the blockchain takes place by calling the custom extrinsic `gear.submitProgram(code, salt, initPayload, gasLimit, value)`. Where:
 
 `code: Bytes` - binary WASM code.
 
-`salt: Bytes` - the random data that's added to the hashing process to force their uniqueness.
+`salt: Bytes` - the random data that is added to the hashing process to force their uniqueness.
 
-`initPayload: Bytes`- the init message payload that will be processed by the init() function during contract initialization.
+`initPayload: Bytes`- the init message payload that will be processed by the init() function during program initialization.
 
-`gasLimit: u64` -  is the amount of gas that users are willing to spend to process upload a new program.
+`gasLimit: u64` -  is the amount of gas that users are willing to spend on processing the upload of a new program.
 
-`value: u128` - the value that will be transferred to the program address.
+`value: u128` - the value that will be transferred to a balance of the newly created account for the program.
 
 ## Program submit events
 
-Program submit will trigger a series of events:
-
 > Note: while extrinsics represent information from the outside world, events represent information from the chain. Extrinsics can trigger events.
 
-They appear this way:
+The extrinsic called to submit a program triggers a series of events. They appear this way:
 
-1. Gear network tries to post a message into the queue that aims to verify the source account has enough balance to cover sending of value and gas_limit.
+1. Gear network tries to post a message into the queue that aims to verify the source account has enough balance to cover sending of value and gas_limit and paying of small processing fee that linearly depends on payload size (this is the standard inclusion fee for Substrate framework, refer to [Substrate Documentation](https://substrate.dev/docs/en/knowledgebase/runtime/fees) for details).
 
 2. Block producer of Gear network posts the message into the block.
 
-3. Gear network reserve a maximum amount of gas specified by the user to be spent on program initialization.
+3. Gear network reserves a maximum amount of gas specified by the user to be spent on program initialization.
 
 4. Program creation and an init message enqueue:
 
@@ -44,17 +42,17 @@ MessageInfo example:
   origin: 0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d
 }
 ```
-5. Program initialization process. `gear.InitSuccess` or `gear.InitFailure` events.
+5. `gear.InitSuccess` or `gear.InitFailure` events.
 
 > `programId` is the unique address of the program.
 
 ## How to deploy
 
-There are several ways to create a program:
+There are several ways to deploy a program:
 
-### Via Gear GUI
+### Upload via Gear GUI
 
-The easiest way to submit the program is to use the official website [idea.gear-tech.io](https://idea.gear-tech.io).
+The easiest way to deploy the program is to use the “Upload program” option in the official website [idea.gear-tech.io](https://idea.gear-tech.io).
 
 ### Via Polkadot.js.org
 
@@ -64,4 +62,4 @@ Also, you can use the standard GUI for substrate-based projects to submit a prog
 
 ### Via gear-js library
 
-Gear-js library that provides a simple and intuitive way to connect GEAR Component APIs, includes interaction with programs. More details [Gear API](https://wiki.gear-tech.io/api/connect).
+Gear-js library provides a simple and intuitive way to connect GEAR Component APIs, including interaction with programs. More details [Gear API](https://wiki.gear-tech.io/api/connect).
