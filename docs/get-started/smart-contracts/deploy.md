@@ -27,7 +27,7 @@ Program submit will trigger a series of events:
 
 They appear this way:
 
-1. Gear network tries to post a message into the queue that aims to verify the source account has enough balance to cover sending of value and gas_limit and paying of small processing fee that linearly depends on payload size (this is the standard inclusion fee for Substrate framework, refer to Substrate Documentation for details).
+1. Gear network tries to post a message into the queue that aims to verify the source account has enough balance to cover sending of value and gas_limit.
 
 2. Block producer of Gear network posts the message into the block.
 
@@ -44,7 +44,7 @@ MessageInfo example:
   origin: 0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d
 }
 ```
-5. `gear.InitSuccess` or `gear.InitFailure` events.
+5. Program initialization process. `gear.InitSuccess` or `gear.InitFailure` events.
 
 > `programId` is the unique address of the program.
 
