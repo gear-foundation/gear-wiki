@@ -5,7 +5,7 @@ sidebar_position: 1
 
 # How to check receipt of Gear Bonus Token
 
-While GEAR is preparing to launch its Canary network, we are using Satemine to reward active members of our community with the GEAR Bonus Token (GRB) - which in the future can be exchanged for native GEAR tokens.
+While GEAR is preparing to launch its Canary network, we are using Statemine to reward active members of our community with the GEAR Bonus Token (GRB) - which in the future can be exchanged for native GEAR tokens.
 
 In this article, we will demonstrate how to check if you’ve been awarded with GRB tokens, and how you can access them.
 
@@ -21,7 +21,7 @@ When adding an account, you can use your mnemonic phrase or restore it from JSON
 
 ## Step 2.
 
-To connect to Satemine, click the Polkadot icon in the top left corner, navigate to “Kusama & Parachains” and select Satemine via OnFinality/ Parity.
+To connect to Statemine, click the Polkadot icon in the top left corner, navigate to “Kusama & Parachains” and select Statemine via OnFinality/ Parity.
 
 ![img alt](./img/screen-3.png)
 
