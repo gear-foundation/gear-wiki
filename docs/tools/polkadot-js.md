@@ -1,5 +1,5 @@
 ---
-sidebar_label: 'Polkdot{.js}'
+sidebar_label: 'Polkadot{.js}'
 sidebar_position: 2
 ---
 
@@ -22,9 +22,3 @@ All substrate addresses are MultiAddress. It's important to understand that the 
 :::
 
 In the Polkadot.js extension click "+"
-
-
-
-
-
-
