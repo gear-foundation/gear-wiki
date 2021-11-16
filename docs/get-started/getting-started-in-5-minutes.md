@@ -88,8 +88,8 @@ license = "GPL-3.0"
 crate-type = ["cdylib"]
 
 [dependencies]
-gcore = { path = "https://github.com/gear-tech/gear.git", features = ["debug"] }
-gstd = { path = "https://github.com/gear-tech/gear.git", features = ["debug"] }
+gcore = { git = "https://github.com/gear-tech/gear.git", features = ["debug"] }
+gstd = { git = "https://github.com/gear-tech/gear.git", features = ["debug"] }
 
 [profile.release]
 lto = true
