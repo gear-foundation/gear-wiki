@@ -54,7 +54,7 @@ For this, a demo environment that emulates the real Gear decentralized network w
 
     Now, your `gear/contracts` directory tree should look like this:
 
-    ```bash
+    ```
     └── first-gear-app
         ├── Cargo.toml
         └── src
@@ -69,7 +69,7 @@ For this, a demo environment that emulates the real Gear decentralized network w
 
 4. Configure `Cargo.toml` in order for our contract to be properly built.
 
-    ```yaml
+    ```toml
     [package]
     name = "first-gear-app"
     version = "0.1.0"
@@ -124,13 +124,13 @@ For this, a demo environment that emulates the real Gear decentralized network w
 6. Now compile the smart-contract to WASM
 
     ```bash
-    cd ~/Gear/contracts/first-gear-app/
+    cd ~/gear/contracts/first-gear-app/
     RUSTFLAGS="-C link-args=--import-memory" cargo +nightly build --release --target=wasm32-unknown-unknown
     ```
 
     If everything goes well, your working directory should now have a `target` directory that looks like this:
 
-    ```bash
+    ```
     target
         ├── CACHEDIR.TAG
         ├── release
