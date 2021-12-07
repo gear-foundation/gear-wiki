@@ -37,9 +37,9 @@ For this, a demo environment that emulates the real Gear decentralized network w
     ```
  **_Note:_** If you use Windows, download and install [Build Tools for Visual Studio](https://visualstudio.microsoft.com/downloads/?q=build+tools).
 
-## 2. Creating your first GEAR smart contract
+## 2. Creating your first Gear smart contract
 
-1. Let's create a `contracts` directory inside `GEAR` and `cd` to it.
+1. Let's create a `contracts` directory inside `Gear` and `cd` to it.
 
     ```bash
     mkdir -p ~/Gear/contracts
@@ -152,7 +152,7 @@ For this, a demo environment that emulates the real Gear decentralized network w
 
 ## 3. Deploy your Smart Contract to the TestNet
 
-GEAR provides a demo environment that emulates the real Gear decentralized network, available in [idea.gear-tech.io](https://idea.gear-tech.io).
+Gear provides a demo environment that emulates the real Gear decentralized network, available in [idea.gear-tech.io](https://idea.gear-tech.io).
 
 ### 1. Create account 
 
