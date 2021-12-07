@@ -13,8 +13,8 @@ For this, a demo environment that emulates the real Gear decentralized network w
 1. For your convenience, it is recommended to create a dedicated directory for everything Gear-related. The rest of the article will assume that you are using the paths suggested. To create a folder in your home directory and navigate to it, type:
 
     ```bash
-    mkdir -p Gear
-    cd ~/Gear
+    mkdir -p gear
+    cd ~/gear
     ```
 
 2. Make sure you have installed all the tools required to build a smart-contract in Rust. [Rustup](https://rustup.rs/) will be used to get Rust compiler ready:
