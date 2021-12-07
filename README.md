@@ -26,11 +26,11 @@ Welcome to Gear network documentation portal for developers. It provides guides 
 3. Start your local Wiki copy and instantly track changes you've made. Open it in your default browser - http://localhost:3000/:
 
     ```bash
-    yarn run start
+    yarn start
     ```
-    
+
     alternatively
-    
+
     ```bash
     npm run start
     ```
