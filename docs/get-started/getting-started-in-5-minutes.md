@@ -8,7 +8,7 @@ sidebar_label: 'Оverview'
 This guide provides a general overview of running smart-contract in the Gear network. It guides how to write a smart contract of your choice in Rust, compile it to WASM, deploy to a Gear network and interact with it.
 For this, a demo environment that emulates the real Gear decentralized network will be used.
 
-## 1. Prerequisites 
+## 1. Prerequisites
 
 1. For your convenience, it is recommended to create a dedicated directory for everything Gear-related. The rest of the article will assume that you are using the paths suggested. To create a folder in your home directory and navigate to it, type:
 
@@ -42,8 +42,8 @@ For this, a demo environment that emulates the real Gear decentralized network w
 1. Let's create a `contracts` directory inside `Gear` and `cd` to it.
 
     ```bash
-    mkdir -p ~/Gear/contracts
-    cd ~/Gear/contracts
+    mkdir -p ~/gear/contracts
+    cd ~/gear/contracts
     ```
 
 2. The next step would be to build a Rust library for our contract.
@@ -52,7 +52,7 @@ For this, a demo environment that emulates the real Gear decentralized network w
     cargo new first-gear-app --lib
     ```
 
-    Now, your `Gear/contracts` directory tree should look like this:
+    Now, your `gear/contracts` directory tree should look like this:
 
     ```bash
     └── first-gear-app
@@ -64,7 +64,7 @@ For this, a demo environment that emulates the real Gear decentralized network w
 3. It's time to write some code. Open `first-gear-app` with your favorite editor. For `VS Code` editor type:
 
     ```bash
-    code ~/Gear/contracts/first-gear-app
+    code ~/gear/contracts/first-gear-app
     ```
 
 4. Configure `Cargo.toml` in order for our contract to be properly built.
@@ -154,11 +154,11 @@ For this, a demo environment that emulates the real Gear decentralized network w
 
 Gear provides a demo environment that emulates the real Gear decentralized network, available in [idea.gear-tech.io](https://idea.gear-tech.io).
 
-### 1. Create account 
+### 1. Create account
 
 1. Download Polkadot extension for your browser via [https://polkadot.js.org/extension/](https://polkadot.js.org/extension/). It does one thing - manages accounts and allows the signing of transactions with those accounts. It is a secure tool that allows injecting your accounts into any Substrate-based dapp. It does not perform wallet functions, e.g send funds.
 
-2. Once downloaded, click '+' button to create a new account: 
+2. Once downloaded, click '+' button to create a new account:
 
 ![img alt](./img/polkadot-add-acc.png)
 
@@ -206,7 +206,7 @@ A notification about successful balance replenishment will appear at the bottom 
 
 ### 3. Send message to a program
 
-1. Now, try sending your newly uploaded program a message to see how it responds! Use this button: 
+1. Now, try sending your newly uploaded program a message to see how it responds! Use this button:
 ![img alt](./img/send-message.png)
 
 2. In the `Payload` field of the opened dialog type `PING`, provide an amount of gas 20 000 000 and click the `Send request` button.
