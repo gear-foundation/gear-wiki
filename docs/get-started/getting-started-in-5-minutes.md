@@ -5,205 +5,220 @@ sidebar_label: 'Оverview'
 
 # Getting started in 5 minutes
 
-In this article, we are going to write and deploy our first smart contract to a GEAR network of your choice.
+This guide provides a general overview of running smart-contract in the Gear network. It guides how to write a smart contract of your choice in Rust, compile it to WASM, deploy to a Gear network and interact with it.
+For this, a demo environment that emulates the real Gear decentralized network will be used.
 
-## Prerequesites
+## 1. Prerequisites 
 
-(Optional) For your convenience, it'd be best to create a dedicated directory for everything GEAR-related.
+1. For your convenience, it is recommended to create a dedicated directory for everything Gear-related. The rest of the article will assume that you are using the paths suggested. To create a folder in your home directory and navigate to it, type:
 
-```bash
-mkdir -p ~/GEAR
-cd ~/GEAR
-```
+    ```bash
+    mkdir -p Gear
+    cd ~/Gear
+    ```
 
-The rest of the article will assume that you are using the paths suggested, so make sure you make adjustments according to your directory tree.
+2. Make sure you have installed all the tools required to build a smart-contract in Rust. [Rustup](https://rustup.rs/) will be used to get Rust compiler ready:
 
-First of all, we need to install all the tools required to build our first contract in Rust.
+    ```bash
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+    ```
 
-We will use [Rustup](https://rustup.rs/) to get our Rust compiler ready.
+3. Now, let's install a `nightly` build for `rustup`, since `Gear` uses the most up-to-date features `rustup` provides.
 
-```bash
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-```
+    ```bash
+    rustup update
+    rustup update nightly
+    ```
 
-Now, let's install a `nightly` build for `rustup`, since `GEAR` uses the most up-to-date features `rustup` provides.
+4. As we will be compiling our Rust smart contract to WASM, we will need a WASM compiler. Let's add it to the toolchain.
 
-```bash
-rustup update
-rustup update nightly
-```
+    ```bash
+    rustup target add wasm32-unknown-unknown --toolchain nightly
+    ```
+ **_Note:_** If you use Windows, download and install [Build Tools for Visual Studio](https://visualstudio.microsoft.com/downloads/?q=build+tools).
 
-As we will be compiling our Rust smart contract to WASM, we will need a WASM compiler. Let's add it to the toolchain.
+## 2. Creating your first GEAR smart contract
 
-```bash
-rustup target add wasm32-unknown-unknown --toolchain nightly
-```
+1. Let's create a `contracts` directory inside `GEAR` and `cd` to it.
 
-Now, it's time to get the source code for GEAR itself by cloning our public [github repo](https://github.com/gear-tech/gear).
+    ```bash
+    mkdir -p ~/Gear/contracts
+    cd ~/Gear/contracts
+    ```
 
-```bash
-git clone https://github.com/gear-tech/gear.git
-```
+2. The next step would be to build a Rust library for our contract.
 
-## Creating your first GEAR smart contract
-Let's create a `contracts` directory inside `GEAR` and `cd` to it.
+    ```bash
+    cargo new first-gear-app --lib
+    ```
 
-```bash
-mkdir -p ~/GEAR/contracts
-cd ~/GEAR/contracts
-```
+    Now, your `Gear/contracts` directory tree should look like this:
 
-The next step would be to build a Rust library for our contract.
+    ```bash
+    └── first-gear-app
+        ├── Cargo.toml
+        └── src
+            └── lib.rs
+    ```
 
-```bash
-cargo new first-gear-app --lib
-```
+3. It's time to write some code. Open `first-gear-app` with your favorite editor. For `VS Code` editor type:
 
-Now, your `GEAR/contracts` directory tree should look like this:
+    ```bash
+    code ~/Gear/contracts/first-gear-app
+    ```
 
-```bash
-└── first-gear-app
-    ├── Cargo.toml
-    └── src
-        └── lib.rs
-```
+4. Configure `Cargo.toml` in order for our contract to be properly built.
 
-It's time to write some code. Open `first-gear-app` with your favorite editor, we will use `VS Code`.
+    ```yaml
+    [package]
+    name = "first-gear-app"
+    version = "0.1.0"
+    authors = ["Your Name"]
+    edition = "2021"
+    license = "GPL-3.0"
 
-```bash
-code ~/GEAR/contracts/first-gear-app
-```
+    [lib]
+    crate-type = ["cdylib"]
 
-We will need to configure `Cargo.toml` in order for our contract to be properly built.
+    [dependencies]
+    gcore = { git = "https://github.com/gear-tech/gear.git", features = ["debug"] }
+    gstd = { git = "https://github.com/gear-tech/gear.git", features = ["debug"] }
 
-```yaml
-[package]
-name = "first-gear-app"
-version = "0.1.0"
-authors = ["Your Name"]
-edition = "2021"
-license = "GPL-3.0"
+    [profile.release]
+    lto = true
+    opt-level = 's'
+    ```
 
-[lib]
-crate-type = ["cdylib"]
+5. Replace the default contents of `lib.rs` with the code for our first smart-contract. Open `src/lib.rs` in your editor and paste the following code:
 
-[dependencies]
-gcore = { git = "https://github.com/gear-tech/gear.git", features = ["debug"] }
-gstd = { git = "https://github.com/gear-tech/gear.git", features = ["debug"] }
+    ```rust
+    #![no_std]
 
-[profile.release]
-lto = true
-opt-level = 's'
-```
+    use gstd::{debug, msg, prelude::*};
 
-Now, it's time to replace the default contents of `lib.rs` with the code for our first smart contract.
+    static mut MESSAGE_LOG: Vec<String> = vec![];
 
-In order to do that, you should open `src/lib.rs` in your editor and paste the following code:
+    #[no_mangle]
+    pub unsafe extern "C" fn handle() {
+        let new_msg = String::from_utf8(msg::load_bytes()).expect("Invalid message");
 
-```rust
-#![no_std]
+        if new_msg == "PING" {
+            msg::reply_bytes("PONG", 12_000_000, 0);
+        }
 
-use gcore::{ext, msg};
-use gstd::prelude::*;
+        MESSAGE_LOG.push(new_msg);
 
-static mut MESSAGE_LOG: Vec<String> = vec![];
+        debug!("{:?} total message(s) stored: ", MESSAGE_LOG.len());
 
-#[no_mangle]
-pub unsafe extern "C" fn handle() {
-    let new_msg =
-        String::from_utf8(gstd::msg::load_bytes()).expect("Invalid message: should be utf-8");
-
-    if new_msg == "PING" {
-        msg::reply(b"PONG", 10_000_000, 0);
+        for log in MESSAGE_LOG.iter() {
+            debug!(log);
+        }
     }
 
-    MESSAGE_LOG.push(new_msg);
+    #[no_mangle]
+    pub unsafe extern "C" fn init() {}
+    ```
 
-    ext::debug(&format!(
-        "{:?} total message(s) stored: ",
-        MESSAGE_LOG.len()
-    ));
+    This simple smart-contract responds with `PONG` to a `PING` message sent to the contract.
 
-    for log in MESSAGE_LOG.iter() {
-        ext::debug(log);
-    }
-}
+6. Now compile the smart-contract to WASM
 
-#[no_mangle]
-pub unsafe extern "C" fn handle_reply() {
-    msg::reply(b"PONG", 10_000_000, 0);
-}
+    ```bash
+    cd ~/Gear/contracts/first-gear-app/
+    RUSTFLAGS="-C link-args=--import-memory" cargo +nightly build --release --target=wasm32-unknown-unknown
+    ```
 
-#[no_mangle]
-pub unsafe extern "C" fn init() {}
-```
+    If everything goes well, your working directory should now have a `target` directory that looks like this:
 
-We will not dive into the specifics behind the smart contract implementation in this article. The only thing you need to know is that this contract responds to a `PING` message send to the contract with `PONG`. If you want to learn more about writing smart contracts for GEAR, refer to [this article on Smart Contracts](smart-contracts/gear-program.md).
-
-Now, it's time to compile the contract.
-
-```bash
-cargo +nightly build --target wasm32-unknown-unknown --release
-```
-
-If everything goes well, your working directory should now have a `target` directory that looks like this:
-
-
-```bash
-target
-    ├── CACHEDIR.TAG
-    ├── release
-    │   ├── ...
-    └── wasm32-unknown-unknown
+    ```bash
+    target
         ├── CACHEDIR.TAG
-        └── release
-            ├── build
-            │   └── ...
-            ├── deps
-            │   └── ...
-            ├── examples
-            ├── first_gear_app.d
-            ├── first_gear_app.wasm <---- this is our .wasm file
-            ├── incremental
-            ├── libfirst_gear_app.d
-            └── libfirst_gear_app.rlib
+        ├── release
+        │   ├── ...
+        └── wasm32-unknown-unknown
+            ├── CACHEDIR.TAG
+            └── release
+                ├── build
+                │   └── ...
+                ├── deps
+                │   └── ...
+                ├── examples
+                ├── incremental
+                ├── first_gear_app.d
+                └── first_gear_app.wasm <---- this is our .wasm file
+    ```
 
-```
+    The compiled `first_gear_app.wasm` file is in `target/wasm32-unknown-unknown/release` directory.
 
-All we need is the `first_gear_app.wasm` file in `target/wasm32-unknown-unknown/release` directory. Now that you know where it is, let's move to the next step.
+## 3. Deploy your Smart Contract to the TestNet
 
-## Deploy your Smart Contract to the TestNet
+GEAR provides a demo environment that emulates the real Gear decentralized network, available in [idea.gear-tech.io](https://idea.gear-tech.io).
 
-GEAR provides a GUI via [idea.gear-tech.io](https://idea.gear-tech.io).
+### 1. Create account 
 
-First, log in using the most suitable method.
+1. Download Polkadot extension for your browser via [https://polkadot.js.org/extension/](https://polkadot.js.org/extension/). It does one thing - manages accounts and allows the signing of transactions with those accounts. It is a secure tool that allows injecting your accounts into any Substrate-based dapp. It does not perform wallet functions, e.g send funds.
 
-Second, in the top right corner, you should create an account.
+2. Once downloaded, click '+' button to create a new account: 
 
-![img alt](./img/account.png)
+![img alt](./img/polkadot-add-acc.png)
 
-Next, you will need to top up your account balance in order to have enough [gas](smart-contracts/messaging.md) to upload your contract.
+3. Make sure you save your 12-word mnemonic seed securely.
 
-When you your account balance is sufficient, click `Upload program` and navigate to the `.wasm` file we have pointed to above.
+![img alt](./img/polkadot-add-acc-2.png)
 
-![img upload](./img/upload.png)
+4. Select the network that will be used for this account - choose "Allow to use on any chain". Provide any name to this account and password, click "Add the account with the generated seed" to complete account registration.
 
-You should now see the following interface:
+![img alt](./img/polkadot-add-acc-3.png)
 
-![img interface](./img/interface.png)
+5. Go to [idea.gear-tech.io](https://idea.gear-tech.io). You will be prompted to grant access to your account for Gear Tech application, click "Yes, allow this application access".
 
-You can now upload the program and wait until IDEA uploads it to the `TestNet`.
+![img alt](./img/polkadot-access.png)
 
-Once your program is uploaded, head to the `Recently uploaded programs` section and find your program.
+6. Click the `Connect` button on top-right to select an account that will be connected to Gear Tech.
 
-![img recent](./img/recent.png)
+![img alt](./img/connect_account.png)
 
-You can interact with your program via these action buttons:
+7. In accordance to Actor model, a smart-contracts are uploaded to a network via messages. Gear node charges a gas fee during message processing (see also about [gas](smart-contracts/messaging.md#gas)). Your account balance needs to have enough funds to upload a smart-contract to the `TestNet`. Click "Get test balance".
 
-![img actions](./img/actions.png)
+![img alt](./img/get-balance.png)
 
-Now, try sending your newly uploaded program a `PING` message too see how it responds!
+A notification about successful balance replenishment will appear at the bottom of the window. Also, you can see the current account balance next to the account name in the upper right corner.
 
-This concludes our tutorial on uploading your first contract.
+![img alt](./img/got-balance.png)
 
-To learn more, you can deep dive to the `Smart Contracts` section of the `GEAR Wiki`.
+### 2. Upload program
+
+1. When your account balance is sufficient, click the `Upload program` and navigate to the `.wasm` file we have pointed to above.
+
+![img alt](./img/upload.png)
+
+2. Specify program Name and Gas limit 20 000 000 and click the `Upload program` button.
+
+![img alt](./img/interface.png)
+
+3. Sign in the program uploading transaction to the Gear network. Also, sign in the program and meta data uploading to the Gear demo environment so you could work with the program. It is recommennded to set the checkbox `Remember my password for the next 15 minutes` for your convenience.
+
+![img alt](./img/sign-transaction.png)
+
+4. Once your program is uploaded, head to the `Recently uploaded programs` section and find your program.
+
+![img alt](./img/recent.png)
+
+### 3. Send message to a program
+
+1. Now, try sending your newly uploaded program a message to see how it responds! Use this button: 
+![img alt](./img/send-message.png)
+
+2. In the `Payload` field of the opened dialog type `PING`, provide an amount of gas 20 000 000 and click the `Send request` button.
+
+![img alt](./img/send-request.png)
+
+3. Sign in the message sending transaction as it is shown in the step #2.3
+
+4. After your message has been successfully processed, the program responds with PONG:
+
+![img alt](./img/prog-replied.png)
+
+***
+
+For additional info about writing smart contracts for Gear and the specifics behind the smart contract implementation, refer to [this article on Smart Contracts](smart-contracts/gear-program.md).
