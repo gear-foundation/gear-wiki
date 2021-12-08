@@ -5,12 +5,13 @@ sidebar_label: 'Оverview'
 
 # Getting started in 5 minutes
 
-This guide provides a general overview of running smart-contract in the Gear network. It guides how to write a smart contract of your choice in Rust, compile it to WASM, deploy to a Gear network and interact with it.
-For this, a demo environment that emulates the real Gear decentralized network will be used.
+This guide provides a general overview of running smart contracts on the Gear network. It guides you through how to write a smart contract, compile it to WASM and deploy it to the Gear network.
+
+For this example, a demo environment that emulates the real Gear decentralized network will be used.
 
 ## 1. Prerequisites
 
-1. For your convenience, it is recommended to create a dedicated directory for everything Gear-related. The rest of the article will assume that you are using the paths suggested. To create a folder in your home directory and navigate to it, type:
+1. For your convenience, it is recommended that you create a dedicated directory for everything Gear-related. The rest of the article will assume that you are using the paths suggested. To create a folder in your home directory and navigate to it, type:
 
     ```bash
     mkdir -p gear
@@ -156,7 +157,7 @@ Gear provides a demo environment that emulates the real Gear decentralized netwo
 
 ### 1. Create account
 
-1. Download Polkadot extension for your browser via [https://polkadot.js.org/extension/](https://polkadot.js.org/extension/). It does one thing - manages accounts and allows the signing of transactions with those accounts. It is a secure tool that allows injecting your accounts into any Substrate-based dapp. It does not perform wallet functions, e.g send funds.
+1. Download the Polkadot extension for your browser via [https://polkadot.js.org/extension/](https://polkadot.js.org/extension/). This extension manages accounts and allows the signing of transactions with those accounts. It is a secure tool that allows injecting your accounts into any Substrate-based dapp. It does not perform wallet functions, e.g send funds.
 
 2. Once downloaded, click '+' button to create a new account:
 
@@ -166,7 +167,7 @@ Gear provides a demo environment that emulates the real Gear decentralized netwo
 
 ![img alt](./img/polkadot-add-acc-2.png)
 
-4. Select the network that will be used for this account - choose "Allow to use on any chain". Provide any name to this account and password, click "Add the account with the generated seed" to complete account registration.
+4. Select the network that will be used for this account - choose "Allow to use on any chain". Provide any name to this account and password and click "Add the account with the generated seed" to complete account registration.
 
 ![img alt](./img/polkadot-add-acc-3.png)
 
@@ -178,11 +179,11 @@ Gear provides a demo environment that emulates the real Gear decentralized netwo
 
 ![img alt](./img/connect_account.png)
 
-7. In accordance to Actor model, a smart-contracts are uploaded to a network via messages. Gear node charges a gas fee during message processing (see also about [gas](smart-contracts/messaging.md#gas)). Your account balance needs to have enough funds to upload a smart-contract to the `TestNet`. Click "Get test balance".
+7. In accordance with the Actor model, smart contracts are uploaded to a network via messages. Gear node charges a gas fee during message processing (see also about [gas](smart-contracts/messaging.md#gas)). Your account balance needs to have enough funds to upload a smart-contract to the `TestNet`. Click "Get test balance".
 
 ![img alt](./img/get-balance.png)
 
-A notification about successful balance replenishment will appear at the bottom of the window. Also, you can see the current account balance next to the account name in the upper right corner.
+A notification about successful balance replenishment will appear at the bottom of the window. You can also see the current account balance next to the account name in the upper right corner.
 
 ![img alt](./img/got-balance.png)
 
@@ -196,7 +197,7 @@ A notification about successful balance replenishment will appear at the bottom 
 
 ![img alt](./img/interface.png)
 
-3. Sign in the program uploading transaction to the Gear network. Also, sign in the program and meta data uploading to the Gear demo environment so you could work with the program. It is recommennded to set the checkbox `Remember my password for the next 15 minutes` for your convenience.
+3. Sign in the program uploading the transaction to the Gear network. Also, sign in the program and meta data uploading to the Gear demo environment so you could work with the program. It is recommended to set the checkbox `Remember my password for the next 15 minutes` for your convenience.
 
 ![img alt](./img/sign-transaction.png)
 
