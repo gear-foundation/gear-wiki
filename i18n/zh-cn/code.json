@@ -1,0 +1,119 @@
+{
+  "theme.NotFound.title": {
+    "message": "Page Not Found"
+  },
+  "theme.NotFound.p1": {
+    "message": "We could not find what you were looking for."
+  },
+  "theme.NotFound.p2": {
+    "message": "Please contact the owner of the site that linked you to the original URL and let them know their link is broken."
+  },
+  "theme.AnnouncementBar.closeButtonAriaLabel": {
+    "message": "Close"
+  },
+  "theme.blog.paginator.navAriaLabel": {
+    "message": "Blog list page navigation"
+  },
+  "theme.blog.paginator.newerEntries": {
+    "message": "Newer Entries"
+  },
+  "theme.blog.paginator.olderEntries": {
+    "message": "Older Entries"
+  },
+  "theme.blog.post.readingTime.plurals": {
+    "message": "One min read|{readingTime} min read"
+  },
+  "theme.tags.tagsListLabel": {
+    "message": "Tags:"
+  },
+  "theme.blog.post.readMore": {
+    "message": "Read More"
+  },
+  "theme.blog.post.paginator.navAriaLabel": {
+    "message": "Blog post page navigation"
+  },
+  "theme.blog.post.paginator.newerPost": {
+    "message": "Newer Post"
+  },
+  "theme.blog.post.paginator.olderPost": {
+    "message": "Older Post"
+  },
+  "theme.tags.tagsPageTitle": {
+    "message": "Tags"
+  },
+  "theme.blog.post.plurals": {
+    "message": "One post|{count} posts"
+  },
+  "theme.blog.tagTitle": {
+    "message": "{nPosts} tagged with \"{tagName}\""
+  },
+  "theme.tags.tagsPageLink": {
+    "message": "View All Tags"
+  },
+  "theme.CodeBlock.copyButtonAriaLabel": {
+    "message": "Copy code to clipboard"
+  },
+  "theme.CodeBlock.copied": {
+    "message": "Copied"
+  },
+  "theme.CodeBlock.copy": {
+    "message": "Copy"
+  },
+  "theme.docs.sidebar.expandButtonTitle": {
+    "message": "Expand sidebar"
+  },
+  "theme.docs.sidebar.expandButtonAriaLabel": {
+    "message": "Expand sidebar"
+  },
+  "theme.docs.paginator.navAriaLabel": {
+    "message": "Docs pages navigation"
+  },
+  "theme.docs.paginator.previous": {
+    "message": "Previous"
+  },
+  "theme.docs.paginator.next": {
+    "message": "Next"
+  },
+  "theme.docs.sidebar.collapseButtonTitle": {
+    "message": "Collapse sidebar"
+  },
+  "theme.docs.sidebar.collapseButtonAriaLabel": {
+    "message": "Collapse sidebar"
+  },
+  "theme.docs.sidebar.responsiveCloseButtonLabel": {
+    "message": "Close menu"
+  },
+  "theme.docs.sidebar.responsiveOpenButtonLabel": {
+    "message": "Open menu"
+  },
+  "theme.docs.versions.unreleasedVersionLabel": {
+    "message": "This is unreleased documentation for {siteTitle} {versionLabel} version."
+  },
+  "theme.docs.versions.unmaintainedVersionLabel": {
+    "message": "This is documentation for {siteTitle} {versionLabel}, which is no longer actively maintained."
+  },
+  "theme.docs.versions.latestVersionSuggestionLabel": {
+    "message": "For up-to-date documentation, see the {latestVersionLink} ({versionLabel})."
+  },
+  "theme.docs.versions.latestVersionLinkLabel": {
+    "message": "latest version"
+  },
+  "theme.common.editThisPage": {
+    "message": "Edit this page"
+  },
+  "theme.common.headingLinkTitle": {
+    "message": "Direct link to heading"
+  },
+  "theme.lastUpdated.atDate": {
+    "message": " on {date}"
+  },
+  "theme.lastUpdated.byUser": {
+    "message": " by {user}"
+  },
+  "theme.lastUpdated.lastUpdatedAtBy": {
+    "message": "Last updated{atDate}{byUser}"
+  },
+  "theme.common.skipToMainContent": {
+    "message": "Skip to main content"
+  }
+}
