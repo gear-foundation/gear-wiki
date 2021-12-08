@@ -12,6 +12,10 @@ module.exports = {
   favicon: '/img/favicon-32x32.png',
   organizationName: 'Gear Technologies',
   projectName: 'docs',
+  i18n: {
+    defaultLocale: 'en',
+    locales: ['en', 'zh-cn'],
+  },
   themeConfig: {
     colorMode: {
       defaultMode: 'dark'
@@ -27,6 +31,10 @@ module.exports = {
         {
           href: 'https://github.com/gear-tech/wiki',
           label: 'GitHub',
+          position: 'right',
+        },
+        {
+          type: 'localeDropdown',
           position: 'right',
         },
       ],
