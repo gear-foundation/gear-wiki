@@ -3,11 +3,11 @@ sidebar_label: 'Create Account'
 sidebar_position: 2
 ---
 
-# How to create a substrate account using the polkadot.js extension
+# How to create a Substrate account using the polkadot.js extension
 
 ## Key information and security
 
-There are several ways to generate a substrate or Polkadot account, but by far the easiest and most recommended is by using the polkadot.js browser extension.
+There are several ways to generate a Substrate or Polkadot account, but by far the easiest and most recommended is by using the polkadot.js browser extension.
 
 There are two key features that make up an account; an address and a key. An address is the public aspect of the account. This is essentially a location that you can send transactions to and from. A key is the private part of the account. This is what enables you to access the address.
 
@@ -27,7 +27,7 @@ Your account’s JSON file is encrypted with a password. This means that while y
 
 ## Polkadot.js browser extension
 
-The polkadot.js browser extension is one of the easiest and most secure ways of creating a substrate account. This method involves installing the polkadot.js plugin and using it as a “virtual vault” that’s separate from your browser to store your private keys and sign transactions.
+The polkadot.js browser extension is one of the easiest and most secure ways of creating a Substrate account. This method involves installing the polkadot.js plugin and using it as a “virtual vault” that’s separate from your browser to store your private keys and sign transactions.
 
 ### Installing the browser extension
 
