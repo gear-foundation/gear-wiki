@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-sidebar_label: 'Connect'
+sidebar_label: '连接'
 ---
 
 # Connect API

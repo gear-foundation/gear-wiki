@@ -1,5 +1,5 @@
 ---
-sidebar_label: 'Memory parallelism'
+sidebar_label: '内存并行'
 sidebar_position: 4
 ---
 

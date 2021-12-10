@@ -1,5 +1,5 @@
 ---
-sidebar_label: 'Actor model'
+sidebar_label: 'Actor 模型'
 sidebar_position: 3
 ---
 

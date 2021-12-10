@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-sidebar_label: 'State components'
+sidebar_label: '状态组件'
 ---
 
 # 状态组件

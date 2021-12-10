@@ -1,6 +1,6 @@
 ---
 sidebar_position: 2
-sidebar_label: 'State transition'
+sidebar_label: '状态转移'
 ---
 
 # 状态转移

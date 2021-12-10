@@ -1,5 +1,5 @@
 ---
-sidebar_label: 'Receive GRB'
+sidebar_label: '接收 GRB'
 sidebar_position: 1
 ---
 

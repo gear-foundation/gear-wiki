@@ -1,5 +1,5 @@
 ---
-sidebar_label: 'Deploy'
+sidebar_label: '部署'
 sidebar_position: 2
 ---
 

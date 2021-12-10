@@ -1,6 +1,6 @@
 ---
 sidebar_position: 3
-sidebar_label: 'Examples'
+sidebar_label: '范例'
 ---
 
 # 范例

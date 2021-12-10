@@ -1,5 +1,5 @@
 ---
-sidebar_label: "Message format"
+sidebar_label: "消息格式"
 sidebar_position: 1
 ---
 

@@ -1,5 +1,5 @@
 ---
-sidebar_label: 'Setting Up'
+sidebar_label: '配置'
 sidebar_position: 1
 ---
 

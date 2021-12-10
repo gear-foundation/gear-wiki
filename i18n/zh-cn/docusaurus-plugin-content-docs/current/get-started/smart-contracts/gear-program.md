@@ -1,5 +1,5 @@
 ---
-sidebar_label: "Program state"
+sidebar_label: "程序状态"
 sidebar_position: 1
 ---
 

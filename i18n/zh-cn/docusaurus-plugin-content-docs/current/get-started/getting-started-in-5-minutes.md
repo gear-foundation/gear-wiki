@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-sidebar_label: 'Оverview'
+sidebar_label: '简介'
 ---
 
 # 5 分钟手册
@@ -47,7 +47,7 @@ rustup target add wasm32-unknown-unknown --toolchain nightly
 git clone https://github.com/gear-tech/gear.git
 ```
 
-## Creating your first GEAR smart contract
+## 创建你的第一个 GEAR 合约
 
 现在让我们在`GEAR` 文件夹内，创建 `contracts` 文件夹，然后通过 `cd` 切换进文件夹
 

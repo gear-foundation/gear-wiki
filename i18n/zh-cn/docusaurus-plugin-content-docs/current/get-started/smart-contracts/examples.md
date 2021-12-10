@@ -1,5 +1,5 @@
 ---
-sidebar_label: 'Examples'
+sidebar_label: '范例'
 sidebar_position: 4
 ---
 

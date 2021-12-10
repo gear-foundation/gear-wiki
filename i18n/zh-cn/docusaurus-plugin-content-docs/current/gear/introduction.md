@@ -1,6 +1,6 @@
 ---
 sidebar_position: 0
-sidebar_label: 'Оverview'
+sidebar_label: '简介'
 ---
 
 # 介绍
