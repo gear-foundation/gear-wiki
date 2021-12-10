@@ -3,11 +3,11 @@ sidebar_position: 1
 sidebar_label: 'Оverview'
 ---
 
-# Getting started in 5 minutes
+# 5 分钟手册
 
 在这篇文章中，我们将会编写并部署第一个智能合约到 GEAR 网络中。
 
-## Prerequesites
+## 前期准备
 
 (可选）为方便起见，最好为所有与 GEAR 有关的内容创建一个专用目录。
 
@@ -174,7 +174,7 @@ target
 
 我们需要的是`target/wasm32-unknown-unknown/release`目录内的 `first_gear_app.wasm` 文件。现在知道它在哪里了，让我们进入下一步。
 
-## Deploy your Smart Contract to the TestNet
+## 在测试网上部署你的第一个合约
 
 Gear 提供了 1 个 GUI 工具，叫[idea.gear-tech.io](https://idea.gear-tech.io)。
 

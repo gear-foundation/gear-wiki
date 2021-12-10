@@ -3,11 +3,11 @@ sidebar_label: 'Examples'
 sidebar_position: 4
 ---
 
-# Gear Examples
+# Gear 范例
 
 你可以编写自己的智能合约，或者尝试通过例子中建立合约。摇滚起来吧！
 
-## Requirements
+## 要求
 
 要开发你的第一个 Rust 智能合约，你需要：
 
@@ -24,7 +24,7 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 rustup target add wasm32-unknown-unknown
 ```
 
-## First steps
+## 第一步
 
 安装 `npm` 和 `node`， `node` 版本至少是 10.x 。
 
@@ -69,7 +69,7 @@ pub unsafe extern "C" fn init() {}
 
 它将 `PONG` 信息发送给原发送人（可以是你！）。
 
-## Building Rust Contract
+## 编译 Rust 合约
 
 我们应该在 app 文件夹中编译智能合约：
 

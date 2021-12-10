@@ -3,7 +3,7 @@ sidebar_label: 'Deploy'
 sidebar_position: 2
 ---
 
-# Deploy Smart contracts
+# 部署智能合约
 
 遵循 Actor 模型的通信原则，创建一个只包含 WASM 文件程序，作为有效载荷的具体交易类型之一。
 
@@ -21,7 +21,7 @@ sidebar_position: 2
 
 `value: u128` - 像新账户转账的数量。
 
-## Program submit events
+## 通过程序提交事件
 
 > 注意：外在因素代表来自外部世界的信息，而事件代表来自链的信息。外在因素可以触发事件。
 
@@ -49,20 +49,20 @@ MessageInfo example:
 
 > `programId` 是程序的唯一地址。
 
-## How to deploy
+## 如何部署
 
 有几种部署程序的方法：
 
-### Upload via Gear GUI
+### 通过 Gear GUI 上传
 
 部署程序最简单的方法是使用官网[idea.gear-tech.io](https://idea.gear-tech.io)中的“Upload program”选项。
 
-### Via Polkadot.js.org
+### 通过 Polkadot.js.org 上传
 
 此外，你可以使用 [polkadot{.js}](https://polkadot.js.org) 提交程序。 在 Developer -> Extrinsic 菜单中使用 `gear.submitProgram` extrinsic。
 
 ![img alt](./img/polkadot-gui.png)
 
-### Via gear-js library
+### 通过 gear-js 库上传
 
 Gear-js 库提供了一种简单直观的方式来连接 GEAR 组件 API，包括与程序的交互。 更多详情请看 [Gear API](https://wiki.gear-tech.io/api/connect)。

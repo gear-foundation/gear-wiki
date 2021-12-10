@@ -3,11 +3,11 @@ sidebar_position: 3
 sidebar_label: 'Examples'
 ---
 
-# Examples
+# 范例
 
 这里有一些小的代码片断，以问答的形式开始与主要的 Gear 组件进行互动。
 
-### Subscribing
+### 订阅
 
 订阅所有事件
 
@@ -65,7 +65,7 @@ createType.decode('TypeName', someBytes);
 createType.decode('TypeName', someBytes, metadata);
 ```
 
-### Create keyring
+### 创建 keyring
 
 创建一个新的 keyring
 
@@ -81,7 +81,7 @@ const jsonKeyring = fs.readFileSync('path/to/keyring.json').toString();
 const keyring = GearKeyring.fromJson(jsonKeyring);
 ```
 
-### Getting metadata
+### 获取元数据
 
 从 program.meta.wasm 获取元数据
 
@@ -91,7 +91,7 @@ const fileBuffer = fs.readFileSync('path/to/program.meta.wasm');
 const meta = await getWasmMetadata(fileBuffer);
 ```
 
-### Uploading program
+### 上传程序
 
 上传程序
 
@@ -120,7 +120,7 @@ try {
 }
 ```
 
-### Sending message
+### 发送消息
 
 发送消息
 
@@ -145,6 +145,6 @@ try {
 }
 ```
 
-## [Examples](https://github.com/gear-tech/gear-js-lib/tree/master/examples)
+## [范例](https://github.com/gear-tech/gear-js-lib/tree/master/examples)
 
 更多例子请看 https://github.com/gear-tech/gear-js-lib/tree/master/examples

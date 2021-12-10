@@ -16,13 +16,13 @@ sidebar_label: 'Connect'
 <!-- // TODO -->
 <!-- add Websocket endpoint for GEAR and Canary Gear -->
 
-## Installation
+## 安装
 
 ```sh
 npm install @gear-js/api
 ```
 
-## Getting started
+## 开始
 
 启动一个 API 连接到 localhost 的运行节点上
 
@@ -60,7 +60,7 @@ const yourCustomTypesExample = {
 const gearApi = await GearApi.create({ customTypes: { ...yourCustomTypesExample } });
 ```
 
-## Example
+## 范例
 
 这个简单的例子描述了如何订阅一个新的区块并获取链基础信息：
 
