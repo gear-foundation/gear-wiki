@@ -1,9 +1,9 @@
 ---
-sidebar_label: 'Setting Up'
+sidebar_label: '配置'
 sidebar_position: 1
 ---
 
-# Setting Up the local node
+# 配置本地节点
 
 1. 下载 Gear 节点的夜间构建版：
 

@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-sidebar_label: 'Definitions'
+sidebar_label: '定义'
 ---
 
-# Definitions
+# 定义

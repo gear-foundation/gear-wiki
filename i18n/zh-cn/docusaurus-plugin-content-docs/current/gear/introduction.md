@@ -1,9 +1,9 @@
 ---
 sidebar_position: 0
-sidebar_label: 'Оverview'
+sidebar_label: '简介'
 ---
 
-# Introduction
+# 介绍
 
 Gear 在引擎盖下使用 Substrate 框架。它提供了企业级去中心化项目最需要的要求--高容错、可复制、标记化、不变性、数据安全和生产级别的的跨平台持久性数据库。
 

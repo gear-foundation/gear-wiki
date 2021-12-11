@@ -1,9 +1,9 @@
 ---
-sidebar_label: 'Actor model'
+sidebar_label: 'Actor 模型'
 sidebar_position: 3
 ---
 
-# Gear Actor model for communications
+# Gear 的 Actor 模型
 
 在并发计算系统中，“消息传递通信”方法意味着程序通过消息交换进行通信。它比“共享内存通信”更具有优势。 消息传递并发比共享内存并发更容易理解。它通常被认为更健壮，比共享内存具有更好的性能。
 
@@ -30,7 +30,7 @@ Actor 是独立的，他们从不分享任何状态，只是相互交换信息�
 
 使用 Actor 模型方法提供了一种在程序（智能合约）逻辑中实现基于 Actor 的并发性的方法。 它可以利用各种语言构造进行异步编程（Rust 中的 Futures 和 async-await）。
 
-## Async/await support
+## Async/await 支持
 
 与类不同，actor 一次只允许一个任务访问它们的可变状态，这使得多个任务中的代码可以安全地与同一个 actor 实例交互。
 

@@ -9,7 +9,7 @@ sidebar_position: 5
 
 GitHub repo: https://github.com/gear-tech/cargo-program
 
-## Install
+## 安装
 
 - _（推荐）_ 使用 cargo-program 的最新版本：
 
@@ -23,7 +23,7 @@ cargo install --git https://github.com/gear-tech/cargo-program.git
 cargo install cargo-program
 ```
 
-## Usage
+## 使用
 
 ### 创建一个新的 Gear 程序
 

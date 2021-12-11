@@ -3,4 +3,4 @@ sidebar_position: 2
 sidebar_label: 'CLI'
 ---
 
-#  Ussing CLI
+#  使用 CLI

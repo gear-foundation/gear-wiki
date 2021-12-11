@@ -1,9 +1,9 @@
 ---
-sidebar_label: 'Memory parallelism'
+sidebar_label: '内存并行'
 sidebar_position: 4
 ---
 
-# Memory parallelism
+# 内存并行
 
 每个程序的独立内存空间，允许在 Gear 节点上进行并行化消息处理。并行处理流的数量等于 CPU 内核数。每个流将处理用于一组已定义程序的消息。它与从其他程序或外部（用户交易）发送的消息有关。
 
