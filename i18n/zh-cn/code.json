@@ -1,0 +1,119 @@
+{
+  "theme.NotFound.title": {
+    "message": "找不到页面"
+  },
+  "theme.NotFound.p1": {
+    "message": "我们找不到您要找的页面。"
+  },
+  "theme.NotFound.p2": {
+    "message": "请联系原始链接来源网站的所有者，并告知他们链接已损坏。"
+  },
+  "theme.AnnouncementBar.closeButtonAriaLabel": {
+    "message": "关闭"
+  },
+  "theme.blog.paginator.navAriaLabel": {
+    "message": "博文列表分页导航"
+  },
+  "theme.blog.paginator.newerEntries": {
+    "message": "较新的博文"
+  },
+  "theme.blog.paginator.olderEntries": {
+    "message": "较旧的博文"
+  },
+  "theme.blog.post.readingTime.plurals": {
+    "message": "{readingTime} 分钟阅读"
+  },
+  "theme.tags.tagsListLabel": {
+    "message": "标签："
+  },
+  "theme.blog.post.readMore": {
+    "message": "阅读更多"
+  },
+  "theme.blog.post.paginator.navAriaLabel": {
+    "message": "博文分页导航"
+  },
+  "theme.blog.post.paginator.newerPost": {
+    "message": "较新一篇"
+  },
+  "theme.blog.post.paginator.olderPost": {
+    "message": "较旧一篇"
+  },
+  "theme.tags.tagsPageTitle": {
+    "message": "标签"
+  },
+  "theme.blog.post.plurals": {
+    "message": "{count} 篇博文"
+  },
+  "theme.blog.tagTitle": {
+    "message": "{nPosts} 含有标签「{tagName}」"
+  },
+  "theme.tags.tagsPageLink": {
+    "message": "查看所有标签"
+  },
+  "theme.CodeBlock.copyButtonAriaLabel": {
+    "message": "复制代码到剪贴板"
+  },
+  "theme.CodeBlock.copied": {
+    "message": "复制成功"
+  },
+  "theme.CodeBlock.copy": {
+    "message": "复制"
+  },
+  "theme.docs.sidebar.expandButtonTitle": {
+    "message": "展开侧边栏"
+  },
+  "theme.docs.sidebar.expandButtonAriaLabel": {
+    "message": "展开侧边栏"
+  },
+  "theme.docs.paginator.navAriaLabel": {
+    "message": "博文列表分页导航"
+  },
+  "theme.docs.paginator.previous": {
+    "message": "上一页"
+  },
+  "theme.docs.paginator.next": {
+    "message": "下一页"
+  },
+  "theme.docs.sidebar.collapseButtonTitle": {
+    "message": "收起侧边栏"
+  },
+  "theme.docs.sidebar.collapseButtonAriaLabel": {
+    "message": "收起侧边栏"
+  },
+  "theme.docs.sidebar.responsiveCloseButtonLabel": {
+    "message": "关闭菜单"
+  },
+  "theme.docs.sidebar.responsiveOpenButtonLabel": {
+    "message": "打开菜单"
+  },
+  "theme.docs.versions.unreleasedVersionLabel": {
+    "message": "此为 {siteTitle} {versionLabel} 版尚未发行的文档。"
+  },
+  "theme.docs.versions.unmaintainedVersionLabel": {
+    "message": "此为 {siteTitle} {versionLabel} 版的文档，现已不再积极维护。"
+  },
+  "theme.docs.versions.latestVersionSuggestionLabel": {
+    "message": "最新的文档请参阅 {latestVersionLink} ({versionLabel})。"
+  },
+  "theme.docs.versions.latestVersionLinkLabel": {
+    "message": "最新版本"
+  },
+  "theme.common.editThisPage": {
+    "message": "编辑此页"
+  },
+  "theme.common.headingLinkTitle": {
+    "message": "标题的直接链接"
+  },
+  "theme.lastUpdated.atDate": {
+    "message": "于 {date} "
+  },
+  "theme.lastUpdated.byUser": {
+    "message": "由 {user} "
+  },
+  "theme.lastUpdated.lastUpdatedAtBy": {
+    "message": "最后{byUser}{atDate}更新"
+  },
+  "theme.common.skipToMainContent": {
+    "message": "跳到主要内容"
+  }
+}

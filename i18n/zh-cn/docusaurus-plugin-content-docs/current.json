@@ -1,0 +1,32 @@
+{
+  "version.label": {
+    "message": "下一页"
+  },
+  "sidebar.tutorialSidebar.category.Gear Network": {
+    "message": "Gear 网络"
+  },
+  "sidebar.tutorialSidebar.category.Gear network state": {
+    "message": "Gear 网络状态"
+  },
+  "sidebar.tutorialSidebar.category.Ecosystem": {
+    "message": "生态"
+  },
+  "sidebar.tutorialSidebar.category.Get Started": {
+    "message": "开始"
+  },
+  "sidebar.tutorialSidebar.category.Local node": {
+    "message": "本地节点"
+  },
+  "sidebar.tutorialSidebar.category.Smart contracts": {
+    "message": "智能合约"
+  },
+  "sidebar.tutorialSidebar.category.API": {
+    "message": "API"
+  },
+  "sidebar.tutorialSidebar.category.Tools": {
+    "message": "工具"
+  },
+  "sidebar.tutorialSidebar.category.Quick-guides": {
+    "message": "快速入门指南"
+  }
+}
