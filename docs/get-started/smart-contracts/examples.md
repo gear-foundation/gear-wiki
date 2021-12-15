@@ -72,7 +72,7 @@ It will just send `PONG` back to the original sender (this can be you!)
 We should compile our smart contract in the app folder:
 
 ```bash
-cargo build --target wasm32-unknown-unknown --release
+cargo +nightly build --target wasm32-unknown-unknown --release
 ```
 
 Our application should compile successfully and the final file `target/wasm32-unknown-unknown/release/gear-app.wasm` should appear.
