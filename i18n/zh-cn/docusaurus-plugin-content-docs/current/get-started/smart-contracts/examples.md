@@ -74,7 +74,7 @@ pub unsafe extern "C" fn init() {}
 我们应该在 app 文件夹中编译智能合约：
 
 ```bash
-cargo build --target wasm32-unknown-unknown --release
+cargo +nightly build --target wasm32-unknown-unknown --release
 ```
 
 我们的应用程序应该编译成功了，最后会出现文件 `target/wasm32-unknown-unknown/release/gear-app.wasm`。
