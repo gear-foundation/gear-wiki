@@ -35,7 +35,7 @@ const gearApi = await GearApi.create();
 You can also connect to a different node
 
 ```javascript
-const gearApi = await GearApi.create({ provider: 'wss://someIP:somePort' });
+const gearApi = await GearApi.create({ providerAddress: 'wss://someIP:somePort' });
 ```
 
 Registering custom types
@@ -69,9 +69,9 @@ async function connect() {
   const gearApi = await GearApi.create();
 
   const [chain, nodeName, nodeVersion] = await Promise.all([
-    gearApi.api.rpc.system.chain(),
-    gearApi.api.rpc.system.name(),
-    gearApi.api.rpc.system.version(),
+    gearApi.chain(),
+    gearApi.nodeName(),
+    gearApi.nodeVersion(),
   ]);
   console.log(`You are connected to chain ${chain} using ${nodeName} v${nodeVersion}`);
 
