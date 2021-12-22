@@ -35,7 +35,7 @@ const gearApi = await GearApi.create();
 你也可以连接到一个不同的节点
 
 ```javascript
-const gearApi = await GearApi.create({ provider: 'wss://someIP:somePort' });
+const gearApi = await GearApi.create({ providerAddress: 'wss://someIP:somePort' });
 ```
 
 注册自定义类型
@@ -69,9 +69,9 @@ async function connect() {
   const gearApi = await GearApi.create();
 
   const [chain, nodeName, nodeVersion] = await Promise.all([
-    gearApi.api.rpc.system.chain(),
-    gearApi.api.rpc.system.name(),
-    gearApi.api.rpc.system.version(),
+    gearApi.chain(),
+    gearApi.nodeName(),
+    gearApi.nodeVersion(),
   ]);
   console.log(`You are connected to chain ${chain} using ${nodeName} v${nodeVersion}`);
 
