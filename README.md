@@ -23,6 +23,12 @@ Welcome to Gear network documentation portal for developers. It provides guides 
     yarn install
     ```
 
+    alternatively
+
+    ```bash
+    npm install
+    ```
+
 3. Start your local Wiki copy and instantly track changes you've made. Open it in your default browser - http://localhost:3000/:
 
     ```bash
@@ -34,6 +40,15 @@ Welcome to Gear network documentation portal for developers. It provides guides 
     ```bash
     npm run start
     ```
+
+#### Tips
+If you want to run with your locale, please use below commands
+
+```bash
+yarn start --locale <locale>
+```
+
+For example, if you want run Chinese version, please run `yarn start --locale zh-cn`.
 
 ## Contribute
 
