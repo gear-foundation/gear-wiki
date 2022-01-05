@@ -1,6 +1,6 @@
 ---
 sidebar_label: 'Receive GRB'
-sidebar_position: 1
+sidebar_position: 2
 ---
 
 # How to check receipt of Gear Bonus Token

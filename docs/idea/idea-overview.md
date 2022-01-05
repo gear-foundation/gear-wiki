@@ -1,5 +1,5 @@
 ---
-sidebar_label: 'Gear IDEA'
+sidebar_label: 'IDEA Overview'
 sidebar_position: 1
 ---
 
