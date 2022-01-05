@@ -18,7 +18,7 @@ The Actor model guarantees:
 
 ## Actor
 
-An Actor in the Actor model, is an atomic computational unit that can send and receive messages. In case of Gear, an actor is a program (smart-contract) or a user that sends messages to a program. Every actor has an internal private state and a mailbox. Communication is asynchronous, messages are popped out from the mailbox and allocated to message provessing streams where processed in cycles.
+An Actor in the Actor model, is an atomic computational unit that can send and receive messages. In case of Gear, an actor is a program (smart-contract) or a user that sends messages to a program. Every actor has an internal private state and a mailbox. Communication is asynchronous, messages are popped out from the mailbox and allocated to message processing streams where processed in cycles.
 
 When an actor receives and processes a message, the response can be the following:
 
