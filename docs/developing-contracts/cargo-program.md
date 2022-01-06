@@ -1,5 +1,5 @@
 ---
-sidebar_label: cargo-program utility
+sidebar_label: Cargo-program Utility
 sidebar_position: 5
 ---
 

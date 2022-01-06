@@ -1,5 +1,5 @@
 ---
-sidebar_label: "Program state"
+sidebar_label: "Program State"
 sidebar_position: 1
 ---
 

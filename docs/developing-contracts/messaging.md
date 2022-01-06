@@ -1,6 +1,6 @@
 ---
-sidebar_label: "Message format"
-sidebar_position: 1
+sidebar_label: "Message Format"
+sidebar_position: 2
 ---
 
 # Message communication format
