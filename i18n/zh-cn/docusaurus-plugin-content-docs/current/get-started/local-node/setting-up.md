@@ -5,7 +5,9 @@ sidebar_position: 1
 
 # 配置本地节点
 
-1. 下载 Gear 节点的夜间构建版：
+Gear 节点可以有单节点的开发网络模式，你也可以选择创建多节点的本次测试网和编译自己的 Gear 节点。
+
+1. 参照 [Gear 节点说明](https://github.com/gear-tech/gear/tree/master/node#readme) 来编译和运行节点。或者直接下载 Gear 节点的每日构建版：
 
     - **Windows x64**: [gear-nightly-windows-x86_64.zip](https://builds.gear.rs/gear-nightly-windows-x86_64.zip)
     - **macOS M1**: [gear-nightly-macos-m1.tar.gz](https://builds.gear.rs/gear-nightly-macos-m1.tar.gz)
@@ -13,7 +15,7 @@ sidebar_position: 1
     - **Linux x64**: [gear-nightly-linux-x86_64.tar.xz](https://builds.gear.rs/gear-nightly-linux-x86_64.tar.xz)
 
 
-2. 不使用特殊参数运行 Gear 节点，以获取连接到 testnet 的节点：
+2. 不使用特殊参数运行 Gear 节点，以连接到测试网：
 
    ```bash
    gear-node
@@ -25,4 +27,6 @@ sidebar_position: 1
     gear-node --help
     ```
 
-更多详情和一些例子请参考[Gear Node README](https://github.com/gear-tech/gear/tree/master/node)。
+***
+
+更多详情和一些范例请参考 [Gear 节点介绍](https://github.com/gear-tech/gear/tree/master/node)。
