@@ -202,6 +202,13 @@ A notification about successful balance replenishment will appear at the bottom 
 
 ![img alt](./img/sign-transaction.png)
 
+:::info
+
+![img interface](./img/contracts.png)
+
+If the program web ui show the red dot, represents an init failure. Please upload program again，and **increase Gas limit** .
+:::
+
 4. Once your program is uploaded, head to the `Recently uploaded programs` section and find your program.
 
 ![img alt](./img/recent.png)

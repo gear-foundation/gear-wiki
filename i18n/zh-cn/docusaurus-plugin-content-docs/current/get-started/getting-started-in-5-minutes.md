@@ -12,8 +12,8 @@ sidebar_label: '简介'
 1. 为方便起见，最好为所有与 GEAR 有关的内容创建一个专用目录。
 
 ```bash
-mkdir -p ~/GEAR
-cd ~/GEAR
+mkdir -p ~/gear
+cd ~/gear
 ```
 
 文章的其余部分将假设你正在使用建议的文件路径，所以请根据你的目录树进行调整。
@@ -211,6 +211,14 @@ Polkadot 浏览器插件可以管理账户并允许用这些账户签署交易�
 3. 签署交易，将合约上传到 Gear 网络。此外，签署合约并将元数据上传到 Gear 演示环境，以便可以使用该合约。为方便起见，建议设置复选框 `Remember my password for the next 15 minutes` 。
 
 ![img alt](./img/sign-transaction.png)
+
+:::info 注意
+
+![img interface](./img/contracts.png)
+
+上传后，如果合约名称前面有红点，代表 init 错误。请再次上传合约，并**扩大 Gas limit**，可以尝试将**默认值扩大 10 倍**。
+
+:::
 
 4. 合约上传后，前往 `Recently uploaded programs` 并找到你的合约。
 
