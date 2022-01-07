@@ -18,9 +18,7 @@ cd ~/GEAR
 
 文章的其余部分将假设你正在使用建议的路径，所以请根据你的目录树进行调整。
 
-
 首先，我们需要安装在 Rust 中构建第一份合约所需的工具。
-
 
 我们将使用[Rustup](https://rustup.rs/)来安装 Rust 编译器。
 
@@ -184,7 +182,7 @@ Gear 提供了 1 个 GUI 工具，叫[idea.gear-tech.io](https://idea.gear-tech.
 
 ![img alt](./img/account.png)
 
-接下来，你需要充值您的帐户，以便有足够的 [gas](smart-contracts/messaging.md) 来上传合约。
+接下来，你需要充值你的帐户，以便有足够的 [gas](smart-contracts/messaging.md) 来上传合约。
 
 当你的账户余额足够时，点击 `Upload program` 并导航到我们上面提到的
 `.wasm`文件。
@@ -195,14 +193,21 @@ Gear 提供了 1 个 GUI 工具，叫[idea.gear-tech.io](https://idea.gear-tech.
 
 ![img interface](./img/interface.png)
 
-你现在可以上传程序并等待 IDEA 将其上传到`TestNet`。
+你现在可以上传程序并等待 IDEA 将其上传到 `TestNet`。
 
+:::info 注意
 
-一旦你的程序被上传，前往`Recently uploaded programs`并找到你的程序。
+![img interface](./img/contracts.png)
+
+上传后，如果合约名称前面有红点，代表 init 错误。请再次上传合约，并**扩大 Gas limit**，可以尝试将**默认值扩大10倍**。
+
+:::
+
+一旦程序被上传，前往`Recently uploaded programs` 并找到你的程序。
 
 ![img recent](./img/recent.png)
 
-你可以通过这些按钮与你的程序互动。
+你可以通过这些按钮与程序互动。
 
 ![img actions](./img/actions.png)
 
@@ -211,3 +216,4 @@ Gear 提供了 1 个 GUI 工具，叫[idea.gear-tech.io](https://idea.gear-tech.
 关于上传第一份合约的教程到此结束。
 
 如果要了解更多关于的内容，你可以到 `GEAR Wiki` 的 `Smart Contracts`部分。
+
