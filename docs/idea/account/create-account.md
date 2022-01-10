@@ -1,6 +1,6 @@
 ---
 sidebar_label: 'Create Account'
-sidebar_position: 2
+sidebar_position: 1
 ---
 
 # How to create a Substrate account using the polkadot.js extension

@@ -1,6 +1,8 @@
 ---
-sidebar_position: 1
-sidebar_label: 'Оverview'
+title: Getting Started
+sidebar_position: 4
+sidebar_label: 'Getting Started'
+slug: /
 ---
 
 # Getting started in 5 minutes
@@ -179,7 +181,7 @@ Gear provides a demo environment that emulates the real Gear decentralized netwo
 
 ![img alt](./img/connect_account.png)
 
-7. In accordance with the Actor model, smart contracts are uploaded to a network via messages. Gear node charges a gas fee during message processing (see also about [gas](smart-contracts/messaging.md#gas)). Your account balance needs to have enough funds to upload a smart-contract to the `TestNet`. Click "Get test balance".
+7. In accordance with the Actor model, smart contracts are uploaded to a network via messages. Gear node charges a gas fee during message processing (see also about [gas](developing-contracts/messaging.md#gas)). Your account balance needs to have enough funds to upload a smart-contract to the `TestNet`. Click "Get test balance".
 
 ![img alt](./img/get-balance.png)
 
@@ -222,4 +224,4 @@ A notification about successful balance replenishment will appear at the bottom 
 
 ***
 
-For additional info about writing smart contracts for Gear and the specifics behind the smart contract implementation, refer to [this article on Smart Contracts](smart-contracts/gear-program.md).
+For additional info about writing smart contracts for Gear and the specifics behind the smart contract implementation, refer to [this article on Smart Contracts](developing-contracts/gear-program.md).

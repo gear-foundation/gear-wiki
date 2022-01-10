@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-sidebar_label: 'State components'
+sidebar_label: 'State Components'
 ---
 
 # State components

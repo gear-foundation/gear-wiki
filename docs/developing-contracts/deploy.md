@@ -1,6 +1,6 @@
 ---
-sidebar_label: 'Deploy'
-sidebar_position: 2
+sidebar_label: 'Upload Program'
+sidebar_position: 3
 ---
 
 # Deploy Smart contracts
