@@ -1,9 +1,11 @@
 ---
-sidebar_label: 'Examples'
-sidebar_position: 4
+sidebar_label: 'Prerequisites'
+sidebar_position: 1
 ---
 
 # Gear Examples
+
+Gear provides a set of examples that can be used for your familiarization with writing programs on Gear or become the basis for your own dApp: [https://github.com/gear-tech/apps](https://github.com/gear-tech/apps).
 
 You can write your own smart contract or try to build from examples. Let's Rock!
 
@@ -42,30 +44,6 @@ The project structure is following:
 
 `Cargo.toml` is a project manifest in Rust, it contains all metadata necessary for compiling the project.
 Configure the `Cargo.toml` similarly to how it is configured [examples/ping/Cargo.toml](https://github.com/gear-tech/gear/blob/master/examples/ping/Cargo.toml);
-
-## PING-PONG
-
-Gear is very easy to write code for!
-
-Here is a minimal program for a classic ping-pong contract:
-
-```rust
-use gstd::{ext, msg};
-
-#[no_mangle]
-pub unsafe extern "C" fn handle() {
-    let new_msg = String::from_utf8(msg::load()).expect("Invalid message: should be utf-8");
-
-    if &new_msg == "PING" {
-        msg::send(msg::source(), b"PONG", 10_000_000);
-    }
-}
-
-#[no_mangle]
-pub unsafe extern "C" fn init() {}
-```
-
-It will just send `PONG` back to the original sender (this can be you!)
 
 ## Building Rust Contract
 
