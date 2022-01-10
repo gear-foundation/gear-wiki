@@ -2,7 +2,6 @@
 title: Getting Started
 sidebar_position: 4
 sidebar_label: 'Getting Started'
-slug: /
 ---
 
 # Getting started in 5 minutes
