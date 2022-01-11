@@ -5,177 +5,177 @@ sidebar_label: '简介'
 
 # 5 分钟手册
 
-在这篇文章中，我们将会编写并部署第一个智能合约到 GEAR 网络中。
+本指南提供了在 Gear 网络上运行智能合约的一般概述。它指导您如何编写智能合约，将其编译为 WASM，并部署到 Gear 网络。
+
+
+在这个例子中，我们将使用一个模拟真实 Gear 去中心化网络的演示环境。
 
 ## 1. 前期准备
 
-1. 为方便起见，最好为所有与 GEAR 有关的内容创建一个专用目录。
+1. 为了方便起见，建议您为所有与 Gear 相关的内容创建一个专用目录。本文的其余部分将假设您使用的是所建议的路径。输入以下命令来在 Home 目录创建一个专用文件夹并跳转到文件夹中：
 
-```bash
-mkdir -p ~/gear
-cd ~/gear
-```
+    ```bash
+    mkdir -p ~/gear
+    cd ~/gear
+    ```
 
-文章的其余部分将假设你正在使用建议的文件路径，所以请根据你的目录树进行调整。
+2. 确保您已经安装了在Rust中构建智能合约所需的所有工具。我们将使用[ Rustup](https://rustup.rs/) 来安装 Rust 编译器。
 
-2. 首先，我们需要安装在 Rust 中构建第一份合约所需的工具。
+    ```bash
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+    ```
 
-我们将使用 [Rustup](https://rustup.rs/) 来安装 Rust 编译器。
+3. 现在，让我们为 `rustup` 安装一个 `nightly` 版本，因为 `Gear` 使用了 一些 `rustup` 提供的最新功能。
 
-```bash
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-```
-
-3. 现在，让我们为 `rustup`安装一个 `nightly` 版本，因为 `GEAR` 使用了一些 `rustup` 提供的最新功能。
-
-```bash
-rustup update
-rustup update nightly
-```
+    ```bash
+    rustup update
+    rustup update nightly
+    ```
 
 4. 我们需要把 Rust 智能合约编译为 WASM，所以我们需要一个 WASM 编译器。让我们将 WASM 编译器添加到工具链中。
 
-```bash
-rustup target add wasm32-unknown-unknown --toolchain nightly
-```
+    ```bash
+    rustup target add wasm32-unknown-unknown --toolchain nightly
+    ```
 
-现在，通过 clone 我们的公共[github repo](https://github.com/gear-tech/gear)来获得 GEAR 的源代码。
+* 现在，通过 clone 我们的公共 [github repo](https://github.com/gear-tech/gear)来获得 Gear 本身的源代码。
 
-```bash
-git clone https://github.com/gear-tech/gear.git
-```
 
-## 2. 创建你的第一个 GEAR 合约
+    ```bash
+    git clone https://github.com/gear-tech/gear.git
+    ```
+
+**_注意_** 如果你使用 Windows，请下载并安装 [Build Tools for Visual Studio](https://visualstudio.microsoft.com/downloads/?q=build+tools)。
+
+
+## 2. 创建你的第一个 Gear 智能合约
 
 1. 现在让我们在 `gear` 文件夹内，创建 `contracts` 文件夹，然后通过 `cd` 切换进文件夹
 
-```bash
-mkdir -p ~/gear/contracts
-cd ~/gear/contracts
-```
 
-2. 下一步，为合约建立一个 Rust 库。
+    ```bash
+    mkdir -p ~/gear/contracts
+    cd ~/gear/contracts
+    ```
 
-```bash
-cargo new first-gear-app --lib
-```
+2. 下一步将是为合约建立一个 Rust 库。
 
-`gear/contracts` 目录树应该是这样的：
+    ```bash
+    cargo new first-gear-app --lib
+    ```
 
-```bash
-└── first-gear-app
-    ├── Cargo.toml
-    └── src
-        └── lib.rs
-```
+    `gear/contracts` 目录树应该是这样的：
 
-3. 现在开始写一些代码。用你喜欢的编辑器打开 `first-gear-app`，我们使用 `VS Code`。
+    ```bash
+    └── first-gear-app
+        ├── Cargo.toml
+        └── src
+            └── lib.rs
+    ```
 
-```bash
-code ~/gear/contracts/first-gear-app
-```
 
-4. 我们将配置 `Cargo.toml`，可以使合约正确地创建。
+3. 现在开始写一些代码。用你喜欢的编辑器打开 `first-gear-app`，我们使用`VS Code`。
 
-   ```toml
-   [package]
-   name = "first-gear-app"
-   version = "0.1.0"
-   authors = ["Your Name"]
-   edition = "2021"
-   license = "GPL-3.0"
+    ```bash
+    code ~/gear/contracts/first-gear-app
+    ```
 
-   [lib]
-   crate-type = ["cdylib"]
+4. 我们将配置`Cargo.toml`，可以使合约正确地创建。
 
-   [dependencies]
-   gcore = { git = "https://github.com/gear-tech/gear.git", features = ["debug"] }
-   gstd = { git = "https://github.com/gear-tech/gear.git", features = ["debug"] }
+    ```yaml
+    [package]
+    name = "first-gear-app"
+    version = "0.1.0"
+    authors = ["Your Name"]
+    edition = "2021"
+    license = "GPL-3.0"
 
-   [profile.release]
-   lto = true
-   opt-level = 's'
-   ```
+    [lib]
+    crate-type = ["cdylib"]
 
-5. 用我们的第一个智能合约的代码替换 `lib.rs`。在编辑器中打开 `src/lib.rs` 并粘贴以下代码：
+    [dependencies]
+    gcore = { git = "https://github.com/gear-tech/gear.git", features = ["debug"] }
+    gstd = { git = "https://github.com/gear-tech/gear.git", features = ["debug"] }
 
-   ```rust
-   #![no_std]
+    [profile.release]
+    lto = true
+    opt-level = 's'
+    ```
 
-   use gstd::{debug, msg, prelude::*};
+5. 用我们的第一个智能合约的代码替换 `lib.rs`。你应该在编辑器中打开`src/lib.rs`并粘贴以下代码：
 
-   static mut MESSAGE_LOG: Vec<String> = vec![];
+    ```rust
+    #![no_std]
 
-   #[no_mangle]
-   pub unsafe extern "C" fn handle() {
-       let new_msg = String::from_utf8(msg::load_bytes()).expect("Invalid message");
+    use gcore::{ext, msg};
+    use gstd::prelude::*;
 
-       if new_msg == "PING" {
-           msg::reply_bytes("PONG", 12_000_000, 0);
-       }
+    static mut MESSAGE_LOG: Vec<String> = vec![];
 
-       MESSAGE_LOG.push(new_msg);
+    #[no_mangle]
+    pub unsafe extern "C" fn handle() {
+        let new_msg =
+            String::from_utf8(gstd::msg::load_bytes()).expect("Invalid message: should be utf-8");
 
-       debug!("{:?} total message(s) stored: ", MESSAGE_LOG.len());
+        if new_msg == "PING" {
+            msg::reply(b"PONG", 10_000_000, 0);
+        }
 
-       for log in MESSAGE_LOG.iter() {
-           debug!(log);
-       }
-   }
+        MESSAGE_LOG.push(new_msg);
 
-   #[no_mangle]
-   pub unsafe extern "C" fn init() {}
-   ```
+        ext::debug(&format!(
+            "{:?} total message(s) stored: ",
+            MESSAGE_LOG.len()
+        ));
 
-在这篇文章中，我们将不会深入研究智能合约实现背后的具体细节。你唯一需要知道的是，这个合约发送了`PING`消息，会收到`PONG`消息作为回应。如果你想了解更多关于为 GEAR 编写智能合约的信息，请参考这篇关于[智能合约的文章]（smart-contracts/gear-program.md）。
+        for log in MESSAGE_LOG.iter() {
+            ext::debug(log);
+        }
+    }
 
-6. 然后，将合约代码编译为 WASM。
+    #[no_mangle]
+    pub unsafe extern "C" fn handle_reply() {
+        msg::reply(b"PONG", 10_000_000, 0);
+    }
 
-   ```bash
-   cd ~/gear/contracts/first-gear-app/
-   RUSTFLAGS="-C link-args=--import-memory" cargo +nightly build --release --target=wasm32-unknown-unknown
-   ```
+    #[no_mangle]
+    pub unsafe extern "C" fn init() {}
+    ```
 
-如果一切顺利，工作目录应该有一个 `target`目录，如下所示：
+    在这篇文章中，我们将不会深入研究智能合约实现背后的具体细节。你唯一需要知道的是，这个合约发送了`PING`消息，会收到`PONG`消息作为回应。如果你想了解更多关于为 GEAR 编写智能合约的信息，请参考这篇关于[智能合约的文章]（smart-contracts/gear-program.md）。
 
-```bash
-target
-    ├── CACHEDIR.TAG
-    ├── release
-    │   ├── ...
-    └── wasm32-unknown-unknown
+6. 然后，编译合约代码。
+
+    ```bash
+    cargo +nightly build --target wasm32-unknown-unknown --release
+    ```
+
+    如果一切顺利，工作目录应该有一个 `target` 目录，如下所示的：
+
+    ```bash
+    target
         ├── CACHEDIR.TAG
-        └── release
-            ├── build
-            │   └── ...
-            ├── deps
-            │   └── ...
-            ├── examples
-            ├── first_gear_app.d
-            ├── first_gear_app.wasm <---- this is our .wasm file
-            ├── incremental
-            ├── libfirst_gear_app.d
-            └── libfirst_gear_app.rlib
+        ├── release
+        │   ├── ...
+        └── wasm32-unknown-unknown
+            ├── CACHEDIR.TAG
+            └── release
+                ├── build
+                │   └── ...
+                ├── deps
+                │   └── ...
+                ├── examples
+                ├── first_gear_app.d
+                ├── first_gear_app.wasm <---- this is our .wasm file
+                ├── incremental
+                ├── libfirst_gear_app.d
+                └── libfirst_gear_app.rlib
 
-```
+    ```
 
-编译好的 `first_gear_app.wasm` 文件在 `target/wasm32-unknown-unknown/release` 。
+    我们需要的是`target/wasm32-unknown-unknown/release`目录内的 `first_gear_app.wasm` 文件。现在知道它在哪里了，让我们进入下一步。
 
-## 3. 在测试网上部署第一个合约
-
-Gear 提供了一个模拟真实 Gear 去中心化网络的演示环境，请访问 [idea.gear-tech.io](https://idea.gear-tech.io) 。
-
-### 1. 创建账户
-
-1. 访问 [https://polkadot.js.org/extension/](https://polkadot.js.org/extension/)，下载 Polkadot 浏览器插件。
-
-Polkadot 浏览器插件可以管理账户并允许用这些账户签署交易。它是一个安全的工具，允许将你的账户注入到任何基于 Substrate 的应用程序中。它不执行钱包功能，比如说发送资金。
-
-2. 下载后，点击'+'按钮，创建一个新账户。
-
-![img alt](./img/polkadot-add-acc.png)
-
-3. 请保存好 12 个单词的助记词。
+## 3. 在测试网上部署你的第一个合约
 
 ![img alt](./img/polkadot-add-acc-2.png)
 
