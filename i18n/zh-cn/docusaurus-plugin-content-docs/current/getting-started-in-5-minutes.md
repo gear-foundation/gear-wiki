@@ -1,6 +1,6 @@
 ---
-sidebar_position: 1
-sidebar_label: '简介'
+sidebar_position: 4
+sidebar_label: '快速入门指南'
 ---
 
 # 5 分钟手册

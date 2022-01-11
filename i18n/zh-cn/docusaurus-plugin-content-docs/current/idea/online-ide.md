@@ -1,5 +1,5 @@
 ---
-sidebar_label: 'Online IDE'
+sidebar_label: '在线 IDE'
 sidebar_position: 2
 ---
 
