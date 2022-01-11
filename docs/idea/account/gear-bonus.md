@@ -3,9 +3,27 @@ sidebar_label: 'Receive GRB'
 sidebar_position: 2
 ---
 
-# How to check receipt of Gear Bonus Token
+# What is GRB?
 
-While GEAR is preparing to launch its Canary network, we are using Statemine to reward active members of our community with the GEAR Bonus Token (GRB) - which in the future can be exchanged for native GEAR tokens.
+While Gear is preparing to launch its Canary Network, we are using Statemine to reward active community members with the Gear Bonus Token (GRB), which in future can be exchanged for native Gear tokens.
+
+To earn GRB, you have to take part in activities and events that are organized by Gear, like workshops and live AMAs. Not all participants will be awarded merely for participation. To earn GRB, individuals have to successfully complete various tasks, for example deploying a dApp during one of our workshops.
+
+To claim your GRB reward, first you have to download the [polkadot.js](https://polkadot.js.org/extension/) extension and create a Substrate account. You can read an in depth post about how to create a Substrate account [here](/create-account.md).
+
+To find out if you have received your GRB, please use one of the following options:
+
+# Gear interface
+
+1. Gear provides an interface to check and claim available GRB: [claim.gear-tech.io/](https://claim.gear-tech.io/).
+
+![img alt](./img/claim-grb-1.png)
+
+2. Click the `Connect` button to select an account that was specified for the event and can be worthy of the bonus.
+
+3. If GRB is available to claim, the interface will provide a `Claim` option. Available GRB balance will be shown on the top right corner.
+
+# Polkadot/Substrate portal
 
 In this article, we will demonstrate how to check if you’ve been awarded with GRB tokens, and how you can access them.
 
