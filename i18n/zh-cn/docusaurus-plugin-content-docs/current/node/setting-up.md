@@ -1,5 +1,5 @@
 ---
-sidebar_label: '配置'
+sidebar_label: '配置节点'
 sidebar_position: 1
 ---
 

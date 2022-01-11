@@ -1,5 +1,5 @@
 ---
-sidebar_label: 'Multi-Node Mode'
+sidebar_label: '多节点模式'
 sidebar_position: 3
 ---
 

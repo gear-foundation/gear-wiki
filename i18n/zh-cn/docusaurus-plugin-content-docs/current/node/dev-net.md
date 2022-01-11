@@ -1,5 +1,5 @@
 ---
-sidebar_label: 'Dev Net Mode'
+sidebar_label: '开发网络'
 sidebar_position: 2
 ---
 

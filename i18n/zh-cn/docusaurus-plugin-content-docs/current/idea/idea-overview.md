@@ -1,5 +1,5 @@
 ---
-sidebar_label: 'IDEA Overview'
+sidebar_label: 'IDEA 简介'
 sidebar_position: 1
 ---
 
