@@ -1,15 +1,16 @@
 ---
-sidebar_label: "Program State"
+sidebar_label: "程序状态"
 sidebar_position: 1
 ---
 
-# Gear program state
+# Gear 程序状态
 
-The program is the main unit of the Gear component. Program code is stored as an immutable Wasm blob. Each program has a fixed amount of memory which persists between messagehandling (so-called static area).
+程序是 Gear 组件的主要单元。程序代码存储为不可变的 Wasm 二进制文件（blob）。
+每个程序都有一个固定的内存，在消息处理之间持续存在（所谓的静态区域）。
 
-The minimum structure of the Gear program is this:
+Gear 程序的最基本结构是这样的：
 
-```rust
+```c
 #![no_std]
 
 use gstd::msg;
@@ -24,6 +25,6 @@ pub unsafe extern "C" fn init() {}
 
 ```
 
-The `init()` function is called only once during program initialization. And handles the incoming `init payload` if there is one.
+`init()`函数在程序初始化时只被调用一次。并处理传入的 `init payload`，如果有的话。
 
-The `handle()` function will be called every time the program receives an incoming message. In this case, the `payload` will be processed.
+`handle()`函数将在每次程序收到传入的消息时被调用。在这种情况下，`payload` 将被处理。

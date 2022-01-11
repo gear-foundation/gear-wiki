@@ -5,8 +5,6 @@ sidebar_position: 1
 
 # Gear IDEA online
 
-Gear IDEA is a convenient tool for writing, compiling and deploying RUST programs directly in the browser without additional configuration of the environment. 
+Gear IDEA是一个方便的工具，可以直接在浏览器中编写、编译和部署RUST程序，而不需要额外配置环境。你现在就可以在 https://idea.gear-tech.io/，开始进行实验。
 
-You can start experimenting right now on https://idea.gear-tech.io/
-
-This is the demo application that implements all the possibilities of interaction with smart-contracts in Gear. It provides the easiest and fast way to upload smart-contract to the blockchain network.
+这是一个演示应用程序，实现了在 Gear 中与智能合约互动的所有可能性。它为上传智能合约到区块链网络提供了最简单和快速的方法。

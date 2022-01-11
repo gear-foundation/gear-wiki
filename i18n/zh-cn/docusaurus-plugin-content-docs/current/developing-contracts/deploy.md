@@ -1,37 +1,39 @@
 ---
-sidebar_label: 'Upload Program'
-sidebar_position: 3
+sidebar_label: '部署'
+sidebar_position: 2
 ---
 
-# Deploy Smart contracts
+# 部署智能合约
 
-Following the principles of Actor model for communication, creating a program is just one of the specific types of transactions that contain a WASM file as a payload.
+遵循 Actor 模型的通信原则，创建一个只包含 WASM 文件程序，作为有效载荷的具体交易类型之一。
 
-Uploading a new program (smart-contract) to the blockchain takes place by calling the custom extrinsic `gear.submitProgram(code, salt, initPayload, gasLimit, value)`. Where:
+向区块链上传一个新的程序（智能合约）是通过调用自定义 extrinsic `gear.submitProgram(code, salt, initPayload, gasLimit, value)`来实现的。
 
-`code: Bytes` - binary WASM code.
+字段含义如下：
 
-`salt: Bytes` - the random data that is added to the hashing process to force their uniqueness.
+`code: Bytes` - 二进制 WASM 代码。
 
-`initPayload: Bytes`- the init message payload that will be processed by the init() function during program initialization.
+`salt: Bytes` - 随机数据，以确定其唯一性。
 
-`gasLimit: u64` -  is the amount of gas that users are willing to spend on processing the upload of a new program.
+`initPayload: Bytes` - 在程序初始化期间将由 init()函数处理的 init 信息有效载荷。
 
-`value: u128` - the value that will be transferred to a balance of the newly created account for the program.
+`gasLimit: u64` -是指用户愿意花在处理上传新程序上的 gas。
 
-## Program submit events
+`value: u128` - 像新账户转账的数量。
 
-> Note: while extrinsics represent information from the outside world, events represent information from the chain. Extrinsics can trigger events.
+## 通过程序提交事件
 
-The extrinsic called to submit a program triggers a series of events. They appear this way:
+> 注意：外在因素代表来自外部世界的信息，而事件代表来自链的信息。外在因素可以触发事件。
 
-1. Gear network tries to post a message into the queue that aims to verify the source account has enough balance to cover sending of value and gas_limit.
+为提交程序而调用的外在因素会触发一系列的事件。它们以这种方式出现：
 
-2. Block producer of Gear network posts the message into the block.
+1. Gear 网络试图在队列中发布一条消息，目的是验证源账户有足够的余额来支付 `value` 和 `gas_limit` 的发送。
 
-3. Gear network reserves a maximum amount of gas specified by the user to be spent on program initialization.
+2. Gear 网络的区块生产者将信息发布到区块中。
 
-4. Program creation and an init message enqueue:
+3. Gear 网络预留了用户指定的最大 gas 量，用于程序初始化。
+
+4. 程序创建和初始化消息入队：
 
 ```sh
 MessageInfo example:
@@ -42,24 +44,25 @@ MessageInfo example:
   origin: 0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d
 }
 ```
-5. Program initialization process. `gear.InitSuccess` or `gear.InitFailure` events.
 
-> `programId` is the unique address of the program.
+5. 程序初始化过程。`gear.InitSuccess` 或 `gear.InitFailure` 事件。
 
-## How to deploy
+> `programId` 是程序的唯一地址。
 
-There are several ways to deploy a program:
+## 如何部署
 
-### Upload via Gear GUI
+有几种部署程序的方法：
 
-The easiest way to deploy the program is to use the “Upload program” option in the official website [idea.gear-tech.io](https://idea.gear-tech.io).
+### 通过 Gear GUI 上传
 
-### Via Polkadot.js.org
+部署程序最简单的方法是使用官网[idea.gear-tech.io](https://idea.gear-tech.io)中的“Upload program”选项。
 
-Also, you can use the standard GUI for substrate-based projects to submit a program. It's the [polkadot{.js}](https://polkadot.js.org) app. Use `gear.submitProgram` extrinsic in Developer -> Extrinsic menu.
+### 通过 Polkadot.js.org 上传
+
+此外，你可以使用 [polkadot{.js}](https://polkadot.js.org) 提交程序。 在 Developer -> Extrinsic 菜单中使用 `gear.submitProgram` extrinsic。
 
 ![img alt](./img/polkadot-gui.png)
 
-### Via gear-js library
+### 通过 gear-js 库上传
 
-Gear-js library provides a simple and intuitive way to connect GEAR Component APIs, including interaction with programs. More details [Gear API](https://wiki.gear-tech.io/api/connect).
+Gear-js 库提供了一种简单直观的方式来连接 GEAR 组件 API，包括与程序的交互。 更多详情请看 [Gear API](https://wiki.gear-tech.io/api/connect)。

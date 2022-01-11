@@ -1,8 +1,6 @@
 ---
-sidebar_label: 'Send a Message'
-sidebar_position: 4
+sidebar_label: '发送交易'
+sidebar_position: 3
 ---
 
-# Call Smart contracts
-
-Coming soon...
+# 调用智能合约
