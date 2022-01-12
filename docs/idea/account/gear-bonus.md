@@ -15,21 +15,21 @@ To find out if you have received your GRB, please use one of the following optio
 
 # Gear interface
 
-1. Gear provides an interface to check and claim available GRB: [claim.gear-tech.io/](https://claim.gear-tech.io/).
+1. Gear provides an easy-to-use interface to check and claim available GRB tokens: [claim.gear-tech.io/](https://claim.gear-tech.io/).
 
 ![img alt](./img/claim-grb-1.png)
 
-2. Click the `Connect` button to select an account that was specified for the event and can be worthy of the bonus.
+2. Click the `Connect` button to connect your Substrate account that is eligible for the bonus tokens.
 
-3. If GRB is available to claim, the interface will provide a `Claim` option. Available GRB balance will be shown on the top right corner.
+3. If GRB is available to claim, the interface will display a `Claim` button. Your available GRB balance will be shown on the top right corner.
 
 # Polkadot/Substrate portal
 
-In this article, we will demonstrate how to check if you’ve been awarded with GRB tokens, and how you can access them.
+Polkadot/Substrate portal enables to check if you’ve been awarded with GRB tokens and access them.
 
-## Step 1.
+### Step 1.
 
-Head over to [the Polkadot / Substrate Portal](https://polkadot.js.org/apps) app. Ensure that your account is added to the wallet and is available for all networks.
+Head over to [the Polkadot/Substrate Portal](https://polkadot.js.org/apps) app. Ensure that your account is added to the wallet and is available for all networks.
 
 ![img alt](./img/screen-1.png)
 
@@ -37,7 +37,7 @@ When adding an account, you can use your mnemonic phrase or restore it from JSON
 
 ![img alt](./img/screen-2.png)
 
-## Step 2.
+### Step 2.
 
 To connect to Statemine, click the Polkadot icon in the top left corner, navigate to “Kusama & Parachains” and select Statemine via OnFinality/ Parity.
 
@@ -47,7 +47,7 @@ Your accounts should now be displayed on the Statemine network:
 
 ![img alt](./img/screen-4.png)
 
-## Step 3.
+### Step 3.
 
 Navigate to “Network” and then “Assets” on the navigation bar.
 
