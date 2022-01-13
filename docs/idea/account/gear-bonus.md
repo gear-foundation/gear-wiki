@@ -9,7 +9,7 @@ While Gear is preparing to launch its Canary Network, we are using Statemine to 
 
 To earn GRB, you have to take part in activities and events that are organized by Gear, like workshops and live AMAs. Not all participants will be awarded merely for participation. To earn GRB, individuals have to successfully complete various tasks, for example deploying a dApp during one of our workshops.
 
-To claim your GRB reward, first you have to download the [polkadot.js](https://polkadot.js.org/extension/) extension and create a Substrate account. You can read an in depth post about how to create a Substrate account [here](/create-account.md).
+To claim your GRB reward, first you have to download the [polkadot.js](https://polkadot.js.org/extension/) extension and create a Substrate account. You can read an in depth post about how to create a Substrate account [here](create-account.md).
 
 To find out if you have received your GRB, please use one of the following options:
 
