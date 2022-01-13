@@ -2,6 +2,9 @@
     "version.label": {
       "message": "下一页"
     },
+    "sidebar.tutorialSidebar.category.Intro to Gear": {
+      "message": "Gear 介绍"
+    },
     "sidebar.tutorialSidebar.category.Gear Network": {
       "message": "Gear 网络"
     },
