@@ -37,6 +37,10 @@ General information and non-technical conversation is found on our [Discord serv
 
 Follow us on Twitter for regular updates: [@gear_techs](https://twitter.com/gear_techs)
 
+### Telegram
+
+Join Gear's official Telegram channel: [gear_tech](https://t.me/gear_tech)
+
 ### Medium
 
 We publish regular updates and articles on Medium that you can read [here](https://medium.com/@gear_techs).
