@@ -1,94 +1,92 @@
 ---
-sidebar_label: 'Create Account'
+sidebar_label: '创建账户'
 sidebar_position: 1
 ---
 
-# How to create a Substrate account using the polkadot.js extension
+# 如何使用 polkadot.js 插件来创建 Substrate 账户
 
-## Key information and security
+## 关键信息及安全
 
-There are several ways to generate a Substrate or Polkadot account, but by far the easiest and most recommended is by using the polkadot.js browser extension.
+有多种生成 Substrate 或 Polkadot 账户的方法，但是目前最简单并且推荐的方法是使用 `polkadot.js` 这个浏览器插件。
 
-There are two key features that make up an account; an address and a key. An address is the public aspect of the account. This is essentially a location that you can send transactions to and from. A key is the private part of the account. This is what enables you to access the address.
+组成账户的重要部分有两个：地址和私钥。地址是账户公开的方面，在本质上是向其发送交易的位置。私钥是账户的私有部分，使你能够访问你的地址。
 
-The only ways to access your account are via your mnemonic phrase or your accounts JSON file and a password. It’s paramount that you keep both these sources of information secure. If you share them with anyone they will have full access to and control over your account, including all your funds.
+访问你账户的唯一方法是通过你的助记词（mnemonic）或你的账户JSON文件及密码。确保这两个信息源的安全是至关重要的。如果你与任何人分享这些信息，他们就可以完全访问和控制你的账户，包括你所有的资金。
 
-### Storing your key safely
+### 安全保存你的私钥
 
-Your seed or mnemonic phrase is the key to your account. If you lose access to your account, by changing device, forgetting the password or losing the JSON file, you can restore your account by using the seed. This also means that someone else can have access to your account if they also have access to your seed.
+你的种子或助记词（mnemonic）是你的帐户的关键。如果更改设备、忘记密码或丢失JSON文件使你无法访问你的帐户，你可以使用种子恢复你的帐户。这也意味着如果其他人可以访问你的种子的话，他们也访问你的帐户。
 
-We recommend that you store your seed in secure places like encrypted hard drives, non-digital devices or ideally, paper. We also recommend that you take other safety precautions to prevent this copy from physical damage, for example fire and water, and make multiple copies stored in different locations.
+我们建议你将种子储存在安全的地方，如加密的硬盘，非电子设备或理想的纸张。我们还建议采取其他安全措施，以防止该副本的物理损坏，例如火灾和水，并在不同的位置存储多份副本。
 
-You should never store your seed on a device that is, or ever will be, connected to the internet.
+你不应该将你的种子存储在一个连接到互联网的设备上。
 
-### Storing your accounts JSON file
+### 保存你的账户 JSON 文件
 
-Your account’s JSON file is encrypted with a password. This means that while you can import into any wallet, you will need to use the password to do so successfully. As there is this additional layer of security - a password - you don’t have to be as cautious about securing it. However, it’s worth using extremely secure passwords that are not used for anything else. You should make a note of this password offline.
+你帐户的 JSON 文件是用密码加密的。这意味着尽管你可以将其导入到任何钱包中，但你需要使用密码才能成功导入。因为有这个额外的安全层——密码——你不必在保护它时那么谨慎。然而，使用不用于其他任何用途的极其安全的密码是值得的。你应该离线记录这个密码。
 
-## Polkadot.js browser extension
+## Polkadot.js 浏览器插件
 
-The polkadot.js browser extension is one of the easiest and most secure ways of creating a Substrate account. This method involves installing the polkadot.js plugin and using it as a “virtual vault” that’s separate from your browser to store your private keys and sign transactions.
+`polkadot.js` 浏览器插件是创建 Substrate 账户的最简单和最安全的方法。这种方法需要安装 `polkadot.js` 浏览器插件，使用插件作为 `虚拟金库` 来将通过浏览器发送交易同存储私钥分开。
 
-### Installing the browser extension
+### 安装浏览器插件
 
-The extension is available for both Chromium based browsers and FireFox.
+该浏览器插件可以用于基于 Chromium 的浏览器和  Firefox。 
 
-You can install the extension via the following links.
+你可以使用以下链接来安装插件。
 
-Install on [Chromium](https://chrome.google.com/webstore/detail/polkadot%7Bjs%7D-extension/mopnmbcafieddcagagdcbnhejhlodfdd?hl=en)- based browser.
+[Chromium](https://chrome.google.com/webstore/detail/polkadot%7Bjs%7D-extension/mopnmbcafieddcagagdcbnhejhlodfdd?hl=en)
 
-Install on [FireFox](https://addons.mozilla.org/en-US/firefox/addon/polkadot-js-extension).
+[FireFox](https://addons.mozilla.org/en-US/firefox/addon/polkadot-js-extension)
 
-Once you’ve installed the extension, you should see an orange and white Polkadot logo in the menu bar.
+一旦安装插件完成，你应该在菜单栏看到一个橙色和白色的 Polkadot 徽标。
 
 ![img alt](./img/create-account-1.png)
 
-### Creating an account
+### 创建账户
 
-Open the extension by clicking on the logo in the menu bar, and click the large plus button to create a new account. Alternatively, you can navigate to the smaller plus icon in the top right and select “Create New Account”.
+通过点击菜单栏上的徽标打开扩展，并单击大加号按钮来创建一个新帐户。或者，你可以导航到右上角较小的加号图标，并选择“创建新帐户”。
 
 ![img alt](./img/create-account-2.png)
 
-Then the extension will create a new seed in the form of twelve words and display it for you to make a note of it.
+然后扩展将创建一个新的种子并展示成12个单词的形式，以方便你记录下来。
 
 ![img alt](./img/create-account-3_.png)
 
-You should back up this seed phrase using the security advice at the beginning of this post.
+你应当按照本章节开头提到的方法来安全保存这个种子短语。
 
-### Choosing a network
+### 选择网络
 
-Next, click the “Network” drop down menu and select the network that you wish to create an account for. If you currently do not have a network preference, select “Allow use on any chain”.
+接下来，点击“网络”下拉菜单，选择你想要创建帐户的网络。如果你目前没有网络首选项，请选择“允许在任何链上使用”。
 
 ![img alt](./img/create-account-3.png)
 
-### Naming the account
+### 命名账户
 
-The account name that you select is for your use only. It is not stored on the blockchain and it will not be visible to anyone other than yourself or anyone who has access to this account. If you plan on using multiple accounts then we advise that you make your account names as detailed as possible to avoid future confusion.
+你选择的帐户名称仅供你使用。它不存储在区块链，它将不可见，除了你自己或任何人有访问这个帐户。如果你计划使用多个帐户，我们建议你尽可能详细地填写你的帐户名称，以避免将来的混淆。
 
 ![img alt](./img/create-account-4.png)
 
-### Entering a password
+### 输入密码
 
-The password that you choose here will be used to encrypt this account’s information. You will need to re-enter it when attempting to process any kind of outgoing transaction, or when using it to cryptographically sign a message. This password is stored locally on the browser extension. 
+你在此选择的密码将用于加密该帐户的信息。当你试图处理任何类型的传出事务时，或者使用它对消息进行加密签名时，你将需要重新输入它。此密码存储在本地的浏览器扩展。
 
-Please note that this password **does not** protect your seed phrase.
+请注意，这个密码**并不保护**你的种子短语。
 
 ![img alt](./img/create-account-5.png)
 
-Once you’ve set a password, click “Add the account with the generated seed”.
+设置好密码后，点击“添加带有生成种子的帐户”。
 
-You’ve now successfully created a new account using the polkadot.js browser extension.
+现在，您已经成功地使用 `polkado .j` 浏览器插件创建了一个新帐户。
 
-### Frequently Asked Questions
+### 常见问题
 
-Is this account portable?
+这个账户是便携式的吗？
 
-> Yes, you can access your account on a different device or wallet of your choice as long as you have the account’s seed
-> phrase or JSON file associated with the account. 
+> 是的，只要你拥有种子短语或者账户的 JSON 文件，你就能在任何不同设备和钱包上访问你的账户
 
-Can I transact directly in the polkadot.js browser extension?
+我能在 `polkadot.js` 浏览器插件里直接发起交易吗？
 
-> There isn’t functionally to make transactions directly in the polkadot.js browser extension. To make transactions, you need to launch [polkadot.js apps](https://polkadot.js.org/apps/#/explorer) on your 
-> browser. Before you can make any transactions, you have to allow polkadot.js 
-> apps to access your account. The browser extension is what holds your account information. You get to choose which 
-> websites get to access this information.
+> 在 `polkadot.js` 浏览器插件里不能直接发起交易。发起交易需要你在浏览器中启动[polkadot.js apps](https://polkadot.js.org/apps/#/explorer)。
+> 在你可以发起交易之前，你需要允许 `polkadot.js app` 访问你的账户。
+> 浏览器插件保存你的账户信息，你需要选择哪些网站可以访问这些信息。

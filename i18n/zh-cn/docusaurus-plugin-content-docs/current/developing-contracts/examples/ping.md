@@ -5,9 +5,9 @@ sidebar_position: 2
 
 # PING-PONG
 
-Gear is very easy to write code for!
+使用 Gear 写代码很容易！
 
-Here is a minimal program for a classic ping-pong contract:
+这是一个经典的 Ping-pong 合约小程序:
 
 ```rust
     #![no_std]
@@ -37,6 +37,6 @@ Here is a minimal program for a classic ping-pong contract:
     pub unsafe extern "C" fn init() {}
 ```
 
-It will just send `PONG` back to the original sender (this can be you!).
+它只会将`PONG`发送回原始发送者(可以是你!)
 
-GitHub link: https://github.com/gear-tech/apps/tree/master/ping
+GitHub 链接: https://github.com/gear-tech/apps/tree/master/ping

@@ -1,9 +1,9 @@
 ---
-sidebar_label: cargo-program utility
+sidebar_label: cargo-program 工具
 sidebar_position: 5
 ---
 
-# `cargo-program` utility
+# `cargo-program` 工具
 
 `cargo-program` 是 Rust 的 `cargo` 扩展程序，旨在简化 Gear 程序的开发。
 
