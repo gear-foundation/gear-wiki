@@ -15,6 +15,14 @@ module.exports = {
   i18n: {
     defaultLocale: 'en',
     locales: ['en', 'zh-cn'],
+    localeConfigs: {
+      'en': {
+        label: 'English',
+      },
+      'zh-cn': {
+        label: '简体中文'
+      }
+    }
   },
   themeConfig: {
     colorMode: {

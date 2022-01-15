@@ -10,6 +10,7 @@ This guide provides a general overview of running smart contracts on the Gear ne
 
 For this example, a demo environment that emulates the real Gear decentralized network will be used.
 
+
 ## 1. Prerequisites
 
 1. For your convenience, it is recommended that you create a dedicated directory for everything Gear-related. The rest of the article will assume that you are using the paths suggested. To create a folder in your home directory and navigate to it, type:
@@ -41,7 +42,7 @@ For this example, a demo environment that emulates the real Gear decentralized n
 
 ## 2. Creating your first Gear smart contract
 
-1. Let's create a `contracts` directory inside `Gear` and `cd` to it.
+1. Let's create a `contracts` directory inside `gear` and `cd` to it.
 
     ```bash
     mkdir -p ~/gear/contracts
@@ -201,6 +202,13 @@ A notification about successful balance replenishment will appear at the bottom 
 3. Sign in the program uploading the transaction to the Gear network. Also, sign in the program and meta data uploading to the Gear demo environment so you could work with the program. It is recommended to set the checkbox `Remember my password for the next 15 minutes` for your convenience.
 
 ![img alt](./img/sign-transaction.png)
+
+:::note
+
+![img interface](./img/contracts.png)
+
+The red dot status for a program indicates init failure. Try to upload the program again with increased **Gas limit**.
+:::
 
 4. Once your program is uploaded, head to the `Recently uploaded programs` section and find your program.
 

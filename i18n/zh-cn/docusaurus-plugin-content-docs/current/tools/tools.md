@@ -1,8 +1,8 @@
 ---
 sidebar_position: 2
-sidebar_label: 'CLI'
+sidebar_label: '工具'
 ---
 
-#  使用 CLI
+#  Tools
 
 正在撰写中...
