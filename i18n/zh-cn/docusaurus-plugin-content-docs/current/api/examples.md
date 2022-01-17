@@ -145,6 +145,6 @@ try {
 }
 ```
 
-## [范例](https://github.com/gear-tech/gear-js-lib/tree/master/examples)
+## [范例](https://github.com/gear-tech/gear/tree/master/examples)
 
-更多例子请看 https://github.com/gear-tech/gear-js-lib/tree/master/examples
+更多例子请看 https://github.com/gear-tech/gear/tree/master/examples
