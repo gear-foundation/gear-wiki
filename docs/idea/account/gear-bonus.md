@@ -1,6 +1,6 @@
 ---
 sidebar_label: 'Receive GRB'
-sidebar_position: 2
+sidebar_position: 3
 ---
 
 # What is GRB?
