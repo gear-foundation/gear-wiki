@@ -1,6 +1,6 @@
 ---
 sidebar_label: '接收 GRB'
-sidebar_position: 2
+sidebar_position: 3
 ---
 
 # 什么是 GRB？
