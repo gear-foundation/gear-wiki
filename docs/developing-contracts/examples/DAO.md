@@ -250,6 +250,7 @@ async fn process_proposal(
 	#[gstd::async_main]
 
 ```rust
+	#[gstd::async_main] 
 	async fn main() {
 		let action: Action = msg::load().expect("Could not load Action");
     	match action {
