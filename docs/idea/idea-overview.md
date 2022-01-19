@@ -5,8 +5,34 @@ sidebar_position: 1
 
 # Gear IDEA online
 
-Gear IDEA is a convenient tool for writing, compiling and deploying RUST programs directly in the browser without additional configuration of the environment. 
+Gear IDEA is a convenient tool that’s purpose is to familiarize users with the Gear platform. It provides smart-contract developers with the easiest and fastest way to write, compile, test and upload smart-contracts to a test network directly in their browser without additional configuration. 
 
-You can start experimenting right now on https://idea.gear-tech.io/
+This is the demo application that implements all of the possibilities of interaction with smart-contracts in Gear, that also manages accounts, balances, events and more.
 
-This is the demo application that implements all the possibilities of interaction with smart-contracts in Gear. It provides the easiest and fast way to upload smart-contract to the blockchain network.
+You can start experimenting right now on https://idea.gear-tech.io/.
+
+# IDEA components and microservices
+
+[frontend](https://github.com/gear-tech/gear-js/tree/master/website/frontend)
+
+React application that provides user interface for working with smart-contracts on Gear IDEA.
+
+[events-listener](https://github.com/gear-tech/gear-js/tree/master/website/events-listener)
+
+Microservice listens to all the events occuring in the Gear node and sends to the data-storage to store the information about them.
+
+[data-storage](https://github.com/gear-tech/gear-js/tree/master/website/data-storage)
+
+Microservice responsible for storing metadata of uploaded programs and information about events.
+
+[api-gateway](https://github.com/gear-tech/gear-js/tree/master/website/api-gateway)
+
+Microservice provides any interaction between the events / meta data store and an external user.
+
+[test-balance](https://github.com/gear-tech/gear-js/tree/master/website/test-balance)
+
+Microservice provides the opportunity to obtain test tokens.
+
+[wasm-compiler](https://github.com/gear-tech/gear-js/tree/master/website/wasm-compiler)
+
+Microservice provides the opportunity to compile Rust projects to WASM.
