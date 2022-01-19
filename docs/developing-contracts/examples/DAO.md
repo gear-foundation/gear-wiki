@@ -1,6 +1,6 @@
 ---
 sidebar_label: 'DAO'
-sidebar_position: 3
+sidebar_position: 4
 ---
 
 # Decentralized autonomous organization
