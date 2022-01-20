@@ -1,6 +1,6 @@
 ---
 sidebar_label: 'DAO'
-sidebar_position: 3
+sidebar_position: 4
 ---
 
 # 去中心化自治组织(DAO)
