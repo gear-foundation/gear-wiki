@@ -247,7 +247,6 @@ async fn process_proposal(
 ```
 
  - These functions are called in `async fn main()` through enum `Actions`.
-	#[gstd::async_main]
 
 ```rust
 	#[gstd::async_main] 

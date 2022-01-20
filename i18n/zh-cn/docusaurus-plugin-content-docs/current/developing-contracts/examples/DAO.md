@@ -247,9 +247,9 @@ async fn process_proposal(
 ```
 
  - 这些函数将在 `async fn main()` 中通过 `Actions` 来调用。
-	#[gstd::async_main]
 
 ```rust
+    #[gstd::async_main]
 	async fn main() {
 		let action: Action = msg::load().expect("Could not load Action");
     	match action {
