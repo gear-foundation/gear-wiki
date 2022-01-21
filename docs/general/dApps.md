@@ -1,6 +1,6 @@
 ---
 sidebar_position: 2
-sidebar_label: 'dApps'
+sidebar_label: 'dApp'
 ---
 
 # What are dApps?
