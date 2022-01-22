@@ -34,5 +34,8 @@
     },
     "sidebar.tutorialSidebar.category.Quick-guides": {
       "message": "快速入门指南"
+    },
+    "sidebar.tutorialSidebar.category.General topics": {
+      "message": "通用概念"
     }
   }
