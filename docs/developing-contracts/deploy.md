@@ -1,9 +1,9 @@
 ---
 sidebar_label: 'Upload Program'
-sidebar_position: 3
+sidebar_position: 5
 ---
 
-# Deploy Smart contracts
+# Deploy smart contracts
 
 Following the principles of Actor model for communication, creating a program is just one of the specific types of transactions that contain a WASM file as a payload.
 
