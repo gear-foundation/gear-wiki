@@ -52,14 +52,14 @@ First of all, make sure you have a compiled `WASM` file of the program you want 
     In this case, you have to choose the most convenient option for you:
 
     * (Recommended) Remove build target `target=wasm32-unknown-unknown` from `config.toml`, which means that you have to
-        * Build the contact with: `cargo +nightly build --target wasm32-unknown-unknown`
-        * Run test as: `cargo test` (опционально: `cargo +nightly test`)
+        * Build the contract with: `cargo +nightly build --target wasm32-unknown-unknown`
+        * Run test as: `cargo test` (optionally: `cargo +nightly test`)
 
     * Keep target in the configuration file, in this case:
-        * Build the contact with: `cargo +nightly build`
+        * Build the contract with: `cargo +nightly build`
         * Run test as: `cargo test --target any_not_wasm32_unknown_unknown_target`
 
-4. Every supported by rust target available from this command:
+4. Every supported by Rust target is available from this command:
 	`rustc --print target-list`
 
 How to find out your system target is described [here](https://stackoverflow.com/questions/52996949/how-can-i-find-the-current-rust-compilers-default-llvm-target-triple?rq=1).
@@ -123,7 +123,7 @@ fn basics() {
     // This emulates node's and chain behavior.
     //
     // By default, sets:
-    // - current block equal 0
+    // - current block equals 0
     // - current timestamp equals UNIX timestamp of your system.
     // - minimal message id equal 0x010000..
     // - minimal program id equal 0x010000..
@@ -152,7 +152,7 @@ fn basics() {
     // Next program initialized without id specification will have id 0x020000.. and so on.
     let ping_pong = Program::from_file(
         &sys,
-        "../target/wasm32-unknown-unknown/release/demo_ping.wasm",
+        "./target/wasm32-unknown-unknown/release/demo_ping.wasm",
     );
 
     // We can check the id of the program by calling `id()` function.
@@ -178,28 +178,28 @@ fn basics() {
     let _ = Program::from_file_with_id(
         &sys,
         105,
-        "../target/wasm32-unknown-unknown/release/demo_ping.wasm",
+        "./target/wasm32-unknown-unknown/release/demo_ping.wasm",
     );
 
     // Hex with "0x"
     let _ = Program::from_file_with_id(
         &sys,
         "0xe659a7a1628cdd93febc04a4e0646ea20e9f5f0ce097d9a05290d4a9e054df4e",
-        "../target/wasm32-unknown-unknown/release/demo_ping.wasm",
+        "./target/wasm32-unknown-unknown/release/demo_ping.wasm",
     );
 
     // Hex without "0x"
     let _ = Program::from_file_with_id(
         &sys,
         "e659a7a1628cdd93febc04a4e0646ea20e9f5f0ce097d9a05290d4a9e054df5e",
-        "../target/wasm32-unknown-unknown/release/demo_ping.wasm",
+        "./target/wasm32-unknown-unknown/release/demo_ping.wasm",
     );
 
     // Array [u8; 32] (e.g. filled with 5)
     let _ = Program::from_file_with_id(
         &sys,
         [5; 32],
-        "../target/wasm32-unknown-unknown/release/demo_ping.wasm",
+        "./target/wasm32-unknown-unknown/release/demo_ping.wasm",
     );
 
     // If you initialize program not in this scope, in cycle, in other conditions,

@@ -59,7 +59,7 @@ pub fn load_bytes() -> Vec<u8> {
 }
 ```
 
-Reply to a message and try to decode to the specified type with `SCALE codec`. Returns `MessageId`:
+Reply to a message and try to enecode to the specified type with `SCALE codec`. Returns `MessageId`:
 
 ```rust
 pub fn reply<E: Encode>(payload: E, gas_limit: u64, value: u128) -> MessageId {
