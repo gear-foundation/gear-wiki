@@ -1,6 +1,6 @@
 ---
 sidebar_label: "Program State"
-sidebar_position: 1
+sidebar_position: 2
 ---
 
 # Gear program state

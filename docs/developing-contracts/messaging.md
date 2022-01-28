@@ -1,6 +1,6 @@
 ---
 sidebar_label: "Message Format"
-sidebar_position: 2
+sidebar_position: 3
 ---
 
 # Message communication format
@@ -41,12 +41,15 @@ Depending on the context the program interprets messages differently. To process
 
 [github link](https://github.com/gear-tech/gear/blob/master/gstd/src/msg.rs)
 
+Load bytes and try to decode to the specified type with `SCALE codec`:
+
 ```rust
 pub fn load<D: Decode>() -> Result<D, codec::Error> {
     D::decode(&mut load_bytes().as_ref())
 }
 ```
-Load bytes and try to decode to the specified type with `codec`
+
+Load bytes:
 
 ```rust
 pub fn load_bytes() -> Vec<u8> {
@@ -55,7 +58,8 @@ pub fn load_bytes() -> Vec<u8> {
     result
 }
 ```
-Load bytes
+
+Reply to a message and try to enecode to the specified type with `SCALE codec`. Returns `MessageId`:
 
 ```rust
 pub fn reply<E: Encode>(payload: E, gas_limit: u64, value: u128) -> MessageId {
@@ -63,16 +67,13 @@ pub fn reply<E: Encode>(payload: E, gas_limit: u64, value: u128) -> MessageId {
 }
 ```
 
-Reply to a message and try to decode to the specified type with `codec`. Returns `MessageId`.
-
+Reply to a message with bytes in `payload`. Returns `MessageId`:
 
 ```rust
 pub fn reply_bytes<T: AsRef<[u8]>>(payload: T, gas_limit: u64, value: u128) -> MessageId {
     gcore::msg::reply(payload.as_ref(), gas_limit, value)
 }
 ```
-Reply to a message with bytes in `payload`. Returns `MessageId`.
-
 
 ## Understandble messages. Encode/Decode
 
@@ -81,6 +82,5 @@ Gear uses the `parity-scale-codec`, a Rust implementation of the SCALE Codec. SC
 ```rust
 #[derive(Encode, Decode)]
 ```
-
 
 [Learn more about SCALE Codec](https://substrate.dev/docs/en/knowledgebase/advanced/codec)
