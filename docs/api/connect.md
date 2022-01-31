@@ -19,7 +19,13 @@ Below are a few entry points for interact with Gear:
 ## Installation
 
 ```sh
-npm install @gear-js/api 
+npm install @gear-js/api
+```
+
+or
+
+```sh
+yarn add @gear-js/api
 ```
 
 ## Getting started
@@ -35,29 +41,18 @@ const gearApi = await GearApi.create();
 You can also connect to a different node
 
 ```javascript
-const gearApi = await GearApi.create({ providerAddress: 'wss://someIP:somePort' });
+const gearApi = await GearApi.create({
+  providerAddress: 'wss://someIP:somePort',
+});
 ```
 
-Registering custom types
+Getting node info
 
 ```javascript
-const yourCustomTypesExample = {
-  Person: {
-    surname: 'String',
-    name: 'String',
-    patronymic: 'Option<String>'
-  },
-  Id: {
-    decimal: 'u64',
-    hex: 'Vec<u8>'
-  },
-  Data: {
-    id: 'Id',
-    person: 'Person',
-    data: 'Vec<String>'
-  }
-};
-const gearApi = await GearApi.create({ customTypes: { ...yourCustomTypesExample } });
+const chain = await gearApi.chain();
+const nodeName = await gearApi.nodeName();
+const version = await gearApi.version();
+const genesis = gearApi.genesisHash.toHex();
 ```
 
 ## Example
@@ -68,15 +63,19 @@ This simple example describes how to subscribe to a new blocks and get chain spe
 async function connect() {
   const gearApi = await GearApi.create();
 
-  const [chain, nodeName, nodeVersion] = await Promise.all([
+  const [chain, nodeName, version] = await Promise.all([
     gearApi.chain(),
     gearApi.nodeName(),
-    gearApi.nodeVersion(),
+    gearApi.version(),
   ]);
-  console.log(`You are connected to chain ${chain} using ${nodeName} v${nodeVersion}`);
+  console.log(
+    `You are connected to chain ${chain} using ${nodeName} v${version}`,
+  );
 
-  gearApi.gearEvents.subscribeNewBlocks((header) => {
-    console.log(`New block with number: ${header.number.toNumber()} and hash: ${header.hash.toHex()}`);
+  const unsub = await gearApi.gearEvents.subscribeNewBlocks((header) => {
+    console.log(
+      `New block with number: ${header.number.toNumber()} and hash: ${header.hash.toHex()}`,
+    );
   });
 }
 connect().catch(console.error);
