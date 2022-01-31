@@ -1512,28 +1512,28 @@
     "@svgr/babel-plugin-transform-react-native-svg" "^6.0.0"
     "@svgr/babel-plugin-transform-svg-component" "^6.2.0"
 
-"@svgr/core@^6.2.0":
-  version "6.2.0"
-  resolved "https://registry.yarnpkg.com/@svgr/core/-/core-6.2.0.tgz#187a7930695635382c1ab42f476a1d4d45a65994"
+"@svgr/core@^6.2.1":
+  version "6.2.1"
+  resolved "https://registry.yarnpkg.com/@svgr/core/-/core-6.2.1.tgz#195de807a9f27f9e0e0d678e01084b05c54fdf61"
   dependencies:
-    "@svgr/plugin-jsx" "^6.2.0"
+    "@svgr/plugin-jsx" "^6.2.1"
     camelcase "^6.2.0"
     cosmiconfig "^7.0.1"
 
-"@svgr/hast-util-to-babel-ast@^6.0.0":
-  version "6.0.0"
-  resolved "https://registry.npmjs.org/@svgr/hast-util-to-babel-ast/-/hast-util-to-babel-ast-6.0.0.tgz"
+"@svgr/hast-util-to-babel-ast@^6.2.1":
+  version "6.2.1"
+  resolved "https://registry.yarnpkg.com/@svgr/hast-util-to-babel-ast/-/hast-util-to-babel-ast-6.2.1.tgz#ae065567b74cbe745afae617053adf9a764bea25"
   dependencies:
     "@babel/types" "^7.15.6"
     entities "^3.0.1"
 
-"@svgr/plugin-jsx@^6.2.0":
-  version "6.2.0"
-  resolved "https://registry.yarnpkg.com/@svgr/plugin-jsx/-/plugin-jsx-6.2.0.tgz#5e41a75b12b34cb66509e63e535606161770ff42"
+"@svgr/plugin-jsx@^6.2.1":
+  version "6.2.1"
+  resolved "https://registry.yarnpkg.com/@svgr/plugin-jsx/-/plugin-jsx-6.2.1.tgz#5668f1d2aa18c2f1bb7a1fc9f682d3f9aed263bd"
   dependencies:
     "@babel/core" "^7.15.5"
     "@svgr/babel-preset" "^6.2.0"
-    "@svgr/hast-util-to-babel-ast" "^6.0.0"
+    "@svgr/hast-util-to-babel-ast" "^6.2.1"
     svg-parser "^2.0.2"
 
 "@svgr/plugin-svgo@^6.2.0":
@@ -1544,17 +1544,17 @@
     deepmerge "^4.2.2"
     svgo "^2.5.0"
 
-"@svgr/webpack@^6.0.0", "@svgr/webpack@^6.2.0":
-  version "6.2.0"
-  resolved "https://registry.yarnpkg.com/@svgr/webpack/-/webpack-6.2.0.tgz#00fafd32e1d59add7b554c40aa2e97e83f975686"
+"@svgr/webpack@^6.0.0", "@svgr/webpack@^6.2.1":
+  version "6.2.1"
+  resolved "https://registry.yarnpkg.com/@svgr/webpack/-/webpack-6.2.1.tgz#ef5d51c1b6be4e7537fb9f76b3f2b2e22b63c58d"
   dependencies:
     "@babel/core" "^7.15.5"
     "@babel/plugin-transform-react-constant-elements" "^7.14.5"
     "@babel/preset-env" "^7.15.6"
     "@babel/preset-react" "^7.14.5"
     "@babel/preset-typescript" "^7.15.0"
-    "@svgr/core" "^6.2.0"
-    "@svgr/plugin-jsx" "^6.2.0"
+    "@svgr/core" "^6.2.1"
+    "@svgr/plugin-jsx" "^6.2.1"
     "@svgr/plugin-svgo" "^6.2.0"
 
 "@szmarczak/http-timer@^1.1.2":
