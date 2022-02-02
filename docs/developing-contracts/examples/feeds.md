@@ -1,5 +1,5 @@
 ---
-sidebar_label: 'Gear Feeds'
+sidebar_label: 'Gear Feeds Workshop Contract'
 sidebar_position: 4
 ---
 
