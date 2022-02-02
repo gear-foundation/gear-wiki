@@ -3,7 +3,7 @@ sidebar_label: 'Program testing'
 sidebar_position: 4
 ---
 
-# Smart contract testing
+## Smart contract testing
 
 Gear lib [`gtest`](https://github.com/gear-tech/gear/tree/master/gtest) is the recommended option for the smart contracts logic testing. This article describes how to test smart contracts using `gtest`.
 

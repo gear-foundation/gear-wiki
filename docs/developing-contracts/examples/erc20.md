@@ -19,7 +19,7 @@ These smart contracts can then be used to create tokenized assets that represent
 
 These tokenized assets are known as fungible tokens as all instances of a given ERC20 token are the same and they can be used interchangeably. A token that is unique and can not be interchangeable is known as a Non Fungible Token.
 
-# Storage Structure
+## Storage Structure
 
 ```rust
 struct FungibleToken {
@@ -146,7 +146,7 @@ pub struct TransferFromReply {
     pub new_limit:
 ```
 
-# ERC-20 functions
+## ERC-20 functions
 
 ```rust
     /// Executed on receiving `fungible-token-messages::MintInput`
@@ -198,3 +198,11 @@ pub struct TransferFromReply {
     /// Executed on receiving `fungible-token-message::BalanceOf`, returns token balance of `account`.
     fn balance_of(&self, account: &ActorI
 ```
+
+## Gear's example of ERC-20
+
+A source code of the contract example provided by Gear is available on GitHub: [fungible-token/src/lib.rs](https://github.com/gear-tech/apps/blob/master/fungible-token/src/lib.rs).
+
+See also an example of the smart contract testing implementation based on `gtest`: [fungible-token/src/tests.rs](https://github.com/gear-tech/apps/blob/master/fungible-token/src/tests.rs).
+
+For more details about testing smart contracts written on Gear, refer to this article: [Program testing](/developing-contracts/testing.md).
