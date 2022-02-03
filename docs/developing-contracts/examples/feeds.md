@@ -1,5 +1,5 @@
 ---
-sidebar_label: 'Gear Feeds Workshop Contract'
+sidebar_label: 'Gear Feeds'
 sidebar_position: 4
 ---
 
@@ -20,7 +20,7 @@ Here's a schema of how the contracts are connected to each other:
 
 Let's now go through the flow of the application step by step.
 
-First, channel owner should compile their own version of the contract filled in with information about the channel. Then, when the contract is uploaded to the network, owner of the contract should send a `Register` message to the router contract. Once router contract receives that message, it sends a `Meta` request to the recently deployed contract to verify that it has been set up correctly. If the channel contract responds properly, it is added to the list of available channels.
+First, channel owner should compile their own version of the contract filled in with information about the channel. Then, when the contract is uploaded to the network via the [idea portal](https://idea.gear-tech.io), owner of the contract should send a `Register` message to the router contract. Once router contract receives that message, it sends a `Meta` request to the recently deployed contract to verify that it has been set up correctly. If the channel contract responds properly, it is added to the list of available channels.
 
 If you want to check out the code available for both the router and the channel contracts, you can find them here: [router](https://github.com/gear-tech/apps/tree/master/gear-feeds-router), [channel](https://github.com/gear-tech/gear-feeds-channel).
 
@@ -28,7 +28,7 @@ The [gear feeds channel contract](https://github.com/gear-tech/gear-feeds-channe
 
 # The Gear Feeds website
 
-You can use this [link](www.workshop.gear-tech.io) to get to the Gear Feeds website. 
+You can use this [link](https://workshop.gear-tech.io) to get to the Gear Feeds website. 
 
 First, log in using your [Polkadot.js extension wallet](https://polkadot.js.org/extension/).
 
