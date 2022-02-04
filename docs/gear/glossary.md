@@ -71,7 +71,7 @@ A secondary framework or protocol that is built on top of an existing blockchain
 
 ### Ledger 
 
-A list of entries containing transactions signed by [account](/definitions#account) owners. A blockchain is a type of distributed ledger.
+A list of entries containing transactions signed by account owners. A blockchain is a type of distributed ledger.
 
 ### Memory Parallelism
 
@@ -87,7 +87,7 @@ A Non Fungible Token is a unique unit of data that’s represented as a cryptogr
 
 ### Parachain 
 
-Parachains are application specific data structures that are integrated into the [Polkadot](/definitions#polkadot) and Kusama networks by connecting to the main Relay Chain. They enable transactions to be spread out and processed in parallel over an ecosystem.
+Parachains are application specific data structures that are integrated into the Polkadot and Kusama networks by connecting to the main Relay Chain. They enable transactions to be spread out and processed in parallel over an ecosystem.
 
 ### Polkadot
 
@@ -95,7 +95,7 @@ Polkadot is an open-source blockchain network that is aiming to enable cross-cha
 
 ### Relay Chain
 
-The Relay Chain is the central chain of the [Polkadot](/definitions#polkadot) network. It is responsible for the networks' shared security, consensus and transaction settlements.
+The Relay Chain is the central chain of the Polkadot network. It is responsible for the networks' shared security, consensus and transaction settlements.
 
 ### Rust
 
@@ -111,7 +111,7 @@ A smart contract is a transactional computer program that can execute transactio
 
 ### Substrate
 
-Substrate is the modular framework for building customized blockchains and the foundation for the whole [Polkadot](/definitions#polkadot) ecosystem. Substrate allows developers to quickly build and launch a blockchain that will be capable of connecting to the Polkadot or Kusama networks.
+Substrate is the modular framework for building customized blockchains and the foundation for the whole Polkadot ecosystem. Substrate allows developers to quickly build and launch a blockchain that will be capable of connecting to the Polkadot or Kusama networks.
 
 ### Transaction
 
@@ -119,7 +119,7 @@ A record in a digital ledger that represents an atomic event in a blockchain. In
 
 ### Validator
 
-A [node](/definitions#node) that verifies transactions on a blockchain and produces blocks.
+A node that verifies transactions on a blockchain and produces blocks.
 
 ### Wallet
 
@@ -127,7 +127,7 @@ A blockchain wallet is an application that allows users to store and manage thei
 
 ### Web3
 
-Web3 is the third evolution of the internet that is heavily supported by blockchain technology and [decentralized applications](/definitions#decentralized-application-dapp).
+Web3 is the third evolution of the internet that is heavily supported by blockchain technology and decentralized applications.
 
 ### WebAssembly (WASM)
 
