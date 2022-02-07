@@ -1,13 +1,19 @@
 ---
-sidebar_label: Interactions between programs
+sidebar_label: Interaction Between Programs
 sidebar_position: 4
 ---
-# Cross-contracts calls
-Let's create two simple contracts:
-- `My Token` this contract will have the ability to mint tokens
--  `Wallet` this contracts will store how many tokens a user has
+# Cross-contract communication
+
+This article explains how several programs (smart contracts) can communicate with each other by sending messages.
+
+Two simple programs are taken as an example:
+- `My Token` - this contract will have an ability to mint tokens
+-  `Wallet` - this contract will store information about how many tokens the user has
+
 ### `My Token` contract
-Let's start by defining the contract struct:
+
+Let's write the contract `My Token` and the first step will be defining the contract struct that stores `name`, `symbol` and `balances` of accounts:
+
 ```rust
 #[derive(Debug, Default, Encode, Decode, TypeInfo)]
 pub struct MyToken {
@@ -16,35 +22,39 @@ pub struct MyToken {
     balances: BTreeMap<ActorId, u128>,
 }
 ```
-It stores `name`, `symbol` and `balances` of accounts. Then we define `input` and `output` message types for `init` and `handle`. The contract will be initialized with the following struct:
 
-```rust
-#[derive(Debug, Encode, Decode, TypeInfo)]
-pub struct InitConfig {
-    name: String,
-    symbol: String,
-}
-```
-The incoming messages will call contract for minting tokens or request an account balance:
-```rust
-#[derive(Debug, Encode, Decode, TypeInfo)]
-pub enum Action {
-    Mint(u128),
-    BalanceOf(ActorId),
-}
-```
-The outcoming messages will either report a successful mint or the user's balance:
-```rust
-#[derive(Debug, Encode, Decode, TypeInfo)]
-pub enum Event {
-    Minted {
-        to: ActorId,
-        amount: u128,
-    },
-    BalanceOf(u128),
-}
-```
-It is necessary to define the message types in `metadata!` macro that serves for exporting functions from Rust:
+Then we define `input` and `output` message types for contract initialization `init` and message handling `handle`.
+
+- The contract will be initialized with the following struct:
+
+    ```rust
+    #[derive(Debug, Encode, Decode, TypeInfo)]
+    pub struct InitConfig {
+        name: String,
+        symbol: String,
+    }
+    ```
+- The incoming messages will call this contract either for minting tokens or request an account balance:
+    ```rust
+    #[derive(Debug, Encode, Decode, TypeInfo)]
+    pub enum Action {
+        Mint(u128),
+        BalanceOf(ActorId),
+    }
+    ```
+- The outcoming messages will either report a successful mint or the user's balance:
+    ```rust
+    #[derive(Debug, Encode, Decode, TypeInfo)]
+    pub enum Event {
+        Minted {
+            to: ActorId,
+            amount: u128,
+        },
+        BalanceOf(u128),
+    }
+    ```
+
+It is necessary to define the message types in `metadata!` macro which is used to export functions from Rust:
 ```rust
 gstd::metadata! {
     title: "MyFungibleToken",
@@ -109,23 +119,22 @@ impl MyToken {
     }
 }
 ```
-Note that here we use `msg::source()` that identifies the account that sends the currently processing message.
+Note that here we use `msg::source()` which identifies the account that sends the current message being processed.
+
 ### `Wallet` contract
-That contract is very simple: it accepts the message `AddBalance` and replies with `BalanceAdded`. 
+The second contract is very simple: it receives the message `AddBalance` and replies with `BalanceAdded`. 
  ```rust
  #[derive(Debug, Encode, Decode, TypeInfo)]
 pub struct AddBalance {
     account: ActorId,
     token_id: ActorId,
 }
-
 #[derive(Debug, Encode, Decode, TypeInfo)]
 pub struct BalanceAdded {
    account: ActorId,
    token_id: ActorId,
    amount: u128,
 }
-
 gstd::metadata! {
     title: "Wallet",
         handle:
@@ -133,13 +142,15 @@ gstd::metadata! {
             output: BalanceAdded,
 }
  ```
- Since an account can have several different fungible tokens, the contract stores users balances in the following way:
+ Since an account can have several different fungible tokens, the contract stores users and their balances in the following way:
  ```rust
 static mut WALLET: BTreeMap<ActorId, BTreeMap<ActorId,u128>> = BTreeMap::new();
 #[no_mangle]
 pub unsafe extern "C" fn init() {}
  ```
-The `Wallet` sends the message to the `MyToken` contract asking for the user balance. The address of the token contract is indicated in `AddBalance`. Note that here we use the async messaging function `send_and_wait_for_reply`, so `#[gstd::async_main]` macro must be used.
+The `Wallet` contract sends the message to the `MyToken` contract asking for the user balance. The address of the token contract is indicated in `AddBalance`. 
+
+Note that here we use the async messaging function `send_and_wait_for_reply`, so `#[gstd::async_main]` macro must be used.
 ``` rust
 #[gstd::async_main]
 async fn main() {
