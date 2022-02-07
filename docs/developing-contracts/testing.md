@@ -3,11 +3,11 @@ sidebar_label: 'Program testing'
 sidebar_position: 4
 ---
 
-## Smart contract testing
+# How to test a smart contract
 
 Gear lib [`gtest`](https://github.com/gear-tech/gear/tree/master/gtest) is the recommended option for the smart contracts logic testing. This article describes how to test smart contracts using `gtest`.
 
-### Basics
+## Basics
 
 Gear uses the standard for Rust programs testing mechanism - test build mode from `cargo`.
 
@@ -17,7 +17,7 @@ The **unit tests** enable testing of each unit of code in isolation from the res
 
 Even when units of code work correctly, it is important to test if several parts of the library work together correctly as well. For **integration tests**, a separate tests directory is required at the top level of your project directory, next to `src`. You can make as many test files in this directory as you need, Cargo will compile each of the files as an individual crate.
 
-### Building smart contract in test mode
+## Building smart contract in test mode
 
 First of all, make sure you have a compiled `WASM` file of the program you want to test. You can refer to [Getting started](./getting-started-in-5-minutes.md) for additional details.
 
@@ -75,7 +75,7 @@ cargo test --target "$(rustc -vV | sed -n 's|host: ||p')"
 
 For details on cargo configuration files, see [Cargobook](https://doc.rust-lang.org/cargo/reference/config.html).
 
-### Import `gtest` lib
+## Import `gtest` lib
 
 In order to use the `gtest` library, it must be imported into your `Cargo.toml` file in the `[dev-dependencies]` block in order to fetch and compile it for tests only
 
@@ -101,7 +101,7 @@ lto = true
 opt-level = 's'
 ```
 
-### Possible issues
+## Possible issues
 
 When writing tests as integration tests, it is not possible to import public structures from within the program itself, because gear contracts must have `crate-type=["cdylib"]` struct and nothing can be imported from them.
 
