@@ -1,6 +1,6 @@
 ---
 sidebar_label: "消息格式"
-sidebar_position: 1
+sidebar_position: 3
 ---
 
 # 消息格式
@@ -47,7 +47,7 @@ pub fn load<D: Decode>() -> Result<D, codec::Error> {
 }
 ```
 
-加载字节并尝试用`codec`解码为指定的类型。
+加载字节。
 
 ```c
 pub fn load_bytes() -> Vec<u8> {
@@ -57,7 +57,7 @@ pub fn load_bytes() -> Vec<u8> {
 }
 ```
 
-加载字节
+回复消息并尝试使用 `codec` 解码为指定类型。 返回`MessageId`。
 
 ```c
 pub fn reply<E: Encode>(payload: E, gas_limit: u64, value: u128) -> MessageId {
@@ -65,15 +65,13 @@ pub fn reply<E: Encode>(payload: E, gas_limit: u64, value: u128) -> MessageId {
 }
 ```
 
-回复消息并尝试使用 `codec` 解码为指定类型。 返回`MessageId`。
+回复消息，内容以字节形式存放在 `payload` 中。 返回`MessageId`。
 
 ```c
 pub fn reply_bytes<T: AsRef<[u8]>>(payload: T, gas_limit: u64, value: u128) -> MessageId {
     gcore::msg::reply(payload.as_ref(), gas_limit, value)
 }
 ```
-
-用 `payload` 中的字节回复消息。 返回`MessageId`
 
 ## 消息编解码
 

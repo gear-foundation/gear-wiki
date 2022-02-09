@@ -1,6 +1,6 @@
 ---
 sidebar_label: cargo-program 工具
-sidebar_position: 5
+sidebar_position: 1
 ---
 
 # `cargo-program` 工具

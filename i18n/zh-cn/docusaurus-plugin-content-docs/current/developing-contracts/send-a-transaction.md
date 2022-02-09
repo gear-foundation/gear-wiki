@@ -1,6 +1,6 @@
 ---
 sidebar_label: '发送交易'
-sidebar_position: 3
+sidebar_position: 6
 ---
 
 # 调用智能合约

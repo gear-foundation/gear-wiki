@@ -1,6 +1,6 @@
 ---
 sidebar_label: "程序状态"
-sidebar_position: 1
+sidebar_position: 2
 ---
 
 # Gear 程序状态
