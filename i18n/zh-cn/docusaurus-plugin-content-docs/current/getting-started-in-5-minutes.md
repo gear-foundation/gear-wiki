@@ -41,7 +41,6 @@ sidebar_label: '快速入门指南'
 
 * 现在，通过 clone 我们的公共 [github repo](https://github.com/gear-tech/gear)来获得 Gear 本身的源代码。
 
-
     ```bash
     git clone https://github.com/gear-tech/gear.git
     ```
@@ -52,7 +51,6 @@ sidebar_label: '快速入门指南'
 ## 2. 创建你的第一个 Gear 智能合约
 
 1. 现在让我们在 `gear` 文件夹内，创建 `contracts` 文件夹，然后通过 `cd` 切换进文件夹
-
 
     ```bash
     mkdir -p ~/gear/contracts
