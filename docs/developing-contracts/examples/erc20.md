@@ -196,7 +196,7 @@ pub struct TransferFromReply {
     fn decrease_total_supply(&mut self, amount: u128)
 
     /// Executed on receiving `fungible-token-message::BalanceOf`, returns token balance of `account`.
-    fn balance_of(&self, account: &ActorI
+    fn balance_of(&self, account: &ActorId)
 ```
 
 ## Gear's example of ERC-20
