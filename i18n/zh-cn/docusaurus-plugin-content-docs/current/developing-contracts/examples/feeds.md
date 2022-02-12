@@ -4,7 +4,7 @@ sidebar_position: 4
 ---
 
 # 介绍
-为了向我们快速增长的社区介绍 Gear 开发的平台，我们开发了一个去中心化应用，以展示使用我们的智能合约可以实现的一些特性。具体来说，我们的目标是建立一个类似 Twitter 的平台:每个用户都可以有自己的“信息流”，“信息流”可以订阅，登陆页面包含全球和个人的“信息流”。
+为了向我们快速增长的社区介绍 Gear 开发的平台，我们开发了一个去中心化应用，以展示使用我们的智能合约可以实现的一些特性。具体来说，我们的目标是建立一个类似 Twitter 的平台：每个用户都可以有自己的“信息流”，“信息流”可以订阅，登陆页面包含全球和个人的“信息流”。
 
 # 信息流 dApp 的构成
 这个应用的由两份智能合约组成：路由合约和频道合约。一个应用有一份路由合约，每个用户拥有一份频道合约。
@@ -24,11 +24,11 @@ sidebar_position: 4
 
 如果你想查看路由合约和频道合约的可用代码，你可以在这里找到它们。[router](https://github.com/gear-tech/apps/tree/master/gear-feeds-router), [channel](https://github.com/gear-tech/gear-feeds-channel)。
 
-[Gear 信息流合约](https://github.com/gear-tech/gear-feeds-channel) 代码库包含部署合约的逐步说明。
+[Gear Feeds 合约](https://github.com/gear-tech/gear-feeds-channel) 代码库包含部署合约的逐步说明。
 
-# Gear 信息流网站
+# Gear Feeds 网站
 
-你可以使用这个 [链接](https://workshop.gear-tech.io) 来进入 Gear 信息流网站。
+你可以使用这个 [链接](https://workshop.gear-tech.io) 来进入 Gear Feeds 网站。
 
 先使用你的 [Polkadot.js 插件钱包](https://polkadot.js.org/extension/) 登陆。
 
