@@ -197,12 +197,6 @@ pub struct TransferFromReply {
 
     /// Executed on receiving `fungible-token-message::BalanceOf`, returns token balance of `account`.
     fn balance_of(&self, account: &ActorId)
-    
-    /// Set the balance of an account.
-    fn set_balance(&mut self, account: &ActorId, amount: u128)
-    
-    /// Get the balance of an account.
-    fn get_balance(&self, account: &ActorId) -> u128
 ```
 
 ## Gear's example of ERC-20
