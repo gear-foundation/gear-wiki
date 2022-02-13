@@ -38,7 +38,7 @@ sidebar_position: 4
 
 ![img alt](./img/show-all.png)
 
-如果你已经使用你登陆网站的同一个 ID 上传了你的合约，你应该在 `my channels` 下看到它。
+如果你已经使用你登陆网站的同一个 ID 上传了你的合约，你应该在 `my channel` 下看到它。
 
 ![img alt](./img/channels.png)
 
