@@ -143,7 +143,8 @@ pub struct TransferFromReply {
     pub sender: ActorId,
     pub recipient: ActorId,
     pub amount: u128,
-    pub new_limit:
+    pub new_limit: u128
+}
 ```
 
 ## ERC-20 functions
