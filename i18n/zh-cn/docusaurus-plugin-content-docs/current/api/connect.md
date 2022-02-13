@@ -22,9 +22,15 @@ sidebar_label: '连接'
 npm install @gear-js/api
 ```
 
+or
+
+```sh
+yarn add @gear-js/api
+```
+
 ## 开始
 
-启动一个 API 连接到 localhost 的运行节点上
+启动一个 API 连接到运行的 localhost 节点上
 
 ```javascript
 import { GearApi } from '@gear-js/api';
@@ -32,32 +38,21 @@ import { GearApi } from '@gear-js/api';
 const gearApi = await GearApi.create();
 ```
 
-你也可以连接到一个不同的节点
+你也可以连接到不同节点
 
 ```javascript
-const gearApi = await GearApi.create({ providerAddress: 'wss://someIP:somePort' });
+const gearApi = await GearApi.create({
+  providerAddress: 'wss://someIP:somePort',
+});
 ```
 
-注册自定义类型
+获取节点信息
 
 ```javascript
-const yourCustomTypesExample = {
-  Person: {
-    surname: 'String',
-    name: 'String',
-    patronymic: 'Option<String>'
-  },
-  Id: {
-    decimal: 'u64',
-    hex: 'Vec<u8>'
-  },
-  Data: {
-    id: 'Id',
-    person: 'Person',
-    data: 'Vec<String>'
-  }
-};
-const gearApi = await GearApi.create({ customTypes: { ...yourCustomTypesExample } });
+const chain = await gearApi.chain();
+const nodeName = await gearApi.nodeName();
+const version = await gearApi.version();
+const genesis = gearApi.genesisHash.toHex();
 ```
 
 ## 范例
@@ -68,15 +63,19 @@ const gearApi = await GearApi.create({ customTypes: { ...yourCustomTypesExample 
 async function connect() {
   const gearApi = await GearApi.create();
 
-  const [chain, nodeName, nodeVersion] = await Promise.all([
+  const [chain, nodeName, version] = await Promise.all([
     gearApi.chain(),
     gearApi.nodeName(),
-    gearApi.nodeVersion(),
+    gearApi.version(),
   ]);
-  console.log(`You are connected to chain ${chain} using ${nodeName} v${nodeVersion}`);
+  console.log(
+    `You are connected to chain ${chain} using ${nodeName} v${version}`,
+  );
 
-  gearApi.gearEvents.subscribeNewBlocks((header) => {
-    console.log(`New block with number: ${header.number.toNumber()} and hash: ${header.hash.toHex()}`);
+  const unsub = await gearApi.gearEvents.subscribeNewBlocks((header) => {
+    console.log(
+      `New block with number: ${header.number.toNumber()} and hash: ${header.hash.toHex()}`,
+    );
   });
 }
 connect().catch(console.error);
