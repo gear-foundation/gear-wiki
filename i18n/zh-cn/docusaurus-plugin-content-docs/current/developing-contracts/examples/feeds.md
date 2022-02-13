@@ -40,11 +40,11 @@ sidebar_position: 4
 
 如果你已经使用你登陆网站的同一个 ID 上传了你的合约，你应该在 `my channels` 下看到它。
 
-[my channels 截图]
+![img alt](./img/channels.png)
 
 在查看自己的频道时，你可以向其添加帖子（你将不得不进行交易）。所有订阅者将在他们的个人频道中看到这些帖子。
 
-[查看 my channels 的截图]
+![img alt](./img/my-channel.png)
 
 # 结论
 Gear Feeds 是一个成熟的应用程序的例子，其核心逻辑是在 Gear 上通过智能合约实现的去中心化的应用程序。我们希望看到更多由 Gear Feeds 启发的令人兴奋的项目，以及我们的社区成员创造的最近的平台改进! :) 
