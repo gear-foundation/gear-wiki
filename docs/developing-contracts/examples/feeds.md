@@ -38,13 +38,13 @@ Now, you can browse a list of all channels.
 
 ![img alt](./img/show-all.png)
 
-If you have uploaded your own contract under the same ID you've logged in to the website with, you should be able to see it under `my channels`.
+If you have uploaded your own contract under the same ID you've logged in to the website with, you should be able to see it under `my channel`.
 
-[Screenshot with my channels]
+![img alt](./img/channels.png)
 
 When viewing your own channel, you can add posts to it (you will have to conduct a transaction). All the subscribers will see the posts in their personal feeds.
 
-[Screenshot with my channel view]
+![img alt](./img/my-channel.png)
 
 # Conclusion
 Gear Feeds is an example of a full-fledged application with core logic being in a decentralized application implemented via Smart Contracts on Gear. We hope to see more exciting projects inspired by Gear feeds and recent platform improvements created by our community members! :) 
