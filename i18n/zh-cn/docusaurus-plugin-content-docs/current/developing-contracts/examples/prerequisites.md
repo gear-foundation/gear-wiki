@@ -7,7 +7,6 @@ sidebar_position: 1
 
 Gear 提供了一组例子，可以用来熟悉在 Gear 上编写程序，或者成为你自己的 dApp 的基础: [https://github.com/gear-tech/apps](https://github.com/gear-tech/apps).
 
-You can write your own smart contract or try to build from examples. Let's Rock!
 你可以编写自己的智能合约或尝试从示例构建。 让我们开干吧！
 
 ## 要求
