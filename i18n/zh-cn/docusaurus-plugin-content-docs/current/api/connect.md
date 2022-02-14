@@ -51,7 +51,7 @@ const gearApi = await GearApi.create({
 ```javascript
 const chain = await gearApi.chain();
 const nodeName = await gearApi.nodeName();
-const version = await gearApi.version();
+const nodeVersion = await gearApi.nodeVersion();
 const genesis = gearApi.genesisHash.toHex();
 ```
 
@@ -63,16 +63,16 @@ const genesis = gearApi.genesisHash.toHex();
 async function connect() {
   const gearApi = await GearApi.create();
 
-  const [chain, nodeName, version] = await Promise.all([
+  const [chain, nodeName, nodeVersion] = await Promise.all([
     gearApi.chain(),
     gearApi.nodeName(),
-    gearApi.version(),
+    gearApi.nodeVersion(),
   ]);
   console.log(
-    `You are connected to chain ${chain} using ${nodeName} v${version}`,
+    `You are connected to chain ${chain} using ${nodeName} v${nodeVersion}`,
   );
 
-  const unsub = await gearApi.gearEvents.subscribeNewBlocks((header) => {
+  const unsub = await gearApi.gearEvents.subscribeToNewBlocks((header) => {
     console.log(
       `New block with number: ${header.number.toNumber()} and hash: ${header.hash.toHex()}`,
     );

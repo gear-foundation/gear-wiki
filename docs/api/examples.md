@@ -197,7 +197,7 @@ unsub();
 Subscribe to new blocks
 
 ```javascript
-const unsub = await gearApi.gearEvents.subscribeNewBlocks((header) => {
+const unsub = await gearApi.gearEvents.subscribeToNewBlocks((header) => {
   console.log(`New block with number: ${header.number.toNumber()} and hash: ${header.hash.toHex()}`);
 });
 // Unsubscribe
