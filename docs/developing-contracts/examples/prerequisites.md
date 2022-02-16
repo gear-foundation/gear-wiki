@@ -22,12 +22,11 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 - Add wasm target to your toolchain:
 
 ```bash
-rustup target add wasm32-unknown-unknown
+rustup toolchain add nightly
+rustup target add wasm32-unknown-unknown --toolchain nightly
 ```
 
 ## First steps
-
-At least 10. x `npm` and `node` versions must be installed
 
 To create our app project use the command **cargo**:
 
@@ -37,10 +36,13 @@ cargo new gear-app --lib
 
 The project structure is following:
 
-    gear-app/
-      ---Cargo.toml
-      ---src
-      ------lib.rs
+  └── gear-app // YOUR CONTRACT DIR
+    │
+    ├── src // SOURCE FILES OF YOUR CONTRACT
+    │    ├── maybe_some_file.rs // SOME NEEDED FILE FOR YOUR LOGIC
+    │    └── lib.rs // MAIN FILE OF YOUR CONTRACT
+    │
+    └── Cargo.toml // MANIFEST OF YOUR CONTRACT
 
 `Cargo.toml` is a project manifest in Rust, it contains all metadata necessary for compiling the project.
 Configure the `Cargo.toml` similarly to how it is configured [examples/ping/Cargo.toml](https://github.com/gear-tech/gear/blob/master/examples/ping/Cargo.toml);
@@ -50,7 +52,7 @@ Configure the `Cargo.toml` similarly to how it is configured [examples/ping/Carg
 We should compile our smart contract in the app folder:
 
 ```bash
-cargo +nightly build --target wasm32-unknown-unknown --release
+RUSTFLAGS="-C link-args=--import-memory" cargo +nightly build --release --target=wasm32-unknown-unknown
 ```
 
 Our application should compile successfully and the final file `target/wasm32-unknown-unknown/release/gear-app.wasm` should appear.
