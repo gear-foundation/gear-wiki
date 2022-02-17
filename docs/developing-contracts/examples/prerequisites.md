@@ -36,6 +36,7 @@ cargo new gear-app --lib
 
 The project structure is following:
 
+```
   └── gear-app // YOUR CONTRACT DIR
     │
     ├── src // SOURCE FILES OF YOUR CONTRACT
@@ -43,6 +44,7 @@ The project structure is following:
     │    └── lib.rs // MAIN FILE OF YOUR CONTRACT
     │
     └── Cargo.toml // MANIFEST OF YOUR CONTRACT
+```
 
 `Cargo.toml` is a project manifest in Rust, it contains all metadata necessary for compiling the project.
 Configure the `Cargo.toml` similarly to how it is configured [examples/ping/Cargo.toml](https://github.com/gear-tech/gear/blob/master/examples/ping/Cargo.toml);
