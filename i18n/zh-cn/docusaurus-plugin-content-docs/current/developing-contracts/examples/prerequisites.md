@@ -22,12 +22,11 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 - 添加 `wasm target` 到你的 `toolchain`:
 
 ```bash
-rustup target add wasm32-unknown-unknown
+rustup toolchain add nightly
+rustup target add wasm32-unknown-unknown --toolchain nightly
 ```
 
 ## 首先
-
-安装 `npm` 和 `node` 10. x 及以上版本。 
 
 使用 **cargo** 来创建咱们的项目:
 
@@ -37,10 +36,13 @@ cargo new gear-app --lib
 
 项目目录如下:
 
-    gear-app/
-      ---Cargo.toml
-      ---src
-      ------lib.rs
+  └── gear-app // YOUR CONTRACT DIR
+    │
+    ├── src // SOURCE FILES OF YOUR CONTRACT
+    │    ├── maybe_some_file.rs // SOME NEEDED FILE FOR YOUR LOGIC
+    │    └── lib.rs // MAIN FILE OF YOUR CONTRACT
+    │
+    └── Cargo.toml // MANIFEST OF YOUR CONTRACT
 
 `Cargo.toml` 是 Rust 项目的 `manifest`, 它包含了所有编译项目所需的元数据。按照 [examples/ping/Cargo.toml](https://github.com/gear-tech/gear/blob/master/examples/ping/Cargo.toml) 来配置 `Cargo.toml`；
 
@@ -49,7 +51,7 @@ cargo new gear-app --lib
 咱们使用以下命令在 `app` 目录编译智能合约：
 
 ```bash
-cargo +nightly build --target wasm32-unknown-unknown --release
+RUSTFLAGS="-C link-args=--import-memory" cargo +nightly build --release --target=wasm32-unknown-unknown
 ```
 
 咱们的应用编译完成后，将生成最终文件 `target/wasm32-unknown-unknown/release/gear-app.wasm`。
