@@ -34,15 +34,16 @@ rustup target add wasm32-unknown-unknown --toolchain nightly
 cargo new gear-app --lib
 ```
 
-项目目录如下:
-
-  └── gear-app // YOUR CONTRACT DIR
+项目目录如下：
+```
+  └── gear-app // 合约目录
     │
-    ├── src // SOURCE FILES OF YOUR CONTRACT
-    │    ├── maybe_some_file.rs // SOME NEEDED FILE FOR YOUR LOGIC
-    │    └── lib.rs // MAIN FILE OF YOUR CONTRACT
+    ├── src // 合约源文件
+    │    ├── maybe_some_file.rs // 合约相关的文件
+    │    └── lib.rs // 合约主文件
     │
-    └── Cargo.toml // MANIFEST OF YOUR CONTRACT
+    └── Cargo.toml // 合约配置文件
+```
 
 `Cargo.toml` 是 Rust 项目的 `manifest`, 它包含了所有编译项目所需的元数据。按照 [examples/ping/Cargo.toml](https://github.com/gear-tech/gear/blob/master/examples/ping/Cargo.toml) 来配置 `Cargo.toml`；
 
