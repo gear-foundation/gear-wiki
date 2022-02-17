@@ -1,18 +1,18 @@
 ---
-sidebar_label: 两个程序交互
+sidebar_label: 合约交互
 sidebar_position: 4
 ---
-# Cross-contract communication
+# 跨合约通信
 
-本文解释了几个程序（智能合约）如何通过发送消息相互通信。
+本文解释了几个程序（智能合约）如何通过发送消息进行相互通信。
 
 以两个简单的程序为例:
 - `My Token` - 该合约将有铸造代币的能力
--  `Wallet` - 该合约将存储有关用户拥有多少令牌的信息
+-  `Wallet` - 该合约将存储用户拥有多少代币的信息
 
 ### `My Token` 合约
 
-让我们编写合约 `My Token` 第一步是定义存储账户结构 `name`, `symbol` 和 `balances`:
+让我们开始编写合约 `My Token`，第一步是定义合约的结构来存储账户的 `name`, `symbol` 和 `balances`：
 
 ```rust
 #[derive(Debug, Default, Encode, Decode, TypeInfo)]
@@ -23,7 +23,7 @@ pub struct MyToken {
 }
 ```
 
-我们定义了`input`和`output`消息类型，合约初始化`init`和消息处理`handle`.
+我们为合约初始化 `init` 和 消息处理 `handle` 定义了 `input` 和 `output` 两种消息类型。
 
 - 合约将用以下结构初始化:
 
@@ -34,7 +34,7 @@ pub struct MyToken {
         symbol: String,
     }
     ```
-- 传入的消息将调用此合约以铸造代币或请求帐户余额:
+- 传入的消息将调用此合约以铸造代币或获取帐户余额:
     ```rust
     #[derive(Debug, Encode, Decode, TypeInfo)]
     pub enum Action {
@@ -42,7 +42,7 @@ pub struct MyToken {
         BalanceOf(ActorId),
     }
     ```
-- 接下来将报告一个成功的铸币或用户的余额的消息:
+- 回发消息将返回铸币成功的结果或用户的余额:
     ```rust
     #[derive(Debug, Encode, Decode, TypeInfo)]
     pub enum Event {
@@ -54,7 +54,7 @@ pub struct MyToken {
     }
     ```
 
-必须在`metadata!` 中定义消息类型，用于从Rust导出函数:
+必须在 `metadata!` 中定义消息类型，用于从 Rust 导出函数:
 ```rust
 gstd::metadata! {
     title: "MyFungibleToken",
@@ -65,7 +65,7 @@ gstd::metadata! {
             output: Event,
 }
 ```
-下一步是程序初始化:
+下一步是写程序初始化:
 ```rust
 static mut TOKEN: Option<MyToken> = None;
 #[no_mangle]
@@ -79,7 +79,7 @@ pub unsafe extern "C" fn init() {
     TOKEN = Some(token);
 }
 ```
-然后我们对传入消息进行处理:
+然后我们写对传入消息进行处理过程:
 ```rust
 #[no_mangle]
 pub unsafe extern "C" fn handle() {
@@ -95,7 +95,7 @@ pub unsafe extern "C" fn handle() {
     }
 }
 ```
-最后，我们实现了`MyToken`:
+最终，我们写 `MyToken` 实现代码块:
 ```rust
 impl MyToken {
     fn mint(&mut self, amount: u128) {
@@ -119,10 +119,10 @@ impl MyToken {
     }
 }
 ```
-请注意，这里我们使用`msg::source()` 来标识发送当前正在处理的消息的帐户
+请注意，这里我们使用 `msg::source()` 来标识发送当前正在处理的消息的帐户。
 
 ### `Wallet` 合约
-第二个合约非常简单: 它会收到消息`AddBalance` ，并回复 `BalanceAdded`. 
+第二个合约非常简单: 它会收到消息 `AddBalance`，并回复 `BalanceAdded`。 
  ```rust
  #[derive(Debug, Encode, Decode, TypeInfo)]
 pub struct AddBalance {
@@ -142,15 +142,15 @@ gstd::metadata! {
             output: BalanceAdded,
 }
  ```
- 由于一个账户可以有多个不同的可替代代币，合同以以下方式存储用户及其余额:
+ 由于一个账户可以有多个不同的同质化代币，合同采用以下方式存储用户及其余额：
  ```rust
 static mut WALLET: BTreeMap<ActorId, BTreeMap<ActorId,u128>> = BTreeMap::new();
 #[no_mangle]
 pub unsafe extern "C" fn init() {}
  ```
-`Wallet` 合约向`MyToken`合约发送请求用户余额的消息。 代币合约的地址显示在`AddBalance`中. 
+`Wallet` 合约向 `MyToken` 合约发送请求用户余额的消息。代币合约的地址显示在 `AddBalance` 中。 
 
-请注意，这里我们使用异步消息传递函数`send_and_wait_for_reply`, 因此必须使用`#[gstd::async_main]`宏.
+请注意，这里我们使用异步消息传递函数 `send_and_wait_for_reply`, 因此必须使用 `#[gstd::async_main]` 宏。
 ``` rust
 #[gstd::async_main]
 async fn main() {
