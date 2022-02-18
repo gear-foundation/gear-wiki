@@ -1,0 +1,197 @@
+---
+sidebar_label: '配置节点'
+sidebar_position: 1
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import CodeBlock from '@theme/CodeBlock';
+
+# 配置本地节点
+
+## 介绍
+
+本教程覆盖了安装和运行 Gear 节点所需的步骤。
+
+这里有两种方式来开始运行 Gear 节点。 第一种方式，你可以下载预编译好的二进制文件，直接运行。第二种方式，你可以自行编译和配置。使用已经准备好的编译文件是最快和最便捷的开始方式，因为你可以跳过诸如安装 Rust、安装依赖和节点编译的过程。从另一方面来讲，如果你决定要采用自己编译的方式来创建你的开发节点，那么它将花费大约20分钟时间或者更多，这一切取决于你的机器配置。
+
+:::info
+### 系统配置要求
+
+Gear 节点并不要求特殊的硬件配置，除了建议使用 SSD 硬盘。
+:::
+
+## 采用预编译的二进制文件来安装
+
+依据你的操作系统，你需要下载 Gear 节点的 `nightly build` 版本：
+
+````mdx-code-block
+<Tabs>
+<TabItem value="win64" label="Windows x64" className="unique-tabs" default>
+
+Terminal:
+
+```bash
+curl -O https://builds.gear.rs/gear-nightly-windows-x86_64.zip
+```
+
+或
+
+**Windows x64**: [gear-nightly-windows-x86_64.zip](https://builds.gear.rs/gear-nightly-windows-x86_64.zip)
+
+</TabItem>
+<TabItem value="mac-arm" label="MacOS ARM">
+
+Terminal:
+
+```bash
+wget https://builds.gear.rs/gear-nightly-macos-m1.tar.gz && \
+tar xvf gear-nightly-macos-m1.tar.gz && \
+rm gear-nightly-macos-m1.tar.gz && \
+chmod +x gear-node
+```
+
+或
+
+**macOS M1**: [gear-nightly-macos-m1.tar.gz](https://builds.gear.rs/gear-nightly-macos-m1.tar.gz)
+
+</TabItem>
+<TabItem value="mac-intel" label="MacOS x64">
+
+Terminal:
+
+```bash
+wget https://builds.gear.rs/gear-nightly-macos-x86_64.tar.gz && \
+tar xvf gear-nightly-macos-x86_64.tar.gz && \
+rm gear-nightly-macos-x86_64.tar.gz && \
+chmod +x gear-node
+```
+
+或
+
+**macOS Intel x64**: [gear-nightly-macos-x86_64.tar.gz](https://builds.gear.rs/gear-nightly-macos-x86_64.tar.gz)
+
+</TabItem>
+
+<TabItem value="mac-linux" label="Linux x64">
+
+Terminal:
+
+```bash
+wget https://builds.gear.rs/gear-nightly-linux-x86_64.tar.xz && \
+tar xvf gear-nightly-linux-x86_64.tar.xz && \
+rm gear-nightly-linux-x86_64.tar.xz && \
+chmod +x gear-node
+```
+
+或
+
+**Linux x64**: [gear-nightly-linux-x86_64.tar.xz](https://builds.gear.rs/gear-nightly-linux-x86_64.tar.xz)
+
+</TabItem>
+</Tabs>
+````
+
+## 自行编译 Gear 节点
+
+自行编译版本需要花费一些时间，同时需要安装一些依赖：
+
+### 安装 Rust:
+
+如果你已经安装 Rust，你可以跳过这一步。
+
+```bash
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```
+
+之后你需要重启你的终端。
+
+### 安装 WASM Toolchains:
+
+```bash
+rustup toolchain add nightly
+rustup target add wasm32-unknown-unknown --toolchain nightly
+```
+
+### 下载 Gear 代码
+
+```bash
+git clone https://github.com/gear-tech/gear.git
+cd gear
+```
+
+### 编译
+
+```bash
+cargo build -p gear-node --release
+```
+
+或
+
+```bash
+make node-release
+```
+
+:::note
+
+你将在 `/gear/target/release/gear-node` 找到最终的编译输出
+
+前往：
+
+```bash
+cd target/release
+```
+
+:::
+
+## 运行 Gear 节点
+
+:::info
+
+这一步同是否是下载的预编译版本还是自己编译的版本无关。在 `gear-node` 安装的目录运行如下命令来链接测试网：
+
+:::
+
+```bash
+./gear-node
+```
+
+采用如下命令来运行开发模式的 Gear 节点：
+
+```bash
+./gear-node --dev --tmp
+```
+
+## 命令标记和选项
+
+```code
+gear-node [flags] [options]
+```
+
+`--staging`
+
+链接到 Gear 测试网。
+
+`--dev`
+
+运行单节点 Gear 开发网络。
+
+`--tmp`
+
+采用临时目录来运行节点。临时目录会被创建出来，用来存储配置信息，并且在进程结束时被删除。
+
+`purge-chain`
+
+删除选定链的存储。需要明确链的类型 `--staging` 或 `--dev`。
+
+`--help`
+
+帮助信息。
+
+## 特殊环境变量
+
+运行 Gear 节点时开启合约日志：
+
+```code
+RUST_LOG="gwasm=debug" gear-node [flags]
+```
