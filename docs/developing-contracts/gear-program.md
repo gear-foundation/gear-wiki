@@ -24,6 +24,6 @@ pub unsafe extern "C" fn init() {}
 
 ```
 
-The `init()` function is called only once during program initialization. And handles the incoming `init payload` if there is one.
+Optional `init()` function is called only once during program initialization. And handles the incoming `init payload` if there is one.
 
-The `handle()` function will be called every time the program receives an incoming message. In this case, the `payload` will be processed.
+The `handle()` function (also optional) will be called every time the program receives an incoming message. In this case, the `payload` will be processed.
