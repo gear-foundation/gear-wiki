@@ -8,23 +8,15 @@ Here are small code snippets in a question-answer format for start to interact w
 
 ### Encode / decode payloads
 
-Encode data
+Encode and decode data
 
 ```javascript
 import { CreateType } from '@gear-js/api';
 
 // If "TypeName" alredy registred
-const result = CreateType.encode('TypeName', somePayload);
+const result = CreateType.create('TypeName', somePayload);
 // Otherwise need to add metadata containing TypeName and all required types
-const result = CreateType.encode('TypeName', somePayload, metadata);
-```
-
-By analogy data is decoded
-
-```javascript
-const result = CreateType.decode('TypeName', someBytes);
-// or
-const result = CreateType.decode('TypeName', someBytes, metadata);
+const result = CreateType.create('TypeName', somePayload, metadata);
 ```
 
 Result of this functions is data of type `Codec` and it has the next methods
@@ -74,7 +66,7 @@ const program = {
 };
 
 try {
-  const programId = await gearApi.program.submit(uploadProgram, meta);
+  const { programId, salt } = await gearApi.program.submit(uploadProgram, meta);
 } catch (error) {
   console.error(`${error.name}: ${error.message}`);
 }
@@ -114,6 +106,96 @@ try {
 }
 ```
 
+### Send reply message
+
+```javascript
+try {
+  const reply = {
+    toId: messageId,
+    payload: somePayload,
+    gasLimit: 10000000,
+    value: 1000,
+  };
+  // In that case payload will be encoded using meta.async_handle_input type
+  await gearApi.reply.submit(reply, meta);
+  // So if you want to use another type you can specify it
+  await gearApi.reply.submit(reply, meta, meta.async_init_input);
+} catch (error) {
+  console.error(`${error.name}: ${error.message}`);
+}
+try {
+  await gearApi.reply.signAndSend(keyring, (events) => {
+    console.log(event.toHuman());
+  });
+} catch (error) {
+  console.error(`${error.name}: ${error.message}`);
+}
+```
+
+### Submit code
+
+```javascript
+const code = fs.readFileSync('path/to/program.opt.wasm');
+const codeHash = gearApi.code.submit(code);
+gearApi.code.signAndSend(alice, () => {
+  events.forEach(({ event: { method, data } }) => {
+    if (method === 'ExtrinsicFailed') {
+      throw new Error(data.toString());
+    } else if (method === 'CodeSaved') {
+      console.log(data.toHuman());
+    }
+  });
+});
+```
+
+### Get gasSpent
+
+#### For init message
+
+```javascript
+const code = fs.readFileSync('demo_ping.opt.wasm');
+const gas = await gearApi.program.gasSpent.init(
+  '0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d', // source id
+  code,
+  '0x00',
+);
+console.log(gas.toHuman());
+```
+
+#### For handle message
+
+```javascript
+const code = fs.readFileSync('demo_meta.opt.wasm');
+const meta = await getWasmMetadata(fs.readFileSync('demo_meta.opt.wasm'));
+const gas = await gearApi.program.gasSpent.handle(
+  '0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d',
+  '0xa178362715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d', //program id
+  {
+    id: {
+      decimal: 64,
+      hex: '0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d',
+    },
+  },
+  meta,
+);
+console.log(gas.toHuman());
+```
+
+#### For reply message
+
+```javascript
+const code = fs.readFileSync('demo_async.opt.wasm');
+const meta = await getWasmMetadata(fs.readFileSync('demo_async.opt.wasm'));
+const gas = await gearApi.program.gasSpent.reply(
+  '0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d',
+  '0x518e6bc03d274aadb3454f566f634bc2b6aef9ae6faeb832c18ae8300fd72635', // message id
+  0, // exit code
+  'PONG',
+  meta,
+);
+console.log(gas.toHuman());
+```
+
 ### Read state of program
 
 ```javascript
@@ -121,6 +203,27 @@ const metaWasm = fs.readFileSync('path/to/meta.wasm');
 const state = gearApi.programState.read(programId, metaWasm);
 // If program expects inputValue in meta_state function it's possible to specify it
 const state = gearApi.programState.read(programId, metaWasm, inputValue);
+```
+
+### Mailbox
+
+#### Read
+
+```javascript
+const api = await GearApi.create();
+const mailbox = await api.mailbox.read('5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY');
+console.log(mailbox.toHuman());
+```
+
+#### Subscribe to mailbox changes
+
+```javascript
+const unsub = await gearApi.mailbox.subscribe(
+  '0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d',
+  (data) => {
+    console.log(data.toHuman());
+  },
+);
 ```
 
 ### Subscribe to events
@@ -202,6 +305,20 @@ const unsub = await gearApi.gearEvents.subscribeToNewBlocks((header) => {
 });
 // Unsubscribe
 unsub();
+```
+
+### Get block data
+
+```javascript
+const data = await gearApi.blocks.get(blockNumberOrBlockHash);
+console.log(data.toHuman());
+```
+
+### Get block timestamp
+
+```javascript
+const ts = await gearApi.blocks.getBlockTimestamp(blockNumberOrBlockHash);
+console.log(ts.toNumber());
 ```
 
 ### Get blockHash by block number

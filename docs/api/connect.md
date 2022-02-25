@@ -9,12 +9,15 @@ The API allows us to interact with the chain and make queries via Javascript. Th
 
 Complete API overview and cookbook is on [Polkadot documentation portal](https://polkadot.js.org/docs/).
 
-Below are a few entry points for interact with Gear:
+Below are a few entry points for interact with Gear RPC Node:
+
+Dev mode:
 
 > ws://127.0.0.1:9944
 
-<!-- // TODO -->
-<!-- add Websocket endpoint for GEAR and Canary Gear -->
+Testnet:
+
+> wss://rpc-node.gear-tech.io:443
 
 ## Installation
 
