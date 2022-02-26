@@ -186,7 +186,7 @@ A notification about successful balance replenishment will appear at the bottom 
 
 ![img alt](./img/interface.png)
 
-3. Sign in the program uploading the transaction to the Gear network. Also, sign in the program and meta data uploading to the Gear demo environment so you could work with the program. It is recommended to set the checkbox `Remember my password for the next 15 minutes` for your convenience.
+3. Sign the program uploading the transaction to the Gear network. Also, sign in the program and meta data uploading to the Gear demo environment so you could work with the program. It is recommended to set the checkbox `Remember my password for the next 15 minutes` for your convenience.
 
 ![img alt](./img/sign-transaction.png)
 
@@ -210,7 +210,7 @@ The red dot status for a program indicates init failure. Try to upload the progr
 
 ![img alt](./img/send-request.png)
 
-3. Sign in the message sending transaction as it is shown in the step #2.3
+3. Sign the message sending transaction as it is shown in the step 3 of section **Upload Program**.
 
 4. After your message has been successfully processed, the program responds with PONG:
 
