@@ -119,32 +119,6 @@ pub unsafe extern "C" fn handle() {
 
     debug!("{:?} total message(s) stored: ", MESSAGE_LOG.len());
 
-    for log in MESSAGE_LOG.iter() {
-        debug!(log);
-    }
-}
-
-/// and a simple unit test:
-
-#[cfg(test)]
-mod tests {
-    extern crate std;
-
-    use gtest::{Log, Program, System};
-
-    #[test]
-    fn it_works() {
-        let system = System::new();
-        system.init_logger();
-
-        let program = Program::current(&system);
-
-        let res = program.send_bytes(42, "INIT");
-        assert!(res.log().is_empty());
-
-        let res = program.send_bytes(42, "PING");
-        assert!(res.contains(&Log::builder().source(1).dest(42).payload_bytes("PONG")));
-    }
 }
 ```
 
