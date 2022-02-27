@@ -154,9 +154,6 @@ This simple smart-contract responds with `PONG` to a `PING` message sent to the 
 
 ```bash
 cd ~/gear/contracts/first-gear-app/
-RUSTFLAGS="-C link-args=--import-memory" cargo +nightly build --release --target=wasm32-unknown-unknown
-
-cd ~/gear/contracts/first-gear-app/
 cargo build --release
 
 ```
