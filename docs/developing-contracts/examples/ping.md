@@ -52,7 +52,8 @@ mod tests {
         assert!(res.log().is_empty());
 
         let res = program.send_bytes(42, "PING");
-        assert!(res.contains(&Log::builder().source(1).dest(42).payload_bytes("PONG")));
+        let log = Log::builder().source(1).dest(42).payload_bytes("PONG");
+        assert!(res.contains(&log));
     }
 }
 ```
