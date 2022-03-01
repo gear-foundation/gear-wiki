@@ -70,7 +70,15 @@ Now, your `gear/contracts` directory tree should look like this:
 code ~/gear/contracts/first-gear-app
 ```
 
-4. Configure `Cargo.toml` in order for our contract to be properly built.
+4. Create file `build.rs` with the following code:
+
+```rust
+fn main() {
+    gear_wasm_builder::build();
+}
+```
+
+and configure `Cargo.toml` in order for our contract to be properly built:
 
 ```toml
 [package]
@@ -80,15 +88,14 @@ authors = ["Your Name"]
 edition = "2021"
 license = "GPL-3.0"
 
-[lib]
-crate-type = ["cdylib"]
-
 [dependencies]
 gstd = { git = "https://github.com/gear-tech/gear.git", features = ["debug"] }
 
-[profile.release]
-lto = true
-opt-level = 's'
+[build-dependencies]
+gear-wasm-builder = { git = "https://github.com/gear-tech/gear.git" }
+
+[dev-dependencies]
+gtest = { git = "https://github.com/gear-tech/gear.git" }
 ```
 
 5. Replace the default contents of `lib.rs` with the code for our first smart-contract. Open `src/lib.rs` in your editor and paste the following code:
@@ -96,15 +103,21 @@ opt-level = 's'
 ```rust
 #![no_std]
 
-use gstd::{msg, prelude::*};
+use gstd::{debug, msg, prelude::*};
+
+static mut MESSAGE_LOG: Vec<String> = vec![];
 
 #[no_mangle]
 pub unsafe extern "C" fn handle() {
     let new_msg = String::from_utf8(msg::load_bytes()).expect("Invalid message");
 
     if new_msg == "PING" {
-        msg::reply_bytes("PONG", 12_000_000, 0);
+        msg::reply_bytes("PONG", 0);
     }
+
+    MESSAGE_LOG.push(new_msg);
+
+    debug!("{:?} total message(s) stored: ", MESSAGE_LOG.len());
 
 }
 ```
@@ -115,7 +128,8 @@ This simple smart-contract responds with `PONG` to a `PING` message sent to the 
 
 ```bash
 cd ~/gear/contracts/first-gear-app/
-RUSTFLAGS="-C link-args=--import-memory" cargo +nightly build --release --target=wasm32-unknown-unknown
+cargo build --release
+
 ```
 
 If everything goes well, your working directory should now have a `target` directory that looks like this:
