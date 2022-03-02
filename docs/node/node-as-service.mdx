@@ -30,7 +30,9 @@ After=network.target
 Type=simple 
 User=root 
 WorkingDirectory=/root/ 
-ExecStart=/root/gear-node --telemetry-url 'ws://telemetry-backend-shard.gear-tech.io:32001/submit 0' --name 'NODE_NAME'
+ExecStart=/root/gear-node 
+    --telemetry-url 'ws://telemetry-backend-shard.gear-tech.io:32001/submit 0' 
+    --name 'NODE_NAME'
 Restart=always 
 RestartSec=3 
 LimitNOFILE=10000
