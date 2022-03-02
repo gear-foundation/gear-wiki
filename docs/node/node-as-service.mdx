@@ -1,0 +1,63 @@
+---
+sidebar_label: 'Node as a Service'
+sidebar_position: 2
+---
+
+# Сonfiguring a node as a Linux service
+
+## Prerequisites
+
+You need to download or compile the gear-node executable file for your OS. [See more](https://wiki.gear-tech.io/node/setting-up#install-with-pre-build-binary) 
+
+To run the Gear node as one of the Linux services, you need to configure the systemd file:
+
+From `root` directory:
+
+```sh
+cd /etc/systemd/system
+touch gear-node.service 
+sudo nano gear-node.service
+```
+
+Configure and save:
+
+```
+[Unit] 
+Description=Gear Node 
+After=network.target 
+
+[Service] 
+Type=simple 
+User=root 
+WorkingDirectory=/root/ 
+ExecStart=/root/gear-node --telemetry-url 'ws://telemetry-backend-shard.gear-tech.io:32001/submit 0' --name 'NODE_NAME'
+Restart=always 
+RestartSec=3 
+LimitNOFILE=10000
+ 
+[Install] 
+WantedBy=multi-user.target
+```
+
+:::note
+Declaration `ExecStart` points to the location of the gear-node binary file. In this case, it is in `root` directory.
+With -- additional launch parameters are indicated, but not mandatory.
+:::
+
+That’s it. We can now start the service:
+
+```sh
+systemctl start gear-node
+```
+
+Automatically get it to start on boot:
+
+```sh
+systemctl enable gear-node
+```
+
+## How to check status of gear-node service?
+
+```sh
+systemctl status gear-node
+```
