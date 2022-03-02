@@ -3,11 +3,11 @@ sidebar_label: 'Setting Up'
 sidebar_position: 1
 ---
 
+# Setting Up Gear Node
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import CodeBlock from '@theme/CodeBlock';
-
-# Setting Up Gear Node
 
 ## Introduction
 
@@ -95,6 +95,22 @@ or
 ## Compile Gear node by yourself
 
 Compiling the build will take some time and requires the installation of some dependencies:
+
+## Prerequisites
+
+Linux users should generally install `GCC` and `Clang`, according to their distribution’s documentation.
+
+For example, on Ubuntu use:
+
+```bash
+sudo apt install -y clang build-essential
+```
+
+On macOS, you can get a C compiler by running:
+
+```bash
+$ xcode-select --install
+```
 
 ### Install Rust:
 
