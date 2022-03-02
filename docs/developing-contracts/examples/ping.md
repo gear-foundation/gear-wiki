@@ -10,7 +10,7 @@ Gear is very easy to write code for!
 Here is a minimal program for a classic ping-pong contract:
 
 ```rust
-  #![no_std]
+#![no_std]
 
 use gstd::{debug, msg, prelude::*};
 
