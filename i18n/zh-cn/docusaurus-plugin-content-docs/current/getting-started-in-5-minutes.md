@@ -73,9 +73,17 @@ cargo new first-gear-app --lib
 code ~/gear/contracts/first-gear-app
 ```
 
-4. 我们将配置`Cargo.toml`，可以使合约正确地创建。
+4. 创建 `build.rs` 文件，并粘贴以下代码：
 
-```yaml
+```rust
+fn main() {
+    gear_wasm_builder::build();
+}
+```
+
+同时配置`Cargo.toml`，可以使合约正确地创建。
+
+```toml
 [package]
 name = "first-gear-app"
 version = "0.1.0"
@@ -83,31 +91,36 @@ authors = ["Your Name"]
 edition = "2021"
 license = "GPL-3.0"
 
-[lib]
-crate-type = ["cdylib"]
-
 [dependencies]
 gstd = { git = "https://github.com/gear-tech/gear.git", features = ["debug"] }
 
-[profile.release]
-lto = true
-opt-level = 's'
+[build-dependencies]
+gear-wasm-builder = { git = "https://github.com/gear-tech/gear.git" }
+
+[dev-dependencies]
+gtest = { git = "https://github.com/gear-tech/gear.git" }
 ```
 
-5. 用我们的第一个智能合约的代码替换 `lib.rs`。你应该在编辑器中打开`src/lib.rs`并粘贴以下代码：
+5. 用我们的第一个智能合约的代码替换 `lib.rs`。在编辑器中打开 `src/lib.rs` 并粘贴以下代码：
 
 ```rust
 #![no_std]
 
-use gstd::{msg, prelude::*};
+use gstd::{debug, msg, prelude::*};
+
+static mut MESSAGE_LOG: Vec<String> = vec![];
 
 #[no_mangle]
 pub unsafe extern "C" fn handle() {
     let new_msg = String::from_utf8(msg::load_bytes()).expect("Invalid message");
 
     if new_msg == "PING" {
-        msg::reply_bytes("PONG", 12_000_000, 0);
+        msg::reply_bytes("PONG", 0);
     }
+
+    MESSAGE_LOG.push(new_msg);
+
+    debug!("{:?} total message(s) stored: ", MESSAGE_LOG.len());
 
 }
 ```
@@ -118,7 +131,7 @@ pub unsafe extern "C" fn handle() {
 
 ```bash
 cd ~/gear/contracts/first-gear-app/
-RUSTFLAGS="-C link-args=--import-memory" cargo +nightly build --release --target=wasm32-unknown-unknown
+cargo build --release
 ```
 
 如果一切顺利，工作目录应该有一个 `target` 目录，如下所示的：

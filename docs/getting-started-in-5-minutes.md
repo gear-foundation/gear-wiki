@@ -129,7 +129,6 @@ This simple smart-contract responds with `PONG` to a `PING` message sent to the 
 ```bash
 cd ~/gear/contracts/first-gear-app/
 cargo build --release
-
 ```
 
 If everything goes well, your working directory should now have a `target` directory that looks like this:
