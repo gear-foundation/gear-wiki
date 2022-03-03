@@ -1,0 +1,67 @@
+---
+sidebar_label: '将节点程序配置成服务'
+sidebar_position: 2
+---
+
+# 将节点程序配置成 Linux 服务
+
+## 前期准备
+
+你需要依据自己的操作系统下载或者自行编译 `gear-node` 可执行文件。[更多信息](https://wiki.gear-tech.io/node/setting-up#install-with-pre-build-binary)。
+
+## 配置服务
+
+为了将 Gear 节点程序作为 Linux 的服务，你需要参照以下方式来配置 `systemd` 文件：
+
+从 `root` 目录开始:
+
+```sh
+cd /etc/systemd/system
+touch gear-node.service 
+sudo nano gear-node.service
+```
+
+配置并保存:
+
+```
+[Unit] 
+Description=Gear Node 
+After=network.target 
+
+[Service] 
+Type=simple 
+User=root 
+WorkingDirectory=/root/ 
+ExecStart=/root/gear-node \
+    --telemetry-url 'ws://telemetry-backend-shard.gear-tech.io:32001/submit 0' \
+    --name 'NODE_NAME' 
+Restart=always 
+RestartSec=3 
+LimitNOFILE=10000
+ 
+[Install] 
+WantedBy=multi-user.target
+```
+
+:::note
+`ExecStart` 指向 `gear-node` 二进制文件所在的位置。在示例中是在 `root` 目录。
+使用 `--` 引入额外的启动参数，但这些参数并不是必须的。
+:::
+
+到这里我们就可以使用以下命令来启动服务：
+
+```sh
+systemctl start gear-node
+```
+
+使其能够随系统自动启动：
+
+```sh
+systemctl enable gear-node
+```
+
+检查 `gear-node` 服务状态：
+
+```sh
+systemctl status gear-node
+```
