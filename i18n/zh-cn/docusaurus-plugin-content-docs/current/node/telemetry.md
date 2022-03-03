@@ -1,6 +1,6 @@
 ---
 sidebar_label: '节点监控'
-sidebar_position: 2
+sidebar_position: 3
 ---
 
 # 配置 Gear 节点监测

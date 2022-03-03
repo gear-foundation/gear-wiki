@@ -1,6 +1,6 @@
 ---
 sidebar_label: 'Multi-Node Mode'
-sidebar_position: 4
+sidebar_position: 5
 ---
 
 # Creating a Multi-Node local testnet
