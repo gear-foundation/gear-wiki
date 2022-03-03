@@ -1,6 +1,6 @@
 ---
 sidebar_label: 'Gear Feeds'
-sidebar_position: 4
+sidebar_position: 6
 ---
 
 # 介绍
