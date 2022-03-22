@@ -231,4 +231,9 @@ The red dot status for a program indicates init failure. Try to upload the progr
 
 ---
 
-For additional info about writing smart contracts for Gear and the specifics behind the smart contract implementation, refer to [this article on Smart Contracts](developing-contracts/gear-program.md).
+## Further reading
+
+In addition to this "Getting started in 5 minutes", you can refer to one more article that demonstrates the simplicity and convenience of creating applications on Gear Platform - [The first smart contract on Rust for beginners](https://app.subsocial.network/6310/gear-tech-the-first-smart-contract-on-rust-for-beginners-31604).
+The article uses Voting application as an example, it describes the structure of Gear smart contracts, how to work with the actor model architecture of programs, process messages, and work with the state.
+
+For more info about writing smart contracts for Gear and the specifics behind the smart contract implementation, refer to [this article on Smart Contracts](developing-contracts/gear-program.md).
