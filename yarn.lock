@@ -1401,7 +1401,7 @@
     webpack-merge "^5.8.0"
     webpackbar "^5.0.2"
 
-"@docusaurus/core@^2.0.0-beta.18":
+"@docusaurus/core@2.0.0-beta.18", "@docusaurus/core@^2.0.0-beta.18":
   version "2.0.0-beta.18"
   resolved "https://registry.yarnpkg.com/@docusaurus/core/-/core-2.0.0-beta.18.tgz#44c6eefe29257462df630640a35f0c86bd80639a"
   dependencies:
@@ -1581,7 +1581,7 @@
     utility-types "^3.10.0"
     webpack "^5.69.1"
 
-"@docusaurus/plugin-content-docs@2.0.0-beta.17", "@docusaurus/plugin-content-docs@^2.0.0-beta.15":
+"@docusaurus/plugin-content-docs@2.0.0-beta.17":
   version "2.0.0-beta.17"
   resolved "https://registry.yarnpkg.com/@docusaurus/plugin-content-docs/-/plugin-content-docs-2.0.0-beta.17.tgz#97f13bb458e165224db6867836e8e9637ea15921"
   dependencies:
@@ -1599,6 +1599,25 @@
     tslib "^2.3.1"
     utility-types "^3.10.0"
     webpack "^5.69.1"
+
+"@docusaurus/plugin-content-docs@^2.0.0-beta.18":
+  version "2.0.0-beta.18"
+  resolved "https://registry.yarnpkg.com/@docusaurus/plugin-content-docs/-/plugin-content-docs-2.0.0-beta.18.tgz#fef52d945da2928e0f4f3f9a9384d9ee7f2d4288"
+  dependencies:
+    "@docusaurus/core" "2.0.0-beta.18"
+    "@docusaurus/logger" "2.0.0-beta.18"
+    "@docusaurus/mdx-loader" "2.0.0-beta.18"
+    "@docusaurus/utils" "2.0.0-beta.18"
+    "@docusaurus/utils-validation" "2.0.0-beta.18"
+    combine-promises "^1.1.0"
+    fs-extra "^10.0.1"
+    import-fresh "^3.3.0"
+    js-yaml "^4.1.0"
+    lodash "^4.17.21"
+    remark-admonitions "^1.2.1"
+    tslib "^2.3.1"
+    utility-types "^3.10.0"
+    webpack "^5.70.0"
 
 "@docusaurus/plugin-content-pages@2.0.0-beta.17":
   version "2.0.0-beta.17"
