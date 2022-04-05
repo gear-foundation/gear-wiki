@@ -38,5 +38,3 @@ cargo run --
   --name 'bob'
   --validator
 ```
-
-3. Execute `cargo run -- --help` to learn more about the template node's CLI options.
