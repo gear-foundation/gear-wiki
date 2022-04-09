@@ -88,3 +88,26 @@ Add `-f` parameter to see the last lines of logs in continuous mode (press Ctrl+
 ```sh
 journalctl -u gear-node -fn 50
 ```
+
+## Update the node with the new version
+
+You just need to replace the node executable (`gear-node`) with the latest version and restart the execution. For example, if your Linux executable is located at `/root/gear-node` (as we've configured above) you are to run:
+
+```
+wget https://builds.gear.rs/gear-nightly-linux-x86_64.tar.xz
+sudo tar -xvf gear-nightly-linux-x86_64.tar.xz -C /root
+rm gear-nightly-linux-x86_64.tar.xz
+sudo systemctl restart gear-node
+```
+
+## Remove the node
+
+You are to remove the node's storage, the service configuration, and the executable itself:
+
+```
+sudo systemctl stop gear-node
+sudo systemctl disable gear-node
+sudo rm -rf /root/.local/share/gear-node
+sudo rm /etc/systemd/system/gear-node.service
+sudo rm /root/gear-node
+```
