@@ -7,7 +7,7 @@ sidebar_position: 2
 
 ## Prerequisites
 
-You need to download or compile the gear-node executable file for your OS. [See more](https://wiki.gear-tech.io/node/setting-up#install-with-pre-build-binary) 
+You need to download or compile the gear-node executable file for your OS. [See more](https://wiki.gear-tech.io/node/setting-up#install-with-pre-build-binary)
 
 ## Configuration
 
@@ -23,22 +23,20 @@ sudo nano gear-node.service
 Configure and save:
 
 ```
-[Unit] 
-Description=Gear Node 
-After=network.target 
+[Unit]
+Description=Gear Node
+After=network.target
 
-[Service] 
-Type=simple 
-User=root 
-WorkingDirectory=/root/ 
-ExecStart=/root/gear-node \
-    --telemetry-url 'ws://telemetry-backend-shard.gear-tech.io:32001/submit 0' \
-    --name 'NODE_NAME' 
-Restart=always 
-RestartSec=3 
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/
+ExecStart=/root/gear-node --name 'NODE_NAME' --telemetry-url 'ws://telemetry-backend-shard.gear-tech.io:32001/submit 0'
+Restart=always
+RestartSec=3
 LimitNOFILE=10000
- 
-[Install] 
+
+[Install]
 WantedBy=multi-user.target
 ```
 
@@ -47,20 +45,46 @@ Declaration `ExecStart` points to the location of the gear-node binary file. In 
 With -- additional launch parameters are indicated, but not mandatory.
 :::
 
-That’s it. We can now start the service:
+That’s it. We can now start the service.
+
+## Starting the node
+
+Run to start the service:
 
 ```sh
-systemctl start gear-node
+sudo systemctl start gear-node
 ```
 
 Automatically get it to start on boot:
 
 ```sh
-systemctl enable gear-node
+sudo systemctl enable gear-node
 ```
 
 How to check status of gear-node service?
 
 ```sh
-systemctl status gear-node
+sudo systemctl status gear-node
+```
+
+## Checking logs
+
+You may see the service logs by running the following command:
+
+```sh
+journalctl -u gear-node
+```
+
+Use navigation keys to browse the logs and `q` key to exit.
+
+You may see the last 50 lines of logs by adding `-n 50` parameter:
+
+```sh
+journalctl -u gear-node -n 50
+```
+
+Add `-f` parameter to see the last lines of logs in continuous mode (press Ctrl+C to exit):
+
+```sh
+journalctl -u gear-node -fn 50
 ```
