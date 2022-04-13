@@ -5,7 +5,7 @@ sidebar_position: 3
 
 # What is GRB?
 
-While Gear is preparing to launch its Canary Network, we are using Statemine to reward active community members with the Gear Bonus Token (GRB), which in future can be exchanged for native Gear tokens.
+While Gear is preparing to launch its Canary Network, we are using Statemine to reward active community members with the Gear Bonus Token (GRB).
 
 To earn GRB, you have to take part in activities and events that are organized by Gear, like workshops and live AMAs. Not all participants will be awarded merely for participation. To earn GRB, individuals have to successfully complete various tasks, for example deploying a dApp during one of our workshops.
 
