@@ -14,7 +14,7 @@ This article will show the example of an escrow smart contract, where assets wil
 * A seller can refund tokens from a paid contract to a buyer.
 * Both buyer and seller can cancel an unpaid contract.
 
-One escrow contract contains info about a `buyer`, a `seller`, its `state` and an `amount` of tokens that this contract can store:
+One escrow contract contains info about a `buyer`, a `seller`, their `state` and an `amount` of tokens that this contract can store:
 
 ```rust
 struct Contract {
@@ -25,7 +25,7 @@ struct Contract {
 }
 ```
 
-`State` is an enum that stores a currect state of a contract:
+`State` is an enum that stores a current state of a contract:
 ```rust
 enum State {
     AwaitingDeposit,
