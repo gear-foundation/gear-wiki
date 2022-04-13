@@ -107,7 +107,8 @@ impl MyToken {
             },
             exec::gas_available() - GAS_RESERVE,
             0,
-        );
+        )
+        .unwrap();
     }
     fn balance_of(&mut self, account: &ActorId) {
         let balance = self.balances.get(account).unwrap_or(&0);
@@ -115,14 +116,15 @@ impl MyToken {
             Event::Balance(*balance),
             exec::gas_available() - GAS_RESERVE,
             0,
-        );
+        )
+        .unwrap();
     }
 }
 ```
 请注意，这里我们使用 `msg::source()` 来标识发送当前正在处理的消息的帐户。
 
 ### `Wallet` 合约
-第二个合约非常简单: 它会收到消息 `AddBalance`，并回复 `BalanceAdded`。 
+第二个合约非常简单: 它会收到消息 `AddBalance`，并回复 `BalanceAdded`。
  ```rust
  #[derive(Debug, Encode, Decode, TypeInfo)]
 pub struct AddBalance {
@@ -148,7 +150,7 @@ static mut WALLET: BTreeMap<ActorId, BTreeMap<ActorId,u128>> = BTreeMap::new();
 #[no_mangle]
 pub unsafe extern "C" fn init() {}
  ```
-`Wallet` 合约向 `MyToken` 合约发送请求用户余额的消息。代币合约的地址显示在 `AddBalance` 中。 
+`Wallet` 合约向 `MyToken` 合约发送请求用户余额的消息。代币合约的地址显示在 `AddBalance` 中。
 
 请注意，这里我们使用异步消息传递函数 `send_and_wait_for_reply`, 因此必须使用 `#[gstd::async_main]` 宏。
 ``` rust
@@ -161,6 +163,7 @@ async fn main() {
         GAS_RESERVE,
         0,
     )
+    .unwrap()
     .await
     .expect("Function call error");
     if let Event::Balance(amount) = reply{
@@ -180,7 +183,8 @@ async fn main() {
             },
             exec::gas_available() - GAS_RESERVE,
             0,
-        );
+        )
+        .unwrap();
     }
 }
  ```

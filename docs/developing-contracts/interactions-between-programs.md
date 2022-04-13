@@ -107,7 +107,8 @@ impl MyToken {
             },
             exec::gas_available() - GAS_RESERVE,
             0,
-        );
+        )
+        .unwrap();
     }
     fn balance_of(&mut self, account: &ActorId) {
         let balance = self.balances.get(account).unwrap_or(&0);
@@ -115,14 +116,15 @@ impl MyToken {
             Event::Balance(*balance),
             exec::gas_available() - GAS_RESERVE,
             0,
-        );
+        )
+        .unwrap();
     }
 }
 ```
 Note that here we use `msg::source()` which identifies the account that sends the current message being processed.
 
 ### `Wallet` contract
-The second contract is very simple: it receives the message `AddBalance` and replies with `BalanceAdded`. 
+The second contract is very simple: it receives the message `AddBalance` and replies with `BalanceAdded`.
  ```rust
  #[derive(Debug, Encode, Decode, TypeInfo)]
 pub struct AddBalance {
@@ -148,7 +150,7 @@ static mut WALLET: BTreeMap<ActorId, BTreeMap<ActorId,u128>> = BTreeMap::new();
 #[no_mangle]
 pub unsafe extern "C" fn init() {}
  ```
-The `Wallet` contract sends the message to the `MyToken` contract asking for the user balance. The address of the token contract is indicated in `AddBalance`. 
+The `Wallet` contract sends the message to the `MyToken` contract asking for the user balance. The address of the token contract is indicated in `AddBalance`.
 
 Note that here we use the async messaging function `send_and_wait_for_reply`, so `#[gstd::async_main]` macro must be used.
 ``` rust
@@ -161,6 +163,7 @@ async fn main() {
         GAS_RESERVE,
         0,
     )
+    .unwrap()
     .await
     .expect("Function call error");
     if let Event::Balance(amount) = reply{
@@ -180,7 +183,8 @@ async fn main() {
             },
             exec::gas_available() - GAS_RESERVE,
             0,
-        );
+        )
+        .unwrap();
     }
 }
  ```

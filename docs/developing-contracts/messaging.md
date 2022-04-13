@@ -71,7 +71,7 @@ Reply to a message with bytes in `payload`. Returns `MessageId`:
 
 ```rust
 pub fn reply_bytes<T: AsRef<[u8]>>(payload: T, gas_limit: u64, value: u128) -> MessageId {
-    gcore::msg::reply(payload.as_ref(), gas_limit, value)
+    gcore::msg::reply(payload.as_ref(), gas_limit, value).unwrap()
 }
 ```
 

@@ -39,7 +39,7 @@ First of all, make sure you have a compiled `WASM` file of the program you want 
     cargo test
     ```
 
-3. If you use `cargo` config files, then keep in mind that `[build]` parameters are applied both to `cargo build` and `cargo test` [Github Issue](https://github.com/rust-lang/cargo/issues/6784). For example - 
+3. If you use `cargo` config files, then keep in mind that `[build]` parameters are applied both to `cargo build` and `cargo test` [Github Issue](https://github.com/rust-lang/cargo/issues/6784). For example -
 
     ```toml
     # .cargo/config.toml
@@ -145,7 +145,7 @@ fn basics() {
 
     // Initialization of program structure from file.
     //
-    // Takes as arguments reference to the related `System` and the path to wasm binary relatively 
+    // Takes as arguments reference to the related `System` and the path to wasm binary relatively
     // the root of the crate where the test was written.
     //
     // Sets free program id from the related `System` to this program. For this case it equals 0x010000..
