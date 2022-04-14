@@ -165,4 +165,6 @@ pub struct InitEscrow {
 ```
 
 ## Source code
-The source code of this example of an escrow smart contract is available on [GitHub](https://github.com/gear-tech/apps/blob/master/escrow).
+The source code of this example of an escrow smart contract and the example of an implementation of its testing is available on [GitHub](https://github.com/gear-tech/apps/blob/master/escrow).
+
+For more details about testing smart contracts written on Gear, refer to the [Program testing](/developing-contracts/testing) article.
