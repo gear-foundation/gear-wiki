@@ -1,10 +1,10 @@
 ---
 title: 快速入门
 sidebar_position: 4
-sidebar_label: '快速入门指南'
+sidebar_label: '5分钟入门'
 ---
 
-# 5 分钟手册
+# 5分钟入门
 
 本指南提供了在 Gear 网络上运行智能合约的一般概述。它指导您如何编写智能合约，将其编译为 WASM，并部署到 Gear 网络。
 
@@ -234,4 +234,10 @@ Gear 提供了一个模拟真实 Gear 去中心化网络的 demo 环境，可以
 
 ---
 
-关于 Gear 编写智能合约的信息以及智能合约实现背后的具体内容，请访问 [智能合约](developing-contracts/gear-program.md)
+## 更多内容
+
+
+除了这篇 "5分钟入门"，你还可以参考另一篇展示在 Gear 平台上创建应用程序的简单性和便利性的文章--[初学者的第一个智能合约](https://app.subsocial.network/6310/gear-tech-the-first-smart-contract-on-rust-for-beginners-31604)。
+这篇文章以 `Voting` 应用程序为例，描述了 Gear 智能合约的结构，如何使用程序的角色模型架构，处理消息，以及如何处理状态。  
+
+关于 Gear 编写智能合约的信息以及智能合约实现背后的具体内容，请访问 [智能合约](developing-contracts/gear-program.md)。
