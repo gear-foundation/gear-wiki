@@ -97,7 +97,7 @@ pub enum LtStateReply {
 
 ## Functions
 
-Lottery contract interacts ERC20 contract through function `transfer_tokens`.
+Lottery contract interacts with ERC20 contract through function `transfer_tokens`.
 
 ```rust
 async fn transfer_tokens(
@@ -122,7 +122,7 @@ let _transfer_response: FTEvent = msg::send_and_wait_for_reply(
 )
 ```
 
-Launches a lottery. Only owner can launch lottery. Lottery must not have been launched earlier.
+Launches a lottery. Only the owner can launch a lottery. Lottery must not have been launched earlier.
 
 ```rust
 fn start_lottery(
@@ -132,7 +132,7 @@ fn start_lottery(
 )
 ```
 
-Called by a player in order to participate in lottery. The player cannot enter the lottery more than once.
+Called by a player in order to participate in the lottery. The player cannot enter the lottery more than once.
 
 ```rust
 async fn enter(
@@ -141,7 +141,7 @@ async fn enter(
 )
 ```
 
-Lottery winner calculation. Only owner can pick the winner.
+Lottery winner calculation. Only the owner can pick the winner.
 
 ```rust
 async fn pick_winner(
@@ -185,7 +185,7 @@ async fn main() {
 }
 ```
 
-It is also important to have the ability to read the contract state off-chain. It is defined in the `fn meta_state()`. The contract receives a request to read the certain data (the possible requests are defined in struct `LtState` ) and sends replies. The contracts replies about its state are defined in the enum `LtStateReply`.
+It is also important to have the ability to read the contract state off-chain. It is defined in the `fn meta_state()`. The contract receives a request to read the certain data (the possible requests are defined in struct `LtState` ) and sends replies. The contract replies about its state are defined in the enum `LtStateReply`.
 
 ```rust
 #[no_mangle]
