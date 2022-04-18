@@ -20,25 +20,23 @@ cd /etc/systemd/system
 sudo nano gear-node.service
 ```
 
-配置并保存:
+配置并保存：
 
 ```
-[Unit] 
-Description=Gear Node 
-After=network.target 
+[Unit]
+Description=Gear Node
+After=network.target
 
-[Service] 
-Type=simple 
-User=root 
-WorkingDirectory=/root/ 
-ExecStart=/root/gear-node \
-    --telemetry-url 'ws://telemetry-backend-shard.gear-tech.io:32001/submit 0' \
-    --name 'NODE_NAME' 
-Restart=always 
-RestartSec=3 
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/
+ExecStart=/root/gear-node --name 'NODE_NAME' --telemetry-url 'ws://telemetry-backend-shard.gear-tech.io:32001/submit 0'
+Restart=always
+RestartSec=3
 LimitNOFILE=10000
- 
-[Install] 
+
+[Install]
 WantedBy=multi-user.target
 ```
 
@@ -47,20 +45,68 @@ WantedBy=multi-user.target
 使用 `--` 引入额外的启动参数，但这些参数并不是必须的。
 :::
 
+## 运行节点
+
 到这里我们就可以使用以下命令来启动服务：
 
 ```sh
-systemctl start gear-node
+sudo systemctl start gear-node
 ```
 
 使其能够随系统自动启动：
 
 ```sh
-systemctl enable gear-node
+sudo systemctl enable gear-node
 ```
 
 检查 `gear-node` 服务状态：
 
 ```sh
-systemctl status gear-node
+sudo systemctl status gear-node
+```
+
+## 检查日志
+
+运行以下命令可以查看服务日志：
+
+```sh
+journalctl -u gear-node
+```
+
+使用导航键浏览日志，使用`q`键退出。
+
+你可以通过添加参数`-n 50`来查看最后50行日志：
+
+```sh
+journalctl -u gear-node -n 50
+```
+
+添加`-f`参数，在连续模式下查看日志的最后一行(按Ctrl+C退出)：
+
+```sh
+journalctl -u gear-node -fn 50
+```
+
+## 更新节点版本
+
+你只需要把节点的可执行文件（`gear-node`）替换成最新版本，然后重新启动执行。
+例如，如果你的Linux可执行文件位于/root/gear-node（如我们上面的配置），你要运行：
+
+```
+wget https://builds.gear.rs/gear-nightly-linux-x86_64.tar.xz
+sudo tar -xvf gear-nightly-linux-x86_64.tar.xz -C /root
+rm gear-nightly-linux-x86_64.tar.xz
+sudo systemctl restart gear-node
+```
+
+## 删除节点
+
+运行以下命令，删除节点的存储、服务配置和可执行文件：
+
+```
+sudo systemctl stop gear-node
+sudo systemctl disable gear-node
+sudo rm -rf /root/.local/share/gear-node
+sudo rm /etc/systemd/system/gear-node.service
+sudo rm /root/gear-node
 ```
