@@ -112,7 +112,7 @@ This function sends a message (the action is defined in the enum `FTAction`) an
 
 ```rust
 let _transfer_response: FTEvent = msg::send_and_wait_for_reply(
-    self.token_address.unwrap(), /// - the ERC-20 contracts address
+    self.token_address.unwrap(), /// - the fungible token contract address
     FTAction::Transfer {		/// - action in ERC20-contract
         from: *from,
         to: *to,
