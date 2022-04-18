@@ -97,7 +97,7 @@ pub enum LtStateReply {
 
 ## Functions
 
-Lottery contract interacts with ERC20 contract through function `transfer_tokens`.
+Lottery contract interacts with fungible token contract through function `transfer_tokens`.
 
 ```rust
 async fn transfer_tokens(
