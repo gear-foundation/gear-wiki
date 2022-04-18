@@ -113,7 +113,7 @@ This function sends a message (the action is defined in the enum `FTAction`) an
 ```rust
 let _transfer_response: FTEvent = msg::send_and_wait_for_reply(
     self.token_address.unwrap(), /// - the fungible token contract address
-    FTAction::Transfer {		/// - action in ERC20-contract
+    FTAction::Transfer {		/// - action in the fungible token-contract
         from: *from,
         to: *to,
         amount: amount_tokens,
@@ -150,6 +150,8 @@ async fn pick_winner(
 ```
 
 These functions are called in `async fn main()` through enum `LtAction`.
+
+This is the entry point to the program, and the program is waiting for a message in `LtAction` format.
 
 ```rust
 #[gstd::async_main]
