@@ -231,7 +231,7 @@ pub unsafe extern "C" fn meta_state() -> *mut [i32; 2] {
 }
 ```
 ## Source code
-The source code of this example of DAO smart contract and the example of an implementation of its testing is available on [GitHub](https://github.com/gear-tech/apps/blob/master/dao-light). 
+The source code of this example of DAO smart contract and the example of an implementation of its testing is available on [GitHub](https://github.com/gear-tech/apps/tree/master/dao-light). 
 
 The extended version of DAO that includes admin, membership proposals and delegated voting can be found at [GitHub](https://github.com/gear-tech/apps/blob/master/dao).
 
