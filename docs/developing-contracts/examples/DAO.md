@@ -63,7 +63,6 @@ The contract has the following structs:
 
 ```rust
 struct Dao {
-    admin: ActorId,
     approved_token_program_id: ActorId,
     period_duration: u64,
     voting_period_length: u64,
@@ -76,8 +75,6 @@ struct Dao {
 }
 ```
 where:
-
-`admin` - the only member that is initially in DAO. He has 1 share that allows him to submit new proposal and therefore add new members.
 
 `approved_token_program_id` - the reference to the token contract (ERC20) that users use as pledge to get the share in the DAO.
 
@@ -98,7 +95,7 @@ where:
 
 `locked_funds` - tokens that are locked when a funding proposal is submitted.
 
-Parameters `admin`, `approved_token_program_id`, `period_duration`, `grace_period_length` are set when initializing a contract. The contract is initialized in the function:
+Parameters `approved_token_program_id`, `period_duration`, `grace_period_length` are set when initializing a contract. The contract is initialized in the function:
 
 ```rust
 #[no_mangle]
@@ -111,7 +108,6 @@ with the following struct:
 
 ```rust
 struct InitDao {
-    admin: ActorId,
     approved_token_program_id: ActorId,
     period_duration: u64,
     voting_period_length: u64,
@@ -221,9 +217,7 @@ pub unsafe extern "C" fn meta_state() -> *mut [i32; 2] {
     let state: State = msg::load().expect("failed to decode input argument");
     let encoded = match state {
         State::UserStatus(account) => {
-            let role = if account == dao.admin {
-                Role::Admin
-            } else if dao.is_member(&account) {
+            let role = if dao.is_member(&account) {
                 Role::Member
             } else {
                 Role::None
@@ -236,3 +230,9 @@ pub unsafe extern "C" fn meta_state() -> *mut [i32; 2] {
     gstd::util::to_leak_ptr(encoded)
 }
 ```
+## Source code
+The source code of this example of DAO smart contract and the example of an implementation of its testing is available on [GitHub](https://github.com/gear-tech/apps/blob/master/dao-light). 
+
+The extended version of DAO that includes admin, membership proposals and delegated voting can be found at [GitHub](https://github.com/gear-tech/apps/blob/master/dao).
+
+For more details about testing smart contracts written on Gear, refer to the [Program testing](/developing-contracts/testing) article.
