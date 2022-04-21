@@ -5,8 +5,6 @@ sidebar_position: 7
 
 # Decentralized autonomous organization
 
-The smart-contract is available on GitHub: https://github.com/gear-tech/apps/tree/master/dao
-
 ## Source files
 
 1. `ft_messages.rs` - contains functions of the fungible token contract. DAO contract interacts with fungible token contract through functions `transfer_tokens` and `balance`:
