@@ -5,7 +5,7 @@ sidebar_position: 7
 
 # Decentralized autonomous organization
 
-The smart-contract is available on GitHub: https://github.com/gear-tech/apps/tree/master/dao
+The smart-contract is available on GitHub: https://github.com/gear-tech/apps/tree/master/dao-light
 
 ## Source files
 
