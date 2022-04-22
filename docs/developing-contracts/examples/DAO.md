@@ -234,3 +234,4 @@ The source code of this example of DAO smart contract and the example of an impl
 The extended version of DAO that includes admin, membership proposals and delegated voting can be found at [GitHub](https://github.com/gear-tech/apps/blob/master/dao).
 
 For more details about testing smart contracts written on Gear, refer to the [Program testing](/developing-contracts/testing) article.
+
