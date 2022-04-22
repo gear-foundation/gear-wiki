@@ -5,8 +5,6 @@ sidebar_position: 7
 
 # 去中心化自治组织 (DAO)
 
-智能合约可以在 Github 上获得：https://github.com/gear-tech/apps/tree/master/dao
-
 ## 源文件
 
 1. `ft_messages.rs` - 包含同质化代币合约的函数。DAO 合约通过 `transfer_tokens` 和 `balance` 函数与同质化代币合约进行交互：
