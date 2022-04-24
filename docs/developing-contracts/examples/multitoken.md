@@ -1,21 +1,21 @@
 ---
-sidebar_label: 'ERC-1155'
+sidebar_label: 'Multi Token'
 sidebar_position: 5
 ---
 
-# ERC-1155
+# Multi Token
 
 ## Introduction
 
 A standard interface for contracts that manage multiple token types. A single deployed contract may include any combination of fungible tokens, non-fungible tokens or other configurations (e.g. semi-fungible tokens).
 
-The idea is simple and seeks to create a smart contract interface that can represent and control any number of fungible and non-fungible token types. In this way, the ERC-1155 token can do the same functions as an ERC-20 and ERC-721 token, and even both at the same time.
+The idea is simple and seeks to create a smart contract interface that can represent and control any number of fungible and non-fungible token types. In this way, the Multi Token token (further MTK) can do the same functions as an ERC-20 and ERC-721 token, and even both at the same time.
 
 ## Interface
 
 
 ### Metadata
-Since ERC1155 deals with non-fungible tokens as well, there is a way to provide metadata while minting tokens. The metadata struct is shown below and it is used in `mint` and `mint_batch` methods.
+Since MTK deals with non-fungible tokens as well, there is a way to provide metadata while minting tokens. The metadata struct is shown below and it is used in `mint` and `mint_batch` methods.
 ```rust
 #[derive(Debug, Decode, Encode, TypeInfo, Default, Clone)]
 pub struct TokenMetadata {
