@@ -170,8 +170,10 @@ pub struct BalanceOfBatchReply {
 
 ## Conclusion
 
-A source code of the contract example provided by Gear is available on GitHub: [`erc1155/src/lib.rs`](https://github.com/gear-tech/apps/blob/master/erc1155/src/lib.rs).
+A source code of the Multitoken core implementation is available on GitHub: [`gear-contract-libraries`](https://github.com/gear-tech/apps/blob/masater/gear-contract-libraries/multitoken)
 
-See also an example of the smart contract testing implementation based on gtest: [`erc1155/tests/tests.rs`](https://github.com/gear-tech/apps/blob/master/erc1155/tests/tests.rs).
+A source code of the contract example provided by Gear is available on GitHub: [`miltitoken/src/lib.rs`](https://github.com/gear-tech/apps/blob/master/multitoken/src/lib.rs).
+
+See also an example of the smart contract testing implementation based on gtest: [`multitoken/tests/tests.rs`](https://github.com/gear-tech/apps/blob/master/multitoken/tests/mtk_tests.rs).
 
 For more details about testing smart contracts written on Gear, refer to this article: [Program testing](https://wiki.gear-tech.io/developing-contracts/testing).
