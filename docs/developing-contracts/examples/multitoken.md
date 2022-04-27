@@ -1,17 +1,18 @@
 ---
-sidebar_label: 'ERC-1155'
+sidebar_label: 'Multitoken'
 sidebar_position: 5
 ---
 
-# ERC-1155
+# Multitoken
 
 ## Introduction
 
 A standard interface for contracts that manage multiple token types. A single deployed contract may include any combination of fungible tokens, non-fungible tokens or other configurations (e.g. semi-fungible tokens).
 
-The idea is simple and seeks to create a smart contract interface that can represent and control any number of fungible and non-fungible token types. In this way, the ERC-1155 token can do the same functions as an ERC-20 and ERC-721 token, and even both at the same time.
+The idea is simple and seeks to create a smart contract interface that can represent and control any number of fungible and non-fungible token types. In this way, the MTK can do the same functions as an ERC-20 and ERC-721 token, and even both at the same time.
 
 ## Interface
+
 
 ### Events
 
@@ -35,10 +36,9 @@ TransferBatch {
 }
 
 // MUST emit when approval for a second party/operator address to manage all tokens for an owner address is enabled or disabled (absence of an event assumes disabled)
-ApprovalForAll {
-    owner: ActorId,
-    operator: ActorId,
-    approved: bool,
+Approve {
+    from: ActorId,
+    to: ActorId,
 }
 ```
 
@@ -46,22 +46,47 @@ ApprovalForAll {
 
 ```rust
 // Get the balance of an account's tokens
-fn balance_of(&self, account: &ActorId, id: &u128) -> u128;
+fn balance_of(&self, account: &ActorId, id: &TokenId)
 
 // Get the balance of multiple account/token pairs
 fn balance_of_batch(&self, accounts: &[ActorId], ids: &[u128]) -> Vec<BalanceOfBatchReply>;
 
-// Enable or disable approval for a third party ("operator") to manage all of the caller's tokens, and MUST emit the ApprovalForAll event
-fn set_approval_for_all(&mut self, operator: &ActorId, approved: bool);
+// Enable approval for a third party ("operator") to manage all of the caller's tokens, and MUST emit the Approve event
+fn approve(&mut self, to: &ActorId);
 
-// Queries the approval status of an operator for a given owner
-fn is_approved_for_all(&mut self, account: &ActorId, operator: &ActorId) -> &bool;
+// Disable approval for a third party ("operator") to manage all of the caller's tokens, and MUST emit the Approve event
+fn revoke_approval(&mut self, to: &ActorId);
 
 // Transfers amount of tokens from address to other address, and MUST emit the TransferSingle event
-fn safe_transfer_from(&mut self, from: &ActorId, to: &ActorId, id: &u128, amount: u128);
+fn transfer_from(&mut self, from: &ActorId, to: &ActorId, id: &TokenId, amount: u128);
 
 // Transfers  multiple type amount of tokens from address to other address, and MUST emit the TransferBatch event
-fn safe_batch_transfer_from(&mut self, from: &ActorId, to: &ActorId, ids: &[u128], amounts: &[u128]);
+fn batch_transfer_from(
+    &mut self,
+    from: &ActorId,
+    to: &ActorId,
+    ids: &[TokenId],
+    amounts: &[u128],
+);
+
+// Add tokens to an address, and MUST emit TransferSingle event
+fn mint(&mut self, account: &ActorId, id: &TokenId, amount: u128, meta: Option<TokenMetadata>);
+
+
+// Add multiple token types to an address, and MUST emit TransferSingle event
+fn mint_batch(
+    &mut self,
+    account: &ActorId,
+    ids: &[TokenId],
+    amounts: &[u128],
+    meta: Vec<Option<TokenMetadata>>,
+)
+
+// Remove token from a user, and MUST emit the TransferSingle event
+fn burn(&mut self, id: &TokenId, amount: u128);
+
+// Remove multiple token types from a user, and MUST emit the TransferSingle event
+fn burn_batch(&mut self, ids: &[TokenId], amounts: &[u128]);
 ```
 
 ### Init Config
@@ -74,29 +99,41 @@ pub struct InitConfig {
 }
 ```
 
+
+### Metadata
+
+Since MTK should be able to handle NFTs we need a way to provide and store a Metadata. The struct for metadata is provided below:
+
+```rust
+pub struct TokenMetadata {
+    pub title: Option<String>,
+    pub description: Option<String>,
+    pub media: Option<String>,
+    pub reference: Option<String>,
+}
+```
 ### `Action` Structure
 
 ```rust
 #[derive(Debug, Decode, Encode, TypeInfo)]
-pub enum Action {
-    Mint(ActorId, u128, u128),
-    BalanceOf(ActorId, u128),
-    BalanceOfBatch(Vec<ActorId>, Vec<u128>),
-    MintBatch(ActorId, Vec<u128>, Vec<u128>),
-    SafeTransferFrom(ActorId, ActorId, u128, u128),
-    SafeBatchTransferFrom(ActorId, ActorId, Vec<u128>, Vec<u128>),
-    SetApprovalForAll(ActorId, bool),
-    IsApprovedForAll(ActorId, ActorId),
-    BurnBatch(Vec<u128>, Vec<u128>),
-    OwnerOf(u128),
-    OwnerOfBatch(Vec<u128>),
+pub enum MTKAction {
+    Mint(ActorId, TokenId, u128, Option<TokenMetadata>),
+    BalanceOf(ActorId, TokenId),
+    BalanceOfBatch(Vec<ActorId>, Vec<TokenId>),
+    MintBatch(ActorId, Vec<u128>, Vec<TokenId>, Vec<Option<TokenMetadata>>),
+    TransferFrom(ActorId, ActorId, TokenId, u128),
+    BatchTransferFrom(ActorId, ActorId, Vec<TokenId>, Vec<u128>),
+    Burn(TokenId, u128),
+    BurnBatch(Vec<TokenId>, Vec<u128>),
+    Approve(ActorId),
+    RevokeApproval(ActorId),
 }
 ```
 
 ### `Event` Structure
 
 ```rust
-pub enum Event {
+pub enum MTKEvent {
     TransferSingle(TransferSingleReply),
     Balance(u128),
     BalanceOfBatch(Vec<BalanceOfBatchReply>),
@@ -105,13 +142,12 @@ pub enum Event {
         operator: ActorId,
         from: ActorId,
         to: ActorId,
-        ids: Vec<u128>,
+        ids: Vec<TokenId>,
         values: Vec<u128>,
     },
-    ApprovalForAll {
-        owner: ActorId,
-        operator: ActorId,
-        approved: bool,
+    Approve {
+        from: ActorId,
+        to: ActorId,
     },
 }
 
