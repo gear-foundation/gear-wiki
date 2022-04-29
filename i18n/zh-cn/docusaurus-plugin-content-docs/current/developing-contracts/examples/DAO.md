@@ -3,110 +3,97 @@ sidebar_label: 'DAO'
 sidebar_position: 7
 ---
 
-# 去中心化自治组织(DAO)
-
-智能合约可以在 Github 上获得: https://github.com/gear-tech/apps/tree/master/dao
+# 去中心化自治组织 (DAO)
 
 ## 源文件
 
-1. `erc20_functions.rs` - 包含 ERC20 合约的函数。DAO 合约通过 `transfer_tokens` 和 `balance` 函数同 ERC20 合约进行交互:
+1. `ft_messages.rs` - 包含同质化代币合约的函数。DAO 合约通过 `transfer_tokens` 和 `balance` 函数与同质化代币合约进行交互：
 
 ```rust
 pub async fn transfer_tokens(
 		&mut self,
-		token_id: &ActorId, /// - ERC-20 合约地址
+		token_id: &ActorId, /// - 同质化代币合约地址
 		from: &ActorId, /// - 发送方地址
 		to: &ActorId, /// - 接收方地址
 		amount: u128, /// - Token 数量
 )
 ```
 
-这个函数发送一个消息(这个 Action 在枚举 `TokenAction` 中定义)并接受返回结果(这个返回结果在枚举 `TokenEvent` 中定义):
+这个函数发送一个消息 (这个 Action 在枚举 `FTAction` 中定义) 并接受返回结果 (这个返回结果在枚举 `FTEvent` 中定义)：
 
 ```rust
-	let transfer_response: TokenEvent = msg::send_and_wait_for_reply(
-        *token_id, /// - ERC20 合约地址,
-        TokenAction::Transfer(transfer_data), /// - ERC20 合约中的 Action
-        exec::gas_available() - GAS_RESERVE,
+	let transfer_response: FTEvent = msg::send_and_wait_for_reply(
+        *token_id, /// - 同质化代币合约地址，
+        FTAction::Transfer(transfer_data), /// - 同质化代币合约中的 Action
         0,
-    )
+    ).unwrap()
+     .await
+     .expect("Error in transfer tokens");
 ```
 
-balance 函数也采用类似的方式定义:
+balance 函数也采用类似的方式定义：
 
 ```rust
 pub async fn balance(
 		&mut self,
-		token_id: &ActorId, /// - ERC20 合约地址,
+		token_id: &ActorId, /// - 同质化代币合约地址，
 		account: &ActorId, /// - 账户地址
 )
-``` 
-并发送消息:
-
-```rust
-let balance_response: TokenEvent = msg::send_and_wait_for_reply(
-        *token_id, /// - ERC20 合约地址,
-		TokenAction::BalanceOf(H256::from_slice(account.as_ref())) /// - ERC20 合约中的 Action
-        exec::gas_available() - GAS_RESERVE,
-        0,
-    )
 ```
 
-2. `payloads.rs` - 包含合约在返回时接收和发送的数据结构。
+并发送消息：
 
-3. `lib.rs` - 定义了合约的逻辑。
+```rust
+let balance_response: FTEvent = msg::send_and_wait_for_reply(
+        *token_id, /// - 同质化代币合约地址，
+		FTAction::BalanceOf(H256::from_slice(account.as_ref())) /// - 同质化代币合约中的 Action
+        0,
+    ).unwrap()
+     .await
+     .expect("Error in balance response");
+```
 
-## Structs
+2. `lib.rs` - 定义了合约的逻辑。
 
-合约包含了以下结构:
+## 合约结构
+
+合约包含了以下结构：
 
 ```rust
 struct Dao {
-    admin: ActorId,
     approved_token_program_id: ActorId,
     period_duration: u64,
     voting_period_length: u64,
     grace_period_length: u64,
-    dilution_bound: u128,
-    abort_window: u64, 
     total_shares: u128,
     members: BTreeMap<ActorId, Member>,
-    member_by_delegate_key: BTreeMap<ActorId, ActorId>,
     proposal_id: u128,
     proposals: BTreeMap<u128, Proposal>,
- 	approved_list: Vec<ActorId>,
+    locked_funds: u128,
 }
 ```
 
-其中:
-
-`admin` - 初始化 DAO 的成员。他拥有一份份额，可以提交新的提案和添加新的成员。
+其中：
 
 `approved_token_program_id` - Token (ERC20) 合约的引用，用户用来抵押获得 DAO 的份额。
 
-`period_duration` - DAO 中最小的时间单位，以毫秒(ms)计。
+`period_duration` - DAO 中最小的时间单位，以毫秒 (ms) 计。
 
 `voting_period_length` - 投票时长。投票持续时间 = 间隔时间单位 * 投票时长（period_duration * voting_period_length）.
 
-`grace_period_length` - 在投票期之后，DAO成员可以在一段时间内离开DAO (ragequit)，在这段时间内他们不会被稀释，最终也不会受到提案被接受到 DAO 的影响。
+`grace_period_length` - 在投票期之后，DAO 成员可以在一段时间内离开 DAO (ragequit)，在这段时间内他们不会被稀释，最终也不会受到提案被接受到 DAO 的影响。
 
-`dilution_bound` - 稀释界限保护成员在集体愤怒的情况下免于过度稀释。它的设计是为了缓解这样一个问题: 提案通过后，许多用户愤怒地从 DAO 退出。如果股份被稀释的限制时间比以前少，该提议将自动被拒绝。
-
-`abort_window` - 申请人可以在退款的情况下取消提案的时间间隔(提案提交后立即开始)。
-
-`total_shares` - 所有成员的总体份额。初始时是 0.
+`total_shares` - 所有成员的总体份额。初始值为 0。
 
 `members` - DAO 所有成员。
-
-`member_by_delegate_key` - 映射提交的提案的 Key 和成员地址。
 
 `proposal_id` - 最后一个提案的索引编号。
 
 `proposals` - 所有的提案（提案队列）。
 
-`approved_list` - 所有被批准的加入 DAO 的行为人。
+`locked_funds` - 当提交资金提案时，这些代币将被锁定。
 
-参数 `admin`, `approved_token_program_id`, `period_duration`, `grace_period_length`, `dilution_bound`, `abort_window` 在合约初始化时进行设置。合约初始化在以下函数中进行:
+参数 `approved_token_program_id`，`period_duration`，`grace_period_length` 在合约初始化时进行设置。合约初始化在以下函数中进行：
 
 ```rust
 #[no_mangle]
@@ -115,80 +102,55 @@ pub unsafe extern "C" fn init() {
 }
 ```
 
-初始化参数使用如下数据结构: 
+初始化参数使用如下数据结构：
 
 ```rust
-struct InitConfig {
-    admin: H256,
-    approved_token_program_id: H256,
-    guild_bank_id: H256,    
+struct InitDao {
+    approved_token_program_id: ActorId,
     period_duration: u64,
     voting_period_length: u64,
     grace_period_length: u64,
-    dilution_bound: u128,
-    abort_window: u64,
 }
 ```
 
-提案数据结构:
+提案数据结构：
 
 ```rust
  pub struct Proposal {
-    pub proposer: ActorId, /// - the member who submitted the proposal
-    pub applicant: ActorId, /// - the applicant who wishes to become a member 
-    pub shares_requested: u128, /// - the amount of shares the applicant is requesting
-    pub yes_votes: u128, /// - the total number of YES votes for that proposal
-    pub no_votes: u128, /// - the total number of NO votes for that proposal
-    pub quorum: u128, /// - a certain threshold of YES votes in order for the proposal to pass
-    pub is_membership_proposal: bool, /// - true if it is a membership proposal, false if it is a funding proposal
-    pub processed: bool, /// - true if the proposal has already been processed
-    pub did_pass: bool, /// - true if the proposal has passed
-    pub canceled: bool, /// - true if the proposal has been canceled
-    pub aborted: bool, /// - true if the proposal has been aborted
-    pub token_tribute: u128, /// - the number of tokens offered for shares
-    pub details: String, /// - proposal details
-    pub starting_period: u64, /// - the start of the voting period
-    pub max_total_shares_at_yes_vote: u128, /// - the number of total shares that were detected at yes votes
-    pub votes_by_member: BTreeMap<H256, Vote>, /// - the votes on that proposal by each member
+    pub proposer: ActorId, /// - 提交提案的成员
+    pub applicant: ActorId, /// - 希望成为会员的申请人
+    pub yes_votes: u128, /// - 支持该提案的总票数
+    pub no_votes: u128, /// - 反对该提案的总票数
+    pub quorum: u128, /// - 为了使提案获得通过，必须达到一定的赞成票
+    pub processed: bool, /// - 如果提案已被处理，则为 true
+    pub did_pass: bool, /// - 如果提案已通过，则为 true
+    pub details: String, /// - 提案详情
+    pub starting_period: u64, /// - 投票期开始时间
+    pub ended_at: u64, /// -  投票期结束时间
+    pub votes_by_member: BTreeMap<ActorId, Vote>, /// - 每个成员对该提案的投票情况
 }
 ```
-成员数据结构:
+
+成员数据结构：
 
 ```rust
 pub struct Member {
-    pub delegate_key: ActorId, /// - the key responsible for submitting proposals and voting ( by default it is equal to member address)
-    pub shares: u128, /// - the shares of that member
-    pub highest_index_yes_vote: u128, /// - the index of the highest proposal on which the members voted YES (that value is checked when user is going to leave the DAO)
+    pub shares: u128, /// - 该成员的股份
+    pub highest_index_yes_vote: u128, /// - 成员投票赞成的最高提案的索引（当用户要离开 DAO 时检查该值）
 }
-``` 
+```
 
-合约接收的外部 Action 在枚举 `Actions` 中定义。合约的返回在枚举 `Events` 中定义。
+合约接收的外部 Action 在枚举 `DaoActions` 中定义。合约的返回在枚举 `DaoEvents` 中定义。
 
 ## DAO 函数
 
- - 添加行为人到审核列表中。这些被添加的行为人可以存入他们的 Token 到 DAO 中，同时 DAO 的成员可以提交提案来将他们加入 DAO 成员中。
+- 加入 DAO。用户可以调用该函数，以便向 DAO 合约发送代币并成为 DAO 成员。
 
 ```rust
-fn add_to_approved_list(
-		&mut self,
-		member: &ActorId,
-)
+ async fn deposit(&mut self, amount: u128)
 ```
 
- - 加入DAO的提议。提案只能由现有成员提交。
-
-```rust
-async fn submit_membership_proposal(
-        &mut self,
-        applicant: &ActorId,
-        token_tribute: u128,
-        shares_requested: u128,
-        quorum: u128,
-        details: String,
-    )
-```
-
- - 资助提案。“申请人”是一个将得到资助的行为人。
+- 资助提案。“申请人”将会得到资助
 
 ```rust
 async fn submit_funding_proposal(
@@ -200,7 +162,7 @@ async fn submit_funding_proposal(
     )
 ```
 
- - 成员或者成员的委托地址可以提交他们对于提案的投票（YES 或 NO）。
+- 成员或者成员的委托地址可以提交他们对于提案的投票（YES 或 NO）。
 
 ```rust
 async fn submit_vote(
@@ -210,25 +172,7 @@ async fn submit_vote(
     )
 ```
 
- - 申请人中止提案的权利。如果申请人不同意申请人所请求的股份或申请人所表示的细节，可以使用这个权利。
-
-```rust
-async fn abort(
-        &mut self,
-        proposal_id: u128
-    )
-```
-
- - 如果没有赞成票，提案人有权在投票期结束后取消提案。
-
-```rust
-async fn cancel_proposal(
-        &mut self,
-        proposal_id: u128,
-    )
-```
-
- - 成员在宽限期内提取资产的权利。如果成员们不同意提案的结果，同时提案被采纳的话，会对他们的股份产生影响，就可以使用这个权利。该成员只有对那项提案投了反对票才能愤然退出。
+- 成员在宽限期内提取资产的权利。如果成员们不同意提案的结果，同时提案被采纳的话，会对他们的股份产生影响，就可以使用这个权利。该成员只有对那项提案投了反对票才能愤然退出。
 
 ```rust
 async fn ragequit(
@@ -237,7 +181,7 @@ async fn ragequit(
     )
 ```
 
- - 宽限期内提案竞争后的提案处理。如果提案被接受，抵押代币存入合约和新的份额被铸造并发行给申请人。如果提案被拒绝，抵押的代币将退还给申请人。
+- 宽限期内提案竞争后的提案处理。如果提案被接受，抵押代币存入合约和新的份额被铸造并发行给申请人。如果提案被拒绝，抵押的代币将退还给申请人。
 
 ```rust
 async fn process_proposal(
@@ -246,50 +190,52 @@ async fn process_proposal(
     )
 ```
 
- - 这些函数将在 `async fn main()` 中通过 `Actions` 来调用。
+- 这些函数将在  `async fn main()` 中通过  `DaoAction` 来调用。
 
 ```rust
-    #[gstd::async_main]
+	#[gstd::async_main]
 	async fn main() {
-		let action: Action = msg::load().expect("Could not load Action");
+		let action: DaoAction = msg::load().expect("Could not load Action");
     	match action {
-        Action::AddToWhiteList(input) => {
-            DAO.add_to_whitelist(&ActorId::new(input.to_fixed_bytes()))
-        }
-        Action::SubmitMembershipProposal(input) => {
-            let applicant = ActorId::new(input.applicant.to_fixed_bytes());
-            DAO.submit_membership_proposal(
-                &applicant,
-                input.token_tribute,
-                input.shares_requested,
-                input.quorum,
-                input.details,
-            )
-            .await;
-        }
-        Action::SubmitFundingProposal(input) => {
-            let applicant = ActorId::new(input.applicant.to_fixed_bytes());
-            DAO.submit_funding_proposal(&applicant, input.amount, input.quorum, input.details)
-                .await;
-        }
-        				...
-    		}
+            DaoAction::Deposit { amount } => dao.deposit(amount).await,
+            DaoAction::SubmitFundingProposal {
+                applicant,
+                amount,
+                quorum,
+                details,
+            } => {
+                dao.submit_funding_proposal(&applicant, amount, quorum, details)
+                    .await;
+            }
+            ...
 	}
 ```
-   
- - 链下获取合约状态的能力也很重要。合约状态在 `fn meta_state()` 中定义。合约收到读取某数据请求（可接受的请求被定义在 `State` 结构中）时发送相应的返回数据。合约返回的数据定义在 `StateReply` 中。
- 
+
+2. `state.rs` - 定义了`State`和`StateReply`。链下获取合约状态的能力也很重要。它被定义在 `fn meta_state()`中。合约收到读取某数据请求（可接受的请求在`State`中定义）时发送相应的返回数据。合约返回的数据定义在`StateReply`中。
+
 ```rust
 pub unsafe extern "C" fn meta_state() -> *mut [i32; 2] {
     let state: State = msg::load().expect("failed to decode input argument");
     let encoded = match state {
-        State::IsMember(input) => {
-  	StateReply::IsMember(DAO.is_member(&ActorId::new(input.to_fixed_bytes()))).encode()
+        State::UserStatus(account) => {
+            let role = if dao.is_member(&account) {
+                Role::Member
+            } else {
+                Role::None
+            };
+            StateReply::UserStatus(role).encode()
         }
+        State::AllProposals => StateReply::AllProposals(dao.proposals.clone()).encode(),
        ...
     };
-    let result = gstd::macros::util::to_wasm_ptr(&(encoded[..]));
-    core::mem::forget(encoded);
-    result
+    gstd::util::to_leak_ptr(encoded)
 }
 ```
+
+## 源码
+
+DAO 智能合约的例子的源代码和其测试的实例可以在 [GitHub](https://github.com/gear-tech/apps/tree/master/dao-light)找到。
+
+DAO 扩展版可以管理、会员提案和委托投票，源码在[GitHub](https://github.com/gear-tech/apps/blob/master/dao)。
+
+更多关于在 Gear 上测试智能合约的细节，请参考这篇文章：[应用测试](https://wiki.gear-tech.io/zh-cn/developing-contracts/testing/)。
