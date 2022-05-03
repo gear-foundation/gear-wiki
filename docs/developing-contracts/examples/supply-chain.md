@@ -88,11 +88,11 @@ Arguments:
 * `price`: an item's price.
 
 ```rust
-async fn purchare_by_distributor(&mut self, item_id: U256, delivery_time: u64)
+async fn purchase_by_distributor(&mut self, item_id: U256, delivery_time: u64)
 ```
-Purchares an item from a producer on behalf of a distributor.
+Purchases an item from a producer on behalf of a distributor.
 Transfers tokens for purchasing an item to a supply chain
-until an item is received (by `receive_by_distributor` function).
+until an item is received (by the `receive_by_distributor` function).
 
 Requirements:
 * `msg::source()` must be a distributor in a supply chain.
@@ -107,8 +107,8 @@ A countdown starts after the `ship_by_producer` function is executed.
 fn ship_by_producer(&mut self, item_id: U256)
 ```
 Starts shipping a purchased item to a distributor on behalf of a producer.
-Starts countdown for delivery time specified in
-`purchare_by_distributor` function.
+Starts a countdown for a delivery time specified in the
+`purchase_by_distributor` function.
 
 Requirements:
 * `msg::source()` must be a producer in a supply chain
@@ -121,9 +121,9 @@ Arguments:
 ```rust
 async fn receive_by_distributor(&mut self, item_id: U256)
 ```
-Receives a shipped item from a producer on behalf of a distrubutor.
+Receives a shipped item from a producer on behalf of a distributor.
 Depending on a counted delivery time, transfers tokens for purchasing an item
-from supply chain to producer or as a penalty for being late refunds some or
+from a supply chain to a producer or as a penalty for being late refunds some or
 all of them to a distributor.
 Transfers item's NFT to a distributor.
 
@@ -138,7 +138,7 @@ Arguments:
 ```rust
 fn process_by_distributor(&mut self, item_id: U256)
 ```
-Processes a received item from a producer on behalf of distributor.
+Processes a received item from a producer on behalf of a distributor.
 
 Requirements:
 * `msg::source()` must be a distributor in a supply chain
@@ -151,7 +151,7 @@ Arguments:
 ```rust
 fn package_by_distributor(&mut self, item_id: U256)
 ```
-Packages a processed item on behalf of distributor.
+Packages a processed item on behalf of a distributor.
 
 Requirements:
 * `msg::source()` must be a distributor in a supply chain
@@ -178,11 +178,11 @@ Arguments:
 * `price`: an item's price.
 
 ```rust
-async fn purchare_by_retailer(&mut self, item_id: U256, delivery_time: u64)
+async fn purchase_by_retailer(&mut self, item_id: U256, delivery_time: u64)
 ```
-Purchares an item from a distributor on behalf of a retailer.
+Purchases an item from a distributor on behalf of a retailer.
 Transfers tokens for purchasing an item to a supply chain
-until an item is received (by `receive_by_retailer` function).
+until an item is received (by the `receive_by_retailer` function).
 
 Requirements:
 * `msg::source()` must be a retailer in a supply chain.
@@ -197,8 +197,8 @@ A countdown starts after the `ship_by_distributor` function is executed.
 fn ship_by_distributor(&mut self, item_id: U256)
 ```
 Starts shipping a purchased item to a retailer on behalf of a distributor.
-Starts countdown for delivery time specified in
-`purchare_by_retailer` function.
+Starts a countdown for a delivery time specified in the
+`purchase_by_retailer` function.
 
 Requirements:
 * `msg::source()` must be a distributor in a supply chain
@@ -213,7 +213,7 @@ async fn receive_by_retailer(&mut self, item_id: U256)
 ```
 Receives a shipped item from a distributor on behalf of a retailer.
 Depending on a counted delivery time, transfers tokens for purchasing an item
-from supply chain to distributor or as a penalty for being late refunds some or
+from a supply chain to a distributor or as a penalty for being late refunds some or
 all of them to a retailer.
 Transfers item's NFT to a retailer.
 
@@ -228,7 +228,7 @@ Arguments:
 ```rust
 async fn put_up_for_sale_by_retailer(&mut self, item_id: U256, price: u128)
 ```
-Puts a received item from distributor up for a sale to a consumer
+Puts a received item from a distributor up for a sale to a consumer
 for a given price on behalf of a retailer.
 Transfers item's NFT to a supply chain.
 
@@ -242,9 +242,9 @@ Arguments:
 * `price`: an item's price.
 
 ```rust
-async fn purchare_by_consumer(&mut self, item_id: U256)
+async fn purchase_by_consumer(&mut self, item_id: U256)
 ```
-Purchares an item from a retailer.
+Purchases an item from a retailer.
 Transfers tokens for purchasing an item to its retailer.
 Transfers item's NFT to a consumer.
 
