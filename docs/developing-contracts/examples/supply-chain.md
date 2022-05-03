@@ -4,13 +4,13 @@ sidebar_position: 10
 ---
 
 # What is a supply chain?
-In logistics, a supply chain is a system for tracking and delivering to end consumer various items. As a rule, such systems can't work without a lot of paperwork and other layers of bureaucracy. All of this costs a lot of time and money and increases a likelihood of an accidental error or, a worst of all, a fraud. With a help of smart contract and blockchain technologies, it is possible to eliminate these problems by making a supply chain more efficient, reliable and transparent.
+In logistics, a supply chain is a system for tracking and delivering to an end consumer various items. As a rule, such systems can't work without a lot of paperwork and other layers of bureaucracy. All of this costs a lot of time and money and increases the likelihood of an accidental error or, worst of all, a fraud. With the help of smart contract and blockchain technologies, it is possible to eliminate these problems by making a supply chain more efficient, reliable and transparent.
 
-So here's an example of supply chain smart contract.
+So here's the example of a supply chain smart contract.
 
 ## Logic
-* Each newly produced item gets NFT (or, more officially, [ERC-721 token](/developing-contracts/examples/erc-721)) and ID equal to ID of its NFT. Then, as an item moves along a supply chain, item's NFT transfers between supply chain program, item's producer, and future distribitor, retailer and end consumer.
-* Anyone who knows item's ID can get item info.
+* Each newly produced item gets the NFT (or, more officially, the [ERC-721 token](/developing-contracts/examples/erc-721)) and an ID equal to the ID of its NFT. Then, as an item moves along a supply chain, an item's NFT transfers between a supply chain program, item's producer, and future distributor, retailer and end consumer.
+* Anyone who knows an item's ID can get item info.
 * Sale, purchase, delivery is made in [ERC-20 tokens](/developing-contracts/examples/erc20).
 
 Item info has the following struct:
@@ -263,7 +263,7 @@ Arguments:
 * `item_id`: an item's ID.
 
 ### Actions & events
-**Action** is an enum that is sent to a program and contains info about what it should do. After a successful processing of **Action**, a program replies with **Event** enum that contains info about a processed **Action** and its result.
+**Action** is an enum that is sent to a program and contains info about what it should do. After a successful processing of **Action**, a program replies with the **Event** enum that contains info about a processed **Action** and its result.
 
 ```rust
 enum SupplyChainAction {
@@ -331,6 +331,6 @@ enum SupplyChainEvent {
 ```
 
 ## Source code
-The source code of this example of an supply chain smart contract and the example of an implementation of its testing is available on [GitHub](https://github.com/gear-tech/apps/blob/master/supply-chain).
+The source code of this example of a supply chain smart contract and the example of an implementation of its testing is available on [GitHub](https://github.com/gear-tech/apps/blob/master/supply-chain).
 
 For more details about testing smart contracts written on Gear, refer to the [Program testing](/developing-contracts/testing) article.
