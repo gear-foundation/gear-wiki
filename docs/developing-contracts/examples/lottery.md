@@ -7,6 +7,13 @@ sidebar_position: 9
 
 The smart-contract is available on GitHub: https://github.com/gear-tech/apps/tree/master/lottery
 
+# Introduction
+Whoever initializes the contract is considered the lottery owner. Only the owner has the right
+to start/finish the lottery.
+Players are added to the lottery themselves by sending a message with their bet to the contract.
+Next, the players monitor the state of the lottery.
+The winner is determined randomly.
+
 ## Source files
 1. `lottery/src/lib.rs` - contains functions of the lottery contract.
 2. `lottery/io/src/lib.rs` - contains Enums and structs that the contract receives and sends in the reply.
