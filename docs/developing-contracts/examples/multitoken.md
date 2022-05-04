@@ -112,23 +112,6 @@ pub struct TokenMetadata {
     pub reference: Option<String>,
 }
 ```
-### `Action` Structure
-
-```rust
-#[derive(Debug, Decode, Encode, TypeInfo)]
-pub enum MTKAction {
-    Mint(ActorId, TokenId, u128, Option<TokenMetadata>),
-    BalanceOf(ActorId, TokenId),
-    BalanceOfBatch(Vec<ActorId>, Vec<TokenId>),
-    MintBatch(ActorId, Vec<u128>, Vec<TokenId>, Vec<Option<TokenMetadata>>),
-    TransferFrom(ActorId, ActorId, TokenId, u128),
-    BatchTransferFrom(ActorId, ActorId, Vec<TokenId>, Vec<u128>),
-    Burn(TokenId, u128),
-    BurnBatch(Vec<TokenId>, Vec<u128>),
-    Approve(ActorId),
-    RevokeApproval(ActorId),
-}
-```
 
 ### `Event` Structure
 
