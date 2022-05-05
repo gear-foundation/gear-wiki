@@ -19,7 +19,7 @@ Gear 使用了来自 `cargo` 构建的 Rust 程序标准测试机制。
 
 ## 在测试模式下构建智能合约
 
-首先，确保你想测试的程序已经编译成 `WASM` 文件。你可以参考 [Getting started](./getting-started-in-5-minutes.md) 了解更多细节。
+首先，确保你想测试的程序已经编译成 `WASM` 文件。你可以参考 [Getting started](getting-started-in-5-minutes.md) 了解更多细节。
 
 1. 通常情况 Gear 智能合约编译需要采用以下强制性参数：
     * `RUSTFLAGS="-C link-args=--import-memory"`
@@ -39,7 +39,7 @@ Gear 使用了来自 `cargo` 构建的 Rust 程序标准测试机制。
     cargo test
     ```
 
-3. 如果你使用 `cargo` 配置文件，那么请记住，`[build]` 参数同时作用于 `cargo build` 和 `cargo test` [Github Issue](https://github.com/rust-lang/cargo/issues/6784)。例如 - 
+3. 如果你使用 `cargo` 配置文件，那么请记住，`[build]` 参数同时作用于 `cargo build` 和 `cargo test` [Github Issue](https://github.com/rust-lang/cargo/issues/6784)。例如 -
 
     ```toml
     # .cargo/config.toml
@@ -49,7 +49,7 @@ Gear 使用了来自 `cargo` 构建的 Rust 程序标准测试机制。
     [target.wasm32-unknown-unknown]
     rustflags = ["-C", "link-args=--import-memory"]
     ```
-    
+
     在这种情况下，你必须选择对你来说最便捷的方案：
 
     * (推荐) 从 `config.toml` 中移除 `target=wasm32-unknown-unknown`, 这意味着你需要：
@@ -112,7 +112,7 @@ opt-level = 's'
 
 ## `gtest` 的能力
 
-为 [PING-PONG](./developing-contracts/examples/ping.md) 程序提供的例子。
+为 [PING-PONG](examples/ping.md) 程序提供的例子。
 
 ```rust
 use gtest::{Log, Program, System};
@@ -146,7 +146,7 @@ fn basics() {
 
     // Initialization of program structure from file.
     //
-    // Takes as arguments reference to the related `System` and the path to wasm binary relatively 
+    // Takes as arguments reference to the related `System` and the path to wasm binary relatively
     // the root of the crate where the test was written.
     //
     // Sets free program id from the related `System` to this program. For this case it equals 0x010000..
