@@ -6,7 +6,7 @@ sidebar_position: 8
 # What is an escrow?
 An escrow is a special account to which some assets (e.g. money or stocks) are deposited and stored until certain conditions are met. In terms of smart contracts, an escrow is a program that is stored on a blockchain and, like a regular escrow, can receive some assets (e.g. a cryptocurrency or tokens) from one user and, when certain conditions are met, send them to another.
 
-This article will show the example of an escrow smart contract, where assets will be [ERC-20 tokens](https://eips.ethereum.org/EIPS/eip-20).
+This article will show the example of an escrow smart contract, where assets will be [Gear fungible tokens - GFT](https://wiki.gear-tech.io/developing-contracts/examples/gft-20).
 
 ## Logic
 * Any user can create a contract as a buyer or seller.
