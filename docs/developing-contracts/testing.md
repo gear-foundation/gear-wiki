@@ -19,7 +19,7 @@ Even when units of code work correctly, it is important to test if several parts
 
 ## Building smart contract in test mode
 
-First of all, make sure you have a compiled `WASM` file of the program you want to test. You can refer to [Getting started](./getting-started-in-5-minutes.md) for additional details.
+First of all, make sure you have a compiled `WASM` file of the program you want to test. You can refer to [Getting started](getting-started-in-5-minutes.md) for additional details.
 
 1. Usually the following mandatory parameters must be used for regular compilation of Gear smart contracts:
     * `RUSTFLAGS="-C link-args=--import-memory"`
@@ -111,7 +111,7 @@ Solution options:
 
 ## `gtest` capabilities
 
-The example provided for [PING-PONG](./developing-contracts/examples/ping.md)  program.
+The example provided for [PING-PONG](examples/ping.md)  program.
 
 ```rust
 use gtest::{Log, Program, System};
