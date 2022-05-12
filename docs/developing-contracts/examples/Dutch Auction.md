@@ -6,7 +6,8 @@ sidebar_position: 10
 # Dutch auction
 
 ## Introduction
-A Dutch auction is one of several types of auctions for buying or selling goods. Most commonly, it means an auction in which the auctioneer begins with a high asking price in the case of selling, and lowers it until some participant accepts the price, or it reaches a predetermined reserve price. A Dutch auction has also been called a clock auction or open-outcry descending-price auction. This type of auction shows the advantage of speed since a sale never requires more than one bid.
+&nbsp;&nbsp;&nbsp;&nbsp;A Dutch auction is one of several types of auctions for buying or selling goods. Most commonly, it means an auction in which the auctioneer begins with a high asking price in the case of selling, and lowers it until some participant accepts the price, or it reaches a predetermined reserve price. A Dutch auction has also been called a clock auction or open-outcry descending-price auction. This type of auction shows the advantage of speed since a sale never requires more than one bid.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;This auction uses [Gear NFT](https://wiki.gear-tech.io/developing-contracts/examples/erc-721#erc-721-interface) as tradable goods. You can read about it if you want to dive deeper.
 
 ## Prerequisites
 [Gear ERC-721](https://wiki.gear-tech.io/developing-contracts/examples/erc-721#erc-721-interface)
@@ -36,8 +37,8 @@ pub struct CreateConfig {
     pub nft_contract_actor_id: ActorId,
     pub token_owner: ActorId,
     pub token_id: U256,
-    pub starting_price: U256,
-    pub discount_rate: U256,
+    pub starting_price: u128,
+    pub discount_rate: u128,
     pub duration: Duration,
 }
 ```
@@ -61,6 +62,24 @@ pub struct Duration {
 - `hours` amount of hours in period
 - `minutes` amount of minutes in period
 
+### Events
+
+```rust
+pub enum Event {
+    AuctionStarted {
+        token_owner: ActorId,
+        price: u128,
+        token_id: U256,
+    },
+    AuctionStoped {
+        token_owner: ActorId,
+        token_id: U256,
+    },
+}
+```
+- `AuctionStarted` is an event that occurs when someone use `Create(CreateConfig)` successfully
+- `AuctionStoped` is an event that occurs when contract owner forcibly ends the auction
+
 ### State
 
 *Requests:*
@@ -83,7 +102,7 @@ Each state request has a corresponding reply with the same name.
 
 ```rust
 pub enum StateReply {
-    TokenPrice(U256),
+    TokenPrice(u128),
     IsActive(bool),
     Info(AuctionInfo),
 }
@@ -100,7 +119,7 @@ pub struct AuctionInfo {
     pub nft_contract_actor_id: ActorId,
     pub token_id: U256,
     pub token_owner: ActorId,
-    pub starting_price: U256,
+    pub starting_price: u128,
 }
 ```
 
