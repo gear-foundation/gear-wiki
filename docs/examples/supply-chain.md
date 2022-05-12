@@ -9,9 +9,9 @@ In logistics, a supply chain is a system for tracking and delivering to an end c
 So here's the example of a supply chain smart contract.
 
 ## Logic
-* Each newly produced item gets the NFT (or, more officially, the [ERC-721 token](/developing-contracts/examples/erc-721)) and an ID equal to the ID of its NFT. Then, as an item moves along a supply chain, an item's NFT transfers between a supply chain program, item's producer, and future distributor, retailer and end consumer.
+* Each newly produced item gets the NFT (in Gear's context - [GNFT token](/developing-contracts/examples/gnft-721)) and an ID equal to the ID of its NFT. Then, as an item moves along a supply chain, an item's NFT transfers between a supply chain program, item's producer, and future distributor, retailer and end consumer.
 * Anyone who knows an item's ID can get item info.
-* Sale, purchase, delivery is made in [ERC-20 tokens](/developing-contracts/examples/erc20).
+* Sale, purchase, delivery is made in [GFT tokens](/developing-contracts/examples/gft-20).
 
 Item info has the following struct:
 ```rust
