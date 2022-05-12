@@ -7,10 +7,7 @@ sidebar_position: 10
 
 ## Introduction
 &nbsp;&nbsp;&nbsp;&nbsp;A Dutch auction is one of several types of auctions for buying or selling goods. Most commonly, it means an auction in which the auctioneer begins with a high asking price in the case of selling, and lowers it until some participant accepts the price, or it reaches a predetermined reserve price. A Dutch auction has also been called a clock auction or open-outcry descending-price auction. This type of auction shows the advantage of speed since a sale never requires more than one bid.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;This auction uses [Gear NFT](https://wiki.gear-tech.io/developing-contracts/examples/erc-721#erc-721-interface) as tradable goods. You can read about it if you want to dive deeper.
-
-## Prerequisites
-[Gear ERC-721](https://wiki.gear-tech.io/developing-contracts/examples/gnft-721)
+&nbsp;&nbsp;&nbsp;&nbsp;This auction uses [Gear NFT](https://wiki.gear-tech.io/developing-contracts/examples/gnft-721) as tradable goods. You can read about it if you want to dive deeper.
 
 ## Contract description
 
