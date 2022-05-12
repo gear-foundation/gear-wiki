@@ -21,7 +21,7 @@ pub enum Action {
 }
 ```
 
-- `Buy` is an action to buy an ERC-721 token by current price
+- `Buy` is an action to buy an GNFT token by current price
 - `Create(CreateConfig)` is an action to create a new auction if the previous one is over or if it's the first auction in this contract.<br/>
 - `ForceStop` is an action to force stop an auction if contract owner would prefer to finish it ahead of time
 
