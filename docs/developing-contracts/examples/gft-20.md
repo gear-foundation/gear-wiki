@@ -1,11 +1,13 @@
 ---
-sidebar_label: 'ERC-20'
+sidebar_label: 'GFT (ERC-20)'
 sidebar_position: 3
 ---
 
-# What is ERC-20?
+# Gear Fungible Token
 
-ERC20 is a standard that’s used for creating and issuing smart contracts on the Ethereum blockchain. It was created by Ethereum developers on behalf of the Ethereum community in 2015, and it was officially recognised in 2017.
+## What is ERC-20?
+
+ERC-20 is a standard that’s used for creating and issuing smart contracts on the Ethereum blockchain. It was created by Ethereum developers on behalf of the Ethereum community in 2015, and it was officially recognised in 2017.
 
 These smart contracts can then be used to create tokenized assets that represent anything on the Ethereum blockchain like:
 
@@ -17,7 +19,9 @@ These smart contracts can then be used to create tokenized assets that represent
 
 - Ounces of Gold
 
-These tokenized assets are known as fungible tokens as all instances of a given ERC20 token are the same and they can be used interchangeably. A token that is unique and can not be interchangeable is known as a Non Fungible Token.
+These tokenized assets are known as fungible tokens as all instances of a given ERC-20 token are the same and they can be used interchangeably. A token that is unique and can not be interchangeable is known as a Non Fungible Token.
+
+Gear provides native implementaion of fungible token (GFT) described in this article.
 
 ## Storage Structure
 
@@ -107,7 +111,7 @@ pub struct TransferInput {
 }
 ```
 
-## ERC-20 functions
+## GFT functions
 
 ```rust
     /// Minting the specified `amount` of tokens for the account that called this function.
@@ -124,7 +128,7 @@ pub struct TransferInput {
 
 ```
 
-## Gear's example of ERC-20
+## Conclusion
 
 A source code of the contract example provided by Gear is available on GitHub: [fungible-token/src/lib.rs](https://github.com/gear-tech/apps/blob/master/fungible-token/src/lib.rs).
 

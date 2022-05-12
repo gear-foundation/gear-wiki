@@ -1,21 +1,19 @@
 ---
-sidebar_label: 'ERC-721: NFT'
+sidebar_label: 'GNFT (ERC-721)'
 sidebar_position: 4
 ---
 
-# ERC-721: NFT
+# Gear Non-Fungible Token
 
 ## Introduction
 
-At Gear, we want to provide an ecosystem for developers coming from various backgrounds. We have to note that Gear offers far more advanced features and technological developments compared to platforms that popular protocols like ERC-20 or ERC-721 were designed for. However, it would be inefficient to ignore such widely used interfaces in favor of arbitrary, but modern implementations. Therefore, Gear provides support for ERC-721 based NFT tokens, as well as an updated standard based on Gear's vision.
+At Gear, we want to provide an ecosystem for developers coming from various backgrounds. We have to note that Gear offers far more advanced features and technological developments compared to platforms that popular standards like ERC-20 or ERC-721 were designed for. However, it would be inefficient to ignore such widely used interfaces in favor of arbitrary, but modern implementations. Therefore, Gear provides support for Non-Fungible Tokens (GNFT) based on Gear's vision.
 
-In this article, we will cover usage of Gear's ERC-721 interface library in composition with an example NFT implementation.
+In this article, we will cover usage of Gear's GNFT interface in composition with an example NFT implementation.
 
-## ERC-721 interface
+## What is ERC-721? 
 
-ERC-721 protocol is a community-accepted standard for Non-Fungible Tokens (NFTs) smart contract implementation. In this article, we will go over the details of how to use the ERC-721 interface provided by Gear via an example.
-
-[ERC-721](https://eips.ethereum.org/EIPS/eip-721) describes the interface that has to be implemented by a smart contract in order to be compliant. The following functions are expected to be present in the NFT contract:
+[ERC-721](https://eips.ethereum.org/EIPS/eip-721) is a community-accepted standard for Non-Fungible Tokens (NFTs) smart contract implementation. ERC-721 describes the interface that has to be implemented by a smart contract in order to be compliant. The following functions are expected to be present in the NFT contract:
 
 ```rust
 /// This emits when ownership of any NFT changes by any mechanism.
@@ -51,7 +49,9 @@ isApprovedForAll(owner, operator): bool;
 
 However, implicitly, some functions - like `mint` and `burn` - are expected to be implemented in the contract as well. Implementation for those functions may vary, therefore leading to existence various NFT collections.
 
-Gear provides an [ERC-721 interface library](https://github.com/gear-tech/apps/tree/master/non-fungible-token) with shared functionality described in the protocol.
+## Gear Non-Fungible Token
+
+Gear provides a [GNFT interface library](https://github.com/gear-tech/apps/tree/master/non-fungible-token) with shared functionality described in the protocol.
 
 :::note
 
@@ -77,15 +77,15 @@ fn approve_for_all(&mut self, owner: &ActorId, operator: &ActorId, approved: boo
 
 Functions above are essential for an NFT implementation and are implemented in the interface provided by Gear.
 
-The core component of the ERC-721 interface library is the `NonFungibleToken` struct. It contains implementations for the functions defined in the `NonFungibleTokenBase` trait and some useful helper functions such as `authorized_actor`, `is_token_owner`, etc.
+The core component of the GNFT interface library is the `NonFungibleToken` struct. It contains implementations for the functions defined in the `NonFungibleTokenBase` trait and some useful helper functions such as `authorized_actor`, `is_token_owner`, etc.
 
-Gear's ERC-721 interface is a library that can be used as a core block in writing a smart contract for an NFT implementation. Let's take a look at how this interface can be composed into a complete contract.
+Gear's GNFT interface is a library that can be used as a core block in writing a smart contract for an NFT implementation. Let's take a look at how this interface can be composed into a complete contract.
 
 ## NFT example
 
 In this section, we will be referring to [this](https://github.com/gear-tech/apps/tree/master/nft-example) implementation example of an NFT smart contract provided by Gear.
 
-First of all, the actions accepted by the contract should be in accordance with ERC-721:
+First of all, the actions accepted by the contract in accordance with ERC-721:
 
 ```rust
 pub enum Action {
@@ -122,7 +122,7 @@ pub struct NFT {
 }
 ```
 
-Note how `NonFungibleToken` struct from the ERC-721 library is composed inside the state; that allows to reuse the functionality it provides within the implementation of the contract's methods.
+Note how `NonFungibleToken` struct from the GNFT library is composed inside the state; that allows to reuse the functionality it provides within the implementation of the contract's methods.
 
 
 We will also need custom implementation for the `mint` and `burn` methods as mentioned above.
@@ -141,7 +141,7 @@ impl NFT {
 }
 ```
 
-Now, inside the `handle` method, we can use `mint` and `burn` described above for `Mint` and `Burn` actions. For the rest of the actions (i.e. `Approve`, `ApproveForAll`, `Transfer`, `OwnerOf` and `BalanceOf`), we can reuse Gear's ERC-721 library implementations.
+Now, inside the `handle` method, we can use `mint` and `burn` described above for `Mint` and `Burn` actions. For the rest of the actions (i.e. `Approve`, `ApproveForAll`, `Transfer`, `OwnerOf` and `BalanceOf`), we can reuse Gear's GNFT library implementations.
 
 Same goes for state querying, i.e. the `metastate` method: library functions can be reused for query implementations.
 
@@ -167,7 +167,7 @@ Action::Approve(input) => {
 
 ## Conclusion
 
-Gear provides a reusable [library](https://github.com/gear-tech/apps/tree/master/non-fungible-token/src) with core functionality for the ERC-721 protocol. By using object composition, that library can be utilized within a custom NFT contract implementation in order to minimize duplication of community available code.
+Gear provides a reusable [library](https://github.com/gear-tech/apps/tree/master/non-fungible-token/src) with core functionality for the GNFT protocol. By using object composition, that library can be utilized within a custom NFT contract implementation in order to minimize duplication of community available code.
 
 A source code of the contract example provided by Gear is available on GitHub: [nft-example/src](https://github.com/gear-tech/apps/tree/master/nft-example/src).
 
