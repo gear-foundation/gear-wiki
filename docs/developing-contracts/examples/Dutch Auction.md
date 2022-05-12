@@ -10,7 +10,7 @@ sidebar_position: 10
 &nbsp;&nbsp;&nbsp;&nbsp;This auction uses [Gear NFT](https://wiki.gear-tech.io/developing-contracts/examples/erc-721#erc-721-interface) as tradable goods. You can read about it if you want to dive deeper.
 
 ## Prerequisites
-[Gear ERC-721](https://wiki.gear-tech.io/developing-contracts/examples/erc-721#erc-721-interface)
+[Gear ERC-721](https://wiki.gear-tech.io/developing-contracts/examples/gnft-721)
 
 ## Contract description
 
