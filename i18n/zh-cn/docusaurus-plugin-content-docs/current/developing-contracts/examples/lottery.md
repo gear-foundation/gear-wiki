@@ -21,7 +21,7 @@ sidebar_position: 9
 
 ## 数据结构
 
-合约有一下数据结构：
+合约有以下数据结构：
 
 ```rust
 struct Lottery {
@@ -35,9 +35,9 @@ struct Lottery {
 }
 ```
 
-`lottery_state` - 彩票状态：彩票的开始时间、结束时间
+`lottery_state` - 彩票状态信息：彩票的开始时间、结束时间
 
-`lottery_owner` - 初始化合约的彩票所有者的地址。
+`lottery_owner` - 初始化合约的彩票所有者的地址
 
 `token_address` - 代币的合约地址
 
@@ -223,7 +223,7 @@ pub unsafe extern "C" fn meta_state() -> *mut [i32; 2] {
 
 ## 总结
 
-Lottery 的源代码可以在 GitHub 发现：[`lottery/src/lib.rs`](https://github.com/gear-tech/apps/blob/master/lottery/src/lib.rs)。
+Lottery 的源代码可以在 GitHub 找到：[`lottery/src/lib.rs`](https://github.com/gear-tech/apps/blob/master/lottery/src/lib.rs)。
 
 本合约的测试代码基于 gtest：
 
