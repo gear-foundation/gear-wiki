@@ -35,10 +35,16 @@ enum AccountState {
 ```
 
 ## Interface
+### Type aliases
+```rust
+/// Escrow account ID.
+type AccountId = U256;
+```
+
 ### Initialization config
 ```rust
 pub struct InitEscrow {
-    // Address of a fungible token program.
+    /// Address of a fungible token program.
     pub ft_program_id: ActorId,
 }
 ```
