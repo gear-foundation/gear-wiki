@@ -31,7 +31,7 @@ sidebar_position: 1
 
 ### 安装浏览器插件
 
-该浏览器插件可以用于基于 Chromium 的浏览器和  Firefox。 
+该浏览器插件可以用于基于 Chromium 和 Firefox 的浏览器。
 
 你可以使用以下链接来安装插件。
 

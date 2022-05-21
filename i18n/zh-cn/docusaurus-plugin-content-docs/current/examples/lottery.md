@@ -1,5 +1,5 @@
 ---
-sidebar_label: 'Lottery'
+sidebar_label: '彩票'
 sidebar_position: 9
 ---
 

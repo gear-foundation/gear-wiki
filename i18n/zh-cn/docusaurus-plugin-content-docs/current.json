@@ -8,12 +8,9 @@
     "sidebar.tutorialSidebar.category.Gear Network": {
       "message": "Gear 网络"
     },
-    "sidebar.tutorialSidebar.category.Gear network state": {
+    "sidebar.tutorialSidebar.category.Gear Network State": {
       "message": "Gear 网络状态"
     },
-    "sidebar.tutorialSidebar.category.gear.Gear network state": {
-        "message": "Gear 网络状态"
-      },
     "sidebar.tutorialSidebar.category.Ecosystem": {
       "message": "生态"
     },
@@ -37,5 +34,11 @@
     },
     "sidebar.tutorialSidebar.category.General topics": {
       "message": "通用概念"
+    },
+    "sidebar.tutorialSidebar.category.Smart Contract Examples": {
+      "message": "智能合约范例"
+    },
+    "sidebar.tutorialSidebar.category.Account": {
+      "message": "账户"
     }
   }
