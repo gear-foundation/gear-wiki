@@ -4,30 +4,29 @@ sidebar_position: 8
 ---
 
 # What is an escrow?
-An escrow is a special account to which some assets (e.g. money or stocks) are deposited and stored until certain conditions are met. In terms of smart contracts, an escrow is an account that is stored on a blockchain and, like a regular escrow, can receive some assets (e.g. a cryptocurrency or tokens) from one user and, when certain conditions are met, send them to another.
+An escrow is a special wallet to which some assets (e.g. money or stocks) are deposited and stored until certain conditions are met. In terms of smart contracts, an escrow is a wallet that is stored on a blockchain and, like a regular escrow, can receive some assets (e.g. a cryptocurrency or tokens) from one user and, when certain conditions are met, send them to another.
 
 This article will show the example of an escrow smart contract, where assets will be [Gear fungible tokens - GFT](/examples/gft-20).
 
 ## Logic
-* Any user can create an escrow account as its buyer or seller.
-* The buyer can make a deposit to or confirm an account.
-* The seller can refund tokens from a paid account to the buyer.
-* Both buyer and seller can cancel an unpaid account.
+* Any user can create an escrow wallet as a buyer or seller.
+* A buyer can make a deposit or confirm a deal and close a wallet.
+* A seller can refund tokens from a paid wallet to a buyer.
+* Both buyer and seller can cancel a deal and close an unpaid wallet.
 
-One escrow account contains info about a `buyer`, a `seller`, their `state` and an `amount` of tokens that this account can store:
-
+One escrow wallet contains info about a `buyer`, a `seller`, wallet `state` and an `amount` of tokens that this wallet can store:
 ```rust
-struct Account {
+struct Wallet {
     buyer: ActorId,
     seller: ActorId,
-    state: AccountState,
+    state: WalletState,
     amount: u128,
 }
 ```
 
-`AccountState` is an enum that stores a current state of an account:
+`WalletState` is the enum that stores a current state of a wallet:
 ```rust
-enum AccountState {
+enum WalletState {
     AwaitingDeposit,
     AwaitingConfirmation,
     Closed,
@@ -37,8 +36,8 @@ enum AccountState {
 ## Interface
 ### Type aliases
 ```rust
-/// Escrow account ID.
-type AccountId = U256;
+/// Escrow wallet ID.
+type WalletId = U256;
 ```
 
 ### Initialization config
@@ -53,10 +52,10 @@ pub struct InitEscrow {
 ```rust
 fn create(&mut self, buyer: ActorId, seller: ActorId, amount: u128)
 ```
-Creates one escrow account and replies with its ID.
+Creates one escrow wallet and replies with its ID.
 
 Requirements:
-* `msg::source()` must be a buyer or seller for the account.
+* `msg::source()` must be a buyer or seller for this wallet.
 
 Arguments:
 * `buyer`: a buyer.
@@ -64,62 +63,62 @@ Arguments:
 * `amount`: an amount of tokens.
 
 ```rust
-async fn deposit(&mut self, account_id: U256)
+async fn deposit(&mut self, wallet_id: WalletId)
 ```
-Makes a deposit from a buyer to an escrow account
-and changes an account state to `AwaitingConfirmation`.
+Makes a deposit from a buyer to an escrow wallet
+and changes a wallet state to `AwaitingConfirmation`.
 
 Requirements:
-* `msg::source()` must be a buyer saved in the account.
-* An account must not be paid or closed.
+* `msg::source()` must be a buyer for this wallet.
+* Wallet must not be paid or closed.
 
 Arguments:
-* `account_id`: an account ID.
+* `wallet_id`: a wallet ID.
 
 ```rust
-async fn confirm(&mut self, account_id: U256)
+async fn confirm(&mut self, wallet_id: WalletId)
 ```
-Confirms an escrow account by transferring tokens from it
-to a seller and changing an account state to `Closed`.
+Confirms a deal by transferring tokens from an escrow wallet
+to a seller and changing a wallet state to `Closed`.
 
 Requirements:
-* `msg::source()` must be a buyer saved in the account.
-* An account must be paid and unclosed.
+* `msg::source()` must be a buyer for this wallet.
+* Wallet must be paid and unclosed.
 
 Arguments:
-* `account_id`: an account ID.
+* `wallet_id`: a wallet ID.
 
 ```rust
-async fn refund(&mut self, account_id: U256)
+async fn refund(&mut self, wallet_id: WalletId)
 ```
-Refunds tokens from an escrow account to a buyer
-and changes an account state back to `AwaitingDeposit`
-(that is, the account can be reused).
+Refunds tokens from an escrow wallet to a buyer
+and changes a wallet state back to `AwaitingDeposit`
+(that is, a wallet can be reused).
 
 Requirements:
-* `msg::source()` must be a seller saved in the account.
-* An account must be paid and unclosed.
+* `msg::source()` must be a seller for this wallet.
+* Wallet must be paid and unclosed.
 
 Arguments:
-* `account_id`: an account ID.
+* `wallet_id`: a wallet ID.
 
 ```rust
-async fn cancel(&mut self, account_id: U256)
+async fn cancel(&mut self, wallet_id: WalletId)
 ```
-Cancels (early closes) an escrow account by changing its state to `Closed`.
+Cancels a deal and closes an escrow wallet by changing its state to `Closed`.
 
 Requirements:
-* `msg::source()` must be a buyer or seller saved in the account.
-* An account must not be paid or closed.
+* `msg::source()` must be a buyer or seller for this wallet.
+* Wallet must not be paid or closed.
 
 Arguments:
-* `account_id`: an account ID.
+* `wallet_id`: a wallet ID.
 
 ### Meta state
 It is also possible to provide a smart contract the ability to report about its state without consuming gas. This can be done by using the `meta_state` function. It gets the `EscrowState` enum and replies with the `EscrowStateReply` enum specified below:
 ```rust
 enum EscrowState {
-    GetInfo(U256),
+    GetInfo(WalletId),
 }
 ```
 
@@ -130,7 +129,7 @@ enum EscrowStateReply {
 ```
 
 ### Actions & events
-**Action** is an enum that is sent to a program and contains info about what it should do. After a successful processing of **Action**, a program replies with **Event** enum that contains info about a processed **Action** and its result.
+**Action** is the enum that is sent to a program and contains info about what it should do. After a successful processing of **Action**, a program replies with the **Event** enum that contains info about a processed **Action** and its result.
 
 ```rust
 enum EscrowAction {
@@ -139,10 +138,10 @@ enum EscrowAction {
         seller: ActorId,
         amount: u128,
     },
-    Deposit(U256),
-    Confirm(U256),
-    Refund(U256),
-    Cancel(U256),
+    Deposit(WalletId),
+    Confirm(WalletId),
+    Refund(WalletId),
+    Cancel(WalletId),
 }
 ```
 
@@ -165,7 +164,7 @@ enum EscrowEvent {
         buyer: ActorId,
         amount: u128,
     },
-    Created(U256),
+    Created(WalletId),
 }
 ```
 
