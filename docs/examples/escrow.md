@@ -24,7 +24,7 @@ struct Wallet {
 }
 ```
 
-`WalletState` is the enum that stores a current state of a wallet:
+`WalletState` is an enum that stores a current state of a wallet:
 ```rust
 enum WalletState {
     AwaitingDeposit,
@@ -129,7 +129,7 @@ enum EscrowStateReply {
 ```
 
 ### Actions & events
-**Action** is the enum that is sent to a program and contains info about what it should do. After a successful processing of **Action**, a program replies with the **Event** enum that contains info about a processed **Action** and its result.
+**Action** is an enum that is sent to a program and contains info about what it should do. After a successful processing of **Action**, a program replies with the **Event** enum that contains info about a processed **Action** and its result.
 
 ```rust
 enum EscrowAction {
