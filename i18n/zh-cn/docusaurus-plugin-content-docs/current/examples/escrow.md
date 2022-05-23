@@ -1,20 +1,22 @@
 ---
-sidebar_label: '第三方托管'
+sidebar_label: '第三方担保'
 sidebar_position: 8
 ---
 
-# What is an escrow?
-An escrow is a special account to which some assets (e.g. money or stocks) are deposited and stored until certain conditions are met. In terms of smart contracts, an escrow is a program that is stored on a blockchain and, like a regular escrow, can receive some assets (e.g. a cryptocurrency or tokens) from one user and, when certain conditions are met, send them to another.
+# 第三方担保是什么?
 
-This article will show the example of an escrow smart contract, where assets will be [Gear fungible tokens - GFT](https://wiki.gear-tech.io/developing-contracts/examples/gft-20).
+第三方担保是一个特殊的账户，某些资产(如金钱或股票)被存入该账户，并被保存到满足某些条件。就智能合约而言，托管是存储在区块链上的程序，与常规托管一样，可以从一个用户那里接收一些资产(例如加密资产或代币)，并在满足特定条件时将它们发送给另一个用户。
 
-## Logic
-* Any user can create a contract as a buyer or seller.
-* A buyer can make a deposit and confirm a contract.
-* A seller can refund tokens from a paid contract to a buyer.
-* Both buyer and seller can cancel an unpaid contract.
+这篇文章将展示1个第三方担保的智能合约案例，其中资产是[Gear 同质化代币 - GFT](https://wiki.gear-tech.io/developing-contracts/examples/gft-20)。
 
-One escrow contract contains info about a `buyer`, a `seller`, their `state` and an `amount` of tokens that this contract can store:
+## 业务逻辑
+
+* 任何用户都可以创建合约，作为买方或卖方
+* 买方可以支付定金并确认合同
+* 卖方可以将已付款合同中的代币退还给买方
+* 买卖双方都可以取消未付款合同
+
+一个担保合约包含了“买方”、“卖方”信息和各自的“状态”，以及可以担保的代币的“数量”信息：
 
 ```rust
 struct Contract {
@@ -25,7 +27,8 @@ struct Contract {
 }
 ```
 
-`State` is an enum that stores a current state of a contract:
+`State`是一个枚举类型，用于存储合约约的当前状态:
+
 ```rust
 enum State {
     AwaitingDeposit,
@@ -34,80 +37,80 @@ enum State {
 }
 ```
 
-## Interface
-### Functions
+## 接口
+
+### 方法
+
 ```rust
 fn create(&mut self, buyer: ActorId, seller: ActorId, amount: u128)
 ```
 
-Creates one escrow contract and replies with an ID of this created contract.
+创建一个担保合约并回复该合约的ID。
 
-Requirements:
-* `msg::source()` must be a buyer or seller for this contract.
+必要条件：
+* `msg::source()` 必须是该合约的买方或卖方。
 
-Arguments:
-* `buyer`: a buyer.
-* `seller`: a seller.
-* `amount`: an amount of tokens.
+参数：
+* `buyer`：买方
+* `seller`：卖方
+* `amount`： 代币数量
 
 ```rust
 async fn deposit(&mut self, contract_id: u128)
 ```
 
-Makes a deposit from a buyer to an escrow account
-and changes a contract state to `AwaitingConfirmation`.
+买方把钱存入担保账户，合约状态改为 `AwaitingConfirmation`。
 
-Requirements:
-* `msg::source()` must be a buyer saved in a contract.
-* Contract must not be paid or completed.
+必要条件：
+* `msg::source()` 必须是保存在合约中的买方
+* 合约必须是未支付状态，并且合约是未完成状态
 
-Arguments:
+参数：
 * `contract_id`: a contract ID.
 
 ```rust
 async fn confirm(&mut self, contract_id: u128)
 ```
 
-Confirms contract by transferring tokens from an escrow account
-to a seller and changing contract state to `Completed`.
+通过将代币从托管账户转移给卖方来确认合同给卖方，并将合同状态改为 `Completed`。
 
-Requirements:
-* `msg::source()` must be a buyer saved in contract.
+必要条件：
+* `msg::source()`  必须是保存在合约中的卖方
 * Contract must be paid and uncompleted.
+* 合约必须是已支付状态并且合约是未完成状态
 
-Arguments:
-* `contract_id`: a contract ID.
+参数：
+* `contract_id`：合约 ID
 
 ```rust
 async fn refund(&mut self, contract_id: u128)
 ```
 
-Refunds tokens from an escrow account to a buyer
-and changes contract state to `AwaitingDeposit`
-(that is, a contract can be reused).
+将代币从托担保账户中退还给买方并将合同状态改为 `AwaitingDeposit`(也就是说，合约可以重复使用)。
 
-Requirements:
-* `msg::source()` must be a seller saved in contract.
-* Contract must be paid and uncompleted.
+必要条件：
+* `msg::source()` 必须是保存在合约中的买方
+* 合约必须是已支付状态并且合约是未完成状态
 
-Arguments:
-* `contract_id`: a contract ID.
+参数：
+* `contract_id`：合约 ID
 
 ```rust
 async fn cancel(&mut self, contract_id: u128)
 ```
 
-Cancels (early completes) a contract by changing its state to `Completed`.
+取消（提前完成）一个合约，将其状态改为 `Completed`。
 
-Requirements:
-* `msg::source()` must be a buyer or seller saved in contract.
-* Contract must not be paid or completed.
+必要条件：
+* `msg::source()` 必须是保存在合约中的买方或卖方
+* 合约必须是已支付状态并且合约是已完成状态
 
-Arguments:
-* `contract_id`: a contract ID.
+参数：
+* `contract_id`：合约 ID
 
 ### Actions & events
-**Action** is an enum that is sent to a program and contains info about what it should do. After a successful processing of **Action**, a program replies with **Event** enum that contains info about a processed **Action** and its result.
+
+**Action** 是一个被发送到程序的枚举类型，包含了它应该如何处理。在成功处理**Action**后，程序用**Event**枚举进行回复，其中包含已处理的**Action**及其结果的信息。
 
 ```rust
 pub enum EscrowAction {
@@ -156,7 +159,8 @@ pub enum EscrowEvent {
 }
 ```
 
-### Initialization config
+### 初始化设置
+
 ```rust
 pub struct InitEscrow {
     // Address of a fungible token program.
@@ -164,7 +168,8 @@ pub struct InitEscrow {
 }
 ```
 
-## Source code
-The source code of this example of an escrow smart contract and the example of an implementation of its testing is available on [GitHub](https://github.com/gear-tech/apps/blob/master/escrow).
+## 源码
 
-For more details about testing smart contracts written on Gear, refer to the [Program testing](/developing-contracts/testing) article.
+Escrow 的合约源代码可以在 [GitHub](https://github.com/gear-tech/apps/blob/master/escrow) 找到。
+
+更多关于在 Gear 的测试智能合约的细节，请参考这篇文章：[应用测试](https://wiki.gear-tech.io/zh-cn/developing-contracts/testing/)。

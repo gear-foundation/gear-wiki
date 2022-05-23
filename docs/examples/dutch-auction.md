@@ -130,6 +130,6 @@ pub struct AuctionInfo {
 
 The source code of this example of Dutch Auction smart contract and the example of an implementation of its testing is available on [GitHub](https://github.com/gear-tech/apps/tree/master/dutch-auction).
 
-See also an example of the smart contract testing implementation based on `gtest`: [fungible-token/src/tests.rs](https://github.com/gear-tech/apps/tree/master/dutch-auction/tests/dutch_auction_tests.rs).
+See also an example of the smart contract testing implementation based on `gtest`: [dutch-auction/tests/dutch_auction_tests.rs](https://github.com/gear-tech/apps/tree/master/dutch-auction/tests/dutch_auction_tests.rs).
 
 For more details about testing smart contracts written on Gear, refer to the [Program testing](/developing-contracts/testing) article.
