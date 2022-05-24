@@ -148,10 +148,10 @@ pub enum State {
 - `Owners` returns list of owners.
 - `Confirmations` returns array with owner addresses, which confirmed transaction whose ID is a parameter.
 - `TransactionIds` returns list of transaction IDs in defined range.
-`from` index start position of transaction array.
-`to` index end position of transaction array(not included).
-`pending` include pending transactions.
-`executed` include executed transactions.
+  - `from` index start position of transaction array.
+  - `to` index end position of transaction array(not included).
+  - `pending` include pending transactions.
+  - `executed` include executed transactions.
 - `IsConfirmed` returns the confirmation status of the transaction whose ID is a parameter.
 - `Description` Returns the description of the transaction whose ID is a parameter.
 
