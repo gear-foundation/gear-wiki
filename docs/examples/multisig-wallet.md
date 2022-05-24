@@ -1,6 +1,6 @@
 ---
 sidebar_label: 'Multisig Wallet'
-sidebar_position: 10
+sidebar_position: 11
 ---
 
 # Multisig Wallet
