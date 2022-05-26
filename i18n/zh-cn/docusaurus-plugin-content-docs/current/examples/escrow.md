@@ -3,11 +3,11 @@ sidebar_label: '第三方担保'
 sidebar_position: 8
 ---
 
-# 第三方担保是什么?
+# 第三方担保是什么？
 
-第三方担保是一个特殊的账户，某些资产(如金钱或股票)被存入该账户，并被保存到满足某些条件。就智能合约而言，托管是存储在区块链上的程序，与常规托管一样，可以从一个用户那里接收一些资产(例如加密资产或代币)，并在满足特定条件时将它们发送给另一个用户。
+第三方担保是一个特殊的钱包，某些资产 (如金钱或股票) 被存入该账户，并被保存到满足某些条件。就智能合约而言，第三方担保是存储在区块链上的钱包，与常规担保一样，可以从一个用户那里接收一些资产 (例如加密资产或代币)，并在满足特定条件时将它们发送给另一个用户。
 
-这篇文章将展示1个第三方担保的智能合约案例，其中资产是[Gear 同质化代币 - GFT](https://wiki.gear-tech.io/developing-contracts/examples/gft-20)。
+这篇文章将展示 1 个第三方担保的智能合约案例，其中资产是[Gear 同质化代币 - GFT](/examples/gft-20)。
 
 ## 业务逻辑
 
@@ -19,25 +19,39 @@ sidebar_position: 8
 一个担保合约包含了“买方”、“卖方”信息和各自的“状态”，以及可以担保的代币的“数量”信息：
 
 ```rust
-struct Contract {
+struct Wallet {
     buyer: ActorId,
     seller: ActorId,
-    state: State,
+    state: WalletState,
     amount: u128,
 }
 ```
 
-`State`是一个枚举类型，用于存储合约约的当前状态:
+`WalletState`是一个枚举类型，用于存储合约约的当前状态：
 
 ```rust
-enum State {
+enum WalletState {
     AwaitingDeposit,
     AwaitingConfirmation,
-    Completed,
+    Closed,
 }
 ```
 
 ## 接口
+
+### 类型别名
+```rust
+/// Escrow wallet ID.
+type WalletId = U256;
+```
+
+### 初始化配置
+```rust
+pub struct InitEscrow {
+    /// Address of a fungible token program.
+    pub ft_program_id: ActorId,
+}
+```
 
 ### 方法
 
@@ -45,97 +59,105 @@ enum State {
 fn create(&mut self, buyer: ActorId, seller: ActorId, amount: u128)
 ```
 
-创建一个担保合约并回复该合约的ID。
+创建一个担保钱包并回复 ID。
+
 
 必要条件：
-* `msg::source()` 必须是该合约的买方或卖方。
+* `msg::source()` 必须是该钱包的买方或卖方
 
 参数：
 * `buyer`：买方
 * `seller`：卖方
-* `amount`： 代币数量
+* `amount`：代币数量
 
 ```rust
-async fn deposit(&mut self, contract_id: u128)
+async fn deposit(&mut self, wallet_id: WalletId)
 ```
 
-买方把钱存入担保账户，合约状态改为 `AwaitingConfirmation`。
+买方把钱存入担保账户，钱包状态改为 `AwaitingConfirmation`。
 
 必要条件：
-* `msg::source()` 必须是保存在合约中的买方
-* 合约必须是未支付状态，并且合约是未完成状态
+* `msg::source()` 必须是保存在钱包中的买方
+* 钱包必须是未支付状态，或者已关闭
 
 参数：
-* `contract_id`: a contract ID.
+* `wallet_id`：钱包 ID
 
 ```rust
-async fn confirm(&mut self, contract_id: u128)
+async fn confirm(&mut self, wallet_id: WalletId)
 ```
 
-通过将代币从托管账户转移给卖方来确认合同给卖方，并将合同状态改为 `Completed`。
+通过从担保钱包转移代币来确认交易，并将钱包状态改为 `Closed`。
 
 必要条件：
-* `msg::source()`  必须是保存在合约中的卖方
-* Contract must be paid and uncompleted.
-* 合约必须是已支付状态并且合约是未完成状态
+* `msg::source()` 必须是保存在钱包中的卖方
+* 钱包必须是已支付状态并且是未关闭状态
 
 参数：
-* `contract_id`：合约 ID
+* `wallet_id`：钱包 ID
 
 ```rust
-async fn refund(&mut self, contract_id: u128)
+async fn refund(&mut self, wallet_id: WalletId)
 ```
 
-将代币从托担保账户中退还给买方并将合同状态改为 `AwaitingDeposit`(也就是说，合约可以重复使用)。
+将代币从担保钱包退款给买家，并将钱包状态更改为`AwaitingDeposit`(也就是说，钱包可以重复使用)。
 
 必要条件：
-* `msg::source()` 必须是保存在合约中的买方
-* 合约必须是已支付状态并且合约是未完成状态
+* `msg::source()` 必须是保存在钱包中的买方
+* 钱包必须是已支付状态并且是未关闭状态
 
 参数：
-* `contract_id`：合约 ID
+* `wallet_id`：钱包 ID
 
 ```rust
-async fn cancel(&mut self, contract_id: u128)
+async fn cancel(&mut self, wallet_id: WalletId)
 ```
 
-取消（提前完成）一个合约，将其状态改为 `Completed`。
+取消交易并关闭一个担保钱包，将其状态改为 `Closed`。
 
 必要条件：
-* `msg::source()` 必须是保存在合约中的买方或卖方
-* 合约必须是已支付状态并且合约是已完成状态
+* `msg::source()` 必须是保存在钱包中的买方或卖方
+* 钱包必须是已支付状态并且合约是已完成状态
 
 参数：
-* `contract_id`：合约 ID
+* `wallet_id`：钱包 ID
+
+### Meta state
+
+也可以为智能合约提供报告其状态的能力，而不消耗 gas。这可以通过`meta_state`函数来实现。它获得`EscrowState`枚举，并以下面指定的`EscrowStateReply`枚举进行回复。
+
+```rust
+enum EscrowState {
+    GetInfo(WalletId),
+}
+```
+
+```rust
+enum EscrowStateReply {
+    Info(Account),
+}
+```
 
 ### Actions & events
 
-**Action** 是一个被发送到程序的枚举类型，包含了它应该如何处理。在成功处理**Action**后，程序用**Event**枚举进行回复，其中包含已处理的**Action**及其结果的信息。
+**Action** 是一个枚举，它被发送给一个程序，并包含关于它应该做什么的信息。在成功处理 **Action** 后，程序会用 **Event** 枚举来回复，其中包含关于已处理的 **Action** 和其结果的信息。
 
 ```rust
-pub enum EscrowAction {
+enum EscrowAction {
     Create {
         buyer: ActorId,
         seller: ActorId,
         amount: u128,
     },
-    Deposit {
-        contract_id: u128,
-    },
-    Confirm {
-        contract_id: u128,
-    },
-    Refund {
-        contract_id: u128,
-    },
-    Cancel {
-        contract_id: u128,
-    },
+    Deposit(WalletId),
+    Confirm(WalletId),
+    Refund(WalletId),
+    Cancel(WalletId),
 }
 ```
 
 ```rust
-pub enum EscrowEvent {
+enum EscrowEvent {
     Cancelled {
         buyer: ActorId,
         seller: ActorId,
@@ -153,18 +175,7 @@ pub enum EscrowEvent {
         buyer: ActorId,
         amount: u128,
     },
-    Created {
-        contract_id: u128,
-    },
-}
-```
-
-### 初始化设置
-
-```rust
-pub struct InitEscrow {
-    // Address of a fungible token program.
-    pub ft_program_id: ActorId,
+    Created(WalletId),
 }
 ```
 
