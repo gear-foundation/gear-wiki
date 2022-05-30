@@ -242,7 +242,7 @@ pub unsafe extern "C" fn meta_state() -> *mut [i32; 2] {
 
 ## User interface
 
-A [Ready-to-Use application](https://dao.gear-tech.io/) example provides a user interface that interacts with [DAO](https://github.com/gear-tech/apps/tree/master/dao-light) and [GFT](https://github.com/gear-tech/apps/tree/master/fungible-token) smart contracts. 
+A [Ready-to-Use application](https://dao.gear-tech.io/) example provides a user interface that interacts with [DAO](https://github.com/gear-academy/dao-light) and [GFT](https://github.com/gear-academy/fungible-token) smart contracts. 
 
 Gear Fundible Token enables creation of utility token DAO, check [this article](gft-20.md) for details.
 
@@ -279,9 +279,9 @@ yarn run start
 ```
 
 ## Source code
-The source code of this example of DAO smart contract and the example of an implementation of its testing is available on [GitHub](https://github.com/gear-tech/apps/tree/master/dao-light). 
+The source code of this example of DAO smart contract and the example of an implementation of its testing is available on [GitHub](https://github.com/gear-academy/dao-light). 
 
-The extended version of DAO that includes admin, membership proposals and delegated voting can be found at [GitHub](https://github.com/gear-tech/apps/blob/master/dao).
+The extended version of DAO that includes admin, membership proposals and delegated voting can be found at [GitHub](https://github.com/gear-academy/dao).
 
 The application source code is available in: [https://github.com/gear-tech/dao-app](https://github.com/gear-tech/dao-app).
 

@@ -5,7 +5,7 @@ sidebar_position: 1
 
 # Gear Examples
 
-Gear provides a set of examples that can be used for your familiarization with writing programs on Gear or become the basis for your own dApp: [https://github.com/gear-tech/apps](https://github.com/gear-tech/apps).
+Gear provides a set of examples that can be used for your familiarization with writing programs on Gear or become the basis for your own dApp: [https://github.com/gear-academy](https://github.com/gear-academy).
 
 You can write your own smart contract or try to build from examples. Let's Rock!
 
@@ -47,7 +47,7 @@ The project structure is following:
 ```
 
 `Cargo.toml` is a project manifest in Rust, it contains all metadata necessary for compiling the project.
-Configure the `Cargo.toml` similarly to how it is configured [examples/ping/Cargo.toml](https://github.com/gear-tech/gear/blob/master/examples/ping/Cargo.toml);
+Configure the `Cargo.toml` similarly to how it is configured [/ping/Cargo.toml](https://github.com/gear-academy/ping/blob/master/Cargo.toml);
 
 ## Building Rust Contract
 
