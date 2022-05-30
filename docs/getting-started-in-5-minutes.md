@@ -195,7 +195,7 @@ A notification about successful balance replenishment will appear at the bottom 
 
 ![img alt](./img/upload.png)
 
-2. Specify program Name and Gas limit 20 000 000 and click the `Upload program` button.
+2. Specify program Name and click `Calculate Gas` button. The Gas limit will be set automatically. Now click the `Upload program` button.
 
 ![img alt](./img/interface.png)
 
@@ -219,7 +219,7 @@ The red dot status for a program indicates init failure. Try to upload the progr
 1. Now, try sending your newly uploaded program a message to see how it responds! Use this button:
    ![img alt](./img/send-message.png)
 
-2. In the `Payload` field of the opened dialog type `PING`, provide an amount of gas 20 000 000 and click the `Send request` button.
+2. In the `Payload` field of the opened dialog type `PING`. Click `Calculate Gas` button, the Gas limit will be set automatically. Now click the `Send request` button.
 
 ![img alt](./img/send-request.png)
 
