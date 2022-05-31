@@ -1,5 +1,5 @@
 ---
-sidebar_label: 'GNFT (ERC-721)'
+sidebar_label: 'gNFT (ERC-721)'
 sidebar_position: 4
 ---
 
@@ -7,9 +7,9 @@ sidebar_position: 4
 
 ## Introduction
 
-At Gear, we want to provide an ecosystem for developers coming from various backgrounds. We have to note that Gear offers far more advanced features and technological developments compared to platforms that popular standards like ERC-20 or ERC-721 were designed for. However, it would be inefficient to ignore such widely used interfaces in favor of arbitrary, but modern implementations. Therefore, Gear provides support for Non-Fungible Tokens (GNFT) based on Gear's vision.
+At Gear, we want to provide an ecosystem for developers coming from various backgrounds. We have to note that Gear offers far more advanced features and technological developments compared to platforms that popular standards like ERC-20 or ERC-721 were designed for. However, it would be inefficient to ignore such widely used interfaces in favor of arbitrary, but modern implementations. Therefore, Gear provides support for Non-Fungible Tokens (gNFT) based on Gear's vision.
 
-In this article, we will cover usage of Gear's GNFT interface in composition with an example NFT implementation.
+In this article, we will cover usage of Gear's gNFT interface in composition with an example NFT implementation.
 
 ## What is ERC-721? 
 
@@ -51,7 +51,7 @@ However, implicitly, some functions - like `mint` and `burn` - are expected to b
 
 ## Gear Non-Fungible Token
 
-Gear provides a [GNFT interface library](https://github.com/gear-tech/apps/tree/master/non-fungible-token) with shared functionality described in the protocol.
+Gear provides a [gNFT interface library](https://github.com/gear-academy/non-fungible-token/tree/master/non-fungible-token) with shared functionality described in the protocol.
 
 :::note
 
@@ -77,13 +77,13 @@ fn approve_for_all(&mut self, owner: &ActorId, operator: &ActorId, approved: boo
 
 Functions above are essential for an NFT implementation and are implemented in the interface provided by Gear.
 
-The core component of the GNFT interface library is the `NonFungibleToken` struct. It contains implementations for the functions defined in the `NonFungibleTokenBase` trait and some useful helper functions such as `authorized_actor`, `is_token_owner`, etc.
+The core component of the gNFT interface library is the `NonFungibleToken` struct. It contains implementations for the functions defined in the `NonFungibleTokenBase` trait and some useful helper functions such as `authorized_actor`, `is_token_owner`, etc.
 
-Gear's GNFT interface is a library that can be used as a core block in writing a smart contract for an NFT implementation. Let's take a look at how this interface can be composed into a complete contract.
+Gear's gNFT interface is a library that can be used as a core block in writing a smart contract for an NFT implementation. Let's take a look at how this interface can be composed into a complete contract.
 
 ## NFT example
 
-In this section, we will be referring to [this](https://github.com/gear-tech/apps/tree/master/nft-example) implementation example of an NFT smart contract provided by Gear.
+In this section, we will be referring to [this](https://github.com/gear-academy/non-fungible-token/tree/master/nft-example) implementation example of an NFT smart contract provided by Gear.
 
 First of all, the actions accepted by the contract in accordance with ERC-721:
 
@@ -122,7 +122,7 @@ pub struct NFT {
 }
 ```
 
-Note how `NonFungibleToken` struct from the GNFT library is composed inside the state; that allows to reuse the functionality it provides within the implementation of the contract's methods.
+Note how `NonFungibleToken` struct from the gNFT library is composed inside the state; that allows to reuse the functionality it provides within the implementation of the contract's methods.
 
 
 We will also need custom implementation for the `mint` and `burn` methods as mentioned above.
@@ -141,7 +141,7 @@ impl NFT {
 }
 ```
 
-Now, inside the `handle` method, we can use `mint` and `burn` described above for `Mint` and `Burn` actions. For the rest of the actions (i.e. `Approve`, `ApproveForAll`, `Transfer`, `OwnerOf` and `BalanceOf`), we can reuse Gear's GNFT library implementations.
+Now, inside the `handle` method, we can use `mint` and `burn` described above for `Mint` and `Burn` actions. For the rest of the actions (i.e. `Approve`, `ApproveForAll`, `Transfer`, `OwnerOf` and `BalanceOf`), we can reuse Gear's gNFT library implementations.
 
 Same goes for state querying, i.e. the `metastate` method: library functions can be reused for query implementations.
 
@@ -167,10 +167,10 @@ Action::Approve(input) => {
 
 ## Conclusion
 
-Gear provides a reusable [library](https://github.com/gear-tech/apps/tree/master/non-fungible-token/src) with core functionality for the GNFT protocol. By using object composition, that library can be utilized within a custom NFT contract implementation in order to minimize duplication of community available code.
+Gear provides a reusable [library](https://github.com/gear-academy/non-fungible-token/tree/master/non-fungible-token/src) with core functionality for the gNFT protocol. By using object composition, that library can be utilized within a custom NFT contract implementation in order to minimize duplication of community available code.
 
-A source code of the contract example provided by Gear is available on GitHub: [nft-example/src](https://github.com/gear-tech/apps/tree/master/nft-example/src).
+A source code of the contract example provided by Gear is available on GitHub: [nft-example/src](https://github.com/gear-academy/non-fungible-token/tree/master/nft-example/src).
 
-See also an example of the smart contract testing implementation based on `gtest`: [nft-example/tests](https://github.com/gear-tech/apps/tree/master/nft-example/tests).
+See also an example of the smart contract testing implementation based on `gtest`: [nft-example/tests](https://github.com/gear-academy/non-fungible-token/tree/master/nft-example/tests).
 
 For more details about testing smart contracts written on Gear, refer to this article: [Program testing](/developing-contracts/testing.md).

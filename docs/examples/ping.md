@@ -58,6 +58,6 @@ mod tests {
 }
 ```
 
-It will just send `PONG` back to the original sender (this can be you!).
+The program just sends `PONG` back to the original sender who sent `PING` to it.
 
-GitHub link: https://github.com/gear-tech/apps/tree/master/ping
+GitHub link: https://github.com/gear-academy/ping

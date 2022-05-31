@@ -5,9 +5,7 @@ sidebar_position: 9
 
 # Lottery
 
-The smart-contract is available on GitHub: https://github.com/gear-tech/apps/tree/master/lottery
-
-# Introduction
+## Introduction
 Whoever initializes the contract is considered the lottery owner. Only the owner has the right
 to start/finish the lottery.
 Players are added to the lottery themselves by sending a message with their bet to the contract.

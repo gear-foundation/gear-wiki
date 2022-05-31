@@ -54,6 +54,8 @@ There are several ways to deploy a program:
 
 The easiest way to deploy the program is to use the “Upload program” option in the official website [idea.gear-tech.io](https://idea.gear-tech.io).
 
+![img alt](./img/idea-upload.png)
+
 ### Via Polkadot.js.org
 
 Also, you can use the standard GUI for substrate-based projects to submit a program. It's the [polkadot{.js}](https://polkadot.js.org) app. Use `gear.submitProgram` extrinsic in Developer -> Extrinsic menu.
