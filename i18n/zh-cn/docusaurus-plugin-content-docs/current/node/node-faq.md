@@ -6,7 +6,7 @@ sidebar_position: 6
 # 节点常见问题
 
 ### 我现在可以运行节点吗？
-当然可以，这篇文章中就如何在 MacOS、Linux 和 Windows 系统中设置和运行 Gear 节点进行了说明，你可以根据指示操作。 https://wiki.gear-tech.io/node/setting-up/
+当然可以，这篇文章中就如何在 MacOS、Linux 和 Windows 系统中设置和运行 Gear 节点进行了说明，你可以根据指示操作。 https://wiki.gear-tech.io/zh-cn/node/setting-up
 
 ### Gear 节点对硬件有什么要求？
 除了连接到测试网或在开发网模式下运行 Gear 节点的 SSD，没有特殊的硬件要求。对于生产网络中的节点，将会有额外的硬件要求。
@@ -24,7 +24,7 @@ sidebar_position: 6
 目前只需运行节点，请关注后续更新。
 
 ### 如何使节点在后台工作？
-解决方案是将 Gear 节点配置为一个服务： https://wiki.gear-tech.io/node/node-as-service/
+解决方案是将 Gear 节点配置为一个服务： https://wiki.gear-tech.io/zh-cn/node/node-as-service/
 
 ### 我遇到了这个问题：`IO error: While lock file <path>: Resource temporarily unavailable`
 你似乎正在运行几个 Gear 节点实例。你很可能把节点配置为一个服务，然后从命令行运行了第二个实例。你应该停止配置服务或者停止从命令行运行 Gear 节点。
@@ -47,7 +47,7 @@ sidebar_position: 6
 wget https://builds.gear.rs/gear-nightly-linux-x86_64.tar.xz
 sudo tar -xvf gear-nightly-linux-x86_64.tar.xz -C /root
 rm gear-nightly-linux-x86_64.tar.xz
-sudo
+sudo systemctl restart gear-node
 ```
 
 ### 我的节点在某个区块编号后停止增加区块高度。
@@ -93,7 +93,7 @@ syncing_time = (3313788 - 3223552) / 143.1 = 630 secs (10.5 mins)
 是的，你可以在节点监控器中看到该节点 —— https://telemetry.gear-tech.io./#/0x70f04c10c85b57482a63514576e6fab6b0df4ddcfbfdf1da8f03dc3f59ba5439。在区块高度完成更新前，该节点呈灰色。
 
 ### 在启动节点服务时，我遇到了该问题 "error: Found argument '\' which wasn't expected, or isn't valid in this context"
-`gear-node.service`配置文件似乎配置不当。请参考 - https://wiki.gear-tech.io/node/node-as-service/，将节点正确配置为一个服务。
+`gear-node.service`配置文件似乎配置不当。请参考 - https://wiki.gear-tech.io/zh-cn/node/node-as-service/，将节点正确配置为一个服务。
 
 ### 我需要将我的钱包连接节点吗？
 目前无需进行该操作。
@@ -101,5 +101,5 @@ syncing_time = (3313788 - 3223552) / 143.1 = 630 secs (10.5 mins)
 ### 是否有任何命令用以检查节点的最新更新？
 没有这样的命令。
 
-#### 这是什么意思？`Failed to start gear-node.service: Unit gear-node.service is masked.`
+### 这是什么意思？`Failed to start gear-node.service: Unit gear-node.service is masked.`
 请查看 —— https://askubuntu.com/questions/1017311/what-is-a-masked-service
