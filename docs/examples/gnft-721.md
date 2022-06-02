@@ -1,5 +1,5 @@
 ---
-sidebar_label: 'GNFT'
+sidebar_label: 'gNFT (ERC-721)'
 sidebar_position: 4
 ---
 
@@ -25,7 +25,9 @@ To use the default implementation you should include the packages into your *Car
 gear-contract-libraries = { path = ".https://github.com/gear-tech/apps/tree/lm-gear-nft/gear-contract-libraries" }
 derive_traits = { path = "https://github.com/gear-tech/apps/tree/lm-gear-nft/gear-contract-libraries/utils/derive_traits" }
 ```
+
 The states that non-fungible-contract store are defined in the struct `NFTState`:
+
 ```rust
 #[derive(Debug, Default)]
 pub struct NFTState {
@@ -45,6 +47,7 @@ To reuse the default struct you need derive the NFTStateKeeper trait and mark th
 ```
 use derive_traits::{NFTStateKeeper, NFTCore, NFTMetaState};
 use gear_contract_libraries::non_fungible_token::{nft_core::*, state::*, token::*};
+
 
 #[derive(Debug, Default, NFTStateKeeper, NFTCore, NFTMetaState)]
 pub struct NFT {
@@ -123,6 +126,7 @@ pub unsafe extern "C" fn handle() {
     }
 }
 ```
+
 ### Developing your non-fungible-token contract
 Next, let's rewrite the implementation of `mint` function. Our `mint` function will create token for the account that send `Mint` message  and require the metadata as an input argument:
 ```rust
@@ -133,6 +137,7 @@ pub enum NFTAction {
     },
 ```
 The `TokenMetadata` is also defined in the gear NFT library:
+
 ```rust
 #[derive(Debug, Default, Encode, Decode, Clone, TypeInfo)]
 pub struct TokenMetadata {
@@ -178,10 +183,10 @@ pub unsafe extern "C" fn handle() {
 
 ## Conclusion
 
-Gear provides a reusable [library](https://github.com/gear-tech/apps/tree/master/non-fungible-token/src) with core functionality for the GNFT protocol. By using object composition, that library can be utilized within a custom NFT contract implementation in order to minimize duplication of community available code.
+Gear provides a reusable [library](https://github.com/gear-academy/non-fungible-token/tree/master/non-fungible-token/src) with core functionality for the gNFT protocol. By using object composition, that library can be utilized within a custom NFT contract implementation in order to minimize duplication of community available code.
 
-A source code of the contract example provided by Gear is available on GitHub: [nft/src](https://github.com/gear-tech/apps/tree/master/nft).
+A source code of the contract example provided by Gear is available on GitHub: [nft-example/src](https://github.com/gear-academy/non-fungible-token/tree/master/nft-example/src).
 
-See also an example of the smart contract testing implementation based on `gtest`: [nft/tests](https://github.com/gear-tech/apps/tree/master/nft/tests).
+See also an example of the smart contract testing implementation based on `gtest`: [nft-example/tests](https://github.com/gear-academy/non-fungible-token/tree/master/nft-example/tests).
 
 For more details about testing smart contracts written on Gear, refer to this article: [Program testing](/developing-contracts/testing.md).

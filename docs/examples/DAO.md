@@ -5,7 +5,17 @@ sidebar_position: 7
 
 # Decentralized autonomous organization
 
-## Source files
+## Introduction
+
+A decentralized autonomous organization, or a DAO for short, is a new type of way to run organizations or institutions that enable individuals to work together for a specific cause in transparent, fair and honest ways. DAOs can be thought of as online groups of like-minded individuals that are also collectively owned and managed by the members themselves in equitable ways.
+
+Decisions are governed by proposals and votes to ensure that everyone within a decentralized autonomous organization has a voice. This is significant because it means that no central entity can manipulate anything for personal gain or based on personal beliefs.
+
+DAOs offer safe alternatives to pooling together money for a particular cause. But this isn’t just money that can be ordinarily managed by members. For instance, a group could set up a DAO to govern a charity to begin accepting donations and distributing aid accordingly. However, by far the biggest use cases for DAOs at the moment have been decentralized investment funds. This is where a group of investors create a venture fund that pools capital together and votes transparently on where to allocate the capital.
+
+## Interface
+
+### Source files
 
 1. `ft_messages.rs` - contains functions of the fungible token contract. DAO contract interacts with fungible token contract through functions `transfer_tokens` and `balance`:
 
@@ -55,7 +65,7 @@ let balance_response: FTEvent = msg::send_and_wait_for_reply(
 
 2. `lib.rs` - defines the contract logic.
 
-## Structs
+### Structs
 
 The contract has the following structs:
 
@@ -141,7 +151,8 @@ pub struct Member {
 
 The actions that the contract receives outside are defined in enum `DaoActions`. The contract's replies are defined in the enum `DaoEvents`.
 
-## DAO functions
+### DAO functions
+
 - Joining the DAO. Users can call that function in order to send the DAO contract the tokens and become the DAO members.
 
 ```rust
@@ -228,10 +239,51 @@ pub unsafe extern "C" fn meta_state() -> *mut [i32; 2] {
     gstd::util::to_leak_ptr(encoded)
 }
 ```
-## Source code
-The source code of this example of DAO smart contract and the example of an implementation of its testing is available on [GitHub](https://github.com/gear-tech/apps/tree/master/dao-light). 
 
-The extended version of DAO that includes admin, membership proposals and delegated voting can be found at [GitHub](https://github.com/gear-tech/apps/blob/master/dao).
+## User interface
+
+A [Ready-to-Use application](https://dao.gear-tech.io/) example provides a user interface that interacts with [DAO](https://github.com/gear-academy/dao-light) and [GFT](https://github.com/gear-academy/fungible-token) smart contracts. 
+
+Gear Fundible Token enables creation of utility token DAO, check [this article](gft-20.md) for details.
+
+This video demonstrates the entire configuration and user interaction workflow: 
+
+**https://youtu.be/6lxr7eojADw**
+
+![img alt](./img/dao-1.jpg)
+
+### Configure basic dApp in .env:
+
+```sh
+REACT_APP_NETWORK
+REACT_APP_CONTRACT_ERC
+REACT_APP_CONTRACT_DAO
+```
+
+- `REACT_APP_NETWORK` is Gear network address (wss://rpc-node.gear-tech.io:443)
+- `REACT_APP_CONTRACT_ERC` is Fundible Token contract address
+- `RREACT_APP_CONTRACT_DAO` is DAO contract address
+
+An example is available: [here](https://github.com/gear-tech/dao-app/blob/master/.env.example)
+
+### How to run
+
+Install required dependencies:
+```sh
+yarn
+```
+
+Run:
+```sh
+yarn run start
+```
+
+## Source code
+The source code of this example of DAO smart contract and the example of an implementation of its testing is available on [GitHub](https://github.com/gear-academy/dao-light). 
+
+The extended version of DAO that includes admin, membership proposals and delegated voting can be found at [GitHub](https://github.com/gear-academy/dao).
+
+The application source code is available in: [https://github.com/gear-tech/dao-app](https://github.com/gear-tech/dao-app).
 
 For more details about testing smart contracts written on Gear, refer to the [Program testing](/developing-contracts/testing) article.
 

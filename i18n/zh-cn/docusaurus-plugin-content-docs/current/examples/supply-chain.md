@@ -3,19 +3,20 @@ sidebar_label: '供应链'
 sidebar_position: 10
 ---
 
-# What is a supply chain?
+# 供应链是什么？
 
-In logistics, a supply chain is a system for tracking and delivering to an end consumer various items. As a rule, such systems can't work without a lot of paperwork and other layers of bureaucracy. All of this costs a lot of time and money and increases the likelihood of an accidental error or, worst of all, a fraud. With the help of smart contract and blockchain technologies, it is possible to eliminate these problems by making a supply chain more efficient, reliable and transparent.
+在物流中，供应链是用于跟踪并向终端消费者交付各种物品的系统。通常，如果没有大量的文书工作和其他层级的官僚机构，这样的系统就无法运行。所有这些都要花费大量的时间和金钱，并增加了发生意外错误的可能性，或者最糟糕的是，发生欺诈。借助智能合约和区块链技术，可以使供应链更加高效、可靠和透明，用来消除这些问题。
 
-So here's the example of a supply chain smart contract.
+这是供应链智能合约的示例。
 
+## 业务逻辑
 
-## Logic
-* Each newly produced item gets the NFT (in Gear's context - [GNFT token](gnft-721.md) and an ID equal to the ID of its NFT. Then, as an item moves along a supply chain, an item's NFT transfers between a supply chain program, item's producer, and future distributor, retailer and end consumer.
-* Anyone who knows an item's ID can get item info.
-* Sale, purchase, delivery is made in [GFT tokens](gft-20.md).
+* 每个新产生的项目会得到 NFT（在Gear的上下文中--[GNFT token](gnft-721.md)和 NFT相关的ID。然后，随着物品在供应链上的移动，物品的NFT在供应链程序、物品的生产商和未来的分销商、零售商和最终消费者之间转移。
+* 任何知道物品 ID 的人都可以获取物品信息
+* 销售、购买、交付使用 [GFT 代币](gft-20.md)。
 
-Item info has the following struct:
+ItemInfo 结构如下：
+
 ```rust
 struct ItemInfo {
     name: String,
@@ -27,7 +28,7 @@ struct ItemInfo {
 }
 ```
 
-And `ItemState` has the following enum:
+`ItemState` 是一个枚举类型：
 ```rust
 enum ItemState {
     Produced,
@@ -46,8 +47,10 @@ enum ItemState {
 }
 ```
 
-## Interface
-### Initialization config
+## 接口
+
+### 初始化配置
+
 ```rust
 struct InitSupplyChain {
     producers: BTreeSet<ActorId>,
@@ -59,213 +62,202 @@ struct InitSupplyChain {
 }
 ```
 
-### Functions
+### 方法
+
 ```rust
 async fn produce_item(&mut self, name: String, notes: String)
 ```
+
 Produces one item with a name and notes and replies with its ID.
 Transfers created NFT for an item to a producer.
 
-Requirements:
-* `msg::source()` must be a producer in a supply chain.
+生产一个带有名称和备注的商品，并以其ID进行消息回复。
+将为一个项目创建的NFT转移给提供商。
 
-Arguments:
-* `name`: an item's name.
-* `notes`: an item's notes.
+必要条件：
+* `msg::source()` 必须是供应链提供商
+
+参数：
+* `name`：商品名称
+* `notes`：商品备注
 
 ```rust
 async fn put_up_for_sale_by_producer(&mut self, item_id: U256, price: u128)
 ```
-Puts an item up for a sale to a distributor for a given price
-on behalf of a producer.
-Transfers item's NFT to a supply chain.
 
-Requirements:
-* `msg::source()` must be a producer in a supply chain
-and a producer of this item.
-* Item's `ItemState` must be `Produced`.
+代表生产商将商品以给定的价格卖给分销商。
+将商品的NFT转移到供应链。
 
-Arguments:
-* `item_id`: an item's ID.
+必要条件：
+* `msg::source()`必须是供应链中的生产者也是这个产品的生产者
+* 商品的 `ItemState` 必须是 `Produced`
+
+参数：
+* `item_id`：商品 ID
 * `price`: an item's price.
 
 ```rust
 async fn purchase_by_distributor(&mut self, item_id: U256, delivery_time: u64)
 ```
-Purchases an item from a producer on behalf of a distributor.
-Transfers tokens for purchasing an item to a supply chain
-until an item is received (by the `receive_by_distributor` function).
 
-Requirements:
-* `msg::source()` must be a distributor in a supply chain.
-* Item's `ItemState` must be `ForSaleByProducer`.
+代表经销商从生产商处购买商品。
+将用于购买项目的代币转移到供应链直到一个条目被接收(通过`receive_by_distributor`函数)。
 
-Arguments:
-* `item_id`: an item's ID.
-* `delivery_time`: a time in seconds for which a producer must deliver an item.
-A countdown starts after the `ship_by_producer` function is executed.
+必要条件：
+* `msg::source()` 必须是供应链中的分销商
+* 商品的 `ItemState` 必须是 `ForSaleByProducer`
+
+参数：
+* `item_id`：商品 ID
+* 生产者的交货时间，已秒为单位。在`ship_by_producer` 函数执行后开始倒计时。
 
 ```rust
 fn ship_by_producer(&mut self, item_id: U256)
 ```
-Starts shipping a purchased item to a distributor on behalf of a producer.
-Starts a countdown for a delivery time specified in the
-`purchase_by_distributor` function.
 
-Requirements:
-* `msg::source()` must be a producer in a supply chain
-and a producer of this item.
-* Item's `ItemState` must be `PurchasedByDistributor`.
+开始代表生产商向分销商运送购买的物品。以 `purchase_by_distributor` 函数中指定的交付时间启动倒计时。
 
-Arguments:
-* `item_id`: an item's ID.
+必要条件：
+* `msg::source()` 必须是供应链中的生产者也是这个产品的生产者
+* 商品的 `ItemState` 必须是 `PurchasedByDistributor`
+
+参数：
+* `item_id`：商品 ID
 
 ```rust
 async fn receive_by_distributor(&mut self, item_id: U256)
 ```
-Receives a shipped item from a producer on behalf of a distributor.
-Depending on a counted delivery time, transfers tokens for purchasing an item
-from a supply chain to a producer or as a penalty for being late refunds some or
-all of them to a distributor.
-Transfers item's NFT to a distributor.
 
-Requirements:
-* `msg::source()` must be a distributor in a supply chain
-and a distributor of this item.
-* Item's `ItemState` must be `ShippedByProducer`.
+代表分销商从生产商接收已发货的产品。
+根据计算的交付时间，将用于购买项目的代币从供应链转移到生产商，或作为延迟的惩罚，将部分或全部退款给分销商。
+将商品的NFT转移到经销商。
 
-Arguments:
-* `item_id`: an item's ID.
+必要条件：
+* `msg::source()`必须是供应链中的分销商也是这个项目的经销商
+* 商品的 `ItemState` 必须是 `ShippedByProducer`
+
+参数：
+* `item_id`：商品 ID
 
 ```rust
 fn process_by_distributor(&mut self, item_id: U256)
 ```
-Processes a received item from a producer on behalf of a distributor.
 
-Requirements:
-* `msg::source()` must be a distributor in a supply chain
-and a distributor of this item.
-* Item's `ItemState` must be `ReceivedByDistributor`.
+代表经销商处理从生产者收到的产品。
 
-Arguments:
-* `item_id`: an item's ID.
+必要条件：
+* `msg::source()` 必须是供应链中的分销商也是这个项目的经销商
+* 商品的 `ItemState` 必须是 `ReceivedByDistributor`
+
+参数：
+* `item_id`：商品 ID
 
 ```rust
 fn package_by_distributor(&mut self, item_id: U256)
 ```
-Packages a processed item on behalf of a distributor.
+代表经销商对已处理的产品进行包装。
 
-Requirements:
-* `msg::source()` must be a distributor in a supply chain
-and a distributor of this item.
-* Item's `ItemState` must be `ProcessedByDistributor`.
+必要条件：
+* `msg::source()`必须是供应链中的分销商也是这个项目的经销商
+* 商品的 `ItemState` 必须是 `ProcessedByDistributor`
 
-Arguments:
-* `item_id`: an item's ID.
+参数：
+* `item_id`：商品 ID
 
 ```rust
 async fn put_up_for_sale_by_distributor(&mut self, item_id: U256, price: u128)
 ```
-Puts a packaged item up for a sale to a retailer
-for a given price on behalf of a distributor.
-Transfers item's NFT to a supply chain.
+代表经销商将包装好的商品以给定的价格卖给零售商。
+将项目的NFT转移到供应链。
 
-Requirements:
-* `msg::source()` must be a distributor in a supply chain
-and a distributor of this item.
-* Item's `ItemState` must be `PackagedByDistributor`.
+必要条件：
+* `msg::source()`必须是供应链中的分销商和该项目的分销商。
+* 商品的 `ItemState` 必须是 `PackagedByDistributor`
 
-Arguments:
-* `item_id`: an item's ID.
-* `price`: an item's price.
+参数：
+* `item_id`：商品 ID
+* `price`: 商品价格
 
 ```rust
 async fn purchase_by_retailer(&mut self, item_id: U256, delivery_time: u64)
 ```
-Purchases an item from a distributor on behalf of a retailer.
-Transfers tokens for purchasing an item to a supply chain
-until an item is received (by the `receive_by_retailer` function).
+代表零售商从经销商处购买商品。
+将购买商品的代币转移到供应链，直到收到商品为止(通过`receive_by_retailer`函数)。
 
-Requirements:
-* `msg::source()` must be a retailer in a supply chain.
-* Item's `ItemState` must be `ForSaleByDistributor`.
+必要条件：
+* `msg::source()` 必须是供应链中的零售商。
+* 商品的 `ItemState` 必须是 `ForSaleByDistributor`
 
-Arguments:
-* `item_id`: an item's ID.
-* `delivery_time`: a time in seconds for which a distributor must deliver an item.
-A countdown starts after the `ship_by_distributor` function is executed.
+参数：
+* `item_id`：商品 ID
+* `delivery_time`：经销商必须在此时间内交付一件商品，以秒为单位。在 `ship_by_distributor`函数执行后开始倒计时。
 
 ```rust
 fn ship_by_distributor(&mut self, item_id: U256)
 ```
-Starts shipping a purchased item to a retailer on behalf of a distributor.
-Starts a countdown for a delivery time specified in the
-`purchase_by_retailer` function.
+开始代表经销商将购买的物品运送给零售商。
+为`purchase_by_retailer` 函数中指定的交付时间启动倒计时。
 
-Requirements:
-* `msg::source()` must be a distributor in a supply chain
-and a distributor of this item.
-* Item's `ItemState` must be `PurchasedByRetailer`.
+必要条件：
+* `msg::source()` 必须是供应链中的分销商和该项目的分销商。
+* 商品的 `ItemState` 必须是 `PurchasedByRetailer`
 
-Arguments:
-* `item_id`: an item's ID.
+参数：
+* `item_id`：商品 ID
 
 ```rust
 async fn receive_by_retailer(&mut self, item_id: U256)
 ```
-Receives a shipped item from a distributor on behalf of a retailer.
-Depending on a counted delivery time, transfers tokens for purchasing an item
-from a supply chain to a distributor or as a penalty for being late refunds some or
-all of them to a retailer.
-Transfers item's NFT to a retailer.
+代表零售商从经销商处接收已发运的项目。
+根据已计算的交付时间，将用于购买项目的代币从供应链转移到分销商，或作为延迟的惩罚，将部分或全部退款给零售商。
+将物品的NFT转移到零售商。
 
-Requirements:
-* `msg::source()` must be a retailer in a supply chain
-and a retailer of this item.
-* Item's `ItemState` must be `ShippedByDistributor`.
+必要条件：
+* `msg::source()` 必须是供应链中的零售商
+* 商品的 `ItemState` 必须是 `ShippedByDistributor`
 
-Arguments:
-* `item_id`: an item's ID.
+参数：
+* `item_id`：商品 ID
 
 ```rust
 async fn put_up_for_sale_by_retailer(&mut self, item_id: U256, price: u128)
 ```
-Puts a received item from a distributor up for a sale to a consumer
-for a given price on behalf of a retailer.
-Transfers item's NFT to a supply chain.
+代表零售商将从经销商收到的商品以给定的价格出售给消费者。
+将项目的NFT转移到供应链。
 
-Requirements:
-* `msg::source()` must be a retailer in a supply chain
-and a retailer of this item.
-* Item's `ItemState` must be `ReceivedByRetailer`.
+必要条件：
+* `msg::source()` 还有这个商品的零售商
+* 商品的 `ItemState` 必须是 `ReceivedByRetailer`
 
-Arguments:
-* `item_id`: an item's ID.
-* `price`: an item's price.
+参数：
+* `item_id`：商品 ID
+* `price`: 商品价格
 
 ```rust
 async fn purchase_by_consumer(&mut self, item_id: U256)
 ```
-Purchases an item from a retailer.
-Transfers tokens for purchasing an item to its retailer.
-Transfers item's NFT to a consumer.
+从零售商那里购买商品。
+将购买物品的代币转让给其零售商。
+将商品的NFT转移给消费者。
 
-Requirements:
-* Item's `ItemState` must be `ForSaleByRetailer`.
+必要条件：
+* 商品的 `ItemState` 必须是 `ForSaleByRetailer`
 
-Arguments:
-* `item_id`: an item's ID.
+参数：
+* `item_id`：商品 ID
 
 ```rust
 fn get_item_info(&mut self, item_id: U256)
 ```
-Gets item info.
 
-Arguments:
-* `item_id`: an item's ID.
+获取商品信息
+
+参数：
+* `item_id`：商品 ID
 
 ### Actions & events
-**Action** is an enum that is sent to a program and contains info about what it should do. After a successful processing of **Action**, a program replies with the **Event** enum that contains info about a processed **Action** and its result.
+
+**Action** 是一个被发送到程序的枚举类型，包含了它应该如何处理。在成功处理**Action**后，程序用**Event**枚举进行回复，其中包含已处理的**Action**及其结果的信息。
 
 ```rust
 enum SupplyChainAction {
@@ -332,7 +324,8 @@ enum SupplyChainEvent {
 }
 ```
 
-## Source code
-The source code of this example of a supply chain smart contract and the example of an implementation of its testing is available on [GitHub](https://github.com/gear-tech/apps/blob/master/supply-chain).
+## 源码
 
-For more details about testing smart contracts written on Gear, refer to the [Program testing](/developing-contracts/testing) article.
+供应链的合约源代码可以在 [GitHub](https://github.com/gear-tech/apps/blob/master/supply-chain) 找到。
+
+更多关于在 Gear 的测试智能合约的细节，请参考这篇文章：[应用测试](https://wiki.gear-tech.io/zh-cn/developing-contracts/testing/)。

@@ -6,8 +6,9 @@ sidebar_position: 10
 # Dutch auction
 
 ## Introduction
-&nbsp;&nbsp;&nbsp;&nbsp;A Dutch auction is one of several types of auctions for buying or selling goods. Most commonly, it means an auction in which the auctioneer begins with a high asking price in the case of selling, and lowers it until some participant accepts the price, or it reaches a predetermined reserve price. A Dutch auction has also been called a clock auction or open-outcry descending-price auction. This type of auction shows the advantage of speed since a sale never requires more than one bid.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;This auction uses [Gear NFT](https://wiki.gear-tech.io/developing-contracts/examples/gnft-721) as tradable goods. You can read about it if you want to dive deeper.
+A Dutch auction is one of several types of auctions for buying or selling goods. Most commonly, it means an auction in which the auctioneer begins with a high asking price in the case of selling, and lowers it until some participant accepts the price, or it reaches a predetermined reserve price. A Dutch auction has also been called a clock auction or open-outcry descending-price auction. This type of auction shows the advantage of speed since a sale never requires more than one bid.
+
+This auction uses [Gear non-fungible tokens (gNFT)](/examples/gnft-721) as tradable goods.
 
 ## Contract description
 
@@ -128,8 +129,8 @@ pub struct AuctionInfo {
 
 ## Source code
 
-The source code of this example of Dutch Auction smart contract and the example of an implementation of its testing is available on [GitHub](https://github.com/gear-tech/apps/tree/master/dutch-auction).
+The source code of this example of Dutch Auction smart contract and the example of an implementation of its testing is available on [gear-academy/dutch-auction](https://github.com/gear-academy/dutch-auction).
 
-See also an example of the smart contract testing implementation based on `gtest`: [fungible-token/src/tests.rs](https://github.com/gear-tech/apps/tree/master/dutch-auction/tests/dutch_auction_tests.rs).
+See also an example of the smart contract testing implementation based on `gtest`: [gear-academy/dutch-auction/tree/master/tests](https://github.com/gear-academy/dutch-auction/tree/master/tests).
 
 For more details about testing smart contracts written on Gear, refer to the [Program testing](/developing-contracts/testing) article.

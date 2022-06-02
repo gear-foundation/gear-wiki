@@ -98,18 +98,20 @@ chmod +x gear-node
 
 ### 前期准备
 
-Linux 用户需要依照自己的发行版本文档来安装 `GCC` 和 `Clang`。
+Linux 用户需要依照自己的发行版本来安装 `GCC` 和 `Clang`。
+另外，需要安装包含所需的 `wasm-opt` 工具的 `binaryen`工具集。
 
 例如在 Ubuntu 上使用如下命令：
 
 ```bash
-sudo apt install -y clang build-essential
+sudo apt install -y clang build-essential binaryen
 ```
 
-在 MacOS 上你可以使用一下命令来安装：
+在 macOS 上，你可以通过运行以下命令得到编译器工具集和`binaryen`。
 
 ```bash
-$ xcode-select --install
+xcode-select --install
+brew install binaryen
 ```
 
 ### 安装 Rust:
