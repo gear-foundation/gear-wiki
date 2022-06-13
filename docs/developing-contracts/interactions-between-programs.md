@@ -157,7 +157,7 @@ gstd::metadata! {
 }
 ```
 
- Since an account can have several different fungible tokens, the contract stores users and their balances in the following way:
+Since an account can have several different fungible tokens, the contract stores users and their balances in the following way:
 
 ```rust
 static mut WALLET: BTreeMap<ActorId, BTreeMap<ActorId, u128>> = BTreeMap::new();
