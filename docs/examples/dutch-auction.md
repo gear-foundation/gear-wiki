@@ -1,5 +1,5 @@
 ---
-sidebar_label: 'Dutch Auction'
+sidebar_label: Dutch Auction
 sidebar_position: 10
 ---
 
@@ -129,8 +129,8 @@ pub struct AuctionInfo {
 
 ## Source code
 
-The source code of this example of Dutch Auction smart contract and the example of an implementation of its testing is available on [gear-academy/dutch-auction](https://github.com/gear-academy/dutch-auction).
+The source code of this example of Dutch Auction smart contract and the example of an implementation of its testing is available on [gear-dapps/dutch-auction](https://github.com/gear-dapps/dutch-auction).
 
-See also an example of the smart contract testing implementation based on `gtest`: [gear-academy/dutch-auction/tree/master/tests](https://github.com/gear-academy/dutch-auction/tree/master/tests).
+See also an example of the smart contract testing implementation based on `gtest`: [gear-dapps/dutch-auction/tree/master/tests](https://github.com/gear-dapps/dutch-auction/tree/master/tests).
 
-For more details about testing smart contracts written on Gear, refer to the [Program testing](/developing-contracts/testing) article.
+For more details about testing smart contracts written on Gear, refer to the [Program Testing](/developing-contracts/testing) article.

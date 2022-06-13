@@ -1,11 +1,11 @@
 ---
 sidebar_position: 2
-sidebar_label: 'State Transition'
+sidebar_label: State Transition
 ---
 
 # State transition
 
-Each system follows the rules according to which the state of the system evolves. As the network processes new input data, the state is advanced according to state transition rules. This input data is packed in granular pieces of information called transactions. 
+Each system follows the rules according to which the state of the system evolves. As the network processes new input data, the state is advanced according to state transition rules. This input data is packed in granular pieces of information called transactions.
 
 Gear nodes maintain and synchronize a transaction pool which contains all those new transactions. When any node (validator or not) receives a transaction, the node propagates the transaction to all connected nodes. For advanced reading how the transaction pool operates, refer to [Substrate Documentation](https://substrate.dev/docs/en/knowledgebase/learn-substrate/tx-pool).
 

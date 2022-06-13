@@ -1,5 +1,5 @@
 ---
-sidebar_label: 'Node as a Service'
+sidebar_label: Node as a Service
 sidebar_position: 2
 ---
 
@@ -11,18 +11,22 @@ You need to download or compile the gear-node executable file for your OS. [See 
 
 ## Configuration
 
+Copy the `gear-node` executable to the `/root` directory:
+
+```bash
+cp gear-node /root/
+```
+
 To run the Gear node as one of the Linux services, you need to configure the systemd file:
 
-From `root` directory:
-
-```sh
+```bash
 cd /etc/systemd/system
 sudo nano gear-node.service
 ```
 
 Configure and save:
 
-```
+```toml
 [Unit]
 Description=Gear Node
 After=network.target

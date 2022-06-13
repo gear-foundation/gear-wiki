@@ -1,5 +1,5 @@
 ---
-sidebar_label: 'Upload Program'
+sidebar_label: Upload Program
 sidebar_position: 5
 ---
 
@@ -64,4 +64,8 @@ Also, you can use the standard GUI for substrate-based projects to submit a prog
 
 ### Via gear-js library
 
-Gear-js library provides a simple and intuitive way to connect GEAR Component APIs, including interaction with programs. More details [Gear API](https://wiki.gear-tech.io/api/connect).
+Gear-js library provides a simple and intuitive way to connect GEAR Component APIs, including interaction with programs. More details [Gear API](/api/connect).
+
+### Via `gear-program`
+
+`gear-program` is the command line (CLI) utility for interacting with the blockchain network. Refer to [gear-program GitHub repo](https://github.com/gear-tech/gear-program) for details.

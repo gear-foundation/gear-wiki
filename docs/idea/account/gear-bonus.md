@@ -1,5 +1,5 @@
 ---
-sidebar_label: 'Receive GRB'
+sidebar_label: Receive GRB
 sidebar_position: 3
 ---
 
@@ -19,9 +19,9 @@ To find out if you have received your GRB, please use one of the following optio
 
 ![img alt](./img/claim-grb-1.png)
 
-2. Click the `Connect` button to connect your Substrate account that is eligible for the bonus tokens.
+2. Click the <kbd>Connect</kbd> button to connect your Substrate account that is eligible for the bonus tokens.
 
-3. If GRB is available to claim, the interface will display a `Claim` button. Your available GRB balance will be shown on the top right corner.
+3. If GRB is available to claim, the interface will display a <kbd>Claim</kbd> button. Your available GRB balance will be shown on the top right corner.
 
 # Polkadot/Substrate portal
 

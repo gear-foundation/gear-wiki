@@ -1,5 +1,5 @@
 ---
-sidebar_label: 'Online IDE'
+sidebar_label: Online IDE
 sidebar_position: 2
 ---
 

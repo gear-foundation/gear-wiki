@@ -1,7 +1,7 @@
 ---
 title: Getting Started
 sidebar_position: 4
-sidebar_label: 'Getting Started'
+sidebar_label: Getting Started
 ---
 
 # Getting started in 5 minutes
@@ -86,7 +86,6 @@ name = "first-gear-app"
 version = "0.1.0"
 authors = ["Your Name"]
 edition = "2021"
-license = "GPL-3.0"
 
 [dependencies]
 gstd = { git = "https://github.com/gear-tech/gear.git", features = ["debug"] }
@@ -137,21 +136,20 @@ If everything goes well, your working directory should now have a `target` direc
 target
     ├── CACHEDIR.TAG
     ├── release
-    │   ├── ...
+    │   └── ...
     └── wasm32-unknown-unknown
-        ├── CACHEDIR.TAG
         └── release
-            ├── build
-            │   └── ...
-            ├── deps
-            │   └── ...
-            ├── examples
-            ├── incremental
-            ├── first_gear_app.d
-            └── first_gear_app.wasm <---- this is our .wasm file
+            ├── ...
+            ├── first_gear_app.wasm      <---- this is our built .wasm file
+            ├── first_gear_app.opt.wasm  <---- this is optimized .wasm file
+            └── first_gear_app.meta.wasm <---- this is meta .wasm file
 ```
 
-The compiled `first_gear_app.wasm` file is in `target/wasm32-unknown-unknown/release` directory.
+The  `target/wasm32-unknown-unknown/release` directory contains three WASM binaries:
+
+- `first_gear_app.wasm` is the output WASM binary built from source files
+- `first_gear_app.opt.wasm` is the optimized WASM aimed to be uploaded to the blockchain
+- `first_gear_app.meta.wasm` is the WASM containing meta information needed to interact with the program
 
 ## Deploy your Smart Contract to the Testnet
 
@@ -161,7 +159,7 @@ Gear provides a demo environment that emulates the real Gear decentralized netwo
 
 1. Download the Polkadot extension for your browser via [https://polkadot.js.org/extension/](https://polkadot.js.org/extension/). This extension manages accounts and allows the signing of transactions with those accounts. It is a secure tool that allows injecting your accounts into any Substrate-based dapp. It does not perform wallet functions, e.g send funds.
 
-2. Once downloaded, click '+' button to create a new account:
+2. Once downloaded, click <kbd>+</kbd> button to create a new account:
 
 ![img alt](./img/polkadot-add-acc.png)
 
@@ -191,11 +189,11 @@ A notification about successful balance replenishment will appear at the bottom 
 
 ### Upload program
 
-1. When your account balance is sufficient, click the `Upload program` and navigate to the `.wasm` file we have pointed to above.
+1. When your account balance is sufficient, click the <kbd>Upload program</kbd> and navigate to the `.opt.wasm` file we have pointed to above.
 
 ![img alt](./img/upload.png)
 
-2. Specify program Name and click `Calculate Gas` button. The Gas limit will be set automatically. Now click the `Upload program` button.
+2. Specify program Name and click <kbd>Calculate Gas</kbd> button. The Gas limit will be set automatically. Now click the <kbd>Upload program</kbd> button.
 
 ![img alt](./img/interface.png)
 
@@ -219,13 +217,13 @@ The red dot status for a program indicates init failure. Try to upload the progr
 1. Now, try sending your newly uploaded program a message to see how it responds! Use this button:
    ![img alt](./img/send-message.png)
 
-2. In the `Payload` field of the opened dialog type `PING`. Click `Calculate Gas` button, the Gas limit will be set automatically. Now click the `Send request` button.
+2. In the `Payload` field of the opened dialog type `PING`. Click <kbd>Calculate Gas</kbd> button, the Gas limit will be set automatically. Now click the <kbd>Send request</kbd> button.
 
 ![img alt](./img/send-request.png)
 
 3. Sign the message sending transaction as it is shown in the step 3 of section **Upload Program**.
 
-4. After your message has been successfully processed, the program responds with PONG:
+4. After your message has been successfully processed, the program responds with `PONG`:
 
 ![img alt](./img/prog-replied.png)
 

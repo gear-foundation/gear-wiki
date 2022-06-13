@@ -1,5 +1,5 @@
 ---
-sidebar_label: 'WebAssembly (WASM)'
+sidebar_label: WebAssembly (WASM)
 sidebar_position: 6
 ---
 
@@ -17,9 +17,8 @@ WASM should give significant speed increases in two main areas. First, it should
 
 WebAssembly has the following advantages:
 
- - WASM is extremely fast, efficient and portable. Code can be executed at near-native speed across different platforms. 
+ - WASM is extremely fast, efficient and portable. Code can be executed at near-native speed across different platforms.
 
- - WASM is also readable and debuggable. Although WebAssembly is a low-level language, it does have a human-readable text format that allows code to be written, viewed and debugged by hand. 
+ - WASM is also readable and debuggable. Although WebAssembly is a low-level language, it does have a human-readable text format that allows code to be written, viewed and debugged by hand.
 
  - It’s also extremely secure as it’s run in a safe, sandboxed environment and like other web code, it will enforce the browsers same-origin and permissionless security policies.
-

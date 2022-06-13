@@ -1,6 +1,6 @@
 ---
 sidebar_position: 5
-sidebar_label: 'NFT'
+sidebar_label: NFT
 ---
 
 # What are NFTs?

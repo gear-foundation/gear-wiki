@@ -1,5 +1,5 @@
 ---
-sidebar_label: 'PING-PONG'
+sidebar_label: PING-PONG
 sidebar_position: 2
 ---
 
@@ -60,4 +60,4 @@ mod tests {
 
 The program just sends `PONG` back to the original sender who sent `PING` to it.
 
-GitHub link: https://github.com/gear-academy/ping
+GitHub link: https://github.com/gear-dapps/ping

@@ -1,11 +1,11 @@
 ---
-sidebar_label: 'Program testing'
+sidebar_label: Program Testing
 sidebar_position: 4
 ---
 
-# How to test a smart contract
+# How to test a program
 
-Gear lib [`gtest`](https://github.com/gear-tech/gear/tree/master/gtest) is the recommended option for the smart contracts logic testing. This article describes how to test smart contracts using `gtest`.
+Gear [`gtest`](https://github.com/gear-tech/gear/tree/master/gtest) library is the recommended option for the programs (smart contracts) logic testing. This article describes how to test programs using `gtest`.
 
 ## Basics
 
@@ -15,99 +15,63 @@ In accordance to basic concepts and testing methods described in [Rustbook](http
 
 The **unit tests** enable testing of each unit of code in isolation from the rest of the code. It helps to quickly find where the code works as expected and where not. The unit tests should be placed in the `src` directory in each file with the code that they test.
 
-Even when units of code work correctly, it is important to test if several parts of the library work together correctly as well. For **integration tests**, a separate tests directory is required at the top level of your project directory, next to `src`. You can make as many test files in this directory as you need, Cargo will compile each of the files as an individual crate.
+Even when units of code work correctly, it is important to test if several parts of the library work together correctly as well. For **integration tests**, a separate `tests` directory is required at the top level of your project directory, next to `src`. You can make as many test files in this directory as you need, Cargo will compile each of the files as an individual crate.
 
-## Building smart contract in test mode
+## Building a program in test mode
 
-First of all, make sure you have a compiled `WASM` file of the program you want to test. You can refer to [Getting started](getting-started-in-5-minutes.md) for additional details.
+First of all, make sure you have a compiled WASM file of the program you want to test. You can refer to [Getting Started](getting-started-in-5-minutes.md) for additional details.
 
-1. Usually the following mandatory parameters must be used for regular compilation of Gear smart contracts:
-    * `RUSTFLAGS="-C link-args=--import-memory"`
-    * `--target=wasm32-unknown-unknown`
-    * `nightly` сompiler
+1. Usually the following command is used for regular compilation of Gear smart contracts:
 
-    ```sh
+    ```bash
     cd ~/gear/contracts/first-gear-app/
-    RUSTFLAGS="-C link-args=--import-memory" cargo +nightly build --release --target=wasm32-unknown-unknown
+    cargo build --release
     ```
 
-2. For test running  they should **not be used**, instead the following conditions are **required**:
-    * `--target` is not `wasm32-unknown-unknown`. It is recommended to build for the architecture of your device (you don't need to specify any flags at all).
-    * `nightly` compiler - required if your contract uses unstable Rust features - the compiler will ask you to enable `nightly` if necessary. Only if you are writing the tests as unit/integration tests, rather than providing a separate library containing only the tests.
+    Nightly compiler is required if some unstable features have been used:
 
-    ```sh
+    ```bash
+    cargo +nightly build --release
+    ```
+
+2. The minimal command for running tests is:
+
+    ```bash
     cargo test
     ```
 
-3. If you use `cargo` config files, then keep in mind that `[build]` parameters are applied both to `cargo build` and `cargo test` [Github Issue](https://github.com/rust-lang/cargo/issues/6784). For example -
+    Nightly compiler is required if your contract uses unstable Rust features, the compiler will ask you to enable `nightly` if necessary. Only if you are writing the tests as unit/integration tests, rather than providing a separate library containing only the tests.
 
-    ```toml
-    # .cargo/config.toml
-    [build]
-    target = "wasm32-unknown-unknown"
-
-    [target.wasm32-unknown-unknown]
-    rustflags = ["-C", "link-args=--import-memory"]
+    ```bash
+    cargo +nightly test
     ```
-    In this case, you have to choose the most convenient option for you:
 
-    * (Recommended) Remove build target `target=wasm32-unknown-unknown` from `config.toml`, which means that you have to
-        * Build the contract with: `cargo +nightly build --target wasm32-unknown-unknown`
-        * Run test as: `cargo test` (optionally: `cargo +nightly test`)
+    Build tests in release mode so they run faster:
 
-    * Keep target in the configuration file, in this case:
-        * Build the contract with: `cargo +nightly build`
-        * Run test as: `cargo test --target any_not_wasm32_unknown_unknown_target`
-
-4. Every supported by Rust target is available from this command:
-	`rustc --print target-list`
-
-How to find out your system target is described [here](https://stackoverflow.com/questions/52996949/how-can-i-find-the-current-rust-compilers-default-llvm-target-triple?rq=1).
-
-So the most universal way to run test will be:
-
-```sh
-cargo test --target "$(rustc -vV | sed -n 's|host: ||p')"
-```
-:::note
-`sed` tool isn’t installed by default for Windows
-:::
-
-For details on cargo configuration files, see [Cargobook](https://doc.rust-lang.org/cargo/reference/config.html).
+    ```bash
+    cargo test --release
+    ```
 
 ## Import `gtest` lib
 
 In order to use the `gtest` library, it must be imported into your `Cargo.toml` file in the `[dev-dependencies]` block in order to fetch and compile it for tests only
 
-```rust
+```toml
 [package]
 name = "first-gear-app"
 version = "0.1.0"
 authors = ["Your Name"]
 edition = "2021"
-license = "GPL-3.0"
-
-[lib]
-crate-type = ["cdylib"]
 
 [dependencies]
 gstd = { git = "https://github.com/gear-tech/gear.git", features = ["debug"] }
 
+[build-dependencies]
+gear-wasm-builder = { git = "https://github.com/gear-tech/gear.git" }
+
 [dev-dependencies]
 gtest = { git = "https://github.com/gear-tech/gear.git" }
-
-[profile.release]
-lto = true
-opt-level = 's'
 ```
-
-## Possible issues
-
-When writing tests as integration tests, it is not possible to import public structures from within the program itself, because gear contracts must have `crate-type=["cdylib"]` struct and nothing can be imported from them.
-
-Solution options:
-* (Recommended) Create a sub-crate library with IO structures and import it into `Cargo.toml`. In this case, structures will be available everywhere.
-* Redefine the same structures in the test file (copy-paste), because with codec they will produce the same bytes.
 
 ## `gtest` capabilities
 
@@ -154,6 +118,9 @@ fn basics() {
         &sys,
         "./target/wasm32-unknown-unknown/release/demo_ping.wasm",
     );
+
+    // Also, you may use `Program::current()` function to load the current program.
+    let ping_pong = Program::current(&sys);
 
     // We can check the id of the program by calling `id()` function.
     //
