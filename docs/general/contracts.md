@@ -1,22 +1,22 @@
 ---
 sidebar_position: 3
-sidebar_label: 'Smart Contracts'
+sidebar_label: Smart Contracts
 ---
 
 # What are Smart Contracts?
 
 Smart contracts are transactional computer programs that can execute the terms of an agreement automatically without the need for intervention. They were first proposed by Nick Szabo in the early ‘90s, but due to technological constraints they couldn’t function properly. It wasn’t until improvements were made to fundamental blockchain technology that application of smart contracts became possible.
 
-In terms of blockchains, smart contracts are digital agreements that are stored and executed on a blockchain once predetermined criteria are met. Once a specific input has been made, a predetermined and specific output is automatically executed. 
+In terms of blockchains, smart contracts are digital agreements that are stored and executed on a blockchain once predetermined criteria are met. Once a specific input has been made, a predetermined and specific output is automatically executed.
 
 Smart contracts can be written in multiple different languages, with Solidity being one of the most popular. But thanks to recent advances in technology, smart contracts can now be written in more traditional programming languages, compiled and deployed on the WebAssembly virtual machine. Not only does this make deploying smart contracts much easier, but it also provides efficiency and speed benefits. You can find out more about this [here](https://medium.com/@gear_techs/why-gear-uses-webassembly-35b705341241).
 
 ## How do smart contracts work?
 
-Smart contracts have three main functions. 
+Smart contracts have three main functions.
 
-- They store rules 
-- They verify rules 
+- They store rules
+- They verify rules
 - They self-execute rules
 
 Smart contracts do this by following simple “if, when & then” statements that are written in programmable code.
@@ -51,4 +51,3 @@ DApps provide numerous significant improvements to traditional web applications 
 Smart contracts also enable more than just applications to run autonomously without centralized control. They also allow entire organizations to function without centralized involvement. These organizations are often referred to as decentralized autonomous organizations (DAOs) and you can think of them as businesses that are run on the blockchain and collectively owned by their community.
 
 DAOs represent a revolutionary new form of corporate governance that enables global collaboration between individuals who do not personally know one another. This means that users no longer need to “trust” each other before they collaborate. Instead, users only need to trust the DAO’s smart contracts, which are completely transparent and verifiable by anyone. DAOs open up new and exciting opportunities for global collaboration and they have the potential to change the way that institutions are governed worldwide.
-

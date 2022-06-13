@@ -1,5 +1,5 @@
 ---
-sidebar_label: 'Lottery'
+sidebar_label: Lottery
 sidebar_position: 9
 ---
 
@@ -220,14 +220,14 @@ pub unsafe extern "C" fn meta_state() -> *mut [i32; 2] {
 
 ## Conclusion
 
-A source code of the contract example provided by Gear is available on GitHub: [`lottery/src/lib.rs`](https://github.com/gear-tech/apps/blob/master/lottery/src/lib.rs).
+A source code of the contract example provided by Gear is available on GitHub: [`lottery/src/lib.rs`](https://github.com/gear-dapps/lottery/blob/master/src/lib.rs).
 
 See also an examples of the smart contract testing implementation based on gtest:
 
-- [`simple_tests.rs`](https://github.com/gear-tech/apps/blob/master/lottery/src/simple_tests.rs).
+- [`simple_tests.rs`](https://github.com/gear-dapps/lottery/blob/master/src/simple_tests.rs).
 
-- [`panic_tests.rs`](https://github.com/gear-tech/apps/blob/master/lottery/src/panic_tests.rs).
+- [`panic_tests.rs`](https://github.com/gear-dapps/lottery/blob/master/src/panic_tests.rs).
 
-- [`token_tests.rs`](https://github.com/gear-tech/apps/blob/master/lottery/src/token_tests.rs).
+- [`token_tests.rs`](https://github.com/gear-dapps/lottery/blob/master/src/token_tests.rs).
 
-For more details about testing smart contracts written on Gear, refer to this article: [Program testing](https://wiki.gear-tech.io/developing-contracts/testing).
+For more details about testing smart contracts written on Gear, refer to this article: [Program Testing](/developing-contracts/testing).

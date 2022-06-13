@@ -7,7 +7,7 @@ slug: /
 
 ## Welcome!
 
-Welcome to Gear’s documentation portal. This is a central source of information for everyone looking for important information, guides and developer's documentation about Gear. 
+Welcome to Gear’s documentation portal. This is a central source of information for everyone looking for important information, guides and developer's documentation about Gear.
 
 Our Wiki outlines foundational information required, general technology overviews, the key advantages of Gear’s technology, help to get started with Gear node setup, how to upload your smart contracts, while also providing full API details and examples.
 
@@ -31,7 +31,7 @@ Instructions and other development-focused conversation is found on our [GitHub]
 
 ### Discord
 
-General information and non-technical conversation is found on our [Discord server](https://discord.gg/mGXwYHKN).
+General information and non-technical conversation is found on our [Discord server](https://discord.gg/7BQznC9uD9).
 
 ### Twitter
 

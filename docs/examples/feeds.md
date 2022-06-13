@@ -1,5 +1,5 @@
 ---
-sidebar_label: 'Gear Feeds'
+sidebar_label: Gear Feeds
 sidebar_position: 6
 ---
 
@@ -22,11 +22,11 @@ Let's now go through the flow of the application step by step.
 
 First, channel owner should compile their own version of the contract filled in with information about the channel. Then, when the contract is uploaded to the network via the [Gear Idea portal](https://idea.gear-tech.io), owner of the contract should send a `Register` message to the router contract. Once router contract receives that message, it sends a `Meta` request to the recently deployed contract to verify that it has been set up correctly. If the channel contract responds properly, it is added to the list of available channels.
 
-If you want to check out the code available for both the router and the channel contracts, you can find them here: [router](https://github.com/gear-tech/apps/tree/master/gear-feeds-router), [channel](https://github.com/gear-tech/gear-feeds-channel).
+If you want to check out the code available for both the router and the channel contracts, you can find them here: [router](https://github.com/gear-dapps/feeds/tree/master/router), [channel](https://github.com/gear-dapps/gear-feeds-channel).
 
 # The Gear Feeds website
 
-You can use this [link](https://workshop.gear-tech.io) to get to the Gear Feeds website. 
+You can use this [link](https://workshop.gear-tech.io) to get to the Gear Feeds website.
 
 First, log in using your [Polkadot.js extension wallet](https://polkadot.js.org/extension/).
 
@@ -45,6 +45,6 @@ When viewing your own channel, you can add posts to it (you will have to conduct
 ![img alt](./img/my-channel.png)
 
 # Conclusion
-Gear Feeds is an example of a full-fledged application with core logic being in a decentralized application implemented via Smart Contracts on Gear. We hope to see more exciting projects inspired by Gear feeds and recent platform improvements created by our community members! :) 
+Gear Feeds is an example of a full-fledged application with core logic being in a decentralized application implemented via Smart Contracts on Gear. We hope to see more exciting projects inspired by Gear feeds and recent platform improvements created by our community members! :)
 
-For more details about testing smart contracts written on Gear, refer to this article: [Program testing](https://wiki.gear-tech.io/developing-contracts/testing).
+For more details about testing smart contracts written on Gear, refer to this article: [Program Testing](/developing-contracts/testing).

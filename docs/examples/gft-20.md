@@ -1,5 +1,5 @@
 ---
-sidebar_label: 'gFT (ERC-20)'
+sidebar_label: gFT (ERC-20)
 sidebar_position: 3
 ---
 
@@ -130,8 +130,8 @@ pub struct TransferInput {
 
 ## Conclusion
 
-A source code of the contract example provided by Gear is available on GitHub: [fungible-token/src/lib.rs](https://github.com/gear-academy/fungible-token/blob/master/src/lib.rs).
+A source code of the contract example provided by Gear is available on GitHub: [fungible-token/src/lib.rs](https://github.com/gear-dapps/fungible-token/blob/master/src/lib.rs).
 
-See also an example of the smart contract testing implementation based on `gtest`: [fungible-token/src/tests.rs](https://github.com/gear-academy/fungible-token/blob/master/src/tests.rs).
+See also an example of the smart contract testing implementation based on `gtest`: [fungible-token/src/tests.rs](https://github.com/gear-dapps/fungible-token/blob/master/src/tests.rs).
 
-For more details about testing smart contracts written on Gear, refer to this article: [Program testing](/developing-contracts/testing.md).
+For more details about testing smart contracts written on Gear, refer to this article: [Program Testing](/developing-contracts/testing).

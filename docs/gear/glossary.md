@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-sidebar_label: 'Glossary'
+sidebar_label: Glossary
 ---
 
 # Glossary
@@ -65,11 +65,11 @@ The ground floor for all blockchain protocols. Examples of operating Layer 0 blo
 
 A term used to describe the underlying main blockchain architecture. It’s a set of solutions that improve the base protocol itself to make the overall system more scalable. The two approaches proposed for implementing Layer 1 solutions include the consensus protocol and sharding. Examples of operating Layer 1 blockchains include Bitcoin, Ethereum etc.
 
-### Layer 2 blockchain protocol 
+### Layer 2 blockchain protocol
 
 A secondary framework or protocol that is built on top of an existing blockchain system. The main goal of these protocols is to solve the transaction speed and scaling difficulties that are being faced by the major cryptocurrency networks.
 
-### Ledger 
+### Ledger
 
 A list of entries containing transactions signed by account owners. A blockchain is a type of distributed ledger.
 
@@ -85,7 +85,7 @@ A computer device that runs on a blockchain network for message processing; it c
 
 A Non Fungible Token is a unique unit of data that’s represented as a cryptographic token that’s stored on a blockchain.
 
-### Parachain 
+### Parachain
 
 Parachains are application specific data structures that are integrated into the Polkadot and Kusama networks by connecting to the main Relay Chain. They enable transactions to be spread out and processed in parallel over an ecosystem.
 
@@ -103,7 +103,7 @@ A multi-paradigm, general-purpose programming language designed for performance 
 
 ### Sharding
 
-Sharding is the process of dividing a blockchain’s database into smaller “shards” to spread the transactional load to help make the network more scalable. 
+Sharding is the process of dividing a blockchain’s database into smaller “shards” to spread the transactional load to help make the network more scalable.
 
 ### Smart Contracts
 

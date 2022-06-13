@@ -1,5 +1,5 @@
 ---
-sidebar_label: 'Create Account'
+sidebar_label: Create Account
 sidebar_position: 1
 ---
 
@@ -69,7 +69,7 @@ The account name that you select is for your use only. It is not stored on the b
 
 ### Entering a password
 
-The password that you choose here will be used to encrypt this account’s information. You will need to re-enter it when attempting to process any kind of outgoing transaction, or when using it to cryptographically sign a message. This password is stored locally on the browser extension. 
+The password that you choose here will be used to encrypt this account’s information. You will need to re-enter it when attempting to process any kind of outgoing transaction, or when using it to cryptographically sign a message. This password is stored locally on the browser extension.
 
 Please note that this password **does not** protect your seed phrase.
 
@@ -84,11 +84,11 @@ You’ve now successfully created a new account using the polkadot.js browser ex
 Is this account portable?
 
 > Yes, you can access your account on a different device or wallet of your choice as long as you have the account’s seed
-> phrase or JSON file associated with the account. 
+> phrase or JSON file associated with the account.
 
 Can I transact directly in the polkadot.js browser extension?
 
-> There isn’t functionally to make transactions directly in the polkadot.js browser extension. To make transactions, you need to launch [polkadot.js apps](https://polkadot.js.org/apps/#/explorer) on your 
-> browser. Before you can make any transactions, you have to allow polkadot.js 
-> apps to access your account. The browser extension is what holds your account information. You get to choose which 
+> There isn’t functionally to make transactions directly in the polkadot.js browser extension. To make transactions, you need to launch [polkadot.js apps](https://polkadot.js.org/apps/#/explorer) on your
+> browser. Before you can make any transactions, you have to allow polkadot.js
+> apps to access your account. The browser extension is what holds your account information. You get to choose which
 > websites get to access this information.

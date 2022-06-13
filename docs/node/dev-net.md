@@ -1,11 +1,11 @@
 ---
-sidebar_label: 'Dev Net Mode'
+sidebar_label: Dev Net Mode
 sidebar_position: 4
 ---
 
 # Running Gear node in Dev Net mode
 
-Dev net is useful for development and debugging of your smart contracts. You can upload your program directly to a local node, send messages to a program and validate the program's logic. 
+Dev net is useful for development and debugging of your smart contracts. You can upload your program directly to a local node, send messages to a program and validate the program's logic.
 
 To run a Gear node in a dev net mode:
 

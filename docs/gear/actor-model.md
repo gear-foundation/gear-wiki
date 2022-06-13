@@ -1,5 +1,5 @@
 ---
-sidebar_label: 'Actor Model'
+sidebar_label: Actor Model
 sidebar_position: 4
 ---
 
@@ -11,7 +11,7 @@ For inter-process communications, Gear uses the Actor model approach. The princi
 
 With the Actor model, systems consist of simultaneously functioning objects that communicate with each other exclusively by messaging. While an ordinary Actor model does not guarantee message ordering, Gear provides some additional guarantees that the order of messages between two particular programs is preserved.
 
-The Actor model guarantees high scalability and high fault tolerance. 
+The Actor model guarantees high scalability and high fault tolerance.
 
 ## Actor
 
@@ -38,4 +38,3 @@ Asynchronous functions significantly streamline concurrency management, but they
 Currently, the lack of normal support of async/await patterns in the typical smart contracts code brings a lot of problems for smart contract developers. Actually, achieving better control in a smart contract program flow is actually more or less possible by adding handmade functions (in Solidity smart contracts). But the problem with many functions in a contract is that one can easily get confused - which function can be called at which stage in the contract's lifetime.
 
 Gear natively provides arbitrary async/await syntax for any programs. It greatly simplifies development and testing and reduces the likelihood of errors in smart contract development. Gear API also allows synchronous messages by simply not using await expression if the logic of the program requires it.
-

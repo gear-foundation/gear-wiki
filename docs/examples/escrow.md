@@ -1,5 +1,5 @@
 ---
-sidebar_label: 'Escrow'
+sidebar_label: Escrow
 sidebar_position: 8
 ---
 
@@ -169,6 +169,6 @@ enum EscrowEvent {
 ```
 
 ## Source code
-The source code of this example of an escrow smart contract and the example of an implementation of its testing is available on [GitHub](https://github.com/gear-academy/escrow).
+The source code of this example of an escrow smart contract and the example of an implementation of its testing is available on [GitHub](https://github.com/gear-dapps/escrow).
 
-For more details about testing smart contracts written on Gear, refer to the [Program testing](/developing-contracts/testing) article.
+For more details about testing smart contracts written on Gear, refer to the [Program Testing](/developing-contracts/testing) article.

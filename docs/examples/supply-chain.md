@@ -1,5 +1,5 @@
 ---
-sidebar_label: 'Supply chain'
+sidebar_label: Supply chain
 sidebar_position: 10
 ---
 
@@ -331,6 +331,7 @@ enum SupplyChainEvent {
 ```
 
 ## Source code
-The source code of this example of a supply chain smart contract and the example of an implementation of its testing is available on [GitHub](https://github.com/gear-tech/apps/blob/master/supply-chain).
 
-For more details about testing smart contracts written on Gear, refer to the [Program testing](/developing-contracts/testing) article.
+The source code of this example of a supply chain smart contract and the example of an implementation of its testing is available on [GitHub](https://github.com/gear-dapps/supply-chain).
+
+For more details about testing smart contracts written on Gear, refer to the [Program Testing](/developing-contracts/testing) article.

@@ -1,5 +1,5 @@
 ---
-sidebar_label: 'Multisig Wallet'
+sidebar_label: Multisig Wallet
 sidebar_position: 11
 ---
 
@@ -18,7 +18,7 @@ Wallet is owned by one or more owners, and in order for something significant to
 
 Deployer of a contract can choose how many owners are allowed to send transaction from the wallet as well as the minimum number of owners needed to send it (e.g., you could have a 2-of-3 multisig where two out of three assigned private keys are needed, 3-of-5, 5-of-7, etc.).
 
-To send a transaction through multisig wallet one of the owners should send transaction to the wallet with a `SubmitTransaction` action in the payload, and other owners should approve this transaction by `ConfirmTransaction` action until the required amount is reached.  
+To send a transaction through multisig wallet one of the owners should send transaction to the wallet with a `SubmitTransaction` action in the payload, and other owners should approve this transaction by `ConfirmTransaction` action until the required amount is reached.
 
 In the description of the transaction owner can add some useful information about it.
 
@@ -28,7 +28,7 @@ The wallet is flexible and users can manage the list of owners and the number of
 
 The transaction approval logic is complex, for example:
 1. If the owner submits the transaction and the contract only needs one confirmation to execute the transaction, the contract will firstly add the transaction to the storage, then confirm it by the submitting owner, then execute transaction automatically.
-2. If the owner submits the transaction and the contract needs two or more confirmations to execute the transaction, the contract will firstly add the transaction to the storage, then confirm it by the submitting owner. And to execute this transaction wallet will steel need one or more confirmations. Then another owner send `ConfirmTransaction` action to the contract and if everything is fine, the transaction will be executed automatically 
+2. If the owner submits the transaction and the contract needs two or more confirmations to execute the transaction, the contract will firstly add the transaction to the storage, then confirm it by the submitting owner. And to execute this transaction wallet will steel need one or more confirmations. Then another owner send `ConfirmTransaction` action to the contract and if everything is fine, the transaction will be executed automatically
 
 > In most cases a transaction will execute automatically after all confirmations is done. But there is a corner case, if the transaction was confirmed `n` times, and the contract requires `n + 1` or more confirmations, and then the owners change the required confirmations count to `n` or less, owners can either wait for the next confirmation, or simply call `ExecuteTransaction` with corresponding transaction ID to execute it
 
@@ -173,8 +173,8 @@ pub enum StateReply {
 
 ## Source code
 
-The source code of this example of Multisig Wallet smart contract and the example of an implementation of its testing is available on [GitHub](https://github.com/gear-tech/apps/tree/master/multisig-wallet).
+The source code of this example of Multisig Wallet smart contract and the example of an implementation of its testing is available on [GitHub](https://github.com/gear-dapps/multisig-wallet).
 
-See also an example of the smart contract testing implementation based on `gtest`: [multisig-wallet/tests](https://github.com/gear-tech/apps/tree/master/multisig-wallet/tests).
+See also an example of the smart contract testing implementation based on `gtest`: [multisig-wallet/tests](https://github.com/gear-dapps/multisig-wallet/tree/master/tests).
 
-For more details about testing smart contracts written on Gear, refer to the [Program testing](/developing-contracts/testing) article.
+For more details about testing smart contracts written on Gear, refer to the [Program Testing](/developing-contracts/testing) article.
