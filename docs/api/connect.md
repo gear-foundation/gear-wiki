@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-sidebar_label: 'Connect'
+sidebar_label: Connect
 ---
 
 # Connect API
@@ -71,7 +71,7 @@ async function connect() {
     gearApi.nodeName(),
     gearApi.nodeVersion(),
   ]);
-  
+
   console.log(
     `You are connected to chain ${chain} using ${nodeName} v${nodeVersion}`,
   );

@@ -1,6 +1,6 @@
 ---
 sidebar_position: 2
-sidebar_label: 'Tools'
+sidebar_label: Tools
 ---
 
 #  Tools

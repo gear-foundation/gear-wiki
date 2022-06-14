@@ -1,11 +1,11 @@
 ---
 sidebar_position: 1
-sidebar_label: 'State Components'
+sidebar_label: State Components
 ---
 
 # State components
 
-As any blockchain system, Gear maintains distributed state. Runtime code compiled to WebAssembly becomes part of the blockchain’s storage state. 
+As any blockchain system, Gear maintains distributed state. Runtime code compiled to WebAssembly becomes part of the blockchain’s storage state.
 
 Gear ensures one of the defining features - **forkless runtime upgrades**. The state is also guaranteed to be finalized if a finality gadget is used.
 
@@ -25,7 +25,7 @@ Programs can allocate more memory from the memory pool provided by a Gear instan
 
 ### Memory
 
-Gear instance holds individual memory space per program and guarantees it's persistence. A program can read and write only within its own memory space and has no access to the memory space of other programs. Individual memory space is reserved for a program during its initialization and does not require an additional fee (included in the program initialization fee). 
+Gear instance holds individual memory space per program and guarantees it's persistence. A program can read and write only within its own memory space and has no access to the memory space of other programs. Individual memory space is reserved for a program during its initialization and does not require an additional fee (included in the program initialization fee).
 
 A program can allocate the required amount of memory in blocks of 64KB. Each memory block allocation requires a gas fee. Each page (64KB) is stored separately on the distributed database backend, but at the run time, Gear node constructs continuous runtime memory and allows programs to run on it without reloads.
 

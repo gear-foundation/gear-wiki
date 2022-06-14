@@ -1,5 +1,5 @@
 ---
-sidebar_label: 'DAO'
+sidebar_label: DAO
 sidebar_position: 7
 ---
 
@@ -49,7 +49,7 @@ pub async fn balance(
 		token_id: &ActorId, /// - the fungible token contract address
 		account: &ActorId, /// - the account address
 )
-``` 
+```
 
 and sends a message:
 
@@ -112,7 +112,7 @@ pub unsafe extern "C" fn init() {
 }
 ```
 
-with the following struct: 
+with the following struct:
 
 ```rust
 struct InitDao {
@@ -128,7 +128,7 @@ The proposal struct:
 ```rust
  pub struct Proposal {
     pub proposer: ActorId, /// - the member who submitted the proposal
-    pub applicant: ActorId, /// - the applicant who wishes to become a member 
+    pub applicant: ActorId, /// - the applicant who wishes to become a member
     pub yes_votes: u128, /// - the total number of YES votes for that proposal
     pub no_votes: u128, /// - the total number of NO votes for that proposal
     pub quorum: u128, /// - a certain threshold of YES votes in order for the proposal to pass
@@ -147,7 +147,7 @@ pub struct Member {
     pub shares: u128, /// - the shares of that member
     pub highest_index_yes_vote: u128, /// - the index of the highest proposal on which the members voted YES (that value is checked when user is going to leave the DAO)
 }
-``` 
+```
 
 The actions that the contract receives outside are defined in enum `DaoActions`. The contract's replies are defined in the enum `DaoEvents`.
 
@@ -202,7 +202,7 @@ async fn process_proposal(
  - These functions are called in `async fn main()` through enum `DaoAction`.
 
 ```rust
-	#[gstd::async_main] 
+	#[gstd::async_main]
 	async fn main() {
 		let action: DaoAction = msg::load().expect("Could not load Action");
     	match action {
@@ -242,11 +242,11 @@ pub unsafe extern "C" fn meta_state() -> *mut [i32; 2] {
 
 ## User interface
 
-A [Ready-to-Use application](https://dao.gear-tech.io/) example provides a user interface that interacts with [DAO](https://github.com/gear-academy/dao-light) and [GFT](https://github.com/gear-academy/fungible-token) smart contracts. 
+A [Ready-to-Use application](https://dao.gear-tech.io/) example provides a user interface that interacts with [DAO](https://github.com/gear-dapps/dao-light) and [GFT](https://github.com/gear-dapps/fungible-token) smart contracts.
 
 Gear Fundible Token enables creation of utility token DAO, check [this article](gft-20.md) for details.
 
-This video demonstrates the entire configuration and user interaction workflow: 
+This video demonstrates the entire configuration and user interaction workflow:
 
 **https://youtu.be/6lxr7eojADw**
 
@@ -264,7 +264,7 @@ REACT_APP_CONTRACT_DAO
 - `REACT_APP_CONTRACT_ERC` is Fundible Token contract address
 - `RREACT_APP_CONTRACT_DAO` is DAO contract address
 
-An example is available: [here](https://github.com/gear-tech/dao-app/blob/master/.env.example)
+An example is available: [here](https://github.com/gear-dapps/dao-app/blob/master/.env.example)
 
 ### How to run
 
@@ -279,11 +279,10 @@ yarn run start
 ```
 
 ## Source code
-The source code of this example of DAO smart contract and the example of an implementation of its testing is available on [GitHub](https://github.com/gear-academy/dao-light). 
+The source code of this example of DAO smart contract and the example of an implementation of its testing is available on [GitHub](https://github.com/gear-dapps/dao-light).
 
-The extended version of DAO that includes admin, membership proposals and delegated voting can be found at [GitHub](https://github.com/gear-academy/dao).
+The extended version of DAO that includes admin, membership proposals and delegated voting can be found at [GitHub](https://github.com/gear-dapps/dao).
 
-The application source code is available in: [https://github.com/gear-tech/dao-app](https://github.com/gear-tech/dao-app).
+The application source code is available in: [https://github.com/gear-dapps/dao-app](https://github.com/gear-dapps/dao-app).
 
-For more details about testing smart contracts written on Gear, refer to the [Program testing](/developing-contracts/testing) article.
-
+For more details about testing smart contracts written on Gear, refer to the [Program Testing](/developing-contracts/testing) article.

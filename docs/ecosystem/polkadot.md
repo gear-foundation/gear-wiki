@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-sidebar_label: 'Polkadot'
+sidebar_label: Polkadot
 ---
 
 # Polkadot network
@@ -22,7 +22,7 @@ Relay Chain is the heart of Polkadot, responsible for the network’s security, 
 The Relay Chain has minimal functionality, which naturally means that advanced functionality features, like smart contracts for example, are not supported. Other specific work is delegated to the parachains, which each have different implementations and features.
 
 The main task of the Relay Chain is to coordinate the overall system and its connected parachains to build a scalable and interoperable network.
- 
+
 It’s also the Relay Chain that is responsible for the network’s shared security, consensus and cross-chain interoperability.
 
 ### Parachains
@@ -33,7 +33,7 @@ Parachains must be connected to the Relay Chain to ensure interoperability with 
 
 Parachains are validateable by validators of the Relay Chain and they get their name from the concept of paralleziable chains that run parallel to the main Relay Chain. Due to their parallel nature, they are able to parallelize transaction processing which helps improve scalability of the Polkadot network.
 
-Parachains optimize their functionality for specific use cases and, in many instances, support their own tokens. 
+Parachains optimize their functionality for specific use cases and, in many instances, support their own tokens.
 
 In order to become a parachain on Polkadot and Kusama, projects have to participate in a [parachain auction](https://parachains.info/auctions).
 

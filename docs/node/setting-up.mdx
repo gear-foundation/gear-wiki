@@ -1,5 +1,5 @@
 ---
-sidebar_label: 'Setting Up'
+sidebar_label: Setting Up
 sidebar_position: 1
 ---
 
@@ -42,6 +42,13 @@ or
 
 **Windows x64**: [gear-nightly-windows-x86_64.zip](https://builds.gear.rs/gear-nightly-windows-x86_64.zip)
 
+Unzip the downloaded package then you can try to run the node:
+
+```
+❯ gear-node.exe --version
+gear-node 0.1.0-hashcode-x86_64-windows
+```
+
 </TabItem>
 <TabItem value="mac-arm" label="MacOS ARM">
 
@@ -56,7 +63,14 @@ chmod +x gear-node
 
 or
 
-**macOS M1**: [gear-nightly-macos-m1.tar.gz](https://builds.gear.rs/gear-nightly-macos-m1.tar.gz)
+**macOS M1/M2**: [gear-nightly-macos-m1.tar.gz](https://builds.gear.rs/gear-nightly-macos-m1.tar.gz)
+
+You can try to run the node:
+
+```
+❯ ./gear-node --version
+gear-node 0.1.0-hashcode-aarch64-macos
+```
 
 </TabItem>
 <TabItem value="mac-intel" label="MacOS x64">
@@ -74,6 +88,13 @@ or
 
 **macOS Intel x64**: [gear-nightly-macos-x86_64.tar.gz](https://builds.gear.rs/gear-nightly-macos-x86_64.tar.gz)
 
+You can try to run the node:
+
+```
+❯ ./gear-node --version
+gear-node 0.1.0-hashcode-x86_64-macos
+```
+
 </TabItem>
 
 <TabItem value="mac-linux" label="Linux x64">
@@ -90,6 +111,13 @@ chmod +x gear-node
 or
 
 **Linux x64**: [gear-nightly-linux-x86_64.tar.xz](https://builds.gear.rs/gear-nightly-linux-x86_64.tar.xz)
+
+You can try to run the node:
+
+```
+❯ ./gear-node --version
+gear-node 0.1.0-hashcode-x86_64-linux
+```
 
 </TabItem>
 </Tabs>
@@ -154,7 +182,7 @@ make node-release
 
 :::note
 
-You can find the final build in directory `/gear/target/release/gear-node`
+You can find the final build at the following location: `gear/target/release/gear-node`
 
 Go to:
 
@@ -185,33 +213,33 @@ To run Gear node in dev mode use the following command:
 ## Command Flags and Options
 
 ```code
-gear-node [flags] [options]
+gear-node [subcommand] [options]
 ```
 
-`--staging`
+- `--staging`
 
-Connect the node to Gear testnet.
+  Connect the node to Gear testnet (default option).
 
-`--dev`
+- `--dev`
 
-Run standalone node of Gear network.
+  Run standalone node of Gear network.
 
-`--tmp`
+- `--tmp`
 
-Run node with a temporary storage. A temporary directory will be created to store the configuration and will be deleted at the end of the process.
+  Run node with a temporary storage. A temporary directory will be created to store the configuration and will be deleted at the end of the process.
 
-`purge-chain`
+- `purge-chain`
 
-Remove storage of the selected chain type. Needs to specify the chain connection type `--staging` or `--dev`
+  Remove storage of the selected chain type. Needs to specify the chain connection type `--staging` or `--dev`
 
-`--help`
+- `help`, `--help`
 
-For more information
+  Print the available subcommands/options or the help of the given subcommand.
 
 ## Special environment variables
 
 To run Gear node with logs from contracts use:
 
 ```code
-RUST_LOG="gwasm=debug" gear-node [flags]
+RUST_LOG="gwasm=debug" gear-node [subcommand] [options]
 ```
