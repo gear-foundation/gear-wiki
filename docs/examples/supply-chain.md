@@ -331,6 +331,7 @@ enum SupplyChainEvent {
 ```
 
 ## Source code
+The source code of this example of a supply chain smart contract and the example of an implementation of its testing is available on [GitHub](https://github.com/gear-dapps/supply-chain).
 
 The source code of this example of a supply chain smart contract and the example of an implementation of its testing is available on [GitHub](https://github.com/gear-dapps/supply-chain).
 
