@@ -7,7 +7,7 @@ sidebar_position: 2
 
 使用 Gear 写代码很容易！
 
-这是一个经典的 Ping-pong 合约小程序:
+这是一个经典的 Ping-pong 合约小程序：
 
 ```rust
 #![no_std]
@@ -58,6 +58,6 @@ mod tests {
 }
 ```
 
-它只会将`PONG`发送回原始发送者(可以是你!)
+该程序只是将 `PONG` 发回向它发送 `PING`的原始发送者。
 
-GitHub 链接: https://github.com/gear-tech/apps/tree/master/ping
+GitHub 链接：https://github.com/gear-dapps/ping

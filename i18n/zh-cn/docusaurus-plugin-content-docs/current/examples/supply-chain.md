@@ -11,9 +11,9 @@ sidebar_position: 10
 
 ## 业务逻辑
 
-* 每个新产生的项目会得到 NFT（在Gear的上下文中--[GNFT token](gnft-721.md)和 NFT相关的ID。然后，随着物品在供应链上的移动，物品的NFT在供应链程序、物品的生产商和未来的分销商、零售商和最终消费者之间转移。
+* 每个新产生的项目会得到 NFT（在 Gear 的上下文中--[gNFT token](gnft-721.md) 和 NFT 相关的 ID。然后，随着物品在供应链上的移动，物品的 NFT 在供应链程序、物品的生产商和未来的分销商、零售商和最终消费者之间转移。
 * 任何知道物品 ID 的人都可以获取物品信息
-* 销售、购买、交付使用 [GFT 代币](gft-20.md)。
+* 销售、购买、交付使用 [gFT 代币](gft-20.md)。
 
 ItemInfo 结构如下：
 
@@ -71,8 +71,8 @@ async fn produce_item(&mut self, name: String, notes: String)
 Produces one item with a name and notes and replies with its ID.
 Transfers created NFT for an item to a producer.
 
-生产一个带有名称和备注的商品，并以其ID进行消息回复。
-将为一个项目创建的NFT转移给提供商。
+生产一个带有名称和备注的商品，并以其 ID 进行消息回复。
+将为一个项目创建的 NFT 转移给提供商。
 
 必要条件：
 * `msg::source()` 必须是供应链提供商
@@ -86,7 +86,7 @@ async fn put_up_for_sale_by_producer(&mut self, item_id: U256, price: u128)
 ```
 
 代表生产商将商品以给定的价格卖给分销商。
-将商品的NFT转移到供应链。
+将商品的 NFT 转移到供应链。
 
 必要条件：
 * `msg::source()`必须是供应链中的生产者也是这个产品的生产者
@@ -101,7 +101,7 @@ async fn purchase_by_distributor(&mut self, item_id: U256, delivery_time: u64)
 ```
 
 代表经销商从生产商处购买商品。
-将用于购买项目的代币转移到供应链直到一个条目被接收(通过`receive_by_distributor`函数)。
+将用于购买项目的代币转移到供应链直到一个条目被接收 (通过`receive_by_distributor`函数)。
 
 必要条件：
 * `msg::source()` 必须是供应链中的分销商
@@ -130,7 +130,7 @@ async fn receive_by_distributor(&mut self, item_id: U256)
 
 代表分销商从生产商接收已发货的产品。
 根据计算的交付时间，将用于购买项目的代币从供应链转移到生产商，或作为延迟的惩罚，将部分或全部退款给分销商。
-将商品的NFT转移到经销商。
+将商品的 NFT 转移到经销商。
 
 必要条件：
 * `msg::source()`必须是供应链中的分销商也是这个项目的经销商
@@ -168,7 +168,7 @@ fn package_by_distributor(&mut self, item_id: U256)
 async fn put_up_for_sale_by_distributor(&mut self, item_id: U256, price: u128)
 ```
 代表经销商将包装好的商品以给定的价格卖给零售商。
-将项目的NFT转移到供应链。
+将项目的 NFT 转移到供应链。
 
 必要条件：
 * `msg::source()`必须是供应链中的分销商和该项目的分销商。
@@ -182,7 +182,7 @@ async fn put_up_for_sale_by_distributor(&mut self, item_id: U256, price: u128)
 async fn purchase_by_retailer(&mut self, item_id: U256, delivery_time: u64)
 ```
 代表零售商从经销商处购买商品。
-将购买商品的代币转移到供应链，直到收到商品为止(通过`receive_by_retailer`函数)。
+将购买商品的代币转移到供应链，直到收到商品为止 (通过`receive_by_retailer`函数)。
 
 必要条件：
 * `msg::source()` 必须是供应链中的零售商。
@@ -210,7 +210,7 @@ async fn receive_by_retailer(&mut self, item_id: U256)
 ```
 代表零售商从经销商处接收已发运的项目。
 根据已计算的交付时间，将用于购买项目的代币从供应链转移到分销商，或作为延迟的惩罚，将部分或全部退款给零售商。
-将物品的NFT转移到零售商。
+将物品的 NFT 转移到零售商。
 
 必要条件：
 * `msg::source()` 必须是供应链中的零售商
@@ -223,7 +223,7 @@ async fn receive_by_retailer(&mut self, item_id: U256)
 async fn put_up_for_sale_by_retailer(&mut self, item_id: U256, price: u128)
 ```
 代表零售商将从经销商收到的商品以给定的价格出售给消费者。
-将项目的NFT转移到供应链。
+将项目的 NFT 转移到供应链。
 
 必要条件：
 * `msg::source()` 还有这个商品的零售商
@@ -238,7 +238,7 @@ async fn purchase_by_consumer(&mut self, item_id: U256)
 ```
 从零售商那里购买商品。
 将购买物品的代币转让给其零售商。
-将商品的NFT转移给消费者。
+将商品的 NFT 转移给消费者。
 
 必要条件：
 * 商品的 `ItemState` 必须是 `ForSaleByRetailer`
@@ -326,6 +326,6 @@ enum SupplyChainEvent {
 
 ## 源码
 
-供应链的合约源代码可以在 [GitHub](https://github.com/gear-tech/apps/blob/master/supply-chain) 找到。
+供应链的合约源代码可以在 [GitHub](https://github.com/gear-dapps/supply-chain) 找到。
 
 更多关于在 Gear 的测试智能合约的细节，请参考这篇文章：[应用测试](https://wiki.gear-tech.io/zh-cn/developing-contracts/testing/)。
