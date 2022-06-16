@@ -1,12 +1,12 @@
 ---
 sidebar_label: NFT Marketplace
-sidebar_position: 10
+sidebar_position: 14
 ---
 
 # NFT Marketplace
 
 ## Introduction
-NFT marketplace is a contract where you can buy and sell non-fungible tokens for fungible tokens or Gear native value. The contract also supports holding the NFT auctions and making/accepting purchase offers on NFTs.
+NFT marketplace is a contract where you can buy and sell non-fungible tokens for fungible tokens. The contract also supports holding the NFT auctions and making/accepting purchase offers on NFTs.
 ## Logic
 The contract state:
 ```rust
