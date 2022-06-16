@@ -1,9 +1,19 @@
 ---
-sidebar_label: 'DAO'
+sidebar_label: DAO
 sidebar_position: 7
 ---
 
 # 去中心化自治组织 (DAO)
+
+## 简介
+
+去中心化自治组织（decentralized autonomous organization，简称 DAO），是一种管理组织或机构的新型方式，使个体能够以透明、公平和诚实的方式为特定事业共同努力。DAO 可以被视为由志同道合的人组成的在线组织，团体成员可以公平拥有并管理该组织。
+
+决策由提案和投票决定，以确保在一个 DAO 中，每个人都有发言权。这一点很重要，因为它意味着没有任何中心实体可以因为个人利益或基于个人信仰操纵任何事情。
+
+DAO 提供了安全的替代方案，为某一特定事业聚集资金。但这不仅仅是成员通常可以管理的钱。例如，一个团体可以建立一个 DAO 来管理一个慈善机构，以开始接受捐赠并相应地分配援助。然而，到目前为止，DAO 目前最大的用例是去中心化的投资基金。在这里，一群投资者创建了一个风险基金，将资金集中在一起，并透明地投票决定如何分配资金。
+
+## 接口
 
 ## 源文件
 
@@ -147,7 +157,7 @@ pub struct Member {
 - 加入 DAO。用户可以调用该函数，以便向 DAO 合约发送代币并成为 DAO 成员。
 
 ```rust
- async fn deposit(&mut self, amount: u128)
+async fn deposit(&mut self, amount: u128)
 ```
 
 - 资助提案。“申请人”将会得到资助
@@ -190,7 +200,7 @@ async fn process_proposal(
     )
 ```
 
-- 这些函数将在  `async fn main()` 中通过  `DaoAction` 来调用。
+- 这些函数将在 `async fn main()` 中通过 `DaoAction` 来调用。
 
 ```rust
 	#[gstd::async_main]
@@ -211,7 +221,7 @@ async fn process_proposal(
 	}
 ```
 
-2. `state.rs` - 定义了`State`和`StateReply`。链下获取合约状态的能力也很重要。它被定义在 `fn meta_state()`中。合约收到读取某数据请求（可接受的请求在`State`中定义）时发送相应的返回数据。合约返回的数据定义在`StateReply`中。
+2. `state.rs` - 定义了`State` 和 `StateReply`。链下获取合约状态的能力也很重要。它被定义在 `fn meta_state()`中。合约收到读取某数据请求（可接受的请求在 `State` 中定义）时发送相应的返回数据。合约返回的数据定义在 `StateReply` 中。
 
 ```rust
 pub unsafe extern "C" fn meta_state() -> *mut [i32; 2] {
@@ -232,10 +242,49 @@ pub unsafe extern "C" fn meta_state() -> *mut [i32; 2] {
 }
 ```
 
+## 用户界面
+
+一个 [即用型应用](https://dao.gear-tech.io/)实例提供了一个与[DAO](https://github.com/gear-dapps/dao-light)和[GFT](https://github.com/gear-dapps/fungible-token)智能合约互动的用户界面。
+
+Gear 同质化代币可以创建基于实用代币的 DAO，详情请看[本文](gft-20.md)。
+
+这个视频演示了整体配置和用户互动工作流程。
+
+**https://youtu.be/6lxr7eojADw**
+
+![img alt](./img/dao-1.jpg)
+
+### 在.env 中配置 dApp
+
+```sh
+REACT_APP_NETWORK
+REACT_APP_CONTRACT_ERC
+REACT_APP_CONTRACT_DAO
+```
+
+- `REACT_APP_NETWORK` 是 Gear 网络地址 (wss://rpc-node.gear-tech.io:443)
+- `REACT_APP_CONTRACT_ERC` 是 同质化代币合约地址
+- `RREACT_APP_CONTRACT_DAO` 是 DAO 合约地址
+
+有一个[例子](https://github.com/gear-tech/dao-app/blob/master/.env.example)可以参考。
+
+### 如何运行
+
+安装依赖：
+
+```sh
+yarn
+```
+
+运行：
+```sh
+yarn run start
+```
+
 ## 源码
 
-DAO 智能合约的例子的源代码和其测试的实例可以在 [GitHub](https://github.com/gear-tech/apps/tree/master/dao-light)找到。
+DAO 智能合约的例子的源代码和其测试的实例源码在 [GitHub](https://github.com/gear-dapps/dao-light)。
 
-DAO 扩展版可以管理、会员提案和委托投票，源码在[GitHub](https://github.com/gear-tech/apps/blob/master/dao)。
+DAO 扩展版可以管理、会员提案和委托投票，源码在 [https://github.com/gear-dapps/dao-app](https://github.com/gear-dapps/dao-app)。
 
 更多关于在 Gear 上测试智能合约的细节，请参考这篇文章：[应用测试](https://wiki.gear-tech.io/zh-cn/developing-contracts/testing/)。
