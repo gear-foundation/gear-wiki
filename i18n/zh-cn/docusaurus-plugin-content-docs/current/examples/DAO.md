@@ -252,6 +252,8 @@ Gear 同质化代币可以创建基于实用代币的 DAO，详情请看[本文]
 
 **https://youtu.be/6lxr7eojADw**
 
+中文字幕版视频在：**https://www.bilibili.com/video/BV1VF411j7ez**
+
 ![img alt](./img/dao-1.jpg)
 
 ### 在.env 中配置 dApp
