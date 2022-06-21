@@ -1,0 +1,73 @@
+---
+sidebar_label: Troubleshooting
+sidebar_position: 7
+---
+
+# Troubleshooting
+
+Typical errors and solutions are described here.
+
+## Unavailable `LOCK` file
+
+- **Error:** `IO error: While lock file /root/.local/share/gear-node/chains/staging_testnet/db/full/LOCK: Resource temporarily unavailable`
+
+- **Solution:** You seem to be running several Gear node instances. Note that only one node instance is allowed to run. You likely have configured the node as a service and then ran the second instance from the command line. You should either stop the service or don't run the Gear node from the command line.
+
+    You can see the current node processes by running the command:
+
+    ```shell
+    ps aux | grep gear-node
+    ```
+
+    If you want to break all node processes you may run:
+
+    ```shell
+    pkill -sigint gear-node
+    ```
+
+    Note that the SystemD service can't be stopped by the command above. Run instead:
+
+    ```shell
+    sudo systemctl stop gear-node
+    ```
+
+## Unexpected argument when starting the node service
+
+- **Error**: `Found argument '\' which wasn't expected, or isn't valid in this context`
+
+- **Solution:**: The `gear-node.service` configuration file seems to be misconfigured. Some versions of SystemD do not accept the backslash character (`\`) as a line break. Therefore, it is better to write each of the config entry on one line.
+
+    Refer to https://wiki.gear-tech.io/node/node-as-service for properly configuring the node as a service.
+
+    Don't forget to restart the node after fixing the service configuration:
+
+    ```shell
+    sudo systemctl daemon-reload
+    sudo systemctl restart gear-node
+    ```
+
+## Corrupted `db_version` file
+
+- **Error**: `Database version cannot be read from existing db_version file`
+
+- **Solution:**: The root of this problem is the lack of the disk free space. You may check the free space using the following command:
+
+    ```shell
+    df -h
+    ```
+
+    Also, you may check how many space is used by the blockchain DB:
+
+    ```shell
+    du -h $HOME/.local/share/gear-node/chains/staging_testnet/db/full
+    ```
+
+    Please refer to the [System Requirements](/node/setting-up#system-requirements) to see the minimum disk space required.
+
+    You need to free more space then purge the chain:
+
+    ```shell
+    ```
+
+
+*To be continued...*
