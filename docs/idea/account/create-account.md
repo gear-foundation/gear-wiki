@@ -3,19 +3,19 @@ sidebar_label: Create Account
 sidebar_position: 1
 ---
 
-# How to create a Substrate account using the polkadot.js extension
+# How to create a Substrate account
 
 ## Key information and security
 
-There are several ways to generate a Substrate or Polkadot account, but by far the easiest and most recommended is by using the polkadot.js browser extension.
+There are several ways to generate a Substrate or Polkadot account, depending on whether you are using a desktop or a mobile device
 
 There are two key features that make up an account; an address and a key. An address is the public aspect of the account. This is essentially a location that you can send transactions to and from. A key is the private part of the account. This is what enables you to access the address.
 
-The only ways to access your account are via your mnemonic phrase or your accounts JSON file and a password. It’s paramount that you keep both these sources of information secure. If you share them with anyone they will have full access to and control over your account, including all your funds.
+The only way to access your account is via your private key (using the mnemonic phrase, seed, or your account's JSON file and a password). 
 
 ### Storing your key safely
 
-Your seed or mnemonic phrase is the key to your account. If you lose access to your account, by changing device, forgetting the password or losing the JSON file, you can restore your account by using the seed. This also means that someone else can have access to your account if they also have access to your seed.
+Your seed or mnemonic phrase is the key to your account. If you lose access to your account, by changing the device, forgetting the password, or losing the JSON file, you can restore your account by using the seed. This also means that someone else can have access to your account if they also have access to your seed.
 
 We recommend that you store your seed in secure places like encrypted hard drives, non-digital devices or ideally, paper. We also recommend that you take other safety precautions to prevent this copy from physical damage, for example fire and water, and make multiple copies stored in different locations.
 
@@ -23,9 +23,10 @@ You should never store your seed on a device that is, or ever will be, connected
 
 ### Storing your accounts JSON file
 
-Your account’s JSON file is encrypted with a password. This means that while you can import into any wallet, you will need to use the password to do so successfully. As there is this additional layer of security - a password - you don’t have to be as cautious about securing it. However, it’s worth using extremely secure passwords that are not used for anything else. You should make a note of this password offline.
+Your account’s JSON file is encrypted with a password. This means that while you can import into any wallet, you will need to use the password to do so successfully. As there is this additional layer of security - a password - you don’t have to be as cautious about securing it. However, it’s worth using highly secure passwords that are not used for anything else. It would be best if you made a note of this password offline.
 
-## Polkadot.js browser extension
+
+## Via Polkadot.js browser extension
 
 The polkadot.js browser extension is one of the easiest and most secure ways of creating a Substrate account. This method involves installing the polkadot.js plugin and using it as a “virtual vault” that’s separate from your browser to store your private keys and sign transactions.
 
@@ -78,6 +79,17 @@ Please note that this password **does not** protect your seed phrase.
 Once you’ve set a password, click “Add the account with the generated seed”.
 
 You’ve now successfully created a new account using the polkadot.js browser extension.
+
+
+## Via mobile app
+
+If you need access to your accounts on a mobile device, then you can use the following mobile wallets for the Polkadot/Kusama ecosystem:
+
+[![img alt](./img/nova-logo.png)](https://novawallet.io/)
+
+[![img alt](./img/subwallet-logo.png)](https://subwallet.app/)
+
+All supported wallets you can check [here](https://wiki.polkadot.network/docs/build-wallets)
 
 ### Frequently Asked Questions
 
