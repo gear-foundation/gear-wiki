@@ -4,6 +4,7 @@ sidebar_position: 6
 ---
 
 # 介绍
+
 为了向我们快速增长的社区介绍 Gear 开发的平台，我们开发了一个去中心化应用，以展示使用我们的智能合约可以实现的一些特性。具体来说，我们的目标是建立一个类似 Twitter 的平台：每个用户都可以有自己的“信息流”，“信息流”可以订阅，登陆页面包含全球和个人的“信息流”。
 
 # 信息流 dApp 的构成
@@ -20,11 +21,9 @@ sidebar_position: 6
 
 现在让我们一步一步地了解应用的流程。
 
-首先，频道所有者应该编译他们自己版本的合约，并填入频道相关的信息。然后，当合约通过 [idea portal](https://idea.gear-tech.io) 上传到网络时，合约的所有者应该向路由合约发送一个 `Register` 消息。一旦路由合约收到该消息，它就会向最近部署的合约发送一个 `Meta` 请求，以验证它是否被正确设置。如果频道合约的响应正确，它就会被添加到可用频道列表中。
+首先，频道所有者应该编译他们自己版本的合约，并填入频道相关的信息。然后，当合约通过 [Gear Idea portal](https://idea.gear-tech.io) 上传到网络时，合约的所有者应该向路由合约发送一个 `Register` 消息。一旦路由合约收到该消息，它就会向最近部署的合约发送一个 `Meta` 请求，以验证它是否被正确设置。如果频道合约的响应正确，它就会被添加到可用频道列表中。
 
-如果你想查看路由合约和频道合约的可用代码，你可以在这里找到它们。[router](https://github.com/gear-tech/apps/tree/master/gear-feeds-router), [channel](https://github.com/gear-tech/gear-feeds-channel)。
-
-[Gear Feeds 合约](https://github.com/gear-tech/gear-feeds-channel) 代码库包含部署合约的逐步说明。
+如果你想查看路由合约和频道合约的可用代码，你可以在这里找到它们：[router](https://github.com/gear-tech/apps/tree/master/gear-feeds-router), [channel](https://github.com/gear-tech/gear-feeds-channel)。
 
 # Gear Feeds 网站
 
@@ -46,5 +45,10 @@ sidebar_position: 6
 
 ![img alt](./img/my-channel.png)
 
-# 结论
-Gear Feeds 是一个成熟的应用程序的例子，其核心逻辑是在 Gear 上通过智能合约实现的去中心化的应用程序。我们希望看到更多由 Gear Feeds 启发的令人兴奋的项目，以及我们的社区成员创造的最近的平台改进! :) 
+# 总结
+
+Gear Feeds 是一个成熟的应用程序的例子，其核心逻辑是在 Gear 上通过智能合约实现的去中心化的应用程序。我们希望看到更多由 Gear Feeds 启发的令人兴奋的项目，以及我们的社区成员创造的最近的平台改进！:)
+
+Router 与 Channel 的合约源代码可以在 [gear-dapps/feeds](https://github.com/gear-dapps/multitoken/tree/master/tests)找到。
+
+更多关于在 Gear 的测试智能合约的细节，请参考这篇文章：[应用测试](https://wiki.gear-tech.io/zh-cn/developing-contracts/testing/)。

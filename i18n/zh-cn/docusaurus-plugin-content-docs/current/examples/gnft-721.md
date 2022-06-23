@@ -1,176 +1,205 @@
 ---
-sidebar_label: 'GNFT (ERC-721)'
+sidebar_label: gNFT (ERC-721)
 sidebar_position: 4
 ---
 
-# Gear Non-Fungible Token
+# Gear 非同质化代币
 
-## 简介
+### 介绍
 
-在 Gear，我们希望为来自不同背景的开发者提供一个生态系统。我们必须注意到，与其他支持流行协议如 ERC-20 或 ERC-721 的平台相比，Gear 提供了更先进的功能和技术发展。然而，如果忽略这些广泛使用的接口，而支持任意的、但现代的实现，将是效率低下的。因此，Gear 提供了非同质化代币(GNFT)的支持，以及基于 Gear 愿景改进的标准。
+非同质化代币（NFT）是区块链上唯一的加密代币，用于证明数字资产的所有权，如数字艺术或游戏资产。与同质化代币的区别在于，同质化代币存储的是一个值，而非同质化代币存储的是一个加密证书。在底层，一个非同质化代币由一个唯一的代币标识符或代币 ID 组成，它被映射到一个所有者标识符，并存储在一个 NFT 智能合约中。<center> <em><strong>token_id</strong></em> → <em><strong>address</strong></em> </center>
 
-在这篇文章中，我们将介绍 Gear 的 GNFT 接口的使用情况，以及一个 NFT 实现的例子。
+当一个给定代币 ID 的所有者希望将其转让给另一个用户时，很容易验证所有权并将代币重新分配给新的所有者。
 
-## ERC-721 接口
+### 非同质化代币实现
 
-[ERC-721](https://eips.ethereum.org/EIPS/eip-721) 协议是社区接受的非同质代币（NFTs）智能合约实施标准。
-ERC-721描述了智能合约必须实现的接口，以便符合要求。NFT合约中会有以下功能：
+每个非同质化代币合约必须支持的功能：
 
-```rust
-/// This emits when ownership of any NFT changes by any mechanism.
-Transfer(from, to, tokenId);
+- *transfer(to, token_id)* 是一个函数，允许你将带有 *token_id* 的代币转移到 *to* 帐户;
 
-/// This emits when the approved address for an NFT is changed or reaffirmed.
-ApprovalForAll(_owner, operator, approved);
+- *approve(approved_account, token_id)* - 是一个函数，允许你将处置代币的权利交给指定的*approved_account*。这个功能在市场或拍卖会上很有用，因为当所有者想出售他的代币时，他们可以把它放在市场/拍卖会上，所以合约将能够在某个时候把这个代币发送给新的所有者。
 
-/// Count all NFTs assigned to an owner
-balanceOf(owner): integer;
+- *mint(to, token_id, metadata)* - 是一个创建新代币的函数。元数据可以包括关于代币的任何信息：它可以是一个指向特定资源的链接，也可以是对代币的描述，等等。
 
-/// Find the owner of an NFT
-ownerOf(tokenId): address;
+- *burn(from, token_id)* - 是一个函数，用于从合约中删除带有 *token_id* 的代币。
 
-/// Transfers the ownership of an NFT from one address to another address
-safeTransferFrom(from, to, tokenId, data: optional);
+NFT 合约的实现为[gear-contract-libraries/non_fungible_token](https://github.com/gear-dapps/gear-lib/tree/master/src/non_fungible_token)。
 
-/// Transfer ownership of an NFT
-transferFrom(from, to, tokenId);
+要使用默认实现需要在 *Cargo.toml* 配置：
 
-/// Change or reaffirm the approved address for an NFT
-approve(approved, tokenId);
-
-/// Enable or disable approval for a third party ("operator") to manage
-setApprovalForAll(operator, approved);
-
-/// Get the approved address for a single NFT
-getApproved(tokenId): address;
-
-/// @notice Query if an address is an authorized operator for another address
-isApprovedForAll(owner, operator): bool;
+```toml
+gear-lib = { git = "https://github.com/gear-dapps/gear-lib.git" }
+gear-lib-derive = { git = "https://github.com/gear-dapps/gear-lib.git" }
 ```
 
-然而，隐含的是，一些函数 -- 如 `mint` 和 `burn` -- 未来也将在合约中实现。这些功能的实现可能有所不同，因此会出现一系列 NFT 集合。
-
-## Gear Non-Fungible Token
-
-Gear 提供一个[GNFT 接口库](https://github.com/gear-tech/apps/tree/master/non-fungible-token)，具有协议中描述的功能。
-
-:::note
-
-请注意，该接口 **还不支持** `ERC721TokenReceiver` 和 `SafeTransferFrom` 等功能。然而，这些功能将尽快被添加。
-
-:::
-
-NonFungibleToken 接口引入了 `NonFungibleTokenBase`，它包含以下函数签名：
+non-fungible 合约的存储状态在结构 `NFTState` 中定义：
 
 ```rust
-/// called during the NFT contract deployment
-fn init(&mut self, name: String, symbol: String, base_uri: String);
-
-/// Transfer an NFT item from current owner to the new one
-fn transfer(&mut self, rom: &ActorId, to: &ActorId, token_id: U256);
-
-/// Gives a right to the actor to manage the specific token
-fn approve(&mut self, owner: &ActorId, spender: &ActorId, token_id: U256);
-
-/// Enables or disables the actor to manage all the tokens the owner has
-fn approve_for_all(&mut self, owner: &ActorId, operator: &ActorId, approved: bool);
-```
-
-上述函数对 NFT 的实现至关重要，并在 Gear 提供的接口中实现。
-
-GNFT 接口库的核心部分是 `NonFungibleToken` 结构。它包含了 `NonFungibleTokenBase` 特性中定义的函数的实现，以及一些有用的辅助函数，如 `authorized_actor`、`is_token_owner` 等。
-
-Gear 的 GNFT 接口是一个库，可以作为编写 NFT 智能合约的核心块。让我们来看看这个接口如何组成一个完整的合约。
-
-## NFT 范例
-
-在本节中，我们将参考 Gear 提供的 NFT 智能合约的实现实例 [代码链接](https://github.com/gear-tech/apps/tree/master/nft-example)。
-
-首先，智能合约接受的 `Actions` 应符合 ERC-721 的规定：
-
-```rust
-pub enum Action {
-    Mint,
-    Burn(U256),
-    Transfer(TransferInput),
-    Approve(ApproveInput),
-    ApproveForAll(ApproveForAllInput),
-    OwnerOf(U256),
-    BalanceOf(H256),
+#[derive(Debug, Default)]
+pub struct NFTState {
+    pub name: String,
+    pub symbol: String,
+    pub base_uri: String,
+    pub owner_by_id: BTreeMap<TokenId, ActorId>,
+    pub token_approvals: BTreeMap<TokenId, Vec<ActorId>>,
+    pub token_metadata_by_id: BTreeMap<TokenId, Option<TokenMetadata>>,
+    pub tokens_for_owner: BTreeMap<ActorId, Vec<TokenId>>,
+    pub royalties: Option<Royalties>,
 }
 ```
 
-状态查询方法完成接口遵从性：
+要重复使用默认结构，你需要派生出 `NFTStateKeeper`，并用 `#[NFTStateField]` 属性标记相应的字段。你也可以在 NF 合约中添加字段。例如，在合约中添加所有者的地址和`token_id`，它将跟踪当前的代币数量。
 
 ```rust
-pub enum State {
-    BalanceOfUser(H256),
-    TokenOwner(U256),
-    IsTokenOwner(TokenAndUser),
-    GetApproved(U256),
-}
-```
+use derive_traits::{NFTStateKeeper, NFTCore, NFTMetaState};
+use gear_contract_libraries::non_fungible_token::{nft_core::*, state::*, token::*};
 
-Gear 的 ERC-721 库包含了对 `transfer`、`approve` 和 `approve_for_all` **Actions** 的完整实现。让我们通过导入该库并将其存储在智能合约的状态中来利用它们。
-
-请记住，该库还包含多个有用的结构，如 `Approve`、`ApproveForAll` 和 `Transfer`，这些结构可以重用于自定义实现。
-
-```rust
+#[derive(Debug, Default, NFTStateKeeper, NFTCore, NFTMetaState)]
 pub struct NFT {
-    pub tokens: NonFungibleToken,
-    pub token_id: U256,
+    #[NFTStateField]
+    pub token: NFTState,
+    pub token_id: TokenId,
     pub owner: ActorId,
 }
 ```
 
-注意来自 GNFT 库的 `NonFungibleToken` 结构是如何在状态中组成的；这允许在合同方法的实现中重复使用它提供的功能。
+为了继承默认的逻辑功能，你需要派生出 `NFTCore` 。相应地，为了读取合约状态，你需要 `NFTMetaState`
 
-如上所述，我们还需要为 `mint` 和 `burn` 方法进行自定义实现。
+让我们来写一下 NFT 合约的整体实现。首先，我们定义消息，它将初始化合约和合约要处理的消息。
 
 ```rust
-impl NFT {
-    fn mint(&mut self) {
-      // custom mint implementation
-      ...
-    }
+#[derive(Debug, Encode, Decode, TypeInfo)]
+pub struct InitNFT {
+    pub name: String,
+    pub symbol: String,
+    pub base_uri: String,
+}
 
-    fn burn(&mut self, token_id: U256) {
-      // custom burn implementation
-      ...
+pub enum NFTAction {
+    Mint {
+        to: ActorId,
+        token_id: TokenId,
+    },
+    Burn {
+        token_id: TokenId,
+    },
+    Transfer {
+        to: ActorId,
+        token_id: TokenId,
+    },
+    Approve {
+        to: ActorId,
+        token_id: TokenId,
+    },
+}
+```
+
+NFT 合约实现：
+
+```rust
+#[derive(Debug, Default, NFTStateKeeper, NFTCore, NFTMetaState)]
+pub struct NFT {
+    #[NFTStateField]
+    pub token: NFTState,
+    pub token_id: TokenId,
+    pub owner: ActorId,
+}
+
+static mut CONTRACT: Option<NFT> = None;
+
+#[no_mangle]
+pub unsafe extern "C" fn init() {
+    let config: InitNFT = msg::load().expect("Unable to decode InitNFT");
+    let mut nft = NFT::default();
+    nft.token.name = config.name;
+    nft.token.symbol = config.symbol;
+    nft.token.base_uri = config.base_uri;
+    nft.owner = msg::source();
+    CONTRACT = Some(nft);
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn handle() {
+    let action: NFTAction = msg::load().expect("Could not load msg");
+    let nft = CONTRACT.get_or_insert(NFT::default());
+    match action {
+        NFTAction::Mint { to, token_id } => NFTCore::mint(&to, token_id, None),
+        NFTAction::Burn { token_id } => NFTCore::burn(nft, token_id),
+        NFTAction::Transfer { to, token_id } => NFTCore::transfer(nft, &to, token_id),
+        NFTAction::Approve { to, token_id } => NFTCore::approve(nft, &to, token_id),
     }
 }
 ```
 
-现在，在 `handle` 方法中，我们可以使用上面描述的 `mint` 和 `burn` 来实现 `Mint` 和 `Burn` Actions。对于其余的 Actions（即 `Approve`、`ApproveForAll`、`Transfer`、`OwnerOf` 和 `BalanceOf`），我们可以重新使用 Gear 的 GNFT 库来实现。
+### 制定你的非同质化代币合约
 
-状态查询也是如此，即 `metastate` 方法：库函数可以重复使用查询实现。
-
-例如，`Mint` Action 可以简单地实现为：
+接下来，让我们重写一下 `mint`函数的实现。`mint` 函数会为发送 `Mint` 消息的账户创建代币，并将元数据作为输入参数。
 
 ```rust
-Action::Mint => {
-    CONTRACT.mint();
+pub enum NFTAction {
+    Mint {
+        token_metadata: TokenMetadata,
+        token_id: TokenId,
+    },
+```
+
+`TokenMetadata` 同样定义在 gear NFT library：
+
+```rust
+#[derive(Debug, Default, Encode, Decode, Clone, TypeInfo)]
+pub struct TokenMetadata {
+    // ex. "CryptoKitty #100"
+    pub name: String,
+    // free-form description
+    pub description: String,
+    // URL to associated media, preferably to decentralized, content-addressed storage
+    pub media: String,
+    // URL to an off-chain JSON file with more info.
+    pub reference: String,
 }
 ```
 
-同样地，看看利用所提供的接口的 `Approve`：
+为我们的新函数定义一个 trait，它将扩展默认的`NFTCore` 。
 
 ```rust
-Action::Approve(input) => {
-    CONTRACT.tokens.approve(
-        &msg::source(),
-        &ActorId::new(input.to.to_fixed_bytes()),
-        input.token_id,
-    );
+pub trait MyNFTCore: NFTCore {
+    fn mint(&mut self, token_metadata: TokenMetadata);
+}
+```
+
+并编写该 trait 的实现：
+
+```rust
+impl MyNFTCore for NFT {
+    fn mint(&mut self, token_metadata: TokenMetadata) {
+        NFTCore::mint(self, &msg::source(), self.token_id, Some(token_metadata));
+        self.token_id = self.token_id.saturating_add(U256::one());
+    }
+}
+```
+
+因此，有必要对 `handle` 函数进行修改。
+
+```rust
+#[no_mangle]
+pub unsafe extern "C" fn handle() {
+    let action: NFTAction = msg::load().expect("Could not load msg");
+    let nft = CONTRACT.get_or_insert(NFT::default());
+    match action {
+        NFTAction::Mint { token_metadata } => MyNFTCore::mint(token_metadata),
+        NFTAction::Burn { token_id } => NFTCore::burn(nft, token_id),
+        NFTAction::Transfer { to, token_id } => NFTCore::transfer(nft, &to, token_id),
+        NFTAction::Approve { to, token_id } => NFTCore::approve(nft, &to, token_id),
+    }
 }
 ```
 
 ## 总结
 
-Gear 提供了一个可重复使用的[库](https://github.com/gear-tech/apps/tree/master/non-fungible-token/src)，具有 GNFT 协议的核心功能。通过使用对象组合，该库可以在自定义的 NFT 合约实现中使用，以减少重复代码。
+Gear 提供了一个可重复使用的[库](https://github.com/gear-dapps/non-fungible-token/tree/master/non-fungible-token/src)，具有 gNFT 协议的核心功能。通过使用对象组合，该库可以在自定义的 NFT 合约实现中使用，以减少重复代码。
 
-Gear 提供的合约实例的源代码可在 GitHub 上找到 [nft-example/src](https://github.com/gear-tech/apps/tree/master/nft-example/src)。
+Gear 提供的合约实例的源代码可在 GitHub 上找到 [nft-example/src](https://github.com/gear-dapps/non-fungible-token/tree/master/nft-example/src)。
 
-也请看基于 `gtest` 的智能合约测试实现的例子：[nft-example/tests](https://github.com/gear-tech/apps/tree/master/nft-example/tests)。
+也请看基于 `gtest` 的智能合约测试实现的例子：[nft-example/tests](https://github.com/gear-dapps/non-fungible-token/tree/master/nft-example/tests)。
 
 关于测试在 Gear 上编写的智能合约的更多细节，请参考这篇文章 [程序测试](/developing-contracts/testing.md)。

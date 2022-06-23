@@ -3,11 +3,7 @@ sidebar_label: '彩票'
 sidebar_position: 9
 ---
 
-# 彩票
-
-智能合约可在 GitHub 上获得：https://github.com/gear-tech/apps/tree/master/lottery
-
-# 简介
+## 介绍
 
 初始化合约的人被视为彩票合约的所有者。只有所有者才有权利开始/结束彩票。
 玩家通过发送一条信息，连同他们在合同上的赌注一起加入彩票池中。
@@ -45,7 +41,7 @@ struct Lottery {
 
 `lottery_history` - 赢家的数据集合
 
-`lottery_id` – 当前彩票id
+`lottery_id` – 当前彩票 id
 
 `lottery_balance` - 彩票中的总投注额
 

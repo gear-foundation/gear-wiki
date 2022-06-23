@@ -45,10 +45,9 @@ pub struct NFTState {
 
 To reuse the default struct you need derive the NFTStateKeeper trait and mark the corresponding field with the #[NFTStateField] attribute.  You can also add your fields in your NFT contract. For example, let's add the owner's address to the contract and the `token_id` that will track the current number of token:
 
-```
+```rust
 use derive_traits::{NFTStateKeeper, NFTCore, NFTMetaState};
 use gear_contract_libraries::non_fungible_token::{nft_core::*, state::*, token::*};
-
 
 #[derive(Debug, Default, NFTStateKeeper, NFTCore, NFTMetaState)]
 pub struct NFT {

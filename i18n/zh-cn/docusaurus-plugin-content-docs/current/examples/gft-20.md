@@ -1,11 +1,11 @@
 ---
-sidebar_label: 'GFT (ERC-20)'
+sidebar_label: gFT (ERC-20)
 sidebar_position: 3
 ---
 
 # 什么是 ERC-20?
 
-ERC20 是以太坊区块链上创建和发行智能合约的标准。它是由以太坊开发者在2015年代表以太坊社区创建的，并于2017年被正式认可。
+ERC20 是以太坊区块链上创建和发行智能合约的标准。它是由以太坊开发者在 2015 年代表以太坊社区创建的，并于 2017 年被正式认可。
 
 这些智能合约可以用来创建代币化资产，代表以太坊区块链上的任何东西，例如：
 
@@ -19,7 +19,7 @@ ERC20 是以太坊区块链上创建和发行智能合约的标准。它是由�
 
 这些通证化的资产被称为 `Fungible Token`，给定的 ERC20 Token 的所有实例都是相同的，它们之间可以互换。唯一且不能互换的 Token 被称为 NFT (Non-Fungible Token)。
 
-Gear 提供本文中描述的同质化代币 (GFT) 的原生实现。
+Gear 提供本文中描述的同质化代币 (gFT) 的原生实现。
 
 ## 存储结构
 
@@ -109,7 +109,7 @@ pub struct TransferInput {
 }
 ```
 
-## GFT 函数
+## gFT 函数
 
 ```rust
     /// Minting the specified `amount` of tokens for the account that called this function.
@@ -128,8 +128,8 @@ pub struct TransferInput {
 
 ## 总结
 
-由 Gear 提供的智能合约源码在 Github 上可以找到： [fungible-token/src/lib.rs](https://github.com/gear-tech/apps/blob/master/fungible-token/src/lib.rs)。
+由 Gear 提供的智能合约源码在 Github 上可以找到：[fungible-token/src/lib.rs](https://github.com/gear-dapps/fungible-token/blob/master/src/lib.rs)。
 
-同样可以找到基于 `gtest` 实现的智能合约测试范例：[fungible-token/src/tests.rs](https://github.com/gear-tech/apps/blob/master/fungible-token/src/tests.rs)。
+同样可以找到基于 `gtest` 实现的智能合约测试范例：[fungible-token/src/tests.rs](https://github.com/gear-dapps/fungible-token/blob/master/src/tests.rs)。
 
 更多关于在 Gear 上测试智能合约的细节，请参考这篇文章：[程序测试](/developing-contracts/testing.md) 。

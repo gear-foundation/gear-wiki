@@ -15,7 +15,7 @@ sidebar_position: 5
 
 `salt: Bytes` - 随机数据，以确定其唯一性。
 
-`initPayload: Bytes` - 在程序初始化期间将由 init()函数处理的 init 信息有效载荷。
+`initPayload: Bytes` - 在程序初始化期间将由 init() 函数处理的 init 信息有效载荷。
 
 `gasLimit: u64` -是指用户愿意花在处理上传新程序上的 gas。
 
@@ -55,14 +55,16 @@ MessageInfo example:
 
 ### 通过 Gear GUI 上传
 
-部署程序最简单的方法是使用官网[idea.gear-tech.io](https://idea.gear-tech.io)中的“Upload program”选项。
+部署程序最简单的方法是使用官网 [idea.gear-tech.io](https://idea.gear-tech.io) 中的“Upload program”选项。
+
+![img alt](./img/idea-upload.png)
 
 ### 通过 Polkadot.js.org 上传
 
-此外，你可以使用 [polkadot{.js}](https://polkadot.js.org) 提交程序。 在 Developer -> Extrinsic 菜单中使用 `gear.submitProgram` extrinsic。
+此外，你可以使用 [polkadot{.js}](https://polkadot.js.org) 提交程序。在 Developer -> Extrinsic 菜单中使用 `gear.submitProgram` extrinsic。
 
 ![img alt](./img/polkadot-gui.png)
 
 ### 通过 gear-js 库上传
 
-Gear-js 库提供了一种简单直观的方式来连接 GEAR 组件 API，包括与程序的交互。 更多详情请看 [Gear API](https://wiki.gear-tech.io/api/connect)。
+Gear-js 库提供了一种简单直观的方式来连接 GEAR 组件 API，包括与程序的交互。更多详情请看 [Gear API](https://wiki.gear-tech.io/api/connect)。

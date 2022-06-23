@@ -7,9 +7,9 @@ sidebar_position: 10
 
 ## 介绍
 
-&nbsp;&nbsp;&nbsp;&nbsp; 荷兰式拍卖是购买或出售商品的几种拍卖类型之一。最常见的是，在拍卖中，在出售过程中，拍卖师以高价开始，然后降低价格，直到一些参与者接受这个价格，或者达到预定的底价。荷兰式拍卖也被称为时钟拍卖或公开叫价降价式拍卖。这种类型的拍卖展现了速度优势，因为一次拍卖不需要超过一个出价。<br/>
+荷兰式拍卖是购买或出售商品的几种拍卖类型之一。最常见的是，在拍卖中，在出售过程中，拍卖师以高价开始，然后降低价格，直到一些参与者接受这个价格，或者达到预定的底价。荷兰式拍卖也被称为时钟拍卖或公开叫价降价式拍卖。这种类型的拍卖展现了速度优势，因为一次拍卖不需要超过一个出价。<br/>
 
-&nbsp;&nbsp;&nbsp;&nbsp;该拍卖使用[Gear NFT](https://wiki.gear-tech.io/developing-contracts/examples/gnft-721)作为交易商品。如果你想深入了解，请阅读相关资料。
+该拍卖使用[Gear 非同质化代币 (gNFT)](/examples/gnft-721)作为交易商品。
 
 ## 合约说明
 
@@ -134,8 +134,8 @@ pub struct AuctionInfo {
 
 ## Source code
 
-荷兰式拍卖的合约源代码可以在 [GitHub](https://github.com/gear-tech/apps/blob/master/escrow) 找到。
+荷兰式拍卖的合约源代码可以在 [gear-dapps/dutch-auction](https://github.com/gear-dapps/dutch-auction) 找到。
 
-同样可以找到基于 gtest 实现的智能合约测试范例：[dutch-auction/tests/dutch_auction_tests.rs](https://github.com/gear-tech/apps/tree/master/dutch-auction/tests/dutch_auction_tests.rs)。
+同样可以找到基于 gtest 实现的智能合约测试范例：[gear-dapps/dutch-auction/tree/master/tests](https://github.com/gear-dapps/dutch-auction/tree/master/tests)。
 
 更多关于在 Gear 的测试智能合约的细节，请参考这篇文章：[应用测试](https://wiki.gear-tech.io/zh-cn/developing-contracts/testing/)。

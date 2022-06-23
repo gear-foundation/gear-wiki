@@ -7,7 +7,7 @@ sidebar_position: 8
 
 第三方担保是一个特殊的钱包，某些资产 (如金钱或股票) 被存入该账户，并被保存到满足某些条件。就智能合约而言，第三方担保是存储在区块链上的钱包，与常规担保一样，可以从一个用户那里接收一些资产 (例如加密资产或代币)，并在满足特定条件时将它们发送给另一个用户。
 
-这篇文章将展示 1 个第三方担保的智能合约案例，其中资产是[Gear 同质化代币 - GFT](/examples/gft-20)。
+这篇文章将展示 1 个第三方担保的智能合约案例，其中资产是[Gear 同质化代币 - gFT](/examples/gft-20)。
 
 ## 业务逻辑
 
@@ -181,6 +181,6 @@ enum EscrowEvent {
 
 ## 源码
 
-Escrow 的合约源代码可以在 [GitHub](https://github.com/gear-tech/apps/blob/master/escrow) 找到。
+Escrow 的合约源代码可以在 [GitHub](https://github.com/gear-dapps/escrow) 找到。
 
 更多关于在 Gear 的测试智能合约的细节，请参考这篇文章：[应用测试](https://wiki.gear-tech.io/zh-cn/developing-contracts/testing/)。
