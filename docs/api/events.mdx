@@ -1,0 +1,171 @@
+---
+sidebar_position: 7
+sidebar_label: Events
+---
+
+# Events
+
+Events are generated for certain operations during execution. The following sections describe events that are part of the default Gear runtime.
+
+To subscribe to all events:
+
+```javascript
+
+import { GearApi } from "@gear-js/api";
+
+GearApi.query.system.events((events) => {
+    console.log(events)
+}
+
+```
+
+## Gear Events Types
+
+### MessageEnqueued
+
+<b>summary:</b> User send message to program, which was successfully. Added to gear message queue.
+
+```rust
+
+MessageEnqueued {
+    /// Generated id of the message.
+    id: MessageId,
+    /// Account id of the source of the message.
+    source: T::AccountId,
+    /// Program id, who is a destination of the message.
+    destination: ProgramId,
+    /// Entry point for processing of the message.
+    /// On the sending stage, processing function
+    /// of program is always known.
+    entry: Entry,
+}
+
+```
+
+### UserMessageSent
+
+<b>Summary:</b> Somebody sent message to user.
+
+```rust
+UserMessageSent {
+    /// Message sent.
+    message: StoredMessage,
+    /// Block number of expiration from `Mailbox`.
+    ///
+    /// Equals `Some(_)` with block number when message
+    /// will be removed from `Mailbox` due to some
+    /// reasons (see #642, #646 and #1010).
+    ///
+    /// Equals `None` if message wasn't inserted to
+    /// `Mailbox` and appears as only `Event`.
+    expiration: Option<T::BlockNumber>,
+}
+```
+
+### UserMessageSent
+
+<b>Summary:</b> Message marked as "read" and removes it from `Mailbox`. This event only affects messages, which were already inserted in `Mailbox` before.
+
+```rust
+UserMessageRead {
+    /// Id of the message read.
+    id: MessageId,
+    /// The reason of the reading (removal from `Mailbox`).
+    ///
+    /// NOTE: See more docs about reasons at `gear_common::event`.
+    reason: UserMessageReadReason,
+}
+```
+
+### MessagesDispatched
+
+<b>Summary:</b> The result of the messages processing within the block.
+
+
+```rust
+MessagesDispatched {
+    /// Total amount of messages removed from message queue.
+    total: MessengerCapacityOf<T>,
+    /// Execution statuses of the messages, which were already known
+    /// by `Event::MessageEnqueued` (sent from user to program).
+    statuses: BTreeMap<MessageId, DispatchStatus>,
+    /// Ids of programs, which state changed during queue processing.
+    state_changes: BTreeSet<ProgramId>,
+}
+```
+
+### MessageWaited
+
+<b>Summary:</b> Messages execution delayed (waited) and it was successfully. Added to gear waitlist.
+
+
+```rust
+MessageWaited {
+    /// Id of the message waited.
+    id: MessageId,
+    /// Origin message id, which started messaging chain with programs,
+    /// where currently waited message was created.
+    ///
+    /// Used for identifying by user, that this message associated
+    /// with him and with the concrete initial message.
+    origin: Option<MessageId>,
+    /// The reason of the waiting (addition to `Waitlist`).
+    ///
+    /// NOTE: See more docs about reasons at `gear_common::event`.
+    reason: MessageWaitedReason,
+    /// Block number of expiration from `Waitlist`.
+    ///
+    /// Equals block number when message will be removed from `Waitlist`
+    /// due to some reasons (see #642, #646 and #1010).
+    expiration: T::BlockNumber,
+}
+```
+
+### MessageWoken
+
+<b>Summary:</b>  Message is ready to continue its execution and was removed from `Waitlist`
+
+```rust
+MessageWoken {
+    /// Id of the message woken.
+    id: MessageId,
+    /// The reason of the waking (removal from `Waitlist`).
+    ///
+    /// NOTE: See more docs about reasons at `gear_common::event`.
+    reason: MessageWokenReason,
+}
+```
+
+### CodeChanged
+
+<b>Summary:</b> Any data related to programs codes changed.
+
+```rust
+CodeChanged {
+    /// Id of the code affected.
+    id: CodeId,
+    /// Change applied on code with current id.
+    ///
+    /// NOTE: See more docs about change kinds at `gear_common::event`.
+    change: CodeChangeKind<T::BlockNumber>,
+}
+```
+
+### CodeChanged
+
+<b>Summary:</b> Any data related to programs changed.
+
+```rust
+ProgramChanged {
+    /// Id of the program affected.
+    id: ProgramId,
+    /// Change applied on program with current id.
+    ///
+    /// NOTE: See more docs about change kinds at `gear_common::event`.
+    change: ProgramChangeKind<T::BlockNumber>,
+}
+```
+
+## Cookbook
+
+example
