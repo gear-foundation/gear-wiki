@@ -33,9 +33,9 @@ Typical errors and solutions are described here.
 
 ## Unexpected argument when starting the node service
 
-- **Error**: `Found argument '\' which wasn't expected, or isn't valid in this context`
+- **Error:** `Found argument '\' which wasn't expected, or isn't valid in this context`
 
-- **Solution:**: The `gear-node.service` configuration file seems to be misconfigured. Some versions of SystemD do not accept the backslash character (`\`) as a line break. Therefore, it is better to write each of the config entry on one line.
+- **Solution:** The `gear-node.service` configuration file seems to be misconfigured. Some versions of SystemD do not accept the backslash character (`\`) as a line break. Therefore, it is better to write each of the config entry on one line.
 
     Refer to https://wiki.gear-tech.io/node/node-as-service for properly configuring the node as a service.
 
@@ -46,11 +46,13 @@ Typical errors and solutions are described here.
     sudo systemctl restart gear-node
     ```
 
-## Corrupted `db_version` file
+## Corrupted data base
 
-- **Error**: `Database version cannot be read from existing db_version file`
+- **Error:** `Database version cannot be read from existing db_version file`
 
-- **Solution:**: The root of this problem is the lack of the disk free space. You may check the free space using the following command:
+- **Alternative error:** `Invalid argument: Column families not opened: ..., col2, col1, col0`
+
+- **Solution:** The root of this problem is the lack of the disk free space. You may check the free space using the following command:
 
     ```shell
     df -h
@@ -67,7 +69,22 @@ Typical errors and solutions are described here.
     You need to free more space then purge the chain:
 
     ```shell
+    sudo systemctl stop gear-node
+    # Provide more free space on the disk
+    gear-node purge-chain
+    sudo systemctl start gear-node
     ```
 
+## Node executable file obsolescence
 
-*To be continued...*
+- **Error:** `Verification failed for block <block-id> received from peer <peer-id>`
+
+- **Alternative error:** `runtime requires function imports which are not present on the host`
+
+- **Solution:** [Update](/node/node-as-service#update-the-node-with-the-new-version) the node binary to the latest version.
+
+## Masked service
+
+- **Error:** `Failed to start gear-node.service: Unit gear-node.service is masked.`
+
+- **Solution:** Please check: https://askubuntu.com/questions/1017311/what-is-a-masked-service
