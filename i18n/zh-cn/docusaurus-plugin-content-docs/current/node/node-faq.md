@@ -82,7 +82,7 @@ sudo journalctl -n 100 -f -u gear-node
 
 #### 节点的同步时间是多少？
 完整的节点同步时间可以用日志中的信息来计算：
-`syncing_time (secs) = (target_block - finalized_block) / bps` 
+`syncing_time (secs) = (target_block - finalized_block) / bps`
 例如：
 ```bash
 Log record -> `Syncing 143.1 bps, target=#3313788 ... finalized #3223552`

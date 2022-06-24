@@ -14,7 +14,7 @@ You need to download or compile the gear-node executable file for your OS. [See 
 Copy the `gear-node` executable to the `/root` directory:
 
 ```bash
-cp gear-node /root/
+sudo cp gear-node /root/
 ```
 
 To run the Gear node as one of the Linux services, you need to configure the systemd file:
@@ -79,7 +79,7 @@ You may see the service logs by running the following command:
 journalctl -u gear-node
 ```
 
-Use navigation keys to browse the logs and `q` key to exit.
+Use navigation keys to browse the logs and <kbd>q</kbd> key to exit.
 
 You may see the last 50 lines of logs by adding `-n 50` parameter:
 
