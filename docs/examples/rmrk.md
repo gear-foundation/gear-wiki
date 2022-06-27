@@ -21,7 +21,7 @@ In the usual NFT standard, NFT owners were stored as mapping from the NFT ids to
 ```rust
 BTreeMap<TokenId, ActorId>
 ```
-In the RMRK NFT standard we store the owners  of tokensin the following way:
+In the RMRK NFT standard we store the owners of tokens in the following way:
 ```rust
 BTreeMap<TokenId, RMRKOwner>
 
@@ -34,8 +34,7 @@ pub struct RMRKOwner {
 
 If the owner of NFT is another NFT then the field `token_id` is `Some(parent_token_id)` and the `owner_id` is the address of the parent RMRK contract, otherwise `token_id` is `None` and `owner_id` is the address of an account or another smart contract.
 
-RMRK NFT tokens have the concept of `owner` and `rootowner`. `Rootowner` will always be an account or program where owner
-owner can also be an NFT ID in cases where an NFT owns another NFT. For example, if Alice owns `NFT A` which owns `NFT B` then the `owner` of `NFT B` is `NFT A` and the `rootowner` of `NFT B` is Alice.
+RMRK NFT tokens have the concept of `owner` and `rootowner`. `Rootowner` will always be an account or program where owner can also be an NFT ID in cases where an NFT owns another NFT. For example, if Alice owns `NFT A` which owns `NFT B` then the `owner` of `NFT B` is `NFT A` and the `rootowner` of `NFT B` is Alice.
 
 RMRK standard has 2 options of minting tokens. The first one is similar to the `mint` function at usual NFT standard:
 
@@ -48,9 +47,9 @@ RMRK standard has 2 options of minting tokens. The first one is similar to the `
 ///
 /// # Arguments:
 /// * `to`: is the address who will own the token.
-/// * `token_id`: is the tokenId of new RMRK token.
+/// * `token_id`: is the tokenId of the new RMRK token.
 ///
-/// On success replie [`RMRKEvent::MintToRootOwner`].
+/// On success reply [`RMRKEvent::MintToRootOwner`].
 MintToRootOwner {
     to: ActorId,
     token_id: TokenId,
@@ -64,13 +63,13 @@ The second `mint` function allows you to create an NFT that will belong to anoth
 ///
 /// # Requirements:
 /// * The `parent_id`  must be a deployed RMRK contract.
-/// * The token with id `parent_token_id` must exist in `parent_id` contract.
+/// * The token with id `parent_token_id` must exist in the `parent_id` contract.
 /// * The `token_id` must not exist.
 ///
 /// # Arguments:
-/// * `parent_id`: is the address of RMRK parent contract.
+/// * `parent_id`: is the address of the RMRK parent contract.
 /// * `parent_token_id`: is the parent RMRK token.
-/// * `token_id`: is the tokenId of new RMRK token.
+/// * `token_id`: is the tokenId of the new RMRK token.
 ///
 /// On success replies [`RMRKEvent::MintToNft`].
 MintToNft {
@@ -105,7 +104,7 @@ AddChild {
 The root owner or the approved account can accept the child NFT by sending the following message:
 ```rust
 /// Accepts an RMRK child being in the `Pending` status.
-/// Removes RMRK child from `pending_children` and adds to `accepted_children`.
+/// Removes RMRK child from `pending_children` and adds it to `accepted_children`.
 ///
 /// # Requirements:
 /// * The `msg::source()` must be an RMRK owner of NFT with tokenId `parent_token_id` or an approved account.
@@ -126,7 +125,7 @@ AcceptChild {
 or reject the child NFT with the message:
 ```rust
 /// Rejects an RMRK child being in the `Pending` status.
-/// It sends message to the child NFT contract to burn NFT token from it.
+/// It sends a message to the child NFT contract to burn the NFT token from it.
 ///
 /// # Requirements:
 /// * The `msg::source()` must be an RMRK owner or an approved account.
@@ -148,7 +147,7 @@ RejectChild {
 The root owner can also remove the already accepted child from his NFT accepted children:
 ```rust
 /// Removes an RMRK child being in the `Accepted` status.
-/// It sends message to the child NFT contract to burn NFT token from it.
+/// It sends a message to the child NFT contract to burn the NFT token from it.
 ///
 /// # Requirements:
 /// * The `msg::source()` must be an RMRK owner or an approved account.
@@ -170,10 +169,10 @@ If the root owner rejects  or removes the child NFT, the child NFT must be burnt
 ```rust
 /// Burns RMRK tokens. It must be called from the RMRK parent contract when the root owner removes or rejects child NFTs.
 /// The input argument is an `BTreeSet<TokenId>` since a parent contract can have multiple children that must be burnt.
-/// It also recursively send messages [`RMRKAction::BurnFromParent`] to children of burnt tokens if any.
+/// It also recursively sends messages [`RMRKAction::BurnFromParent`] to children of burnt tokens if any.
 ///
 /// # Requirements:
-/// * The `msg::source()` must be RMRK parent contract.
+/// * The `msg::source()` must be a RMRK parent contract.
 /// * All tokens in `BTreeSet<TokenId>` must exist.
 ///
 /// # Arguments:
@@ -185,12 +184,12 @@ BurnFromParent {
     root_owner: ActorId,
 },
 ```
-The token being burned may also have children in other contracts. When burned, it recursively burn all the children NFTs.
+The token being burned may also have children in other contracts. When burned, it recursively burns all the children's NFTs.
 
 The root owner can also burn the NFT with following message:
 ```rust
 /// Burns RMRK token.
-/// It recursively burn all the children NFTs.
+/// It recursively burns all the children's NFTs.
 /// It checks whether the token is a child of another token.
 /// If so, it sends a message to the parent NFT  to remove the child.
 ///
@@ -211,7 +210,7 @@ In addition to burning tokens recursively, it also checks whether the burnt NFT 
 ///
 /// # Requirements:
 /// * The `msg::source()` must be a child RMRK contract.
-/// * The indicated child must exist the children list of `parent_token_id`.
+/// * The indicated child must exist on the children list of `parent_token_id`.
 ///
 /// # Arguments:
 /// * `parent_token_id`: is the tokenId of the parent NFT.
@@ -224,19 +223,19 @@ BurnChild {
 },
 ```
 
-When NFT is transferred, the destination can be either an account or another NFT. To send a NFT to another account you need to send a message:
+When NFT is transferred, the destination can be either an account or another NFT. To send an NFT to another account you need to send a message:
 ```rust
 /// Transfers NFT to another account.
-/// If the previous owner is another RMRK contract, it sends the message [`RMRKAction::BurnChild`] to the parent conract.
+/// If the previous owner is another RMRK contract, it sends the message [`RMRKAction::BurnChild`] to the parent contract.
 ///
 /// # Requirements:
 /// * The `token_id` must exist.
-/// * The `msg::source()` must be approved or owner of the token.
+/// * The `msg::source()` must be approved by the owner of the token.
 /// * The `to` address should be a non-zero address.
 ///
 /// # Arguments:
 /// * `to`: is the receiving address.
-/// * `token_id`: is the tokenId of the transfered token.
+/// * `token_id`: is the tokenId of the transferred token.
 ///
 /// On success replies [`RMRKEvent::ChildBurnt`].
 Transfer {
@@ -252,13 +251,13 @@ In case of transferring a token to another NFT, the following message is sent:
 ///
 /// # Requirements:
 /// * The `token_id` must exist.
-/// * The `msg::source()` must be approved or root owner of the token.
+/// * The `msg::source()` must be approved by the root owner of the token.
 /// * The `to` address should be a non-zero address
 ///
 /// # Arguments:
-/// * `to`: is the address of new parent RMRK contract.
+/// * `to`: is the address of the new parent RMRK contract.
 /// * `destination_id: is the tokenId of the parent RMRK token.
-/// * `token_id`: is the tokenId of the transfered token.
+/// * `token_id`: is the tokenId of the transferred token.
 ///
 /// On success replies [`RMRKEvent::TransferToNft`].
 TransferToNft {
@@ -267,13 +266,13 @@ TransferToNft {
     destination_id: TokenId,
 },
 ```
-In this case, 6 scenarios are possible:
+In this case, 5 scenarios are possible:
 1. Root owner transfers child token from NFT to another his NFT within one contract.
 In that case child RMRK contract sends message `TransferChild` to parent RMRK contract with indicated previous `TokenId` and new `TokenId`:
 
 ```rust
 /// That message is designed to be sent from another RMRK contracts
-/// when root owner transfers his child to another parent token within one contract.
+/// when the root owner transfers his child to another parent token within one contract.
 /// If root owner transfers child token from NFT to another his NFT
 /// it adds a child to the NFT  with a status that child had before. 
 /// If root owner transfers child token from NFT to another NFT that he does not own
@@ -301,7 +300,7 @@ TransferChild {
     - Child RMRK contract sends message `AddAcceptedChild` to new parent RMRK contract;
 ```rust
 /// That function is designed to be called from another RMRK contracts
-/// when root owner transfers his child NFT to another his NFT in another contract.
+/// when the root owner transfers his child NFT to another his NFT in another contract.
 /// It adds a child to the RMRK token with tokenId `parent_token_id` with status `Accepted`.
 ///
 /// # Requirements:
@@ -330,11 +329,11 @@ The `approve` function in RMRK NFT standard is similar to the usual nft standard
 ///
 /// # Requirements:
 /// * The `token_id` must exist.
-/// * The `msg::source()` must be approved or root owner of the token.
+/// * The `msg::source()` must be approved by the root owner of the token.
 /// * The `to` address must be a non-zero address
 ///
 /// # Arguments:
-/// * `to`: is the address of approved account.
+/// * `to`: is the address of the approved account.
 /// * `token_id`: is the tokenId of the token.
 ///
 /// On success replies [`RMRKEvent::Approval`].
@@ -347,10 +346,10 @@ Approve {
 The Multi Resource NFT standard is a standalone part of RMRK concepts. The idea is that an NFT can have multiple resources. 
 There are four key use cases for NFT multiresource:
 - *Cross-metaverse compatibility*:  for example, NFT with several resources can be used in different games.
-- *multi-media output*: NFT can be stored in different digital format (image, video, audio or text file).
-- *Media Redundancy*: Many NFTs are minted with metadata centralized on a server somewhere or, in some cases, a hardcoded IPFS gateway which can also go down, instead of just an IPFS hash. By adding the same metadata file as different resources, the resilience of the metadata and its referenced media increases exponentially as the chances of all the protocols going down at once become ever less likely.
-- *NFT Evolution*: Many NFTs, particularly game related ones, require evolution. 
-RMRK contract can create a contract to store it resources.
+- *Multimedia output*: NFT can be stored in different digital formats (image, video, audio, eBooks or text file).
+- *Media Redundancy*: many NFTs are minted with metadata centralized on a server somewhere or, in some cases, a hardcoded IPFS gateway which can also go down, instead of just an IPFS hash. By adding the same metadata file as different resources, the resilience of the metadata and its referenced media increases exponentially as the chances of all the protocols going down at once become ever less likely.
+- *NFT Evolution*: many NFTs, particularly game related ones, require evolution. 
+RMRK contract can create a contract to store its resources.
 #### **Resource storage contract:**
 The storage state:
 ```rust
@@ -403,7 +402,7 @@ GetResource {
 The RMRK contract admin can add resource to the storage contract through the RMRK contract:
 ```rust
 /// Adds resource entry on resource storage contract.
-/// It sends a message to resource storage contract with information about new resource.
+/// It sends a message to the resource storage contract with information about a new resource.
 ///
 /// # Requirements:
 /// * The `msg::source()` must be the contract admin.
@@ -425,7 +424,7 @@ AddResourceEntry {
 Anyone can add resource to the existing token in the form of a propose-commit pattern. When adding a resource to a token, it is first placed in the "Pending" array, and must be migrated to the "Active" array by the token owner:
 ```rust
 /// Adds resource to an existing token.
-/// Checks that the resource woth indicated id exists in the resource storage contract.
+/// Checks that the resource with indicated id exists in the resource storage contract.
 /// Proposed resource is placed in the "Pending" array.
 /// A pending resource can be also proposed to overwrite an existing resource.
 ///
