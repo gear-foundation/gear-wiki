@@ -12,7 +12,7 @@ The guarantee successful message processing and to avoid errors like `Gaslimit e
 
 ## Calculate gas for messages
 
-Depending on the conditions, you can calculate gas for initalizing a program or processing a message in handle() or reply()
+Depending on the conditions, you can calculate gas for initalizing a program or processing a message in `handle()` or `reply()`.
 
 :::info
 Gas calculation returns the GasInfo object, which contains 3 parameters:
