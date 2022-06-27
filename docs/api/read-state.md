@@ -11,7 +11,7 @@ The following query is used to read the state of the program:
 const metaWasm = fs.readFileSync('path/to/meta.wasm');
 const state = await gearApi.programState.read(programId, metaWasm, inputValue?);
 ```
-`programId` is a payload If program expects it in `meta_state`
+`programId` is a payload if program expects it in `meta_state`
 
 ## cookbook
 
