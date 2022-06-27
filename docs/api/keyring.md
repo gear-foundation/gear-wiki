@@ -55,8 +55,7 @@ const { seed } = GearKeyring.generateSeed(mnemonic);
 
 ## Default Accounts
 
-In most cases on development chains, Substrate has a number of standard accounts that are pre-funded. Generally when operating on development chains you will be introduced to pars such as `Alice`, `Bob`, `Charlie`, `Dave`, `Eve` and `Ferdie`. To create keyring from pre-installed accounts use:
-
+In most cases on development chains, Substrate has a number of standard accounts that are pre-funded. Generally when operating on development chains you will be introduced to characters such as `Alice`, `Bob`, `Charlie`, `Dave`, `Eve` and `Ferdie`. To create keyring from pre-installed accounts use:
 
 ```javascript
 const keyring = await GearKeyring.fromSuri('//Alice');
