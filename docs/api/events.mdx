@@ -1,0 +1,209 @@
+---
+sidebar_position: 7
+sidebar_label: Events
+---
+
+# Events
+
+Events are generated for certain operations during execution. The following sections describe events that are part of the default Gear runtime.
+
+To subscribe to all events:
+
+```javascript
+
+import { GearApi } from "@gear-js/api";
+
+GearApi.query.system.events((events) => {
+    console.log(events)
+}
+
+```
+
+## Gear Events Types
+
+### MessageEnqueued
+
+**Summary:** When a user successfully sends a message to a program and it gets added to the Gear message queue.
+
+```rust
+
+MessageEnqueued {
+    /// Generated id of the message.
+    id: MessageId,
+    /// Account id of the source of the message.
+    source: T::AccountId,
+    /// Program id, who is a destination of the message.
+    destination: ProgramId,
+    /// Entry point for processing of the message.
+    /// On the sending stage, processing function
+    /// of program is always known.
+    entry: Entry,
+}
+
+```
+
+### UserMessageSent
+
+**Summary:** When someone has sent a message to the user.
+    
+```rust
+UserMessageSent {
+    /// Message sent.
+    message: StoredMessage,
+    /// Block number of expiration from `Mailbox`.
+    ///
+    /// Equals `Some(_)` with block number when message
+    /// will be removed from `Mailbox` due to some
+    /// reasons (see #642, #646 and #1010).
+    ///
+    /// Equals `None` if message wasn't inserted to
+    /// `Mailbox` and appears as only `Event`.
+    expiration: Option<T::BlockNumber>,
+}
+```
+
+### UserMessageSent
+
+**Summary:** When a message has been marked as "read" and it has been removed from the `Mailbox`. This event only affects messages, which were already prior inserted into the `Mailbox`.
+
+```rust
+UserMessageRead {
+    /// Id of the message read.
+    id: MessageId,
+    /// The reason of the reading (removal from `Mailbox`).
+    ///
+    /// NOTE: See more docs about reasons at `gear_common::event`.
+    reason: UserMessageReadReason,
+}
+```
+
+### MessagesDispatched
+
+**Summary:** The result of when a message is processing within the block.
+
+
+```rust
+MessagesDispatched {
+    /// Total amount of messages removed from message queue.
+    total: MessengerCapacityOf<T>,
+    /// Execution statuses of the messages, which were already known
+    /// by `Event::MessageEnqueued` (sent from user to program).
+    statuses: BTreeMap<MessageId, DispatchStatus>,
+    /// Ids of programs, which state changed during queue processing.
+    state_changes: BTreeSet<ProgramId>,
+}
+```
+
+### MessageWaited
+
+**Summary:** When a message’s execution has been delayed and it has been added to the Gear waitlist.
+
+```rust
+MessageWaited {
+    /// Id of the message waited.
+    id: MessageId,
+    /// Origin message id, which started messaging chain with programs,
+    /// where currently waited message was created.
+    ///
+    /// Used for identifying by user, that this message associated
+    /// with him and with the concrete initial message.
+    origin: Option<MessageId>,
+    /// The reason of the waiting (addition to `Waitlist`).
+    ///
+    /// NOTE: See more docs about reasons at `gear_common::event`.
+    reason: MessageWaitedReason,
+    /// Block number of expiration from `Waitlist`.
+    ///
+    /// Equals block number when message will be removed from `Waitlist`
+    /// due to some reasons (see #642, #646 and #1010).
+    expiration: T::BlockNumber,
+}
+```
+
+### MessageWoken
+
+**Summary:**  When a message is ready to continue its execution and has been removed from the `Waitlist`.
+
+```rust
+MessageWoken {
+    /// Id of the message woken.
+    id: MessageId,
+    /// The reason of the waking (removal from `Waitlist`).
+    ///
+    /// NOTE: See more docs about reasons at `gear_common::event`.
+    reason: MessageWokenReason,
+}
+```
+
+### CodeChanged
+
+**Summary:** Any data related to programs codes changed.
+
+```rust
+CodeChanged {
+    /// Id of the code affected.
+    id: CodeId,
+    /// Change applied on code with current id.
+    ///
+    /// NOTE: See more docs about change kinds at `gear_common::event`.
+    change: CodeChangeKind<T::BlockNumber>,
+}
+```
+
+### ProgramChanged
+
+**Summary:** Any data related to programs changed.
+
+```rust
+ProgramChanged {
+    /// Id of the program affected.
+    id: ProgramId,
+    /// Change applied on program with current id.
+    ///
+    /// NOTE: See more docs about change kinds at `gear_common::event`.
+    change: ProgramChangeKind<T::BlockNumber>,
+}
+```
+
+## Cookbook
+
+Example of listening to events to check if specified program has been initialized:
+
+```js
+import { GearApi, Hex, MessageEnqueued, ProgramChanged, UserMessageSent } from '@gear-js/api';
+import { UnsubscribePromise } from '@polkadot/api/types';
+
+export function waitForInit(api: GearApi, programId: string): Promise<UnsubscribePromise> {
+  let messageId: Hex;
+  return new Promise((resolve, reject) => {
+    const unsub = api.query.system.events((events) => {
+      events.forEach(({ event }) => {
+        switch (event.method) {
+          case 'MessageEnqueued':
+            const meEvent = event as MessageEnqueued;
+            if (meEvent.data.destination.eq(programId) && meEvent.data.entry.isInit) {
+              messageId = meEvent.data.id.toHex();
+            }
+            break;
+          case 'UserMessageSent':
+            const {
+              data: {
+                message: { source, reply, payload },
+              },
+            } = event as UserMessageSent;
+            if (source.eq(programId) && reply.isSome && reply.unwrap()[0].eq(messageId) && reply.unwrap()[1].eq(1)) {
+              reject(payload.toHuman());
+            }
+            break;
+          case 'ProgramChanged':
+            const pcEvent = event as ProgramChanged;
+            if (pcEvent.data.id.eq(programId) && pcEvent.data.change.isActive) {
+              resolve(unsub);
+            }
+            break;
+        }
+      });
+    });
+  });
+}
+```

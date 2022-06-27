@@ -1,0 +1,71 @@
+---
+sidebar_position: 4
+sidebar_label: Send Message
+---
+
+# Send Message
+
+To send messages to the program:
+
+```javascript
+try {
+  const message = {
+    destination: destination, // programId
+    payload: somePayload,
+    gasLimit: 100_000_000,
+    value: 1000,
+  };
+  // By default, the payload will be encoded using meta.handle_input type
+  const submitted = await gearApi.message.submit(message, meta);
+
+  // If you need to specify a different handler
+  // For example 
+  await gearApi.message.submit(message, meta, meta.async_handle_input); 
+} catch (error) {
+  console.error(`${error.name}: ${error.message}`);
+}
+try {
+  await gearApi.message.signAndSend(keyring, (event) => {
+    console.log(event.toHuman());
+  });
+} catch (error) {
+  console.error(`${error.name}: ${error.message}`);
+}
+```
+
+:::note
+In real conditions to ensure successful message processing, the calculation of the required gas for processing the message should be use `api.program.calculateGas` method.
+
+[more info](/api/calculate-gas)
+:::
+
+### Send reply message
+
+To reply to a message from the program:
+
+```javascript
+try {
+  const reply = {
+    replyToId: messageId,
+    payload: somePayload,
+    gasLimit: 10000000,
+    value: 1000,
+  };
+  // In that case, the payload will be encoded using meta.async_handle_input type if it exists, if not it will be used meta.async_init_input
+
+  const submitted = await gearApi.reply.submit(reply, meta);
+
+  // If you need to specify a handler mannualy
+  // For example 
+  await gearApi.reply.submit(reply, meta, meta.async_init_input);
+} catch (error) {
+  console.error(`${error.name}: ${error.message}`);
+}
+try {
+  await gearApi.reply.signAndSend(keyring, (events) => {
+    console.log(event.toHuman());
+  });
+} catch (error) {
+  console.error(`${error.name}: ${error.message}`);
+}
+```
