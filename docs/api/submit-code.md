@@ -5,7 +5,7 @@ sidebar_label: Submit Code
 
 # Submit Code
 
-If need to load the program code into the chain without initialization, we can look at the following example:
+If we need to load the program code into the chain without initialization, we can look at the following example:
 
 ```javascript
 
