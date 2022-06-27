@@ -13,7 +13,7 @@ const state = await gearApi.programState.read(programId, metaWasm, inputValue?);
 ```
 `programId` is a payload if program expects it in `meta_state`
 
-## cookbook
+## Cookbook
 
 To read state in front-end applications you can use `fetch` browser API to get buffer from meta.wasm
 
