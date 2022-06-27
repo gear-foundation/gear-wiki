@@ -5,20 +5,20 @@ sidebar_label: Calculate gas
 
 # Calculate gas
 
-Any operations of the program code execution or processing of messages are paid with gas by the initiator of any of these actions.
+All network operations, whether that be executing a program’s code or processing a message, require gas. This gas is paid by the initiator of these actions. 
 
-To guarantee successful message processing and avoid errors like `Gaslimit exceeded`, you can simulate the execution in advance and calculate the exact value of the gas consumed.
+The guarantee successful message processing and to avoid errors like `Gaslimit exceeded`, you can simulate the execution in advance to calculate the exact value of gas consumed.
 
 
 ## Calculate gas for messages
 
-Depending on the conditions, you can calculate the gas for initializing the program, processing the message in handle() or reply()
+Depending on the conditions, you can calculate gas for initalizing a program or processing a message in handle() or reply()
 
 :::info
-Gas calculation returns GasInfo object contains 3 parameters:
+Gas calculation returns the GasInfo object, which contains 3 parameters:
 
 - `min_limit` - Minimum gas limit required for execution
-- `reserved` - Gas amount that will be reserved for some other on-chain interactions
+- `reserved` - Gas amount that will be reserved for other on-chain interactions
 - `burned` - Number of gas burned during message processing
 :::
 
