@@ -43,7 +43,7 @@ console.log(gas.toHuman());
 const meta = await getWasmMetadata(fs.readFileSync('demo_meta.opt.wasm'));
 const estimatedGas = await gearApi.program.calculateGas.handle(
   '0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d', // source id
-  '0xa178362715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d', //program id
+  '0xa178362715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d', // program id
   {
     id: {
       decimal: 64,
