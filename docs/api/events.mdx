@@ -23,7 +23,7 @@ GearApi.query.system.events((events) => {
 
 ### MessageEnqueued
 
-<b>summary:</b> User send message to program, which was successfully. Added to gear message queue.
+**Summary:** When a user successfully sends a message to a program and it gets added to the Gear message queue.
 
 ```rust
 
@@ -44,8 +44,8 @@ MessageEnqueued {
 
 ### UserMessageSent
 
-<b>Summary:</b> Somebody sent message to user.
-
+**Summary:** When someone has sent a message to the user.
+    
 ```rust
 UserMessageSent {
     /// Message sent.
@@ -64,7 +64,7 @@ UserMessageSent {
 
 ### UserMessageSent
 
-<b>Summary:</b> Message marked as "read" and removes it from `Mailbox`. This event only affects messages, which were already inserted in `Mailbox` before.
+**Summary:** When a message has been marked as "read" and it has been removed from the `Mailbox`. This event only affects messages, which were already prior inserted into the `Mailbox`.
 
 ```rust
 UserMessageRead {
@@ -79,7 +79,7 @@ UserMessageRead {
 
 ### MessagesDispatched
 
-<b>Summary:</b> The result of the messages processing within the block.
+**Summary:** The result of when a message is processing within the block.
 
 
 ```rust
@@ -96,8 +96,7 @@ MessagesDispatched {
 
 ### MessageWaited
 
-<b>Summary:</b> Messages execution delayed (waited) and it was successfully. Added to gear waitlist.
-
+**Summary:** When a message’s execution has been delayed and it has been added to the Gear waitlist.
 
 ```rust
 MessageWaited {
@@ -123,7 +122,7 @@ MessageWaited {
 
 ### MessageWoken
 
-<b>Summary:</b>  Message is ready to continue its execution and was removed from `Waitlist`
+**Summary:**  When a message is ready to continue its execution and has been removed from the `Waitlist`.
 
 ```rust
 MessageWoken {
@@ -138,7 +137,7 @@ MessageWoken {
 
 ### CodeChanged
 
-<b>Summary:</b> Any data related to programs codes changed.
+**Summary:** Any data related to programs codes changed.
 
 ```rust
 CodeChanged {
@@ -151,9 +150,9 @@ CodeChanged {
 }
 ```
 
-### CodeChanged
+### ProgramChanged
 
-<b>Summary:</b> Any data related to programs changed.
+**Summary:** Any data related to programs changed.
 
 ```rust
 ProgramChanged {
