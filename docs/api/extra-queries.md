@@ -7,7 +7,7 @@ sidebar_label: Cookbook
 
 Some batch of useful code snippets in a question-answer format:
 
-##Subscribe to new blocks
+## Subscribe to new blocks
 
 ```javascript
 const unsub = await gearApi.gearEvents.subscribeToNewBlocks((header) => {
