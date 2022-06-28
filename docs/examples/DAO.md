@@ -7,11 +7,21 @@ sidebar_position: 7
 
 ## Introduction
 
+### What is DAO
+
 A decentralized autonomous organization, or a DAO for short, is a new type of way to run organizations or institutions that enable individuals to work together for a specific cause in transparent, fair and honest ways. DAOs can be thought of as online groups of like-minded individuals that are also collectively owned and managed by the members themselves in equitable ways.
 
 Decisions are governed by proposals and votes to ensure that everyone within a decentralized autonomous organization has a voice. This is significant because it means that no central entity can manipulate anything for personal gain or based on personal beliefs.
 
 DAOs offer safe alternatives to pooling together money for a particular cause. But this isn’t just money that can be ordinarily managed by members. For instance, a group could set up a DAO to govern a charity to begin accepting donations and distributing aid accordingly. However, by far the biggest use cases for DAOs at the moment have been decentralized investment funds. This is where a group of investors create a venture fund that pools capital together and votes transparently on where to allocate the capital.
+
+### DAO application example by Gear
+
+Anyone can easily create their own DAO application and run it on the Gear Network. To do this, Gear created an example of the DAO smart contract, which is available on [GitHub](https://github.com/gear-dapps/dao-light). 
+
+This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios.
+
+In addition, Gear provides an example implementation of the DAO user interface to demonstrate its interaction with the smart contract in the Gear Network. You can watch a video on how to get the DAO application up and running and its capabilities here: **https://youtu.be/6lxr7eojADw**. The source code for the DAO application is available on [GitHub](https://github.com/gear-dapps/dao-app).
 
 ## Interface
 
@@ -262,7 +272,7 @@ REACT_APP_CONTRACT_DAO
 
 - `REACT_APP_NETWORK` is Gear network address (wss://rpc-node.gear-tech.io:443)
 - `REACT_APP_CONTRACT_ERC` is Fundible Token contract address
-- `RREACT_APP_CONTRACT_DAO` is DAO contract address
+- `REACT_APP_CONTRACT_DAO` is DAO contract address
 
 An example is available: [here](https://github.com/gear-dapps/dao-app/blob/master/.env.example)
 

@@ -1,9 +1,9 @@
 ---
-sidebar_label: RMRK NFT standard.
+sidebar_label: RMRK NFT standard
 sidebar_position: 15
 ---
 
-# RMRK NFT standard.
+# RMRK NFT standard
 
 ## Introduction
 RMRK is an NFT protocol dedicated to establishing a standard NFT cross-chain infrastructure on the Kusama and Polkadot ecosystems. The [RMRK NFT 2.0 Concepts](https://docs.rmrk.app/concepts) are divided into RMRK legos and RMRK concepts. Legos are primitives that make up complex use cases and enable certain concepts.
