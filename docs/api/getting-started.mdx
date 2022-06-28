@@ -5,10 +5,9 @@ sidebar_label: Getting started
 
 # Connect API
 
-The API allows us to interact with the chain and make queries via Javascript. The basic API is implemented on the Substrate layer and is the same for all substrate-based networks.
+The API allows us to interact with the blockchain and make queries via Javascript. The basic API is implemented on the Substrate layer and is the same for all substrate-based networks.
 
-Complete API overview and cookbook is on [Polkadot documentation portal](https://polkadot.js.org/docs/).
-
+Complete API overview and cookbook is on the [Polkadot documentation portal](https://polkadot.js.org/docs/).
 
 ## Installation
 
@@ -24,7 +23,7 @@ yarn add @gear-js/api
 
 ## Getting started
 
-Start an API connection to a running local RPC node
+Start the API connection by running a local RPC node:
 
 ```javascript
 import { GearApi } from '@gear-js/api';
@@ -32,7 +31,7 @@ import { GearApi } from '@gear-js/api';
 const gearApi = await GearApi.create();
 ```
 
-You can also connect to a different node
+You can also connect to a different node:
 
 ```javascript
 const gearApi = await GearApi.create({
@@ -42,7 +41,7 @@ const gearApi = await GearApi.create({
 
 :::note
 
-Below are a few entry points for interact with Gear RPC Node:
+Below are a few entry points for interact with Gear RPC Node.
 
 For connection to local node use:
 
