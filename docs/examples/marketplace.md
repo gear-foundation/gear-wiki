@@ -274,7 +274,7 @@ Withdraw {
 
 A [Ready-to-Use application](https://marketplace.gear-tech.io/) example provides a user interface that interacts with [gNFT](https://github.com/gear-dapps/non-fungible-token/tree/master/nft) and [Marketplace](https://github.com/gear-dapps/non-fungible-token/tree/master/nft-marketplace) smart contracts running in Gear Network.
 
-Gear Non-Fundible Token enables creation of NFT tokens, proves an ownership of a digital assets, check [this article](gnft-721.md) for details.
+Gear Non-Fundible Token enables creation of NFT tokens, proves an ownership of a digital assets, check [this article](https://wiki.gear-tech.io/examples/gnft-721) for details.
 
 NFT Marketplace contract enables to buy and sell non-fungible tokens for fungible tokens, hold the NFT auctions and make/accept purchase offers on NFTs.
 
