@@ -6,7 +6,17 @@ sidebar_position: 14
 # NFT Marketplace
 
 ## Introduction
+
 NFT marketplace is a contract where you can buy and sell non-fungible tokens for fungible tokens. The contract also supports holding the NFT auctions and making/accepting purchase offers on NFTs.
+
+A smart contract examples created by Gear are available on GitHub so anyone can easily create their own NFT marketplace application and run it on the Gear Network:
+- [Gear Non-Fungible Token](https://github.com/gear-dapps/non-fungible-token/tree/master/nft). 
+- [NFT marketplace](https://github.com/gear-dapps/non-fungible-token/tree/master/nft-marketplace).
+
+This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios.
+
+Gear also [provides](https://github.com/gear-tech/gear-js/tree/master/apps/marketplace) an example implementation of the [NFT Marketplace's](https://marketplace.gear-tech.io/) user interface to demonstrate its interaction with smart contracts in the Gear Network.
+
 ## Logic
 The contract state:
 ```rust
@@ -259,9 +269,54 @@ Withdraw {
     hash: H256,
 },
 ```
+
+## User interface
+
+A [Ready-to-Use application](https://marketplace.gear-tech.io/) example provides a user interface that interacts with [gNFT](https://github.com/gear-dapps/non-fungible-token/tree/master/nft) and [Marketplace](https://github.com/gear-dapps/non-fungible-token/tree/master/nft-marketplace) smart contracts running in Gear Network.
+
+Gear Non-Fundible Token enables creation of NFT tokens, proves an ownership of a digital assets, check [this article](https://wiki.gear-tech.io/examples/gnft-721) for details.
+
+NFT Marketplace contract enables to buy and sell non-fungible tokens for fungible tokens, hold the NFT auctions and make/accept purchase offers on NFTs.
+
+![img alt](./img/nft-marketplace.png)
+
+### Configure basic dApp in .env:
+
+```sh
+
+REACT_APP_NODE_ADDRESS
+REACT_APP_IPFS_ADDRESS
+REACT_APP_IPFS_GATEWAY_ADDRESS
+REACT_APP_NFT_CONTRACT_ADDRESS
+REACT_APP_MARKETPLACE_CONTRACT_ADDRESS
+
+```
+
+- `REACT_APP_NETWORK` is Gear Network address (wss://rpc-node.gear-tech.io:443)
+- `REACT_APP_IPFS_ADDRESS` is address of IPFS to store NFT assets (https://ipfs.gear-tech.io/api/v0 was used for Gear Marketplace implementation)
+- `REACT_APP_IPFS_GATEWAY_ADDRESS` is IPFS Gateway address (https://ipfs-gw.gear-tech.io/ipfs)
+- `REACT_APP_NFT_CONTRACT_ADDRESS` is Gear Non-Fundible Token contract address in Gear Network
+- `REACT_APP_MARKETPLACE_CONTRACT_ADDRESS` is NFT Marketplace contract address in Gear Network
+
+An example is available: [here](https://github.com/gear-tech/gear-js/blob/master/apps/marketplace/.env.example)
+
+### How to run
+
+Install required dependencies:
+```sh
+npm install
+```
+
+Run the app in the development mode:
+```sh
+npm start
+```
+Open http://localhost:3000 to view it in the browser.
+
 ## Source code
 
-The source code of this example of NFT marketplace smart contract and the example of an implementation of its testing is available on [GitHub](https://github.com/gear-dapps/non-fungible-token/tree/master/nft-marketplace).
+The source code of this example of NFT marketplace smart contract and the example of an implementation of its testing is available on [Gear-dapps](https://github.com/gear-dapps/non-fungible-token/tree/master/nft-marketplace).
 
+The Gear JS application code is available in [Gear-tech/gear-js](https://github.com/gear-tech/gear-js/tree/master/apps/marketplace).
 
 For more details about testing smart contracts written on Gear, refer to the [Program Testing](/developing-contracts/testing) article.

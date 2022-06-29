@@ -5,7 +5,7 @@ sidebar_label: Metadata & Type Creation
 
 # Basics & Metadata / Type creation
 
-In the context of Gear programs, metadata allows the interaction of the client part (javascript) and the program (Rust). Metadata is a kind of interface map that helps to identify a set of bytes into an understandable structure and indicates the function it is intended for. Metadata is stored in a separate *.meta.wasm file and, in case of decoding it will contain a common structure:
+In the context of Gear programs, metadata facilitates the interaction between the client side (javascript) and the program (Rust). Metadata is a kind of interface map that can help to identify and order a set of bytes into an understandable structure and indicates what the function it is intended for. Metadata is stored in a separate *.meta.wasm file and, in the case of decoding, it will contain a common structure:
 
 ```javascript
 interface Metadata {
@@ -36,9 +36,9 @@ const meta = await getWasmMetadata(fileBuffer);
 
 ## Types
 
-Metadata defines by the types of which it consists. More information about the basic types and methods of work can be found in the main documentation of Polkadot [here](https://polkadot.js.org/docs/api/start/types.basics)
+Metadata is defined by the type of which it consists. More information about the basic types and methods of work can be found in the main documentation of Polkadot [here](https://polkadot.js.org/docs/api/start/types.basics)
 
-If for some reason you need to create a type "manually" for encode/decode any payload:
+If for some reason you need to create a type "manually" to encode/decode any payload:
 
 ```javascript
 import { CreateType } from '@gear-js/api';
@@ -50,7 +50,7 @@ const result = CreateType.create('TypeName', somePayload);
 const result = CreateType.create('TypeName', somePayload, metadata);
 ```
 
-The result of this function is data of type `Codec` and it has the next methods
+The result of this function is data of type `Codec` and it has the following methods:
 
 ```javascript
 result.toHex(); // - returns a hex represetation of the value
@@ -59,5 +59,3 @@ result.toString(); //  - returns a string representation of the value
 result.toU8a(); // - encodes the value as a Unit8Array
 result.toJSON(); // - converts the value to JSON
 ```
-
-## Cookbook

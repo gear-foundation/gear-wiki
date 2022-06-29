@@ -5,9 +5,9 @@ sidebar_label: Calculate gas
 
 # Calculate gas
 
-All network operations, whether that be executing a program’s code or processing a message, require gas. This gas is paid by the initiator of these actions. 
+All network operations, whether that be executing a program’s code or processing a message, require gas. This gas is paid by the initiator of these actions.
 
-The guarantee successful message processing and to avoid errors like `Gaslimit exceeded`, you can simulate the execution in advance to calculate the exact value of gas consumed.
+They guarantee successful message processing and to avoid errors like `Gaslimit exceeded`, you can simulate the execution in advance to calculate the exact value of gas consumed.
 
 
 ## Calculate gas for messages

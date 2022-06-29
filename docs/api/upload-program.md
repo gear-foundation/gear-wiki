@@ -31,6 +31,7 @@ try {
 ```
 
 :::note
+
 For the calculation of the required gas for init message processing should use `api.program.calculateGas.init()` method.
 
 [more info](/api/calculate-gas)
