@@ -39,8 +39,13 @@ module.exports = {
       },
       items: [
         {
+          href: 'https://www.gear-tech.io/',
+          label: 'Gear-tech.io',
+          position: 'right',
+        },
+        {
           href: 'https://github.com/gear-tech/wiki',
-          label: 'GitHub',
+          label: 'Contribute',
           position: 'right',
         },
         {
