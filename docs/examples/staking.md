@@ -1,6 +1,6 @@
 ---
 sidebar_label: 'Staking'
-sidebar_position: 14
+sidebar_position: 15
 ---
 
 # Staking
@@ -16,16 +16,19 @@ Rewards are distributed fairly across stakers.
 How rewards work:
 Lets we have Alice who stakes 100 tokens and Bob who stakes 50 tokens. Lets in our example reward tokens are minted every minute.
 In total inside the staking contract there are 150 tokens. One week later Alice decided to unstake her tokens. The length of time Alice tokens were staked is 7 * 24 * 60. The amount of reward tokens:
-
-[<img src="./img/staking/staking-formula-1-1.png" width="140">](./img/staking/staking-formula-1-1.png)
+$$
+R * \frac {100} {150} * 7 * 24 * 60
+$$
 
 Another week later Bob also decides to unstake his 50 tokens. Lets calculate his reward. During the first week he staked 50 tokens out of 150 tokens. During the second week the he staked 50 tokens out of 50. Then his reward:
-
-[<img src="./img/staking/staking-formula-2-2.png" width="180">](./img/staking/staking-formula-2-2.png)
+$$
+R * (\frac {50} {150} + \frac {50} {50}) * 7 * 24 * 60
+$$
 
 It is possible to generalize the formula:
-
-[<img src="./img/staking/staking-formula-3-3.png" width="180">](./img/staking/staking-formula-3-3.png)
+$$
+r(a, b) = R\sum_{t=a}^{t=b} \frac {l(t)} {L(t)}
+$$
 
 where:
 -	r(a, b) -  reward for user for time interval a <= t <= b;
@@ -35,21 +38,32 @@ where:
 
 To implement that formula it’s necessary to store l(t) for each user and for each time interval and L(t) for each time interval. In order to compute a reward we have to run a for loop for each time interval. That operation сonsumes a lot of gas and storage.
 It can be done in a more efficient way:
-1.	Let l(t) for a user is constant k for  a <= t <= b. Then:
 
-[<img src="./img/staking/staking-formula-4-4.png" width="280">](./img/staking/staking-formula-4-4.png)
+Let l(t) for a user is constant k for  a <= t <= b. Then:
+$$
+r(a, b) = R\sum_{t=a}^{t=b} \frac {l(t)} {L(t)} = Rk\sum_{t=a}^{t=b} \frac {1} {L(t)}
+$$
 
 That equation can be further simplified:
-
-[<img src="./img/staking/staking-formula-5-5.png" width="680">](./img/staking/staking-formula-5-5.png)
+$$
+\sum_{t=a}^{t=b} \frac {1} {L(t)} = \frac {1} {L(a)} + \frac {1} {L(a + 1)} + ... + \frac {1} {L(b)} =
+$$
+$$
+\frac {1} {L(0)} + \frac {1} {L(1)} + ... + \frac {1} {L(b)} -
+(\frac {1} {L(0)} + \frac {1} {L(1)} + ... + \frac {1} {L(a - 1)}) =
+$$
+$$
+\sum_{t=0}^{t=b} \frac {1} {L(t)} - \sum_{t=0}^{t=a-1} \frac {1} {L(t)}
+$$
 
 So, the equation to calculate the amount of reward that a user will receive from t=a to t=b under the condition the the number of tokens he staked is constant:
-
-[<img src="./img/staking/staking-formula-6-6.png" width="380">](./img/staking/staking-formula-6-6.png)
+$$
+Rk\sum_{t=a}^{t=b} \frac {1} {L(t)} = Rk(\sum_{t=0}^{t=b} \frac {1} {L(t)} - \sum_{t=0}^{t=a-1} \frac {1} {L(t)})
+$$
 
 Based on that equation the implementation in the smart contract can be written:
 ```rust
-(staker.balance * self.tokens_per_stake) / DECIMALS_COUNT + staker.reward_allowed - staker.reward_debt - staker.distributed
+(staker.balance * self.tokens_per_stake) / DECIMALS_FACTOR + staker.reward_allowed - staker.reward_debt - staker.distributed
 ```
 
 ### Contract description
@@ -68,6 +82,7 @@ The contract has the following structs:
 
 ```rust
 struct Staking {
+    owner: ActorId,
     staking_token_address: ActorId,
     reward_token_address: ActorId,
     tokens_per_stake: u128,
@@ -81,6 +96,8 @@ struct Staking {
 }
 ```
 where:
+
+`owner` - the owner of the staking contract
 
 `staking_token_address` - address of the staking token contract
 
@@ -185,7 +202,7 @@ pub async fn transfer_tokens(
 This function sends a message (the action is defined in the enum `FTAction`) and gets a reply (the reply is defined in the enum `FTEvent`).
 
 ```rust
-msg::send_and_wait_for_reply::<FTEvent, _>(
+msg::send_for_reply(
     *token_address, /// - the fungible token contract address
     FTAction::Transfer {		/// - action in the fungible token-contract
         from: *from,
