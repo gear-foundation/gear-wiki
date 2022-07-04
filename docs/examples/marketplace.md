@@ -6,7 +6,17 @@ sidebar_position: 14
 # NFT Marketplace
 
 ## Introduction
+
 NFT marketplace is a contract where you can buy and sell non-fungible tokens for fungible tokens. The contract also supports holding the NFT auctions and making/accepting purchase offers on NFTs.
+
+A smart contract examples created by Gear are available on GitHub so anyone can easily create their own NFT marketplace application and run it on the Gear Network:
+- [Gear Non-Fungible Token](https://github.com/gear-dapps/non-fungible-token/tree/master/nft). 
+- [NFT marketplace](https://github.com/gear-dapps/non-fungible-token/tree/master/nft-marketplace).
+
+This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios.
+
+Gear also [provides](https://github.com/gear-tech/gear-js/tree/master/apps/marketplace) an example implementation of the [NFT Marketplace's](https://marketplace.gear-tech.io/) user interface to demonstrate its interaction with smart contracts in the Gear Network.
+
 ## Logic
 The contract state:
 ```rust
@@ -20,7 +30,7 @@ pub struct Market {
 }
 ```
 - `admin_id` - an account who has the right to approve non-fungible-token and fungible-tokens contracts that can be used in the marketplace contract;
-- `treasury_id` - an account to which sales commission will be creadited;
+- `treasury_id` - an account to which sales commission will be credited;
 - `treasury_fee` - 
 commission percentage (from 1 to 5 percent)
 The marketplace contract is initialized with the following fields;
@@ -29,7 +39,7 @@ The marketplace contract is initialized with the following fields;
 - `approved_ft_contracts` - 
 fungible token accounts for which it is possible to buy marketplace items;
 
-The makretplace item has the following struct:
+The marketplace item has the following struct:
 ```rust
 pub struct Item {
     pub owner_id: ActorId,
@@ -80,10 +90,10 @@ To buy NFT send the following message:
 /// Sells the NFT.
 /// 
 /// # Requirements:
-/// * The NFT item must exists and be on sale.
-/// * If the NFT is sold for a native Gear value, then a buyer must attach value equals to the price.
+/// * The NFT item must exist and be on sale.
+/// * If the NFT is sold for a native Gear value, then a buyer must attach a value equal to the price.
 /// * If the NFT is sold for fungible tokens then a buyer must have enough tokens in the fungible token contract.
-/// * There must be no an opened auction on the item.
+/// * There must be no open auction on the item.
 /// 
 /// Arguments:
 /// * `nft_contract_id`: NFT contract address
@@ -115,14 +125,14 @@ pub struct Auction {
 - `current_price` - the current offered price for the NFT;
 - `current_winner` - the current auction winner
 
-The auction is started with the following messsage:
+The auction is started with the following message:
 
 ```rust
 /// Creates an auction for selected item.
 /// If the NFT item doesn't exist on the marketplace then it will be listed
 ///
 /// Requirements:
-/// * Only the item owner can start auction.
+/// * Only the item owner can start the auction.
 /// * `nft_contract_id` must be in the list of `approved_nft_contracts`
 /// *  There must be no active auction.
 ///
@@ -150,11 +160,11 @@ To add bid to the current auction send the following message:
 /// Adds a bid to an ongoing auction.
 /// 
 /// # Requirements:
-/// * The item must extsts.
-/// * The auction must exists on the item.
-/// * If the NFT is sold for a native Gear value, then a buyer must attach value equals to the price indicated in the arguments.
+/// * The item must exist.
+/// * The auction must exist on the item.
+/// * If the NFT is sold for a native Gear value, then a buyer must attach a value equal to the price indicated in the arguments.
 /// * If the NFT is sold for fungible tokens then a buyer must have   enough tokens in the fungible token contract.
-/// * `price` must be greater then the current offered price for that item.
+/// * `price` must be greater than the current offered price for that item.
 /// 
 /// # Arguments
 /// * `nft_contract_id`: the NFT contract address.
@@ -195,8 +205,8 @@ To make offer on the marketplace item send the following message:
 /// 
 /// Requirements:
 /// * NFT item must exists and be listed on the marketplace.
-/// * There must be no an ongoing auction on the item.
-/// * If a user makes an offer in native Gear value, then he must attach value equals to the price indicated in the arguments.
+/// * There must be no ongoing auction on the item.
+/// * If a user makes an offer in native Gear value, then he must attach a value equal to the price indicated in the arguments.
 /// * If a user makes an offer in fungible tokens then he must have  enough tokens in the fungible token contract.
 /// * The price can not be equal to 0.
 /// * There must be no identical offers on the item.
@@ -220,8 +230,8 @@ The item owner can accept the offer:
 /// Accepts an offer.
 /// 
 /// Requirements:
-/// * NFT item must exists and be listed on the marketplace.
-/// * Only owner can accept offer.
+/// * NFT item must exist and be listed on the marketplace.
+/// * Only the owner can accept the offer.
 /// * There must be no ongoing auction.
 /// * The offer with indicated hash must exist.
 /// 
@@ -243,7 +253,7 @@ The user who made the offer can also withdraw his tokens:
 /// Withdraws tokens.
 /// 
 /// Requirements:
-/// * NFT item must exists and be listed on the marketplace.
+/// * NFT item must exist and be listed on the marketplace.
 /// * Only the offer creator can withdraw his tokens.
 /// * The offer with indicated hash must exist.
 /// 
@@ -259,9 +269,64 @@ Withdraw {
     hash: H256,
 },
 ```
+
+## User interface
+
+A [Ready-to-Use application](https://marketplace.gear-tech.io/) example provides a user interface that interacts with [gNFT](https://github.com/gear-dapps/non-fungible-token/tree/master/nft) and [Marketplace](https://github.com/gear-dapps/non-fungible-token/tree/master/nft-marketplace) smart contracts running in Gear Network.
+
+Gear Non-Fundible Token enables creation of NFT tokens, proves an ownership of a digital assets, check [this article](https://wiki.gear-tech.io/examples/gnft-721) for details.
+
+NFT Marketplace contract enables to buy and sell non-fungible tokens for fungible tokens, hold the NFT auctions and make/accept purchase offers on NFTs.
+
+![img alt](./img/nft-marketplace.png)
+
+An NFT Marketplace application example is available on [GitHub](https://github.com/gear-tech/gear-js/tree/master/apps/marketplace).
+
+### Configure basic dApp in .env:
+
+For proper application functioning, one needs to adjust an environment variable parameters. An example is available [here](https://github.com/gear-tech/gear-js/blob/master/apps/marketplace/.env.example).
+
+```sh
+
+REACT_APP_NODE_ADDRESS
+REACT_APP_IPFS_ADDRESS
+REACT_APP_IPFS_GATEWAY_ADDRESS
+REACT_APP_NFT_CONTRACT_ADDRESS
+REACT_APP_MARKETPLACE_CONTRACT_ADDRESS
+
+```
+
+- `REACT_APP_NETWORK` is Gear Network address (wss://rpc-node.gear-tech.io:443)
+- `REACT_APP_IPFS_ADDRESS` is address of IPFS to store NFT assets (https://ipfs.gear-tech.io/api/v0 was used for Gear Marketplace implementation)
+- `REACT_APP_IPFS_GATEWAY_ADDRESS` is IPFS Gateway address (https://ipfs-gw.gear-tech.io/ipfs)
+- `REACT_APP_NFT_CONTRACT_ADDRESS` is Gear Non-Fungible Token contract address in Gear Network
+- `REACT_APP_MARKETPLACE_CONTRACT_ADDRESS` is NFT Marketplace contract address in Gear Network
+
+### Simple NFT
+
+Another example of an interface that demonstrates how to work with a smart contract can be found at the link: https://nft.gear-tech.io.
+
+It implements the ability to mint NFTs, view all NFTs minted by any account in the contract, as well as view NFTs that someone has approved to the current account (`AprovedToMe`) with the possibility of further transfer to another account (this option is not available in the [NFT Marketplace](https://marketplace.gear-tech.io/) application).
+
+A Simple NFT application example is available on [GitHub](https://github.com/gear-tech/gear-js/tree/master/apps/nft).
+
+### How to run
+
+Install required dependencies:
+```sh
+npm install
+```
+
+Run the app in the development mode:
+```sh
+npm start
+```
+Open http://localhost:3000 to view it in the browser.
+
 ## Source code
 
-The source code of this example of NFT marketplace smart contract and the example of an implementation of its testing is available on [GitHub](https://github.com/gear-dapps/non-fungible-token/tree/master/nft-marketplace).
+The source code of this example of NFT marketplace smart contract and the example of an implementation of its testing is available on [Gear-dapps](https://github.com/gear-dapps/non-fungible-token/tree/master/nft-marketplace).
 
+The Gear JS application code is available in [Gear-tech/gear-js](https://github.com/gear-tech/gear-js/tree/master/apps/marketplace).
 
 For more details about testing smart contracts written on Gear, refer to the [Program Testing](/developing-contracts/testing) article.

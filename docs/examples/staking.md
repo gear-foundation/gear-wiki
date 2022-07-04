@@ -16,16 +16,19 @@ Rewards are distributed fairly across stakers.
 How rewards work:
 Lets we have Alice who stakes 100 tokens and Bob who stakes 50 tokens. Lets in our example reward tokens are minted every minute.
 In total inside the staking contract there are 150 tokens. One week later Alice decided to unstake her tokens. The length of time Alice tokens were staked is 7 * 24 * 60. The amount of reward tokens:
+
 $$
 R * \frac {100} {150} * 7 * 24 * 60
 $$
 
 Another week later Bob also decides to unstake his 50 tokens. Lets calculate his reward. During the first week he staked 50 tokens out of 150 tokens. During the second week the he staked 50 tokens out of 50. Then his reward:
+
 $$
 R * (\frac {50} {150} + \frac {50} {50}) * 7 * 24 * 60
 $$
 
 It is possible to generalize the formula:
+
 $$
 r(a, b) = R\sum_{t=a}^{t=b} \frac {l(t)} {L(t)}
 $$
@@ -40,23 +43,28 @@ To implement that formula it’s necessary to store l(t) for each user and for e
 It can be done in a more efficient way:
 
 Let l(t) for a user is constant k for  a <= t <= b. Then:
+
 $$
 r(a, b) = R\sum_{t=a}^{t=b} \frac {l(t)} {L(t)} = Rk\sum_{t=a}^{t=b} \frac {1} {L(t)}
 $$
 
 That equation can be further simplified:
+
 $$
 \sum_{t=a}^{t=b} \frac {1} {L(t)} = \frac {1} {L(a)} + \frac {1} {L(a + 1)} + ... + \frac {1} {L(b)} =
 $$
+
 $$
 \frac {1} {L(0)} + \frac {1} {L(1)} + ... + \frac {1} {L(b)} -
 (\frac {1} {L(0)} + \frac {1} {L(1)} + ... + \frac {1} {L(a - 1)}) =
 $$
+
 $$
 \sum_{t=0}^{t=b} \frac {1} {L(t)} - \sum_{t=0}^{t=a-1} \frac {1} {L(t)}
 $$
 
 So, the equation to calculate the amount of reward that a user will receive from t=a to t=b under the condition the the number of tokens he staked is constant:
+
 $$
 Rk\sum_{t=a}^{t=b} \frac {1} {L(t)} = Rk(\sum_{t=0}^{t=b} \frac {1} {L(t)} - \sum_{t=0}^{t=a-1} \frac {1} {L(t)})
 $$

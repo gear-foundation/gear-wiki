@@ -64,7 +64,7 @@ Also, you can use the standard GUI for substrate-based projects to submit a prog
 
 ### Via gear-js library
 
-Gear-js library provides a simple and intuitive way to connect GEAR Component APIs, including interaction with programs. More details [Gear API](/api/connect).
+Gear-js library provides a simple and intuitive way to connect GEAR Component APIs, including interaction with programs. More details [Gear API](/api/getting-started).
 
 ### Via `gear-program`
 

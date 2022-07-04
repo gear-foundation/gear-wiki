@@ -1,23 +1,13 @@
 ---
 sidebar_position: 1
-sidebar_label: Connect
+sidebar_label: Getting started
 ---
 
 # Connect API
 
-The API allows us to interact with the chain and make queries via Javascript. The basic API is implemented on the Substrate layer and is the same for all substrate-based networks.
+The API allows us to interact with the blockchain and make queries via Javascript. The basic API is implemented on the Substrate layer and is the same for all substrate-based networks.
 
-Complete API overview and cookbook is on [Polkadot documentation portal](https://polkadot.js.org/docs/).
-
-Below are a few entry points for interact with Gear RPC Node:
-
-Dev mode:
-
-> ws://127.0.0.1:9944
-
-Testnet:
-
-> wss://rpc-node.gear-tech.io:443
+Complete API overview and cookbook is on the [Polkadot documentation portal](https://polkadot.js.org/docs/).
 
 ## Installation
 
@@ -33,7 +23,7 @@ yarn add @gear-js/api
 
 ## Getting started
 
-Start an API connection to a running node on localhost
+Start the API connection to the local running RPC node:
 
 ```javascript
 import { GearApi } from '@gear-js/api';
@@ -41,13 +31,32 @@ import { GearApi } from '@gear-js/api';
 const gearApi = await GearApi.create();
 ```
 
-You can also connect to a different node
+You can also connect to a different node:
 
 ```javascript
 const gearApi = await GearApi.create({
   providerAddress: 'wss://someIP:somePort',
 });
 ```
+
+:::note
+
+Below are a few entry points for interact with Gear RPC Node.
+
+For connection to local node use:
+
+```bash
+ws://127.0.0.1:9944
+```
+
+For connection to Testnet use:
+
+```bash
+wss://rpc-node.gear-tech.io:443
+```
+
+:::
+
 
 Getting node info
 
