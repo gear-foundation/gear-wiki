@@ -5,7 +5,7 @@ sidebar_label: Mailbox
 
 # Mailbox
 
-The mailbox is used to store messages sent from the program to the user.
+The mailbox is used to store messages sent from the program to a user.
 
 ## Read messages from Mailbox
 

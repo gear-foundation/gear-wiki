@@ -5,8 +5,7 @@ sidebar_label: Keyring
 
 # Keyring
 
-Keyring enables you to manage your key pair (account) to perform a wide range of operations, including signing, verifying and encrypting/decrypting.
-
+Keyring enables you to manage your key pair (account) to perform a wide range of operations, including signing, verifying and encrypting/decrypting. The SecretKey is never exposed to the outside.
 
 ## Create keyring
 

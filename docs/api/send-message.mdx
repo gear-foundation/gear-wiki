@@ -1,11 +1,11 @@
 ---
-sidebar_position: 4
+sidebar_position: 6
 sidebar_label: Send Message
 ---
 
 # Send Message
 
-To send messages to the program:
+This example shows how to send messages to the program:
 
 ```javascript
 try {
@@ -35,14 +35,14 @@ try {
 
 :::note
 
-In real conditions to ensure successful message processing, the calculation of the required gas for processing the message should be using `api.program.calculateGas` method.
+In real conditions to ensure successful message processing, the calculation of the required gas for processing the message should be performed by using `api.program.calculateGas` method.
 
 [more info](/api/calculate-gas)
 :::
 
 ### Send reply message
 
-To reply to a message from the program:
+When you need to reply to a message received from a program, use this example:
 
 ```javascript
 try {
