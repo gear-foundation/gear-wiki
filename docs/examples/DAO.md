@@ -252,15 +252,15 @@ pub unsafe extern "C" fn meta_state() -> *mut [i32; 2] {
 
 ## User interface
 
-A [Ready-to-Use application](https://dao.gear-tech.io/) example provides a user interface that interacts with [DAO](https://github.com/gear-dapps/dao-light) and [GFT](https://github.com/gear-dapps/fungible-token) smart contracts.
+A [Ready-to-Use application](https://dao.gear-tech.io/) example provides a user interface that interacts with [DAO](https://github.com/gear-dapps/dao-light) and [gFT](https://github.com/gear-dapps/fungible-token) smart contracts.
 
 Gear Fundible Token enables creation of utility token DAO, check [this article](gft-20.md) for details.
 
-This video demonstrates the entire configuration and user interaction workflow:
-
-**https://youtu.be/6lxr7eojADw**
+This video demonstrates the entire configuration and user interaction workflow: **https://youtu.be/6lxr7eojADw**
 
 ![img alt](./img/dao-1.jpg)
+
+A DAO application source code is available on [GitHub](https://github.com/gear-dapps/dao-app).
 
 ### Configure basic dApp in .env:
 
