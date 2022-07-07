@@ -17,6 +17,8 @@ This article explains the programming interface, data structure, basic functions
 
 Gear also [provides](https://github.com/gear-tech/gear-js/tree/master/apps/marketplace) an example implementation of the [NFT Marketplace's](https://marketplace.gear-tech.io/) user interface to demonstrate its interaction with smart contracts in the Gear Network.
 
+ You can watch a video on how to get the NFT Marketplace application up and running and its capabilities here: **https://youtu.be/RdlWUkxlmV4**.
+
 ## Logic
 The contract state:
 ```rust
@@ -273,14 +275,14 @@ Withdraw {
 ## User interface
 
 A [Ready-to-Use application](https://marketplace.gear-tech.io/) example provides a user interface that interacts with [gNFT](https://github.com/gear-dapps/non-fungible-token/tree/master/nft) and [Marketplace](https://github.com/gear-dapps/non-fungible-token/tree/master/nft-marketplace) smart contracts running in Gear Network.
+- Gear Non-Fundible Token contract enables creation of NFT tokens, proves an ownership of a digital assets, check [this article](https://wiki.gear-tech.io/examples/gnft-721) for details.
+- NFT Marketplace contract enables to buy and sell non-fungible tokens for fungible tokens, hold the NFT auctions and make/accept purchase offers on NFTs.
 
-Gear Non-Fundible Token enables creation of NFT tokens, proves an ownership of a digital assets, check [this article](https://wiki.gear-tech.io/examples/gnft-721) for details.
-
-NFT Marketplace contract enables to buy and sell non-fungible tokens for fungible tokens, hold the NFT auctions and make/accept purchase offers on NFTs.
+This video demonstrates how to configure and run Markeplace applciation on your own and explains the user interaction workflow: **https://youtu.be/RdlWUkxlmV4**
 
 ![img alt](./img/nft-marketplace.png)
 
-An NFT Marketplace application example is available on [GitHub](https://github.com/gear-tech/gear-js/tree/master/apps/marketplace).
+An NFT Marketplace application source code is available on [GitHub](https://github.com/gear-tech/gear-js/tree/master/apps/marketplace).
 
 ### Configure basic dApp in .env:
 
