@@ -1,11 +1,11 @@
 ---
-sidebar_position: 10
+sidebar_position: 11
 sidebar_label: Cookbook
 ---
 
 # Cookbook
 
-Some batch of useful code snippets in a question-answer format:
+Here is collected a set of useful code snippets in a question-answer format:
 
 ## Subscribe to new blocks
 
