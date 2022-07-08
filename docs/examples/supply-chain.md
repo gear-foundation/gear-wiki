@@ -3,10 +3,18 @@ sidebar_label: Supply chain
 sidebar_position: 10
 ---
 
-# What is a supply chain?
+# Supply chain
+
+## Introduction
+
+### What is a supply chain?
 In logistics, a supply chain is a system for tracking and delivering to an end consumer various items. As a rule, such systems can't work without a lot of paperwork and other layers of bureaucracy. All of this costs a lot of time and money and increases the likelihood of an accidental error or, worst of all, a fraud. With the help of smart contract and blockchain technologies, it is possible to eliminate these problems by making a supply chain more efficient, reliable and transparent.
 
-So here's the example of a supply chain smart contract.
+### Supply chain application example by Gear
+
+Anyone can create their own supply chain contract and application and run it on the Gear Network. To do this, Gear created an example which is available on [GitHub](https://github.com/gear-dapps/supply-chain). 
+
+This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios.
 
 ## Logic
 * Each newly produced item gets the NFT (in Gear's context - [Gear non-fungible tokens (gNFT)](gnft-721.md) and an ID equal to the ID of its NFT. Then, as an item moves along a supply chain, an item's NFT transfers between a supply chain program, item's producer, and future distributor, retailer and end consumer.

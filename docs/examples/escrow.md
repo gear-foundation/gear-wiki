@@ -6,7 +6,7 @@ sidebar_position: 8
 # What is an escrow?
 An escrow is a special wallet to which some assets (e.g. money or stocks) are deposited and stored until certain conditions are met. In terms of smart contracts, an escrow is a wallet that is stored on a blockchain and, like a regular escrow, can receive some assets (e.g. a cryptocurrency or tokens) from one user and, when certain conditions are met, send them to another.
 
-This article will show the example of an escrow smart contract, where assets will be [Gear fungible tokens - gFT](/examples/gft-20).
+This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. Anyone can easily create their own application and run it on the Gear Network. Assets in escrow smart contract will be [Gear fungible tokens - gFT](/examples/gft-20). The source code is available on [GitHub](https://github.com/gear-dapps/escrow). 
 
 ## Logic
 * Any user can create an escrow wallet as a buyer or seller.

@@ -8,7 +8,9 @@ sidebar_position: 10
 ## Introduction
 A Dutch auction is one of several types of auctions for buying or selling goods. Most commonly, it means an auction in which the auctioneer begins with a high asking price in the case of selling, and lowers it until some participant accepts the price, or it reaches a predetermined reserve price. A Dutch auction has also been called a clock auction or open-outcry descending-price auction. This type of auction shows the advantage of speed since a sale never requires more than one bid.
 
-This auction uses [Gear non-fungible tokens (gNFT)](/examples/gnft-721) as tradable goods.
+The auction uses [Gear non-fungible tokens (gNFT)](/examples/gnft-721) as tradable goods.
+
+The article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. Anyone can easily create their own application and run it on the Gear Network. The source code is available on [GitHub](https://github.com/gear-dapps/dutch-auction). 
 
 ## Contract description
 

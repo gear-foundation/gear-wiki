@@ -6,11 +6,12 @@ sidebar_position: 9
 # Lottery
 
 ## Introduction
-Whoever initializes the contract is considered the lottery owner. Only the owner has the right
-to start/finish the lottery.
-Players are added to the lottery themselves by sending a message with their bet to the contract.
-Next, the players monitor the state of the lottery.
-The winner is determined randomly.
+ 
+Anyone can easily create their own Lottery application and run it on the Gear Network. To do this, Gear created an example of the Lottery smart contract, which is available on [GitHub](https://github.com/gear-dapps/lottery). 
+
+This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios.
+
+In this example, whoever initializes the contract is considered the lottery owner. Only the owner has the right to start/finish the lottery. Players are added to the lottery themselves by sending a message with their bet to the contract. Then players monitor the state of the lottery. The winner is determined randomly.
 
 ## Source files
 1. `lottery/src/lib.rs` - contains functions of the lottery contract.

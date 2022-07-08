@@ -12,6 +12,8 @@ Imagine a bank vault that requires more than one key to open: That’s a little 
 
 Multisignature proponents argue that multisignature is the most secure and fail-proof way to store cryptocurrency. Even if a thief gets his hands on one of your wallets, for example, they still won’t be able to access your account without the keys to the other wallets in the setup.
 
+This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. Anyone can easily create their own application and run it on the Gear Network. The source code is available on [GitHub](https://github.com/gear-dapps/multisig-wallet). 
+
 ## Logic
 
 Wallet is owned by one or more owners, and in order for something significant to take place required count of owners should confirm this action.

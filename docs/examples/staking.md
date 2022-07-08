@@ -9,6 +9,10 @@ sidebar_position: 16
 Stacking is an analogue of a bank deposit, receiving passive earnings due to simple storage of cryptomonets.
 The percentage of income may be different – it all depends on the term of the deposit.
 
+Anyone can create their own Staking contract and run it on the Gear Network. To do this, Gear created an example which is available on [GitHub](https://github.com/gear-dapps/staking). 
+
+This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios.
+
 ### Mathematics
 You can stake the fungible token into the contract (So you deposit tokens into the staking contract and later claim that token (or another fungible token) for a reward.
 A fixed amount of reward  is minted for certain time interval (it can be a second, minute or day)
