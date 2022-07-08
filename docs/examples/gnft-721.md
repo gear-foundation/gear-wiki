@@ -7,9 +7,12 @@ sidebar_position: 4
 
 ### Introduction
 Non-fungible tokens (NFTs) are unique cryptographic tokens on a blockchain that are used to prove an ownership of a digital asset, such as digital art or gaming assets. The difference from fungible tokens is that the fungible tokens store a value, while non-fungible tokens store a cryptographic certificate.
+
 Under the hood, a non-fungible token consists of a unique token identifier, or token ID, which is mapped to an owner identifier and stored inside a NFT smart contract.<center> <em><strong>token_id</strong></em> → <em><strong>address</strong></em> </center>
 
 When the owner of a given token ID wishes to transfer it to another user, it is easy to verify ownership and reassign the token to a new owner.
+
+This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. Anyone can easily create their own application and run it on the Gear Network. The source code is available on [GitHub](https://github.com/gear-dapps/non-fungible-token). 
 
 ### Default non-fungible-token implementation
 The functions that must be supported by each non-fungible-token contract:

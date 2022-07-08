@@ -13,6 +13,8 @@ RMRK legos that are already implemented on Gear:
 - Multi-resource NFTs:
 The ability for an NFT to vary its output depending on the context it is being loaded in.
 
+This article explains the programming interface, data structure, basic functions and explains their purpose. The source code is available on [GitHub](https://github.com/gear-dapps/RMRK). 
+
 ## Logic
 ### Nesting logic
 The concept of nested NFTs refers to NFTs being able to own other NFTs. So, the NFT owner can be not only an account or a smart contract, but also another NFT. 

@@ -4,7 +4,9 @@ sidebar_position: 6
 ---
 
 # Introduction
-In order to introduce our rapidly growing community to the platform developed by Gear, we've developed a dApplication in order to showcase some of the features that can be implemented using our smart contracts. Specifically, we aimed to build a platform simillar to Twitter: each user can have their own "feed", "feeds" can be subscribed to and the landing page contains global & personal "feeds".
+In order to introduce our rapidly growing community to the platform developed by Gear, we've developed a dApplication in order to showcase some of the features that can be implemented using our smart contracts. Specifically, this contract aims to build a platform simillar to Twitter: each user can have their own "feed", "feeds" can be subscribed to and the landing page contains global & personal "feeds".
+
+This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. Anyone can easily create their own application and run it on the Gear Network. The source code is available on [GitHub](https://github.com/gear-dapps/feeds). 
 
 # Feeds dApp composition
 The application strcture consists of two smart contracts: the router contract and the channel contract. There's one router contract per application and one channel contract per user.

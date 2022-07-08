@@ -7,7 +7,7 @@ sidebar_position: 2
 
 Gear is very easy to write code for!
 
-Here is a minimal program for a classic ping-pong contract:
+This is the minimal program for a classic ping-pong contract:
 
 ```rust
 #![no_std]
