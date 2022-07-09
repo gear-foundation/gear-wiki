@@ -1258,7 +1258,7 @@
     webpack-merge "^5.8.0"
     webpackbar "^5.0.2"
 
-"@docusaurus/core@^2.0.0-beta.22":
+"@docusaurus/core@2.0.0-beta.22", "@docusaurus/core@^2.0.0-beta.22":
   version "2.0.0-beta.22"
   resolved "https://registry.yarnpkg.com/@docusaurus/core/-/core-2.0.0-beta.22.tgz#72430b817571e2d7354012523bcaefc99fe4e004"
   dependencies:
@@ -1419,6 +1419,19 @@
     "@types/react-router-dom" "*"
     react-helmet-async "*"
 
+"@docusaurus/module-type-aliases@2.0.0-beta.22":
+  version "2.0.0-beta.22"
+  resolved "https://registry.yarnpkg.com/@docusaurus/module-type-aliases/-/module-type-aliases-2.0.0-beta.22.tgz#bae805e339364eb3d801e010b3098ceb04dd5ce4"
+  dependencies:
+    "@docusaurus/react-loadable" "5.5.2"
+    "@docusaurus/types" "2.0.0-beta.22"
+    "@types/history" "^4.7.11"
+    "@types/react" "*"
+    "@types/react-router-config" "*"
+    "@types/react-router-dom" "*"
+    react-helmet-async "*"
+    react-loadable "npm:@docusaurus/react-loadable@5.5.2"
+
 "@docusaurus/plugin-content-blog@2.0.0-beta.21":
   version "2.0.0-beta.21"
   resolved "https://registry.npmjs.org/@docusaurus/plugin-content-blog/-/plugin-content-blog-2.0.0-beta.21.tgz"
@@ -1440,7 +1453,7 @@
     utility-types "^3.10.0"
     webpack "^5.72.1"
 
-"@docusaurus/plugin-content-docs@2.0.0-beta.21", "@docusaurus/plugin-content-docs@^2.0.0-beta.20":
+"@docusaurus/plugin-content-docs@2.0.0-beta.21":
   version "2.0.0-beta.21"
   resolved "https://registry.npmjs.org/@docusaurus/plugin-content-docs/-/plugin-content-docs-2.0.0-beta.21.tgz"
   dependencies:
@@ -1458,6 +1471,27 @@
     tslib "^2.4.0"
     utility-types "^3.10.0"
     webpack "^5.72.1"
+
+"@docusaurus/plugin-content-docs@^2.0.0-beta.22":
+  version "2.0.0-beta.22"
+  resolved "https://registry.yarnpkg.com/@docusaurus/plugin-content-docs/-/plugin-content-docs-2.0.0-beta.22.tgz#ef8c60729f74c1604e178863a798890376a0dd63"
+  dependencies:
+    "@docusaurus/core" "2.0.0-beta.22"
+    "@docusaurus/logger" "2.0.0-beta.22"
+    "@docusaurus/mdx-loader" "2.0.0-beta.22"
+    "@docusaurus/module-type-aliases" "2.0.0-beta.22"
+    "@docusaurus/types" "2.0.0-beta.22"
+    "@docusaurus/utils" "2.0.0-beta.22"
+    "@docusaurus/utils-validation" "2.0.0-beta.22"
+    "@types/react-router-config" "^5.0.6"
+    combine-promises "^1.1.0"
+    fs-extra "^10.1.0"
+    import-fresh "^3.3.0"
+    js-yaml "^4.1.0"
+    lodash "^4.17.21"
+    tslib "^2.4.0"
+    utility-types "^3.10.0"
+    webpack "^5.73.0"
 
 "@docusaurus/plugin-content-pages@2.0.0-beta.21":
   version "2.0.0-beta.21"
@@ -1612,6 +1646,19 @@
     react-helmet-async "^1.3.0"
     utility-types "^3.10.0"
     webpack "^5.72.1"
+    webpack-merge "^5.8.0"
+
+"@docusaurus/types@2.0.0-beta.22":
+  version "2.0.0-beta.22"
+  resolved "https://registry.yarnpkg.com/@docusaurus/types/-/types-2.0.0-beta.22.tgz#8042ccdf32a915db0e4a2c0e6f98f6d43c6f7fa5"
+  dependencies:
+    "@types/history" "^4.7.11"
+    "@types/react" "*"
+    commander "^5.1.0"
+    joi "^17.6.0"
+    react-helmet-async "^1.3.0"
+    utility-types "^3.10.0"
+    webpack "^5.73.0"
     webpack-merge "^5.8.0"
 
 "@docusaurus/utils-common@2.0.0-beta.21":
@@ -2037,7 +2084,7 @@
   version "1.2.4"
   resolved "https://registry.npmjs.org/@types/range-parser/-/range-parser-1.2.4.tgz"
 
-"@types/react-router-config@*":
+"@types/react-router-config@*", "@types/react-router-config@^5.0.6":
   version "5.0.6"
   resolved "https://registry.npmjs.org/@types/react-router-config/-/react-router-config-5.0.6.tgz"
   dependencies:
