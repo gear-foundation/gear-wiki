@@ -145,23 +145,6 @@ pub enum State {
 }
 ```
 
-- `ConfirmationsCount` returns number of confirmations of a transaction whose ID is a parameter.
-- `TransactionsCount` returns total number of transactions after filers are applied. `pending` includes transactions that have not been executed yet, `executed` includes transactions that have been completed
-- `Owners` returns list of owners.
-- `Confirmations` returns array with owner addresses, which confirmed transaction whose ID is a parameter.
-
-- `TransactionIds` returns list of transaction IDs in defined range.
-  - `from` index start position of transaction array.
-  - `to` index end position of transaction array(not included).
-  - `pending` include pending transactions.
-  - `executed` include executed transactions.
-- `IsConfirmed` returns the confirmation status of the transaction whose ID is a parameter.
-- `Description` Returns the description of the transaction whose ID is a parameter.
-
-Each state request has a corresponding reply with the same name.
-
----
-
 - `ConfirmationsCount` 返回交易的确认数量。
 - `TransactionsCount` 返回应用申报者后的交易总数。`pending` 包括尚未执行的交易，`executed` 包括已完成的交易。
 - `Owners` 返回所有者的列表。
