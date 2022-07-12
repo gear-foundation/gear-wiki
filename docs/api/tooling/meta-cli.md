@@ -30,8 +30,11 @@ gear-meta --help
 ### Available commands
 
 **decode** - _Decode payload from hex_
+
 **encode** - _Encode payload to hex_
+
 **meta** - _Display metadata from .meta.wasm_
+
 **type** - _Display type structure for particular type from .meta.wasm_
 
 You can simply run these commands and you will be prompted to enter the necessary data. Or you can specify data through options:
