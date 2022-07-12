@@ -1,0 +1,71 @@
+---
+sidebar_position: 6
+sidebar_label: 发送消息
+---
+
+# 发送消息
+
+向程序发送消息：
+
+```javascript
+try {
+  const message = {
+    destination: destination, // programId
+    payload: somePayload,
+    gasLimit: 100_000_000,
+    value: 1000,
+  };
+  // By default, the payload will be encoded using meta.handle_input type
+  const submitted = await gearApi.message.submit(message, meta);
+
+  // If you need to specify a different handler
+  // For example
+  await gearApi.message.submit(message, meta, meta.async_handle_input);
+} catch (error) {
+  console.error(`${error.name}: ${error.message}`);
+}
+try {
+  await gearApi.message.signAndSend(keyring, (event) => {
+    console.log(event.toHuman());
+  });
+} catch (error) {
+  console.error(`${error.name}: ${error.message}`);
+}
+```
+
+:::note
+在实际情况下，为确保成功处理信息，应通过使用`api.program.calculateGas`方法来计算处理信息所需的 gas。
+
+请看[更多相关信息](/api/calculate-gas)
+:::
+
+### 发送回复信息
+
+当你需要回复从一个程序收到的信息时，请使用这个例子：
+
+```javascript
+try {
+  const reply = {
+    replyToId: messageId,
+    payload: somePayload,
+    gasLimit: 10000000,
+    value: 1000,
+  };
+  // In that case, the payload will be encoded using meta.async_handle_input type if it exists, if not it will be used meta.async_init_input
+
+  const submitted = await gearApi.reply.submit(reply, meta);
+
+  // If you need to specify a handler mannualy
+  // For example
+  await gearApi.reply.submit(reply, meta, meta.async_init_input);
+} catch (error) {
+  console.error(`${error.name}: ${error.message}`);
+}
+try {
+  await gearApi.reply.signAndSend(keyring, (events) => {
+    console.log(event.toHuman());
+  });
+} catch (error) {
+  console.error(`${error.name}: ${error.message}`);
+}
+```

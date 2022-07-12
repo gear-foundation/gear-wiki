@@ -1,0 +1,208 @@
+---
+sidebar_position: 10
+sidebar_label: 事件
+---
+
+# 事件
+
+在执行期间，某些操作会生成事件。 以下部分描述了作为默认 Gear 运行时一部分的事件。
+
+订阅所有事件：
+
+```javascript
+
+import { GearApi } from "@gear-js/api";
+
+GearApi.query.system.events((events) => {
+    console.log(events)
+}
+
+```
+
+## Gear 事件 类型
+
+### MessageEnqueued
+
+**Summary:** 当用户成功向程序发送消息并将其添加到 Gear 消息队列时。
+
+```rust
+
+MessageEnqueued {
+    /// Generated id of the message.
+    id: MessageId,
+    /// Account id of the source of the message.
+    source: T::AccountId,
+    /// Program id, who is a destination of the message.
+    destination: ProgramId,
+    /// Entry point for processing of the message.
+    /// On the sending stage, processing function
+    /// of program is always known.
+    entry: Entry,
+}
+
+```
+
+### UserMessageSent
+
+**Summary:** 当有人向用户发送消息时。
+
+```rust
+UserMessageSent {
+    /// Message sent.
+    message: StoredMessage,
+    /// Block number of expiration from `Mailbox`.
+    ///
+    /// Equals `Some(_)` with block number when message
+    /// will be removed from `Mailbox` due to some
+    /// reasons (see #642, #646 and #1010).
+    ///
+    /// Equals `None` if message wasn't inserted to
+    /// `Mailbox` and appears as only `Event`.
+    expiration: Option<T::BlockNumber>,
+}
+```
+
+### UserMessageSent
+
+**Summary:** 当消息被标记为“已读”并且已从`Mailbox`中删除时。 此事件仅影响先前已插入到`Mailbox`的消息。
+
+```rust
+UserMessageRead {
+    /// Id of the message read.
+    id: MessageId,
+    /// The reason of the reading (removal from `Mailbox`).
+    ///
+    /// NOTE: See more docs about reasons at `gear_common::event`.
+    reason: UserMessageReadReason,
+}
+```
+
+### MessagesDispatched
+
+**Summary:** 当一个消息在块内被处理的结果。
+
+```rust
+MessagesDispatched {
+    /// Total amount of messages removed from message queue.
+    total: MessengerCapacityOf<T>,
+    /// Execution statuses of the messages, which were already known
+    /// by `Event::MessageEnqueued` (sent from user to program).
+    statuses: BTreeMap<MessageId, DispatchStatus>,
+    /// Ids of programs, which state changed during queue processing.
+    state_changes: BTreeSet<ProgramId>,
+}
+```
+
+### MessageWaited
+
+**Summary:** 当一个消息的执行被推迟，并被添加到Gear等待列表中。
+
+```rust
+MessageWaited {
+    /// Id of the message waited.
+    id: MessageId,
+    /// Origin message id, which started messaging chain with programs,
+    /// where currently waited message was created.
+    ///
+    /// Used for identifying by user, that this message associated
+    /// with him and with the concrete initial message.
+    origin: Option<MessageId>,
+    /// The reason of the waiting (addition to `Waitlist`).
+    ///
+    /// NOTE: See more docs about reasons at `gear_common::event`.
+    reason: MessageWaitedReason,
+    /// Block number of expiration from `Waitlist`.
+    ///
+    /// Equals block number when message will be removed from `Waitlist`
+    /// due to some reasons (see #642, #646 and #1010).
+    expiration: T::BlockNumber,
+}
+```
+
+### MessageWoken
+
+**Summary:** 当一条消息准备好继续执行并从 `Waitlist` 中删除时。
+
+```rust
+MessageWoken {
+    /// Id of the message woken.
+    id: MessageId,
+    /// The reason of the waking (removal from `Waitlist`).
+    ///
+    /// NOTE: See more docs about reasons at `gear_common::event`.
+    reason: MessageWokenReason,
+}
+```
+
+### CodeChanged
+
+**Summary:**  当程序代码被改变时。
+
+```rust
+CodeChanged {
+    /// Id of the code affected.
+    id: CodeId,
+    /// Change applied on code with current id.
+    ///
+    /// NOTE: See more docs about change kinds at `gear_common::event`.
+    change: CodeChangeKind<T::BlockNumber>,
+}
+```
+
+### ProgramChanged
+
+**Summary:** 与程序有关的任何数据改变时。
+
+```rust
+ProgramChanged {
+    /// Id of the program affected.
+    id: ProgramId,
+    /// Change applied on program with current id.
+    ///
+    /// NOTE: See more docs about change kinds at `gear_common::event`.
+    change: ProgramChangeKind<T::BlockNumber>,
+}
+```
+
+## Cookbook
+
+获取事件以检查指定程序是否已被初始化的例子。
+
+```js
+import { GearApi, Hex, MessageEnqueued, ProgramChanged, UserMessageSent } from '@gear-js/api';
+import { UnsubscribePromise } from '@polkadot/api/types';
+
+export function waitForInit(api: GearApi, programId: string): Promise<UnsubscribePromise> {
+  let messageId: Hex;
+  return new Promise((resolve, reject) => {
+    const unsub = api.query.system.events((events) => {
+      events.forEach(({ event }) => {
+        switch (event.method) {
+          case 'MessageEnqueued':
+            const meEvent = event as MessageEnqueued;
+            if (meEvent.data.destination.eq(programId) && meEvent.data.entry.isInit) {
+              messageId = meEvent.data.id.toHex();
+            }
+            break;
+          case 'UserMessageSent':
+            const {
+              data: {
+                message: { source, reply, payload },
+              },
+            } = event as UserMessageSent;
+            if (source.eq(programId) && reply.isSome && reply.unwrap()[0].eq(messageId) && reply.unwrap()[1].eq(1)) {
+              reject(payload.toHuman());
+            }
+            break;
+          case 'ProgramChanged':
+            const pcEvent = event as ProgramChanged;
+            if (pcEvent.data.id.eq(programId) && pcEvent.data.change.isActive) {
+              resolve(unsub);
+            }
+            break;
+        }
+      });
+    });
+  });
+}
+```

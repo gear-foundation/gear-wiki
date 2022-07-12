@@ -1,0 +1,98 @@
+---
+sidebar_position: 1
+sidebar_label: 开始
+---
+
+# Getting started
+
+## Gear-JS API
+
+Gear-JS API 提供了一组实用程序、库和工具，使 JavaScript 应用程序能够通过对 Gear 节点的查询与在 Gear 网络中运行的智能合约进行交互。
+
+以下部分描述了你可以在 JS 应用程序中使用的工具来实现基本功能，例如管理密钥对（帐户）、计算网络操作所需的gas、在网络中上传程序、向程序发送消息、读取程序的状态、 从 mailbox 中获取消息，使用元数据等等。 Cookbook 部分提供了一些有用的代码片段。
+
+基本的API是在Substrate层实现的，对所有基于Substrate的网络都是一样的。Gear-JS的API代码可以在[GitHub](https://github.com/gear-tech/gear-js)上找到。完整的API概述可以在[Polkadot 文档]（https://polkadot.js.org/docs/）上找到。
+
+## 安装
+
+```sh
+npm install @gear-js/api
+```
+
+或者
+
+```sh
+yarn add @gear-js/api
+```
+
+## 开始
+
+使用 API 连接本地节点：
+
+```javascript
+import { GearApi } from '@gear-js/api';
+
+const gearApi = await GearApi.create();
+```
+
+或者连接不同节点
+
+```javascript
+const gearApi = await GearApi.create({
+  providerAddress: 'wss://someIP:somePort',
+});
+```
+
+:::note
+
+以下是与Gear RPC节点几个入口。
+
+连接本地节点：
+
+```bash
+ws://127.0.0.1:9944
+```
+
+连接测试节点：
+
+```bash
+wss://rpc-node.gear-tech.io:443
+```
+
+:::
+
+获取节点信息：
+
+```javascript
+const chain = await gearApi.chain();
+const nodeName = await gearApi.nodeName();
+const nodeVersion = await gearApi.nodeVersion();
+const genesis = gearApi.genesisHash.toHex();
+```
+
+## 例子
+
+这个简单的例子描述了如何订阅一个新的区块并获得链的基本信息：
+
+```js
+async function connect() {
+  const gearApi = await GearApi.create();
+
+  const [chain, nodeName, nodeVersion] = await Promise.all([
+    gearApi.chain(),
+    gearApi.nodeName(),
+    gearApi.nodeVersion(),
+  ]);
+
+  console.log(
+    `You are connected to chain ${chain} using ${nodeName} v${nodeVersion}`,
+  );
+
+  const unsub = await gearApi.gearEvents.subscribeToNewBlocks((header) => {
+    console.log(
+      `New block with number: ${header.number.toNumber()} and hash: ${header.hash.toHex()}`,
+    );
+  });
+}
+connect().catch(console.error);
+```
