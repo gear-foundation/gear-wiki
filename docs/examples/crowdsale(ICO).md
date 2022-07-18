@@ -21,18 +21,18 @@ pub async fn transfer_tokens(
 ```
 This function sends a message (the action is defined in the enum IcoAction) and gets a reply (the reply is defined in the enum IcoEvent):
 ```rust
-    let _transfer_response: FTEvent = msg::send_and_wait_for_reply(
-        *token_id,
-        FTAction::Transfer {
-            from: *from,
-            to: *to,
-            amount,
-        },
-        0,
-    )
-    .unwrap()
-    .await
-    .expect("Error in transfer");
+let _transfer_response = msg::send_for_reply(
+    *token_id,
+    FTAction::Transfer {
+        from: *from,
+        to: *to,
+        amount,
+    },
+    0,
+)
+.expect("Error in message")
+.await
+.expect("Error in transfer");
 ```
 
 2. `asserts.rs` - contains asserts functions: `owner_message` and `not_zero_address`. 
