@@ -94,15 +94,37 @@ pub struct IcoState {
 ```rust
 async fn start_ico(&mut self, config: IcoAction)
 ```
+replies with:
+```rust
+IcoEvent::SaleStarted {
+    duration,
+    start_price,
+    tokens_goal,
+    price_increase_step,
+    time_increase_step,
+},
+```
 
 - Purchase of tokens. Anyone with enough balance can call and buy tokens:
 ```rust
 pub fn buy_tokens(&mut self, tokens_cnt: u128)
 ```
+replies with:
+```rust
+IcoEvent::Bought {
+    buyer,
+    amount,
+    change,
+}
+```
 
 - Ends the ICO. Only owner can call it:
 ```rust
 async fn end_sale(&mut self)
+```
+replies with:
+```rust
+IcoEvent::SaleEnded
 ```
 
 ## Source code
