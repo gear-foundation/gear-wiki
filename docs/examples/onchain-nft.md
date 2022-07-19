@@ -10,8 +10,8 @@ On the info related to gNFT consider reading: [gNFT-721](https://wiki.gear-tech.
 
 When the owner of a given token ID wishes to transfer it to another user, it is easy to verify ownership and reassign the token to a new owner.
 
-Mostly NFTs images (or other base resourse) is stored somewhere else (e.g. ipfs) and only the metadata is stored in the contract. Metadata consists of a name, an ID and links to the external resources, where the images is actually stored.
-But there is another approached introduced here. Sometimes you can store NFTs directly on chain without any external storage. This approach helps you not to lose your nft if there is a problem with the external storage.
+Mostly NFTs images (or other base resources) are stored somewhere else (e.g. IPFS) and only the metadata is stored in the contract. Metadata consists of a name, an ID and links to the external resources, where the images are actually stored.
+But there is another approach introduced here. Sometimes you can store NFTs directly on chain without any external storage. This approach helps you not to lose your NFT if there is a problem with the external storage.
 
 ### Approach
 To successfully implement this approach several things are needed. Firstly, when initializing a collection, one should provide all the possible images of all the layers for a collection. Secondly, when minting alongside with a small metadata, one should provide a combination of layers used for a specific NFT. This approach seems quite costly when initializing, but is relatively cheap when it comes to minting.
@@ -248,7 +248,7 @@ pub unsafe extern "C" fn meta_state() -> *mut [i32; 2] {
 
 Gear provides a reusable [library](https://github.com/gear-dapps/non-fungible-token/tree/master/nft/src) with core functionality for the gNFT protocol. By using object composition, that library can be utilized within a custom NFT contract implementation in order to minimize duplication of community available code.
 
-A source code of the NFT marketplace provided by Gear is available on GitHub: [on-chain-nft/src](https://github.com/gear-dapps/non-fungible-token/tree/master/on-chain-nft/src).
+A source code of the on-chain NFT provided by Gear is available on GitHub: [on-chain-nft/src](https://github.com/gear-dapps/non-fungible-token/tree/master/on-chain-nft/src).
 
 See also an example of the smart contract testing implementation based on `gtest`: [on-chain-nft/tests](https://github.com/gear-dapps/non-fungible-token/tree/master/on-chain-nft/tests).
 
