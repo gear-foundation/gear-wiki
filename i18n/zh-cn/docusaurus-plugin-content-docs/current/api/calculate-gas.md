@@ -1,6 +1,6 @@
 ---
 sidebar_position: 3
-sidebar_label: 计算 gas
+sidebar_label: 计算 Gas
 ---
 
 # 计算 gas
@@ -9,7 +9,7 @@ Gear 节点对所有的网络操作收取 gas，无论是执行程序的代码�
 
 ## 为消息计算 gas
 
-根据条件，你可以在`handle()`或`reply()`中计算出启动程序或处理信息的 gas。
+根据条件，你可以在 `handle()` 或 `reply()` 中计算出启动程序或处理信息的 gas。
 
 :::info
 gas 计算返回 GasInfo 对象，其中包含 3 个参数。
@@ -34,7 +34,7 @@ const gas = await gearApi.program.calculateGas.init(
 console.log(gas.toHuman());
 ```
 
-### Handle
+### Handle 方法
 
 ```javascript
 const meta = await getWasmMetadata(fs.readFileSync('demo_meta.opt.wasm'));
@@ -54,7 +54,7 @@ const estimatedGas = await gearApi.program.calculateGas.handle(
 console.log(gas.toHuman());
 ```
 
-### Reply
+### Reply 方法
 
 ```javascript
 const code = fs.readFileSync('demo_async.opt.wasm');
