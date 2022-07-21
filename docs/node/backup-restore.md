@@ -31,13 +31,13 @@ Let's explore the data that the node stores in this directory.
 
 ### Chains
 
-The node can connect to different chains. The chain can be chosen using the `--chain` argument. The default value is the staging network. Its data is located in `gear-node/chains/staging_testnet` directory.
+The node can connect to different chains. The chain can be selected using the `--chain` argument. The default chain is the staging test network at the moment. Its data is located in `gear-node/chains/staging_testnet` directory.
 
 If you start the node with the `--dev` argument, the virtual network in development mode will run with the data stored in the `gear-node/chains/dev` directory.
 
 ### Database
 
-The database keeps the blockchain state in the local node storage. It synchronizes with other nodes over a peer-to-peer protocol. One can choose the DB format using `--database` argument. Possible options:
+The database keeps the blockchain state in the local node storage. It synchronizes with other nodes over a peer-to-peer protocol. One can choose the DB format using the `--database` argument. Possible options are:
 
 - `rocksdb` (default): use RocksDB as database engine, data is stored in `<chain>/db/full` subdirectory.
 - `paritydb`: use ParityDB as database engine, data is stored in `<chain>/paritydb/full` subdirectory.
@@ -71,7 +71,7 @@ The network key file cannot be recovered if lost. Therefore, you are to keep it 
 
 ## Moving the node
 
-To move the node to a new server you are to backup then restore (the following paths are for default parameters):
+To move the node to a new server you are to backup then restore the following (provided paths are for default node's parameters):
 
 - The network private key of the node:
 
