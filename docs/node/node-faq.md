@@ -1,6 +1,6 @@
 ---
 sidebar_label: Node FAQ
-sidebar_position: 6
+sidebar_position: 7
 ---
 
 # Node FAQ
@@ -69,7 +69,7 @@ sudo systemctl restart gear-node
 
 ## How do I change the port number if the default one is already used by another software?
 
-Use on of the supported flags when running the node:
+Use one of the supported flags when running the node:
 
 ```
 --port <PORT>

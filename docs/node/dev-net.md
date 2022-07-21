@@ -1,6 +1,6 @@
 ---
 sidebar_label: Dev Net Mode
-sidebar_position: 4
+sidebar_position: 5
 ---
 
 # Running Gear node in Dev Net mode
