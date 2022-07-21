@@ -1,12 +1,17 @@
 ---
 sidebar_label: Crowdsale(ICO)
-sidebar_position: 17
+sidebar_position: 18
 ---
 
 # Crowdsale (ICO)
 
 ## Introduction
-An initial coin offering (ICO) or initial currency offering is a type of funding using cryptocurrencies. It is a form of crowdfunding, in which a quantity of cryptocurrency is sold in the form of "tokens" ("coins") to investors, in exchange for other cryptocurrencies such as Ether. The tokens are promoted as future functional units of currency when the ICO's funding goal is met and the project successfully launches
+
+A public offering to invest in a brand-new cryptocurrency or other digital asset is known as a cryptocurrency Crowdsale. An initial coin offering (ICO) can be used by new projects to raise money for development and other purposes. ICO is a time-limited campaign where investors can exchange their cryptocurrencies defined in the campaign to newly proposed tokens. The new tokens are promoted as future functional units after the ICO's funding goal is met and the project launches.
+
+An example of an ICO smart-contract implementation described in this article is one of many other decentralized applications that can be implemented and laucnhed on Gear. This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. Anyone can easily create their own Crowdsale ICO application and run it on the Gear Network.
+
+Initial funds with which a token is purchased are determined by the Gear fungible tokens contract - [gFT](https://wiki.gear-tech.io/examples/gft-20). The contract's source code is available on [GitHub](https://github.com/gear-dapps/crowdsale-ico).
 
 ## Interface
 ### Source files
@@ -127,7 +132,8 @@ replies with:
 IcoEvent::SaleEnded
 ```
 
-## Source code
+## Conclusion
+
 The source code of this example of ICO smart contract and the example of an implementation of its testing is available on [Github](https://github.com/gear-dapps/crowdsale-ico).
 
 For more details about testing smart contracts written on Gear, refer to the [Program Testing](https://wiki.gear-tech.io/developing-contracts/testing) article.
