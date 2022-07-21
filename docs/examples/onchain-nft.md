@@ -5,18 +5,20 @@ sidebar_position: 16
 
 # On-chain gNFT assets
 
-### Introduction
-On the info related to gNFT consider reading: [gNFT-721](https://wiki.gear-tech.io/examples/gnft-721).
+## Introduction
 
-When the owner of a given token ID wishes to transfer it to another user, it is easy to verify ownership and reassign the token to a new owner.
+This NFT smart-contract example demonstrates an approach when the token assets are stored directly on chain. For details related to common gNFT smart-contract implentation, read: [gNFT-721](https://wiki.gear-tech.io/examples/gnft-721).
 
-Mostly NFTs images (or other base resources) are stored somewhere else (e.g. IPFS) and only the metadata is stored in the contract. Metadata consists of a name, an ID and links to the external resources, where the images are actually stored.
+When the owner of a given token ID wishes to transfer it to another user, it is easy to verify ownership and reassign the token to a new owner. Mostly NFTs images (or other base resources) are stored somewhere else (e.g. IPFS) and only the metadata is stored in the contract. Metadata consists of a name, an ID and links to the external resources, where the images are actually stored.
+
 But there is another approach introduced here. Sometimes you can store NFTs directly on chain without any external storage. This approach helps you not to lose your NFT if there is a problem with the external storage.
 
-### Approach
+This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. The source code is available on [GitHub](https://github.com/gear-dapps/non-fungible-token/tree/master/on-chain-nft).
+
+## Approach
 To successfully implement this approach several things are needed. Firstly, when initializing a collection, one should provide all the possible images of all the layers for a collection. Secondly, when minting alongside with a small metadata, one should provide a combination of layers used for a specific NFT. This approach seems quite costly when initializing, but is relatively cheap when it comes to minting.
 
-### Developing on-chain non-fungible-token contract
+## Developing on-chain non-fungible-token contract
 The functions that must be supported by each non-fungible-token contract:
 - *transfer(to, token_id)* - is a function that allows you to transfer a token with the *token_id* number to the *to* account;
 - *approve(approved_account, token_id)* - is a function that allows you to give the right to dispose of the token to the specified *approved_account*. This functionality can be useful on marketplaces or auctions as when the owner wants to sell his token, they can put it on a marketplace/auction, so the contract will be able to send this token to the new owner at some point;
