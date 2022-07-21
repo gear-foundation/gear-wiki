@@ -270,6 +270,7 @@ In this case, 5 scenarios are possible:
 1. Root owner transfers child token from NFT to another his NFT within one contract.
 In that case child RMRK contract sends message `TransferChild` to parent RMRK contract with indicated previous `TokenId` and new `TokenId`:
 
+
 ```rust
 /// That message is designed to be sent from another RMRK contracts
 /// when the root owner transfers his child to another parent token within one contract.
@@ -295,6 +296,10 @@ TransferChild {
     child_token_id: TokenId,
 },
 ```
+
+ ![Image](transfer1.drawio.svg?style=centerme)
+
+ 
 2. Root owner transfers child token from RMRK parent token in one contract to another his RMRK token in another contract:
     - Child RMRK contract sends message `BurnChild` to previous parent RMRK contract;
     - Child RMRK contract sends message `AddAcceptedChild` to new parent RMRK contract;
