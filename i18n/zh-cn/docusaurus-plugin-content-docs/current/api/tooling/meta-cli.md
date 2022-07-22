@@ -5,53 +5,54 @@ sidebar_label: Meta CLI
 
 # Gear Meta CLI
 
-CLI tool to encode/decode payloads and work with .meta.wasm files.
+CLI 工具，对参数进行编码/解码，并对 `.meta.wasm` 文件进行处理。
 
-## Installation
+## 安装
 
 ```sh
 npm install -g @gear-js/gear-meta
 ```
 
-or
+或
 
 ```sh
 yarn global add @gear-js/gear-meta
 ```
 
-## Usage
+## 用法
 
-### Full list of commmands
+### 完整的命令列表
 
 ```sh
 gear-meta --help
 ```
 
-### Available commands
+### 可用命令
 
-**decode** - _Decode payload from hex_
+**decode** - _解析 16 进制的 payload_
 
-**encode** - _Encode payload to hex_
+**encode** - _将 payload 编码为 16 进制数据_
 
-**meta** - _Display metadata from .meta.wasm_
+**meta** - _从.meta.wasm 显示 metadata_
 
-**type** - _Display type structure for particular type from .meta.wasm_
+**type** - _显示来自 .meta.wasm 的特定类型的类型结构_
 
-You can simply run these commands and you will be prompted to enter the necessary data. Or you can specify data through options:
+你可以运行这些命令的简写模式，系统会提示你输入必要的数据。或者你可以通过选项指定数据：
 
 **-t, --type** - _Type to encode or decode the payload. If it is not specified you can select it later_
 
-**-m, --meta** - _Path to .meta.wasm file with program's metadata_
+**-m, --meta** - _ .meta.wasm 文件的路径_
 
-**-o --output** - _Output JSON file. If it doesn't exist it will be created_
+**-o --output** - _输出 JSON 文件。如果它不存在，将会创建_
 
-**-j --payloadFromJson** - _If need to take the payload from json_
+**-j --payloadFromJson** - _如果需要从 json 中获取有效载荷_
+_
 
-All of these options are available for `decode` and `encode` commands
-`-o --output` option is available for `meta` command
-`-m, --meta` option is available for `type` command
+所有这些选项都适用于 `decode` "和`encode`命令
+`-o --output` 选项可用于 `meta` 命令
+`-m, --meta` 选项可用于 `type` 命令
 
-## Examples
+## 例子
 
 ```sh
 gear-meta encode '{"amount": 8, "currency": "GRT"}' -t init_input -m ./path/to/demo_meta.meta.wasm
