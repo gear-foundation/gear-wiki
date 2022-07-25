@@ -11,7 +11,9 @@ Anyone can easily create their own Lottery application and run it on the Gear Ne
 
 This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios.
 
-In this example, whoever initializes the contract is considered the lottery owner. Only the owner has the right to start/finish the lottery. Players are added to the lottery themselves by sending a message with their bet to the contract. Then players monitor the state of the lottery. The winner is determined randomly.
+Gear also [provides](https://github.com/gear-tech/gear-js/tree/master/apps/lottery) an example implementation of the [Lottery](https://lottery.gear-tech.io/) user interface to demonstrate its interaction with smart contracts in the Gear Network. In this example, whoever initializes the contract is considered the lottery owner. Only the owner has the right to start/finish the lottery. Players are added to the lottery themselves by sending a message with their bet to the contract. Then players monitor the state of the lottery. The winner is determined randomly.
+
+ You can watch a video on how to get the Lottery application up and running and its capabilities here: **https://youtu.be/35StUMjbdFc**.
 
 ## Source files
 1. `lottery/src/lib.rs` - contains functions of the lottery contract.
@@ -218,6 +220,43 @@ pub unsafe extern "C" fn meta_state() -> *mut [i32; 2] {
     gstd::util::to_leak_ptr(encoded)
 }
 ```
+
+## User interface
+
+A [Ready-to-Use application](https://lottery.gear-tech.io/) example provides a user interface that interacts with [Lottery](https://github.com/gear-dapps/lottery) smart contract running in Gear Network.
+
+This video demonstrates how to configure and run Lottery application on your own and explains the user interaction workflow: **https://youtu.be/35StUMjbdFc**
+
+![img alt](./img/Lottery.png)
+
+A Lottery application source code is available on [GitHub](https://github.com/gear-tech/gear-js/tree/master/apps/lottery).
+
+### Configure basic dApp in .env:
+
+For proper application functioning, one needs to create `.env` file and adjust an environment variable parameters. An example is available [here](https://github.com/gear-tech/gear-js/blob/master/apps/lottery/.env.example).
+
+```sh
+
+REACT_APP_NODE_ADDRESS
+REACT_APP_LOTTERY_CONTRACT_ADDRESS
+
+```
+
+- `REACT_APP_NODE_ADDRESS` is the Gear Network's address (wss://rpc-node.gear-tech.io:443)
+- `REACT_APP_MARKETPLACE_CONTRACT_ADDRESS` is Lottery smart contract address in Gear Network
+
+### How to run
+
+Install required dependencies:
+```sh
+npm install
+```
+
+Run the app in the development mode:
+```sh
+npm start
+```
+Open http://localhost:3000 to view it in the browser.
 
 ## Conclusion
 
