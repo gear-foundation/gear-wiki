@@ -278,7 +278,7 @@ A [Ready-to-Use application](https://marketplace.gear-tech.io/) example provides
 - Gear Non-Fundible Token contract enables creation of NFT tokens, proves an ownership of a digital assets, check [this article](https://wiki.gear-tech.io/examples/gnft-721) for details.
 - NFT Marketplace contract enables to buy and sell non-fungible tokens for fungible tokens, hold the NFT auctions and make/accept purchase offers on NFTs.
 
-This video demonstrates how to configure and run Markeplace applciation on your own and explains the user interaction workflow: **https://youtu.be/RdlWUkxlmV4**
+This video demonstrates how to configure and run Markeplace application on your own and explains the user interaction workflow: **https://youtu.be/RdlWUkxlmV4**
 
 ![img alt](./img/nft-marketplace.png)
 
