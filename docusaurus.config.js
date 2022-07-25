@@ -59,6 +59,14 @@ module.exports = {
       darkTheme: darkCodeTheme,
       additionalLanguages: ['rust', 'toml'],
     },
+    algolia: {
+      appId: "OI5YH8L74V",
+      apiKey: "70e750fb6f98f28f089ca6f0c7cd86a6",
+      indexName: "gear-tech",
+      contextualSearch: true,
+      searchParameters: {},
+      searchPagePath: 'search',
+    }
   },
   presets: [
     [
