@@ -10,7 +10,7 @@ A Dutch auction is one of several types of auctions for buying or selling goods.
 
 The auction uses [Gear non-fungible tokens (gNFT)](/examples/gnft-721) as tradable goods.
 
-The article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. Anyone can easily create their own application and run it on the Gear Network. The source code is available on [GitHub](https://github.com/gear-dapps/dutch-auction). 
+The article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. Anyone can easily create their own application and run it on the Gear Network. The source code is available on [GitHub](https://github.com/gear-dapps/dutch-auction).
 
 ## Contract description
 
