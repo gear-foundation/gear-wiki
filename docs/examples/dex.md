@@ -3,9 +3,9 @@ sidebar_label: DEX
 sidebar_position: 19
 ---
 
-# DEX (decentralized exchange).
+# DEX (decentralized exchange)
 
-## Introduction.
+## Introduction
 A decentralized exchange (DEX for short) is a peer-to-peer marketplace where transactions occur directly between crypto traders. Unlike centralized exchanges like Binance, DEXs don’t allow for exchanges between fiat and crypto — instead, they exclusively trade cryptocurrency tokens for other cryptocurrency tokens.
 Decentralized exchanges, on the other hand, are simply a set of smart contracts. They establish the prices of various cryptocurrencies against each algorithmically and use “liquidity pools” — in which investors lock funds in exchange for interest-like rewards — to facilitate trades.
 While transactions on a centralized exchange are recorded on that exchange’s internal database, DEX transactions are settled directly on the blockchain.
@@ -13,15 +13,15 @@ DEXs are usually built on open-source code, meaning that anyone interested can s
 
 The exchange uses [Gear fungible tokens (GFT-20)](/examples/gft-20) underneath for the tokens and [Gear-lib FT wrapper](https://github.com/gear-dapps/gear-lib/tree/master/src/fungible_token) for the pair to keep track of the liquidity.
 
-### Math.
+### Math
 As it was said all the prices are algorithmically calculated. Investors provide funds to the liquidity pools and price is calculated according to the amount of tokens in the reserves using the following formula: <br/><br/>
 $$reserve0 * reserve1 = K$$, where $$reserve0, reserve1$$ - are the reserves of token0 and token1 respectively provided by the investors, and $$K$$ - is the constant.
 All the prices/amounts all calculated in the way that the $$K$$ <strong>MUST</strong> remain constant. This basically means that the more token0 we have in pool, the lower price of token1 will be when performing a swap.
 
-## Contract description. Factory.
+## Factory contract description
 Taking into account that we might have a large amount of trading pairs, we should have a way to monitor them/deploy another one and etc. That's where a factory comes into play. Factory helps to create a new pair and monitor all the existing pairs.
 
-### Actions.
+### Actions
 
 All of the actions are pretty straightforward. We have an action to initialize a factory, to create a pair and to modify fee related stuff.
 
@@ -80,7 +80,7 @@ pub enum FactoryAction {
 }
 ```
 
-### Events.
+### Events
 
 All of the actions above have the exact counterparts:
 ```rust
@@ -103,7 +103,7 @@ pub enum FactoryEvent {
 }
 ```
 
-### State.
+### State
 ```rust
 
 #[derive(Debug, Encode, Decode, TypeInfo)]
@@ -125,7 +125,7 @@ pub enum FactoryStateReply {
 }
 ```
 
-### Interfaces.
+### Interfaces
 According to the list of actions, we have functions to cover them all:
 ```rust
 /// Sets a fee_to address
@@ -151,17 +151,17 @@ fn set_fee_to_setter(&mut self, fee_to_setter: ActorId);
 async fn create_pair(&mut self, mut token_a: ActorId, mut token_b: ActorId);
 ```
 
-### Source code.
+### Source code
 The source code of this example of DEX factory smart contract and the example of an implementation of its testing is available on [gear-dapps/dex/tree/master/factory](https://github.com/gear-dapps/dex/tree/master/factory).
 
 See also an example of the smart contract testing implementation based on `gtest`: [gear-dapps/dex/tree/master/factory/tests](https://github.com/gear-dapps/dex/tree/master/factory/tests).
 
 For more details about testing smart contracts written on Gear, refer to the [Program Testing](/developing-contracts/testing) article.
 
-## Contract description. Pair.
+## Pair contract description
 The pair contract is where all the exchange magic happens. Each pair contract handles the liquidity provided to this pair only. All swap operations are performed applying the formula in the Math section.
 
-### Actions.
+### Actions
 ```rust
 
 pub type TokenId = ActorId;
@@ -269,7 +269,7 @@ pub enum PairAction {
 }
 ```
 
-### Events.
+### Events
 All of the actions above have the exact counterparts:
 ```rust
 #[derive(Debug, Encode, Decode, TypeInfo)]
@@ -321,7 +321,7 @@ pub enum PairEvent {
 }
 ```
 
-### State.
+### State
 The state is pretty straightforward and self-explanatory as well:
 
 ```rust
@@ -342,7 +342,7 @@ pub enum PairStateReply {
 }
 ```
 
-### Interfaces.
+### Interfaces
 To successfully implement all the logic, we should provide additional math methods:
 ```rust
 /// Calculates the amount of token1 for given amount of token0 and reserves
@@ -495,7 +495,7 @@ pub async fn swap_exact_tokens_for(&mut self, amount_in: u128, to: ActorId);
 pub async fn swap_tokens_for_exact(&mut self, amount_out: u128, to: ActorId);
 ```
 
-### Source code.
+### Source code
 The source code of this example of DEX pair smart contract and the example of an implementation of its testing is available on [gear-dapps/dex/tree/master/pair](https://github.com/gear-dapps/dex/tree/master/pair).
 
 See also an example of the smart contract testing implementation based on `gtest`: [gear-dapps/dex/tree/master/pair/tests](https://github.com/gear-dapps/dex/tree/master/pair/tests).
