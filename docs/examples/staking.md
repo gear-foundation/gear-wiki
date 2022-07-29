@@ -1,6 +1,6 @@
 ---
 sidebar_label: 'Staking'
-sidebar_position: 16
+sidebar_position: 17
 ---
 
 # Staking
