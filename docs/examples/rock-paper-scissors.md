@@ -1,6 +1,6 @@
 ---
 sidebar_label: Rock Paper Scissors
-sidebar_position: 16
+sidebar_position: 19
 ---
 
 # Rock Paper Scissors
@@ -12,7 +12,7 @@ A simultaneous, zero-sum game, it has three possible outcomes: a draw, a win or 
 
 One popular five-weapon expansion is "rock paper scissors Spock lizard", invented by Sam Kass and Karen Bryla, which adds "Spock" and "lizard" to the standard three choices. "Spock" is signified with the Star Trek Vulcan salute, while "lizard" is shown by forming the hand into a sock-puppet-like mouth. Spock smashes scissors and vaporizes rock; he is poisoned by lizard and disproved by paper. Lizard poisons Spock and eats paper; it is crushed by rock and decapitated by scissors. This variant was mentioned in a 2005 article in The Times of London and was later the subject of an episode of the American sitcom The Big Bang Theory in 2008 (as rock-paper-scissors-lizard-Spock).
 
-We have made a "rock paper scissors Spock lizard" game version for multiple players, in which the winner can be determined in several rounds of tense struggle.
+Anyone can easily create their own decentralized game application and run it on the Gear Network. To do this, we have made a "rock paper scissors Spock lizard" game version for multiple players, in which the winner can be determined in several rounds of tense struggle. The source code is available on [GitHub](https://github.com/gear-dapps/rock-paper-scissors). This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios.
 
 ## Logic
 
