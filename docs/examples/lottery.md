@@ -1,22 +1,22 @@
 ---
-sidebar_label: Lottery
+sidebar_label: Game of chance
 sidebar_position: 9
 ---
 
-# Lottery
+# Game of chance
 
 ## Introduction
- 
-Anyone can easily create their own Lottery application and run it on the Gear Network. To do this, Gear created an example of the Lottery smart contract, which is available on [GitHub](https://github.com/gear-dapps/lottery). 
 
-This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios.
+Anyone can easily create their own game application and run it on the Gear Network. To do this, Gear created an example of the Game-of-chance smart contract, which is available on [GitHub](https://github.com/gear-dapps/lottery). 
 
-Gear also [provides](https://github.com/gear-tech/gear-js/tree/master/apps/lottery) an example implementation of the [Lottery](https://lottery.gear-tech.io/) user interface to demonstrate its interaction with smart contracts in the Gear Network. In this example, whoever initializes the contract is considered the lottery owner. Only the owner has the right to start/finish the lottery. Players are added to the lottery themselves by sending a message with their bet to the contract. Then players monitor the state of the lottery. The winner is determined randomly.
+This article explains the programming interface, data structure, basic functions their purpose. It can be used as is or modified to suit your own scenarios.
 
- You can watch a video on how to get the Lottery application up and running and its capabilities here: **https://youtu.be/35StUMjbdFc**.
+Gear also [provides](https://github.com/gear-tech/gear-js/tree/master/apps/lottery) an example implementation of the [Game of chance's](https://lottery.gear-tech.io/) user interface to demonstrate its interaction with smart contracts in the Gear Network. In this example, whoever initializes the contract is considered the game owner. Only the owner has the right to start/finish the game. Players are added to the Game of chance themselves by sending a message with their bet to the contract. Then players monitor the state of the game. The winner is determined randomly.
+
+ You can watch a video on how to get the Game of chance application up and running and its capabilities here: **https://youtu.be/35StUMjbdFc**.
 
 ## Source files
-1. `lottery/src/lib.rs` - contains functions of the lottery contract.
+1. `lottery/src/lib.rs` - contains functions of the game contract.
 2. `lottery/io/src/lib.rs` - contains Enums and structs that the contract receives and sends in the reply.
 
 ## Structs
@@ -36,19 +36,19 @@ struct Lottery {
 ```
 where:
 
-`lottery_state` - Lottery state: Start Time, End time of the lottery
+`lottery_state` - Game state: Start Time, End time of the game
 
-`lottery_owner` - The address of the lottery owner who initialized the contract
+`lottery_owner` - The address of the game owner who initialized the contract
 
 `token_address` - address of the token contract
 
-`players` - 'map' of the lottery players
+`players` - 'map' of the game players
 
-`lottery_history` - 'map'  of the lottery winners
+`lottery_history` - 'map' of the game winners
 
-`lottery_id` – current lottery id
+`lottery_id` – current game id
 
-`lottery_balance` - the total amount of bets in the lottery
+`lottery_balance` - the total amount of bets in the game
 
 The `LotteryState` struct:
 
@@ -105,7 +105,7 @@ pub enum LtStateReply {
 
 ## Functions
 
-Lottery contract interacts with fungible token contract through function `transfer_tokens`.
+Game contract interacts with fungible token contract through function `transfer_tokens`.
 
 ```rust
 async fn transfer_tokens(
@@ -130,7 +130,7 @@ let _transfer_response: FTEvent = msg::send_and_wait_for_reply(
 )
 ```
 
-Launches a lottery. Only the owner can launch a lottery. Lottery must not have been launched earlier.
+Launches a game. Only the owner can launch a game. Game must not have been launched earlier.
 
 ```rust
 fn start_lottery(
@@ -140,7 +140,7 @@ fn start_lottery(
 )
 ```
 
-Called by a player in order to participate in the lottery. The player cannot enter the lottery more than once.
+Called by a player in order to participate in the game. The player cannot enter the game more than once.
 
 ```rust
 async fn enter(
@@ -149,7 +149,7 @@ async fn enter(
 )
 ```
 
-Lottery winner calculation. Only the owner can pick the winner.
+Game winner calculation. Only the owner can pick the winner.
 
 ```rust
 async fn pick_winner(
@@ -223,13 +223,13 @@ pub unsafe extern "C" fn meta_state() -> *mut [i32; 2] {
 
 ## User interface
 
-A [Ready-to-Use application](https://lottery.gear-tech.io/) example provides a user interface that interacts with [Lottery](https://github.com/gear-dapps/lottery) smart contract running in Gear Network.
+A [Ready-to-Use application](https://lottery.gear-tech.io/) example provides a user interface that interacts with [Game of chance](https://github.com/gear-dapps/lottery) smart contract running in Gear Network.
 
-This video demonstrates how to configure and run Lottery application on your own and explains the user interaction workflow: **https://youtu.be/35StUMjbdFc**
+This video demonstrates how to configure and run Game application on your own and explains the user interaction workflow: **https://youtu.be/35StUMjbdFc**
 
 ![img alt](./img/Lottery.png)
 
-A Lottery application source code is available on [GitHub](https://github.com/gear-tech/gear-js/tree/master/apps/lottery).
+A game application source code is available on [GitHub](https://github.com/gear-tech/gear-js/tree/master/apps/lottery).
 
 ### Configure basic dApp in .env:
 
@@ -243,7 +243,7 @@ REACT_APP_LOTTERY_CONTRACT_ADDRESS
 ```
 
 - `REACT_APP_NODE_ADDRESS` is the Gear Network's address (wss://rpc-node.gear-tech.io:443)
-- `REACT_APP_MARKETPLACE_CONTRACT_ADDRESS` is Lottery smart contract address in Gear Network
+- `REACT_APP_MARKETPLACE_CONTRACT_ADDRESS` is the Game's smart contract address in the Gear Network
 
 ### How to run
 
