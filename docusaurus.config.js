@@ -5,7 +5,7 @@ const katex = require('rehype-katex');
 
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
-  title: 'Gear documentation portal',
+  title: 'Gear Documentation Portal',
   tagline: 'The place to start developing with Gear',
   url: 'https://wiki.gear-tech.io/',
   baseUrl: '/',
@@ -38,6 +38,12 @@ module.exports = {
         srcDark: "img/logo-white.svg"
       },
       items: [
+        {
+          type: 'doc',
+          docId: 'intro',
+          position: 'left',
+          label: 'Docs',
+        },
         {
           href: 'https://www.gear-tech.io/',
           label: 'Gear-tech.io',
@@ -74,7 +80,7 @@ module.exports = {
       {
         docs: {
           path: './docs',
-          routeBasePath: '/',
+          routeBasePath: '/docs',
           sidebarPath: require.resolve('./sidebars.js'),
           editUrl:
             'https://github.com/gear-tech/wiki/edit/master/',

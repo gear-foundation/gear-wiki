@@ -4,47 +4,74 @@ import styles from './HomepageFeatures.module.css';
 
 const FeatureList = [
   {
-    title: 'Easy to Use',
-    Svg: require('../../static/img/undraw_docusaurus_mountain.svg').default,
+    title: 'Intro to Gear Protocol',
+    link: '/docs/gear/glossary',
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        Get started building your decentralized app or marketplace....
       </>
     ),
   },
   {
-    title: 'Focus on What Matters',
-    Svg: require('../../static/img/undraw_docusaurus_tree.svg').default,
+    title: 'Start building',
+    link: '/docs/getting-started-in-5-minutes',
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        Get started building your decentralized app or marketplace....
       </>
     ),
   },
   {
-    title: 'Powered by React',
-    Svg: require('../../static/img/undraw_docusaurus_react.svg').default,
+    title: 'Run Gear node',
+    link: '/docs/node/setting-up',
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        Get started building your decentralized app or marketplace....
+      </>
+    ),
+  },
+  {
+    title: 'API for interacting with Gear node',
+    link: '/docs/api/getting-started',
+    description: (
+      <>
+        Get started building your decentralized app or marketplace....
+      </>
+    ),
+  },
+  {
+    title: 'Developing smart contracts',
+    link: '/docs/developing-contracts/gear-program',
+    description: (
+      <>
+        Get started building your decentralized app or marketplace....
+      </>
+    ),
+  },
+  {
+    title: 'Smart contract examples',
+    link: '/docs/examples/prerequisites',
+    description: (
+      <>
+        Get started building your decentralized app or marketplace....
       </>
     ),
   },
 ];
 
-function Feature({Svg, title, description}) {
+function Feature({ link, title, description }) {
   return (
     <div className={clsx('col col--4')}>
-      <div className="text--center">
-        <Svg className={styles.featureSvg} alt={title} />
-      </div>
-      <div className="text--center padding-horiz--md">
-        <h3>{title}</h3>
-        <p>{description}</p>
-      </div>
+      <a class={styles.link} href={link}>
+        <div class={styles.feature}>
+          <div class={styles.header}>
+            <h3>{title}</h3>
+          </div>
+          <div class={styles.body}>
+            <p>{description}</p>
+          </div>
+        </div>
+      </a>
     </div>
   );
 }
