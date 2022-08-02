@@ -14,18 +14,6 @@ module.exports = {
   favicon: '/img/favicon-32x32.png',
   organizationName: 'Gear Technologies',
   projectName: 'docs',
-  i18n: {
-    defaultLocale: 'en',
-    locales: ['en', 'zh-cn'],
-    localeConfigs: {
-      'en': {
-        label: 'English',
-      },
-      'zh-cn': {
-        label: '简体中文'
-      }
-    }
-  },
   themeConfig: {
     colorMode: {
       defaultMode: 'dark'
@@ -39,8 +27,8 @@ module.exports = {
       },
       items: [
         {
-          type: 'doc',
-          docId: 'intro',
+          to: 'docs/',
+          activeBasePath: 'docs',
           position: 'left',
           label: 'Docs',
         },
@@ -79,8 +67,6 @@ module.exports = {
       '@docusaurus/preset-classic',
       {
         docs: {
-          path: './docs',
-          routeBasePath: '/docs',
           sidebarPath: require.resolve('./sidebars.js'),
           editUrl:
             'https://github.com/gear-tech/wiki/edit/master/',
@@ -94,6 +80,18 @@ module.exports = {
       },
     ],
   ],
+  i18n: {
+    defaultLocale: 'en',
+    locales: ['en', 'zh-cn'],
+    localeConfigs: {
+      'en': {
+        label: 'English',
+      },
+      'zh-cn': {
+        label: '简体中文'
+      }
+    }
+  },
   stylesheets: [
     {
       href: 'https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css',
