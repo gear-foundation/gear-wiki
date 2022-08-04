@@ -1,77 +1,63 @@
 import React from 'react';
 import clsx from 'clsx';
-import styles from './HomepageFeatures.module.css';
+import Link from '@docusaurus/Link';
+
+import styles from './HomepageFeatures.module.scss';
+
+import Translate from '@docusaurus/Translate';
 
 const FeatureList = [
   {
-    title: 'Intro to Gear Protocol',
+    title: <Translate>Intro to Gear Protocol</Translate>,
+    id: 'into',
     link: '/docs/gear/glossary',
-    description: (
-      <>
-        Get started building your decentralized app or marketplace....
-      </>
-    ),
+    description: <Translate>Get to know the main features of Gear’s advanced engine for smart contracts.</Translate>,
   },
   {
-    title: 'Start building',
+    title: <Translate>Start building</Translate>,
+    id: 'start-build',
     link: '/docs/getting-started-in-5-minutes',
-    description: (
-      <>
-        Get started building your decentralized app or marketplace....
-      </>
-    ),
+    description: <Translate>Use the guide to create your first smart contract in just 5 minutes.</Translate>
   },
   {
-    title: 'Run Gear node',
+    title: <Translate>Run Gear node</Translate>,
+    id: 'run',
     link: '/docs/node/setting-up',
-    description: (
-      <>
-        Get started building your decentralized app or marketplace....
-      </>
-    ),
+    description: <Translate>Install, compile and run the Gear Node!</Translate>
   },
   {
-    title: 'API for interacting with Gear node',
+    title: <Translate>Intecating with Gear Node</Translate>,
+    id: 'api',
     link: '/docs/api/getting-started',
-    description: (
-      <>
-        Get started building your decentralized app or marketplace....
-      </>
-    ),
+    description: <Translate>Discover a set of tools and API for creating user interface applications that interact with Gear smart-contracts.</Translate>
   },
   {
-    title: 'Developing smart contracts',
+    title: <Translate>Developing smart contracts</Translate>,
+    id: 'develop',
     link: '/docs/developing-contracts/gear-program',
-    description: (
-      <>
-        Get started building your decentralized app or marketplace....
-      </>
-    ),
+    description: <Translate>Dive into the main aspects and principles of developing smart contracts on Gear Protocol!</Translate>
   },
   {
-    title: 'Smart contract examples',
+    title: <Translate>Smart contract examples</Translate>,
+    id: 'examples',
     link: '/docs/examples/prerequisites',
-    description: (
-      <>
-        Get started building your decentralized app or marketplace....
-      </>
-    ),
+    description: <Translate>Experiment with our smart contract examples, try to play around with the code and create your own dApp!</Translate>
   },
 ];
 
-function Feature({ link, title, description }) {
+function Feature({ link, title, description, id }) {
   return (
     <div className={clsx('col col--4')}>
-      <a class={styles.link} href={link}>
-        <div class={styles.feature}>
-          <div class={styles.header}>
+      <Link className={styles.link} to={link}>
+        <div className={clsx(styles['feature'], styles[id])}>
+          <div className={styles.header}>
             <h3>{title}</h3>
           </div>
-          <div class={styles.body}>
+          <div className={styles.body}>
             <p>{description}</p>
           </div>
         </div>
-      </a>
+      </Link>
     </div>
   );
 }
