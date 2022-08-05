@@ -262,6 +262,14 @@ const urlList = [
     {
         "to": "/docs/general/dao",
         "from": "/general/dao"
+    },
+    {
+        "to": "/docs/examples/gft-20",
+        "from": "/developing-contracts/examples/erc20"
+    },
+    {
+        "to": "/docs/examples/gft-20",
+        "from": "/docs/developing-contracts/examples/erc20"
     }
 ]
 
