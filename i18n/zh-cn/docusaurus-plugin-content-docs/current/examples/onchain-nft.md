@@ -1,40 +1,45 @@
 ---
-sidebar_label: OnChain NFT
+sidebar_label: 链上 NFT
 sidebar_position: 17
 ---
 
-# On-chain gNFT assets
+# 链上 gNFT 资产
 
-## Introduction
+## 介绍
 
-This NFT smart-contract example demonstrates an approach when the token assets are stored directly on chain. For details related to common gNFT smart-contract implentation, read: [gNFT-721](https://wiki.gear-tech.io/examples/gnft-721).
+NFT 智能合约的例子展示了当代币资产直接存储在链上的方法。有关 gNFT 智能合约植入的细节，请阅读：[gNFT-721]（/examples/gnft-721）。
 
-When the owner of a given token ID wishes to transfer it to another user, it is easy to verify ownership and reassign the token to a new owner. Mostly NFTs images (or other base resources) are stored somewhere else (e.g. IPFS) and only the metadata is stored in the contract. Metadata consists of a name, an ID and links to the external resources, where the images are actually stored.
+当一个给定的代币 ID 的所有者希望将其转让给另一个用户时，很容易验证所有权并将代币重新分配给新的所有者。大多数 NFT 图像（或其他基础资源）被存储在其他地方（如 IPFS），只有元数据被存储在合同中。元数据包括一个名称、一个 ID 和指向外部资源的链接，图像实际存储在那里。
 
-But there is another approach introduced here. Sometimes you can store NFTs directly on chain without any external storage. This approach helps you not to lose your NFT if there is a problem with the external storage.
+但这里还介绍了另一种方法。你可以直接将 NFT 存储在链上，而不需要任何外部存储。这种方法可以帮助你在外部存储出现问题时不会丢失 NFT。
 
-This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. The source code is available on [GitHub](https://github.com/gear-dapps/non-fungible-token/tree/master/on-chain-nft).
+本文介绍了合约接口、数据结构、基本功能并解释了它们的用途。它可以按原样使用，也可以根据你自己的情况进行修改。源代码可在[GitHub](https://github.com/gear-dapps/non-fungible-token/tree/master/on-chain-nft) 查看。
 
-## Approach
-To successfully implement this approach several things are needed. Firstly, when initializing a collection, one should provide all the possible images of all the layers for a collection. Secondly, when minting alongside with a small metadata, one should provide a combination of layers used for a specific NFT. This approach seems quite costly when initializing, but is relatively cheap when it comes to minting.
+## 方法
 
-## Developing on-chain non-fungible-token contract
-The functions that must be supported by each non-fungible-token contract:
-- *transfer(to, token_id)* - is a function that allows you to transfer a token with the *token_id* number to the *to* account;
-- *approve(approved_account, token_id)* - is a function that allows you to give the right to dispose of the token to the specified *approved_account*. This functionality can be useful on marketplaces or auctions as when the owner wants to sell his token, they can put it on a marketplace/auction, so the contract will be able to send this token to the new owner at some point;
-- *mint(to, token_id, metadata)* is a function that creates a new token. Metadata can include any information about the token: it can be a link to a specific resource, a description of the token, etc;
-- *burn(from, token_id)* is a function that removes the token with the mentioned *token_id* from the contract.
+为了成功实现这种方法，需要做几件事。首先，当初始化一个集合时，人们应该为一个集合提供所有可能的图层的图像。其次，在用一个小的元数据进行铸币时，应该提供一个用于特定 NFT 的图层组合。这种方法在初始化时似乎相当昂贵，但在铸币时却相对便宜。
 
-The default implementation of the NFT contract is provided in the gear library: [gear-lib/non_fungible_token](https://github.com/gear-dapps/gear-lib/tree/master/src/non_fungible_token).
+## 开发链上 NFT 合约
 
-To use the default implementation you should include the packages into your *Cargo.toml* file:
+每个不可伪造的代币合约必须支持的功能：
+- *transfer(to, token_id)* - 允许你将带有*token_id*号码的令牌转移到*to*账户
+
+- *approve(approved_account, token_id)* - 允许你将处置代币的权利交给指定的*approved_account*。这个功能在市场或拍卖会上很有用，因为当所有者想出售他的代币时，他们可以把它放在市场/拍卖会上，所以合同将能够在某个时候把这个代币发送给新的所有者
+
+- *mint(to, token_id, metadata)* - 是一个创建新令牌的函数。元数据可以包括关于令牌的任何信息：它可以是一个指向特定资源的链接，也可以是对令牌的描述，等等。
+
+- *burn(from, token_id)* 用于从合同中移除带有所述*token_id*的令牌。
+
+NFT 合约的默认实现是在 Gear 库中提供的：[gear-lib/non_fungible_token](https://github.com/gear-dapps/gear-lib/tree/master/src/non_fungible_token)。
+
+要使用默认的实现，请在 *Cargo.toml* 配置：
 
 ```toml
 gear-lib = { git = "https://github.com/gear-dapps/gear-lib.git" }
 gear-lib-derive = { git = "https://github.com/gear-dapps/gear-lib.git" }
 ```
 
-First, we start by modifying the state and the init message:
+首先，我们从修改状态和 init 信息开始：
 
 ```rust
 #[derive(Debug, Default, NFTStateKeeper, NFTCore, NFTMetaState)]
@@ -62,7 +67,8 @@ pub struct InitOnChainNFT {
 }
 ```
 
-Next let's rewrite several functions: `mint`, `burn` and `token_uri`. Our `mint` and `burn` functions will behave as one woud expect them to with the addition of slight state modification (e.g. checking against the state, adding/removing). `token_uri` will return an NFT's metadata as well as all the layer content provided for a specified NFT:
+接下来让我们重写几个函数：`mint`，`burn` 和 `token_uri`。`mint` and `burn` 与人们所期望的一样，再加上状态修改。(例如，对照状态检查，添加/删除)。`token_uri` 将返回一个 NFT 的元数据，以及为指定的 NFT 提供的所有层内容。
+
 ```rust
 #[derive(Debug, Encode, Decode, TypeInfo)]
 pub enum OnChainNFTQuery {
@@ -101,8 +107,7 @@ pub struct TokenURI {
 }
 ```
 
-
-The `TokenMetadata` is also defined in the gear NFT library:
+在 Gear NFT 库中也定义了 `TokenMetadata` ：
 
 ```rust
 #[derive(Debug, Default, Encode, Decode, Clone, TypeInfo)]
@@ -117,7 +122,9 @@ pub struct TokenMetadata {
     pub reference: String,
 }
 ```
-Define a trait for our new functions that will extend the default `NFTCore` trait:
+
+为我们的新函数定义一个 trait，它将扩展默认的 `NFTCore`特质：
+
 ```rust
 pub trait OnChainNFTCore: NFTCore {
     fn mint(&mut self, description: Vec<ItemId>, metadata: TokenMetadata);
@@ -125,7 +132,9 @@ pub trait OnChainNFTCore: NFTCore {
     fn token_uri(&mut self, token_id: TokenId) -> Option<Vec<u8>>;
 }
 ```
-and write the implementation of that trait:
+
+并编写该 trait 的实现：
+
 ```rust
 impl OnChainNFTCore for OnChainNFT {
 
@@ -204,7 +213,9 @@ impl OnChainNFTCore for OnChainNFT {
     }
 }
 ```
-Accordingly, it is necessary to make changes to the `handle` and `meta_state` functions:
+
+因此，有必要对`handle`和`meta_state`函数进行修改：
+
 ```rust
 #[no_mangle]
 pub unsafe extern "C" fn handle() {
@@ -245,13 +256,13 @@ pub unsafe extern "C" fn meta_state() -> *mut [i32; 2] {
 }
 ```
 
-## Conclusion
+## 总结
 
-Gear provides a reusable [library](https://github.com/gear-dapps/non-fungible-token/tree/master/nft/src) with core functionality for the gNFT protocol. By using object composition, that library can be utilized within a custom NFT contract implementation in order to minimize duplication of community available code.
+Gear 为 gNFT 协议的核心功能提供了一个可重复使用的[库](https://github.com/gear-dapps/non-fungible-token/tree/master/nft/src)。通过使用对象组合，该库可以在自定义的 NFT 合约实现中使用，减少可重复代码。
 
-A source code of the on-chain NFT provided by Gear is available on GitHub: [on-chain-nft/src](https://github.com/gear-dapps/non-fungible-token/tree/master/on-chain-nft/src).
+本合约实现在 GitHub [on-chain-nft/src](https://github.com/gear-dapps/non-fungible-token/tree/master/on-chain-nft/src)上。
 
-See also an example of the smart contract testing implementation based on `gtest`: [on-chain-nft/tests](https://github.com/gear-dapps/non-fungible-token/tree/master/on-chain-nft/tests).
+同样可以找到基于 `gtest` 实现的智能合约测试范例：`gtest`: [on-chain-nft/tests](https://github.com/gear-dapps/non-fungible-token/tree/master/on-chain-nft/tests)。
 
-For more details about testing smart contracts written on Gear, refer to this article: [Program Testing](/developing-contracts/testing).
+更多关于在 Gear 上测试智能合约的细节，请参考这篇文章：[应用测试](https://wiki.gear-tech.io/zh-cn/developing-contracts/testing/)。
 
