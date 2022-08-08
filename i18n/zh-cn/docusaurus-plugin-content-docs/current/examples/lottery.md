@@ -1,18 +1,23 @@
 ---
-sidebar_label: '彩票'
+sidebar_label: 博彩游戏
 sidebar_position: 9
 ---
 
+# 博彩游戏
+
 ## 介绍
 
-初始化合约的人被视为彩票合约的所有者。只有所有者才有权利开始/结束彩票。
-玩家通过发送一条信息，连同他们在合同上的赌注一起加入彩票池中。
-接下来，玩家监控彩票的状态。
-获胜者是随机的。
+任何人都可以轻松创建自己的游戏应用程序，并在 Gear Network 上运行它。为了做到这一点，Gear 创建了一个 Game-of-chance 智能合约的例子，可以在[GitHub](https://github.com/gear-dapps/lottery)上找到。
+
+本文会介绍接口、数据结构、基本功能及其用途。你可以按直接使用，也可以根据自己的场景进行修改。
+
+Gear 还[提供](https://github.com/gear-tech/gear-js/tree/master/apps/lottery)了一个[游戏界面](https://lottery.gear-tech.io/)，展示智能合约的互动。在这个例子中，谁初始化合约，谁就被认为是游戏所有者。只有所有者才有权利开始/结束游戏。玩家通过向合约发送带有赌注的信息，自己加入到机会游戏中。然后玩家监控游戏的状态。赢家是随机决定的。
+
+你可以在这里观看关于如何启动和运行游戏应用程序，及其如何使用的视频：**https://youtu.be/35StUMjbdFc**。
 
 ## 源文件
 
-1. `lottery/src/lib.rs` - 包含彩票合约的方法体。
+1. `lottery/src/lib.rs` - 包含博彩合约的方法体。
 2. `lottery/io/src/lib.rs` - 包含合约的接收和回复信息的枚举和数据结构
 
 ## 数据结构
@@ -31,9 +36,9 @@ struct Lottery {
 }
 ```
 
-`lottery_state` - 彩票状态信息：彩票的开始时间、结束时间
+`lottery_state` - 游戏状态信息：开始时间、结束时间
 
-`lottery_owner` - 初始化合约的彩票所有者的地址
+`lottery_owner` -  初始化合约的所有者的地址
 
 `token_address` - 代币的合约地址
 
@@ -41,9 +46,9 @@ struct Lottery {
 
 `lottery_history` - 赢家的数据集合
 
-`lottery_id` – 当前彩票 id
+`lottery_id` – 当前游戏 id
 
-`lottery_balance` - 彩票中的总投注额
+`lottery_balance` - 游戏中中的总投注额
 
 
 
@@ -102,7 +107,7 @@ pub enum LtStateReply {
 
 ## 方法
 
-彩票合约通过函数 `transfer_tokens` 与同质化代币合约互动。
+游戏合约通过函数 `transfer_tokens` 与同质化代币合约互动。
 
 ```rust
 async fn transfer_tokens(
@@ -217,16 +222,54 @@ pub unsafe extern "C" fn meta_state() -> *mut [i32; 2] {
 }
 ```
 
+## 用户界面
+
+一个[即用型应用](https://lottery.gear-tech.io/)的例子提供了一个用户界面，与在 Gear Network 中运行的[游戏](https://github.com/gear-dapps/lottery)智能合约进行互动。
+
+本视频演示了如何配置和运行 Dapp，并解释了用户互动流程：**https://youtu.be/35StUMjbdFc**
+
+![img alt](./img/Lottery.png)
+
+合约源代码可以在 [GitHub](https://github.com/gear-tech/gear-js/tree/master/apps/lottery)找到。
+
+### 在 .env 文件中配置环境变量
+
+为了使应用程序正常运行，需要创建`.env`文件并调整环境变量。[这是个例子](https://github.com/gear-tech/gear-js/blob/master/apps/lottery/.env.example)。
+
+
+```sh
+REACT_APP_NODE_ADDRESS
+REACT_APP_LOTTERY_CONTRACT_ADDRESS
+```
+
+- `REACT_APP_NODE_ADDRESS` 是 Gear 的网络地址 (通常为 wss://rpc-node.gear-tech.io:443)
+- `REACT_APP_MARKETPLACE_CONTRACT_ADDRESS` 合约地址
+
+### 如何运行
+
+安装必要依赖：
+```sh
+npm install
+```
+
+运行程序：
+
+```sh
+npm start
+```
+
+在浏览器打开 http://localhost:3000
+
 ## 总结
 
 Lottery 的源代码可以在 GitHub 找到：[`lottery/src/lib.rs`](https://github.com/gear-tech/apps/blob/master/lottery/src/lib.rs)。
 
 本合约的测试代码基于 gtest：
 
-- [`simple_tests.rs`](https://github.com/gear-tech/apps/blob/master/lottery/src/simple_tests.rs).
+- [`simple_tests.rs`](https://github.com/gear-dapps/lottery/blob/master/src/simple_tests.rs)
 
-- [`panic_tests.rs`](https://github.com/gear-tech/apps/blob/master/lottery/src/panic_tests.rs).
+- [`panic_tests.rs`](https://github.com/gear-dapps/lottery/blob/master/src/panic_tests.rs)
 
-- [`token_tests.rs`](https://github.com/gear-tech/apps/blob/master/lottery/src/token_tests.rs).
+- [`token_tests.rs`](https://github.com/gear-dapps/lottery/blob/master/src/token_tests.rs)
 
 更多关于在 Gear 上测试智能合约的细节，请参考这篇文章：[应用测试](https://wiki.gear-tech.io/zh-cn/developing-contracts/testing/)。
