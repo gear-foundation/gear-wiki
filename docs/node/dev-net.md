@@ -9,7 +9,7 @@ Dev net is useful for development and debugging of your smart contracts. You can
 
 To run a Gear node in a dev net mode:
 
-1. Compile or download nightly build for your operating system as described in https://wiki.gear-tech.io/node/setting-up.
+1. Compile or download nightly build for your operating system as described in [setting-up](/docs/node/setting-up).
 
 2. Run the node in dev mode:
 ```bash

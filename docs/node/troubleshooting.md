@@ -64,7 +64,7 @@ Typical errors and solutions are described here.
     du -h $HOME/.local/share/gear-node/chains/staging_testnet/db/full
     ```
 
-    Please refer to the [System Requirements](/node/setting-up#system-requirements) to see the minimum disk space required.
+    Please refer to the [System Requirements](/docs/node/setting-up#system-requirements) to see the minimum disk space required.
 
     You need to free more space then purge the chain:
 
@@ -81,7 +81,7 @@ Typical errors and solutions are described here.
 
 - **Alternative error:** `runtime requires function imports which are not present on the host`
 
-- **Solution:** [Update](/node/node-as-service#update-the-node-with-the-new-version) the node binary to the latest version.
+- **Solution:** [Update](/docs/node/node-as-service#update-the-node-with-the-new-version) the node binary to the latest version.
 
 ## Masked service
 
