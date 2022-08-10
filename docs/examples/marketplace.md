@@ -331,4 +331,4 @@ The source code of this example of NFT marketplace smart contract and the exampl
 
 The Gear JS application code is available in [Gear-tech/gear-js](https://github.com/gear-tech/gear-js/tree/master/apps/marketplace).
 
-For more details about testing smart contracts written on Gear, refer to the [Program Testing](/developing-contracts/testing) article.
+For more details about testing smart contracts written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.

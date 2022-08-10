@@ -295,4 +295,4 @@ The extended version of DAO that includes admin, membership proposals and delega
 
 The application source code is available in: [https://github.com/gear-dapps/dao-app](https://github.com/gear-dapps/dao-app).
 
-For more details about testing smart contracts written on Gear, refer to the [Program Testing](/developing-contracts/testing) article.
+For more details about testing smart contracts written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.

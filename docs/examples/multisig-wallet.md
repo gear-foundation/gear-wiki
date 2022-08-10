@@ -179,4 +179,4 @@ The source code of this example of Multisig Wallet smart contract and the exampl
 
 See also an example of the smart contract testing implementation based on `gtest`: [multisig-wallet/tests](https://github.com/gear-dapps/multisig-wallet/tree/master/tests).
 
-For more details about testing smart contracts written on Gear, refer to the [Program Testing](/developing-contracts/testing) article.
+For more details about testing smart contracts written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.

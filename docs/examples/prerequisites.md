@@ -55,7 +55,7 @@ fn main() {
 ```
 
 `Cargo.toml` is a project manifest in Rust, it contains all metadata necessary for compiling the project.
-Configure the `Cargo.toml` similarly to how it is configured [ping/Cargo.toml](https://github.com/gear-dapps/ping/blob/master/Cargo.toml). You can refer to [Getting Started](getting-started-in-5-minutes.md) for additional details.
+Configure the `Cargo.toml` similarly to how it is configured [ping/Cargo.toml](https://github.com/gear-dapps/ping/blob/master/Cargo.toml). You can refer to [Getting Started](/docs/getting-started-in-5-minutes.md) for additional details.
 
 ## Building Rust Contract
 

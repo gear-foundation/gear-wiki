@@ -103,4 +103,4 @@ A source code of the contract example provided by Gear is available on GitHub: [
 
 See also an example of the smart contract testing implementation based on gtest: [`concert/tests/concert_tests.rs`](https://github.com/gear-dapps/concert/blob/master/tests/concert_tests.rs).
 
-For more details about testing smart contracts written on Gear, refer to this article: [Program Testing](/developing-contracts/testing).
+For more details about testing smart contracts written on Gear, refer to this article: [Program Testing](/docs/developing-contracts/testing).

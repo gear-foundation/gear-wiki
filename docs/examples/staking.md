@@ -343,4 +343,4 @@ See also an examples of the smart contract testing implementation based on gtest
 
 - [`panic_test.rs`](https://github.com/gear-dapps/staking/blob/master/tests/panic_test.rs).
 
-For more details about testing smart contracts written on Gear, refer to this article: [Program testing](https://wiki.gear-tech.io/developing-contracts/testing).
+For more details about testing smart contracts written on Gear, refer to this article: [Program testing](/docs/developing-contracts/testing).

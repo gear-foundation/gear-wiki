@@ -134,4 +134,4 @@ A source code of the contract example provided by Gear is available on GitHub: [
 
 See also an example of the smart contract testing implementation based on `gtest`: [fungible-token/src/tests.rs](https://github.com/gear-dapps/fungible-token/blob/master/src/tests.rs).
 
-For more details about testing smart contracts written on Gear, refer to this article: [Program Testing](/developing-contracts/testing).
+For more details about testing smart contracts written on Gear, refer to this article: [Program Testing](/docs/developing-contracts/testing).

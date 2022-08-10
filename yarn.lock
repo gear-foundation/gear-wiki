@@ -1246,6 +1246,7 @@
 "@docusaurus/core@2.0.1", "@docusaurus/core@^2.0.1":
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@docusaurus/core/-/core-2.0.1.tgz#a2b0d653e8f18eacddda4778a46b638dd1f0f45c"
+  integrity sha512-Prd46TtZdiixlTl8a+h9bI5HegkfREjSNkrX2rVEwJZeziSz4ya+l7QDnbnCB2XbxEG8cveFo/F9q5lixolDtQ==
   dependencies:
     "@babel/core" "^7.18.6"
     "@babel/generator" "^7.18.7"
@@ -1370,32 +1371,33 @@
     react-helmet-async "*"
     react-loadable "npm:@docusaurus/react-loadable@5.5.2"
 
-"@docusaurus/plugin-client-redirects@2.0.0-rc.1":
-  version "2.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/@docusaurus/plugin-client-redirects/-/plugin-client-redirects-2.0.0-rc.1.tgz#ce71d9f73bfbb4b2e159ee3a22f5517b3480c83c"
-  integrity sha512-uGiK7kzQeJ+gChzIgazKMlHEonOwlmK6NEJvr44aWS6DbauVXOs/aolXZCHx8ZdKPETOpZEzSRYjU5e+QIN+HA==
+"@docusaurus/plugin-client-redirects@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@docusaurus/plugin-client-redirects/-/plugin-client-redirects-2.0.1.tgz#3b00cd0a816fe85e6c505651f28b59fff723ac67"
+  integrity sha512-A/giM3MIRRyUmxNzLb/jWvmRf0NtPYX4bV04njAnziAdPo4dqT4dZF2Hvy0uUSaF/SXPGLUjrZWWpzTl5mTJtQ==
   dependencies:
-    "@docusaurus/core" "2.0.0-rc.1"
-    "@docusaurus/logger" "2.0.0-rc.1"
-    "@docusaurus/utils" "2.0.0-rc.1"
-    "@docusaurus/utils-common" "2.0.0-rc.1"
-    "@docusaurus/utils-validation" "2.0.0-rc.1"
+    "@docusaurus/core" "2.0.1"
+    "@docusaurus/logger" "2.0.1"
+    "@docusaurus/utils" "2.0.1"
+    "@docusaurus/utils-common" "2.0.1"
+    "@docusaurus/utils-validation" "2.0.1"
     eta "^1.12.3"
     fs-extra "^10.1.0"
     lodash "^4.17.21"
     tslib "^2.4.0"
 
-"@docusaurus/plugin-content-blog@2.0.0-rc.1":
-  version "2.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/@docusaurus/plugin-content-blog/-/plugin-content-blog-2.0.0-rc.1.tgz#8ae5d5ec2da08c583a057bf2754a5b9278b3eb08"
+"@docusaurus/plugin-content-blog@2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@docusaurus/plugin-content-blog/-/plugin-content-blog-2.0.1.tgz#a37065e18ffd26e022ffb16a21ff28199140729e"
+  integrity sha512-/4ua3iFYcpwgpeYgHnhVGROB/ybnauLH2+rICb4vz/+Gn1hjAmGXVYq1fk8g49zGs3uxx5nc0H5bL9P0g977IQ==
   dependencies:
-    "@docusaurus/core" "2.0.0-rc.1"
-    "@docusaurus/logger" "2.0.0-rc.1"
-    "@docusaurus/mdx-loader" "2.0.0-rc.1"
-    "@docusaurus/types" "2.0.0-rc.1"
-    "@docusaurus/utils" "2.0.0-rc.1"
-    "@docusaurus/utils-common" "2.0.0-rc.1"
-    "@docusaurus/utils-validation" "2.0.0-rc.1"
+    "@docusaurus/core" "2.0.1"
+    "@docusaurus/logger" "2.0.1"
+    "@docusaurus/mdx-loader" "2.0.1"
+    "@docusaurus/types" "2.0.1"
+    "@docusaurus/utils" "2.0.1"
+    "@docusaurus/utils-common" "2.0.1"
+    "@docusaurus/utils-validation" "2.0.1"
     cheerio "^1.0.0-rc.12"
     feed "^4.2.2"
     fs-extra "^10.1.0"
@@ -1406,9 +1408,10 @@
     utility-types "^3.10.0"
     webpack "^5.73.0"
 
-"@docusaurus/plugin-content-docs@2.0.1", "@docusaurus/plugin-content-docs@^2.0.0-rc.1":
+"@docusaurus/plugin-content-docs@2.0.1", "@docusaurus/plugin-content-docs@^2.0.1":
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@docusaurus/plugin-content-docs/-/plugin-content-docs-2.0.1.tgz#4059591b4bff617e744e856ca680674b27c0b98a"
+  integrity sha512-2qeBWRy1EjgnXdwAO6/csDIS1UVNmhmtk/bQ2s9jqjpwM8YVgZ8QVdkxFAMWXgZWDQdwWwdP1rnmoEelE4HknQ==
   dependencies:
     "@docusaurus/core" "2.0.1"
     "@docusaurus/logger" "2.0.1"
@@ -1486,6 +1489,7 @@
 "@docusaurus/preset-classic@^2.0.1":
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@docusaurus/preset-classic/-/preset-classic-2.0.1.tgz#21a806e16b61026d2a0efa6ca97e17397065d894"
+  integrity sha512-nOoniTg46My1qdDlLWeFs55uEmxOJ+9WMF8KKG8KMCu5LAvpemMi7rQd4x8Tw+xiPHZ/sQzH9JmPTMPRE4QGPw==
   dependencies:
     "@docusaurus/core" "2.0.1"
     "@docusaurus/plugin-content-blog" "2.0.1"
