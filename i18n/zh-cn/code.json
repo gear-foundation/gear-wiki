@@ -143,7 +143,7 @@
   "Install, compile and run the Gear Node!": {
     "message": "安装，编译并运行 Gear 节点！"
   },
-  "Intecating with Gear Node": {
+  "Interacting with Gear Node": {
     "message": "与 Gear 节点交互的 API "
   },
   "Discover a set of tools and API for creating user interface applications that interact with Gear smart-contracts.": {

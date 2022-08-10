@@ -26,7 +26,7 @@ const FeatureList = [
     description: <Translate>Install, compile and run the Gear Node!</Translate>
   },
   {
-    title: <Translate>Intecating with Gear Node</Translate>,
+    title: <Translate>Interacting with Gear Node</Translate>,
     id: 'api',
     link: '/docs/api/getting-started',
     description: <Translate>Discover a set of tools and API for creating user interface applications that interact with Gear smart-contracts.</Translate>

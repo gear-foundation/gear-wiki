@@ -3,7 +3,6 @@
 .link {
   color: #222222;
   font-weight: 400;
-  position: relative;
   text-decoration: none;
 }
 
@@ -27,6 +26,7 @@
   transition-property: all;
   border-radius: 1rem;
   display: flex;
+  position: relative;
   flex-direction: column;
   background: #202022 url(/static/img/gradient-off.svg) 10px 0 no-repeat;
 
