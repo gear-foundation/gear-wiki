@@ -2,10 +2,11 @@ const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 const math = require('remark-math');
 const katex = require('rehype-katex');
+const { urlList } = require('./redirectRules');
 
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
-  title: 'Gear documentation portal',
+  title: 'Gear Documentation Portal',
   tagline: 'The place to start developing with Gear',
   url: 'https://wiki.gear-tech.io/',
   baseUrl: '/',
@@ -14,18 +15,6 @@ module.exports = {
   favicon: '/img/favicon-32x32.png',
   organizationName: 'Gear Technologies',
   projectName: 'docs',
-  i18n: {
-    defaultLocale: 'en',
-    locales: ['en', 'zh-cn'],
-    localeConfigs: {
-      'en': {
-        label: 'English',
-      },
-      'zh-cn': {
-        label: '简体中文'
-      }
-    }
-  },
   themeConfig: {
     colorMode: {
       defaultMode: 'dark'
@@ -38,6 +27,12 @@ module.exports = {
         srcDark: "img/logo-white.svg"
       },
       items: [
+        {
+          to: 'docs/',
+          activeBasePath: 'docs',
+          position: 'left',
+          label: 'Docs',
+        },
         {
           href: 'https://www.gear-tech.io/',
           label: 'Gear-tech.io',
@@ -68,13 +63,20 @@ module.exports = {
       searchPagePath: 'search',
     }
   },
+  plugins: [
+    'docusaurus-plugin-sass',
+    [
+      '@docusaurus/plugin-client-redirects',
+      {
+        redirects: urlList
+      }
+    ],
+  ],
   presets: [
     [
       '@docusaurus/preset-classic',
       {
         docs: {
-          path: './docs',
-          routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars.js'),
           editUrl:
             'https://github.com/gear-tech/wiki/edit/master/',
@@ -83,7 +85,7 @@ module.exports = {
         },
         blog: false,
         theme: {
-          customCss: require.resolve('./src/css/custom.css'),
+          customCss: require.resolve('./src/css/custom.scss'),
         },
         googleAnalytics: {
           trackingID: 'UA-213824102-2',
@@ -92,6 +94,18 @@ module.exports = {
       },
     ],
   ],
+  i18n: {
+    defaultLocale: 'en',
+    locales: ['en', 'zh-cn'],
+    localeConfigs: {
+      'en': {
+        label: 'English',
+      },
+      'zh-cn': {
+        label: '简体中文'
+      }
+    }
+  },
   stylesheets: [
     {
       href: 'https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css',

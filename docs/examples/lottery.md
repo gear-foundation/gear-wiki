@@ -270,4 +270,4 @@ See also an examples of the smart contract testing implementation based on gtest
 
 - [`token_tests.rs`](https://github.com/gear-dapps/lottery/blob/master/src/token_tests.rs).
 
-For more details about testing smart contracts written on Gear, refer to this article: [Program Testing](/developing-contracts/testing).
+For more details about testing smart contracts written on Gear, refer to this article: [Program Testing](/docs/developing-contracts/testing).

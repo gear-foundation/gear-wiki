@@ -115,5 +115,50 @@
   },
   "theme.common.skipToMainContent": {
     "message": "跳到主要内容"
+  },
+  "Wellcome to Gear Documentation Portal": {
+    "message": "欢迎来到 Gear 文档门户网站"
+  },
+  "The place to start developing with Gear": {
+    "message": "从这里开始，使用 Gear 开发"
+  },
+  "Start develop now - 5min ⏱️": {
+    "message": "开启 Gear 开发之旅  - 5 分钟 ⏱️"
+  },
+  "Intro to Gear Protocol": {
+    "message": "Gear 协议概览"
+  },
+  "Get to know the main features of Gear’s advanced engine for smart contracts.": {
+    "message": "了解 Gear 先进智能合约引擎的主要功能"
+  },
+  "Start building": {
+    "message": "开始构建"
+  },
+  "Use the guide to create your first smart contract in just 5 minutes.": {
+    "message": "使用本指南在 5 分钟内构建您的第一个智能合约。"
+  },
+  "Run Gear node": {
+    "message": "运行 Gear 节点"
+  },
+  "Install, compile and run the Gear Node!": {
+    "message": "安装，编译并运行 Gear 节点！"
+  },
+  "Interacting with Gear Node": {
+    "message": "与 Gear 节点交互的 API "
+  },
+  "Discover a set of tools and API for creating user interface applications that interact with Gear smart-contracts.": {
+    "message": "探索用于创建用户界面应用程序的工具与 API，您可以使用它们与 Gear 网络中的智能合约互动"
+  },
+  "Developing smart contracts": {
+    "message": "开发智能合约"
+  },
+  "Dive into the main aspects and principles of developing smart contracts on Gear Protocol!": {
+    "message": "全方位深入了解 Gear 协议上智能合约的开发与原理!"
+  },
+  "Smart contract examples": {
+    "message": "智能合约范例"
+  },
+  "Experiment with our smart contract examples, try to play around with the code and create your own dApp!": {
+    "message": "开启 Gear 智能合约范例之旅，尝试使用代码并创建自己的 dApp！"
   }
 }

@@ -1,50 +1,63 @@
 import React from 'react';
 import clsx from 'clsx';
-import styles from './HomepageFeatures.module.css';
+import Link from '@docusaurus/Link';
+
+import styles from './HomepageFeatures.module.scss';
+
+import Translate from '@docusaurus/Translate';
 
 const FeatureList = [
   {
-    title: 'Easy to Use',
-    Svg: require('../../static/img/undraw_docusaurus_mountain.svg').default,
-    description: (
-      <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
-      </>
-    ),
+    title: <Translate>Intro to Gear Protocol</Translate>,
+    id: 'into',
+    link: '/docs/gear/glossary',
+    description: <Translate>Get to know the main features of Gear’s advanced engine for smart contracts.</Translate>,
   },
   {
-    title: 'Focus on What Matters',
-    Svg: require('../../static/img/undraw_docusaurus_tree.svg').default,
-    description: (
-      <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
-      </>
-    ),
+    title: <Translate>Start building</Translate>,
+    id: 'start-build',
+    link: '/docs/getting-started-in-5-minutes',
+    description: <Translate>Use the guide to create your first smart contract in just 5 minutes.</Translate>
   },
   {
-    title: 'Powered by React',
-    Svg: require('../../static/img/undraw_docusaurus_react.svg').default,
-    description: (
-      <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
-      </>
-    ),
+    title: <Translate>Run Gear node</Translate>,
+    id: 'run',
+    link: '/docs/node/setting-up',
+    description: <Translate>Install, compile and run the Gear Node!</Translate>
+  },
+  {
+    title: <Translate>Interacting with Gear Node</Translate>,
+    id: 'api',
+    link: '/docs/api/getting-started',
+    description: <Translate>Discover a set of tools and API for creating user interface applications that interact with Gear smart-contracts.</Translate>
+  },
+  {
+    title: <Translate>Developing smart contracts</Translate>,
+    id: 'develop',
+    link: '/docs/developing-contracts/gear-program',
+    description: <Translate>Dive into the main aspects and principles of developing smart contracts on Gear Protocol!</Translate>
+  },
+  {
+    title: <Translate>Smart contract examples</Translate>,
+    id: 'examples',
+    link: '/docs/examples/prerequisites',
+    description: <Translate>Experiment with our smart contract examples, try to play around with the code and create your own dApp!</Translate>
   },
 ];
 
-function Feature({Svg, title, description}) {
+function Feature({ link, title, description, id }) {
   return (
     <div className={clsx('col col--4')}>
-      <div className="text--center">
-        <Svg className={styles.featureSvg} alt={title} />
-      </div>
-      <div className="text--center padding-horiz--md">
-        <h3>{title}</h3>
-        <p>{description}</p>
-      </div>
+      <Link className={styles.link} to={link}>
+        <div className={clsx(styles['feature'], styles[id])}>
+          <div className={styles.header}>
+            <h3>{title}</h3>
+          </div>
+          <div className={styles.body}>
+            <p>{description}</p>
+          </div>
+        </div>
+      </Link>
     </div>
   );
 }

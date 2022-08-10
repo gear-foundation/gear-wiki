@@ -254,5 +254,5 @@ A source code of the on-chain NFT provided by Gear is available on GitHub: [on-c
 
 See also an example of the smart contract testing implementation based on `gtest`: [on-chain-nft/tests](https://github.com/gear-dapps/non-fungible-token/tree/master/on-chain-nft/tests).
 
-For more details about testing smart contracts written on Gear, refer to this article: [Program Testing](/developing-contracts/testing).
+For more details about testing smart contracts written on Gear, refer to this article: [Program Testing](/docs/developing-contracts/testing).
 

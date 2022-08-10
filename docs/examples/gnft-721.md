@@ -192,4 +192,4 @@ A source code of the NFT marketplace provided by Gear is available on GitHub: [n
 
 See also an example of the smart contract testing implementation based on `gtest`: [nft-marketplace/tests](https://github.com/gear-dapps/non-fungible-token/tree/master/nft-marketplace/tests).
 
-For more details about testing smart contracts written on Gear, refer to this article: [Program Testing](/developing-contracts/testing).
+For more details about testing smart contracts written on Gear, refer to this article: [Program Testing](/docs/developing-contracts/testing).

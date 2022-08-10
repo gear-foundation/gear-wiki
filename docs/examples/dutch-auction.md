@@ -135,4 +135,4 @@ The source code of this example of Dutch Auction smart contract and the example 
 
 See also an example of the smart contract testing implementation based on `gtest`: [gear-dapps/dutch-auction/tree/master/tests](https://github.com/gear-dapps/dutch-auction/tree/master/tests).
 
-For more details about testing smart contracts written on Gear, refer to the [Program Testing](/developing-contracts/testing) article.
+For more details about testing smart contracts written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.

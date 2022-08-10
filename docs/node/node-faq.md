@@ -7,17 +7,18 @@ sidebar_position: 7
 
 ## Can I run the Gear node now?
 
-Yes, follow the instructions from this article on how to set up and run Gear node under MacOS, Linux and Windows: https://wiki.gear-tech.io/node/setting-up
+Yes, follow the instructions from this article on how to set up and run Gear node under MacOS, Linux and Windows: 
+[Setting Up](/docs/node/setting-up)
 
 ## What are hardware requirements for Gear node?
 
 There are no special hardware requirements except SSD for running Gear node connected to a test net or in a dev net mode. For nodes in a production network, the hardware requirements will be provided further.
 
-Please refer to the [System Requirements](/node/setting-up#system-requirements) to see the actual hardware requirements.
+Please refer to the [System Requirements](/docs/node/setting-up#system-requirements) to see the actual hardware requirements.
 
 ## I have an error when trying to run the node
 
-Please refer to the [Troubleshooting](/node/troubleshooting) section to find typical errors and solutions.
+Please refer to the [Troubleshooting](/docs/node/troubleshooting) section to find typical errors and solutions.
 
 ## Are there rewards for running nodes?
 
@@ -37,7 +38,7 @@ That's all at the moment, but stay tuned for future updates.
 
 ## How do I make the node work in the background?
 
-The solution is to configure the [Gear node as a service](/node/node-as-service).
+The solution is to configure the [Gear node as a service](/docs/node/node-as-service).
 
 ## My host provider claims the node abuses their network.
 
@@ -65,7 +66,7 @@ sudo systemctl restart gear-node
 
 ## My node stopped to increment the block height after some block number.
 
-[Update](/node/node-as-service#update-the-node-with-the-new-version) the node binary to the latest version.
+[Update](/docs/node/node-as-service#update-the-node-with-the-new-version) the node binary to the latest version.
 
 ## How do I change the port number if the default one is already used by another software?
 
@@ -94,7 +95,7 @@ Default ports are:
 
 ## How to see Gear node service logs?
 
-See the [Checking logs](/node/node-as-service#checking-logs) section for details.
+See the [Checking logs](/docs/node/node-as-service#checking-logs) section for details.
 
 ## What is the node syncing time?
 

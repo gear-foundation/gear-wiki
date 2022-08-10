@@ -15,7 +15,7 @@ Uploading a new program (smart-contract) to the blockchain takes place by callin
 
 `initPayload: Bytes`- the init message payload that will be processed by the init() function during program initialization.
 
-`gasLimit: u64` -  is the amount of gas that users are willing to spend on processing the upload of a new program.
+`gasLimit: u64` - is the amount of gas that users are willing to spend on processing the upload of a new program.
 
 `value: u128` - the value that will be transferred to a balance of the newly created account for the program.
 
@@ -42,6 +42,7 @@ MessageInfo example:
   origin: 0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d
 }
 ```
+
 5. Program initialization process. `gear.InitSuccess` or `gear.InitFailure` events.
 
 > `programId` is the unique address of the program.
@@ -64,7 +65,7 @@ Also, you can use the standard GUI for substrate-based projects to submit a prog
 
 ### Via gear-js library
 
-Gear-js library provides a simple and intuitive way to connect GEAR Component APIs, including interaction with programs. More details [Gear API](/api/getting-started).
+Gear-js library provides a simple and intuitive way to connect GEAR Component APIs, including interaction with programs. More details [Gear API](/docs/api/getting-started).
 
 ### Via `gear-program`
 

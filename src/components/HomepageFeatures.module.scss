@@ -1,0 +1,220 @@
+/* stylelint-disable docusaurus/copyright-header */
+
+.link {
+  color: #222222;
+  font-weight: 400;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: none;
+}
+
+.features {
+  padding: 2em 0;
+}
+
+.feature {
+  -webkit-animation: .4s .15s backwards a;
+  animation: .4s .15s backwards a;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+  margin-top: 0;
+  margin-bottom: 2em;
+  padding: 1rem 5rem 1rem 1rem;
+  min-height: 200px;
+  transition-duration: .2s;
+  transition-property: all;
+  border-radius: 1rem;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  background: #202022 url(/static/img/gradient-off.svg) 10px 0 no-repeat;
+
+  &:hover {
+    -webkit-transform: translateY(-5px);
+    transform: translateY(-5px);
+
+    &.into::after {
+      background-image: url(/static/icons/into-on.svg);
+    }
+
+    &.start-build::after {
+      background-image: url(/static/icons/start-build-on.svg);
+    }
+
+    &.run::after {
+      background-image: url(/static/icons/run-on.svg);
+    }
+
+    &.api::after {
+      background-image: url(/static/icons/api-on.svg);
+    }
+
+    &.develop::after {
+      background-image: url(/static/icons/develop-on.svg);
+    }
+
+    &.examples::after {
+      background-image: url(/static/icons/examples-on.svg);
+    }
+  }
+
+  &::after {
+    content: '';
+    background-size: cover;
+    position: absolute;
+    top: 30px;
+    right: 20px;
+  }
+
+  &.into::after {
+    background-image: url(/static/icons/into-off.svg);
+    width: 40px;
+    height: 38px;
+  }
+
+  &.start-build::after {
+    background-image: url(/static/icons/start-build-off.svg);
+    width: 40px;
+    height: 44px;
+    top: 25px;
+  }
+
+  &.run::after {
+    background-image: url(/static/icons/run-off.svg);
+    width: 40px;
+    height: 43px;
+  }
+
+  &.api::after {
+    background-image: url(/static/icons/api-off.svg);
+    width: 53px;
+    height: 38px;
+  }
+
+  &.develop::after {
+    background-image: url(/static/icons/develop-off.svg);
+    width: 59px;
+    height: 38px;
+  }
+
+  &.examples::after {
+    background-image: url(/static/icons/examples-off.svg);
+    width: 40px;
+    height: 49px;
+  }
+
+}
+
+
+@media (max-width: 996px) {
+  .feature {
+    background-position: 100%
+  }
+}
+
+html[data-theme='dark'] .feature {
+  background-color: #242526;
+  color: #ffffff
+}
+
+html[data-theme='light'] .feature {
+  background-color: #ffffff;
+  color: #222222;
+
+  &.into::after {
+    background-image: url(/static/icons/white-into-off.svg);
+    width: 40px;
+    height: 38px;
+  }
+
+  &.start-build::after {
+    background-image: url(/static/icons/white-start-build-off.svg);
+    width: 40px;
+    height: 44px;
+    top: 25px;
+  }
+
+  &.run::after {
+    background-image: url(/static/icons/white-run-off.svg);
+    width: 40px;
+    height: 43px;
+  }
+
+  &.api::after {
+    background-image: url(/static/icons/white-api-off.svg);
+    width: 53px;
+    height: 38px;
+  }
+
+  &.develop::after {
+    background-image: url(/static/icons/white-develop-off.svg);
+    width: 59px;
+    height: 38px;
+  }
+
+  &.examples::after {
+    background-image: url(/static/icons/white-examples-off.svg);
+    width: 40px;
+    height: 49px;
+  }
+
+  &:hover {
+    -webkit-transform: translateY(-5px);
+    transform: translateY(-5px);
+
+    &.into::after {
+      background-image: url(/static/icons/into-on.svg);
+    }
+
+    &.start-build::after {
+      background-image: url(/static/icons/start-build-on.svg);
+    }
+
+    &.run::after {
+      background-image: url(/static/icons/run-on.svg);
+    }
+
+    &.api::after {
+      background-image: url(/static/icons/api-on.svg);
+    }
+
+    &.develop::after {
+      background-image: url(/static/icons/develop-on.svg);
+    }
+
+    &.examples::after {
+      background-image: url(/static/icons/examples-on.svg);
+    }
+  }
+
+}
+
+
+html[data-theme='dark'] .feature:hover {
+  background: #202022 url(/static/img/gradient-on.svg) 100% 0 no-repeat;
+}
+
+html[data-theme='light'] .feature:hover {
+  background: #eeeeee url(/static/img/gradient-on.svg) 100% 0 no-repeat;
+}
+
+.feature h3 {
+  color: #2bd071;
+  font-weight: 700;
+  margin: 0;
+}
+
+
+.header {
+  padding: 1rem;
+}
+
+.body:not(:last-child),
+.header:not(:last-child) {
+  padding-bottom: 0;
+}
+
+.body {
+  padding: 1rem;
+}
