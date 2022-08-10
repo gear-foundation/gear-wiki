@@ -24,7 +24,7 @@ function HomepageHeader() {
             className={styles.button}
             to="/docs/getting-started-in-5-minutes">
             <Translate>
-              Star develop now - 5min ⏱️
+              Start develop now - 5min ⏱️
             </Translate>
           </Link>
         </div>
