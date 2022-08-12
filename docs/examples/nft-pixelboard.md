@@ -2,7 +2,11 @@
 
 ## Introduction
 
-This article explains at a superficial level the purpose and logic of the smart contract. For a more detailed technical description, see [its documentation on the programs documentation portal](https://dapps.gear.rs/nft_pixelboard_io/index.html).
+:::note
+
+This article explains at a superficial level the purpose and logic of this smart contract. For a more detailed technical description, see its [documentation on the dapps documentation portal](https://dapps.gear.rs/nft_pixelboard_io) and [source code](#source-code).
+
+:::
 
 The idea for this smart contract is taken from **The Million Dollar Homepage** ([the Wikipedia article about it](https://en.wikipedia.org/wiki/The_Million_Dollar_Homepage)). In short, this is a website with the 1000 by 1000 pixels canvas where 1 pixel on it costs 1 dollar. Everyone could buy a 10 by 10 pixels block or several such blocks there, paint purchased pixels, and attach some web link to them. NFT pixelboard uses the same logic, but in addition purchased pixel blocks are NFTs, and they can be colored at any time, not just at the time of a purchase, and resold.
 
