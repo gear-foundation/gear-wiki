@@ -1,6 +1,6 @@
 ---
 sidebar_label: DEX
-sidebar_position: 19
+sidebar_position: 20
 ---
 
 # DEX (decentralized exchange)
