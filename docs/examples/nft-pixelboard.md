@@ -1,3 +1,7 @@
+---
+sidebar_position: 20
+---
+
 # NFT pixelboard
 
 ## Introduction
