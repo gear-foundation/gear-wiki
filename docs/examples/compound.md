@@ -186,3 +186,10 @@ This action and event corresponds to the redeem_tokens function
         amount_per_borrow: BTreeMap<u128, u128>,
     },
 ```
+
+## Conclusion
+A source code of the contract example provided by Gear is available on GitHub: [`compound/src/lib.rs`](https://github.com/gear-dapps/compound/blob/master/src/lib.rs).
+
+See also an example of the smart contract testing implementation based on gtest: [`concert/tests/`](https://github.com/gear-dapps/compound/blob/master/tests/).
+
+For more details about testing smart contracts written on Gear, refer to this article: [Program Testing](/developing-contracts/testing).
