@@ -1,15 +1,15 @@
 ---
-sidebar_label: 众筹 (ICO)
+sidebar_label: 公开发售
 sidebar_position: 18
 ---
 
-# 众筹 (ICO)
+# 公开发售
 
 ## 介绍
 
-公开发售投资全新的加密货币或其他数字资产，被称为加密货币众筹。首次代币发行（ICO）可以被新项目用来为开发和其他目的筹集资金。ICO 是一个有时间限制的活动，投资者可以将他们在活动中定义的加密货币兑换成新发行的代币。新的代币在 ICO 的融资目标达到和项目启动后，作为未来的功能被推广。
+公开发售投资全新的加密货币或其他数字资产，被称为加密货币公开发售。首次代币发行（ICO，公开发售）可以被新项目用来为开发和其他目的筹集资金。公开发售是一个有时间限制的活动，投资者可以将他们在活动中定义的加密货币兑换成新发行的代币。新的代币在公开发售的融资目标达到和项目启动后，作为未来的功能被推广。
 
-本文所描述的 ICO 智能合约实现的例子是其他许多可以在 Gear 上实现和发布的去中心化应用之一。这篇文章解释了编程接口、数据结构、基本功能，并解释了它们的用途。它可以按原样使用，也可以根据你自己的场景进行修改。任何人都可以轻松创建自己的 ICO 应用，并在 Gear 网络上运行。
+本文所描述的公开发售智能合约实现的例子是其他许多可以在 Gear 上实现和发布的去中心化应用之一。这篇文章解释了编程接口、数据结构、基本功能，并解释了它们的用途。它可以按原样使用，也可以根据你自己的场景进行修改。任何人都可以轻松创建自己的公开发售应用，并在 Gear 网络上运行。
 
 Initial funds with which a token is purchased are determined by the Gear fungible tokens contract - [gFT](https://wiki.gear-tech.io/examples/gft-20). The contract's source code is available on [GitHub](https://github.com/gear-dapps/crowdsale-ico).
 
@@ -20,7 +20,7 @@ Initial funds with which a token is purchased are determined by the Gear fungibl
 
 ### 源码
 
-1. `messages.rs` - 包含同质化币合约的功能。众筹合同通过 transfer_tokens 函数与同质化币合约进行互动。
+1. `messages.rs` - 包含同质化币合约的功能。公开发售合约通过 transfer_tokens 函数与同质化代币合约进行交互。
 
 ```rust
 pub async fn transfer_tokens(
@@ -89,7 +89,7 @@ struct IcoContract {
 }
 ```
 
-- `ico_state` 是 `IcoState`结构，由以下部分组成。
+- `ico_state` 是 `IcoState` 结构，由以下部分组成：
 
 ```rust
 pub struct IcoState {
@@ -110,7 +110,7 @@ pub struct IcoState {
 
 ### 方法
 
-- 开始 ICO。只有所有者可以调用：
+- 开始公开发售。只有所有者可以调用：
 
 ```rust
 async fn start_ico(&mut self, config: IcoAction)
@@ -144,7 +144,7 @@ IcoEvent::Bought {
 }
 ```
 
-- 结束 ICO。只有所有者可以调用：
+- 结束公开发售。只有所有者可以调用：
 
 ```rust
 async fn end_sale(&mut self)
@@ -158,6 +158,6 @@ IcoEvent::SaleEnded
 
 ## 总结
 
-ICO 合约源码在 [Github](https://github.com/gear-dapps/crowdsale-ico)。
+公开发售合约源码在 [Github](https://github.com/gear-dapps/crowdsale-ico)。
 
 更多关于在 Gear 上测试智能合约的细节，请参考这篇文章：[程序测试](/developing-contracts/testing.md)。
