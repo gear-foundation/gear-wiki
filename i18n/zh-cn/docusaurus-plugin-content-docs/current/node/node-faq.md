@@ -1,12 +1,12 @@
 ---
-sidebar_label: 'Node FAQ'
+sidebar_label: '常见问题'
 sidebar_position: 6
 ---
 
 # 节点常见问题
 
 ### 现在可以运行节点吗？
-当然可以，这篇文章中就如何在 MacOS、Linux 和 Windows 系统中设置和运行 Gear 节点进行了说明，你可以根据指示操作。 https://wiki.gear-tech.io/zh-cn/node/setting-up
+当然可以，这篇文章中就如何在 MacOS、Linux 和 Windows 系统中设置和运行 Gear 节点进行了说明，你可以根据指示操作。https://wiki.gear-tech.io/zh-cn/node/setting-up
 
 ### Gear 节点对硬件有什么要求？
 除了连接到测试网或在开发网模式下运行 Gear 节点的 SSD，没有特殊的硬件要求。对于生产网络中的节点，将会有额外的硬件要求。
@@ -24,7 +24,7 @@ sidebar_position: 6
 目前只需运行节点，请关注后续更新。
 
 ### 如何使节点在后台工作？
-解决方案是将 Gear 节点配置为一个服务： https://wiki.gear-tech.io/zh-cn/node/node-as-service/
+解决方案是将 Gear 节点配置为一个服务：https://wiki.gear-tech.io/zh-cn/node/node-as-service/
 
 ### `IO error: While lock file <path>: Resource temporarily unavailable` 遇到以上问题该如何解决？
 你似乎正在运行几个 Gear 节点实例。你很可能把节点配置为一个服务，然后从命令行运行了第二个实例。你应该停止配置服务或者停止从命令行运行 Gear 节点。
@@ -39,7 +39,7 @@ sidebar_position: 6
 100.64.0.0/10
 169.254.0.0/16
 ```
-例如，你可以使用这个手册进行操作： https://community.hetzner.com/tutorials/block-outgoing-traffic-to-private-networks
+例如，你可以使用这个手册进行操作：https://community.hetzner.com/tutorials/block-outgoing-traffic-to-private-networks
 
 ### 将节点配置为服务后应该怎样更新节点？
 你只需要把节点的可执行文件（`gear-node`）替换成最新版本，然后重新执行。例如，如果你的 Linux 可执行文件位于`/root/gear-node`，你将运行：
