@@ -1,9 +1,9 @@
 ---
-sidebar_label: 博彩游戏
+sidebar_label: 彩票
 sidebar_position: 9
 ---
 
-# 博彩游戏
+# 彩票
 
 ## 介绍
 
@@ -17,7 +17,7 @@ Gear 还[提供](https://github.com/gear-tech/gear-js/tree/master/apps/lottery)�
 
 ## 源文件
 
-1. `lottery/src/lib.rs` - 包含博彩合约的方法体。
+1. `lottery/src/lib.rs` - 包含彩票合约的方法体。
 2. `lottery/io/src/lib.rs` - 包含合约的接收和回复信息的枚举和数据结构
 
 ## 数据结构
