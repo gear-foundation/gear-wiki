@@ -16,7 +16,7 @@ use gstd::msg;
 
 #[no_mangle]
 pub unsafe extern "C" fn handle() {
-    msg::reply(b"Hello world!", 0).unwrap();
+    msg::reply(b"Hello world!", 0).expect("Error in sending reply");
 }
 
 #[no_mangle]

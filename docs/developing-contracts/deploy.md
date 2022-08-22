@@ -7,7 +7,7 @@ sidebar_position: 5
 
 Following the principles of Actor model for communication, creating a program is just one of the specific types of transactions that contain a WASM file as a payload.
 
-Uploading a new program (smart-contract) to the blockchain takes place by calling the custom extrinsic `gear.submitProgram(code, salt, initPayload, gasLimit, value)`. Where:
+Uploading a new program (smart-contract) to the blockchain takes place by calling the custom extrinsic `gear.uploadProgram(code, salt, initPayload, gasLimit, value)`. Where:
 
 `code: Bytes` - binary WASM code.
 
@@ -59,7 +59,7 @@ The easiest way to deploy the program is to use the “Upload program” option 
 
 ### Via Polkadot.js.org
 
-Also, you can use the standard GUI for substrate-based projects to submit a program. It's the [polkadot{.js}](https://polkadot.js.org) app. Use `gear.submitProgram` extrinsic in Developer -> Extrinsic menu.
+Also, you can use the standard GUI for substrate-based projects to submit a program. It's the [polkadot{.js}](https://polkadot.js.org) app. Use `gear.uploadProgram` extrinsic in Developer -> Extrinsic menu.
 
 ![img alt](./img/polkadot-gui.png)
 
