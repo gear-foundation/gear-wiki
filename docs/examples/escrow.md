@@ -6,13 +6,11 @@ sidebar_position: 8
 
 ## Introduction
 
-:::note
+An escrow is a special wallet to which some assets (e.g. money or stocks) are deposited and stored until certain conditions are met. In terms of smart contracts, an escrow is a wallet that is stored on a blockchain and, like a regular escrow, can receive some assets (e.g. a cryptocurrency or fungible tokens (like [Gear fungible tokens - gFT](gft-20.md) in this example)) from one user and, when certain conditions are met, send them to another.
 
 This article explains at a superficial level the purpose and logic of this smart contract. For a more detailed technical description, see its [documentation on the dapps documentation portal](https://dapps.gear.rs/escrow_io) and [source code](#source-code).
 
-:::
-
-An escrow is a special wallet to which some assets (e.g. money or stocks) are deposited and stored until certain conditions are met. In terms of smart contracts, an escrow is a wallet that is stored on a blockchain and, like a regular escrow, can receive some assets (e.g. a cryptocurrency or fungible tokens (like [Gear fungible tokens - gFT](gft-20.md) in this example)) from one user and, when certain conditions are met, send them to another.
+You can watch a video on how to get the Escrow application up and running and its capabilities here: **https://youtu.be/CD8j4epEY4E**.
 
 ## Logic
 
@@ -165,6 +163,34 @@ pub enum EscrowState {
     CreatedWallets,
 }
 ```
+
+## User interface
+
+A [Ready-to-Use application](https://escrow.gear-tech.io/) example provides a user interface that interacts with [Escrow](https://github.com/gear-dapps/escrow) smart contract running in Gear Network.
+
+This video demonstrates how to configure and run Escrow application on your own and explains the user interaction workflow: **https://youtu.be/CD8j4epEY4E**
+
+![img alt](./img/escrow.png)
+
+The application's source code is available on [GitHub](https://github.com/gear-tech/gear-js/tree/main/apps/escrow).
+
+### Configure basic dApp in .env:
+
+For proper application functioning, one needs to create `.env` file and adjust an environment variable parameters. An example is available [here](https://github.com/gear-tech/gear-js/blob/main/apps/escrow/.env.example).
+
+```sh
+REACT_APP_NODE_ADDRESS
+```
+
+- `REACT_APP_NODE_ADDRESS` is the Gear Network's address (wss://rpc-node.gear-tech.io:443)
+
+:::note
+
+In order for all features to work as expected, the node and its runtime version should be chosen based on the current @gear-js/api version.
+
+In case of issues with the application, try to switch to another network or run your own local node and specify its address in the .env file. When applicable, make sure the smart contract(s) wasm files are uploaded and running in this network accordingly.
+
+:::
 
 ## Source code
 
