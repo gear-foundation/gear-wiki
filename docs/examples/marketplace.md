@@ -289,13 +289,11 @@ An NFT Marketplace application source code is available on [GitHub](https://gith
 For proper application functioning, one needs to adjust an environment variable parameters. An example is available [here](https://github.com/gear-tech/gear-js/blob/master/apps/marketplace/.env.example).
 
 ```sh
-
 REACT_APP_NODE_ADDRESS
 REACT_APP_IPFS_ADDRESS
 REACT_APP_IPFS_GATEWAY_ADDRESS
 REACT_APP_NFT_CONTRACT_ADDRESS
 REACT_APP_MARKETPLACE_CONTRACT_ADDRESS
-
 ```
 
 - `REACT_APP_NETWORK` is Gear Network address (wss://rpc-node.gear-tech.io:443)

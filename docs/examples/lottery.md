@@ -236,10 +236,8 @@ A game application source code is available on [GitHub](https://github.com/gear-
 For proper application functioning, one needs to create `.env` file and adjust an environment variable parameters. An example is available [here](https://github.com/gear-tech/gear-js/blob/master/apps/lottery/.env.example).
 
 ```sh
-
 REACT_APP_NODE_ADDRESS
 REACT_APP_LOTTERY_CONTRACT_ADDRESS
-
 ```
 
 - `REACT_APP_NODE_ADDRESS` is the Gear Network's address (wss://rpc-node.gear-tech.io:443)
