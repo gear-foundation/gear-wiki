@@ -56,10 +56,6 @@ const urlList = [
         "from": "/idea/account/ss58"
     },
     {
-        "to": "/docs/idea/account/gear-bonus",
-        "from": "/idea/account/gear-bonus"
-    },
-    {
         "to": "/docs/node/setting-up",
         "from": "/node/setting-up"
     },
