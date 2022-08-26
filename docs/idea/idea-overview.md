@@ -13,26 +13,26 @@ You can start experimenting right now on https://idea.gear-tech.io/.
 
 # IDEA components and microservices
 
-[frontend](https://github.com/gear-tech/gear-js/tree/master/website/frontend)
+[frontend](https://github.com/gear-tech/gear-js/tree/main/idea/frontend)
 
 React application that provides user interface for working with smart-contracts on Gear IDEA.
 
-[events-listener](https://github.com/gear-tech/gear-js/tree/master/website/events-listener)
+[events-listener](https://github.com/gear-tech/gear-js/tree/main/idea/events-listener)
 
 Microservice listens to all the events occuring in the Gear node and sends to the data-storage to store the information about them.
 
-[data-storage](https://github.com/gear-tech/gear-js/tree/master/website/data-storage)
+[data-storage](https://github.com/gear-tech/gear-js/tree/main/idea/data-storage)
 
 Microservice responsible for storing metadata of uploaded programs and information about events.
 
-[api-gateway](https://github.com/gear-tech/gear-js/tree/master/website/api-gateway)
+[api-gateway](https://github.com/gear-tech/gear-js/tree/main/idea/api-gateway)
 
 Microservice provides any interaction between the events / meta data store and an external user.
 
-[test-balance](https://github.com/gear-tech/gear-js/tree/master/website/test-balance)
+[test-balance](https://github.com/gear-tech/gear-js/tree/main/idea/test-balance)
 
 Microservice provides the opportunity to obtain test tokens.
 
-[wasm-compiler](https://github.com/gear-tech/gear-js/tree/master/website/wasm-compiler)
+[wasm-compiler](https://github.com/gear-tech/gear-js/tree/main/idea/wasm-compiler)
 
 Microservice provides the opportunity to compile Rust projects to WASM.

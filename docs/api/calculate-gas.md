@@ -19,14 +19,14 @@ Gas calculation returns the GasInfo object, which contains 3 parameters:
 - `min_limit` - Minimum gas limit required for execution
 - `reserved` - Gas amount that will be reserved for other on-chain interactions
 - `burned` - Number of gas burned during message processing
-:::
+  :::
 
 ### Init message
 
 ```javascript
 // get program code
 const code = fs.readFileSync('demo_ping.opt.wasm');
-const gas = await gearApi.program.calculateGas.init(
+const gas = await gearApi.program.calculateGas.initUpload(
   '0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d', // source id
   code,
   '0x00', // payload
@@ -36,7 +36,7 @@ const gas = await gearApi.program.calculateGas.init(
 console.log(gas.toHuman());
 ```
 
-### Handle 
+### Handle
 
 ```javascript
 const meta = await getWasmMetadata(fs.readFileSync('demo_meta.opt.wasm'));

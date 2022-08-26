@@ -15,9 +15,9 @@ Messages in Gear have common interface with the following parameters:
 - Gas limit
 - Value
 
-*Gas limit* is the amount of gas that users are willing to spend to process the message.
+_Gas limit_ is the amount of gas that users are willing to spend to process the message.
 
-*Value* is a currency value to be transferred to the target account. In the special message of the initial program upload, the value will be transferred to a balance of the newly created account for the program.
+_Value_ is a currency value to be transferred to the target account. In the special message of the initial program upload, the value will be transferred to a balance of the newly created account for the program.
 
 ## Types of messages
 
@@ -30,7 +30,10 @@ In the case of the program, there are the following types of messages:
 
 ## Gas
 
-Gear node charges a gas fee during message processing. The gas fee is linear - 64000 gas per allocated memory page of size 64KB and 1000 gas per instrumented WASM instruction. Messages from transactions with the highest fee are taken first. In this case, messages from transactions with the lowest fee can be delayed or even never end up in the processing queue. If a transaction is processed before the limit is reached, the rest of the gas will be returned to the sending account.
+Gas is a special currency for paying for blockchain computing. Its formation occurs by exchanging value with a special coefficient (currently = 1, but this may change in the future if the network votes).
+Gas is related to weight based on a one-to-one ratio. One unit of weight is one picosecond of computation. In order for the block to fit into a specific execution time, we calculate its gas allowance available for spending, but we do not exceed it.
+
+Based on the fact that one unit of weight equals one unit of gas,which takes one picosecond of calculations, we used benchmarks on average hardware to determine the cost of all available wasm instructions, including our syscalls
 
 ## Message process module
 

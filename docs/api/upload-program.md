@@ -18,7 +18,10 @@ const program = {
 };
 
 try {
-  const { programId, salt, submitted } = await gearApi.program.submit(uploadProgram, meta);
+  const { programId, salt, submitted } = await gearApi.program.upload(
+    uploadProgram,
+    meta,
+  );
 } catch (error) {
   console.error(`${error.name}: ${error.message}`);
 }
@@ -34,7 +37,7 @@ try {
 
 :::note
 
-For the calculation of the required gas for `init` message processing should use `api.program.calculateGas.init()` method.
+For the calculation of the required gas for `init` message processing should use `api.program.calculateGas.initUpload()` method.
 
 [more info](/docs/api/calculate-gas)
 :::

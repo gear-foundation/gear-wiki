@@ -111,7 +111,7 @@ pub unsafe extern "C" fn handle() {
     let new_msg = String::from_utf8(msg::load_bytes()).expect("Invalid message");
 
     if new_msg == "PING" {
-        msg::reply_bytes("PONG", 0).unwrap();
+        msg::reply_bytes("PONG", 0).expect("Error in sending reply");
     }
 
     MESSAGE_LOG.push(new_msg);
@@ -145,7 +145,7 @@ target
             └── first_gear_app.meta.wasm <---- this is meta .wasm file
 ```
 
-The  `target/wasm32-unknown-unknown/release` directory contains three WASM binaries:
+The `target/wasm32-unknown-unknown/release` directory contains three WASM binaries:
 
 - `first_gear_app.wasm` is the output WASM binary built from source files
 - `first_gear_app.opt.wasm` is the optimized WASM aimed to be uploaded to the blockchain
