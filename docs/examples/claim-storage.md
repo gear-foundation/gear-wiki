@@ -1,5 +1,5 @@
 ---
-sidebar_label: Claim Storage
+sidebar_position: ...
 ---
 
 
@@ -9,10 +9,10 @@ sidebar_label: Claim Storage
 
 This smart contracts example created by Gear represents a Simple Claim storage.
 
-It is a simple storage operating with Claims. A claim is a basic strucure which states some fact about a subject. A claim can be issued by a subject, or any other issuer on behalf of the subject (e.g. a university might issue the claim that a subject has successfully graduted).
+It is simple storage operating with Claims. A claim is a basic structure that states some facts about a subject. A claim can be issued by a subject, or any other issuer on behalf of the subject (e.g. a university might issue the claim that a subject has successfully graduated).
 Whenever a claim is issued it MUST be signed by an issuer (or a subject in case he issues it on behalf of himself).
 
-Every other contract user can verify any claim with his public key and a signature or check the claim data using one of the claim set's hash (more detail bellow).
+Every other contract user can verify any claim with his public key and a signature or check the claim data using one of the claim set's hashes (more detail below).
 
 The basic stored value inside the contract is a claim:
 ```rust
@@ -52,7 +52,8 @@ pub struct Claim {
     pub data: ClaimData,
 }
 ```
-Internally claim contains an issuance date, a validity status and a set of hashed data. The set is used the following way. Say, one wants to store his address: Russia, Moscow, Nikolskaya street, 3, 15. This is okay if the users wants to be able to verify the whole address. But if a user wants to only verify that he lives in Moscow? Should there be another claim created? The answer is no. A user simply breaks his address and hashed every value seprately and than passes it as a set. The check procedure is done against the whole set, so one can now verify he lives in Moscow without disclosing the full address.
+
+Internally claim contains an issuance date, a validity status, and a set of hashed data. The set is used the following way. Say, one wants to store his address: Netherlands, Amsterdam, Museumplein, 6, 1071. This is okay if the user wants to be able to verify the full address. But if a user wants only to verify that he lives in Amsterdam? Should there be another claim created? The answer is no. A user simply breaks his address and hashed every value separately and then passes it as a set. The check procedure is done against the whole set, so one can now verify he lives in Amsterdam without disclosing the full address.
 
 ### Init Config
 To successfully initialize a claim storage contract one should provide an ActorID of and owner, and that's it.
@@ -384,7 +385,7 @@ According the actions/events provided there is a need in 4 functions:
 ```
 
 ### Testing
-Though the contract is not that complicated itself, we strongly suggest you check the tests. In there provided tests we show a user actually interacts with the contract (e.g. keypairs/signature and hasing).
+Though the contract is not that complicated itself, we strongly suggest you check the tests. In there provided tests we show a user actually interacts with the contract (e.g. keypairs/signature and hashing).
 
 ## Conclusion
 A source code of the contract example provided by Gear is available on GitHub: [`identity/src/lib.rs`](https://github.com/gear-dapps/identity/blob/master/src/lib.rs).
