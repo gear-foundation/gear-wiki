@@ -56,18 +56,12 @@ pub struct Claim {
 Internally claim contains an issuance date, a validity status, and a set of hashed data. The set is used the following way. Say, one wants to store his address: Netherlands, Amsterdam, Museumplein, 6, 1071. This is okay if the user wants to be able to verify the full address. But if a user wants only to verify that he lives in Amsterdam? Should there be another claim created? The answer is no. A user simply breaks his address and hashed every value separately and then passes it as a set. The check procedure is done against the whole set, so one can now verify he lives in Amsterdam without disclosing the full address.
 
 ### Init Config
-To successfully initialize a claim storage contract one should provide an ActorID of and owner, and that's it.
+To successfully initialize a claim storage contract one should just send an `InitIdentity` message.
 
 ```rust
 /// Initializes an identity storage.
-///
-/// # Requirements:
-/// * `owner_id` MUST be non-zero address
-///
-/// `owner_id` - is the owner of the contract.
 #[derive(Decode, Encode, TypeInfo)]
 pub struct InitIdentity {
-    pub owner_id: ActorId,
 }
 
 ```
@@ -97,7 +91,7 @@ pub enum IdentityAction {
     ///
     /// # Requirements:
     /// * all public keys and signatures MUST be non-zero arrays
-    ClaimValidationStatus {
+    ChangeClaimValidationStatus {
         /// Validator's public key. Can be either a subject's or an issuer's one.
         validator: PublicKey,
         /// Subject's public key.
@@ -121,18 +115,6 @@ pub enum IdentityAction {
         subject: PublicKey,
         /// Claim's id.
         piece_id: PieceId,
-    },
-    /// Check the claim with a hash from it's data set.
-    ///
-    /// # Requirements:
-    /// * all public keys and signatures MUST be non-zero arrays
-    CheckClaim {
-        /// Subject's public key.
-        subject: PublicKey,
-        /// Claim's id.
-        piece_id: PieceId,
-        /// Hash to check against.
-        hash: [u8; 32],
     },
 }
 ```
@@ -166,14 +148,6 @@ pub enum IdentityEvent {
         /// Claim's id.
         piece_id: PieceId,
     },
-    CheckedClaim {
-        /// Subject's public key.
-        subject: PublicKey,
-        /// Claim's id.
-        piece_id: PieceId,
-        /// The result of the check (e.g. true is it was found in BTreeSet).
-        status: bool,
-    },
 }
 ```
 
@@ -182,15 +156,42 @@ pub enum IdentityEvent {
 #[derive(Debug, Decode, Encode, TypeInfo)]
 pub enum IdentityStateQuery {
     /// Get all the claims for a specified public key.
+    ///
+    /// Arguments:
+    /// `PublicKey` - is the public key of a user whose claims are queried
     UserClaims(PublicKey),
     /// Get a specific claim with the provided public key and a claim id.
+    ///
+    /// Arguments:
+    /// `PublicKey` - is the public key of a user whose claim is queried
+    /// `PieceId` - is the claim id
     Claim(PublicKey, PieceId),
     /// Get all the verifiers' public keys for a corresponding claim.
+    ///
+    /// Arguments:
+    /// `PublicKey` - is the public key of a user whose claim is queried
+    /// `PieceId` - is the claim id
     Verifiers(PublicKey, PieceId),
     /// Get claim's validation status.
+    ///
+    /// Arguments:
+    /// `PublicKey` - is the public key of a user whose claim is queried
+    /// `PieceId` - is the claim id
     ValidationStatus(PublicKey, PieceId),
     /// Get claim's issuance date.
+    ///
+    /// Arguments:
+    /// `PublicKey` - is the public key of a user whose claim is queried
+    /// `PieceId` - is the claim id
     Date(PublicKey, PieceId),
+    /// Check the claim with a hash from it's data set.
+    ///
+    /// Arguments:
+    /// `PublicKey` - is the public key of a user whose claim is queried
+    /// `PieceId` - is the claim id
+    /// `[u8; 32]` - is the hash being queried.
+    /// If it is in the claim hashed_info set then true is returned. Otherwise - false.
+    CheckClaim(PublicKey, PieceId, [u8; 32]),
 }
 
 #[derive(Debug, Decode, Encode, TypeInfo)]
@@ -199,9 +200,11 @@ pub enum IdentityStateReply {
     Claim(Option<Claim>),
     Verifiers(Vec<PublicKey>),
     ValidationStatus(bool),
-    Date(u128),
+    Date(u64),
+    CheckedClaim(PublicKey, PieceId, bool),
 }
 ```
+**Note**: the actual function performing a check is in the state (query & reply) since it does not modify state. Keeping it in state will also facilitate it's usage outside of the contract.
 
 
 ### Functions
@@ -224,9 +227,6 @@ According the actions/events provided there is a need in 4 functions:
         subject: PublicKey,
         data: ClaimData,
     ) {
-        if subject == ZERO_KEY || issuer_signature == ZERO_SIGNATURE || issuer == ZERO_KEY {
-            panic!("IDENTITY: Can not use a zero public key");
-        }
         self.user_claims.entry(subject).or_default().insert(
             self.piece_counter,
             Claim {
@@ -238,16 +238,17 @@ According the actions/events provided there is a need in 4 functions:
             },
         );
 
-        self.piece_counter += 1;
         msg::reply(
             IdentityEvent::ClaimIssued {
                 issuer,
                 subject,
-                piece_id: self.piece_counter - 1,
+                piece_id: self.piece_counter,
             },
             0,
         )
         .expect("IDENTITY: Error during replying with IdentityEvent::ClaimIssued");
+
+        self.piece_counter += 1;
     }
 
     /// Changes claim's validation status.
@@ -260,18 +261,13 @@ According the actions/events provided there is a need in 4 functions:
     /// * `subject`- the subject's public key.
     /// * `piece_id` - claim's id.
     /// * `status` - new claim's status.
-    fn validation_status(
+    fn change_validation_status(
         &mut self,
         validator: PublicKey,
         subject: PublicKey,
         piece_id: PieceId,
         status: bool,
     ) {
-        // TODO!: Unnecessary check
-        // TODO!: Check validator (message source)
-        if validator == ZERO_KEY || subject == ZERO_KEY {
-            panic!("IDENTITY: Can not use a zero public key");
-        }
         let data_piece = self
             .user_claims
             .get(&subject)
@@ -317,9 +313,6 @@ According the actions/events provided there is a need in 4 functions:
         subject: PublicKey,
         piece_id: PieceId,
     ) {
-        if verifier == ZERO_KEY || subject == ZERO_KEY || verifier_signature == ZERO_SIGNATURE {
-            panic!("IDENTITY: Can not use a zero public key");
-        }
         let piece = self
             .user_claims
             .get(&subject)
@@ -345,42 +338,6 @@ According the actions/events provided there is a need in 4 functions:
             0,
         )
         .expect("IDENTITY: Error during replying with IdentityEvent::VerifiedClaim");
-    }
-
-    /// Check the claim's internal data.
-    ///
-    /// # Requirements:
-    /// * all the public keys and signatures MUST be non-zero.
-    /// * `verifier` - MUST differ from the claim's subject or issuer.
-    ///
-    /// # Arguments:
-    /// * `piece_id` - claim's id.
-    /// * `subject` - subject's public key.
-    /// * `hash` - the hash to check against.
-    fn check_claim(&mut self, subject: PublicKey, piece_id: PieceId, hash: [u8; 32]) {
-        // TODO!: Rewrite in rust
-        let mut status = false;
-        if self
-            .user_claims
-            .get(&subject)
-            .expect("The user has no claims")
-            .get(&piece_id)
-            .expect("The user has not such claim with the provided piece_id")
-            .data
-            .hashed_info
-            .contains(&hash)
-        {
-            status = true;
-        }
-        msg::reply(
-            IdentityEvent::CheckedClaim {
-                subject,
-                piece_id,
-                status,
-            },
-            0,
-        )
-        .expect("IDENTITY: Error during replying with IdentityEvent::CheckedClaim");
     }
 ```
 
