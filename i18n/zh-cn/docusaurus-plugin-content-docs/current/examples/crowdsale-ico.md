@@ -7,7 +7,7 @@ sidebar_position: 18
 
 ## 介绍
 
-公开发售投资全新的加密货币或其他数字资产，被称为加密货币公开发售。首次代币发行（ICO，公开发售）可以被新项目用来为开发和其他目的筹集资金。公开发售是一个有时间限制的活动，投资者可以将他们在活动中定义的加密货币兑换成新发行的代币。新的代币在公开发售的融资目标达到和项目启动后，作为未来的功能被推广。
+公开发售投资全新的加密货币或其他数字资产，被称为加密货币公开发售。首次代币发行（公开发售）可以被新项目用来为开发和其他目的筹集资金。公开发售是一个有时间限制的活动，投资者可以将他们在活动中定义的加密货币兑换成新发行的代币。新的代币在公开发售的融资目标达到和项目启动后，作为未来的功能被推广。
 
 本文所描述的公开发售智能合约实现的例子是其他许多可以在 Gear 上实现和发布的去中心化应用之一。这篇文章解释了编程接口、数据结构、基本功能，并解释了它们的用途。它可以按原样使用，也可以根据你自己的场景进行修改。任何人都可以轻松创建自己的公开发售应用，并在 Gear 网络上运行。
 
@@ -93,10 +93,10 @@ struct IcoContract {
 
 ```rust
 pub struct IcoState {
-    pub ico_started: bool, // true if ICO was started
-    pub start_time: u64, // time when ICO was started, otherwise is zero
-    pub duration: u64, // duration of the ICO, otherwise is zero
-    pub ico_ended: bool, // true if ICO was ended
+    pub ico_started: bool, // true if started
+    pub start_time: u64, // time when started, otherwise is zero
+    pub duration: u64, // duration, otherwise is zero
+    pub ico_ended: bool, // true if ended
 }
 ```
 - `start_price` - 代币初始价格
