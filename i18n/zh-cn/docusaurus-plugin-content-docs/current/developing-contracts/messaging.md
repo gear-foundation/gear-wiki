@@ -1,5 +1,5 @@
 ---
-sidebar_label: "消息格式"
+sidebar_label: 消息格式
 sidebar_position: 3
 ---
 
@@ -9,17 +9,15 @@ sidebar_position: 3
 
 Gear 中的消息有共同的接口，参数如下：
 
-```
-source account,
-target account,
-payload,
-gas_limit
-value
-```
+- Source account
+- Target account
+- Payload
+- Gas limit
+- Value
 
-`gas_limit` 是用户愿意花在处理信息上的 gas 数量。
+_Gas limit_ 是用户愿意花在处理信息上的 gas 数量。
 
-`value` 是一个要转账到目标账户的值。在初始程序上传的特殊信息中，这个值将被发送到该程序新创建账户的余额中。
+_Value_ 是要转账到目标账户的值。在初始程序上传的特殊信息中，这个值将被发送到该程序新创建账户的余额中。
 
 ## 消息类型
 
@@ -28,58 +26,29 @@ value
 - 从用户到程序
 - 从程序到程序
 - 从程序到用户
-- 来自用户的特殊消息，用于将新程序上传到网络。 payload 必须包含程序本身的 Wasm 文件。 不得指定目标帐户 - 它将作为处理消息发布的一部分创建。
+- 来自用户的特殊消息，用于将新程序上传到网络。payload 必须包含程序本身的 WASM 文件。不得指定目标帐户 - 它将作为处理消息发布的一部分创建。
 
 ## Gas
 
-Gear 节点在消息处理过程中收取 gas 费用。 gas 费用是线性的——每个分配的 64KB 内存页面需要 64000 gas，每个检测的 Wasm 指令需要 1000 gas。
-在这种情况下，手续费最低的交易的消息可能会延迟，甚至永远不会进入处理队列。如果在达到限制之前处理了交易，则剩余的气体将返回到发送帐户。
+Gas 是一种用于支付区块链计算的特殊货币。它的形成是通过交换具有特殊系数的价值（目前=1，但如果网络投票，这在未来可能会改变）。Gas 与 weight 的关系是基于一对一的比率。一个单位的 weight 就是一皮秒的计算量。为了让区块适应特定的执行时间，我们计算其可用于支出的 gas 余量，但不会超过它。
+
+基于一个单位的 weight 等于一个单位的气体，这需要一皮秒的计算，我们使用平均硬件上的基准来确定所有可用的 wasm 指令的成本，包括系统调用。
 
 ## 消息处理模块
 
-根据上下文，程序以不同的方式解释消息。 为了在 Gear 程序中处理消息，使用了专有的 `gstd` 标准库和 `::msg` 模块。 gstd 中 msg.rs 中描述了所有可用函数：
+根据不同的上下文，程序对消息的解释是不同的。为了在 Gear 程序中处理消息，特意使用了`gstd`标准库中的`msg`模块。这里描述了所有可用的功能：https://docs.gear.rs/gstd/msg/index.html
 
-[github 链接](https://github.com/gear-tech/gear/blob/master/gstd/src/msg.rs)
-
-```c
-pub fn load<D: Decode>() -> Result<D, codec::Error> {
-    D::decode(&mut load_bytes().as_ref())
-}
-```
-
-加载字节。
-
-```c
-pub fn load_bytes() -> Vec<u8> {
-    let mut result = vec![0u8; gcore::msg::size()];
-    gcore::msg::load(&mut result[..]);
-    result
-}
-```
-
-回复消息并尝试使用 `codec` 解码为指定类型。 返回`MessageId`。
-
-```c
-pub fn reply<E: Encode>(payload: E, gas_limit: u64, value: u128) -> MessageId {
-    reply_bytes(&payload.encode(), gas_limit, value)
-}
-```
-
-回复消息，内容以字节形式存放在 `payload` 中。 返回`MessageId`。
-
-```c
-pub fn reply_bytes<T: AsRef<[u8]>>(payload: T, gas_limit: u64, value: u128) -> MessageId {
-    gcore::msg::reply(payload.as_ref(), gas_limit, value).unwrap()
-}
-```
-
-## 消息编解码
+## 理解消息编解码接口
 
 Gear 使用`parity-scale-codec`，这是 SCALE 编解码器的 Rust 实现。
-SCALE 是一种轻量级的格式，允许编码（和解码），这使得它非常适用于资源受限的执行环境，如区块链运行时间和低功耗、低内存设备。
+SCALE 是一种轻量级的格式，允许编码、解码，这使得它非常适用于资源受限的执行环境，如区块链运行时间和低功耗、低内存设备。
 
-```c
+```rust
 #[derive(Encode, Decode)]
+enum MyType {
+    MyStruct { field: ... },
+    ...
+}
 ```
 
-更多关于 SCALE 的内容请看 [SCALE Codec](https://substrate.dev/docs/en/knowledgebase/advanced/codec)。
+关于 SCALE 更多的内容请看 [SCALE Codec](https://substrate.dev/docs/en/knowledgebase/advanced/codec)。

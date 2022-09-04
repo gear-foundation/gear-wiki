@@ -1,10 +1,10 @@
 ---
 title: 快速入门
 sidebar_position: 4
-sidebar_label: '5分钟入门'
+sidebar_label: '5 分钟入门'
 ---
 
-# 5分钟入门
+# 5 分钟入门
 
 本指南提供了在 Gear 网络上运行智能合约的一般概述。它指导您如何编写智能合约，将其编译为 WASM，并部署到 Gear 网络。
 
@@ -20,7 +20,7 @@ mkdir -p ~/gear
 cd ~/gear
 ```
 
-2. 确保您已经安装了在Rust中构建智能合约所需的所有工具。我们将使用[ Rustup](https://rustup.rs/) 来安装 Rust 编译器。
+2. 确保您已经安装了在 Rust 中构建智能合约所需的所有工具。我们将使用[ Rustup](https://rustup.rs/) 来安装 Rust 编译器。
 
 ```bash
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
@@ -115,7 +115,7 @@ pub unsafe extern "C" fn handle() {
     let new_msg = String::from_utf8(msg::load_bytes()).expect("Invalid message");
 
     if new_msg == "PING" {
-        msg::reply_bytes("PONG", 0).unwrap();
+        msg::reply_bytes("PONG", 0).expect("Error in sending reply");
     }
 
     MESSAGE_LOG.push(new_msg);
@@ -154,7 +154,7 @@ target
             └── first_gear_app.wasm <---- this is our .wasm file
 ```
 
-我们需要的是`target/wasm32-unknown-unknown/release`目录内的 `first_gear_app.wasm` 文件。现在知道它在哪里了，让我们进入下一步。
+我们需要的是 `target/wasm32-unknown-unknown/release` 目录内的 `first_gear_app.wasm` 文件。现在知道它在哪里了，让我们进入下一步。
 
 ## 在测试网上部署你的第一个合约
 
@@ -169,7 +169,7 @@ Gear 提供了一个模拟真实 Gear 去中心化网络的 demo 环境，可以
 
 ![img alt](./img/polkadot-add-acc.png)
 
-3. 确保你安全的保存了 12个单词的助记词。
+3. 确保你安全的保存了 12 个单词的助记词。
 
 ![img alt](./img/polkadot-add-acc-2.png)
 
@@ -226,7 +226,7 @@ Gear 提供了一个模拟真实 Gear 去中心化网络的 demo 环境，可以
 
 ![img alt](./img/send-request.png)
 
-3. 签名消息发送交易，如上传合约中的步骤3所示
+3. 签名消息发送交易，如上传合约中的步骤 3 所示
 
 4. 成功处理消息后，合约会发送 PONG 作为响应：
 
@@ -237,7 +237,7 @@ Gear 提供了一个模拟真实 Gear 去中心化网络的 demo 环境，可以
 ## 更多内容
 
 
-除了这篇 "5分钟入门"，你还可以参考另一篇展示在 Gear 平台上创建应用程序的简单性和便利性的文章--[初学者的第一个智能合约](https://app.subsocial.network/6310/gear-tech-the-first-smart-contract-on-rust-for-beginners-31604)。
-这篇文章以 `Voting` 应用程序为例，描述了 Gear 智能合约的结构，如何使用程序的角色模型架构，处理消息，以及如何处理状态。  
+除了这篇 "5 分钟入门"，你还可以参考另一篇展示在 Gear 平台上创建应用程序的简单性和便利性的文章--[初学者的第一个智能合约](https://app.subsocial.network/6310/gear-tech-the-first-smart-contract-on-rust-for-beginners-31604)。
+这篇文章以 `Voting` 应用程序为例，描述了 Gear 智能合约的结构，如何使用程序的角色模型架构，处理消息，以及如何处理状态。
 
 关于 Gear 编写智能合约的信息以及智能合约实现背后的具体内容，请访问 [智能合约](developing-contracts/gear-program.md)。

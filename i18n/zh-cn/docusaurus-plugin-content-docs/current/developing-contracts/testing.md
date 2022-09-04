@@ -1,5 +1,5 @@
 ---
-sidebar_label: '合约测试'
+sidebar_label: 合约测试
 sidebar_position: 4
 ---
 
@@ -21,94 +21,58 @@ Gear 使用了来自 `cargo` 构建的 Rust 程序标准测试机制。
 
 首先，确保你想测试的程序已经编译成 `WASM` 文件。你可以参考 [Getting started](getting-started-in-5-minutes.md) 了解更多细节。
 
-1. 通常情况 Gear 智能合约编译需要采用以下强制性参数：
-    * `RUSTFLAGS="-C link-args=--import-memory"`
-    * `--target=wasm32-unknown-unknown`
-    * `nightly` сompiler
+1. 通常情况下，以下命令用于 Gear 智能合约的常规编译：
 
-    ```sh
+    ```bash
     cd ~/gear/contracts/first-gear-app/
-    RUSTFLAGS="-C link-args=--import-memory" cargo +nightly build --release --target=wasm32-unknown-unknown
+    cargo build --release
     ```
 
-2. 运行测试时，以上参数 **不应当使用**，而是 **应当** 采用以下条件进行修改：
-    * `--target` 参数不要使用 `wasm32-unknown-unknown`。建议根据你的设备架构来构建（你根本不需要指定任何标志）。
-    * `nightly` 编译器。如果你的智能合约使用了尚不稳定的 Rust 特性，则需要。编译器会要求你在必要时启用 `nightly`。只有当你把测试写成单元测试/集成测试，而不是提供一个单独的只包含测试的库。
+    如果使用了一些不稳定的功能，则需要 Nightly 编译器。
 
-    ```sh
+    ```bash
+    cargo +nightly build --release
+    ```
+
+2. 运行测试的最简命令是：
+
+    ```bash
     cargo test
     ```
 
-3. 如果你使用 `cargo` 配置文件，那么请记住，`[build]` 参数同时作用于 `cargo build` 和 `cargo test` [Github Issue](https://github.com/rust-lang/cargo/issues/6784)。例如 -
+    如果你的合约使用不稳定的 Rust 特性，就需要 Nightly 编译器，编译器会要求你在必要时启用`nightly`。
+    仅当将测试写为单元/集成测试，而不是提供仅包含测试的单独库时。
 
-    ```toml
-    # .cargo/config.toml
-    [build]
-    target = "wasm32-unknown-unknown"
-
-    [target.wasm32-unknown-unknown]
-    rustflags = ["-C", "link-args=--import-memory"]
+    ```bash
+    cargo +nightly test
     ```
 
-    在这种情况下，你必须选择对你来说最便捷的方案：
+    在 release 模式下构建测试，使其运行更快：
 
-    * (推荐) 从 `config.toml` 中移除 `target=wasm32-unknown-unknown`, 这意味着你需要：
-        * 编译合约时使用: `cargo +nightly build --target wasm32-unknown-unknown`
-        * 测试合约时使用: `cargo test` (可选: `cargo +nightly test`)
-
-    * 在配置文件中保留编译目标, 在这种情况下:
-        * 编译合约时使用: `cargo +nightly build`
-        * 测试合约时使用: `cargo test --target any_not_wasm32_unknown_unknown_target`
-
-4. Rust 所支持的每一编译目标都可以从这个命令中获得:
-	`rustc --print target-list`
-
-如何找出你的系统目标，[这里](https://stackoverflow.com/questions/52996949/how-can-i-find-the-current-rust-compilers-default-llvm-target-triple?rq=1)。
-
-因此，运行测试的最普遍方法将是:
-
-```sh
-cargo test --target "$(rustc -vV | sed -n 's|host: ||p')"
-```
-:::note
-`sed` 工具在 Windows 中默认没有安装
-:::
-
-更多关于 Cargo 配置文件的信息请参考考 [Cargobook](https://doc.rust-lang.org/cargo/reference/config.html).
+    ```bash
+    cargo test --release
+    ```
 
 ## 引入 `gtest` 库
 
 为了使用 `gtest` 库，它必须被导入你的 `Cargo.toml` 文件的 `[dev-dependencies]` 中，以便只在测试时获取和编译它。
 
-```rust
+```toml
 [package]
 name = "first-gear-app"
 version = "0.1.0"
 authors = ["Your Name"]
 edition = "2021"
-license = "GPL-3.0"
-
-[lib]
-crate-type = ["cdylib"]
 
 [dependencies]
 gstd = { git = "https://github.com/gear-tech/gear.git", features = ["debug"] }
 
+[build-dependencies]
+gear-wasm-builder = { git = "https://github.com/gear-tech/gear.git" }
+
 [dev-dependencies]
 gtest = { git = "https://github.com/gear-tech/gear.git" }
-
-[profile.release]
-lto = true
-opt-level = 's'
 ```
-
-## 可能遇到的问题
-
-当把测试写成集成测试时，不能从程序本身导入公共结构，因为 Gear 智能合约必须有 `crat-type=["cdylib"]` 结构，并且不能从它们中导入任何东西。
-
-解决方案：
-* （推荐）创建一个带有 IO 结构的 sub-crate 库，并将其导入到 `Cargo.toml`。在这种情况下，结构可以在任何地方使用。
-* 在测试文件中重新定义相同的结构（复制-粘贴），因为有了 codec，它们将生成相同的字节。
 
 ## `gtest` 的能力
 
@@ -155,6 +119,9 @@ fn basics() {
         &sys,
         "./target/wasm32-unknown-unknown/release/demo_ping.wasm",
     );
+
+    // Also, you may use `Program::current()` function to load the current program.
+    let ping_pong = Program::current(&sys);
 
     // We can check the id of the program by calling `id()` function.
     //

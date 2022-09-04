@@ -13,26 +13,26 @@ Gear IDEA 是一个方便的工具，其目的是让用户熟悉 Gear 平台。�
 
 # IDEA 组件和微服务
 
-[frontend](https://github.com/gear-tech/gear-js/tree/master/website/frontend)
+[frontend](https://github.com/gear-tech/gear-js/tree//main/idea/frontend)
 
 基于 React 的前端应用，用来为 Gear IDEA 提供合约交互能力。
 
-[events-listener](https://github.com/gear-tech/gear-js/tree/master/website/events-listener)
+[events-listener](https://github.com/gear-tech/gear-js/tree//main/idea/events-listener)
 
-监听 Gear 节点上的所有事件的微服务，将事件发送到存储服务(data-storage)。
+监听 Gear 节点上的所有事件的微服务，将事件发送到存储服务 (data-storage)。
 
-[data-storage](https://github.com/gear-tech/gear-js/tree/master/website/data-storage)
+[data-storage](https://github.com/gear-tech/gear-js/tree//main/idea/data-storage)
 
 存储上传的程序元数据和相关事件的微服务。
 
-[api-gateway](https://github.com/gear-tech/gear-js/tree/master/website/api-gateway)
+[api-gateway](https://github.com/gear-tech/gear-js/tree//main/idea/api-gateway)
 
 为外部用户提供同事件、元数据进行交互的微服务。
 
-[test-balance](https://github.com/gear-tech/gear-js/tree/master/website/test-balance)
+[test-balance](https://github.com/gear-tech/gear-js/tree//main/idea/test-balance)
 
 用来获取测试代币的微服务
 
-[wasm-compiler](https://github.com/gear-tech/gear-js/tree/master/website/wasm-compiler)
+[wasm-compiler](https://github.com/gear-tech/gear-js/tree//main/idea/wasm-compiler)
 
 用来将 Rust 项目编译成 WASM 的微服务。
