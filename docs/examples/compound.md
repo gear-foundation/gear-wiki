@@ -25,93 +25,89 @@ pub struct CompoundInit {
 ```
 
 ### Logic
-Each user can lend tokens with `LendTokens { amount }`, borrow with `BorrowTokens { amount }` and redeem with `RedeemTokens { amount }`.
+Each user can lend tokens with `LendTokens { amount }`, borrow with `BorrowTokens { amount }`, refund with `RedfundTokens { amount }` ad withdraw tokens with `WothdrawTokens { amount }`.
 
 1. User can lend some `amount` of `tokens` if his balance is greater or equal to the `amount`. User receives in return `ctokens` according to the `ctoken_rate`
-2. User can borrow some `amount` of `tokens` if he has lent at least `lend_amount` which is not less than `amount` / `collateral_factor`
-3. User can redeem lend assets and some amount of borrowed payments only if expression `total_lend` * `collateral_factor` >= `total_borrowed` will be true
-
-All payments are stored in `BTreeMap<ActorId, BTreeSet<Payment>>` and in `redeem` user picks payments he wants to refund and deposits he wants to redeem  
+2. User can borrow some `amount` of `tokens` if his `ctoken` balance multiplied by `ctoken_rate` is not less than `amount` / `collateral_factor`
+3. User can refund `amount` of borrowed tokens only if he had borrowed at least `amount`
+4. User can withdraw `amount` of lent assets only if his `ctoken` balance multiplied by `ctoken_rate` will not be less than his borrowed balance / `collateral_factor`
 
 ### Structs
 ```rust
 struct Compound {
-    token_address: ActorId,  // address of token contract
-    ctoken_address: ActorId, // address of ctoken contract
+    token_address: ActorId,  // token contract address
+    ctoken_address: ActorId, // ctoken contract address
     owner_address: ActorId,  // contract owner address
-    lend_data: LendData,     // info realted to lend tokens
-    borrow_data: BorrowData, // info realted to borrow tokens
-    user_deposits: BTreeMap<ActorId, BTreeSet<Payment>>, // map of address -> lend payment
-    user_borrows: BTreeMap<ActorId, BTreeSet<Payment>>,  // map of address -> borrow payment
-    user_assets: BTreeMap<ActorId, (u128, u128)>, // total lent and borrowed tokens number for each user
+    interest_rate: u128, // user will earn `interest_rate` percent of his deposit
+    collateral_factor: u128, // user can borrow callateral * `collateral_factor`
+    borrow_rate: u128,   // user will have to pay borrowed amount * `borrow_rate`
+    ctoken_rate: u128,   // token cost * `ctoken_rate` = ctoken cost
+    user_assets: BTreeMap<ActorId, Assets>, // assets for each user
     init_time: u64, // compound init time
 }
 
-pub struct LendData {
-    pub ctoken_rate: u128,    // token cost * `ctoken_rate` = Ctoken cost
-    pub interest_rate: u128,  // user will earn `interest_rate` percent asset
-    pub max_deposit_id: u128, // id of the last lend
-}
-
-pub struct BorrowData {
-    pub collateral_factor: u128, // user can borrow callateral * `collateral_factor`
-    pub borrow_rate: u128,       // user will have to pay borrowed amount * `borrow_rate`
-    pub max_borrow_id: u128,     // id of the last borrow
-}
-
-pub struct Payment {
-    pub amount: u128,         // how much tokens in the lend/borrow
-    pub ctokens_amount: u128, // 0 if payment is borrow, otherwise how much ctokens got for lending
-    pub interest_rate: u128,  // `interest_rate` or `borrow_rate`
-    pub payment_time: u64,    // timestamp when payment was made
-    pub id: u128,             // payment id 
-}
-
-impl Payment {
-    // returns how amount increased 
-    pub fn count_interest(&self, amount: u128, time_now: u64) -> u128; 
-}
-
 impl Compound {
-    // `msg::source` lend `amount` of tokens
+    // `msg::source` lends `amount` of tokens
     pub async fn lend_tokens(&mut self, amount: u128); 
     
-    // `msg::source` borrow `amount` of tokens
+    // `msg::source` borrows `amount` of tokens
     pub async fn borrow_tokens(&mut self, amount: u128); 
     
-    // `msg::source` redeems tokens with ids in `lend_to_redeem` and refunds borrows in `amount_per_borrow`
-    pub async fn redeem_tokens(
-        &mut self,
-        lend_to_redeem: BTreeSet<u128>,
-        amount_per_borrow: BTreeMap<u128, u128>,
-    );
+    // `msg::source` refunds `amount` of tokens
+    pub async fn refund_tokens(&mut self, amount: u128);
+
+    // `msg::source` withdraws `amount` tokens fron his deposits
+    pub async fn withdraw_tokens(&mut self, amount: u128);
+
+    // updates `self.borrow_rate` and `self.interest_rate`
+    fn update_rates(&mut self);
     
-    // returns is redeem posible with those params
-    fn redeem_posible(
-        &self,
-        user: ActorId,
-        lend_to_redeem: &BTreeSet<u128>,
-        amount_per_borrow: &BTreeMap<u128, u128>,
-    ) -> bool;
+    // count how much ctokens corresponds to `tokens_amount` with current `ctoken_rate`
+    fn count_ctokens(tokens_amount: u128, ctoken_rate: u128) -> u128;
     
-    // add payment to `container`
-    fn insert_payment(
-        address: ActorId,
-        container: &mut BTreeMap<ActorId, BTreeSet<Payment>>,
-        payment: &mut Payment,
-    );
-    
-    // delete all payments where amount = 0
-    fn delete_payments(&mut self, user_address: ActorId);
-    
-    // count how much ctokens corresponds to `tokens_amount`
-    fn count_ctokens(&mut self, tokens_amount: u128) -> u128;
-    
-    // count how much tokens corresponds to `ctokens_amount`
-    fn count_tokens(&mut self, ctokens_amount: u128) -> u128;
-    
-    // returns current `tokens` -> `ctokens` rate
-    fn get_current_rate(_init_time: u64, ctoken_rate: u128) -> u128;
+    // count how much tokens corresponds to `ctokens_amount` with current `token_rate`
+    fn count_tokens(ctokens_amount: u128, ctoken_rate: u128) -> u128;
+}
+```
+
+### Assets logic
+APY is constantly changing, so we need to calculate interest rate for every amount for every rate. How to do it? Let's imagine that each deposit is a ray ($y = kx + b$), where $k$ (slope of curve) is the interest rate and the ray starts in the point $(x_0, y_0)$, where $x_0$, $y_0$ is timestamp when deposit was made and amount of tokens respectively. So now we have a plane with many rays on it. Now let's itetate from left to right on x-axis and if we find new ray add it to our equation $y = kx + b$, where $k = b = 0$ at the start. Thus we can make dynamicly changing equation, which in every time will show how much tokens we have (to do this insert time in our equation instead of x)
+
+### Example
+_User_ wants to make a deposit on `1662350919` timestamp of `1000` tokens and `2.7%` APY. Let's calculate ray equation: <br />
+$y = kx + b$, where <br />
+$
+y_0 = 1000 \\
+x_0 = 1662350919 \\
+k = \frac{y_0 \cdot k}{ \text{SEC-IN-YEAR} } = \frac{1000 \cdot 2.7}{ 31536000 } = \frac{1}{11680}\\
+b = y_0 - k \cdot x_0 = 1000 - \frac{1662350919}{11680} \approx -141324.56498288
+$ <br /> <br />
+![img alt](./img/compound-ray-example1.png)
+
+Then _user_ wants to make a deposit on `1662437319` timestamp of `2000` tokens and `1.6%` APY. Let's make the same calculations and get: <br />
+$y = \frac{x}{9855} - 166689.73302892$
+
+Thus we have a table: <br />
+
+| Equation | Range |
+| --- | :---: |
+| $y = 0x + 0$ | $x < 1662350919$ |
+| $y = \frac{x}{11680} - 141324.56498288$ | $1662350919 \le x \le 1662437319$ |
+| $y = \frac{x}{11680} - 141324.56498288 \\ y = \frac{x}{9855} - 166689.73302892$ | $x > 1662437319$ |
+
+It is not hard to see that for each x greater than second deposit time total tokens amount is a sum of two equations. So our method is correct and we need to sum eqautions after each deposit appears. If _user_ wants to withdraw just subtract amount from $b$ coefficient. The same logic os correct for borrow and refund functions respectively.
+
+```rust
+pub struct Assets {
+    pub lent_amount: u128, // ctokens amount
+    pub lend_start: u64, // first deposit time
+    pub interest_rate: u128, // APY (coef k)
+    pub lend_offset: i128, // coef b
+
+    pub borrowed_amount: u128, // ctokens
+    pub borrow_start: u64, // first borrow time
+    pub borrow_rate: u128, // APY (coef k)
+    pub borrow_offset: i128, // coef b
 }
 ```
 
@@ -190,6 +186,6 @@ This action and event corresponds to the redeem_tokens function
 ## Conclusion
 A source code of the contract example provided by Gear is available on GitHub: [`compound/src/lib.rs`](https://github.com/gear-dapps/compound/blob/master/src/lib.rs).
 
-See also an example of the smart contract testing implementation based on gtest: [`concert/tests/`](https://github.com/gear-dapps/compound/blob/master/tests/).
+See also an example of the smart contract testing implementation based on gtest: [`compound/tests/`](https://github.com/gear-dapps/compound/blob/master/tests/).
 
 For more details about testing smart contracts written on Gear, refer to this article: [Program Testing](/developing-contracts/testing).
