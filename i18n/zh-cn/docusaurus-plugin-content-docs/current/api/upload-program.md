@@ -18,7 +18,10 @@ const program = {
 };
 
 try {
-  const { programId, salt, submitted } = await gearApi.program.submit(uploadProgram, meta);
+  const { programId, salt, submitted } = await gearApi.program.upload(
+    uploadProgram,
+    meta,
+  );
 } catch (error) {
   console.error(`${error.name}: ${error.message}`);
 }
@@ -33,7 +36,7 @@ try {
 ```
 
 :::note
-对于计算`init`信息处理所需的 gas，应该使用`api.program.calculateGas.init()`。
+对于计算`init`信息处理所需的 gas，应该使用`api.program.calculateGas.initUpload()`。
 
 请看[更多相关信息](/api/calculate-gas)
 :::

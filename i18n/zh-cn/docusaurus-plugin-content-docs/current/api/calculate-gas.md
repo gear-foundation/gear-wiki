@@ -24,7 +24,7 @@ gas 计算返回 GasInfo 对象，其中包含 3 个参数。
 ```javascript
 // get program code
 const code = fs.readFileSync('demo_ping.opt.wasm');
-const gas = await gearApi.program.calculateGas.init(
+const gas = await gearApi.program.calculateGas.initUpload(
   '0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d', // source id
   code,
   '0x00', // payload
