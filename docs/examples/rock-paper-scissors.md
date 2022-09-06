@@ -24,9 +24,9 @@ First of all someone(admin) should deploy a "Rock Paper Scissors Lizard spock" p
 pub struct GameConfig {
     pub bet_size: u128,
     pub players_count_limit: u8,
-    pub entry_timeout: u64, // in ms
-    pub move_timeout: u64, // in ms
-    pub reveal_timeout: u64, // in ms
+    pub entry_timeout_ms: u64,
+    pub move_timeout_ms: u64,
+    pub reveal_timeout_ms: u64,
 }
 ```
 
@@ -48,27 +48,27 @@ When the administrator stops the game, all funds are distributed among the playe
 
 Then players can register for the game by paying a bet(of bet_size) with sending `Register` action.
 
-The registration stage continues `entry_timeout` milliseconds from the moment the program was deployed(or the end of the previous game). After that the game begins and the players can make a move.
+The registration stage continues `entry_timeout_ms` milliseconds from the moment the program was deployed(or the end of the previous game). After that the game begins and the players can make a move.
 
->If time of registration stage is over, but only 1 or 0 players has registered, stage will be extended by `entry_timeout`. And the player won't be unregistered.  
+>If time of registration stage is over, but only 1 or 0 players has registered, stage will be extended by `entry_timeout_ms`. And the player won't be unregistered.  
 
 ### Moves
 
 During the move phase, players must choose one of five move options(Rock Paper Scissors Lizard Spock). 
 
-To submit a player's choice, the service that provides this capability must allow the player to enter a password or generate a password itself and save it in a local storage. Password is needed to secure user's move from other players, who would really like to see the player's move in the blockchain. After password was generated or entered service should concatenate number of move(Rock - '0', Paper - '1', Scissors - '2', Lizard - '3', Spock - '4') with password and get a string like "2pass". Then service hashes it with 256-bit blake2b, turns into a hex string and sends to the blockchain by `MakeMove(String)` with this hash inside.
+To submit a player's choice, the service that provides this capability must allow the player to enter a password or generate a password itself and save it in a local storage. Password is needed to secure user's move from other players, who would really like to see the player's move in the blockchain. After password was generated or entered service should concatenate number of move(Rock - '0', Paper - '1', Scissors - '2', Lizard - '3', Spock - '4') with password and get a string like "2pass". Then service hashes it with 256-bit blake2b, turns into a binary form and sends to the blockchain by `MakeMove(Vec<u8>)` with this hash inside.
 
 >Player can't change his move.
 
-The moves stage continues before all players is done or `move_timeout` milliseconds since registration has ended or this round has started. After that, the reveal phase begins, and the players can show the moves so that the program can determine the winner.
+The moves stage continues before all players is done or `move_timeout_ms` milliseconds since registration has ended or this round has started. After that, the reveal phase begins, and the players can show the moves so that the program can determine the winner.
 
->If time of the moves stage is over, but no one has made a move, stage will be extended by `move_timeout`. And the players can further make their moves.
+>If time of the moves stage is over, but no one has made a move, stage will be extended by `move_timeout_ms`. And the players can further make their moves.
 >
 >If time of the moves stage is over, but only one player has made a move, this player is declared the winner and receives full reward.
 
 ### Reveal
 
-Reveal is a necessary step in protecting the game from cheating. At this stage, the players must confirm their moves. For this they have to repeat password(or service can get it from his storage), repeat move(or service can get it from his storage) and service should just concatenate number of move(Rock - '0', Paper - '1', Scissors - '2', Lizard - '3', Spock - '4') with password and get a string like "2pass" and send it to the blockchain by `Reveal(String)` action. In this step the program validates that the hash submitted during the moves stage is equal to a hashed open string and save this move(first character from string) to determine a winners.
+Reveal is a necessary step in protecting the game from cheating. At this stage, the players must confirm their moves. For this they have to repeat password(or service can get it from his storage), repeat move(or service can get it from his storage) and service should just concatenate number of move(Rock - '0', Paper - '1', Scissors - '2', Lizard - '3', Spock - '4') with password and get a string like "2pass", then UTF-8-encoded bytes array from this string and send it to the blockchain by `Reveal(Vec<u8>)` action. In this step the program validates that the hash submitted during the moves stage is equal to a hashed open string and save this move(first character from string) to determine the winners.
 
 After all players have finished or the time has expired, the program determines the winning move to figure out the players who will continue to fight for the reward. And players who have chosen the winner move advance to the next round.
 
@@ -78,7 +78,7 @@ After the program determines the players who have passed to the next round, move
 
 When the game ends, a new game starts immediately with the new config that was set by `ChangeNextGameConfig(GameConfig)`. If it has not been installed, the old config will be relevant.
 
->If time of the reveal stage is over, but no one has made a move, stage will be extended by `reveal_timeout`. And the players can further reveal their moves.
+>If time of the reveal stage is over, but no one has made a move, stage will be extended by `reveal_timeout_ms`. And the players can further reveal their moves.
 >
 >If time of the reveal stage is over, but only one player has revealed a move, this player is declared the winner and receives full reward. A new game starts immediately.
 
@@ -89,8 +89,8 @@ When the game ends, a new game starts immediately with the new config that was s
 ```rust
 pub enum Action {
     Register,
-    MakeMove(String),
-    Reveal(String),
+    MakeMove(Vec<u8>),
+    Reveal(Vec<u8>),
     ChangeNextGameConfig(GameConfig),
     StopGame,
 }
@@ -110,7 +110,7 @@ pub enum Event {
     SuccessfulMove(ActorId),
     SuccessfulReveal(RevealResult),
     GameConfigChanged,
-    GameWasStopped(BTreeSet<ActorId>),
+    GameStopped(BTreeSet<ActorId>),
 }
 
 pub enum RevealResult {
