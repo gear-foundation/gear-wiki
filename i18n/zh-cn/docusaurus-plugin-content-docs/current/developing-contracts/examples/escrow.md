@@ -1,13 +1,17 @@
 ---
-sidebar_label: '第三方担保'
+sidebar_label: 第三方担保
 sidebar_position: 8
 ---
 
-# 第三方担保是什么？
+# 第三方担
 
-第三方担保是一个特殊的钱包，某些资产 (如金钱或股票) 被存入该账户，并被保存到满足某些条件。就智能合约而言，第三方担保是存储在区块链上的钱包，与常规担保一样，可以从一个用户那里接收一些资产 (例如加密资产或代币)，并在满足特定条件时将它们发送给另一个用户。
+## 介绍
 
-这篇文章将展示 1 个第三方担保的智能合约案例，其中资产是[Gear 同质化代币 - gFT](/examples/gft-20)。
+第三方担保是一个特殊钱包，某些资产 (如钱或股票) 存放在其中，直到某些条件得到满足。就智能合约而言，第三方担保是存储在区块链上的钱包，与常规担保一样，可以从一个用户那里接收一些资产 (例如加密资产或代币，在这个例子中，是像 [gFT](gft-20.md)资产)，并在满足特定条件时将它们发送给另一个用户。
+
+本篇文章主要介绍智能合约的作用和代码逻辑。想获得更详细的技术描述，请参考[技术文档](https://dapps.gear.rs/escrow_io)和[源码](#source-code)。
+
+你也可以通过视频了解本合约：**https://youtu.be/CD8j4epEY4E**.
 
 ## 业务逻辑
 
@@ -19,15 +23,20 @@ sidebar_position: 8
 一个担保合约包含了“买方”、“卖方”信息和各自的“状态”，以及可以担保的代币的“数量”信息：
 
 ```rust
-struct Wallet {
-    buyer: ActorId,
-    seller: ActorId,
-    state: WalletState,
-    amount: u128,
+pub struct Wallet {
+    /// A buyer.
+    pub buyer: ActorId,
+    /// A seller.
+    pub seller: ActorId,
+    /// A wallet state.
+    pub state: WalletState,
+    /// An amount of tokens that a wallet can have. **Not** a current amount on
+    /// a wallet balance!
+    pub amount: u128,
 }
 ```
 
-`WalletState`是一个枚举类型，用于存储合约约的当前状态：
+`WalletState` 是一个枚举类型，用于存储合约约的当前状态：
 
 ```rust
 enum WalletState {
@@ -39,14 +48,11 @@ enum WalletState {
 
 ## 接口
 
-### 类型别名
-```rust
-/// Escrow wallet ID.
-type WalletId = U256;
-```
-
 ### 初始化配置
+
 ```rust
+/// Initializes an escrow program.
+#[derive(Decode, Encode, TypeInfo)]
 pub struct InitEscrow {
     /// Address of a fungible token program.
     pub ft_program_id: ActorId,
@@ -56,131 +62,142 @@ pub struct InitEscrow {
 ### 方法
 
 ```rust
-fn create(&mut self, buyer: ActorId, seller: ActorId, amount: u128)
-```
-
-创建一个担保钱包并回复 ID。
-
-
-必要条件：
-* `msg::source()` 必须是该钱包的买方或卖方
-
-参数：
-* `buyer`：买方
-* `seller`：卖方
-* `amount`：代币数量
-
-```rust
-async fn deposit(&mut self, wallet_id: WalletId)
-```
-
-买方把钱存入担保账户，钱包状态改为 `AwaitingConfirmation`。
-
-必要条件：
-* `msg::source()` 必须是保存在钱包中的买方
-* 钱包必须是未支付状态，或者已关闭
-
-参数：
-* `wallet_id`：钱包 ID
-
-```rust
-async fn confirm(&mut self, wallet_id: WalletId)
-```
-
-通过从担保钱包转移代币来确认交易，并将钱包状态改为 `Closed`。
-
-必要条件：
-* `msg::source()` 必须是保存在钱包中的卖方
-* 钱包必须是已支付状态并且是未关闭状态
-
-参数：
-* `wallet_id`：钱包 ID
-
-```rust
-async fn refund(&mut self, wallet_id: WalletId)
-```
-
-将代币从担保钱包退款给买家，并将钱包状态更改为`AwaitingDeposit`(也就是说，钱包可以重复使用)。
-
-必要条件：
-* `msg::source()` 必须是保存在钱包中的买方
-* 钱包必须是已支付状态并且是未关闭状态
-
-参数：
-* `wallet_id`：钱包 ID
-
-```rust
-async fn cancel(&mut self, wallet_id: WalletId)
-```
-
-取消交易并关闭一个担保钱包，将其状态改为 `Closed`。
-
-必要条件：
-* `msg::source()` 必须是保存在钱包中的买方或卖方
-* 钱包必须是已支付状态并且合约是已完成状态
-
-参数：
-* `wallet_id`：钱包 ID
-
-### Meta state
-
-也可以为智能合约提供报告其状态的能力，而不消耗 gas。这可以通过`meta_state`函数来实现。它获得`EscrowState`枚举，并以下面指定的`EscrowStateReply`枚举进行回复。
-
-```rust
-enum EscrowState {
-    GetInfo(WalletId),
-}
-```
-
-```rust
-enum EscrowStateReply {
-    Info(Account),
-}
-```
-
-### Actions & events
-
-**Action** 是一个枚举，它被发送给一个程序，并包含关于它应该做什么的信息。在成功处理 **Action** 后，程序会用 **Event** 枚举来回复，其中包含关于已处理的 **Action** 和其结果的信息。
-
-```rust
-enum EscrowAction {
+/// An enum to send the program info about what it should do.
+///
+/// After a successful processing of this enum, the program replies with [`EscrowEvent`].
+#[derive(Decode, Encode, TypeInfo)]
+pub enum EscrowAction {
+    /// Creates one escrow wallet and replies with its ID.
+    ///
+    /// # Requirements
+    /// * [`msg::source()`](gstd::msg::source) must be `buyer` or `seller` for this wallet.
+    /// * `buyer` or `seller` mustn't have the zero address.
+    ///
+    /// On success, returns [`EscrowEvent::Created`].
     Create {
+        /// A buyer.
         buyer: ActorId,
+        /// A seller.
         seller: ActorId,
+        /// An amount of tokens.
         amount: u128,
     },
-    Deposit(WalletId),
-    Confirm(WalletId),
-    Refund(WalletId),
-    Cancel(WalletId),
+
+    /// Makes a deposit from a buyer to an escrow wallet
+    /// and changes wallet's [`WalletState`] to [`AwaitingConfirmation`](WalletState::AwaitingConfirmation).
+    ///
+    /// Transfers tokens to an escrow wallet until a deal is confirmed (by [`EscrowAction::Confirm`]) or cancelled ([`EscrowAction::Cancel`]).
+    ///
+    /// # Requirements
+    /// * [`msg::source()`](gstd::msg::source) must be a buyer for this wallet.
+    /// * Wallet mustn't be paid or closed (that is, wallet's [`WalletState`] must be [`AwaitingDeposit`](WalletState::AwaitingDeposit)).
+    ///
+    /// On success, returns [`EscrowEvent::Deposited`].
+    Deposit(
+        /// A wallet ID.
+        WalletId,
+    ),
+
+    /// Confirms a deal by transferring tokens from an escrow wallet
+    /// to a seller and changing wallet's [`WalletState`] to [`Closed`](WalletState::Closed).
+    ///
+    /// Transfers tokens from an escrow wallet to a seller for this wallet.
+    ///
+    /// # Requirements
+    /// * [`msg::source()`](gstd::msg::source) must be a buyer for this wallet.
+    /// * Wallet must be paid and unclosed (that is, wallet's [`WalletState`] must be [`AwaitingDeposit`](WalletState::AwaitingConfirmation)).
+    ///
+    /// On success, returns [`EscrowEvent::Confirmed`].
+    Confirm(
+        /// A wallet ID.
+        WalletId,
+    ),
+
+    /// Refunds tokens from an escrow wallet to a buyer
+    /// and changes wallet's [`WalletState`] back to [`AwaitingDeposit`](WalletState::AwaitingDeposit)
+    /// (that is, a wallet can be reused).
+    ///
+    /// Refunds tokens from an escrow wallet to a buyer for this wallet.
+    ///
+    /// # Requirements
+    /// * [`msg::source()`](gstd::msg::source) must be a seller for this wallet.
+    /// * Wallet must be paid and unclosed (that is, wallet's [`WalletState`] must be [`AwaitingDeposit`](WalletState::AwaitingConfirmation)).
+    ///
+    /// On success, returns [`EscrowEvent::Refunded`].
+    Refund(
+        /// A wallet ID.
+        WalletId,
+    ),
+
+    /// Cancels a deal and closes an escrow wallet by changing its [`WalletState`] to [`Closed`](WalletState::Closed).
+    ///
+    /// # Requirements
+    /// * [`msg::source()`](gstd::msg::source) must be a buyer or seller for this wallet.
+    /// * Wallet mustn't be paid or closed (that is, wallet's [`WalletState`] must be [`AwaitingDeposit`](WalletState::AwaitingDeposit)).
+    ///
+    /// On success, returns [`EscrowEvent::Cancelled`].
+    Cancel(
+        /// A wallet ID.
+        WalletId,
+    ),
 }
 ```
 
+### Meta state 查询
+
 ```rust
-enum EscrowEvent {
-    Cancelled {
-        buyer: ActorId,
-        seller: ActorId,
-        amount: u128,
-    },
-    Refunded {
-        buyer: ActorId,
-        amount: u128,
-    },
-    Confirmed {
-        seller: ActorId,
-        amount: u128,
-    },
-    Deposited {
-        buyer: ActorId,
-        amount: u128,
-    },
-    Created(WalletId),
+/// An enum for requesting the program state.
+///
+/// After a successful processing of this enum, the program replies with [`EscrowStateReply`].
+#[derive(Decode, Encode, TypeInfo)]
+pub enum EscrowState {
+    /// Gets wallet info.
+    ///
+    /// On success, returns [`EscrowStateReply::Info`].
+    Info(
+        /// A wallet ID.
+        WalletId,
+    ),
+    /// Gets all created wallets.
+    ///
+    /// On success, returns [`EscrowStateReply::CreatedWallets`].
+    CreatedWallets,
 }
 ```
+
+## 用户界面
+
+一个[现成的应用](https://escrow.gear-tech.io/)实例提供了一个与[第三方担保](https://github.com/gear-dapps/dao-light)智能合约互动的用户界面。
+
+
+你也可以通过视频了解如何使用：**https://youtu.be/CD8j4epEY4E**.
+
+![img alt](./img/escrow.png)
+
+源码在 [GitHub](https://github.com/gear-tech/gear-js/tree/main/apps/escrow).
+
+### .env 中基本配置
+
+For proper application functioning, one needs to create `.env` file and adjust an environment variable parameters. An example is available [here](https://github.com/gear-tech/gear-js/blob/main/apps/escrow/.env.example).
+
+为了使应用程序正常运行，需要创建`.env`文件并调整环境变量。有一个例子在[这里](https://github.com/gear-tech/gear-js/blob/main/apps/escrow/.env.example)。
+
+```sh
+REACT_APP_NODE_ADDRESS
+```
+
+- `REACT_APP_NODE_ADDRESS` 是 Gear Network 的 地址 (默认 wss://rpc-node.gear-tech.io:443)
+
+:::note
+
+为了使所有的功能都能按预期工作，应该根据当前 `@gear-js/api` 的版本来选择节点及其运行时版本。
+
+在应用程序出现问题时，尝试切换到另一个网络或运行你自己的本地节点，并在 `.env` 文件中指定其地址。确保智能合约 wasm 文件已上传并在该网络中运行。
+
+:::
 
 ## 源码
 
-Escrow 的合约源代码可以在 [GitHub](https://github.com/gear-dapps/escrow) 找到。
+Escrow 的合约源码可以在 [GitHub](https://github.com/gear-dapps/escrow) 找到。
 
-更多关于在 Gear 的测试智能合约的细节，请参考这篇文章：[应用测试](https://wiki.gear-tech.io/zh-cn/developing-contracts/testing/)。
+更多关于在 Gear 的测试智能合约的细节，请参考这篇文章：[应用测试](/docs/developing-contracts/testing)。
