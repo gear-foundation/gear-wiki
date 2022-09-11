@@ -1,5 +1,5 @@
 ---
-sidebar_label: 'PING-PONG'
+sidebar_label: PING-PONG
 sidebar_position: 2
 ---
 

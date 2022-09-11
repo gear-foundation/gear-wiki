@@ -1,5 +1,5 @@
 ---
-sidebar_label: 'Gear Feeds'
+sidebar_label: Gear Feeds
 sidebar_position: 6
 ---
 

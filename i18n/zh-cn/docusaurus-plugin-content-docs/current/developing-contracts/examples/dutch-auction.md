@@ -1,5 +1,5 @@
 ---
-sidebar_label: '荷兰式拍卖'
+sidebar_label: 荷兰式拍卖
 sidebar_position: 10
 ---
 

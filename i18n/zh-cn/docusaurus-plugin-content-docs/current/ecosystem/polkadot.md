@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-sidebar_label: 'Polkadot'
+sidebar_label: Polkadot
 ---
 
 # Polkadot 网络
@@ -39,7 +39,7 @@ Polkadot 架构中有几个组成部分，分别是：
 
 ### 跨链桥
 
-跨链桥是一种特殊的连接，它允许 Polkadot 生态系统连接到外部网络并与之通信，如以太坊、比特币等。这样的网络可以被认为是 Layer-1 。桥连接允许将代币或任意数据从一个区块链转移到另一个区块链。
+跨链桥是一种特殊的连接，它允许 Polkadot 生态系统连接到外部网络并与之通信，如以太坊、比特币等。这样的网络可以被认为是 Layer-1。桥连接允许将代币或任意数据从一个区块链转移到另一个区块链。
 
 ### Gear 在 Polkadot 生态中的角色
 
@@ -47,8 +47,8 @@ Polkadot 架构中有几个组成部分，分别是：
 
 与 Polkadot 一样，Gear 使用 Substrate 框架，这使得为特定应用创建不同区块链的过程得以简化。Substrate 提供了开箱即用的可扩展能力，这让用户可以专注于在协议上创建自定义引擎。
 
-Polkadot 的核心方面是它能够在链之间路由任意消息。 Polkadot 和 Gear 网络使用相同的语言——异步消息——因此所有使用 Gear 构建的项目都可以轻松集成到 Polkadot 和 Kusama 网络中。 异步消息传递架构使 Gear 成为高效且易于使用的平行链。
+Polkadot 的核心方面是它能够在链之间路由任意消息。Polkadot 和 Gear 网络使用相同的语言——异步消息——因此所有使用 Gear 构建的项目都可以轻松集成到 Polkadot 和 Kusama 网络中。异步消息传递架构使 Gear 成为高效且易于使用的平行链。
 
 基于 Gear 的项目可以将他们的解决方案无缝集成到整个 Polkadot/Kusama 生态系统中。
 
-Gear 的大多数开发人员和启发者都直接参与了 Polkadot 和 Substrate 技术的创建。 Gear 正在开发中，考虑到 Substrate 的架构和设计的特点。我们依赖于我们产品的高安全性和灵活性，就像 Polkadot 一样。
+Gear 的大多数开发人员和启发者都直接参与了 Polkadot 和 Substrate 技术的创建。Gear 正在开发中，考虑到 Substrate 的架构和设计的特点。我们依赖于我们产品的高安全性和灵活性，就像 Polkadot 一样。
