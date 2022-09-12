@@ -22,3 +22,5 @@ WebAssembly has the following advantages:
  - WASM is also readable and debuggable. Although WebAssembly is a low-level language, it does have a human-readable text format that allows code to be written, viewed and debugged by hand.
 
  - It’s also extremely secure as it’s run in a safe, sandboxed environment and like other web code, it will enforce the browsers same-origin and permissionless security policies.
+
+WASM format allows Gear’s developers write applications in Rust today along with C#/C++, Go, and Javascript in the future.

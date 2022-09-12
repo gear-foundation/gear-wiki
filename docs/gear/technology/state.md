@@ -1,6 +1,6 @@
 ---
-sidebar_position: 1
-sidebar_label: State Components
+sidebar_position: 2
+sidebar_label: Gear Network State
 ---
 
 # State components

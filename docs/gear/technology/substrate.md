@@ -1,9 +1,25 @@
 ---
-sidebar_position: 2
+sidebar_position: 1
 sidebar_label: Substrate
 ---
 
 # Substrate
+
+Substrate is a modular framework that enables the creation of unique blockchains by composing custom or pre-built components.
+
+It`s easy to understand the functions of Substrate by its name. Substrate is a template that provides extensive functionality out-of-the-box, including consensus mechanisms, governance features, WASM, and more. Substrate features are the following:
+
+- Forkless Update
+- Built-in Coordination
+- Cross-Language Support with WebAssembly
+- Light-Client Friendly
+- Deterministic Finality
+- Seamless Integration
+
+Substrate allows us to significantly reduce development time and focus on developing the main Gear component. Rust guarantees security and high performance.
+
+See more about Substrate https://www.substrate.io/
+
 
 As Gear uses a Substrate framework, the creation of different blockchains for specific applications is simplified. Substrate provides extensive functionality out-of-the-box and allows developers to focus on creating a custom engine on top of the protocol. This covers the most desired requirements for enterprise-ready decentralized projects.
 
