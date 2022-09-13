@@ -5,27 +5,25 @@ sidebar_label: Send Message
 
 # Send Message
 
-This example shows how to send messages to the program:
+Use `api.message.send` method to send messages to the program:
 
 ```javascript
 try {
   const message = {
     destination: destination, // programId
     payload: somePayload,
-    gasLimit: 100_000_000,
+    gasLimit: 10000000,
     value: 1000,
   };
-  // By default, the payload will be encoded using meta.handle_input type
-  const submitted = await gearApi.message.submit(message, meta);
-
-  // If you need to specify a different handler
-  // For example 
-  await gearApi.message.submit(message, meta, meta.async_handle_input); 
+  // In that case payload will be encoded using meta.handle_input type
+  let extrinsic = gearApi.message.send(message, meta);
+  // So if you want to use another type you can specify it
+  extrinsic = gearApi.message.send(message, meta, meta.async_handle_input);
 } catch (error) {
   console.error(`${error.name}: ${error.message}`);
 }
 try {
-  await gearApi.message.signAndSend(keyring, (event) => {
+  await extrinsic.signAndSend(keyring, (event) => {
     console.log(event.toHuman());
   });
 } catch (error) {
@@ -42,7 +40,7 @@ In real conditions to ensure successful message processing, the calculation of t
 
 ### Send reply message
 
-When you need to reply to a message received from a program, use this example:
+When you need to reply to a message received from a program, use `api.message.reply`:
 
 ```javascript
 try {
@@ -52,18 +50,14 @@ try {
     gasLimit: 10000000,
     value: 1000,
   };
-  // In that case, the payload will be encoded using meta.async_handle_input type if it exists, if not it will be used meta.async_init_input
-
-  const submitted = await gearApi.reply.submit(reply, meta);
-
-  // If you need to specify a handler mannualy
-  // For example 
-  await gearApi.reply.submit(reply, meta, meta.async_init_input);
+  // In this case payload will be encoded using `meta.async_handle_input` type if it exsits,
+  // otherwise `meta.async_init_input` will be used
+  const extrinsic = gearApi.message.sendReply(reply, meta);
 } catch (error) {
   console.error(`${error.name}: ${error.message}`);
 }
 try {
-  await gearApi.reply.signAndSend(keyring, (events) => {
+  await extrinsic(keyring, (events) => {
     console.log(event.toHuman());
   });
 } catch (error) {

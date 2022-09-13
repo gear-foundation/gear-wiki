@@ -7,16 +7,6 @@ sidebar_label: Cookbook
 
 Here is collected a set of useful code snippets in a question-answer format:
 
-## Subscribe to new blocks
-
-```javascript
-const unsub = await gearApi.gearEvents.subscribeToNewBlocks((header) => {
-  console.log(`New block with number: ${header.number.toNumber()} and hash: ${header.hash.toHex()}`);
-});
-// Unsubscribe
-unsub();
-```
-
 ### Get block data
 
 ```javascript
@@ -74,4 +64,42 @@ const transactionFee = paymentInfo.partialFee.toNumber();
 consolg.log(transactionFee);
 ```
 
+## Sign data
 
+Create signature
+
+```javascript
+import { GearKeyring } from '@gear-js/api';
+const message = 'your message';
+const signature = GearKeyring.sign(keyring, message);
+```
+
+Validate signature
+
+```javascript
+import { signatureIsValid } from '@gear-js/api';
+const publicKey = keyring.address;
+const verified = signatureIsValid(publicKey, signature, message);
+```
+
+## Convert public keys into ss58 format and back
+
+Use `encodeAddress` and `decodeAddress` functions to convert the public key into ss58 format and back.
+
+Convert to raw format
+
+```javascript
+import { decodeAddress } from '@gear-js/api';
+console.log(decodeAddress('5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY'));
+```
+
+Convert to ss58 format
+
+```javascript
+import { encodeAddress } from '@gear-js/api';
+console.log(
+  encodeAddress(
+    '0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d',
+  ),
+);
+```
