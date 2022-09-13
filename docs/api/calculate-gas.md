@@ -7,18 +7,18 @@ sidebar_label: Calculate gas
 
 Gear nodes charge gas fees for all network operations, whether that be executing a program’s code or processing a message. This gas is paid by the initiator of these actions.
 
-They guarantee successful message processing and to avoid errors like `Gaslimit exceeded`, you can simulate the execution in advance to calculate the exact value of gas consumed.
+They guarantee successful message processing and to avoid errors like `Gaslimit exceeded`, you can simulate the execution in advance to calculate the exact amount of gas that will be consumed.
 
 ## Calculate gas for messages
 
-To find out the minimum gas amount to send extrinsic, use `gearApi.program.calculateGas.[method]`. Depending on the conditions, you can calculate gas for initalizing a program or processing a message in `handle()` or `reply()`.
+To find out the minimum gas amount required to send extrinsic, use `gearApi.program.calculateGas.[method]`. Depending on the conditions, you can calculate gas for initializing a program or processing a message in `handle()` or `reply()`.
 
 :::info
 Gas calculation returns the GasInfo object, which contains 5 parameters:
 
-- `min_limit` - Minimum gas limit required for execution
-- `reserved` - Gas amount that will be reserved for other on-chain interactions
-- `burned` - Number of gas burned during message processing
+- `min_limit` - minimum gas limit required for execution
+- `reserved` - gas amount that will be reserved for other on-chain interactions
+- `burned` - number of gas burned during message processing
 - `may_be_returned` - value that can be returned in some cases
 - `waited` - notifies that the message will be added to waitlist
   :::
