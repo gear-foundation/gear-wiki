@@ -1,7 +1,7 @@
 ---
-title: Why Gear?
+title: Why do we Gear?
 sidebar_position: 2
-sidebar_label: Why Gear?
+sidebar_label: Why do we build Gear?
 ---
 
 ## Global aspect
@@ -81,3 +81,5 @@ The central aspect of Polkadot is its ability to route arbitrary messages betwee
 The majority of developers and inspirers of Gear Protocol were directly involved in creating Polkadot and Substrate technologies. Gear is developing, taking into account the features of the architecture and design of its older brother. We rely on the high security and flexibility of our product, just like Polkadot.
 
 Gear networks scale naturally as hardware improves as it utilizes all CPU cores. Anyone with a standard computer can run a Gear node today and always. With its shardable design, Gear networks can scale by deploying across multiple parachain slots and can be sharded as a standalone network for additional scalability.
+
+For additional details, refer to [Gear Whitepaper](https://whitepaper.gear-tech.io/).

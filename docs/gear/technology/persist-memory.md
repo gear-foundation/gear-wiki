@@ -1,7 +1,12 @@
 ---
-sidebar_label: Memory Parallelism
-sidebar_position: 5
+sidebar_label: Persistent Memory
+sidebar_position: 4
 ---
+
+
+Smart contracts are stored in the blockchain’s state and are invoked, preserving their state upon request.
+
+...
 
 # Memory parallelism
 

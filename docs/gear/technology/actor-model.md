@@ -1,9 +1,13 @@
 ---
 sidebar_label: Actor Model
-sidebar_position: 4
+sidebar_position: 2
 ---
 
 # Actor Model
+
+One of the key and distinguished feature of Gear Protocol is - Actor model for message-passing communcations.
+
+....
 
 In concurrent computing systems, “message-passing communication” means that programs communicate by exchanging messages. This has its advantages over “shared memory communication” as message passing is easier to understand than shared memory concurrency as it’s more robust and has better performance characteristics.
 
