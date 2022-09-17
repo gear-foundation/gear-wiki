@@ -1,5 +1,5 @@
 ---
-title: Why do we Gear?
+title: Why do we build Gear?
 sidebar_position: 2
 sidebar_label: Why do we build Gear?
 ---
