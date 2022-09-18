@@ -11,13 +11,13 @@ Actor model framework enables asynchronous messaging and parallel computation wh
 
 In concurrent computing systems, “message-passing communication” means that programs communicate by exchanging messages. This has its advantages over “shared memory communication” as message passing is easier to understand than shared memory concurrency as it’s more robust and has better performance characteristics.
 
-For inter-process communications, Gear Protocol uses the Actor model approach. The principle of the Actor model approach is that programs never share any state and just exchange messages between each other.
+The principle of the Actor model approach is that programs never share any state and just exchange messages between each other. With the Actor model, a system consist of simultaneously functioning objects that communicate with each other exclusively by messaging. 
 
-With the Actor model, systems consist of simultaneously functioning objects that communicate with each other exclusively by messaging. While an ordinary Actor model does not guarantee message ordering, Gear Protocol provides some additional guarantees that the order of messages between two particular programs is preserved.
+While an ordinary Actor model does not guarantee message ordering, Gear Protocol provides some additional guarantees that the order of messages between two particular programs is preserved.
 
 Actors are isolated from each other and do not share their memory. They have a state and the only way to change it is by receiving a message. 
 
-The Actor model guarantees high scalability and high fault tolerance.
+The Actor model guarantees high scalability and high fault tolerance. As applications become more computationally intensive over time in Web3, the Actor model will naturally allow advancements in CPU technology to support this continued scale.
 
 ## Actor
 

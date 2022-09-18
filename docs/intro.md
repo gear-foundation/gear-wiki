@@ -17,7 +17,7 @@ As our project is developing and growing, contributions are more than welcome!
 
 Gear Protocol is a Substrate-based smart-contract platform that enables anyone to develop and run a dApp in a matter of minutes. Gear Protocol is the most developer-friendly way to implement smart contracts with arbitratry logic and of any complexity. Gear smart-contract are run as WebAssembly programs so they can be compiled from many popular programming languages, such as Rust, C, C++ and many more.  
 
-The protocol ensures very minimal, intuitive and sufficient API for implementing programs and running them on multiple networks without having to rewrite them. From a technological point of view, Gear Protocol is distinguished by fundamentally new features that allow you to create asynchronous programs with a completely new, previously unattainable user experience, namely - Actor model for communication, persistent memory, WebAssembly execution environment.
+The protocol ensures very minimal, intuitive and sufficient API for implementing programs and running them on multiple networks without having to rewrite them. From a technological point of view, Gear Protocol is distinguished by fundamentally new features that allow you to create asynchronous programs with a completely new, previously unattainable user experience, namely - Actor model for communication, persistent memory, WebAssembly execution environment. Protocol dictates what actors should look like as a communicating entities.
 
 Gear Protocol will assist with the transition to mass use of Web3 technologies by enabling the running of innovative dApps, microservices, middleware and open APIs.
 
