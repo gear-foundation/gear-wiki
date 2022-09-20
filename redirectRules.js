@@ -20,7 +20,7 @@ const urlList = [
         "from": "/gear/actor-model"
     },
     {
-        "to": "/docs/gear/technology/memory-parallelism",
+        "to": "/docs/gear/technology/persist-memory",
         "from": "/gear/memory-parallelism"
     },
     {
