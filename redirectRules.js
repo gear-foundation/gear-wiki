@@ -4,7 +4,7 @@ const urlList = [
         "from": "/gear/glossary"
     },
     {
-        "to": "/docs",
+        "to": "/docs/",
         "from": "/gear/introduction"
     },
     {
