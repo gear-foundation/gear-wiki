@@ -4,35 +4,35 @@ const urlList = [
         "from": "/gear/glossary"
     },
     {
-        "to": "/docs/gear/introduction",
+        "to": "/docs",
         "from": "/gear/introduction"
     },
     {
-        "to": "/docs/gear/gear-state/state",
+        "to": "/docs/gear/technology/state",
         "from": "/gear/gear-state/state"
     },
     {
-        "to": "/docs/gear/gear-state/state-transition",
+        "to": "/docs/gear/technology/state-transition",
         "from": "/gear/gear-state/state-transition"
     },
     {
-        "to": "/docs/gear/actor-model",
+        "to": "/docs/gear/technology/actor-model",
         "from": "/gear/actor-model"
     },
     {
-        "to": "/docs/gear/memory-parallelism",
+        "to": "/docs/gear/technology/memory-parallelism",
         "from": "/gear/memory-parallelism"
     },
     {
-        "to": "/docs/gear/WASM",
+        "to": "/docs/gear/technology/WASM",
         "from": "/gear/WASM"
     },
     {
-        "to": "/docs/ecosystem/polkadot",
+        "to": "/docs/gear/glossary",
         "from": "/ecosystem/polkadot"
     },
     {
-        "to": "/docs/ecosystem/substrate",
+        "to": "/docs/gear/technology/substrate",
         "from": "/ecosystem/substrate"
     },
     {
@@ -108,79 +108,79 @@ const urlList = [
         "from": "/developing-contracts/deploy"
     },
     {
-        "to": "/docs/examples/prerequisites",
+        "to": "/docs/developing-contracts/examples/prerequisites",
         "from": "/examples/prerequisites"
     },
     {
-        "to": "/docs/examples/ping",
+        "to": "/docs/developing-contracts/examples/ping",
         "from": "/examples/ping"
     },
     {
-        "to": "/docs/examples/gft-20",
+        "to": "/docs/developing-contracts/examples/gft-20",
         "from": "/examples/gft-20"
     },
     {
-        "to": "/docs/examples/gnft-721",
+        "to": "/docs/developing-contracts/examples/gnft-721",
         "from": "/examples/gnft-721"
     },
     {
-        "to": "/docs/examples/gmt-1155",
+        "to": "/docs/developing-contracts/examples/gmt-1155",
         "from": "/examples/gmt-1155"
     },
     {
-        "to": "/docs/examples/feeds",
+        "to": "/docs/developing-contracts/examples/feeds",
         "from": "/examples/feeds"
     },
     {
-        "to": "/docs/examples/DAO",
+        "to": "/docs/developing-contracts/examples/DAO",
         "from": "/examples/DAO"
     },
     {
-        "to": "/docs/examples/escrow",
+        "to": "/docs/developing-contracts/examples/escrow",
         "from": "/examples/escrow"
     },
     {
-        "to": "/docs/examples/lottery",
+        "to": "/docs/developing-contracts/examples/lottery",
         "from": "/examples/lottery"
     },
     {
-        "to": "/docs/examples/dutch-auction",
+        "to": "/docs/developing-contracts/examples/dutch-auction",
         "from": "/examples/dutch-auction"
     },
     {
-        "to": "/docs/examples/supply-chain",
+        "to": "/docs/developing-contracts/examples/supply-chain",
         "from": "/examples/supply-chain"
     },
     {
-        "to": "/docs/examples/multisig-wallet",
+        "to": "/docs/developing-contracts/examples/multisig-wallet",
         "from": "/examples/multisig-wallet"
     },
     {
-        "to": "/docs/examples/concert",
+        "to": "/docs/developing-contracts/examples/concert",
         "from": "/examples/concert"
     },
     {
-        "to": "/docs/examples/marketplace",
+        "to": "/docs/developing-contracts/examples/marketplace",
         "from": "/examples/marketplace"
     },
     {
-        "to": "/docs/examples/rmrk",
+        "to": "/docs/developing-contracts/examples/rmrk",
         "from": "/examples/rmrk"
     },
     {
-        "to": "/docs/examples/onchain-nft",
+        "to": "/docs/developing-contracts/examples/onchain-nft",
         "from": "/examples/onchain-nft"
     },
     {
-        "to": "/docs/examples/staking",
+        "to": "/docs/developing-contracts/examples/staking",
         "from": "/examples/staking"
     },
     {
-        "to": "/docs/examples/crowdsale-ico",
+        "to": "/docs/developing-contracts/examples/crowdsale-ico",
         "from": "/examples/crowdsale-ico"
     },
     {
-        "to": "/docs/examples/rock-paper-scissors",
+        "to": "/docs/developing-contracts/examples/rock-paper-scissors",
         "from": "/examples/rock-paper-scissors"
     },
     {
@@ -260,11 +260,11 @@ const urlList = [
         "from": "/general/dao"
     },
     {
-        "to": "/docs/examples/gft-20",
+        "to": "/docs/developing-contracts/examples/gft-20",
         "from": "/developing-contracts/examples/erc20"
     },
     {
-        "to": "/docs/examples/gft-20",
+        "to": "/docs/developing-contracts/examples/gft-20",
         "from": "/docs/developing-contracts/examples/erc20"
     }
 ]
