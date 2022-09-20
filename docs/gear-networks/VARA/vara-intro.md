@@ -1,13 +1,12 @@
 ---
-title: About VARA Network
+title: About Vara Network
 sidebar_position: 1
-sidebar_label: About VARA Network
+sidebar_label: About Vara Network
 ---
 
-Vara Network can be considered mostly as a test-bed for optimizations and experiments. It will have the utility of a single-chain, high-performance network. Once it is live, it will live forever and will never lose any user data.
-It will have very little governance.
+**Vara Network** can be considered mostly as a test-bed for optimizations and experiments. It will have the utility of a single-chain, high-performance, lowest latency network. Once it is live, it will live forever and will never lose any user data. It will have very little governance. Gaming, payments and experimental use cases will likely be best suited for Vara.
 
-The main features of VARA network are:
+The main features of Vara network are:
 
 - Fastest truly decentralized L1 ever
 - Testbed for new features and optimizations
