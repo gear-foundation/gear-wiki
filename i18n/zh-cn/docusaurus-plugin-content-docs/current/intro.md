@@ -19,7 +19,7 @@ slug: /
 
 Gear 是一个基于 Substrate 的智能合约平台，使任何人都能在几分钟内部署一个 dApp。Gear 是运行智能合约的最具成本效益的方式，这些智能合约是由许多流行的编程语言（如 Rust、C、C++ 等）编译而成。它确保了非常简约、直观和充分的 API，可以在多个网络上运行新写的和现有的程序，而不必重写。智能合约存储在区块链的状态中，并被调用，根据要求保留其状态。
 
-Gear 正计划成为 Polkadot 和 Kusama 网络中的一个准成员，在这些各自的网络中托管智能合约。这将意味着，通过在 Gear 上的部署，开发者将能够以最小的成本利用 Polkadot 和 Kusama 的网络及[生态系统](/ecosystem/polkadot.md)的所有好处。
+Gear 正计划成为 Polkadot 和 Kusama 网络中的一个准成员，在这些各自的网络中托管智能合约。这将意味着，通过在 Gear 上的部署，开发者将能够以最小的成本利用 Polkadot 和 Kusama 的网络及[生态系统](/docs/gear/technology/substrate)的所有好处。
 
 Gear 将通过使创新的 dApps、微服务、中间件和开放的 API  的运行，协助过渡到大规模用 Web3 技术。
 
