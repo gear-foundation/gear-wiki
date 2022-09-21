@@ -53,19 +53,15 @@ A Decentralized Autonomous Organization, or DAO for short, is an organization th
 
 Decentralized Finance, or DeFi for short, are financial services that are powered by decentralized applications and blockchain technology.
 
-### GRB
-
-GRB is Gear’s bonus reward that can be earned by taking part in events or contributing to the Gear protocol.
-
-### Layer 0 protocol
+### Layer-0 protocol
 
 The ground floor for all blockchain protocols. Examples of operating Layer 0 blockchains include Kusama and Polkadot.
 
-### Layer 1 blockchain protocol
+### Layer-1 blockchain protocol
 
-A term used to describe the underlying main blockchain architecture. It’s a set of solutions that improve the base protocol itself to make the overall system more scalable. The two approaches proposed for implementing Layer 1 solutions include the consensus protocol and sharding. Examples of operating Layer 1 blockchains include Bitcoin, Ethereum etc.
+A term used to describe the underlying main blockchain architecture. It’s a set of solutions that improve the base protocol itself to make the overall system more scalable. The two approaches proposed for implementing Layer 1 solutions include the consensus protocol and sharding. Examples of operating Layer-1 blockchains include Bitcoin, Ethereum etc.
 
-### Layer 2 blockchain protocol
+### Layer-2 blockchain protocol
 
 A secondary framework or protocol that is built on top of an existing blockchain system. The main goal of these protocols is to solve the transaction speed and scaling difficulties that are being faced by the major cryptocurrency networks.
 
@@ -115,7 +111,7 @@ Substrate is the modular framework for building customized blockchains and the f
 
 ### Transaction
 
-A record in a digital ledger that represents an atomic event in a blockchain. In case of Gear transactions can be 4 types: create a program; send a message; dequeue messages; balance transfers.
+A record in a digital ledger that represents an atomic event in a blockchain. In case of Gear Protocol transactions can be 4 types: create a program; send a message; dequeue messages; balance transfers.
 
 ### Validator
 

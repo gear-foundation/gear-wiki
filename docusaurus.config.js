@@ -34,6 +34,11 @@ module.exports = {
           label: 'Docs',
         },
         {
+          href: 'https://www.vara-network.io/',
+          label: 'VARA',
+          position: 'right',
+        },
+        {
           href: 'https://www.gear-tech.io/',
           label: 'Gear-tech.io',
           position: 'right',

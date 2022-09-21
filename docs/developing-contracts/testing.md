@@ -75,7 +75,7 @@ gtest = { git = "https://github.com/gear-tech/gear.git" }
 
 ## `gtest` capabilities
 
-The example provided for [PING-PONG](/docs/examples/ping.md)  program.
+The example provided for [PING-PONG](/docs/developing-contracts/examples/ping)  program.
 
 ```rust
 use gtest::{Log, Program, System};
