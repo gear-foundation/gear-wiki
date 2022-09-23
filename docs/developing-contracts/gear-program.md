@@ -1,6 +1,6 @@
 ---
 sidebar_label: Executable functions
-sidebar_position: 2
+sidebar_position: 1
 ---
 
 # Executable functions
@@ -43,8 +43,7 @@ Processing the reply to the message in Gear program is performed using `handle_r
 
 ```rust
 
-use gstd::msg;
-
+#[no_mangle]
 unsafe extern "C" fn handle_reply() {
     // execute this code during message reply
 }
