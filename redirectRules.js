@@ -92,10 +92,6 @@ const urlList = [
         "from": "/developing-contracts/gear-program"
     },
     {
-        "to": "/docs/developing-contracts/messaging",
-        "from": "/developing-contracts/messaging"
-    },
-    {
         "to": "/docs/developing-contracts/interactions-between-programs",
         "from": "/developing-contracts/interactions-between-programs"
     },
