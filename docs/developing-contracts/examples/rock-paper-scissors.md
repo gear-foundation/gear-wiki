@@ -50,11 +50,11 @@ Then players can register for the game by paying a bet(of bet_size) with sending
 
 The registration stage continues `entry_timeout_ms` milliseconds from the moment the program was deployed(or the end of the previous game). After that the game begins and the players can make a move.
 
->If time of registration stage is over, but only 1 or 0 players has registered, stage will be extended by `entry_timeout_ms`. And the player won't be unregistered.  
+>If time of registration stage is over, but only 1 or 0 players has registered, stage will be extended by `entry_timeout_ms`. And the player won't be unregistered.
 
 ### Moves
 
-During the move phase, players must choose one of five move options(Rock Paper Scissors Lizard Spock). 
+During the move phase, players must choose one of five move options(Rock Paper Scissors Lizard Spock).
 
 To submit a player's choice, the service that provides this capability must allow the player to enter a password or generate a password itself and save it in a local storage. Password is needed to secure user's move from other players, who would really like to see the player's move in the blockchain. After password was generated or entered service should concatenate number of move(Rock - '0', Paper - '1', Scissors - '2', Lizard - '3', Spock - '4') with password and get a string like "2pass". Then service hashes it with 256-bit blake2b, turns into a binary form and sends to the blockchain by `MakeMove(Vec<u8>)` with this hash inside.
 
@@ -74,7 +74,7 @@ After all players have finished or the time has expired, the program determines 
 
 > There are situations in which program can't determine the winner move. For example, there is a Stone move, a Paper move and a Scissors move, in this situation the Stone will crush the Scissors, the Scissors will cut the Paper, and the Paper will cover the Stone, then we will not be able to determine the winning move, because all the moves are beaten. In such situations, all players move on to the next round.
 
-After the program determines the players who have passed to the next round, moves stage starts again and advanced players can make their moves. If there is only one such player, the game ends and the entire reward goes to that player. 
+After the program determines the players who have passed to the next round, moves stage starts again and advanced players can make their moves. If there is only one such player, the game ends and the entire reward goes to that player.
 
 When the game ends, a new game starts immediately with the new config that was set by `ChangeNextGameConfig(GameConfig)`. If it has not been installed, the old config will be relevant.
 
@@ -124,7 +124,7 @@ pub enum RevealResult {
 - `SuccessfulMove(ActorId)` is an event that occurs when someone uses `MakeMove` action successfully, it returns an ActorId of the player who made this move.
 - `SuccessfulReveal` is an event that occurs when someone uses `Reveal` action successfully, it returns reveal result with actual game stage after this reveal.
 - `GameConfigChanged` is an event that occurs when someone uses `ChangeNextGameConfig` action successfully.
-- `GameWasStopped` is an event that occurs when the wallet uses `StopGame` action successfully, it returns the IDs of the players who got their reward or got their bet back.
+- `GameStopped` is an event that occurs when the wallet uses `StopGame` action successfully, it returns the IDs of the players who got their reward or got their bet back.
 
 ### State
 
@@ -151,7 +151,7 @@ pub struct StageDescription {
 ```
 
 - `Config` returns `GameConfig` of a current game.
-- `LobbyList` returns a list of all players registered in this game whether they are currently out of the game or not. 
+- `LobbyList` returns a list of all players registered in this game whether they are currently out of the game or not.
 - `GameStage` returns current `GameStage` with the corresponding `StageDescription`, if necessary, where the program user can get information about the players who are anticipated(`anticipated_players`) at this stage or already finished(`finished_players`).
 - `CurrentStageTimestamp` returns timestamp of current stage start.
 
