@@ -1,5 +1,5 @@
 ---
-sidebar_label: '供应链'
+sidebar_label: 供应链
 sidebar_position: 10
 ---
 
