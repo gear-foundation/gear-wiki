@@ -5,8 +5,6 @@ sidebar_label: 欢迎
 slug: /
 ---
 
-## 欢迎
-
 欢迎来到 Gear 的文档门户。这是一个中央信息源，供每个人寻找关于 Gear 的重要信息、指南和开发人员的文档。
 
 我们的 Wiki 概述了所需的基础信息、一般技术概述、Gear 技术的主要优势、帮助开始设置 Gear 节点、如何上传你的智能合约，同时还提供完整的 API 细节和例子。
@@ -15,7 +13,7 @@ slug: /
 
 由于我们的项目正在发展和壮大，我们非常欢迎你的贡献。
 
-## 什么是Gear？
+## 什么是 Gear Protocol？
 
 Gear 是一个基于 Substrate 的智能合约平台，使任何人都能在几分钟内部署一个 dApp。Gear 是运行智能合约的最具成本效益的方式，这些智能合约是由许多流行的编程语言（如 Rust、C、C++ 等）编译而成。它确保了非常简约、直观和充分的 API，可以在多个网络上运行新写的和现有的程序，而不必重写。智能合约存储在区块链的状态中，并被调用，根据要求保留其状态。
 
@@ -23,7 +21,13 @@ Gear 正计划成为 Polkadot 和 Kusama 网络中的一个准成员，在这些
 
 Gear 将通过使创新的 dApps、微服务、中间件和开放的 API  的运行，协助过渡到大规模用 Web3 技术。
 
-## 如何与Gear社区互动
+## What is Gear Network?
+
+Gear Protocol provides the most cost-effective way to run smart contracts that have been compiled from many popular programming languages, such as Rust, C, C++ and many more.
+
+Powered by Gear Protocol, Gear Networks imply a standalone L1 network as well as are planning on becoming a parachains in the Polkadot and Kusama networks to host smart contracts on these respective networks. This will mean that by deploying on Gear Network, developers would be able to take advantage of all the benefits of the Polkadot and Kusama networks and ecosystems at minimal cost.
+
+## 如何与 Gear 社区互动
 
 ### Github
 
@@ -39,9 +43,9 @@ Gear 将通过使创新的 dApps、微服务、中间件和开放的 API  的运
 
 ### Telegram
 
-加入我们的电报群  
+加入我们的电报群
 [官方电报群](https://t.me/gear_tech)  [中文电报群](https://t.me/Gear_CN)
 
 ### Medium
 
-我们定期在我们的 [Medium 频道](https://medium.com/@gear_techs) 上发布更新和文章。 
+我们定期在我们的 [Medium 频道](https://medium.com/@gear_techs) 上发布更新和文章。
