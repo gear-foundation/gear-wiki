@@ -183,7 +183,7 @@ Gear 提供了一个模拟真实 Gear 去中心化网络的 demo 环境，可以
 
 6. 点击右上方的 `Connect` 按钮，选择一个账户，连接到 Gear Tech。
 
-7. 根据 Actor 模型，智能合约通过消息上传到网络。Gear 节点在消息处理过程中会收取一定的 gas（关于[gas](developing-contracts/messaging.md#gas)）。账户需要有足够的资金来上传智能合约到`TestNet`。点击 "Get test balance"。
+7. 根据 Actor 模型，智能合约通过消息上传到网络。Gear 节点在消息处理过程中会收取一定的 gas。账户需要有足够的资金来上传智能合约到`TestNet`。点击 "Get test balance"。
 
 ![img alt](./img/get-balance.png)
 
