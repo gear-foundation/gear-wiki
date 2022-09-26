@@ -33,9 +33,9 @@ async fn main() {
 }
 ```
 
-```info
+:::info
 `async_init` сan be used together with `async_main`. But functions `init`, `handle_reply` cannot be specified if this macro is used.
-```
+:::
 
 # Cross-program invoke
 
