@@ -19,7 +19,7 @@ Gear 提供了一组例子，可以用来熟悉在 Gear 上编写程序，或者
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
 
-- 添加 `wasm target` 到你的 `toolchain`:
+- 添加 `wasm target` 到你的 `toolchain`：
 
 ```bash
 rustup toolchain add nightly
@@ -45,7 +45,7 @@ cargo new gear-app --lib
     └── Cargo.toml // 合约配置文件
 ```
 
-`Cargo.toml` 是 Rust 项目的 `manifest`, 它包含了所有编译项目所需的元数据。按照 [examples/ping/Cargo.toml](https://github.com/gear-dapps/ping/blob/master/Cargo.toml) 来配置 `Cargo.toml`；
+`Cargo.toml` 是 Rust 项目的 `manifest`，它包含了所有编译项目所需的元数据。按照 [examples/ping/Cargo.toml](https://github.com/gear-dapps/ping/blob/master/Cargo.toml) 来配置 `Cargo.toml`。你可以参考 [5 分钟入门教程](/getting-started-in-5-minutes.md) 了解更多细节。
 
 ## 编译 Rust 合约
 
