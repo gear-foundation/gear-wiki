@@ -5,8 +5,6 @@ sidebar_position: 5
 
 # Deploy smart contracts
 
-Following the principles of Actor model for communication, creating a program is just one of the specific types of transactions that contain a WASM file as a payload.
-
 Uploading a new program (smart-contract) to the blockchain takes place by calling the custom extrinsic `gear.uploadProgram(code, salt, initPayload, gasLimit, value)`. Where:
 
 `code: Bytes` - binary WASM code.
@@ -20,8 +18,6 @@ Uploading a new program (smart-contract) to the blockchain takes place by callin
 `value: u128` - the value that will be transferred to a balance of the newly created account for the program.
 
 ## Program submit events
-
-> Note: while extrinsics represent information from the outside world, events represent information from the chain. Extrinsics can trigger events.
 
 The extrinsic called to submit a program triggers a series of events. [Learn more about events](/docs/api/events#gear-events-types)
 
