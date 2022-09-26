@@ -9,7 +9,7 @@ The program is the main unit of the Gear component. Each program is immutable [W
 
 ## Basic structure
 
-Any program can contain up to 3 entry points that perform various functions in the program lifecycle: `init()`, `handle()`, `handle_reply()`. All of them are optional.
+Any program can contain up to 3 entry points that perform various functions in the program lifecycle: `init()`, `handle()`, `handle_reply()`. All of them are optional, but any program required to have at least one fn: init() or handle()
 
 ### Init()
 
@@ -18,7 +18,7 @@ Optional `init()` function is called only once during program initialization and
 ```rust
 
 #[no_mangle]
-pub unsafe extern "C" fn init() {
+extern "C" fn init() {
     // execute this code during contract initialization
 }
 
@@ -31,21 +31,22 @@ The `handle()` function (also optional) will be called every time the program re
 ```rust
 
 #[no_mangle]
-pub unsafe extern "C" fn handle() {
-    // execute this code during message incoming
+extern "C" fn handle() {
+    // execute this code during explicitly incoming message
 }
 
 ```
 
 ### handle_reply()
 
+
 Processing the reply to the message in Gear program is performed using `handle_reply` function.
 
 ```rust
 
 #[no_mangle]
-unsafe extern "C" fn handle_reply() {
-    // execute this code during message reply
+extern "C" fn handle_reply() {
+    // execute this code during handling reply on the previously sent message
 }
 
 ```

@@ -9,7 +9,7 @@ Gear library `gstd` provides all the necessary and sufficient functions and meth
 
 ## Message handing
 
-Gear allows users and programs to interact with other users and programs via messages. Messages can contain a `payload` that will be able to be processed during message executione. Interaction with messages is possible thanks to the module `msg`
+Gear allows users and programs to interact with other users and programs via messages. Messages can contain a `payload` that will be able to be processed during message execution. Interaction with messages is possible thanks to the module `msg`
 
 ```rust
 use gstd::msg;
