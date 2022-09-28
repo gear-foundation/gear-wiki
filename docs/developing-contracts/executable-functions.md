@@ -5,13 +5,15 @@ sidebar_position: 1
 
 # Executable functions
 
-The program is the main unit of the Gear component. Each program is immutable [WASM](/docs/gear/technology/WASM) blob and has a fixed amount of memory which persists between messagehandling (so-called static area).
+The program is the main unit of the Gear Protocol. Each program in the Gear network is an immutable [WASM](/docs/gear/technology/WASM) blob and has a fixed amount of memory which persists between message handling (so-called static area).
 
 ## Basic structure
 
-Any program can contain up to 3 entry points that perform various functions in the program lifecycle: `init()`, `handle()`, `handle_reply()`. All of them are optional, but any program required to have at least one fn: init() or handle()
+Any program can contain up to 3 entry points that perform various functions in the program lifecycle: `init()`, `handle()`, `handle_reply()`. All of them are optional, but any program required to have at least one fn: init() or handle().
 
-### Init()
+Another special system entry point introduced by the Gear Protocol is `handle_signal()`. It allows the system to communicate with programs if it is necessary to notify (signal) that some event related to the program's messages has happened.
+
+### init()
 
 Optional `init()` function is called only once during program initialization and handles the incoming init payload if any.
 
@@ -40,7 +42,7 @@ extern "C" fn handle() {
 ### handle_reply()
 
 
-Processing the reply to the message in Gear program is performed using `handle_reply` function.
+Processing the reply to the message in the Gear program is performed using the `handle_reply` function.
 
 ```rust
 
@@ -50,4 +52,3 @@ extern "C" fn handle_reply() {
 }
 
 ```
-
