@@ -5,11 +5,11 @@ sidebar_position: 2
 
 # Gear library
 
-Gear library `gstd` provides all the necessary and sufficient functions and methods for develop smart-contracts.
+Gear Protocol’s library `gstd` provides all the necessary and sufficient functions and methods for developing smart-contracts.
 
-## Message handing
+## Message handling
 
-Gear allows users and programs to interact with other users and programs via messages. Messages can contain a `payload` that will be able to be processed during message execution. Interaction with messages is possible thanks to the module `msg`
+Gear Protocol allows users and programs to interact with other users and programs via messages. Messages can contain a `payload` that will be able to be processed during message execution. Interaction with messages is possible thanks to the module `msg`:
 
 ```rust
 use gstd::msg;
@@ -17,8 +17,7 @@ use gstd::msg;
 
 Message processing is possible only inside the defined functions `init()`, `handle()` and `hadle_reply()`. They also define the context for processing such messages.
 
-
-- Get a payload of the message currently being processed and decode it.
+- Get a payload of the message currently being processed and decode it:
 
 ```rust
 use gstd::msg;
@@ -28,7 +27,7 @@ unsafe extern "C" fn handle() {
 }
 ```
 
-- Reply with payload
+- Reply to the message with payload:
 
 ```rust
 use gstd::msg;
@@ -38,7 +37,7 @@ unsafe extern "C" fn handle() {
 }
 ```
 
-- Send message to user
+- Send message to user:
 
 ```rust
 use gstd::{msg, ActorId};
@@ -51,17 +50,17 @@ unsafe extern "C" fn handle() {
 }
 ```
 
-You can see more cases of using `msg` module in our [docs](https://docs.gear.rs/gstd/msg/index.html)
+You can see more cases of using the `msg` module in our [documentation](https://docs.gear.rs/gstd/msg/index.html).
 
-## Sys call's
+## Syscall's
 
-Also in your programs, you can use some system calls related to the program execution flow.
+System calls related to the program execution flow can be also used in your programs:
 
 ```rust
 use gstd::exec;
 ```
 
-- Send a reply after the block timestamp reaches the indicated date
+- Send a reply after the block timestamp reaches the indicated date:
 
 ```rust
 use gstd::{exec, msg};
@@ -73,7 +72,7 @@ unsafe extern "C" fn handle() {
 }
 ```
 
-- Get self value balance in program
+- Get self value balance of a program:
 
 ```rust
 use gstd::exec;
@@ -84,17 +83,17 @@ unsafe extern "C" fn handle() {
 }
 ```
 
-You can read more about program sys calls [here](https://docs.gear.rs/gstd/exec/index.html)
+You can read more about program syscalls [here](https://docs.gear.rs/gstd/exec/index.html).
 
 ## Prelude::*
 
-The `gstd` default prelude. Re-imports default std modules and traits. std can be safely replaced to `gstd  in the Rust programs.
+The `gstd` default prelude lists things that Rust automatically imports into every program. It re-imports default `std` modules and traits. `std` can be safely replaced with `gstd  in the Rust programs.
 
-See more [here](https://docs.gear.rs/gstd/prelude/index.html)
+See more details [here](https://docs.gear.rs/gstd/prelude/index.html).
 
 ## Debug::*
 
-Macro `gstd::debug` provide ability to debug contract during program execution
+Macro `gstd::debug` provide ability to debug contract during program execution:
 
 ```rust
 
@@ -106,7 +105,8 @@ use gstd::{debug, msg};
 pub unsafe extern "C" fn handle() {
    let payload_string: String = msg::load().expect("Unable to decode `String`");
 
-    debug!("{:?} recived message: ", payload_string);
+    debug!("{:?} received message: ", payload_string);
 }
 
 ```
+
