@@ -5,15 +5,17 @@ sidebar_position: 5
 
 # Create program from program
 
-Due to the logic of the execution programs can create other programs.
+Business logic of an arbitrary decentralized application may require the program (smart contract) the possibility of creating, initializing and launching one or several other programs in the network. It can be necessary when external parties (users) need access to their own instance of the typical smart contract. 
 
-To create a program, firstly you have to submit program code using an extrinsic `gear.uploadCode` without initializing the program and get its code hash.
+For example a contract that implements loan functionality. In this case, the program developer can create a loan factory contract that will create instances of loan smart contracts on demand and operate them.
+
+Firstly, to create a program, you have to submit program code to the network using an extrinsic `gear.uploadCode` and get its code hash. Submit program code does not initialize the program.
 
 :::info
-To submit code you can use our GUI [Gear IDEA](https://idea.gear-tech.io/) or just submit it via @gear-js/api library. Also you can use `Gear Program` CLI https://github.com/gear-tech/gear-program
+To submit code you can use our GUI at [Gear IDEA](https://idea.gear-tech.io/) or just submit it via @gear-js/api library. Also you can use `Gear Program` CLI - https://github.com/gear-tech/gear-program
 :::
 
-From now we can use this code to create a new program:
+After the code has been submitted, it can be used to create a new program:
 
 ```rust
 use gstd::{prog::ProgramGenerator, CodeHash};
@@ -29,4 +31,5 @@ unsafe extern "C" fn handle() {
 }
 ```
 
-[See more](https://docs.gear.rs/gstd/prog/index.html) about `gstd::prog` module
+More info about `gstd::prog` module see in https://docs.gear.rs/gstd/prog/index.html
+
