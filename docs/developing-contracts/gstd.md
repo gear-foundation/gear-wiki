@@ -52,7 +52,7 @@ unsafe extern "C" fn handle() {
 
 You can see more cases of using the `msg` module in our [documentation](https://docs.gear.rs/gstd/msg/index.html).
 
-## Syscall's
+## Syscalls
 
 System calls related to the program execution flow can be also used in your programs:
 
@@ -85,13 +85,13 @@ unsafe extern "C" fn handle() {
 
 You can read more about program syscalls [here](https://docs.gear.rs/gstd/exec/index.html).
 
-## Prelude::*
+## Importing familiar types via prelude
 
 The `gstd` default prelude lists things that Rust automatically imports into every program. It re-imports default `std` modules and traits. `std` can be safely replaced with `gstd  in the Rust programs.
 
 See more details [here](https://docs.gear.rs/gstd/prelude/index.html).
 
-## Debug::*
+## Logging inside the contracts
 
 Macro `gstd::debug` provide ability to debug contract during program execution:
 
