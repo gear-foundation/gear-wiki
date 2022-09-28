@@ -15,7 +15,7 @@ Where:
 - `gasLimit: u64` - the amount of gas that users are willing to spend on processing the upload of a new program.
 - `value: u128` - the value that will be transferred to a balance of the newly created account for the program.
 
-## Program submit events
+## Program upload events
 
 > Note: while extrinsics represent information from the outside world, events represent information from the chain. Extrinsics can trigger events.
 
