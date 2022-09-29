@@ -18,7 +18,7 @@ To submit code you can use our GUI at [Gear IDEA](https://idea.gear-tech.io/) or
 After the code has been submitted, it can be used to create a new program:
 
 ```rust
-use gstd::{prog::ProgramGenerator, CodeHash};
+use gstd::{prog::ProgramGenerator, CodeHash, msg};
 
 #[no_mangle]
 unsafe extern "C" fn handle() {
@@ -26,8 +26,12 @@ unsafe extern "C" fn handle() {
         hex_literal::hex!("abf3746e72a6e8740bd9e12b879fbdd59e052cb390f116454e9116c22021ae4a")
             .into();
 
-    ProgramGenerator::create_program_with_gas(submitted_code, b"payload", 10_000_000_000, 0)
-        .unwrap();
+    // ProgramGenerator returs ProgramId         
+
+    let program_id =  ProgramGenerator::create_program_with_gas(submitted_code, b"payload", 10_000_000_000, 0).unwrap();
+    
+    msg::send(program_id, b"hello", 0).expect("Unable to send message");
+
 }
 ```
 
