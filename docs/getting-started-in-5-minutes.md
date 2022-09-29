@@ -179,7 +179,7 @@ Gear provides a demo environment that emulates the real Gear decentralized netwo
 
 ![img alt](./img/connect_account.png)
 
-7. In accordance with the Actor model, smart contracts are uploaded to a network via messages. Gear node charges a gas fee during message processing (see also about [gas](developing-contracts/messaging.md#gas)). Your account balance needs to have enough funds to upload a smart-contract to the `TestNet`. Click "Get test balance".
+7. In accordance with the Actor model, smart contracts are uploaded to a network via messages. Gear node charges a gas fee during message processing. Your account balance needs to have enough funds to upload a smart-contract to the `TestNet`. Click "Get test balance".
 
 ![img alt](./img/get-balance.png)
 
@@ -234,4 +234,4 @@ The red dot status for a program indicates init failure. Try to upload the progr
 In addition to this "Getting started in 5 minutes", you can refer to one more article that demonstrates the simplicity and convenience of creating applications on Gear Platform - [The first smart contract on Rust for beginners](https://app.subsocial.network/6310/gear-tech-the-first-smart-contract-on-rust-for-beginners-31604).
 The article uses Voting application as an example, it describes the structure of Gear smart contracts, how to work with the actor model architecture of programs, process messages, and work with the state.
 
-For more info about writing smart contracts for Gear and the specifics behind the smart contract implementation, refer to [this article on Smart Contracts](developing-contracts/gear-program.md).
+For more info about writing smart contracts for Gear and the specifics behind the smart contract implementation, refer to [this article on Smart Contracts](/docs/developing-contracts/executable-functions).

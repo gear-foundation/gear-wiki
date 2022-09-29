@@ -183,7 +183,7 @@ Gear 提供了一个模拟真实 Gear 去中心化网络的 demo 环境，可以
 
 6. 点击右上方的 `Connect` 按钮，选择一个账户，连接到 Gear Tech。
 
-7. 根据 Actor 模型，智能合约通过消息上传到网络。Gear 节点在消息处理过程中会收取一定的 gas（关于[gas](developing-contracts/messaging.md#gas)）。账户需要有足够的资金来上传智能合约到`TestNet`。点击 "Get test balance"。
+7. 根据 Actor 模型，智能合约通过消息上传到网络。Gear 节点在消息处理过程中会收取一定的 gas。账户需要有足够的资金来上传智能合约到`TestNet`。点击 "Get test balance"。
 
 ![img alt](./img/get-balance.png)
 
@@ -240,4 +240,4 @@ Gear 提供了一个模拟真实 Gear 去中心化网络的 demo 环境，可以
 除了这篇 "5 分钟入门"，你还可以参考另一篇展示在 Gear 平台上创建应用程序的简单性和便利性的文章--[初学者的第一个智能合约](https://app.subsocial.network/6310/gear-tech-the-first-smart-contract-on-rust-for-beginners-31604)。
 这篇文章以 `Voting` 应用程序为例，描述了 Gear 智能合约的结构，如何使用程序的角色模型架构，处理消息，以及如何处理状态。
 
-关于 Gear 编写智能合约的信息以及智能合约实现背后的具体内容，请访问 [智能合约](developing-contracts/gear-program.md)。
+关于 Gear 编写智能合约的信息以及智能合约实现背后的具体内容，请访问 [智能合约](/docs/developing-contracts/executable-functions)。
