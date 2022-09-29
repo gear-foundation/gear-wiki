@@ -1,5 +1,5 @@
 ---
-sidebar_label: '前期准备'
+sidebar_label: 前期准备
 sidebar_position: 1
 ---
 

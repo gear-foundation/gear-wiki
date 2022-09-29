@@ -40,7 +40,7 @@ const FeatureList = [
   {
     title: <Translate>Smart contract examples</Translate>,
     id: 'examples',
-    link: '/docs/developing-contracts/examples/prerequisites',
+    link: '/docs/examples/prerequisites',
     description: <Translate>Experiment with our smart contract examples, try to play around with the code and create your own dApp!</Translate>
   },
 ];

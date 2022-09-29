@@ -3,21 +3,21 @@ sidebar_label: 合约测试
 sidebar_position: 4
 ---
 
-# 如何测试一个智能合约
+# 如何测试一个程序
 
-Gear 团队提供的 [`gtest`](https://github.com/gear-tech/gear/tree/master/gtest) 库是智能合约逻辑测试的推荐选项。这篇文章描述了如何使用 `gtest` 来进行智能合约测试。
+Gear [`gtest`](https://github.com/gear-tech/gear/tree/master/gtest) 库是程序（智能合约）逻辑测试的推荐选项。这篇文章介绍如何使用`gtest`来测试程序。
 
 ## 基础信息
 
 Gear 使用了来自 `cargo` 构建的 Rust 程序标准测试机制。
 
-根据 [Rustbook](https://doc.rust-lang.org/book/ch11-00-testing.html) 中描述的基本概念和测试方法，测试可以被组织成两个主要类别。**单元测试**和**集成测试**。
+根据 [Rustbook](https://doc.rust-lang.org/book/ch11-00-testing.html) 中描述的基本概念和测试方法，测试可以被组织成两个主要类别：**单元测试**和**集成测试**。
 
 **单元测试**能够对每个单元的代码进行测试，并与其他代码隔离。它可以帮助快速找到代码在哪些地方按照预期工作，哪些地方没有。单元测试应该放在`src`目录下，与它们所测试的代码一起放在一个文件中。
 
 即使单元代码工作正常，对代码库的几个部分是否也能一起正常工作进行测试也很重要。对于**集成测试**，需要在项目目录的顶层，即`src'旁边建立一个单独的测试目录。你可以在这个目录下添加任意多的测试文件，Cargo 会把每个文件作为一个单独的 crate 来编译。
 
-## 在测试模式下构建智能合约
+## 在测试模式下构建程序
 
 首先，确保你想测试的程序已经编译成 `WASM` 文件。你可以参考 [Getting started](getting-started-in-5-minutes.md) 了解更多细节。
 
@@ -28,7 +28,7 @@ Gear 使用了来自 `cargo` 构建的 Rust 程序标准测试机制。
     cargo build --release
     ```
 
-    如果使用了一些不稳定的功能，则需要 Nightly 编译器。
+    如果使用了一些不稳定的特性，则需要 Nightly 编译器：
 
     ```bash
     cargo +nightly build --release
@@ -55,7 +55,7 @@ Gear 使用了来自 `cargo` 构建的 Rust 程序标准测试机制。
 
 ## 引入 `gtest` 库
 
-为了使用 `gtest` 库，它必须被导入你的 `Cargo.toml` 文件的 `[dev-dependencies]` 中，以便只在测试时获取和编译它。
+为了使用 `gtest` 库，它必须被导入 `Cargo.toml` 文件的 `[dev-dependencies]` 中，以便只在测试时获取和编译。
 
 ```toml
 [package]
@@ -76,7 +76,7 @@ gtest = { git = "https://github.com/gear-tech/gear.git" }
 
 ## `gtest` 的能力
 
-为 [PING-PONG](examples/ping.md) 程序提供的例子。
+为 [PING-PONG](/docs/examples/ping) 程序提供的测试例子。
 
 ```rust
 use gtest::{Log, Program, System};

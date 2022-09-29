@@ -34,7 +34,7 @@ const meta = await getWasmMetadata(fileBuffer);
 
 ```
 
-## Types
+## 类型
 
 元数据是由其组成的类型来定义的。关于基本类型和方法的更多信息可以在 Polkadot 的[文档](https://polkadot.js.org/docs/api/start/types.basics) 中找到。
 

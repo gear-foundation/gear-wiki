@@ -1,5 +1,5 @@
 ---
-sidebar_label: '部署'
+sidebar_label: 部署合约
 sidebar_position: 5
 ---
 
