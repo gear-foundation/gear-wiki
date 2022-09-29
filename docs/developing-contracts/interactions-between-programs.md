@@ -1,9 +1,9 @@
 ---
-sidebar_label: Cross-program communication
+sidebar_label: Asynchronous programming
 sidebar_position: 4
 ---
 
-# Cross-program communication
+# Asynchronous programming
 
 Asynchronous interaction between Gear programs is similar to the usual asynchronous request in using `await` and implemented by sending a message:
 
@@ -37,7 +37,7 @@ async fn main() {
 `async_init` сan be used together with `async_main`. But functions `init`, `handle_reply` cannot be specified if this macro is used.
 :::
 
-# Cross-program invoke
+# Cross-program message
 
 To send message to Gear program use function `send_for_reply(program, payload, value)`, in this function:
 
