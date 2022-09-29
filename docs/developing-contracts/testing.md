@@ -75,15 +75,8 @@ gtest = { git = "https://github.com/gear-tech/gear.git" }
 
 ## `gtest` capabilities
 
-The example provided for [PING-PONG](/docs/examples/ping) program.
-
+- Initialization of the common environment for running smart contacts:
 ```rust
-use gtest::{Log, Program, System};
-
-#[test]
-fn basics() {
-    // Initialization of the common environment for running smart contacts.
-    //
     // This emulates node's and chain behavior.
     //
     // By default, sets:
@@ -92,21 +85,9 @@ fn basics() {
     // - minimal message id equal 0x010000..
     // - minimal program id equal 0x010000..
     let sys = System::new();
-
-    // You may control time in the system by spending blocks.
-    //
-    // It adds the amount of blocks passed as argument to the current block of the system.
-    // Same for the timestamp. Note, that for now 1 block in Gear network is 1 sec duration.
-    sys.spend_blocks(150);
-
-    // Initialization of styled `env_logger` to print logs (only from `gwasm` by default) into stdout.
-    //
-    // To specify printed logs, set the env variable `RUST_LOG`:
-    // `RUST_LOG="target_1=logging_level,target_2=logging_level" cargo test`
-    //
-    // Gear smart contracts use `gwasm` target with `debug` logging level
-    sys.init_logger();
-
+```
+- Program initialization:
+```rust
     // Initialization of program structure from file.
     //
     // Takes as arguments reference to the related `System` and the path to wasm binary relatively
@@ -114,13 +95,13 @@ fn basics() {
     //
     // Sets free program id from the related `System` to this program. For this case it equals 0x010000..
     // Next program initialized without id specification will have id 0x020000.. and so on.
-    let ping_pong = Program::from_file(
+    let _ = Program::from_file(
         &sys,
         "./target/wasm32-unknown-unknown/release/demo_ping.wasm",
     );
 
     // Also, you may use `Program::current()` function to load the current program.
-    let ping_pong = Program::current(&sys);
+    let _ = Program::current(&sys);
 
     // We can check the id of the program by calling `id()` function.
     //
@@ -172,9 +153,27 @@ fn basics() {
     // If you initialize program not in this scope, in cycle, in other conditions,
     // where you didn't save the structure, you may get the object from the system by id.
     let _ = sys.get_program(105);
-
+```
+- Getting the program from the system:
+```rust
+    // If you initialize program not in this scope, in cycle, in other conditions,
+    // where you didn't save the structure, you may get the object from the system by id.
+    let _ = sys.get_program(105);
+```
+- Initialization of styled `env_logger`:
+```rust
+    // Initialization of styled `env_logger` to print logs (only from `gwasm` by default) into stdout.
+    //
+    // To specify printed logs, set the env variable `RUST_LOG`:
+    // `RUST_LOG="target_1=logging_level,target_2=logging_level" cargo test`
+    //
+    // Gear smart contracts use `gwasm` target with `debug` logging level
+    sys.init_logger();
+```
+- Sending messages:
+```rust
     // To send message to the program need to call one of two program's functions:
-    // `send()` or `send_bytes()`.
+    // `send()` or `send_bytes()` (or `send_with_value` and `send_bytes_with_value` if you need to send message with attached funds).
     //
     // Both of the methods require sender id as the first argument and the payload as second.
     //
@@ -187,8 +186,10 @@ fn basics() {
     // `send()` uses `send_bytes()` under the hood with bytes from payload.encode().
     //
     // First message to the initialized program structure is always the init message.
-    let res = ping_pong.send_bytes(100001, "INIT MESSAGE");
-
+    let res = program.send_bytes(100001, "INIT MESSAGE");
+```
+- Processing the result of the program execution:
+```rust
     // Any sending functions in the lib returns `RunResult` structure.
     //
     // It contains the final result of the processing message and others,
@@ -229,7 +230,8 @@ fn basics() {
     // And it's exit code equals 1, instead of 0 for success replies.
     let _ = Log::error_builder();
 
-    // Let’s send a new message after the program has been initialized.
+    // Let’s send a new message after the program has been initialized. 
+    // The initialized program expects to receive a byte string "PING" and replies with a byte string "PONG".
     let res = ping_pong.send_bytes(100001, "PING");
 
     // Other fields are set optionally by `dest()`, `source()`, `payload()`, `payload_bytes()`.
@@ -261,5 +263,76 @@ fn basics() {
 
     assert!(!res.contains(&(ping_pong_id, ping_pong_id, "PONG")));
     assert!(res.contains(&(1, 100001, "PONG")));
+```
+- Spending blocks:
+```rust
+    // You may control time in the system by spending blocks.
+    //
+    // It adds the amount of blocks passed as argument to the current block of the system.
+    // Same for the timestamp. Note, that for now 1 block in Gear network is 1 sec duration.
+    sys.spend_blocks(150);
+```
+- Reading the program state:
+```rust
+    // To read the program state you need to call one of two program's functions:
+    // `meta_state()` or `meta_state_with_bytes()`.
+    //
+    // The methods require the payload as the input argument.
+    //
+    // The first one requires payload to be CODEC Encodable, while the second requires payload
+    // implement `AsRef<[u8]>`, that means to be able to represent as bytes.
+    //
+    // Let we have the following contract state and `meta_state` function:
+    #[derive(Encode, Decode, TypeInfo)]
+    pub struct ContractState {
+        a: u128,
+        b: u128,
+    }
+
+    pub enum State {
+        A,
+        B,
+    }
+
+    pub enum StateReply {
+        A(u128),
+        B(u128),
+    }
+
+    #[no_mangle]
+    pub unsafe extern "C" fn meta_state() -> *mut [i32; 2] {
+        let query: State = msg::load().expect("Unable to decode `State`");
+        let encoded = match query {
+            State::A => StateReply::A(STATE.a),
+            State::B => StateReply::B(STATE.b),
+        }.encode();
+        gstd::util::to_leak_ptr(encoded)
+    }
+
+    // Let's send a query from gtest:
+    let reply: StateReply = self
+            .meta_state(&State::A)
+            .expect("Meta_state failed");
+    let expected_reply = StateReply::A(10);
+    assert_eq!(reply,expected_reply);
+
+    // If your `meta_state` function doesn't require input payloads, 
+    // you can use `meta_state_empty` or `meta_state_empty_with_bytes` functions
+    // without any arguments.
+```
+- Mailbox:
+    /
+- Balance:
+```rust
+    // If you need to send a message with value you have to mint balance for the message sender:
+    let user_id = 42;
+    sys.mint_to(user_id, 5000);
+    assert_eq!(sys.balance_of(user_id), 5000);
+    
+    // To give the balance to the program you should use `mint` method:
+    let prog = Program::current(&sys);
+    prog.mint(1000);
+    assert_eq!(prog.balance(), 1000);
+```
 }
 ```
