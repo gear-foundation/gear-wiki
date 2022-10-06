@@ -121,6 +121,7 @@ gear-node 0.1.0-hashcode-x86_64-linux
 </Tabs>
 ````
 
+
 ### Create Stash and Controller accounts
 
 For security reasons, we recommend creating two separate accounts: `Stash` and `Controller`. It's important to make sure that each of them has enough funds to pay transaction fee. Most of the funds should be stored on the stash account since it's meant to store staking funds.
@@ -135,7 +136,7 @@ To generete new seed phrase:
 Both seed phrases should be carefully saved in a secure place. If you want to use your own seed phrase, you can skip the previous step. Also you can use [Polkadot.{js}](https://polkadot.js.org/apps/#/accounts) or [Polkadot extension](https://polkadot.js.org/extension/)
 :::
 
-### Run and Sycronize Node
+### Run Node
 
 The most convenient and easiest way to run a node in validator mode will be to use the `ansible script` we have prepared.
 
@@ -191,3 +192,41 @@ ok: [<my-host>] => {
 ```
 
 You can also see your node with the name you set when running the playbook in telemetry: https://telemetry.rs
+
+### Get session keys
+
+You need to tell the chain your Session keys. If you are on a remote server, it is easier to run this command on the same machine (while the node is running with the default HTTP RPC port configured):
+
+```sh
+curl -H "Content-Type: application/json" -d '{"id":1, "jsonrpc":"2.0", "method": "author_rotateKeys", "params":[]}' http://localhost:9933
+```
+
+Output:
+
+```
+{“jsonrpc”:”2.0",”result”:”0x5e977ddcc0c69a6aed067052d5bd8f6bd365fae03562fd447d434e9814ac415d7c9ffe722364922bda314e44654f5c0cdc00d152470d5433f12cb73d078061863ac769d5f17b5460f042d221edf0099d2ce4c23edbe96ac943452cc4d3ad6d72”,”id”:1}
+```
+
+The output will have a hex-encoded `result` field. Copy and save it!
+
+
+## Setup Validator
+
+If your node is live and synchronized, appears in telemetry, and session keys are prepared it's time to set up the validator.
+
+Go to Polkadot.{js} app and navigate to Network → Staking → [Account actions](https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fvara.gear.rs#/staking/actions) section and click `+Validator`:
+
+Select stash and controller account. It’s recommended to use different accounts for stash and controller.
+
+![setup validator](./img/setup-validator-1.png)
+
+Set the `session key` and reward commission.
+
+![setup validator](./img/setup-validator-2.png)
+
+And sign the transaction. Make sure that you have been added to the stashe and wait for the next Era.
+When the next Era starts, your validator will be added.
+
+![setup validator](./img/setup-validator-3.png)
+
+## Get Payouts
