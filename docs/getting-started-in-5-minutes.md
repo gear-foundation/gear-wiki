@@ -1,7 +1,6 @@
 ---
 title: Getting Started
 sidebar_position: 4
-sidebar_label: Getting Started
 ---
 
 # Getting started in 5 minutes
@@ -12,11 +11,10 @@ For this example, a demo environment that emulates the real Gear decentralized n
 
 ## Prerequisites
 
-1. For your convenience, it is recommended that you create a dedicated directory for everything Gear-related. The rest of the article will assume that you are using the paths suggested. To create a folder in your home directory and navigate to it, type:
+1. For your convenience, it is recommended that you create a dedicated directory for everything Gear-related. The rest of the article will assume that you are using the paths suggested. Type to create a folder in your home directory:
 
 ```bash
-mkdir -p gear
-cd ~/gear
+mkdir -p ~/gear
 ```
 
 2. Make sure you have installed all the tools required to build a smart-contract in Rust. [Rustup](https://rustup.rs/) will be used to get Rust compiler ready:
@@ -25,11 +23,10 @@ cd ~/gear
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
 
-3. Now, let's install a `nightly` build for `rustup`, since `Gear` uses the most up-to-date features `rustup` provides.
+3. Now, let's install a `nightly` version of the toolchain with `rustup`, since Gear uses the most up-to-date features `rustup` provides.
 
 ```bash
-rustup update
-rustup update nightly
+rustup toolchain add nightly
 ```
 
 4. As we will be compiling our Rust smart contract to WASM, we will need a WASM compiler. Let's add it to the toolchain.
@@ -107,17 +104,22 @@ use gstd::{debug, msg, prelude::*};
 static mut MESSAGE_LOG: Vec<String> = vec![];
 
 #[no_mangle]
-pub unsafe extern "C" fn handle() {
+extern "C" fn handle() {
     let new_msg = String::from_utf8(msg::load_bytes()).expect("Invalid message");
 
     if new_msg == "PING" {
-        msg::reply_bytes("PONG", 0).expect("Error in sending reply");
+        msg::reply_bytes("PONG", 0).expect("Unable to reply");
     }
 
-    MESSAGE_LOG.push(new_msg);
+    unsafe {
+        MESSAGE_LOG.push(new_msg);
 
-    debug!("{:?} total message(s) stored: ", MESSAGE_LOG.len());
+        debug!("{:?} total message(s) stored: ", MESSAGE_LOG.len());
 
+        for log in &MESSAGE_LOG {
+            debug!(log);
+        }
+    }
 }
 ```
 
@@ -230,8 +232,5 @@ The red dot status for a program indicates init failure. Try to upload the progr
 ---
 
 ## Further reading
-
-In addition to this "Getting started in 5 minutes", you can refer to one more article that demonstrates the simplicity and convenience of creating applications on Gear Platform - [The first smart contract on Rust for beginners](https://app.subsocial.network/6310/gear-tech-the-first-smart-contract-on-rust-for-beginners-31604).
-The article uses Voting application as an example, it describes the structure of Gear smart contracts, how to work with the actor model architecture of programs, process messages, and work with the state.
 
 For more info about writing smart contracts for Gear and the specifics behind the smart contract implementation, refer to [this article on Smart Contracts](/docs/developing-contracts/executable-functions).
