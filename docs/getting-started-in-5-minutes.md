@@ -163,72 +163,89 @@ Gear provides a demo environment that emulates the real Gear decentralized netwo
 
 2. Once downloaded, click <kbd>+</kbd> button to create a new account:
 
-![img alt](./img/polkadot-add-acc.png)
+    ![Add account](./img/getting-started/polkadot-add-acc.png)
 
 3. Make sure you save your 12-word mnemonic seed securely.
 
-![img alt](./img/polkadot-add-acc-2.png)
+    ![Create account](./img/getting-started/polkadot-add-acc-2.png)
 
 4. Select the network that will be used for this account - choose "Allow to use on any chain". Provide any name to this account and password and click "Add the account with the generated seed" to complete account registration.
 
-![img alt](./img/polkadot-add-acc-3.png)
+    ![Finalizing account](./img/getting-started/polkadot-add-acc-3.png)
 
 5. Go to [idea.gear-tech.io](https://idea.gear-tech.io). You will be prompted to grant access to your account for Gear Tech application, click "Yes, allow this application access".
 
-![img alt](./img/polkadot-access.png)
+    ![Allow access](./img/getting-started/polkadot-access.png)
 
 6. Click the `Connect` button on top-right to select an account that will be connected to Gear Tech.
 
-![img alt](./img/connect_account.png)
+    ![Connect account](./img/getting-started/connect-account.png)
 
-7. In accordance with the Actor model, smart contracts are uploaded to a network via messages. Gear node charges a gas fee during message processing. Your account balance needs to have enough funds to upload a smart-contract to the `TestNet`. Click "Get test balance".
+7. Make sure you are connected to the `Gear Staging Testnet V3`. The network name is on the top left corner of the page.
 
-![img alt](./img/get-balance.png)
+    ![Network name](./img/getting-started/idea-network.png)
 
-A notification about successful balance replenishment will appear at the bottom of the window. You can also see the current account balance next to the account name in the upper right corner.
+8. You may switch the network by clicking on the network name.
 
-![img alt](./img/got-balance.png)
+    ![Switch network](./img/getting-started/switch-network.png)
+
+7. In accordance with the Actor model, smart contracts are uploaded to a network via messages. Gear node charges a gas fee during message processing. Your account balance needs to have enough funds to upload a smart-contract to the `TestNet`. Click the following button to get test balance:
+
+    ![Get balance](./img/getting-started/get-balance.png)
+
+    A notification about successful balance replenishment will appear after passing captcha at the bottom of the window. You can also see the current account balance next to the account name in the upper right corner.
+
+    ![Transfer balance](./img/getting-started/got-balance.png)
 
 ### Upload program
 
 1. When your account balance is sufficient, click the <kbd>Upload program</kbd> and navigate to the `.opt.wasm` file we have pointed to above.
 
-![img alt](./img/upload.png)
+    ![Upload program button](./img/getting-started/upload.png)
 
 2. Specify program Name and click <kbd>Calculate Gas</kbd> button. The Gas limit will be set automatically. Now click the <kbd>Upload program</kbd> button.
 
-![img alt](./img/interface.png)
+    ![Upload program form](./img/getting-started/interface.png)
 
 3. Sign the program uploading the transaction to the Gear network. Also, sign in the program and meta data uploading to the Gear demo environment so you could work with the program. It is recommended to set the checkbox `Remember my password for the next 15 minutes` for your convenience.
 
-![img alt](./img/sign-transaction.png)
+    ![Sign transaction](./img/getting-started/sign-transaction.png)
 
 :::note
 
-![img interface](./img/contracts.png)
+![Programs](./img/getting-started/contracts.png)
 
 The red dot status for a program indicates init failure. Try to upload the program again with increased **Gas limit**.
 :::
 
 4. Once your program is uploaded, head to the `Recently uploaded programs` section and find your program.
 
-![img alt](./img/recent.png)
+    ![Recently uploaded programs](./img/getting-started/recent.png)
 
 ### Send message to a program
 
 1. Now, try sending your newly uploaded program a message to see how it responds! Use this button:
-   ![img alt](./img/send-message.png)
+   ![Send button](./img/getting-started/send-message.png)
 
 2. In the `Payload` field of the opened dialog type `PING`. Click <kbd>Calculate Gas</kbd> button, the Gas limit will be set automatically. Now click the <kbd>Send request</kbd> button.
 
-![img alt](./img/send-request.png)
+    ![Send form](./img/getting-started/send-request.png)
 
 3. Sign the message sending transaction as it is shown in the step 3 of section **Upload Program**.
 
-4. After your message has been successfully processed, the program responds with `PONG`:
+4. After your message has been successfully processed, you are to see correspondent log messages:
 
-![img alt](./img/prog-replied.png)
+    ![Log](./img/getting-started/message-log.png)
 
+5. Press `Mailbox` tab at the top of page to enter the mailbox and find the reply.
+
+    ![Mailbox reply](./img/getting-started/mailbox-reply.png)
+
+    :::note
+
+    The reply is in the mailbox for a limited time depending on the gas limit. If you don't see the reply, try resending the `PING` message with the gas limit increasing and go to the mailbox immediately after sending the message.
+
+    :::
 ---
 
 ## Further reading
