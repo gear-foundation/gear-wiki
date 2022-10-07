@@ -189,7 +189,7 @@ Gear provides a demo environment that emulates the real Gear decentralized netwo
 
     ![Switch network](./img/getting-started/switch-network.png)
 
-7. In accordance with the Actor model, smart contracts are uploaded to a network via messages. Gear node charges a gas fee during message processing. Your account balance needs to have enough funds to upload a smart-contract to the `TestNet`. Click the following button to get test balance:
+9. In accordance with the Actor model, smart contracts are uploaded to a network via messages. Gear node charges a gas fee during message processing. Your account balance needs to have enough funds to upload a smart-contract to the `TestNet`. Click the following button to get test balance:
 
     ![Get balance](./img/getting-started/get-balance.png)
 
