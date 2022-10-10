@@ -7,7 +7,7 @@ sidebar_position: 7
 
 ## Can I run the Gear node now?
 
-Yes, follow the instructions from this article on how to set up and run Gear node under MacOS, Linux and Windows: 
+Yes, follow the instructions from this article on how to set up and run Gear node under MacOS, Linux and Windows:
 [Setting Up](/docs/node/setting-up)
 
 ## What are hardware requirements for Gear node?
@@ -58,7 +58,7 @@ For example you can use this manual: https://community.hetzner.com/tutorials/blo
 You just need to replace the node executable (`gear-node`) with the latest version and restart the execution. For example, if your Linux executable is located at `/root/gear-node` you are to run:
 
 ```shell
-wget https://builds.gear.rs/gear-nightly-linux-x86_64.tar.xz
+wget https://get.gear.rs/gear-nightly-linux-x86_64.tar.xz
 sudo tar -xvf gear-nightly-linux-x86_64.tar.xz -C /root
 rm gear-nightly-linux-x86_64.tar.xz
 sudo systemctl restart gear-node
