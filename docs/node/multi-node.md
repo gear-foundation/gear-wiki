@@ -14,7 +14,7 @@ Note: this will require two terminal sessions (one for each node).
 1. Start Alice's node first. The command below uses the default TCP port (30333) and specifies `/tmp/alice` as the chain database location. Alice's node ID will be `12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp` (legacy representation: `QmRpheLN4JWdAnY7HGJfWFNbfkQCb6tFf4vvA6hgjMZKrR`); this is determined by the node-key.
 
 ```bash
-./gear-node
+./gear
   --base-path /tmp/alice
   --chain=local
   --alice
@@ -27,7 +27,7 @@ Note: this will require two terminal sessions (one for each node).
 2. In another terminal, use the following command to start Bob's node on a different TCP port (30334) and with a chain database location of `/tmp/bob`. The `--bootnodes` option will connect his node to Alice's on TCP port 30333:
 
 ```bash
-./gear-node
+./gear
   --base-path /tmp/bob
   --bootnodes /ip4/127.0.0.1/tcp/30333/p2p/12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp
   --chain=local

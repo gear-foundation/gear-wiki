@@ -55,7 +55,7 @@ For example you can use this manual: https://community.hetzner.com/tutorials/blo
 
 ## I've configured the node as a service. How can I update it?
 
-You just need to replace the node executable (`gear-node`) with the latest version and restart the execution. For example, if your Linux executable is located at `/root/gear-node` you are to run:
+You just need to replace the node executable (`gear`) with the latest version and restart the execution. For example, if your Linux executable is located at `/root/gear` you are to run:
 
 ```shell
 wget https://get.gear.rs/gear-nightly-linux-x86_64.tar.xz

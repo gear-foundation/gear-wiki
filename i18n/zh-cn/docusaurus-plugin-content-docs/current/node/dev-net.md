@@ -14,7 +14,7 @@ sidebar_position: 4
 2. 使用开发模式运行节点：
 
 ```bash
-./gear-node --dev --tmp
+./gear --dev --tmp
 ```
 
 3. 访问 https://idea.gear-tech.io/ 并连接到本地开发节点。通过左上方的按钮点击网络切换，选择 Development -> Local node，然后点击切换按钮。使用 Idea 发送消息，读取程序状态等。
@@ -22,11 +22,11 @@ sidebar_position: 4
 4. 要清除开发链的节点数据，请使用：
 
 ```bash
-./gear-node purge-chain --dev
+./gear purge-chain --dev
 ```
 
 5. 要运行一个有详细日志的开发链，请使用：
 
 ```bash
-RUST_LOG=debug RUST_BACKTRACE=1 ./gear-node -lruntime=debug --dev
+RUST_LOG=debug RUST_BACKTRACE=1 ./gear -lruntime=debug --dev
 ```

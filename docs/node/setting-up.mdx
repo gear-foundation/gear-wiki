@@ -43,8 +43,8 @@ or
 Unzip the downloaded package then you can try to run the node:
 
 ```
-❯ gear-node.exe --version
-gear-node 0.1.0-hashcode-x86_64-windows
+❯ gear.exe --version
+gear.exe 0.1.0-hashcode
 ```
 
 </TabItem>
@@ -55,8 +55,7 @@ Terminal:
 ```bash
 wget https://get.gear.rs/gear-nightly-macos-m.tar.gz && \
 tar xvf gear-nightly-macos-m.tar.gz && \
-rm gear-nightly-macos-m.tar.gz && \
-chmod +x gear-node
+rm gear-nightly-macos-m.tar.gz
 ```
 
 or
@@ -66,8 +65,8 @@ or
 You can try to run the node:
 
 ```
-❯ ./gear-node --version
-gear-node 0.1.0-hashcode-aarch64-macos
+❯ ./gear --version
+gear 0.1.0-hashcode
 ```
 
 </TabItem>
@@ -78,8 +77,7 @@ Terminal:
 ```bash
 wget https://get.gear.rs/gear-nightly-macos-x86_64.tar.gz && \
 tar xvf gear-nightly-macos-x86_64.tar.gz && \
-rm gear-nightly-macos-x86_64.tar.gz && \
-chmod +x gear-node
+rm gear-nightly-macos-x86_64.tar.gz
 ```
 
 or
@@ -89,8 +87,8 @@ or
 You can try to run the node:
 
 ```
-❯ ./gear-node --version
-gear-node 0.1.0-hashcode-x86_64-macos
+❯ ./gear --version
+gear 0.1.0-hashcode
 ```
 
 </TabItem>
@@ -102,8 +100,7 @@ Terminal:
 ```bash
 wget https://get.gear.rs/gear-nightly-linux-x86_64.tar.xz && \
 tar xvf gear-nightly-linux-x86_64.tar.xz && \
-rm gear-nightly-linux-x86_64.tar.xz && \
-chmod +x gear-node
+rm gear-nightly-linux-x86_64.tar.xz
 ```
 
 or
@@ -113,8 +110,8 @@ or
 You can try to run the node:
 
 ```
-❯ ./gear-node --version
-gear-node 0.1.0-hashcode-x86_64-linux
+❯ ./gear --version
+gear 0.1.0-hashcode
 ```
 
 </TabItem>
@@ -169,7 +166,7 @@ cd gear
 ### Compile
 
 ```bash
-cargo build -p gear-node --release
+cargo build -p gear-cli --release
 ```
 
 or
@@ -180,7 +177,7 @@ make node-release
 
 :::note
 
-You can find the final build at the following location: `gear/target/release/gear-node`
+You can find the final build at the following location: `gear/target/release/gear`
 
 Go to:
 
@@ -199,19 +196,19 @@ It doesn't matter if you downloaded the prebuild binary or built it yourself. Be
 :::
 
 ```bash
-./gear-node
+./gear
 ```
 
 To run Gear node in dev mode use the following command:
 
 ```bash
-./gear-node --dev --tmp
+./gear --dev --tmp
 ```
 
 ## Command Flags and Options
 
 ```code
-gear-node [subcommand] [options]
+gear [subcommand] [options]
 ```
 
 - `--staging`
@@ -239,5 +236,5 @@ gear-node [subcommand] [options]
 To run Gear node with logs from contracts use:
 
 ```code
-RUST_LOG="gwasm=debug" gear-node [subcommand] [options]
+RUST_LOG="gwasm=debug" gear [subcommand] [options]
 ```

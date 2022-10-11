@@ -26,7 +26,7 @@ Also provide your node name using:
 Example to start a node with telemetry - `cd` to the directory where your node binary resides and run the command:
 
 ```sh
-./gear-node --telemetry-url 'ws://telemetry-backend-shard.gear-tech.io:32001/submit 0' --name 'My_Gear_node_name'
+./gear --telemetry-url 'ws://telemetry-backend-shard.gear-tech.io:32001/submit 0' --name 'My_Gear_node_name'
 ```
 
 To check telemetry for currently running nodes, visit web address - [https://telemetry.gear-tech.io](https://telemetry.gear-tech.io).
