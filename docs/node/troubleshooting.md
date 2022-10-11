@@ -9,20 +9,20 @@ Typical errors and solutions are described here.
 
 ## Unavailable `LOCK` file
 
-- **Error:** `IO error: While lock file /root/.local/share/gear-node/chains/staging_testnet_v2/db/full/LOCK: Resource temporarily unavailable`
+- **Error:** `IO error: While lock file /root/.local/share/gear-node/chains/staging_testnet_v3/db/full/LOCK: Resource temporarily unavailable`
 
 - **Solution:** You seem to be running several Gear node instances. Note that only one node instance is allowed to run. You likely have configured the node as a service and then ran the second instance from the command line. You should either stop the service or don't run the Gear node from the command line.
 
     You can see the current node processes by running the command:
 
     ```shell
-    ps aux | grep gear-node
+    ps aux | grep gear
     ```
 
     If you want to break all node processes you may run:
 
     ```shell
-    pkill -sigint gear-node
+    pkill -sigint gear
     ```
 
     Note that the SystemD service can't be stopped by the command above. Run instead:
@@ -61,7 +61,7 @@ Typical errors and solutions are described here.
     Also, you may check how many space is used by the blockchain DB:
 
     ```shell
-    du -h $HOME/.local/share/gear-node/chains/staging_testnet_v2/db/full
+    du -h $HOME/.local/share/gear-node/chains/staging_testnet_v3/db/full
     ```
 
     Please refer to the [System Requirements](/docs/node/setting-up#system-requirements) to see the minimum disk space required.
@@ -71,7 +71,7 @@ Typical errors and solutions are described here.
     ```shell
     sudo systemctl stop gear-node
     # Provide more free space on the disk
-    gear-node purge-chain
+    gear purge-chain
     sudo systemctl start gear-node
     ```
 

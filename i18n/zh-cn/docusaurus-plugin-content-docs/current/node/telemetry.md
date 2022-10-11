@@ -26,7 +26,7 @@ sidebar_position: 3
 如何启动节点监测？`cd` 到你的节点二进制文件所在的目录，然后运行一下命令：
 
 ```sh
-./gear-node --telemetry-url 'ws://telemetry-backend-shard.gear-tech.io:32001/submit 0' --name 'My_Gear_node_name' 
+./gear --telemetry-url 'ws://telemetry-backend-shard.gear-tech.io:32001/submit 0' --name 'My_Gear_node_name'
 ```
 
 要检查当前运行节点的监测信息，请访问 [https://telemetry.gear-tech.io](https://telemetry.gear-tech.io)。

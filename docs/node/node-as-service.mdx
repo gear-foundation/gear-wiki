@@ -7,14 +7,14 @@ sidebar_position: 2
 
 ## Prerequisites
 
-You need to download or compile the gear-node executable file for your OS. [See more](/docs/node/setting-up#install-with-pre-build-binary)
+You need to download or compile the `gear` executable file for your OS. [See more](/docs/node/setting-up#install-with-pre-build-binary)
 
 ## Configuration
 
-Copy the `gear-node` executable to the `/root` directory:
+Copy the `gear` executable to the `/root` directory:
 
 ```bash
-sudo cp gear-node /root/
+sudo cp gear /root/
 ```
 
 To run the Gear node as one of the Linux services, you need to configure the systemd file:
@@ -35,7 +35,7 @@ After=network.target
 Type=simple
 User=root
 WorkingDirectory=/root/
-ExecStart=/root/gear-node --name 'NODE_NAME' --telemetry-url 'ws://telemetry-backend-shard.gear-tech.io:32001/submit 0'
+ExecStart=/root/gear --name 'NODE_NAME' --telemetry-url 'ws://telemetry-backend-shard.gear-tech.io:32001/submit 0'
 Restart=always
 RestartSec=3
 LimitNOFILE=10000
@@ -45,7 +45,7 @@ WantedBy=multi-user.target
 ```
 
 :::note
-Declaration `ExecStart` points to the location of the gear-node binary file. In this case, it is in `root` directory.
+Declaration `ExecStart` points to the location of the `gear` binary file. In this case, it is in `root` directory.
 With -- additional launch parameters are indicated, but not mandatory.
 :::
 
@@ -97,7 +97,7 @@ journalctl -u gear-node -fn 50
 
 After the node has been running for a while, you may need to update it to the latest version.
 
-You just need to replace the node executable (`gear-node`) with the latest version and restart the execution. For example, if your Linux executable is located at `/root/gear-node` (as we've configured above) you are to run:
+You just need to replace the node executable (`gear`) with the latest version and restart the execution. For example, if your Linux executable is located at `/root/gear` (as we've configured above) you are to run:
 
 ```
 wget https://get.gear.rs/gear-nightly-linux-x86_64.tar.xz
@@ -123,5 +123,5 @@ sudo systemctl stop gear-node
 sudo systemctl disable gear-node
 sudo rm -rf /root/.local/share/gear-node
 sudo rm /etc/systemd/system/gear-node.service
-sudo rm /root/gear-node
+sudo rm /root/gear
 ```

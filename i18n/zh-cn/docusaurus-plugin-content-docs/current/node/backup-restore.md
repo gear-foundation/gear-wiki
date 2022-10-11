@@ -11,7 +11,7 @@ Gear 将节点数据存储在专用目录中。
 
 - Linux：`$HOME/.local/share/gear-node`
 - macOS：`$HOME/Library/Application Support/gear-node`
-- Windows：`%USERPROFILE%\AppData\Local\gear-node.exe`
+- Windows：`%USERPROFILE%\AppData\Local\gear-node`
 
 例如，在 Linux 操作系统中以 root 用户运行节点 (`$HOME` = `/root`)，节点数据目录的绝对路径为：
 
@@ -23,7 +23,7 @@ Gear 将节点数据存储在专用目录中。
         └── chains
             ├── dev
             │   └── ...
-            └── staging_testnet_v2
+            └── staging_testnet_v3
                 ├── db
                 │   └── full
                 ├── keystore
@@ -31,7 +31,7 @@ Gear 将节点数据存储在专用目录中。
 
 ### 链
 
-节点可以连接到不同的链。可以使用 `--chain` 参数来选择链。目前默认的链是 staging test 网络。它的数据位于 `gear-node/chains/staging_testnet_v2`目录中。
+节点可以连接到不同的链。可以使用 `--chain` 参数来选择链。目前默认的链是 staging test 网络。它的数据位于 `gear-node/chains/staging_testnet_v3`目录中。
 
 如果使用`--dev`参数启动节点，开发模式下的虚拟网络将节点数据存储在`gear-node/chains/dev`。
 
@@ -45,14 +45,14 @@ Gear 将节点数据存储在专用目录中。
 
 注意，数据库内容取决于节点的修剪模式。默认情况下，节点只保留最后 256 个块。要保留所有的块，在运行节点时，请使用 `--pruning=archive`参数。
 
-可以在任何时候删除和同步数据库。使用`gear-node purge-chain`命令将完全删除数据库。
+可以在任何时候删除和同步数据库。使用`gear purge-chain`命令将完全删除数据库。
 
 ### 网络密钥
 
 网络私钥用于计算唯一的节点标识符 (以`12D3KooW`开头)。这个密钥存储在 `<chain>/network/secret_ed25519` 文件中。密钥文件是一个二进制文件，包含了 32 字节 Ed25519 私钥 (默认) 。你可以使用`hexdump`命令读取密钥：
 
 ```shell
-hexdump -e '1/1 "%02x"' /root/.local/share/gear-node/chains/staging_testnet_v2/network/secret_ed25519
+hexdump -e '1/1 "%02x"' /root/.local/share/gear-node/chains/staging_testnet_v3/network/secret_ed25519
 
 # 42bb2fdd46edfa4f41a5f0f9c1a5a1d407a39bafbce6f07456a2c8d9963c8f5c
 ```
@@ -60,7 +60,7 @@ hexdump -e '1/1 "%02x"' /root/.local/share/gear-node/chains/staging_testnet_v2/n
 你可以通过运行带有`--node-key`参数的节点来覆盖这个密钥：
 
 ```shell
-gear-node --node-key=42bb2fdd46edfa4f41a5f0f9c1a5a1d407a39bafbce6f07456a2c8d9963c8f5c
+gear --node-key=42bb2fdd46edfa4f41a5f0f9c1a5a1d407a39bafbce6f07456a2c8d9963c8f5c
 
 # Discovered new external address for our node: /ip4/127.0.0.1/tcp/30333/ws/p2p/12D3KooWMRApe2S5QMdhHwmcDapDxZ7xf2Xa3z2HfCCYoHTmjiXV
 ```
@@ -75,15 +75,15 @@ gear-node --node-key=42bb2fdd46edfa4f41a5f0f9c1a5a1d407a39bafbce6f07456a2c8d9963
 
 - 节点的网络密钥：
 
-    - Linux: `$HOME/.local/share/gear-node/chains/staging_testnet_v2/network/secret_ed25519`
-    - macOS: `$HOME/Library/Application Support/gear-node/chains/staging_testnet_v2/network/secret_ed25519`
-    - Windows: `%USERPROFILE%\AppData\Local\gear-node.exe\chains\staging_testnet_v2\network\secret_ed25519`
+    - Linux: `$HOME/.local/share/gear-node/chains/staging_testnet_v3/network/secret_ed25519`
+    - macOS: `$HOME/Library/Application Support/gear-node/chains/staging_testnet_v3/network/secret_ed25519`
+    - Windows: `%USERPROFILE%\AppData\Local\gear-node.exe\chains\staging_testnet_v3\network\secret_ed25519`
 
 - (可选) 数据库：
 
-    - Linux: `$HOME/.local/share/gear-node/chains/staging_testnet_v2/db/full`
-    - macOS: `$HOME/Library/Application Support/gear-node/chains/staging_testnet_v2/db/full`
-    - Windows: `%USERPROFILE%\AppData\Local\gear-node.exe\chains\staging_testnet_v2\db\full`
+    - Linux: `$HOME/.local/share/gear-node/chains/staging_testnet_v3/db/full`
+    - macOS: `$HOME/Library/Application Support/gear-node/chains/staging_testnet_v3/db/full`
+    - Windows: `%USERPROFILE%\AppData\Local\gear-node.exe\chains\staging_testnet_v3\db\full`
 
 - (可选) 如果你已经将节点配置为服务，则服务配置：
 

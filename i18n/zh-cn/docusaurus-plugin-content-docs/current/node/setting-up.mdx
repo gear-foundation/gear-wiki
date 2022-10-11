@@ -49,8 +49,7 @@ Terminal:
 ```bash
 wget https://get.gear.rs/gear-nightly-macos-m.tar.gz && \
 tar xvf gear-nightly-macos-m.tar.gz && \
-rm gear-nightly-macos-m.tar.gz && \
-chmod +x gear-node
+rm gear-nightly-macos-m.tar.gz
 ```
 
 或
@@ -65,8 +64,7 @@ Terminal:
 ```bash
 wget https://get.gear.rs/gear-nightly-macos-x86_64.tar.gz && \
 tar xvf gear-nightly-macos-x86_64.tar.gz && \
-rm gear-nightly-macos-x86_64.tar.gz && \
-chmod +x gear-node
+rm gear-nightly-macos-x86_64.tar.gz
 ```
 
 或
@@ -82,8 +80,7 @@ Terminal:
 ```bash
 wget https://get.gear.rs/gear-nightly-linux-x86_64.tar.xz && \
 tar xvf gear-nightly-linux-x86_64.tar.xz && \
-rm gear-nightly-linux-x86_64.tar.xz && \
-chmod +x gear-node
+rm gear-nightly-linux-x86_64.tar.xz
 ```
 
 或
@@ -143,7 +140,7 @@ cd gear
 ### 编译
 
 ```bash
-cargo build -p gear-node --release
+cargo build -p gear-cli --release
 ```
 
 或
@@ -154,7 +151,7 @@ make node-release
 
 :::note
 
-你将在 `/gear/target/release/gear-node` 找到最终的编译输出
+你将在 `/gear/target/release/gear` 找到最终的编译输出
 
 前往：
 
@@ -173,19 +170,19 @@ cd target/release
 :::
 
 ```bash
-./gear-node
+./gear
 ```
 
 采用如下命令来运行开发模式的 Gear 节点：
 
 ```bash
-./gear-node --dev --tmp
+./gear --dev --tmp
 ```
 
 ## 命令标记和选项
 
 ```code
-gear-node [flags] [options]
+gear [flags] [options]
 ```
 
 `--staging`
