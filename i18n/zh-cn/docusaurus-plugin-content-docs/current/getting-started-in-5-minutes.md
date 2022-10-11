@@ -1,7 +1,7 @@
 ---
 title: 快速入门
 sidebar_position: 4
-sidebar_label: '5 分钟入门'
+sidebar_label: '5 分钟快速入门'
 ---
 
 # 5 分钟入门

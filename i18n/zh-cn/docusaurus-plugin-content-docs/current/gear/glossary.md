@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-sidebar_label: '术语表'
+sidebar_label: 术语表
 ---
 
 # 术语表
@@ -43,29 +43,25 @@ sidebar_label: '术语表'
 
 ### Decentralized Application (dApp) / 去中心化应用
 
-去中心化应用程序(Decentralized Application，简称dApp)是一种可以自主运行的应用程序，通常通过使用智能合约运行在区块链网络上。
+去中心化应用程序 (Decentralized Application，简称 dApp) 是一种可以自主运行的应用程序，通常通过使用智能合约运行在区块链网络上。
 
 ### Decentralized Autonomous Organization (DAO) / 去中心化自治组织
 
-去中心化自治组织(Decentralized Autonomous Organization，简称DAO)是一种由智能合约中编码的规则表示的组织，这种智能合约是透明的，由组织成员控制，而不是受中心实体的影响。
+去中心化自治组织 (Decentralized Autonomous Organization，简称 DAO) 是一种由智能合约中编码的规则表示的组织，这种智能合约是透明的，由组织成员控制，而不是受中心实体的影响。
 
 ### Decentralized Finance (DeFi) / 去中心化金融
 
-去中心化金融(Decentralized Finance，简称DeFi)是由去中心化应用程序和区块链技术驱动的金融服务。
+去中心化金融 (Decentralized Finance，简称 DeFi) 是由去中心化应用程序和区块链技术驱动的金融服务。
 
-### GRB
-
-GRB 是 Gear 的奖励代币，可以通过参加活动或为 Gear 协议做贡献而获得。
-
-### Layer 0 protocol / Layer-0 协议
+### Layer-0 protocol / Layer-0 协议
 
 所有区块链协议的底层。运营 Layer-0 区块链的例子包括 Kusama 和 Polkadot。
 
-### Layer 1 blockchain protocol / Layer-1 区块链协议
+### Layer-1 blockchain protocol / Layer-1 区块链协议
 
 用于描述底层主要区块链体系结构的术语。它是一组解决方案，改进基本协议本身，使整个系统更具可伸缩性。为实现 Layer-1 解决方案提出的两种方法包括共识协议和分片。运营 Layer-1 区块链的例子包括比特币、以太坊等。
 
-### Layer 2 blockchain protocol 
+### Layer 2 blockchain protocol
 
 在现有区块链系统上构建的二级框架或协议。这些协议的主要目标是解决主要加密货币网络面临的交易速度和扩展困难。
 
@@ -79,7 +75,7 @@ GRB 是 Gear 的奖励代币，可以通过参加活动或为 Gear 协议做贡�
 
 ### Node / 节点
 
-一种运行在区块链网络上进行信息处理的计算机设备;它也可以是一个验证器(块生成器)。Node通过连接的设备将信息提供给每个人。
+一种运行在区块链网络上进行信息处理的计算机设备;它也可以是一个验证器 (块生成器)。Node 通过连接的设备将信息提供给每个人。
 
 ### Non Fungible Tokens (NFTs) / 非同质化代币
 
@@ -91,7 +87,7 @@ GRB 是 Gear 的奖励代币，可以通过参加活动或为 Gear 协议做贡�
 
 ### Polkadot / 波卡
 
-Polkadot是一个开源的区块链网络，旨在实现不同区块链网络之间的跨链通信。
+Polkadot 是一个开源的区块链网络，旨在实现不同区块链网络之间的跨链通信。
 
 ### Relay Chain / 中继链
 
@@ -115,7 +111,7 @@ Substrate 是用于构建定制区块链的模块化框架，也是整个 Polkad
 
 ### Transaction / 交易
 
-数字账本中表示区块链中原子事件的记录。在 Gear 交易可以有4种类型：创建一个程序；发送消息；消息出列；资产转移。
+数字账本中表示区块链中原子事件的记录。在 Gear Protocol 中交易可以有 4 种类型：创建一个程序；发送消息；消息出列；资产转移。
 
 ### Validator / 验证器
 
@@ -127,7 +123,7 @@ Substrate 是用于构建定制区块链的模块化框架，也是整个 Polkad
 
 ### Web3
 
-Web3是互联网的第三次进化，它得到了区块链技术和去中心化应用的大力支持。
+Web3 是互联网的第三次进化，它得到了区块链技术和去中心化应用的大力支持。
 
 ### WebAssembly (WASM)
 

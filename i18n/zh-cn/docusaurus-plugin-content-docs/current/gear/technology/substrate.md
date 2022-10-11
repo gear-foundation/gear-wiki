@@ -5,6 +5,7 @@ sidebar_label: Substrate
 
 # Substrate
 
+
 Substrate 是一个模块化框架，通过组合定制或预先构建的组件，可以创建独特的区块链。
 
 从名字上很容易理解 Substrate 的功能。Substrate 是一个模板，提供了开箱即用的可扩展能力，包括共识机制、治理功能、WASM 等等。Substrate 有以下几个功能：

@@ -123,10 +123,10 @@
     "message": "从这里开始，使用 Gear 开发"
   },
   "Start develop now - 5min ⏱️": {
-    "message": "开启 Gear 开发之旅  - 5 分钟 ⏱️"
+    "message": "开启 Gear 开发之旅  - 只需 5 分钟 ⏱️"
   },
   "Intro to Gear Protocol": {
-    "message": "Gear 协议概览"
+    "message": "Gear Protocol 概览"
   },
   "Get to know the main features of Gear’s advanced engine for smart contracts.": {
     "message": "了解 Gear 先进智能合约引擎的主要功能"
@@ -153,7 +153,7 @@
     "message": "开发智能合约"
   },
   "Dive into the main aspects and principles of developing smart contracts on Gear Protocol!": {
-    "message": "全方位深入了解 Gear 协议上智能合约的开发与原理!"
+    "message": "全方位深入了解 Gear 协议上智能合约的开发与原理！"
   },
   "Smart contract examples": {
     "message": "智能合约范例"
