@@ -9,7 +9,7 @@ The program is the main unit of the Gear Protocol. Each program in the Gear netw
 
 ## Basic structure
 
-Any program can contain up to 3 entry points that perform various functions in the program lifecycle: `init()`, `handle()`, `handle_reply()`. All of them are optional, but any program required to have at least one fn: init() or handle().
+Any program can contain up to 3 entry points that perform various functions in the program lifecycle: `init()`, `handle()`, `handle_reply()`. All of them are optional, but any program required to have at least one fn: `init()` or `handle()`.
 
 Another special system entry point introduced by the Gear Protocol is `handle_signal()`. It allows the system to communicate with programs if it is necessary to notify (signal) that some event related to the program's messages has happened.
 
@@ -40,7 +40,6 @@ extern "C" fn handle() {
 ```
 
 ### handle_reply()
-
 
 Processing the reply to the message in the Gear program is performed using the `handle_reply` function.
 

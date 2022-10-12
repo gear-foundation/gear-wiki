@@ -5,27 +5,27 @@ sidebar_label: Welcome!
 slug: /
 ---
 
-Welcome to Gear’s documentation portal. This is the central source of information for everyone who is looking for general information about Gear, wants to learn about technology behind, find guides and developer's documentation and dive deeper into developing smart contracts on the Gear Protocol.
+Welcome to Gear’s documentation portal. This is the central source of information for everyone who is looking for general information about Gear. Here you will find guides and developer's documentation that will enable you to dive deeper into developing smart contracts on the Gear Protocol.
 
-Our Wiki outlines foundational information required, general technology overviews and key advantages of Gear’s technology, how to implement and run your smart contracts, how to get started with Gear node setup, while also providing full API details and examples.
+Our Wiki outlines foundational information required, general technology overviews and key advantages of Gear’s technology, including how to implement and run your smart contracts and how to get started with the Gear node setup, while also providing full API details and examples.
 
 All code, libraries, and tools are available on Github with a permissive Apache-2.0 license. Feel free to use the tools and libraries, log issues as you find them, or create pull requests for your bug-bears or features.
 
 As our project is developing and growing, contributions are more than welcome!
 
-## What is Gear Protocol?
+## What is the Gear Protocol?
 
-Gear Protocol is a Substrate-based smart-contract platform that enables anyone to develop and run a dApp in a matter of minutes. Gear Protocol is the most developer-friendly way to implement smart contracts with arbitratry logic and of any complexity. Gear smart-contract are run as WebAssembly programs so they can be compiled from many popular programming languages, such as Rust, C, C++ and many more.  
+The Gear Protocol is a Substrate-based smart-contract platform that enables anyone to develop and run a dApp in a matter of minutes. The Gear Protocol is the most developer-friendly way to implement smart contracts with arbitrary logic and of any complexity. Gear smart-contracts run as WebAssembly programs so they can be compiled from many popular programming languages, such as Rust, C, C++ and many more.
 
-The protocol ensures very minimal, intuitive and sufficient API for implementing programs and running them on multiple networks without having to rewrite them. From a technological point of view, Gear Protocol is distinguished by fundamentally new features that allow you to create asynchronous programs with a completely new, previously unattainable user experience, namely - Actor model for communication, persistent memory, WebAssembly execution environment. Protocol dictates what actors should look like as a communicating entities.
+The protocol ensures very minimal, intuitive and sufficient APIs for implementing programs and running them on multiple networks without having to rewrite them. From a technological point of view, the Gear Protocol is distinguished by fundamentally new features that enable you to create asynchronous programs with a completely new and previously unattainable user experience, namely - the Actor model for communication, the persistent memory concept and WebAssembly execution environment. The protocol dictates what actors should look like as communicating entities.
 
-Gear Protocol will assist with the transition to mass use of Web3 technologies by enabling the running of innovative dApps, microservices, middleware and open APIs.
+The Gear Protocol will assist with the transition to mass use of Web3 technologies by enabling the running of innovative dApps, microservices, middleware and open APIs.
 
-## What is Gear Network?
+## What is the Gear Network?
 
-Gear Protocol provides the most cost-effective way to run smart contracts that have been compiled from many popular programming languages, such as Rust, C, C++ and many more. 
+The Gear Protocol provides the most cost-effective way to run smart contracts that have been compiled from many popular programming languages, such as Rust, C, C++ and many more.
 
-Powered by Gear Protocol, Gear Networks imply a standalone L1 network as well as are planning on becoming a parachains in the Polkadot and Kusama networks to host smart contracts on these respective networks. This will mean that by deploying on Gear Network, developers would be able to take advantage of all the benefits of the Polkadot and Kusama networks and ecosystems at minimal cost.
+Powered by the Gear Protocol, Gear Networks can act as standalone L1 networks, as well as become a parachain in the Polkadot and Kusama ecosystem too. This will mean that by deploying on the Gear Network, developers would be able to take advantage of all the benefits of the Polkadot and Kusama networks and ecosystems at minimal cost.
 
 ## How to engage with the Gear community
 

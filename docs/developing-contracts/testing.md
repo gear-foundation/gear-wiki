@@ -5,20 +5,19 @@ sidebar_position: 6
 
 # How to test a program
 
-Gear [`gtest`](https://github.com/gear-tech/gear/tree/master/gtest) library is the recommended option for the programs (smart contracts) logic testing. This article describes how to test programs using `gtest`.
+The Gear [`gtest`](https://github.com/gear-tech/gear/tree/master/gtest) library is the recommended option for the programs (smart contracts) logic testing. This article describes how to test programs using `gtest`.
 
 ## Basics
 
 Gear uses the standard for Rust programs testing mechanism - test build mode from `cargo`.
 
-In accordance to basic concepts and testing methods described in [Rustbook](https://doc.rust-lang.org/book/ch11-00-testing.html), tests can be organized in two main categories: **unit tests** and **integration tests**.
+In accordance with basic concepts and testing methods described in [Rustbook](https://doc.rust-lang.org/book/ch11-00-testing.html), tests can be organized in two main categories: **unit tests** and **integration** tests.
 
 The **unit tests** enable testing of each unit of code in isolation from the rest of the code. It helps to quickly find where the code works as expected and where not. The unit tests should be placed in the `src` directory in each file with the code that they test.
 
 Even when units of code work correctly, it is important to test if several parts of the library work together correctly as well. For **integration tests**, a separate `tests` directory is required at the top level of your project directory, next to `src`. You can make as many test files in this directory as you need, Cargo will compile each of the files as an individual crate.
 
 ## Building a program in test mode
-
 First of all, make sure you have a compiled WASM file of the program you want to test. You can refer to [Getting Started](getting-started-in-5-minutes.md) for additional details.
 
 1. Usually the following command is used for regular compilation of Gear smart contracts:
@@ -40,7 +39,7 @@ First of all, make sure you have a compiled WASM file of the program you want to
     cargo test
     ```
 
-    Nightly compiler is required if your contract uses unstable Rust features, the compiler will ask you to enable `nightly` if necessary. Only if you are writing the tests as unit/integration tests, rather than providing a separate library containing only the tests.
+    Nightly compiler is required if your contract uses unstable Rust features and the compiler will ask you to enable `nightly` if necessary. Only if you are writing the tests as unit/integration tests, rather than providing a separate library containing only the tests.
 
     ```bash
     cargo +nightly test
@@ -54,7 +53,7 @@ First of all, make sure you have a compiled WASM file of the program you want to
 
 ## Import `gtest` lib
 
-In order to use the `gtest` library, it must be imported into your `Cargo.toml` file in the `[dev-dependencies]` block in order to fetch and compile it for tests only
+In order to use the `gtest` library, it must be imported into your `Cargo.toml` file in the [dev-dependencies] block in order to fetch and compile it for tests only
 
 ```toml
 [package]
@@ -77,7 +76,7 @@ gtest = { git = "https://github.com/gear-tech/gear.git" }
 
 - Initialization of the common environment for running smart contacts:
 ```rust
-    // This emulates node's and chain behavior.
+    // This emulates node's and chain's behavior.
     //
     // By default, sets:
     // - current block equals 0
@@ -100,7 +99,7 @@ gtest = { git = "https://github.com/gear-tech/gear.git" }
         "./target/wasm32-unknown-unknown/release/demo_ping.wasm",
     );
 
-    // Also, you may use `Program::current()` function to load the current program.
+    // Also, you may use the `Program::current()` function to load the current program.
     let _ = Program::current(&sys);
 
     // We can check the id of the program by calling `id()` function.
@@ -111,7 +110,7 @@ gtest = { git = "https://github.com/gear-tech/gear.git" }
     // There is also a `from_file_with_id` constructor to manually specify the id of the program.
     //
     // Every place in this lib, where you need to specify some ids,
-    // it requires generic type `ID`, which implements `Into<ProgramIdWrapper>`.
+    // it requires generic type 'ID`, which implements `Into<ProgramIdWrapper>`.
     //
     // `ProgramIdWrapper` may be built from:
     // - u64;
@@ -172,8 +171,8 @@ gtest = { git = "https://github.com/gear-tech/gear.git" }
 ```
 - Sending messages:
 ```rust
-    // To send message to the program need to call one of two program's functions:
-    // `send()` or `send_bytes()` (or `send_with_value` and `send_bytes_with_value` if you need to send message with attached funds).
+    To send message to the program need to call one of two program's functions:
+    // `send()` or `send_bytes()` (or `send_with_value` and `send_bytes_with_value` if you need to send a message with attached funds).
     //
     // Both of the methods require sender id as the first argument and the payload as second.
     //
@@ -211,12 +210,12 @@ gtest = { git = "https://github.com/gear-tech/gear.git" }
     // Equals false if no others were called.
     assert!(!res.others_failed());
 
-    // Returns bool which shows that logs contains a given log.
+    // Returns bool which shows that logs contain a given log.
     //
     // Syntax sugar around `res.log().iter().any(|v| v == arg)`.
     assert!(!res.contains(&Log::builder()));
 
-    // To build a log for assertion you need to use `Log` structure with it's builders.
+    // To build a log for assertion you need to use `Log` structure with its builders.
     // All fields here are optional.
     // Assertion with Logs from core are made on the Some(..) fields
     // You will run into panic if you try to set the already specified field.
@@ -227,7 +226,7 @@ gtest = { git = "https://github.com/gear-tech/gear.git" }
     // Constructor for error reply log.
     //
     // Note that error reply never contains payload.
-    // And it's exit code equals 1, instead of 0 for success replies.
+    // And its exit code equals 1, instead of 0 for success replies.
     let _ = Log::error_builder();
 
     // Let’s send a new message after the program has been initialized. 
@@ -268,7 +267,7 @@ gtest = { git = "https://github.com/gear-tech/gear.git" }
 ```rust
     // You may control time in the system by spending blocks.
     //
-    // It adds the amount of blocks passed as argument to the current block of the system.
+    // It adds the amount of blocks passed as arguments to the current block of the system.
     // Same for the timestamp. Note, that for now 1 block in Gear network is 1 sec duration.
     sys.spend_blocks(150);
 ```
@@ -320,8 +319,6 @@ gtest = { git = "https://github.com/gear-tech/gear.git" }
     // you can use `meta_state_empty` or `meta_state_empty_with_bytes` functions
     // without any arguments.
 ```
-- Mailbox:
-    /
 - Balance:
 ```rust
     // If you need to send a message with value you have to mint balance for the message sender:
@@ -333,6 +330,4 @@ gtest = { git = "https://github.com/gear-tech/gear.git" }
     let prog = Program::current(&sys);
     prog.mint(1000);
     assert_eq!(prog.balance(), 1000);
-```
-}
 ```
