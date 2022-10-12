@@ -23,7 +23,12 @@ Let's explore the data that the node stores in this directory.
         └── chains
             ├── dev
             │   └── ...
-            └── staging_testnet_v3
+            ├── staging_testnet_v3
+            │   ├── db
+            │   │   └── full
+            │   ├── keystore
+            │   └── network
+            └── vara_network
                 ├── db
                 │   └── full
                 ├── keystore
@@ -32,6 +37,8 @@ Let's explore the data that the node stores in this directory.
 ### Chains
 
 The node can connect to different chains. The chain can be selected using the `--chain` argument. The default chain is the staging test network at the moment. Its data is located in `gear-node/chains/staging_testnet_v3` directory.
+
+If you connect to the Vara network, the chain subdirectory name will be `vara_network` resulting in the `gear-node/chains/vara_network` path.
 
 If you start the node with the `--dev` argument, the virtual network in development mode will run with the data stored in the `gear-node/chains/dev` directory.
 
@@ -71,7 +78,7 @@ The network key file cannot be recovered if lost. Therefore, you are to keep it 
 
 ## Moving the node
 
-To move the node to a new server you are to backup then restore the following (provided paths are for default node's parameters):
+To move the node to a new server you are to backup then restore the following (provided paths are for default Staging Testnet V3 node's parameters):
 
 - The network private key of the node:
 
