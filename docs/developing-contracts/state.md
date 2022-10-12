@@ -26,7 +26,7 @@ impl State {
 static mut STATE: State = State::new();
 ```
 
-If you're programming in Rust or other object-oriented languages, you should be familiar with most types. However, the 'ActorId' type is something new when developing contracts via Gear Protocol.
+If you're programming in Rust or other object-oriented languages, you should be familiar with most types. However, the `ActorId` type is something new when developing contracts via the Gear Protocol.
 
 :::info
 `ActorId` is a special type that represents an 32 bytes array and defines any `ID` in Gear.
@@ -34,7 +34,7 @@ If you're programming in Rust or other object-oriented languages, you should be 
 
 ## State functions
 
-To display the contact status information (similar to the "view" Gear functions), the `meta_state()` is used. It allows you to instantly read the contact status (for example, balance). Reading state is a free function, it does not require gas costs.
+To display the contact status information (similar to the `view` Gear functions), the `meta_state()` is used. It allows you to instantly read the contact status (for example, balance). Reading state is a free function and it does not require any gas costs.
 
 ```rust
 // The function meta_state() returns a part of memory with a state

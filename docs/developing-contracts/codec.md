@@ -5,7 +5,7 @@ sidebar_position: 4
 
 # Data encoding/decoding
 
-To optimize how data is sent and received over the network, Gear uses the `parity-scale-codec` - a Rust implementation of the SCALE Codec. This codec is used by the Substrate nodes' internal runtime. SCALE is a lightweight format that allows to serialize and deserialize data. Encoding (and decoding) data using SCALE makes it highly suitable for resource-constrained execution environments like blockchain runtimes and low-power/low-memory devices.
+To optimize how data is sent and received over the network, Gear uses the `parity-scale-codec` - a Rust implementation of the SCALE Codec. This codec is used by the Substrate nodes' internal runtime. SCALE is a lightweight format that enables the serialization and deserialization of data. Encoding (and decoding) data using SCALE makes it highly suitable for resource-constrained execution environments like blockchain runtimes and low-power/low-memory devices.
 
 To use SCALE codec in your program, you should add it in `Cargo.toml`:
 
@@ -27,11 +27,10 @@ enum MyType {
 ```
 
 :::info
-We only need the Encode and Decode trait when using wrapped methods from `gstd`, such as: `msg::send`, `msg::reply`, `send_for_reply` etc. 
-In methods like `send_byte` or `reply_bytes` we operate with a set of bytes, so nothing needs to be decoded/encoded.
+We only need the Encode and Decode trait when using wrapped methods from `gstd`, such as: `msg::send`, `msg::reply`, `send_for_reply` etc. In methods like `send_byte` or `reply_bytes` we operate with a set of bytes, so nothing needs to be decoded/encoded.
 :::
 
-[Learn more about SCALE Codec](https://github.com/paritytech/parity-scale-codec)
+Learn more about SCALE Codec [here](https://github.com/paritytech/parity-scale-codec).
 
 ## `scale-info`
 
@@ -64,4 +63,4 @@ gstd::metadata! {
 }
 ```
 
-[Learn more about `scale-info`](https://github.com/paritytech/scale-info)
+Learn more about `scale-info` [here](https://github.com/paritytech/scale-info)
