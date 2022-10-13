@@ -65,7 +65,7 @@ You can see more cases of using the `msg` module in our [documentation](https://
 
 ## Execution info
 
-A program can get some useful information about the current execution context by using `exec` module:
+A program can get some useful information about the current execution context by using the `exec` module:
 
 ```rust
 use gstd::exec;
