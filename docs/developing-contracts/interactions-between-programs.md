@@ -5,7 +5,7 @@ sidebar_position: 4
 
 # Asynchronous programming
 
-Asynchronous interaction between Gear programs is similar to the usual asynchronous request in using `await` and implemented by sending a message:
+Asynchronous interaction between Gear programs is similar to the usual asynchronous request in using `await` and implemented by sending a message.
 
 ## Program entry points
 
@@ -40,8 +40,8 @@ async fn main() {
 # Cross-program message
 
 To send message to a Gear program use function `send_for_reply(program, payload, value)`, in this function:
-- program - the address of the program to send the message for; 
-- payload - the message to the program; 
+- program - the address of the program to send the message for;
+- payload - the message to the program;
 - value - the funds attached to the message.
 
 ```rust
