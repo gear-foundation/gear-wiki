@@ -38,7 +38,7 @@ Learn more about SCALE Codec [here](https://github.com/paritytech/parity-scale-c
 
 The definitions provide third party tools (e.g. a UI client) with information about how they are able to decode types agnostic of language. The interface that uses `scale-info` for Gear programs is called the `metadata` macro. It defines incoming and outgoing types for all necessary entry points and allows contracts and the client part to understand each other.
 
-To use metadata in contract:
+To use `metadata` in contract:
 
 ```toml
 [dependencies]
@@ -47,7 +47,7 @@ To use metadata in contract:
 scale-info = { version = "2.2.0", default-features = false, features = ["derive"] }
 ```
 
-```
+```rust
 // We define all incoming and outgoing data types in advance
 
 gstd::metadata! {
