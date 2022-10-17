@@ -5,7 +5,7 @@ sidebar_position: 3
 
 # Store data
 
-Persistent data of the Gear smart contact is stored in the same way as in a classic program and does not require initialization of the external storage.
+Persistent data of the Gear smart contract is stored in the same way as in a classic program and does not require initialization of the external storage.
 
 ```rust
 // describe state structure
@@ -34,7 +34,7 @@ If you're programming in Rust or other object-oriented languages, you should be 
 
 ## State functions
 
-To display the contact status information (similar to the `view` Gear functions), the `meta_state()` is used. It allows you to instantly read the contact status (for example, balance). Reading state is a free function and it does not require any gas costs.
+To display the contract status information (similar to the `view` Gear functions), the `meta_state()` is used. It allows you to instantly read the contract status (for example, balance). Reading state is a free function and it does not require any gas costs.
 
 ```rust
 // The function meta_state() returns a part of memory with a state

@@ -83,7 +83,7 @@ use gtest::{Log, Program, System};
 
 #[test]
 fn basics() {
-    // Initialization of the common environment for running smart contacts.
+    // Initialization of the common environment for running smart contracts.
     //
     // This emulates node's and chain behavior.
     //
