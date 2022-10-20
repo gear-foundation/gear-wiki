@@ -76,21 +76,19 @@ Install on [Chromium](https://chrome.google.com/webstore/detail/polkadot%7Bjs%7D
 
 Install on [FireFox](https://addons.mozilla.org/en-US/firefox/addon/polkadot-js-extension).
 
-Once you’ve installed the extension, you should see an orange and white Polkadot logo in the menu bar.
-
-![img alt](./img/create-account-1.png)
-
 2. Open the extension by clicking on the logo in the menu bar
 
 3. Click the large plus button to create a new account. Alternatively, you can navigate to the smaller plus icon in the top right and select “Create New Account”.
 
-![img alt](./img/create-account-2.png)
+[img alt](./img/create-account-1.png)
 
 4. Save the `seed phrase` in a safe place using the security advices at the beginning of this article. 
 
-![img alt](./img/create-account-3_.png)
+![img alt](./img/create-account-2.png)
 
-5. Specify the name of your account and a strong password for making transactions. Click “Add the account with the generated seed”.
+ 5. Specify the name of your account and a strong password for making transactions. Click “Add the account with the generated seed”.
+
+![img alt](./img/create-account-3.png)
 
 :::note
 The password that you choose here will be used to encrypt this account’s information. You will need to re-enter it when attempting to process any kind of outgoing transaction, or when using it to cryptographically sign a message. This password is stored locally on the browser extension.
