@@ -1,11 +1,11 @@
 ---
-sidebar_label: State functions
+sidebar_label: State 函数
 sidebar_position: 3
 ---
 
-# Store data
+# 存储数据
 
-Persistent data of the Gear smart contract is stored in the same way as in a classic program and does not require initialization of the external storage.
+Gear 智能合约的持久化数据的存储方式与传统程序相同，不需要初始化外部存储。
 
 ```rust
 // describe state structure
@@ -26,15 +26,15 @@ impl State {
 static mut STATE: State = State::new();
 ```
 
-If you're programming in Rust or other object-oriented languages, you should be familiar with most types. However, the `ActorId` type is something new when developing contracts via the Gear Protocol.
+如果用 Rust 或其他面向对象的语言编程，你应该对大多数类型都很熟悉。然而，在 Gear 上开发合约时，`ActorId` 类型是一个新内容。
 
 :::info
-`ActorId` is a special type that represents an 32 bytes array and defines any `ID` in Gear.
+`ActorId` 是一个特殊的类型，代表一个 32 字节的数组，并定义了 Gear 中的任何 `ID`。
 :::
 
 ## State functions
 
-To display the contract status information (similar to the `view` Gear functions), the `meta_state()` is used. It allows you to instantly read the contract status (for example, balance). Reading state is a free function and it does not require any gas costs.
+为了显示合约状态信息（类似于 `view` Gear 函数），使用了 `meta_state()`。它允许您立即读取合约状态（例如，余额）。读取状态是一个免费函数，不需要消耗任何 gas 费用。
 
 ```rust
 // The function meta_state() returns a part of memory with a state

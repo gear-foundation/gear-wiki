@@ -74,7 +74,7 @@ gtest = { git = "https://github.com/gear-tech/gear.git" }
 
 ## `gtest` capabilities
 
-- Initialization of the common environment for running smart contacts:
+- Initialization of the common environment for running smart contracts:
 ```rust
     // This emulates node's and chain's behavior.
     //
@@ -229,7 +229,7 @@ gtest = { git = "https://github.com/gear-tech/gear.git" }
     // And its exit code equals 1, instead of 0 for success replies.
     let _ = Log::error_builder();
 
-    // Let’s send a new message after the program has been initialized. 
+    // Let’s send a new message after the program has been initialized.
     // The initialized program expects to receive a byte string "PING" and replies with a byte string "PONG".
     let res = ping_pong.send_bytes(100001, "PING");
 
@@ -315,7 +315,7 @@ gtest = { git = "https://github.com/gear-tech/gear.git" }
     let expected_reply = StateReply::A(10);
     assert_eq!(reply,expected_reply);
 
-    // If your `meta_state` function doesn't require input payloads, 
+    // If your `meta_state` function doesn't require input payloads,
     // you can use `meta_state_empty` or `meta_state_empty_with_bytes` functions
     // without any arguments.
 ```
@@ -325,7 +325,7 @@ gtest = { git = "https://github.com/gear-tech/gear.git" }
     let user_id = 42;
     sys.mint_to(user_id, 5000);
     assert_eq!(sys.balance_of(user_id), 5000);
-    
+
     // To give the balance to the program you should use `mint` method:
     let prog = Program::current(&sys);
     prog.mint(1000);
