@@ -4,82 +4,80 @@ sidebar_position: 2
 sidebar_label: 我们为什么创建 Gear？
 ---
 
-## Global aspect
+## 全局方面
 
-Blockchain technology launched a rapid transition from centralized, server-based internet (Web2) to a decentralized, distributed one - Web3. Its distinctive features are: no single point of failure (the network can still function even if a large proportion of participants are attacked/taken out), censorship resistance, anyone in the network has the possibility to use the service (permissionless).
+区块链技术启动了从中心化、基于服务器的互联网（Web2）模式向去中心化、分布式的互联网--Web3 的快速过渡。它的显著特点是：没有单点故障（即使很大一部分参与者被攻击/被清除，网络仍然可以运行），抗审查，网络中的任何人都有可能使用服务（无需许可）。
 
-Web3 introduces new types of decentralized applications (dApps) and assets such as: decentralized finances (DeFi), decentralized currency exchanges (DEX), decentralized marketplaces and gaming platforms, NFTs, Social Tokens and more.
+Web3 引入了新的去中心化应用程序 (dApps) 和资产类型，如：去中心化金融 (DeFi)、去中心化交易所 (DEX)、去中心化交易市场和游戏平台、nft、社交代币等。
 
-Today the industry is still in its infancy, which provides opportunities for the rapid growth of Web3 and all-time high demand for Web3 developers, their activity is growing faster than ever.
+现在，该行业仍处于起步阶段，这为 Web3 的快速增长和对 Web3 开发人员的高需求提供了机会，他们的活动比以往任何时候都增长得更快。
 
-Gear was built for the purpose of becoming an essential platform for building the Web3 ecosystem.
+Gear 旨在成为构建 Web3 生态系统的重要平台。
 
-### Blockchains evolution
+### 区块链革命
 
-At their core, blockchains store a history of transactions between parties in a form that can be accessible by anybody. They ensure decentralized, immutable and premissionless access to data in the blcokchain.
+区块链的核心是，任何人都可以访问的形式存储各方之间的交易历史。它们确保了对区块链中数据的去中心化、不可更改和无需授权的访问。
 
-Networks that were at the dawn of blockchain technology have a number of significant issues:
+区块链网络在技术初期存在许多重大问题：
 
-- Lack of scalability, low transaction speed, high transaction costs - all of it hinders the growth of applications in Web3
-- Domain-specific development languages leads to high barrier to entry. The need to learn new programming language and paradigms holds back the growth of developers entering Web3
-- Complex and inefficient native consensus protocols
-- Absence of intercommunication between networks
+- 缺乏可扩展性、交易速度慢、交易成本高 - 所有这些都阻碍了 Web3 中应用程序的增长
+- 特定领域的开发语言导致进入门槛很高。学习新的编程语言和范式阻碍了进入 Web3 的开发人员的增长
+- 复杂且低效的原生共识协议
+- 网络之间缺乏相互通信
 
+## Dotsama 生态系统（Polkadot/Kusama 网络）
 
-## Dotsama ecosystem (Polkadot/Kusama networks)
+我们在 Parity 技术中已经找到了解决方案，该技术专注于创建一个  Layer-0，将区块链连接在一起成为一个更大的网络--Polkadot。
 
-The solution has been found in Parity technologies focused on creating a Layer-0 technology that connects blockchains together into one big network - Polkadot.
+Polkadot 为区块链提供了一个共存互补的系统。不同的并行区块链（平行链）建立在 Substrate 和 Polkadot 上，并连接到中继链并具有本地连接。这使得不同的节点可以运行不同的应用逻辑，将每条链保持在自己的平台上。所有平行链都是相互连接的，创建了一个庞大的多功能区块链服务网络。平行链构成了 Polkadot 生态系统的第 1 层，与其他独立的第 1 层区块链网络（如以太坊、比特币、Solana 等）连接的主要区别在于平行链通过 Substrate Cumulus 库连接，独立区块链通过桥进行连接。
 
-Polkadot provides a system in which blockchains coexist and complement each other. Different parallel blockchains (parachains) are built on Substrate as well as Polkadot and connected to the relay chain and have a native connection.This allows for different nodes to run different application logic, keeping each chain on its own platform. All parachains are interconnected, creating a massive network of multifunctional blockchain services. Parachains compose the Layer-1 of the Polkadot ecosystem, the main difference in connection with other standalone Layer-1 blockchain networks like Ethereum, Bitcoin, Solana, etc. is that parachains are connected through Substrate Cumulus library and standalone blockchains through bridges.
+Polkadot 及其测试网 Kusama 旨在成为一个完全可扩展和可扩展的区块链开发、部署和交互测试平台。它被打造为一个在很大程度上面向未来的工具，能够吸收新的区块链技术，而无需过于复杂的去中心化协调或硬分叉。
 
-Polkadot and its testnet Kusama are designed to be a fully extensible and scalable blockchain development, deployment and interaction test bed. It is built to be a largely future-proof harness able to assimilate new blockchain technology as it becomes available without over-complicated decentralized coordination or hard forks.
+目前，Polkadot 是增长最快的多链网络之一。虽然它具有构建智能合约平台的自适应架构和去中心化应用程序的快速技术开发，但它本身并不是一个智能合约平台。
 
-Today Polkadot is one of the fastest-growing multi-chain networks. Although it has an adaptive architecture for building smart-contract platforms and rapid technology development for decentralized applications, it is not a smart contract platform by itself.
+作为一个建立在 Substrate 上的智能合约平台，Gear 的建立使得它可以用来在 Polkadot 或 Kusama 上部署一个 Layer-1 平行链，或者一个独立于 Polkadot 或 Kusama 的网络，其中任何一个都是“Gear 网络”。Gear 网络使开发者能够在短短几分钟内以最简单和最有效的方式部署他们的 dApps。这将使开发人员能够在 Polkadot 和 Kusama 上构建 dapp，从而充分利用每个独特网络的优势，而不必花费传统的大量时间和金钱。
 
-As a smart contract platform built on Substrate, Gear was built so that it can be used to deploy a Layer-1 parachain on Polkadot or Kusama, or a standalone network independent of Polkadot or Kusama, any of which being a “Gear Network”. A Gear Network enables developers to deploy their dApps in mere minutes in the easiest and most efficient way possible. This will enable developers to build dApps on Polkadot and Kusama to take advantage of the benefits of each unique network without the traditional significant time and financial expense associated with doing so.
+Polkadot 架构中有几个组成部分：
+- 中继链
+- 平行链
+- 桥
 
-There are several components in the Polkadot architecture, namely:
+### 中继链
 
- - Relay Chain
- - Parachains
- - Bridges
+中继链是 Polkadot 的核心，负责网络的安全、共识和跨链的互操作性。它允许专用区块链和公共区块链在统一的、可互操作的 Polkadot 网络内连接。中继链可以被理解为 Layer-0 平台。
 
-### Relay Chain
+中继链具有精简的功能，这自然意味着不支持高级功能特性，例如智能合约。其他具体的工作被委托给平行链，它们各自都有不同的实现方式和功能。
 
-Relay Chain is the heart of Polkadot, responsible for the network’s security, consensus and cross-chain interoperability. It allows specialized blockchains and public blockchains to connect within the unified and interoperable Polkadot network. Relay Chain can be understood as a Layer-0 platform.
+中继链的主要任务是协调整个系统及其连接的平行链，以建立一个可伸缩和互操作的网络。
 
-The Relay Chain has minimal functionality, which naturally means that advanced functionality features, like smart contracts for example, are not supported. Other specific work is delegated to the parachains, which each have different implementations and features.
+中继链也同时负责网络安全、共识和跨链互操作的中继链。
 
-The main task of the Relay Chain is to coordinate the overall system and its connected parachains to build a scalable and interoperable network.
+### 平行链
 
-It’s also the Relay Chain that is responsible for the network’s shared security, consensus and cross-chain interoperability.
+平行链是独立的区块链，可以拥有自己的代币并针对特定用例优化功能。
 
-### Parachains
+平行链必须连接到中继链，以确保与其他网络的互操作性。为此，平行链可以租用一个插槽来进行连接，或者它们可以随用随付 (在这种情况下，它们被称为平行线程)。平行链构成了 Polkadot 生态系统的第二层。
 
-Parachains are sovereign blockchains that can have their own tokens and optimize their functionality for specific use cases.
+平行链可由中继链的验证者验证，“平行链”这个名称来源于与中继链平行运行的概念。由于它们的并行特性，它们能够并行化交易处理，这有助于提高 Polkadot 网络的可扩展性。
 
-Parachains must be connected to the Relay Chain to ensure interoperability with other networks. For this, parachains lease a slot for continuous connectivity or they can pay as they go (in this case they are called Parathreads). Parachains compose the Layer-2 of the Polkadot ecosystem.
+Parachains 为特定的用例优化其功能，在许多情况下，拥有它们自己的代币。
 
-Parachains are validateable by validators of the Relay Chain and they get their name from the concept of paralleziable chains that run parallel to the main Relay Chain. Due to their parallel nature, they are able to parallelize transaction processing which helps improve scalability of the Polkadot network.
+为了成为 Polkadot 和 Kusama 的平行链，项目必须参加[平行链拍卖](https://parachains.info/auctions)。
 
-Parachains optimize their functionality for specific use cases and, in many instances, support their own tokens.
+### 桥
 
-In order to become a parachain on Polkadot and Kusama, projects have to participate in a [parachain auction](https://parachains.info/auctions).
+区块链桥是一种特殊的连接，允许 Polkadot 生态系统连接到以太坊、比特币等外部网络并与之通信。这样的网络可以被认为是 Layer-1。桥接允许将代币或任意数据从一个区块链转移到另一个区块链。
 
-### Bridges
+## Gear 在 Polkadot 网络中的角色
 
-A blockchain bridge is a special connection that allows the Polkadot ecosystem to connect to and communicate with external networks like Ethereum, Bitcoin and others. Such networks can be considered as Layer-1. Bridge connection allows transfer of tokens or arbitrary data from one blockchain to another.
+作为Polkadot/Kusama的平行链网络  Gear Protocol 驱动的网络旨在承载第二层智能合约。这允许任何人在 Polkadot 和 Kusama 上部署任何 dApp，以最小的经济成本利用其生态系统的所有好处。
 
-## Gear role in the Polkadot network
+与 Polkadot 一样，Gear Protocol 使用 Substrate 框架。这简化了为特定应用程序创建不同区块链的过程。Substrate 提供了大量开箱即用的功能，并允许人们专注于在协议之上创建自定义引擎。基于 Gear Protocol 构建的项目可以将其解决方案无缝集成到整个 Polkadot/Kusama 生态系统中。
 
-As a Polkadot/Kusama parachain network, Gear Protocol-powered networks are intended for hosting Layer-2 smart contracts. This allows anyone to deploy any dApp on Polkadot and Kusama to take advantage of all the benefits of their ecosystems, yet at the minimal financial expense.
+Polkadot 的核心方面是它能够在链之间路由任意消息。Polkadot 和 Gear 网络都使用相同的语言——异步消息，所以使用 Gear 构建的所有项目都可以轻松集成到 Polkadot 和 Kusama 网络中。异步消息传递架构使 Gear 网络成为高效且易于使用的平行链。
 
-Like Polkadot, Gear Protocol uses a Substrate framework. This simplifies the creation of different blockchains for specific applications. Substrate provides extensive functionality out-of-the-box and allows one to focus on creating a custom engine on top of the protocol. Projects building on Gear Protocol can seamlessly integrate their solutions into the whole Polkadot/Kusama ecosystem.
+齿轮协议的大多数开发者和启发者都直接参与了 Polkadot 和 Substrate 技术的创建。Gear 正在开发中，考虑到 Polkadot 的架构和设计的特点。我们依赖于产品的高安全性和灵活性，就像 Polkadot 一样。
 
-The central aspect of Polkadot is its ability to route arbitrary messages between chains. Both Polkadot and Gear networks speak the same language — asynchronous messages — so all the projects built using Gear easily integrate into the Polkadot and Kusama networks. The asynchronous messaging architecture allows Gear networks to be an efficient and easy-to-use parachains.
+随着硬件的改进，Gear 网络会自然扩展，因为它利用了 CPU 的所有内核。任何拥有标准计算机的人现在都可以运行 Gear 节点，并且永远如此。凭借可分片设计，Gear 网络可以通过跨多个平行链插槽进行部署来扩展，并且可以作为一个独立的网络进行分片以获得额外的可扩展性。
 
-The majority of developers and inspirers of Gear Protocol were directly involved in creating Polkadot and Substrate technologies. Gear is developing, taking into account the features of the architecture and design of its older brother. We rely on the high security and flexibility of our product, just like Polkadot.
-
-Gear networks scale naturally as hardware improves as it utilizes all CPU cores. Anyone with a standard computer can run a Gear node today and always. With its shardable design, Gear networks can scale by deploying across multiple parachain slots and can be sharded as a standalone network for additional scalability.
-
-For additional details, refer to [Gear Whitepaper](https://whitepaper.gear-tech.io/).
+更多详细内容，请看[Gear 白皮书](https://whitepaper.gear-tech.io/)。
