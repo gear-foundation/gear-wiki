@@ -8,13 +8,13 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import CodeBlock from '@theme/CodeBlock';
 
-Validators are special network participants who, if selected in an active `validator set`, produce blocks for the chain. Vadidators receive a reward for their bets.
+Validators are special network participants who, if selected in an active `validator set`, produce blocks for the chain. Validators receive a reward for their bets.
 
-Running a validator on a live network is a responsible role. The validator is responsible not only for his own stake, but also the stake of your current nominators. Nevertheless, this is an important role that is also well rewarded.
+Running a validator on a live network is a responsible role. The validators are responsible not only for their own stake, but also for the stake of their current nominators. Nevertheless, this is an important role that is also well rewarded.
 
 ## Initial Set Up
 
-### Hadrware requirements
+### Hardware requirements
 
 :::info
 The most common way for a beginner to run a validator is on a cloud server running Linux. To do this, choose whatever VPS provider corresponds to the characteristics below.
@@ -26,7 +26,7 @@ The most common way for a beginner to run a validator is on a cloud server runni
 
 ### Install Vara Node
 
-Download `gear-node` from the nighly builds repo and unpack (choose the binary according to your host operating system):
+Download `gear-node` from the nightly builds repo and unpack (choose the binary according to your host operating system):
 
 ````mdx-code-block
 <Tabs>
@@ -126,9 +126,9 @@ gear-node 0.1.0-hashcode-x86_64-linux
 
 ### Create Stash and Controller accounts
 
-For security reasons, we recommend creating two separate accounts: `Stash` and `Controller`. It's important to make sure that each of them has enough funds to pay transaction fee. Most of the funds should be stored on the stash account since it's meant to store staking funds.
+For security reasons, we recommend creating two separate accounts: `Stash` and `Controller`. It's important to make sure that each of them has enough funds to pay the transaction fee. Most of the funds should be stored on the stash account since it's meant to store staking funds.
 
-To generete new seed phrase:
+To generate new seed phrase:
 
 ```sh
 ./gear-node key generate | grep phrase
@@ -149,9 +149,9 @@ Install ansible
 ```
 brew install ansible
 
-# Optional If you access your server using SSH login and password instead of SSH key
+# Optional:
+If you access your server using SSH login and password instead of SSH key
 brew install esolitos/ipa/sshpass
-
 ```
 
 - Ubuntu Linux:
@@ -218,7 +218,7 @@ If your node is live and synchronized, appears in telemetry, and session keys ar
 
 Go to Polkadot.{js} app and navigate to Network → Staking → [Account actions](https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fvara.gear.rs#/staking/actions) section and click `+Validator`:
 
-Select stash and controller account. It’s recommended to use different accounts for stash and controller.
+Select stash and controller accounts.
 
 ![setup validator](./img/setup-validator-1.png)
 
@@ -226,9 +226,11 @@ Set the `session key` and reward commission.
 
 ![setup validator](./img/setup-validator-2.png)
 
-And sign the transaction. Make sure that you have been added to the stashe and wait for the next Era.
+And sign the transaction. Make sure that you have been added to the stash and wait for the next Era.
 When the next Era starts, your validator will be added.
 
 ![setup validator](./img/setup-validator-3.png)
 
 ## Get Payouts
+
+TBD...
