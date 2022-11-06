@@ -61,7 +61,7 @@ Typical errors and solutions are described here.
     Also, you may check how many space is used by the blockchain DB:
 
     ```shell
-    du -h $HOME/.local/share/gear-node/chains/staging_testnet_4/db/full
+    du -h $HOME/.local/share/gear-node/chains/staging_testnet_v4/db/full
     ```
 
     Please refer to the [System Requirements](/docs/node/setting-up#system-requirements) to see the minimum disk space required.
