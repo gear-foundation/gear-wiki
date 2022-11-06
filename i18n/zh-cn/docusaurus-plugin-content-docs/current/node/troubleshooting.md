@@ -9,7 +9,7 @@ sidebar_position: 7
 
 ## `LOCK` 文件不可用
 
-- **错误：** `IO 错误：While lock file /root/.local/share/gear-node/chains/staging_testnet_v3/db/full/LOCK: Resource temporarily unavailable`
+- **错误：** `IO 错误：While lock file /root/.local/share/gear-node/chains/staging_testnet_v4/db/full/LOCK: Resource temporarily unavailable`
 
 - **解决方式：**  你似乎在运行几个 Gear 节点实例。注意，只允许运行一个节点实例。你很可能把节点配置为一个服务，然后从命令行运行第二个实例。你应该停止该服务，或者不要从命令行运行 Gear 节点。
 
@@ -61,7 +61,7 @@ sudo systemctl stop gear-node
     此外，你可以检查区块链数据库使用了多少空间。
 
     ```shell
-    du -h $HOME/.local/share/gear-node/chains/staging_testnet_v3/db/full
+    du -h $HOME/.local/share/gear-node/chains/staging_testnet_v4/db/full
     ```
 
     请参考 [系统要求](/node/setting-up#system-requirements)，查看所需的最小磁盘空间。
