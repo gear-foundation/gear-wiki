@@ -11,13 +11,13 @@ Anyone can easily create their own game application and run it on the Gear Netwo
 
 This article explains the programming interface, data structure, basic functions their purpose. It can be used as is or modified to suit your own scenarios.
 
-Gear also [provides](https://github.com/gear-tech/gear-js/tree/master/apps/lottery) an example implementation of the [Game of chance's](https://lottery.gear-tech.io/) user interface to demonstrate its interaction with smart contracts in the Gear Network. In this example, whoever initializes the contract is considered the game owner. Only the owner has the right to start/finish the game. Players are added to the Game of chance themselves by sending a message with their bet to the contract. Then players monitor the state of the game. The winner is determined randomly.
+Gear also [provides](https://github.com/gear-tech/gear-js/tree/master/apps/game-of-chance) an example implementation of the [Game of chance's](https://lottery.gear-tech.io/) user interface to demonstrate its interaction with smart contracts in the Gear Network. In this example, whoever initializes the contract is considered the game owner. Only the owner has the right to start/finish the game. Players are added to the Game of chance themselves by sending a message with their bet to the contract. Then players monitor the state of the game. The winner is determined randomly.
 
  You can watch a video on how to get the Game of chance application up and running and its capabilities here: **https://youtu.be/35StUMjbdFc**.
 
 ## Source files
-1. `lottery/src/lib.rs` - contains functions of the game contract.
-2. `lottery/io/src/lib.rs` - contains Enums and structs that the contract receives and sends in the reply.
+1. `game-of-chance/src/lib.rs` - contains functions of the game contract.
+2. `game-of-chance/io/src/lib.rs` - contains Enums and structs that the contract receives and sends in the reply.
 
 ## Structs
 
@@ -227,13 +227,13 @@ A [Ready-to-Use application](https://lottery.gear-tech.io/) example provides a u
 
 This video demonstrates how to configure and run Game application on your own and explains the user interaction workflow: **https://youtu.be/35StUMjbdFc**
 
-![img alt](./img/Lottery.png)
+![img alt](./img/game-of-chance.png)
 
-A game application source code is available on [GitHub](https://github.com/gear-tech/gear-js/tree/master/apps/lottery).
+A game application source code is available on [GitHub](https://github.com/gear-tech/gear-js/tree/master/apps/game-of-chance).
 
 ### Configure basic dApp in .env:
 
-For proper application functioning, one needs to create `.env` file and adjust an environment variable parameters. An example is available [here](https://github.com/gear-tech/gear-js/blob/master/apps/lottery/.env.example).
+For proper application functioning, one needs to create `.env` file and adjust an environment variable parameters. An example is available [here](https://github.com/gear-tech/gear-js/blob/master/apps/game-of-chance/.env.example).
 
 ```sh
 REACT_APP_NODE_ADDRESS
@@ -258,14 +258,14 @@ Open http://localhost:3000 to view it in the browser.
 
 ## Conclusion
 
-A source code of the contract example provided by Gear is available on GitHub: [`lottery/src/lib.rs`](https://github.com/gear-dapps/lottery/blob/master/src/lib.rs).
+A source code of the contract example provided by Gear is available on GitHub: [`game-of-chance/src/lib.rs`](https://github.com/gear-dapps/game-of-chance/blob/master/src/lib.rs).
 
 See also an examples of the smart contract testing implementation based on gtest:
 
-- [`simple_tests.rs`](https://github.com/gear-dapps/lottery/blob/master/src/simple_tests.rs).
+- [`simple_tests.rs`](https://github.com/gear-dapps/game-of-chance/blob/master/src/simple_tests.rs).
 
-- [`panic_tests.rs`](https://github.com/gear-dapps/lottery/blob/master/src/panic_tests.rs).
+- [`panic_tests.rs`](https://github.com/gear-dapps/game-of-chance/blob/master/src/panic_tests.rs).
 
-- [`token_tests.rs`](https://github.com/gear-dapps/lottery/blob/master/src/token_tests.rs).
+- [`token_tests.rs`](https://github.com/gear-dapps/game-of-chance/blob/master/src/token_tests.rs).
 
 For more details about testing smart contracts written on Gear, refer to this article: [Program Testing](/docs/developing-contracts/testing).
