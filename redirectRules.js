@@ -136,7 +136,7 @@ const urlList = [
         "from": "/examples/escrow"
     },
     {
-        "to": "/docs/examples/lottery",
+        "to": "/docs/examples/game-of-chance",
         "from": "/examples/lottery"
     },
     {
@@ -172,7 +172,7 @@ const urlList = [
         "from": "/examples/staking"
     },
     {
-        "to": "/docs/examples/crowdsale-ico",
+        "to": "/docs/examples/crowdsale",
         "from": "/examples/crowdsale-ico"
     },
     {
