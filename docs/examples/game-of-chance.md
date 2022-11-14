@@ -145,6 +145,6 @@ pub struct GOCState {
 
 ## Source code
 
-The source code of this example of a supply chain smart contract and an implementation of its testing is available on [GitHub](https://github.com/gear-dapps/game-of-chance). They can be used as is or modified to suit your own scenarios.
+The source code of the Game of chance smart contract and an implementation of its testing is available on [GitHub](https://github.com/gear-dapps/game-of-chance). They can be used as is or modified to suit your own scenarios.
 
 For more details about testing smart contracts written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.
