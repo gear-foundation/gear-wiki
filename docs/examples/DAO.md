@@ -17,7 +17,7 @@ DAOs offer safe alternatives to pooling together money for a particular cause. B
 
 ### DAO application example by Gear
 
-Anyone can easily create their own DAO application and run it on the Gear Network. To do this, Gear created an example of the DAO smart contract, which is available on [GitHub](https://github.com/gear-dapps/dao-light). 
+Anyone can easily create their own DAO application and run it on the Gear Network. To do this, Gear created an example of the DAO smart contract, which is available on [GitHub](https://github.com/gear-dapps/dao-light).
 
 This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios.
 
@@ -117,7 +117,7 @@ Parameters `approved_token_program_id`, `period_duration`, `grace_period_length`
 
 ```rust
 #[no_mangle]
-pub unsafe extern "C" fn init() {
+extern "C" fn init() {
     ...
 }
 ```
@@ -232,7 +232,7 @@ async fn process_proposal(
  2. `state.rs` - defines the `State` and `StateReply` enums.  It is important to have the ability to read the contract state off-chain. It is defined in the `fn meta_state()`.  The contract receives a request to read the certain data (the possible requests are defined in the enum `State`) and sends replies. The contracts replies about its state are defined in the enum `StateReply`.
 
 ```rust
-pub unsafe extern "C" fn meta_state() -> *mut [i32; 2] {
+unsafe extern "C" fn meta_state() -> *mut [i32; 2] {
     let state: State = msg::load().expect("failed to decode input argument");
     let encoded = match state {
         State::UserStatus(account) => {

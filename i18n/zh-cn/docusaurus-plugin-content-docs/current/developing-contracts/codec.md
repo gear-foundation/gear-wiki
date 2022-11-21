@@ -13,7 +13,7 @@ sidebar_position: 4
 [dependencies]
 
 // ...
-codec = { package = "parity-scale-codec", version = "3.1.2", default-features = false, features = ["derive", "full"] }
+codec = { package = "parity-scale-codec", version = "3.1.2", default-features = false }
 ```
 
 ```rust
@@ -44,7 +44,7 @@ enum MyType {
 [dependencies]
 
 // ...
-scale-info = { version = "2.2.0", default-features = false, features = ["derive"] }
+scale-info = { version = "2.2.0", default-features = false }
 ```
 
 ```rust

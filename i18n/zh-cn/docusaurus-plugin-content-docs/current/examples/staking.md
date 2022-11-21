@@ -312,7 +312,7 @@ async unsafe fn main() {
 
 ```rust
 #[no_mangle]
-pub unsafe extern "C" fn meta_state() -> *mut [i32; 2] {
+unsafe extern "C" fn meta_state() -> *mut [i32; 2] {
     let query: StakingState = msg::load().expect("failed to decode input argument");
     let staking = STAKING.get_or_insert(Staking::default());
 

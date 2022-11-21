@@ -42,10 +42,10 @@ sidebar_position: 6
 例如，你可以使用这个手册进行操作：https://community.hetzner.com/tutorials/block-outgoing-traffic-to-private-networks
 
 ### 将节点配置为服务后应该怎样更新节点？
-你只需要把节点的可执行文件（`gear`）替换成最新版本，然后重新执行。例如，如果你的 Linux 可执行文件位于`/root/gear`，你将运行：
+你只需要把节点的可执行文件（`gear`）替换成最新版本，然后重新执行。例如，如果你的 Linux 可执行文件位于`/usr/bin`，你将运行：
 ```bash
 wget https://get.gear.rs/gear-nightly-linux-x86_64.tar.xz
-sudo tar -xvf gear-nightly-linux-x86_64.tar.xz -C /root
+sudo tar -xvf gear-nightly-linux-x86_64.tar.xz -C /usr/bin
 rm gear-nightly-linux-x86_64.tar.xz
 sudo systemctl restart gear-node
 ```

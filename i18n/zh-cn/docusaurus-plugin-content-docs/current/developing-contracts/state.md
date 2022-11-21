@@ -45,7 +45,7 @@ pub struct ContractState {}
 static mut STATE: ContractState = ContractState {};
 
 #[no_mangle]
-pub unsafe extern "C" fn meta_state() -> *mut [i32; 2] {
+unsafe extern "C" fn meta_state() -> *mut [i32; 2] {
     let query =
         String::from_utf8(msg::load_bytes().expect("Unable to load bytes")).expect("Invalid query");
     let reply = if query == "CONTRACT_STATE" {

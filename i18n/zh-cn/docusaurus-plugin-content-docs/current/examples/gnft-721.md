@@ -108,7 +108,7 @@ pub struct NFT {
 static mut CONTRACT: Option<NFT> = None;
 
 #[no_mangle]
-pub unsafe extern "C" fn init() {
+unsafe extern "C" fn init() {
     let config: InitNFT = msg::load().expect("Unable to decode InitNFT");
     let mut nft = NFT::default();
     nft.token.name = config.name;
@@ -119,7 +119,7 @@ pub unsafe extern "C" fn init() {
 }
 
 #[no_mangle]
-pub unsafe extern "C" fn handle() {
+unsafe extern "C" fn handle() {
     let action: NFTAction = msg::load().expect("Could not load msg");
     let nft = CONTRACT.get_or_insert(NFT::default());
     match action {
@@ -182,7 +182,7 @@ impl MyNFTCore for NFT {
 
 ```rust
 #[no_mangle]
-pub unsafe extern "C" fn handle() {
+unsafe extern "C" fn handle() {
     let action: NFTAction = msg::load().expect("Could not load msg");
     let nft = CONTRACT.get_or_insert(NFT::default());
     match action {

@@ -200,7 +200,7 @@ async fn main() {
 
 ```rust
 #[no_mangle]
-pub unsafe extern "C" fn meta_state() -> *mut [i32; 2] {
+unsafe extern "C" fn meta_state() -> *mut [i32; 2] {
     let query: LtState = msg::load().expect("failed to decode input argument");
     let lottery: &mut Lottery = LOTTERY.get_or_insert(Lottery::default());
 
