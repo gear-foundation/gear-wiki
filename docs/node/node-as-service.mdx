@@ -11,10 +11,10 @@ You need to download or compile the `gear` executable file for your OS. [See mor
 
 ## Configuration
 
-Copy the `gear` executable to the `/root` directory:
+Copy the `gear` executable to the `/usr/bin` directory:
 
 ```bash
-sudo cp gear /root/
+sudo cp gear /usr/bin
 ```
 
 To run the Gear node as one of the Linux services, you need to configure the systemd file:
@@ -35,7 +35,7 @@ After=network.target
 Type=simple
 User=root
 WorkingDirectory=/root/
-ExecStart=/root/gear --name 'NODE_NAME' --telemetry-url 'ws://telemetry-backend-shard.gear-tech.io:32001/submit 0'
+ExecStart=/usr/bin/gear --name "NODE_NAME" --telemetry-url "wss://telemetry.rs/submit 0"
 Restart=always
 RestartSec=3
 LimitNOFILE=10000
@@ -45,7 +45,7 @@ WantedBy=multi-user.target
 ```
 
 :::note
-Declaration `ExecStart` points to the location of the `gear` binary file. In this case, it is in `root` directory.
+Declaration `ExecStart` points to the location of the `gear` binary file. In this case, it is in `/usr/bin` directory.
 With -- additional launch parameters are indicated, but not mandatory.
 :::
 
@@ -101,7 +101,7 @@ You just need to replace the node executable (`gear`) with the latest version an
 
 ```
 wget https://get.gear.rs/gear-nightly-linux-x86_64.tar.xz
-sudo tar -xvf gear-nightly-linux-x86_64.tar.xz -C /root
+sudo tar -xvf gear-nightly-linux-x86_64.tar.xz -C /usr/bin
 rm gear-nightly-linux-x86_64.tar.xz
 sudo systemctl restart gear-node
 ```
@@ -123,5 +123,5 @@ sudo systemctl stop gear-node
 sudo systemctl disable gear-node
 sudo rm -rf /root/.local/share/gear
 sudo rm /etc/systemd/system/gear-node.service
-sudo rm /root/gear
+sudo rm /usr/bin/gear
 ```
