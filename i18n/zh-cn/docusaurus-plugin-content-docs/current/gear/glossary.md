@@ -125,6 +125,6 @@ Substrate 是用于构建定制区块链的模块化框架，也是整个 Polkad
 
 Web3 是互联网的第三次进化，它得到了区块链技术和去中心化应用的大力支持。
 
-### WebAssembly (WASM)
+### WebAssembly (Wasm)
 
-WebAssembly 是一种将 JavaScript 以外的编程语言的应用程序作为网页运行的方式。从本质上讲，WASM 只是一个在所有现代浏览器上运行的虚拟机。但在过去，你需要使用 JavaScript 来运行网页中的代码，而 WASM 使得在浏览器中运行 JavaScript 以外的编程语言的代码成为可能。
+WebAssembly 是一种将 JavaScript 以外的编程语言的应用程序作为网页运行的方式。从本质上讲，Wasm 只是一个在所有现代浏览器上运行的虚拟机。但在过去，你需要使用 JavaScript 来运行网页中的代码，而 Wasm 使得在浏览器中运行 JavaScript 以外的编程语言的代码成为可能。

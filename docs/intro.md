@@ -27,6 +27,8 @@ The Gear Protocol provides the most cost-effective way to run smart contracts th
 
 Powered by the Gear Protocol, Gear Networks can act as standalone L1 networks, as well as become a parachain in the Polkadot and Kusama ecosystem too. This will mean that by deploying on the Gear Network, developers would be able to take advantage of all the benefits of the Polkadot and Kusama networks and ecosystems at minimal cost.
 
+**[Vara Network](https://vara-network.io/)** is the first stand-alone layer-1 decentralized network built and running on top of Gear Protocol.
+
 ## How to engage with the Gear community
 
 ### GitHub

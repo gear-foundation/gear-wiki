@@ -5,12 +5,12 @@ sidebar_position: 5
 
 # Upload smart contracts
 
-Following the principles of Actor model for communication, uploading a program in the network is just one of the specific types of transactions that contain a WASM file as a payload.
+Following the principles of Actor model for communication, uploading a program in the network is just one of the specific types of transactions that contain a Wasm file as a payload.
 
 Uploading a new program (smart-contract) to the blockchain takes place by calling the custom extrinsic `gear.uploadProgram(code, salt, initPayload, gasLimit, value)`. 
 Where:
 
-- `code: Bytes` - binary WASM code
+- `code: Bytes` - binary Wasm code
 - `salt: Bytes` - the random data that is added to the hashing process to force their uniqueness
 - `initPayload: Bytes`- the init message payload that will be processed by the init() function during program initialization
 - `gasLimit: u64` - the amount of gas that users are willing to spend on processing the upload of a new program

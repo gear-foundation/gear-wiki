@@ -19,7 +19,7 @@ Gear 使用了来自 `cargo` 构建的 Rust 程序标准测试机制。
 
 ## 在测试模式下构建程序
 
-首先，确保你想测试的程序已经编译成 `WASM` 文件。你可以参考 [5 分钟入门教程](getting-started-in-5-minutes.md) 了解更多细节。
+首先，确保你想测试的程序已经编译成 `Wasm` 文件。你可以参考 [5 分钟入门教程](getting-started-in-5-minutes.md) 了解更多细节。
 
 1. 通常情况下，以下命令用于 Gear 智能合约的常规编译：
 
