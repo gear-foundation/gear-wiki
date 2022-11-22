@@ -24,8 +24,8 @@ const urlList = [
         "from": "/gear/memory-parallelism"
     },
     {
-        "to": "/docs/gear/technology/WASM",
-        "from": "/gear/WASM"
+        "to": "/docs/gear/technology/wasm",
+        "from": "/gear/wasm"
     },
     {
         "to": "/docs/gear/glossary",

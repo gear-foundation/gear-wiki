@@ -5,7 +5,7 @@ sidebar_position: 1
 
 # Executable functions
 
-The program is the main unit of the Gear Protocol. Each program in the Gear network is an immutable [WASM](/docs/gear/technology/WASM) blob and has a fixed amount of memory which persists between message handling (so-called static area).
+The program is the main unit of the Gear Protocol. Each program in the Gear network is an immutable [Wasm](/docs/gear/technology/Wasm) blob and has a fixed amount of memory which persists between message handling (so-called static area).
 
 ## Basic structure
 

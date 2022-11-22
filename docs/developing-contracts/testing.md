@@ -18,7 +18,7 @@ The **unit tests** enable testing of each unit of code in isolation from the res
 Even when units of code work correctly, it is important to test if several parts of the library work together correctly as well. For **integration tests**, a separate `tests` directory is required at the top level of your project directory, next to `src`. You can make as many test files in this directory as you need, Cargo will compile each of the files as an individual crate.
 
 ## Building a program in test mode
-First of all, make sure you have a compiled WASM file of the program you want to test. You can refer to [Getting Started](getting-started-in-5-minutes.md) for additional details.
+First of all, make sure you have a compiled Wasm file of the program you want to test. You can refer to [Getting Started](getting-started-in-5-minutes.md) for additional details.
 
 1. Usually the following command is used for regular compilation of Gear smart contracts:
 

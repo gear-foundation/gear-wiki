@@ -125,6 +125,6 @@ A blockchain wallet is an application that allows users to store and manage thei
 
 Web3 is the third evolution of the internet that is heavily supported by blockchain technology and decentralized applications.
 
-### WebAssembly (WASM)
+### WebAssembly (Wasm)
 
-WebAssembly is a way to run applications in programming languages other than JavaScript as web pages. Essentially, WASM is just a virtual machine that runs on all modern browsers. But whereas in the past you were required to use JavaScript to run code in a web page, WASM makes it possible to run code in browsers with programming languages other than JavaScript.
+WebAssembly is a way to run applications in programming languages other than JavaScript as web pages. Essentially, Wasm is just a virtual machine that runs on all modern browsers. But whereas in the past you were required to use JavaScript to run code in a web page, Wasm makes it possible to run code in browsers with programming languages other than JavaScript.

@@ -5,13 +5,13 @@ sidebar_position: 5
 
 # 上传智能合约
 
-遵循 Actor 模型的通信原则，创建一个只包含 WASM 文件程序，作为有效载荷的具体交易类型之一。
+遵循 Actor 模型的通信原则，创建一个只包含 Wasm 文件程序，作为有效载荷的具体交易类型之一。
 
 向区块链上传一个新的程序（智能合约）是通过调用自定义 extrinsic `gear.uploadProgram(code, salt, initPayload, gasLimit, value)` 来实现的。
 
 字段含义如下：
 
-- `code: Bytes` - 二进制 WASM 代码。
+- `code: Bytes` - 二进制 Wasm 代码。
 - `salt: Bytes` - 随机数据，以确定其唯一性。
 - `initPayload: Bytes` - 在程序初始化期间将由 init() 函数处理的 init 信息有效载荷。
 - `gasLimit: u64` - 是指用户愿意花在处理上传新程序上的 gas。

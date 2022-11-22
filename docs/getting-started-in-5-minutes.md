@@ -5,7 +5,7 @@ sidebar_position: 4
 
 # Getting started in 5 minutes
 
-This guide provides a general overview of running smart contracts on the Gear network. It guides you through how to write a smart contract, compile it to WASM and deploy it to the Gear network.
+This guide provides a general overview of running smart contracts on the Gear network. It guides you through how to write a smart contract, compile it to Wasm and deploy it to the Gear network.
 
 For this example, a demo environment that emulates the real Gear decentralized network will be used.
 
@@ -29,7 +29,7 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 rustup toolchain add nightly
 ```
 
-4. As we will be compiling our Rust smart contract to WASM, we will need a WASM compiler. Let's add it to the toolchain.
+4. As we will be compiling our Rust smart contract to Wasm, we will need a Wasm compiler. Let's add it to the toolchain.
 
 ```bash
 rustup target add wasm32-unknown-unknown --toolchain nightly
@@ -126,7 +126,7 @@ extern "C" fn handle() {
 
 This simple smart-contract responds with `PONG` to a `PING` message sent to the contract.
 
-6. Now compile the smart-contract to WASM
+6. Now compile the smart-contract to Wasm
 
 ```bash
 cd ~/gear/contracts/first-gear-app/
@@ -148,11 +148,11 @@ target
             └── first_gear_app.meta.wasm <---- this is meta .wasm file
 ```
 
-The `target/wasm32-unknown-unknown/release` directory contains three WASM binaries:
+The `target/wasm32-unknown-unknown/release` directory contains three Wasm binaries:
 
-- `first_gear_app.wasm` is the output WASM binary built from source files
-- `first_gear_app.opt.wasm` is the optimized WASM aimed to be uploaded to the blockchain
-- `first_gear_app.meta.wasm` is the WASM containing meta information needed to interact with the program
+- `first_gear_app.wasm` is the output Wasm binary built from source files
+- `first_gear_app.opt.wasm` is the optimized Wasm aimed to be uploaded to the blockchain
+- `first_gear_app.meta.wasm` is the Wasm containing meta information needed to interact with the program
 
 ## Deploy your Smart Contract to the Testnet
 

@@ -35,4 +35,4 @@ Gear IDEA 是一个方便的工具，其目的是让用户熟悉 Gear 平台。�
 
 [wasm-compiler](https://github.com/gear-tech/gear-js/tree//main/idea/wasm-compiler)
 
-用来将 Rust 项目编译成 WASM 的微服务。
+用来将 Rust 项目编译成 Wasm 的微服务。

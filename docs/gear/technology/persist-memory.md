@@ -8,7 +8,7 @@ Another distinguished feature of the Gear Protocol is the Persistent memory appr
 
 Programs running in Gear Networks don’t use storage but rather their full state is persisted which ensures much less API surface for blockchain context. It avoids domain-specific language features as well as allows using much more complex language constructs — persisted boxed closures, futures compositors, etc.
 
-The Gear Protocol uses clever memory virtualization techniques (despite vanilla WASM does not), memory allocation and deallocation are first-class syscalls of the protocol. Memory access is also tracked and only required pages are loaded/stored. That allows heap-allocated stack frames of smart contracts stored in the blockchain’s state (typically found in futures and their compositors) to be seamlessly persisted and invoked when needed, preserving their state upon request.
+The Gear Protocol uses clever memory virtualization techniques (despite vanilla Wasm does not), memory allocation and deallocation are first-class syscalls of the protocol. Memory access is also tracked and only required pages are loaded/stored. That allows heap-allocated stack frames of smart contracts stored in the blockchain’s state (typically found in futures and their compositors) to be seamlessly persisted and invoked when needed, preserving their state upon request.
 
 Program code is stored as an immutable Wasm blob. Each program has a fixed amount of memory which persists between message-handling (so-called static area).
 

@@ -35,4 +35,4 @@ Microservice provides the opportunity to obtain test tokens.
 
 [wasm-compiler](https://github.com/gear-tech/gear-js/tree/main/idea/wasm-compiler)
 
-Microservice provides the opportunity to compile Rust projects to WASM.
+Microservice provides the opportunity to compile Rust projects to Wasm.

@@ -6,7 +6,7 @@ sidebar_label: '5 分钟快速入门'
 
 # 5 分钟入门
 
-本指南提供了在 Gear 网络上运行智能合约的一般概述。它指导您如何编写智能合约，将其编译为 WASM，并部署到 Gear 网络。
+本指南提供了在 Gear 网络上运行智能合约的一般概述。它指导您如何编写智能合约，将其编译为 Wasm，并部署到 Gear 网络。
 
 
 在这个例子中，我们将使用一个模拟真实 Gear 去中心化网络的演示环境。
@@ -33,7 +33,7 @@ rustup update
 rustup update nightly
 ```
 
-4. 我们需要把 Rust 智能合约编译为 WASM，所以我们需要一个 WASM 编译器。让我们将 WASM 编译器添加到工具链中。
+4. 我们需要把 Rust 智能合约编译为 Wasm，所以我们需要一个 Wasm 编译器。让我们将 Wasm 编译器添加到工具链中。
 
 ```bash
 rustup target add wasm32-unknown-unknown --toolchain nightly

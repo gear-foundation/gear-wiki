@@ -5,7 +5,7 @@ sidebar_position: 1
 
 # 可执行函数
 
-程序是 Gear 组件的主要单元。程序代码存储为不可变的 [WASM](/docs/gear/technology/WASM) 二进制文件（blob）。
+程序是 Gear 组件的主要单元。程序代码存储为不可变的 [Wasm](/docs/gear/technology/wasm) 二进制文件（blob）。
 每个程序都有一个固定的内存，在消息处理之间持续存在（所谓的静态区域）。
 
 ## 基础结构
