@@ -1,6 +1,6 @@
 ---
 sidebar_label: Concert (FT to NFT transition)
-sidebar_position: 13
+sidebar_position: 14
 ---
 
 # Concert Contract (FT to NFT transition)
