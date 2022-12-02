@@ -156,7 +156,7 @@ const urlList = [
         "from": "/examples/concert"
     },
     {
-        "to": "/docs/examples/marketplace",
+        "to": "/docs/examples/nft-marketplace/marketplace",
         "from": "/examples/marketplace"
     },
     {

@@ -1,6 +1,6 @@
 ---
-sidebar_label: NFT Marketplace
-sidebar_position: 14
+sidebar_label: Base Marketplace
+sidebar_position: 1
 ---
 
 # NFT Marketplace
@@ -280,7 +280,7 @@ A [Ready-to-Use application](https://marketplace.gear-tech.io/) example provides
 
 This video demonstrates how to configure and run Markeplace application on your own and explains the user interaction workflow: **https://youtu.be/4suveOT3O-Y**
 
-![img alt](./img/nft-marketplace.png)
+![img alt](./../img/nft-marketplace.png)
 
 An NFT Marketplace application source code is available on [GitHub](https://github.com/gear-tech/gear-js/tree/master/apps/marketplace).
 
