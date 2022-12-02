@@ -32,7 +32,7 @@ First of all, we need to create a GraphQL scheme describing all entities and rel
 
 The next step is to create the Processor.
 
-Subsquid provides a really simple way to obtain data from an archive. Using `@subsquid/substrate-processor` you can easily subscribe to necessary data. The Class `SubstrateBatchProcessor` lets you select the range of blocks that you want to index and specify the event or extrinsic that you want to receive.
+Subsquid provides a really simple way to obtain data from an Archive. Using `@subsquid/substrate-processor` you can easily subscribe to necessary data. The Class `SubstrateBatchProcessor` lets you select the range of blocks that you want to index and specify the event or extrinsic that you want to receive.
 
 In our case we need only `UserMessageSent` events, because they contain all the necessary data.
 
@@ -40,7 +40,7 @@ The payloads of messages received through the processor are represented as bytes
 
 The `SubsquidBatchProcessor` returns the data in batches, so in order to avoid a large number of read/write operations in the database it’s better to prepare all the data in every batch and save it after the entire batch is processed. To achieve this goal we created a [BatchState](https://github.com/gear-tech/gear-integrations/blob/master/Subsquid/nft-marketplace/src/state.ts) class that is responsible for storing the prepared data before it is written into the database.
 
-In case a new NFT program is registered in the marketplace, you may want to index it to get all its historical data. To do this we created [indexNft](https://github.com/gear-tech/gear-integrations/blob/master/Subsquid/nft-marketplace/src/indexNft.ts) function that queries the relevant data from the archive and writes it into the database.
+In case a new NFT program is registered in the marketplace, you may want to index it to get all its historical data. To do this we created [indexNft](https://github.com/gear-tech/gear-integrations/blob/master/Subsquid/nft-marketplace/src/indexNft.ts) function that queries the relevant data from the Archive and writes it into the database.
 
 The source code of the Subsquid-based indexer components is available on GitHub [here](https://github.com/gear-tech/gear-integrations/tree/master/Subsquid).
 
