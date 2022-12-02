@@ -13,7 +13,7 @@ NFT 智能合约的例子展示了当代币资产直接存储在链上的方法�
 
 但这里还介绍了另一种方法。你可以直接将 NFT 存储在链上，而不需要任何外部存储。这种方法可以帮助你在外部存储出现问题时不会丢失 NFT。
 
-本文介绍了合约接口、数据结构、基本功能并解释了它们的用途。它可以按原样使用，也可以根据你自己的情况进行修改。源代码可在[GitHub](https://github.com/gear-dapps/non-fungible-token/tree/master/on-chain-nft) 查看。
+本文介绍了合约接口、数据结构、基本功能并解释了它们的用途。它可以直接使用，也可以根据自己的情况进行修改。源代码可在[GitHub](https://github.com/gear-dapps/non-fungible-token/tree/master/on-chain-nft) 查看。
 
 ## 方法
 
