@@ -117,7 +117,7 @@ $$
 
 ## Is the node visible in telemetry during syncing?
 
-Yes, it is visible on the telemetry portal - https://telemetry.rs. It will be gray until the block height becomes up to date.
+Yes, it is visible on the telemetry portal - https://telemetry.gear-tech.io. It will be gray until the block height becomes up to date.
 
 ## Should I associate my wallet with the node?
 

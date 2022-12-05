@@ -14,7 +14,7 @@ sidebar_position: 3
 如果你愿意参与并分享你的监测数据，那么请使用一下选项来运行你的节点：
 
 ```sh
-gear --telemetry-url "wss://telemetry.rs/submit 0"
+gear --telemetry-url "ws://telemetry-backend-shard.gear-tech.io:32001/submit 0"
 ```
 
 同时使用以下选项来提供你的节点名称：
@@ -26,7 +26,7 @@ gear --name "NODE NAME"
 如何启动节点监测？`cd` 到你的节点二进制文件所在的目录，然后运行一下命令：
 
 ```sh
-./gear --telemetry-url "wss://telemetry.rs/submit 0" --name "My_Gear_node_name"
+./gear --telemetry-url "ws://telemetry-backend-shard.gear-tech.io:32001/submit 0" --name "My_Gear_node_name"
 ```
 
-要检查当前运行节点的监测信息，请访问 [https://telemetry.rs](https://telemetry.rs)。
+要检查当前运行节点的监测信息，请访问 [https://telemetry.gear-tech.io](https://telemetry.gear-tech.io)。
