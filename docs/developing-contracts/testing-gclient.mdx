@@ -1,0 +1,208 @@
+---
+sidebar_position: 8
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import CodeBlock from '@theme/CodeBlock';
+
+# Testing with `gclient`
+
+It is essential to underline that testing with `gclient` requires the running node as the second part of the test suite. The `gclient` interacts with the node over the WebSocket protocol. Depending on the purpose of testing, `gclient' can communicate with either a local or a remote node. We recommend using the local node in developer mode for initial debugging and continuous integration.
+
+## Import `gclient` lib
+
+To use the `gclient` library, you must import it into your `Cargo.toml` file in the [dev-dependencies] block. Also, you need to add some external crates that are used together with `gclient`:
+
+
+```toml
+[package]
+name = "first-gear-app"
+version = "0.1.0"
+authors = ["Your Name"]
+edition = "2021"
+
+[dependencies]
+gstd = { git = "https://github.com/gear-tech/gear.git", features = ["debug"], branch = "stable" }
+
+[build-dependencies]
+gear-wasm-builder = { git = "https://github.com/gear-tech/gear.git", branch = "stable" }
+
+[dev-dependencies]
+gclient = { git = "https://github.com/gear-tech/gear.git", branch = "stable" }
+tokio = { version = "1.22.0", features = ["full"] }
+
+[patch.crates-io]
+sp-core = { version = "6.0.0", git = "https://github.com/gear-tech/substrate.git", branch = "gear-stable" }
+sp-runtime = { version = "6.0.0", git = "https://github.com/gear-tech/substrate.git", branch = "gear-stable" }
+```
+
+## Running the node
+
+The best way is to download the latest node binary for your operating system from https://get.gear.rs. Then unpack the package and run the node. Here and below, we assume the node is running in developer mode.
+
+````mdx-code-block
+<Tabs>
+<TabItem value="win64" label="Windows x64" className="unique-tabs" default>
+
+```shell
+curl -O https://get.gear.rs/gear-nightly-windows-x86_64.zip
+```
+
+or
+
+**Windows x64**: [gear-nightly-windows-x86_64.zip](https://get.gear.rs/gear-nightly-windows-x86_64.zip)
+
+Unzip the downloaded package, then run:
+
+```shell
+gear.exe --dev
+```
+
+</TabItem>
+<TabItem value="mac-arm" label="MacOS ARM">
+
+Terminal:
+
+```shell
+wget https://get.gear.rs/gear-nightly-macos-m.tar.gz && \
+tar xvf gear-nightly-macos-m.tar.gz && \
+rm gear-nightly-macos-m.tar.gz
+```
+
+Run the node in development mode:
+
+```shell
+./gear --dev
+```
+
+</TabItem>
+<TabItem value="mac-intel" label="MacOS x64">
+
+Terminal:
+
+```shell
+wget https://get.gear.rs/gear-nightly-macos-x86_64.tar.gz && \
+tar xvf gear-nightly-macos-x86_64.tar.gz && \
+rm gear-nightly-macos-x86_64.tar.gz
+```
+
+Run the node in development mode:
+
+```shell
+./gear --dev
+```
+
+</TabItem>
+
+<TabItem value="mac-linux" label="Linux x64">
+
+Terminal:
+
+```shell
+wget https://get.gear.rs/gear-nightly-linux-x86_64.tar.xz && \
+tar xvf gear-nightly-linux-x86_64.tar.xz && \
+rm gear-nightly-linux-x86_64.tar.xz
+```
+
+Run the node in development mode:
+
+```shell
+./gear --dev
+```
+
+</TabItem>
+</Tabs>
+````
+
+Open the second terminal window and run tests using `cargo` as it was described in the [previous section](testing.md#building-a-program-in-test-mode).
+
+## Simple example
+
+Let's add an end-to-end test to our `first-gear-app` introduced in the [Getting Started](getting-started-in-5-minutes.md#creating-your-first-gear-smart-contract) section.
+
+Add the `tests` directory next to the `src` directory and create the `end2end.rs` file in it.
+
+```
+└── first-gear-app
+    ├── Cargo.toml
+    ├── src
+    │   └── lib.rs
+    └── tests
+        └── end2end.rs
+```
+
+`end2end.rs`:
+
+```rust
+use gclient::{EventProcessor, GearApi, Result};
+
+const WASM_PATH: &str = "./target/wasm32-unknown-unknown/release/first_gear_app.opt.wasm";
+
+#[tokio::test]
+async fn test_example() -> Result<()> {
+    // Create API instance
+    let api = GearApi::dev().await?;
+
+    // Subscribe to events
+    let mut listener = api.subscribe().await?;
+
+    // Check that blocks are still running
+    assert!(listener.blocks_running().await?);
+
+    // Calculate gas amount needed for initialization
+    let gas_info = api
+        .calculate_upload_gas(
+            None,
+            gclient::code_from_os(WASM_PATH)?,
+            vec![],
+            0,
+            true,
+            None,
+        )
+        .await?;
+
+    // Upload and init the program
+    let (message_id, program_id, _hash) = api
+        .upload_program_bytes_by_path(
+            WASM_PATH,
+            gclient::bytes_now(),
+            vec![],
+            gas_info.min_limit,
+            0,
+        )
+        .await?;
+
+    assert!(listener.message_processed(message_id).await?.succeed());
+
+    let payload = b"PING".to_vec();
+
+    // Calculate gas amount needed for handling the message
+    let gas_info = api
+        .calculate_handle_gas(None, program_id, payload.clone(), 0, true, None)
+        .await?;
+
+    // Send the PING message
+    let (message_id, _hash) = api
+        .send_message_bytes(program_id, payload, gas_info.min_limit, 0)
+        .await?;
+
+    assert!(listener.message_processed(message_id).await?.succeed());
+
+    Ok(())
+}
+```
+
+Run the following command and wait for all tests to be green:
+
+```shell
+cargo test --release
+```
+
+Let's explore what we've done in the test function above.
+
+Firstly, we instantiate the API that allows interaction with the node by calling correspondent extrinsics. Then we create an event listener, as getting the feedback from the node is possible only by subscribing to events. We use the API instance both for invoking RPC calls (e.g., calculating the gas amount needed for processing) and sending extrinsics (e.g., uploading the program and sending a message). Events listener allows us to get the result of operation.
+
+## More details about `gclient`
+
+Please refer to the [`gclient` docs](https://docs.gear.rs/gclient/) for more information about its capabilities and use cases.
