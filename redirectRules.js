@@ -120,6 +120,10 @@ const urlList = [
         "from": "/examples/gnft-721"
     },
     {
+        "to": "/docs/examples/gnft-4907",
+        "from": "/examples/gnft-4907"
+    },
+    {
         "to": "/docs/examples/gmt-1155",
         "from": "/examples/gmt-1155"
     },

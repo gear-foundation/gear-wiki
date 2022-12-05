@@ -1,6 +1,6 @@
 ---
 sidebar_label: Crowdsale smart contract mechanics
-sidebar_position: 18
+sidebar_position: 19
 ---
 
 # Crowdsale smart contract mechanics

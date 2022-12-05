@@ -1,6 +1,6 @@
 ---
 sidebar_label: RMRK NFT standard
-sidebar_position: 15
+sidebar_position: 16
 ---
 
 # RMRK NFT standard

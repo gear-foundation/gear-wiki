@@ -1,6 +1,6 @@
 ---
 sidebar_label: Dutch Auction
-sidebar_position: 10
+sidebar_position: 11
 ---
 
 # Dutch auction
