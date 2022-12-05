@@ -1,5 +1,4 @@
 ---
-sidebar_label: Game of chance
 sidebar_position: 9
 ---
 
@@ -7,265 +6,145 @@ sidebar_position: 9
 
 ## Introduction
 
-Anyone can easily create their own game application and run it on the Gear Network. To do this, Gear created an example of the Game-of-chance smart contract, which is available on [GitHub](https://github.com/gear-dapps/lottery).
+:::note
 
-This article explains the programming interface, data structure, basic functions their purpose. It can be used as is or modified to suit your own scenarios.
+This article explains at a superficial level the purpose and logic of this smart contract. For a more detailed technical description, see its [documentation on the dApps documentation portal](https://dapps.gear.rs/game_of_chance) and [the source code section](#source-code).
 
-Gear also [provides](https://github.com/gear-tech/gear-js/tree/master/apps/game-of-chance) an example implementation of the [Game of chance's](https://lottery.gear-tech.io/) user interface to demonstrate its interaction with smart contracts in the Gear Network. In this example, whoever initializes the contract is considered the game owner. Only the owner has the right to start/finish the game. Players are added to the Game of chance themselves by sending a message with their bet to the contract. Then players monitor the state of the game. The winner is determined randomly.
+:::
 
- You can watch a video on how to get the Game of chance application up and running and its capabilities here: **https://youtu.be/35StUMjbdFc**.
+Game of chance is a simple game smart contract with the lottery logic.
 
-## Source files
-1. `game-of-chance/src/lib.rs` - contains functions of the game contract.
-2. `game-of-chance/io/src/lib.rs` - contains Enums and structs that the contract receives and sends in the reply.
+There is also [an example implementation of the Game of chance's user interface](https://game-of-chance.gear-tech.io) (and [its source code](https://github.com/gear-tech/gear-js/tree/main/apps/game-of-chance)) to demonstrate an interaction with smart contracts in the Gear Network.
 
-## Structs
+<iframe width="100%" height="315" src="https://www.youtube.com/embed/35StUMjbdFc" allow="fullscreen"></iframe>
 
-The contract has the following structs:
+## Logic
 
-```rust
-struct Lottery {
-    lottery_state: LotteryState,
-    lottery_owner: ActorId,
-    token_address: Option<ActorId>,
-    players: BTreeMap<u32, Player>,
-    lottery_history: BTreeMap<u32, ActorId>,
-    lottery_id: u32,
-    lottery_balance: u128,
-}
-```
-where:
+During an initialization, the game administrator is assigned. It has the rights to start a new game round and pick a winner after the end of each one. Other actors can participate in a round if they have enough fungible tokens or the native value, they're used to collect prize fund. After the end of the players entry stage, the administrator should execute the action for picking a winner, and this smart contract does it randomly and then sends prize fund to the winner.
 
-`lottery_state` - Game state: Start Time, End time of the game
+## Interface
 
-`lottery_owner` - The address of the game owner who initialized the contract
-
-`token_address` - address of the token contract
-
-`players` - 'map' of the game players
-
-`lottery_history` - 'map' of the game winners
-
-`lottery_id` – current game id
-
-`lottery_balance` - the total amount of bets in the game
-
-The `LotteryState` struct:
+### Initialization
 
 ```rust
-pub struct LotteryState {
-    pub lottery_started: bool,
-    pub lottery_start_time: u64,
-    pub lottery_duration: u64,
+/// Initializes the Game of chance contract.
+///
+/// # Requirements
+/// - `admin` mustn't be [`ActorId::zero()`].
+#[derive(Debug, Default, Encode, Decode, PartialEq, Eq, PartialOrd, Ord, Clone, TypeInfo)]
+pub struct GOCInit {
+    /// [`ActorId`] of the game administrator that'll have the rights to
+    /// [start a game round](GOCAction::Start) and
+    /// [pick a winner](GOCAction::PickWinner).
+    pub admin: ActorId,
 }
 ```
 
-The `Player` struct:
+### Actions
 
 ```rust
-pub struct Player {
-    pub player_id: ActorId,
-    pub balance: u128,
-}
-```
-
-## Enums
-
-```rust
-pub enum LtAction {
-    Enter(u128),
-    StartLottery {
-        duration: u64,
-        token_address: Option<ActorId>,
-    },
-    LotteryState,
-    PickWinner,
-}
-
-pub enum LtEvent {
-    LotteryState(LotteryState),
-    Winner(u32),
-    PlayerAdded(u32),
-}
-
-pub enum LtState {
-    GetWinners,
-    GetPlayers,
-    BalanceOf(u32),
-    LotteryState,
-}
-
-pub enum LtStateReply {
-    Winners(BTreeMap<u32, ActorId>),
-    Players(BTreeMap<u32, Player>),
-    Balance(u128),
-    LotteryState(LotteryState),
-}
-```
-
-## Functions
-
-Game contract interacts with fungible token contract through function `transfer_tokens`.
-
-```rust
-async fn transfer_tokens(
-	&mut self,
-	from: &ActorId, /// - the sender address
-	to: &ActorId, /// - the recipient address
-	amount_tokens: u128 /// - the amount of tokens
-)
-```
-
-This function sends a message (the action is defined in the enum `FTAction`) and gets a reply (the reply is defined in the enum `FTEvent`).
-
-```rust
-let _transfer_response: FTEvent = msg::send_and_wait_for_reply(
-    self.token_address.unwrap(), /// - the fungible token contract address
-    FTAction::Transfer {		/// - action in the fungible token-contract
-        from: *from,
-        to: *to,
-        amount: amount_tokens,
+/// Sends a contract info about what it should do.
+#[derive(Debug, Encode, Decode, PartialEq, Eq, PartialOrd, Ord, Clone, Copy, TypeInfo)]
+pub enum GOCAction {
+    /// Starts a game round and allows to participate in it.
+    ///
+    /// # Requirements
+    /// - [`msg::source()`](gstd::msg::source) must be the game administrator.
+    /// - The current game round must be over.
+    /// - `ft_actor_id` mustn't be [`ActorId::zero()`].
+    ///
+    /// On success, replies with [`GOCEvent::Started`].
+    Start {
+        /// The duration (in milliseconds) of the players entry stage.
+        ///
+        /// After that, no one will be able to enter a game round and a winner
+        /// should be picked.
+        duration: u64,
+        /// The price of participation in a game round.
+        participation_cost: u128,
+        /// A currency (or FT contract [`ActorId`]) of a game round.
+        ///
+        /// Determines fungible tokens in which a prize fund and a participation
+        /// cost will be collected. [`None`] means that the native value will be
+        /// used instead of fungible tokens.
+        ft_actor_id: Option<ActorId>,
     },
-    0,
-)
-```
 
-Launches a game. Only the owner can launch a game. Game must not have been launched earlier.
+    /// Randomly picks a winner from current game round participants (players)
+    /// and sends a prize fund to it.
+    ///
+    /// The randomness of a winner pick depends on
+    /// [`exec::block_timestamp()`](gstd::exec::block_timestamp).
+    /// Not the best source of entropy, but, in theory, it's impossible to
+    /// exactly predict a winner if the time of an execution of this action is
+    /// unknown.
+    ///
+    /// If no one participated in the round, then a winner will be
+    /// [`ActorId::zero()`].
+    ///
+    /// # Requirements
+    /// - [`msg::source()`](gstd::msg::source) must be the game administrator.
+    /// - The players entry stage must be over.
+    /// - A winner mustn't already be picked.
+    ///
+    /// On success, replies with [`GOCEvent::Winner`].
+    PickWinner,
 
-```rust
-fn start_lottery(
-	&mut self,
-	duration: u64,
-	token_address: Option<ActorId>
-)
-```
-
-Called by a player in order to participate in the game. The player cannot enter the game more than once.
-
-```rust
-async fn enter(
-	&mut self,
-	amount: u128
-)
-```
-
-Game winner calculation. Only the owner can pick the winner.
-
-```rust
-async fn pick_winner(
-	&mut self
-)
-```
-
-These functions are called in `async fn main()` through enum `LtAction`.
-
-This is the entry point to the program, and the program is waiting for a message in `LtAction` format.
-
-```rust
-#[gstd::async_main]
-async fn main() {
-    if msg::source() == ZERO_ID {
-        panic!("Message from zero address");
-    }
-
-    let action: LtAction = msg::load().expect("Could not load Action");
-    let lottery: &mut Lottery = unsafe { LOTTERY.get_or_insert(Lottery::default()) };
-
-    match action {
-        LtAction::Enter(amount) => {
-            lottery.enter(amount).await;
-        }
-
-        LtAction::StartLottery {
-            duration,
-            token_address,
-        } => {
-            lottery.start_lottery(duration, token_address);
-        }
-
-        LtAction::LotteryState => {
-            msg::reply(LtEvent::LotteryState(lottery.lottery_state.clone()), 0).unwrap();
-            debug!("LotteryState: {:?}", lottery.lottery_state);
-        }
-
-        LtAction::PickWinner => {
-            lottery.pick_winner().await;
-        }
-    }
+    /// Pays a participation cost and adds [`msg::source()`] to the current game
+    /// round participants (players).
+    ///
+    /// A participation cost and its currency can be queried by the
+    /// `meta_state()` entry function.
+    ///
+    /// # Requirements
+    /// - The players entry stage mustn't be over.
+    /// - [`msg::source()`] mustn't already participate.
+    /// - [`msg::source()`] must have enough currency to pay a participation
+    /// cost.
+    /// - If the current game round currency is the native value (`ft_actor_id`
+    /// is [`None`]), [`msg::source()`] must send this action with the amount of
+    /// the value exactly equal to a participation cost.
+    ///
+    /// On success, replies with [`GOCEvent::PlayerAdded`].
+    ///
+    /// [`msg::source()`]: gstd::msg::source
+    Enter,
 }
 ```
 
-It is also important to have the ability to read the contract state off-chain. It is defined in the `fn meta_state()`. The contract receives a request to read the certain data (the possible requests are defined in struct `LtState` ) and sends replies. The contract replies about its state are defined in the enum `LtStateReply`.
+### Meta state reply
 
 ```rust
-#[no_mangle]
-extern "C" fn meta_state() -> *mut [i32; 2] {
-    let query: LtState = msg::load().expect("failed to decode input argument");
-    let lottery: &mut Lottery = unsafe { LOTTERY.get_or_insert(Lottery::default()) };
-
-    let encoded = match query {
-        LtState::GetPlayers => LtStateReply::Players(lottery.players.clone()).encode(),
-        LtState::GetWinners => LtStateReply::Winners(lottery.lottery_history.clone()).encode(),
-        LtState::LotteryState => LtStateReply::LotteryState(lottery.lottery_state.clone()).encode(),
-
-        LtState::BalanceOf(index) => {
-            if let Some(player) = lottery.players.get(&index) {
-                LtStateReply::Balance(player.balance).encode()
-            } else {
-                LtStateReply::Balance(0).encode()
-            }
-        }
-    };
-
-    gstd::util::to_leak_ptr(encoded)
+/// The current game round state.
+#[derive(Debug, Default, Encode, Decode, PartialEq, Eq, PartialOrd, Ord, Clone, TypeInfo)]
+pub struct GOCState {
+    /// The start time (in milliseconds) of the current game round and the
+    /// players entry stage.
+    ///
+    /// If it equals 0, a winner has picked and the round is over.
+    pub started: u64,
+    /// See the documentation of [`GOCEvent::Started`].
+    pub ending: u64,
+    /// Participants of the current game round.
+    pub players: BTreeSet<ActorId>,
+    /// The current game round prize fund.
+    ///
+    /// It's calculated by multiplying `participation_cost` and the number
+    /// of `players`.
+    pub prize_fund: u128,
+    /// See the documentation of [`GOCAction::Start`].
+    pub participation_cost: u128,
+    /// The winner of the previous game round.
+    pub last_winner: ActorId,
+    /// A currency (or a FT contract [`ActorId`]) of the current game round.
+    ///
+    /// See the documentation of [`GOCAction::Start`].
+    pub ft_actor_id: Option<ActorId>,
 }
 ```
 
-## User interface
+## Source code
 
-A [Ready-to-Use application](https://lottery.gear-tech.io/) example provides a user interface that interacts with [Game of chance](https://github.com/gear-dapps/lottery) smart contract running in Gear Network.
+The source code of the Game of chance smart contract and an implementation of its testing is available on [GitHub](https://github.com/gear-dapps/game-of-chance). They can be used as is or modified to suit your own scenarios.
 
-This video demonstrates how to configure and run Game application on your own and explains the user interaction workflow: **https://youtu.be/35StUMjbdFc**
-
-![img alt](./img/game-of-chance.png)
-
-A game application source code is available on [GitHub](https://github.com/gear-tech/gear-js/tree/master/apps/game-of-chance).
-
-### Configure basic dApp in .env:
-
-For proper application functioning, one needs to create `.env` file and adjust an environment variable parameters. An example is available [here](https://github.com/gear-tech/gear-js/blob/master/apps/game-of-chance/.env.example).
-
-```sh
-REACT_APP_NODE_ADDRESS
-REACT_APP_LOTTERY_CONTRACT_ADDRESS
-```
-
-- `REACT_APP_NODE_ADDRESS` is the Gear Network's address (wss://rpc-node.gear-tech.io:443)
-- `REACT_APP_MARKETPLACE_CONTRACT_ADDRESS` is the Game's smart contract address in the Gear Network
-
-### How to run
-
-Install required dependencies:
-```sh
-npm install
-```
-
-Run the app in the development mode:
-```sh
-npm start
-```
-Open http://localhost:3000 to view it in the browser.
-
-## Conclusion
-
-A source code of the contract example provided by Gear is available on GitHub: [`game-of-chance/src/lib.rs`](https://github.com/gear-dapps/game-of-chance/blob/master/src/lib.rs).
-
-See also an examples of the smart contract testing implementation based on gtest:
-
-- [`simple_tests.rs`](https://github.com/gear-dapps/game-of-chance/blob/master/src/simple_tests.rs).
-
-- [`panic_tests.rs`](https://github.com/gear-dapps/game-of-chance/blob/master/src/panic_tests.rs).
-
-- [`token_tests.rs`](https://github.com/gear-dapps/game-of-chance/blob/master/src/token_tests.rs).
-
-For more details about testing smart contracts written on Gear, refer to this article: [Program Testing](/docs/developing-contracts/testing).
+For more details about testing smart contracts written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.
