@@ -9,7 +9,7 @@ sidebar_position: 17
 Stacking is an analogue of a bank deposit, receiving passive earnings due to simple storage of cryptomonets.
 The percentage of income may be different – it all depends on the term of the deposit.
 
-Anyone can create their own Staking contract and run it on the Gear Network. To do this, Gear created an example which is available on [GitHub](https://github.com/gear-dapps/staking). 
+Anyone can create their own Staking contract and run it on the Gear Network. To do this, Gear created an example which is available on [GitHub](https://github.com/gear-dapps/staking).
 
 This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios.
 
@@ -313,9 +313,9 @@ It is also important to have the ability to read the contract state off-chain. I
 
 ```rust
 #[no_mangle]
-pub unsafe extern "C" fn meta_state() -> *mut [i32; 2] {
+extern "C" fn meta_state() -> *mut [i32; 2] {
     let query: StakingState = msg::load().expect("failed to decode input argument");
-    let staking = STAKING.get_or_insert(Staking::default());
+    let staking = unsafe { STAKING.get_or_insert(Default::default()) };
 
     let encoded = match query {
         StakingState::GetStakers => StakingStateReply::Stakers(staking.stakers.clone()).encode(),

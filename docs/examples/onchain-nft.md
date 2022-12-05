@@ -207,9 +207,9 @@ impl OnChainNFTCore for OnChainNFT {
 Accordingly, it is necessary to make changes to the `handle` and `meta_state` functions:
 ```rust
 #[no_mangle]
-pub unsafe extern "C" fn handle() {
+extern "C" fn handle() {
     let action: OnChainNFTAction = msg::load().expect("Could not load OnChainNFTAction");
-    let nft = CONTRACT.get_or_insert(Default::default());
+    let nft = unsafe { CONTRACT.get_or_insert(Default::default()) };
     match action {
         OnChainNFTAction::Mint {
             description,
@@ -227,9 +227,9 @@ pub unsafe extern "C" fn handle() {
 }
 
 #[no_mangle]
-pub unsafe extern "C" fn meta_state() -> *mut [i32; 2] {
+extern "C" fn meta_state() -> *mut [i32; 2] {
     let query: OnChainNFTQuery = msg::load().expect("failed to decode input argument");
-    let nft = CONTRACT.get_or_insert(OnChainNFT::default());
+    let nft = unsafe { CONTRACT.get_or_insert(Default::default()) };
     match query {
         OnChainNFTQuery::TokenURI { token_id } => {
             let encoded = OnChainNFTCore::token_uri(nft, token_id)
@@ -254,4 +254,3 @@ A source code of the on-chain NFT provided by Gear is available on GitHub: [on-c
 See also an example of the smart contract testing implementation based on `gtest`: [on-chain-nft/tests](https://github.com/gear-dapps/non-fungible-token/tree/master/on-chain-nft/tests).
 
 For more details about testing smart contracts written on Gear, refer to this article: [Program Testing](/docs/developing-contracts/testing).
-

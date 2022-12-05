@@ -31,7 +31,7 @@ After=network.target
 Type=simple
 User=root
 WorkingDirectory=/root/
-ExecStart=/root/gear --name 'NODE_NAME' --telemetry-url 'ws://telemetry-backend-shard.gear-tech.io:32001/submit 0'
+ExecStart=/usr/bin/gear --name "NODE_NAME" --telemetry-url "ws://telemetry-backend-shard.gear-tech.io:32001/submit 0"
 Restart=always
 RestartSec=3
 LimitNOFILE=10000
@@ -41,7 +41,7 @@ WantedBy=multi-user.target
 ```
 
 :::note
-`ExecStart` 指向 `gear` 二进制文件所在的位置。在示例中是在 `root` 目录。
+`ExecStart` 指向 `gear` 二进制文件所在的位置。在示例中是在 `/usr/bin` 目录。
 使用 `--` 引入额外的启动参数，但这些参数并不是必须的。
 :::
 
@@ -90,11 +90,11 @@ journalctl -u gear-node -fn 50
 ## 更新节点版本
 
 你只需要把节点的可执行文件（`gear`）替换成最新版本，然后重新启动执行。
-例如，如果你的Linux可执行文件位于/root/gear（如我们上面的配置），你要运行：
+例如，如果你的Linux可执行文件位于/usr/bin（如我们上面的配置），你要运行：
 
 ```
 wget https://get.gear.rs/gear-nightly-linux-x86_64.tar.xz
-sudo tar -xvf gear-nightly-linux-x86_64.tar.xz -C /root
+sudo tar -xvf gear-nightly-linux-x86_64.tar.xz -C /usr/bin
 rm gear-nightly-linux-x86_64.tar.xz
 sudo systemctl restart gear-node
 ```
@@ -108,5 +108,5 @@ sudo systemctl stop gear-node
 sudo systemctl disable gear-node
 sudo rm -rf /root/.local/share/gear
 sudo rm /etc/systemd/system/gear-node.service
-sudo rm /root/gear
+sudo rm /usr/bin/gear
 ```

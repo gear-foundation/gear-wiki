@@ -13,7 +13,7 @@ To use SCALE codec in your program, you should add it in `Cargo.toml`:
 [dependencies]
 
 // ...
-codec = { package = "parity-scale-codec", version = "3.1.2", default-features = false, features = ["derive", "full"] }
+codec = { package = "parity-scale-codec", version = "3.1.2", default-features = false }
 ```
 
 ```rust
@@ -44,7 +44,7 @@ To use `metadata` in contract:
 [dependencies]
 
 // ...
-scale-info = { version = "2.2.0", default-features = false, features = ["derive"] }
+scale-info = { version = "2.2.0", default-features = false }
 ```
 
 ```rust

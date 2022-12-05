@@ -11,22 +11,22 @@ As any other Substrate based nodes, Gear node can be connected to an arbitrary t
 
 To start sending telemetry messages to the arbitrary telemetry server instance, one needs to specify an additional key during node run that will enable sending telemetry to specified http address.
 
-If you want to participate and share your telemetry - run your node with flag:
+If you want to participate and share your telemetry, run your node with the flag (we assume the executable is in `/usr/bin` directory):
 
 ```sh
---telemetry-url 'ws://telemetry-backend-shard.gear-tech.io:32001/submit 0'
+gear --telemetry-url "ws://telemetry-backend-shard.gear-tech.io:32001/submit 0"
 ```
 
-Also provide your node name using:
+Also, you can provide your node name using the `--name` flag:
 
 ```sh
---name 'NODE NAME'
+gear --name "NODE NAME"
 ```
 
-Example to start a node with telemetry - `cd` to the directory where your node binary resides and run the command:
+For example, to start a node with telemetry, run the command:
 
 ```sh
-./gear --telemetry-url 'ws://telemetry-backend-shard.gear-tech.io:32001/submit 0' --name 'My_Gear_node_name'
+gear --telemetry-url "ws://telemetry-backend-shard.gear-tech.io:32001/submit 0" --name "My_Gear_node_name"
 ```
 
-To check telemetry for currently running nodes, visit web address - [https://telemetry.gear-tech.io](https://telemetry.gear-tech.io).
+To check telemetry for currently running nodes, visit the web address: [https://telemetry.gear-tech.io](https://telemetry.gear-tech.io).

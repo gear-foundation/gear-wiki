@@ -218,9 +218,9 @@ impl OnChainNFTCore for OnChainNFT {
 
 ```rust
 #[no_mangle]
-pub unsafe extern "C" fn handle() {
+extern "C" fn handle() {
     let action: OnChainNFTAction = msg::load().expect("Could not load OnChainNFTAction");
-    let nft = CONTRACT.get_or_insert(Default::default());
+    let nft = unsafe { CONTRACT.get_or_insert(Default::default()) };
     match action {
         OnChainNFTAction::Mint {
             description,
@@ -238,9 +238,9 @@ pub unsafe extern "C" fn handle() {
 }
 
 #[no_mangle]
-pub unsafe extern "C" fn meta_state() -> *mut [i32; 2] {
+extern "C" fn meta_state() -> *mut [i32; 2] {
     let query: OnChainNFTQuery = msg::load().expect("failed to decode input argument");
-    let nft = CONTRACT.get_or_insert(OnChainNFT::default());
+    let nft = unsafe { CONTRACT.get_or_insert(Default::default()) };
     match query {
         OnChainNFTQuery::TokenURI { token_id } => {
             let encoded = OnChainNFTCore::token_uri(nft, token_id)
@@ -265,4 +265,3 @@ Gear 为 gNFT 协议的核心功能提供了一个可重复使用的[库](https:
 同样可以找到基于 `gtest` 实现的智能合约测试范例：`gtest`: [on-chain-nft/tests](https://github.com/gear-dapps/non-fungible-token/tree/master/on-chain-nft/tests)。
 
 更多关于在 Gear 上测试智能合约的细节，请参考这篇文章：[应用测试](https://wiki.gear-tech.io/zh-cn/developing-contracts/testing/)。
-

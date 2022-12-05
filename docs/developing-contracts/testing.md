@@ -63,13 +63,13 @@ authors = ["Your Name"]
 edition = "2021"
 
 [dependencies]
-gstd = { git = "https://github.com/gear-tech/gear.git", features = ["debug"] }
+gstd = { git = "https://github.com/gear-tech/gear.git", branch = "stable" }
 
 [build-dependencies]
-gear-wasm-builder = { git = "https://github.com/gear-tech/gear.git" }
+gear-wasm-builder = { git = "https://github.com/gear-tech/gear.git", branch = "stable" }
 
 [dev-dependencies]
-gtest = { git = "https://github.com/gear-tech/gear.git" }
+gtest = { git = "https://github.com/gear-tech/gear.git", branch = "stable" }
 ```
 
 ## `gtest` capabilities
@@ -299,7 +299,7 @@ gtest = { git = "https://github.com/gear-tech/gear.git" }
     }
 
     #[no_mangle]
-    pub unsafe extern "C" fn meta_state() -> *mut [i32; 2] {
+    unsafe extern "C" fn meta_state() -> *mut [i32; 2] {
         let query: State = msg::load().expect("Unable to decode `State`");
         let encoded = match query {
             State::A => StateReply::A(STATE.a),

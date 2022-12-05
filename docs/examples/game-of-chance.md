@@ -7,7 +7,7 @@ sidebar_position: 9
 
 ## Introduction
 
-Anyone can easily create their own game application and run it on the Gear Network. To do this, Gear created an example of the Game-of-chance smart contract, which is available on [GitHub](https://github.com/gear-dapps/lottery). 
+Anyone can easily create their own game application and run it on the Gear Network. To do this, Gear created an example of the Game-of-chance smart contract, which is available on [GitHub](https://github.com/gear-dapps/lottery).
 
 This article explains the programming interface, data structure, basic functions their purpose. It can be used as is or modified to suit your own scenarios.
 
@@ -199,9 +199,9 @@ It is also important to have the ability to read the contract state off-chain. I
 
 ```rust
 #[no_mangle]
-pub unsafe extern "C" fn meta_state() -> *mut [i32; 2] {
+extern "C" fn meta_state() -> *mut [i32; 2] {
     let query: LtState = msg::load().expect("failed to decode input argument");
-    let lottery: &mut Lottery = LOTTERY.get_or_insert(Lottery::default());
+    let lottery: &mut Lottery = unsafe { LOTTERY.get_or_insert(Lottery::default()) };
 
     let encoded = match query {
         LtState::GetPlayers => LtStateReply::Players(lottery.players.clone()).encode(),

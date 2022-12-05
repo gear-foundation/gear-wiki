@@ -12,7 +12,7 @@ Under the hood, a non-fungible token consists of a unique token identifier, or t
 
 When the owner of a given token ID wishes to transfer it to another user, it is easy to verify ownership and reassign the token to a new owner.
 
-This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. Anyone can easily create their own application and run it on the Gear Network. The source code is available on [GitHub](https://github.com/gear-dapps/non-fungible-token). 
+This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. Anyone can easily create their own application and run it on the Gear Network. The source code is available on [GitHub](https://github.com/gear-dapps/non-fungible-token).
 
 ### Default non-fungible-token implementation
 The functions that must be supported by each non-fungible-token contract:
@@ -107,20 +107,20 @@ pub struct NFT {
 static mut CONTRACT: Option<NFT> = None;
 
 #[no_mangle]
-pub unsafe extern "C" fn init() {
+extern "C" fn init() {
     let config: InitNFT = msg::load().expect("Unable to decode InitNFT");
     let mut nft = NFT::default();
     nft.token.name = config.name;
     nft.token.symbol = config.symbol;
     nft.token.base_uri = config.base_uri;
     nft.owner = msg::source();
-    CONTRACT = Some(nft);
+    unsafe { CONTRACT = Some(nft) };
 }
 
 #[no_mangle]
-pub unsafe extern "C" fn handle() {
+extern "C" fn handle() {
     let action: NFTAction = msg::load().expect("Could not load msg");
-    let nft = CONTRACT.get_or_insert(NFT::default());
+    let nft = unsafe { CONTRACT.get_or_insert(NFT::default()) };
     match action {
         NFTAction::Mint { to, token_id } => NFTCore::mint(&to, token_id, None),
         NFTAction::Burn { token_id } => NFTCore::burn(nft, token_id),
@@ -172,9 +172,9 @@ impl MyNFTCore for NFT {
 Accordingly, it is necessary to make changes to the `handle` function:
 ```rust
 #[no_mangle]
-pub unsafe extern "C" fn handle() {
+extern "C" fn handle() {
     let action: NFTAction = msg::load().expect("Could not load msg");
-    let nft = CONTRACT.get_or_insert(NFT::default());
+    let nft = unsafe { CONTRACT.get_or_insert(Default::default()) };
     match action {
         NFTAction::Mint { token_metadata } => MyNFTCore::mint(token_metadata),
         NFTAction::Burn { token_id } => NFTCore::burn(nft, token_id),

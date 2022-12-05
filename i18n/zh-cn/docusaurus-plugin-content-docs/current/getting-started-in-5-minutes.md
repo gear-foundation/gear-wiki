@@ -92,13 +92,13 @@ edition = "2021"
 license = "GPL-3.0"
 
 [dependencies]
-gstd = { git = "https://github.com/gear-tech/gear.git", features = ["debug"] }
+gstd = { git = "https://github.com/gear-tech/gear.git", features = ["debug"], branch = "stable" }
 
 [build-dependencies]
-gear-wasm-builder = { git = "https://github.com/gear-tech/gear.git" }
+gear-wasm-builder = { git = "https://github.com/gear-tech/gear.git", branch = "stable" }
 
 [dev-dependencies]
-gtest = { git = "https://github.com/gear-tech/gear.git" }
+gtest = { git = "https://github.com/gear-tech/gear.git", branch = "stable" }
 ```
 
 5. 用我们的第一个智能合约的代码替换 `lib.rs`。在编辑器中打开 `src/lib.rs` 并粘贴以下代码：
@@ -111,7 +111,7 @@ use gstd::{debug, msg, prelude::*};
 static mut MESSAGE_LOG: Vec<String> = vec![];
 
 #[no_mangle]
-pub unsafe extern "C" fn handle() {
+unsafe extern "C" fn handle() {
     let new_msg = String::from_utf8(msg::load_bytes().expect("Unable to load bytes"))
         .expect("Invalid message");
 
