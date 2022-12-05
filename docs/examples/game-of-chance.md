@@ -16,7 +16,7 @@ Game of chance is a simple game smart contract with the lottery logic.
 
 There is also [an example implementation of the Game of chance's user interface](https://lottery.gear-tech.io) (and [its source code](https://github.com/gear-tech/gear-js/tree/main/apps/game-of-chance)) to demonstrate an interaction with smart contracts in the Gear Network.
 
-<iframe width="100%" height="315" src="https://www.youtube.com/embed/35StUMjbdFc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="100%" height="315" src="https://www.youtube.com/embed/35StUMjbdFc" allow="fullscreen"></iframe>
 
 ## Logic
 
