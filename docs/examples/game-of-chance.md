@@ -14,9 +14,13 @@ This article explains at a superficial level the purpose and logic of this smart
 
 Game of chance is a simple game smart contract with the lottery logic.
 
+There is also [an example implementation of the Game of chance's user interface](https://lottery.gear-tech.io) (and [its source code](https://github.com/gear-tech/gear-js/tree/main/apps/game-of-chance)) to demonstrate an interaction with smart contracts in the Gear Network.
+
+<iframe width="100%" height="315" src="https://www.youtube.com/embed/35StUMjbdFc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ## Logic
 
-During an initialization, the game administrator is assigned. It has the rights to start a new game round and pick a winner after the end of each one. Other actors can participate in a round if they have enough fungible tokens or the native value, they're used to collect prize fund. After the end of the players entry stage, the administrator should execute the action for picking a winner and this smart contract does it randomly and then sends prize fund to the winner.
+During an initialization, the game administrator is assigned. It has the rights to start a new game round and pick a winner after the end of each one. Other actors can participate in a round if they have enough fungible tokens or the native value, they're used to collect prize fund. After the end of the players entry stage, the administrator should execute the action for picking a winner, and this smart contract does it randomly and then sends prize fund to the winner.
 
 ## Interface
 
@@ -45,13 +49,11 @@ pub enum GOCAction {
     /// Starts a game round and allows to participate in it.
     ///
     /// # Requirements
-    /// - [`msg::source()`] must be the game administrator.
+    /// - [`msg::source()`](gstd::msg::source) must be the game administrator.
     /// - The current game round must be over.
     /// - `ft_actor_id` mustn't be [`ActorId::zero()`].
     ///
-    /// On success, returns [`GOCEvent::Started`].
-    ///
-    /// [`msg::source()`]: gstd::msg::source
+    /// On success, replies with [`GOCEvent::Started`].
     Start {
         /// The duration (in milliseconds) of the players entry stage.
         ///
@@ -71,7 +73,8 @@ pub enum GOCAction {
     /// Randomly picks a winner from current game round participants (players)
     /// and sends a prize fund to it.
     ///
-    /// The randomness of a winner pick depends on [`exec::block_timestamp()`].
+    /// The randomness of a winner pick depends on
+    /// [`exec::block_timestamp()`](gstd::exec::block_timestamp).
     /// Not the best source of entropy, but, in theory, it's impossible to
     /// exactly predict a winner if the time of an execution of this action is
     /// unknown.
@@ -80,18 +83,15 @@ pub enum GOCAction {
     /// [`ActorId::zero()`].
     ///
     /// # Requirements
-    /// - [`msg::source()`] must be the game administrator.
+    /// - [`msg::source()`](gstd::msg::source) must be the game administrator.
     /// - The players entry stage must be over.
     /// - A winner mustn't already be picked.
     ///
-    /// On success, returns [`GOCEvent::Winner`].
-    ///
-    /// [`exec::block_timestamp()`]: gstd::exec::block_timestamp
-    /// [`msg::source()`]: gstd::msg::source
+    /// On success, replies with [`GOCEvent::Winner`].
     PickWinner,
 
-    /// Pays a participation cost on behalf of [`msg::source()`] and adds it to
-    /// the current game round participants (players).
+    /// Pays a participation cost and adds [`msg::source()`] to the current game
+    /// round participants (players).
     ///
     /// A participation cost and its currency can be queried by the
     /// `meta_state()` entry function.
@@ -105,7 +105,7 @@ pub enum GOCAction {
     /// is [`None`]), [`msg::source()`] must send this action with the amount of
     /// the value exactly equal to a participation cost.
     ///
-    /// On success, returns [`GOCEvent::PlayerAdded`].
+    /// On success, replies with [`GOCEvent::PlayerAdded`].
     ///
     /// [`msg::source()`]: gstd::msg::source
     Enter,
