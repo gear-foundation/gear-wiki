@@ -232,7 +232,7 @@ async fn process_proposal(
  2. `state.rs` - defines the `State` and `StateReply` enums.  It is important to have the ability to read the contract state off-chain. It is defined in the `fn meta_state()`.  The contract receives a request to read the certain data (the possible requests are defined in the enum `State`) and sends replies. The contracts replies about its state are defined in the enum `StateReply`.
 
 ```rust
-unsafe extern "C" fn meta_state() -> *mut [i32; 2] {
+extern "C" fn meta_state() -> *mut [i32; 2] {
     let state: State = msg::load().expect("failed to decode input argument");
     let encoded = match state {
         State::UserStatus(account) => {
@@ -244,7 +244,7 @@ unsafe extern "C" fn meta_state() -> *mut [i32; 2] {
             StateReply::UserStatus(role).encode()
         }
         State::AllProposals => StateReply::AllProposals(dao.proposals.clone()).encode(),
-       ...
+        ...
     };
     gstd::util::to_leak_ptr(encoded)
 }

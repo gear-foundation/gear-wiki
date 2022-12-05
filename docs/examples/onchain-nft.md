@@ -207,9 +207,9 @@ impl OnChainNFTCore for OnChainNFT {
 Accordingly, it is necessary to make changes to the `handle` and `meta_state` functions:
 ```rust
 #[no_mangle]
-unsafe extern "C" fn handle() {
+extern "C" fn handle() {
     let action: OnChainNFTAction = msg::load().expect("Could not load OnChainNFTAction");
-    let nft = CONTRACT.get_or_insert(Default::default());
+    let nft = unsafe { CONTRACT.get_or_insert(Default::default()) };
     match action {
         OnChainNFTAction::Mint {
             description,
@@ -227,9 +227,9 @@ unsafe extern "C" fn handle() {
 }
 
 #[no_mangle]
-unsafe extern "C" fn meta_state() -> *mut [i32; 2] {
+extern "C" fn meta_state() -> *mut [i32; 2] {
     let query: OnChainNFTQuery = msg::load().expect("failed to decode input argument");
-    let nft = CONTRACT.get_or_insert(OnChainNFT::default());
+    let nft = unsafe { CONTRACT.get_or_insert(Default::default()) };
     match query {
         OnChainNFTQuery::TokenURI { token_id } => {
             let encoded = OnChainNFTCore::token_uri(nft, token_id)

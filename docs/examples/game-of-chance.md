@@ -199,9 +199,9 @@ It is also important to have the ability to read the contract state off-chain. I
 
 ```rust
 #[no_mangle]
-unsafe extern "C" fn meta_state() -> *mut [i32; 2] {
+extern "C" fn meta_state() -> *mut [i32; 2] {
     let query: LtState = msg::load().expect("failed to decode input argument");
-    let lottery: &mut Lottery = LOTTERY.get_or_insert(Lottery::default());
+    let lottery: &mut Lottery = unsafe { LOTTERY.get_or_insert(Lottery::default()) };
 
     let encoded = match query {
         LtState::GetPlayers => LtStateReply::Players(lottery.players.clone()).encode(),

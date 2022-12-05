@@ -107,7 +107,7 @@ struct Dao {
 
 ```rust
 #[no_mangle]
-unsafe extern "C" fn init() {
+extern "C" fn init() {
     ...
 }
 ```
@@ -224,7 +224,7 @@ async fn process_proposal(
 2. `state.rs` - 定义了`State` 和 `StateReply`。链下获取合约状态的能力也很重要。它被定义在 `fn meta_state()`中。合约收到读取某数据请求（可接受的请求在 `State` 中定义）时发送相应的返回数据。合约返回的数据定义在 `StateReply` 中。
 
 ```rust
-unsafe extern "C" fn meta_state() -> *mut [i32; 2] {
+extern "C" fn meta_state() -> *mut [i32; 2] {
     let state: State = msg::load().expect("failed to decode input argument");
     let encoded = match state {
         State::UserStatus(account) => {
@@ -236,7 +236,7 @@ unsafe extern "C" fn meta_state() -> *mut [i32; 2] {
             StateReply::UserStatus(role).encode()
         }
         State::AllProposals => StateReply::AllProposals(dao.proposals.clone()).encode(),
-       ...
+        ...
     };
     gstd::util::to_leak_ptr(encoded)
 }

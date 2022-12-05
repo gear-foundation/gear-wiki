@@ -107,20 +107,20 @@ pub struct NFT {
 static mut CONTRACT: Option<NFT> = None;
 
 #[no_mangle]
-unsafe extern "C" fn init() {
+extern "C" fn init() {
     let config: InitNFT = msg::load().expect("Unable to decode InitNFT");
     let mut nft = NFT::default();
     nft.token.name = config.name;
     nft.token.symbol = config.symbol;
     nft.token.base_uri = config.base_uri;
     nft.owner = msg::source();
-    CONTRACT = Some(nft);
+    unsafe { CONTRACT = Some(nft) };
 }
 
 #[no_mangle]
-unsafe extern "C" fn handle() {
+extern "C" fn handle() {
     let action: NFTAction = msg::load().expect("Could not load msg");
-    let nft = CONTRACT.get_or_insert(NFT::default());
+    let nft = unsafe { CONTRACT.get_or_insert(NFT::default()) };
     match action {
         NFTAction::Mint { to, token_id } => NFTCore::mint(&to, token_id, None),
         NFTAction::Burn { token_id } => NFTCore::burn(nft, token_id),
@@ -172,9 +172,9 @@ impl MyNFTCore for NFT {
 Accordingly, it is necessary to make changes to the `handle` function:
 ```rust
 #[no_mangle]
-unsafe extern "C" fn handle() {
+extern "C" fn handle() {
     let action: NFTAction = msg::load().expect("Could not load msg");
-    let nft = CONTRACT.get_or_insert(NFT::default());
+    let nft = unsafe { CONTRACT.get_or_insert(Default::default()) };
     match action {
         NFTAction::Mint { token_metadata } => MyNFTCore::mint(token_metadata),
         NFTAction::Burn { token_id } => NFTCore::burn(nft, token_id),

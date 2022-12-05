@@ -45,11 +45,11 @@ pub struct ContractState {}
 static mut STATE: ContractState = ContractState {};
 
 #[no_mangle]
-unsafe extern "C" fn meta_state() -> *mut [i32; 2] {
+extern "C" fn meta_state() -> *mut [i32; 2] {
     let query =
         String::from_utf8(msg::load_bytes().expect("Unable to load bytes")).expect("Invalid query");
     let reply = if query == "CONTRACT_STATE" {
-        let encoded = STATE.encode();
+        let encoded = unsafe { STATE.encode() };
         gstd::util::to_leak_ptr(encoded)
     } else {
         gstd::util::to_leak_ptr(vec![])
