@@ -30,11 +30,11 @@ gear-wasm-builder = { git = "https://github.com/gear-tech/gear.git", branch = "s
 
 [dev-dependencies]
 gclient = { git = "https://github.com/gear-tech/gear.git", branch = "stable" }
-tokio = { version = "1.22.0", features = ["full"] }
+tokio = { version = "1.23.0", features = ["full"] }
 
 [patch.crates-io]
-sp-core = { version = "6.0.0", git = "https://github.com/gear-tech/substrate.git", branch = "gear-stable" }
-sp-runtime = { version = "6.0.0", git = "https://github.com/gear-tech/substrate.git", branch = "gear-stable" }
+sp-core = { git = "https://github.com/gear-tech/substrate.git", branch = "gear-stable" }
+sp-runtime = { git = "https://github.com/gear-tech/substrate.git", branch = "gear-stable" }
 ```
 
 ## Running the node
