@@ -10,7 +10,7 @@ As we said earlier, `gtest` is excellent for unit and integration testing. It is
 
 ## Import `gtest` lib
 
-To use the `gtest` library, you must import it into your `Cargo.toml` file in the [dev-dependencies] block to fetch and compile it for tests only:
+To use the `gtest` library, you must import it into your `Cargo.toml` file in the `[dev-dependencies]` block to fetch and compile it for tests only:
 
 ```toml
 [package]
