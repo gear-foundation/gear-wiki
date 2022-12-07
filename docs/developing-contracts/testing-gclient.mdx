@@ -8,12 +8,15 @@ import CodeBlock from '@theme/CodeBlock';
 
 # Testing with `gclient`
 
-It is essential to underline that testing with `gclient` requires the running node as the second part of the test suite. The `gclient` interacts with the node over the WebSocket protocol. Depending on the purpose of testing, `gclient` can communicate with either a local or a remote node. We recommend using the local node in developer mode for initial debugging and continuous integration.
+`gclient` is intended to be used as a tool for testing Gear programs with a real blockchain network. It allows you to send extrinsics and RPCs by connecting to the network. We recommend using `gclient` for end-to-end testing to ensure the program works as expected in the real blockchain world.
+
+It is essential to underline that testing with `gclient` requires the running node as the second part of the test suite. The `gclient` interacts with the node over the WebSocket protocol. Depending on the purpose of testing, `gclient` can communicate with either a local or a remote node. The best choice is to use the **local node in developer mode** for initial debugging and continuous integration.
+
+Testing with `gclient` is slower than `gtest` and produces more build artifacts, so it is better suited as the last mile in quality control. However, `gclient` gives the most accurate test results.
 
 ## Import `gclient` lib
 
 To use the `gclient` library, you must import it into your `Cargo.toml` file in the [dev-dependencies] block. Also, you need to add some external crates that are used together with `gclient`:
-
 
 ```toml
 [package]
