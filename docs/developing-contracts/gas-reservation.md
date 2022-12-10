@@ -6,8 +6,25 @@ sidebar_position: 7
 
 Gas reservation is the powerful feature of Gear Protocol that enables the new approach to smart-contract programming and modern [use cases](../gear/distinctive-features).
 
-Briefly, it allows sending messages using reserved gas from the initial message instead of using gas from the last sent message.
+Briefly,  a program can send a message using gas that was reserved before instead of using gas from the currently processing message.
 
-A program developer can provide a special function in the program's code which takes some defined amount of gas from the amount available for this program and reserves it. A reservation gets a unique identifier that can be used by a program to get this reserved gas and use it later. Programs can have different executions, change state and evaluate somehow, but when it is necessary, a program can send a message with this reserved gas instead of using its own gas.
+A program developer can provide a special function in the program's code which takes some defined amount of gas from the amount available for this program and reserves it. A reservation gets a unique identifier that can be used by a program to get this reserved gas and use it later. 
+To reserve the amount of gas for further usage use the following function:
+```rust
+let reservation_id = ReservationId::reserve(RESERVATION_AMOUNT, TIME)
+                                    .expect("reservation across executions");
+``` 
+You also have to indicated the block count within which the reserve must be used. Gas reservation is not free: the reservation for one block costs 100 gas. The `reserve` function returns `ReservationId`, which one can use for sending a message with that gas. To send a message using the reserved gas:
+```rust
+msg::send_from_reservation(reservation_id, program, payload, value)
+                                .expect("Failed to send message from reservation");
+```
+if gas is not needed within the time specified during the reservation, it can be unreserved and the gas will be returned to the user who made the reservation.
+```rust
+id.unreserve().expect("unreservation across executions");
+```
+Programs can have different executions, change state and evaluate somehow, but when it is necessary, a program can send a message with this reserved gas instead of using its own gas.
 
-For example, let's consider some arbitrary game implementation. A user starts a game (sends a message to a program) and a program reserves some amount of gas from this message. Then other actors start sending messages to the program (registration of participation in the game). Once all is done (by timeout or number of participants threshold reached), a program sends a final message automatically (the game results) using reserved gas without the need for the user to manually interact with the program. It allows the program not to hang in the waitlist waiting for a reply and spending gas (being in the whitelist consumes gas every block). In this example, synchronous implementation can be more effective from the gas consumption perspective.
+For example, let's consider the game that works completely on-chain. The players are smart contract that compete with each other by implementing various playing strategies. Usually in these types of games, there is a master contract that starts the game and controls the move order between the players. 
+To start the game, someone sends a message to the contract. The gas attached to this message is spent on the players' contracts, which in turn spend gas on their execution. Since the game can last quite a lot of rounds, the attached gas may not be enough to complete the game. You can send a message  asking the program to continue the game, or you can use the gas reservation and make a fully automatic play. 
+Using gas reservation the contract will be able to  hold the game without interrupption. 
