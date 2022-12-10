@@ -1,6 +1,6 @@
 ---
 title: Why do we build Gear?
-sidebar_position: 2
+sidebar_position: 1
 sidebar_label: Why do we build Gear?
 ---
 

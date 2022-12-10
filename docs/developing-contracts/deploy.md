@@ -1,6 +1,6 @@
 ---
 sidebar_label: Upload Program
-sidebar_position: 5
+sidebar_position: 9
 ---
 
 # Upload smart contracts
