@@ -42,8 +42,8 @@ let reply = msg_future.await;
 The execution fails in `Program B` and `Program A` receives a signal:
 ```rust
 #[no_mangle]
-unsafe extern "C" fn my_handle_signal() {
-    if STATE.msg_id == msg::signal_from() {
+extern "C" fn my_handle_signal() {
+    if unsafe { STATE.msg_id == msg::signal_from() } {
         // write logic here
     }
 }
