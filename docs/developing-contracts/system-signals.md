@@ -40,7 +40,7 @@ unsafe { STATE.msg_id == msg::id() };
 
 let reply = msg_future.await;
 ```
-The execution fails in `Program B` and `Program A` receives a signal:
+The execution fails in `Program B`, and `Program A` receives a signal:
 ```rust
 #[no_mangle]
 extern "C" fn my_handle_signal() {
