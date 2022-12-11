@@ -19,7 +19,7 @@ You also have to indicate the block count within which the reserve must be used.
 msg::send_from_reservation(reservation_id, program, payload, value)
                                 .expect("Failed to send message from reservation");
 ```
-if gas is not needed within the time specified during the reservation, it can be unreserved and the gas will be returned to the user who made the reservation.
+If gas is not needed within the time specified during the reservation, it can be unreserved and the gas will be returned to the user who made the reservation.
 ```rust
 id.unreserve().expect("unreservation across executions");
 ```
