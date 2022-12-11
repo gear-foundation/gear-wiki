@@ -40,7 +40,7 @@ NFT can be dynamic - it can change its properties based on some conditions. Dyna
 The scenarios for updating the NFT can be the following:
 - User sends a message for updating the NFT instantly
 - NFT contract sends a message to itself at regular intervals in order to update the token properties
-- NFT contract sends a delayed message to another actor (program or account) and change the NFTs properties based on the result of processing that message
+- NFT contract sends a delayed message to another actor (program or account) and changes the NFTs properties based on the result of processing that message
 
 ### Gaming
 
