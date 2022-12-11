@@ -27,7 +27,7 @@ One of the unique features that become possible using pool with reserved gas is 
 
 But the most interesting option opened by this functionality is an ability for a program to continue execution later after a defined period of time by sending a message to itself. In fact, a smart-contract is able to execute itself **unlimited** number of blocks (provided that enough gas for execution is kept available). 
 
-This opens up wide opportunities for the implementation of functional logic related to the **continuing messaging automation** in smart-contracts. The delayed messages are essentially similar to cron jobs, which can not be implemented in smart contracts on other blockchains without the help of external resources. The remarkable effect of this a solution is that it eliminates the need of having centralized components for dApps making them functioning **totally on-chain** providing true decentralization to the world.
+This opens up wide opportunities for the implementation of functional logic related to the **continuing messaging automation** in smart-contracts. The delayed messages are essentially similar to cron jobs, which can not be implemented in smart contracts on other blockchains without the help of external resources. The remarkable effect of this solution is that it eliminates the need of having centralized components for dApps making them functioning **totally on-chain** providing true decentralization to the world.
 
 ## Use cases
 
