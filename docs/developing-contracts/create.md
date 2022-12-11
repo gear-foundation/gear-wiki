@@ -1,6 +1,6 @@
 ---
 sidebar_label: Create program
-sidebar_position: 5
+sidebar_position: 6
 ---
 
 # Create program from program
