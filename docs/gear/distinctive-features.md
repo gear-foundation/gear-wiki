@@ -19,7 +19,7 @@ It enables extensive smart contract use cases, unlocks entirely new decentralize
 
 ## Continuing messaging automation
 
-The execution of any messages in Gear (including the system messages) consumes gas. The Gear Protocol introduces a **gas reservation** feature which can be very useful for implementation of a variety modern use cases. 
+The execution of any messages in Gear (including the [system messages](../developing-contracts/system-signals.md)) consumes gas. The Gear Protocol introduces a [gas reservation](../developing-contracts/gas-reservation.md) feature which can be very useful for implementation of a variety modern use cases. 
 
 Briefly gas reservation is a special pool with gas that can be used by a program for further executions. Each pool is created per-program and has a unique identifier used by a program. Gas from this pool can be consumed for program's execution if the program's `gas_available` is not enough.
 
