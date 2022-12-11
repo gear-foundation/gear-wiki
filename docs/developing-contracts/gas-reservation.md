@@ -14,7 +14,7 @@ To reserve the amount of gas for further usage use the following function:
 let reservation_id = ReservationId::reserve(RESERVATION_AMOUNT, TIME)
                                     .expect("reservation across executions");
 ``` 
-You also have to indicated the block count within which the reserve must be used. Gas reservation is not free: the reservation for one block costs 100 gas. The `reserve` function returns `ReservationId`, which one can use for sending a message with that gas. To send a message using the reserved gas:
+You also have to indicate the block count within which the reserve must be used. Gas reservation is not free: the reservation for one block costs 100 gas. The `reserve` function returns `ReservationId`, which one can use for sending a message with that gas. To send a message using the reserved gas:
 ```rust
 msg::send_from_reservation(reservation_id, program, payload, value)
                                 .expect("Failed to send message from reservation");
