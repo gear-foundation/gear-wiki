@@ -36,6 +36,7 @@ let (msg_id, msg_future) = if let Ok(msg_future) = result {
 };
 
 // save the `msg_id` in program state
+unsafe { STATE.msg_id == msg::id() };
 
 let reply = msg_future.await;
 ```
