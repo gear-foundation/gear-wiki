@@ -15,7 +15,7 @@ Previously it was led to either poor smart contract capabilities or developers t
 
 Now with native Gear Protocol’s async messaging support, a contract developer is able to implement an arbitrary logic of the contract with delayed messages that will wake the contract itself after a certain period of time or by some event.
 
-It enables extensive smart contract use cases, unlocks entirely new decentralized functionality and brings more value to users that wasn’t previously possible in the blockchain ecosystems.
+It enables extensive smart contract use cases, unlocks entirely new decentralized functionality and brings more value to users that weren’t previously possible in the blockchain ecosystems.
 
 ## Continuing messaging automation
 
