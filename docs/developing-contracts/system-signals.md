@@ -21,7 +21,7 @@ exec::system_reserve_gas(1_000_000_000).expect("Error during system gas reservat
 
 If a signal message appears, it uses gas specifically reserved for such kinds of messages. If no gas has been reserved for system messages, they are just skipped and the program will not receive them.
 
-If gas has been reserved but no system messages occur during current execution, then this gas returns back from where it was taken. The same relates to gas reserved for non-system messages - gas returns back after a defined number of blocks or by program’s command.
+If gas has been reserved but no system messages occur during the current execution, then this gas returns back from where it was taken. The same relates to gas reserved for non-system messages - gas returns back after a defined number of blocks or by the program’s command.
 
 It can be useful for a developer when writing communication between programs. Developer can define `my_handle_signal` function and implement some logic there. For example, `Program A` sent a message to `Program B`. `Program A` is waiting for a reply from `Program B` but `Program B` runs out of gas. The current execution will be interrupted, but the system will send a signal to `Program A` and indicates the message identifier during which the execution was interrupted.  
 So, `Program A` sends a message and saves the message identifier:
