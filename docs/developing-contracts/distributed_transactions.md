@@ -145,7 +145,7 @@ If a participant times out waiting for a coordinator, elect a new coordinator.
 
 Let’s get back to our swap contract.
 
-**Prepare phase**:  
+**Preparation phase**:  
 The following cases are possible:
 - all token contracts receive the message;
 - the swap contract fails to wait for response from any token contract
