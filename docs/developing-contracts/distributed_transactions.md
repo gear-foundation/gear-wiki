@@ -160,7 +160,7 @@ There are two ways of coordination sagas:
 - `Choreography` - each local transaction publishes domain events that trigger local transactions in other services;
 - `Orchestration` - an orchestrator (object) tells the participants what local transactions to execute.
 
-We will consider the `orchestration based Saga` where there would be an orchestrator(swap contract) to manage the entire operation from one center. 
+We will consider the `orchestration based Saga` where there would be an orchestrator (swap contract) to manage the entire operation from one center. 
 
 The swap operation consists of the following steps:
 1. Swap contract receives a message to exchange tokens in the liquidity pool. So, it must transfer tokens A from the account to its address and then transfer tokens B to the user.
