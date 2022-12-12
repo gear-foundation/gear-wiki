@@ -14,7 +14,7 @@ For example, the Ethereum transactions are `atomic`.The global state changes whe
 
 Many applications on the blockchain use atomicity features. So, it is important to understand that if you implement an application following the programming paradigm used, for example, on Ethereum, then there will be the problem of not being able to recover the state after a failed transaction. 
 
-For example, consider the simple exchange, where a user wants to swap tokens A for tokenss B in the liquidity pool. The swap contract will send a message to the token A contract and a message to the token B contract. If one message succeeds and the other one fails for some reason, then the state of the token A contract will be changed and the state of the token B contract will remain unchanged.
+For example, consider the simple exchange, where a user wants to swap tokens A for tokens B in the liquidity pool. The swap contract will send a message to the token A contract and a message to the token B contract. If one message succeeds and the other one fails for some reason, then the state of the token A contract will be changed and the state of the token B contract will remain unchanged.
 
 So, we have to think about another programming paradigm for distributed transactions.
 let's look at different programming methods using the example of a token exchange.
