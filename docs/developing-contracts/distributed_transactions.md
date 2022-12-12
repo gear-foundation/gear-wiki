@@ -162,7 +162,7 @@ There are two ways of coordination sagas:
 
 We will consider the `orchestration based Saga` where there would be an orchestrator(swap contract) to manage the entire operation from one center. 
 
-The swap operation consist of the following steps:
+The swap operation consists of the following steps:
 1. Swap contract receives a message to exchange tokens in the liquidity pool. So, it must transfer tokens A from the account to its address and then transfer tokens B to the user.
 2. It creates the first task: transfer tokens from user to swap contract. It also creates a compensating transaction for the first task: transfer tokens from the swap contract back to the user. The second task is to transfer tokens from the swap contract to the user.
 3. It starts executing the first task. If the execution fails, it cancels the transaction. If it’s successful, the swap contract executes the second task;
