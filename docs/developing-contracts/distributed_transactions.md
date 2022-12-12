@@ -60,7 +60,7 @@ If the coordinator issued a commit message, the participants commit the transact
 - `Coordinator`:  
 If the coordinator issues a message to commit the transaction, it waits to receive acknowledgment from each participant before it ends the global transaction. If the coordinator issued a message to roll back the transaction, it does not wait for acknowledgments from the participants.
 
-Let's see how it can be used on the example of a token swap contract. We consider the following situation: the account wants to exchange his tokens (let’s call it tokenA) for other tokens (tokenB) using the liquidity pool in the swap contract.
+Let's see how it can be used in the example of a token swap contract. We consider the following situation: the account wants to exchange his tokens (let’s call it tokenA) for other tokens (tokenB) using the liquidity pool in the swap contract.
 
 In that case the swap contract is a coordinator contract and tokens contracts are participants.
 
