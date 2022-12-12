@@ -185,6 +185,6 @@ The swap operation consists of the following steps:
 4. If the execution of the second task is successful, the transaction is completed. Otherwise, the swap contract executes the compensation transaction for the first task.
 
 ![img alt](./img/saga.png#gh-light-mode-only)
-![img alt](./img/saga-dark.png#gh-dark-mode-only)
+![img alt](./img/Saga-dark.png#gh-dark-mode-only)
 
 It is important to note that compensatory transactions should not fail due to any logical error. They can only fall due to lack of gas. If this happens, then you need to restart the transaction again or use the gas reservation. The `idempotency` of the token contract guarantees that the transaction will be completed to the end without any duplicate transactions.
