@@ -43,7 +43,7 @@ It is possible to execute a swap in one transaction. To resolve the problem of a
 We have a coordinator that sends messages to participants. The `two-phase commit protocol` has two parts: the `prepare` phase and the `commit` phase.
 
 **Preparation phase:**
-During the prepare phase, the coordinator and participants perform the following dialog:
+During the preparation phase, the coordinator and participants perform the following dialog:
 - `Coordinator`:  
 The coordinator directs each participant database server to prepare to commit the transaction.
 - `Participants`:  
