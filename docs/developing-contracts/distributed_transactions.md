@@ -158,7 +158,7 @@ As in the previous stage we can have a failure only due to the lack of gas. Here
 A `saga` is a sequence of local transactions. Each local transaction updates the database and publishes a message or event to trigger the next local transaction in the saga. If a local transaction fails because it violates a business rule then the saga executes a series of compensating transactions that undo the changes that were made by the preceding local transactions. Thus, Saga consists of multiple steps whereas `2PC` acts like a single request.  
 There are two ways of coordination sagas:
 - `Choreography` - each local transaction publishes domain events that trigger local transactions in other services;
-- `Orchestration` - an orchestrator (object) tells the participants what local transactions to execute.  
+- `Orchestration` - an orchestrator (object) tells the participants what local transactions to execute.
 
 We will consider the `orchestration based Saga` where there would be an orchestrator(swap contract) to manage the entire operation from one center. 
 
