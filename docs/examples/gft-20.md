@@ -160,9 +160,9 @@ The case when the message has been executed with failure must be impossible (It 
 
 When the `transfer` is occurs in two transactions (2 PC):
 1. The logic contract sends the message `DecreaseBalance` to the storage contract. If it is successful, it sets the status to `Lock`.
-![img alt](./img/Lock.png)
+![img alt](./img/lock.png)
 2. In the next step, the logic contract must receive either `Сommit` or an `Abort` action. If it receives a `Сommit` message, it just sets the transaction status to `Success`. Otherwise it sends the message `IncreaseBalance` to the storage contract. 
-![img alt](./img/Commit_Abort.png)
+![img alt](./img/commit_abort.png)
 
 ### The master contract architecture
 The master contract state has the following fields:
