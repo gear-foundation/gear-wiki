@@ -18,24 +18,29 @@ For example, consider the simple exchange, where a user wants to swap tokens A f
 
 So, we have to think about another programming paradigm for distributed transactions.
 let's look at different programming methods using the example of a token exchange.
+
 ## Splitting a token swap transaction into 3 separate transactions
+
 Consider the following situation: we have a liquidity pool of token A and token B, and also a user who wants to exchange his tokens A for tokens B.
 
 `1 step` : A user sends a `MakeOrder` message to the swap contract. During that transaction the contract sends a message to the fungible token contract. The result of executing this message can be a success, a failure. Also, the worst case is the lack of gas when processing a message in the token contract or in the subsequent execution of the swap contract. However, since the token contract supports idempotency, the user can simply restart the transaction and complete it.
 
-![img alt](./img/swap_step1.png)
+![img alt](./img/1.step1.png#gh-light-mode-only)
+![img alt](./img/1.step1-dark.png#gh-dark-mode-only)
 
 `2 step`:  A user sends an `ExecuteOrder` message to the swap contract. The swap contract just calculates the amount of tokens a user will receive and saves the new state of the liquidity poll.
-![img alt](./img/swap_step2.png)
+
+![img alt](./img/1.step2.png#gh-light-mode-only)
+![img alt](./img/1.step2-dark.png#gh-dark-mode-only)
 
 `3 step`:  A user sends a `Withdraw` message to the swap contract and receives tokens B. The situation here is the same as in the first step.
-![img alt](./img/swap_step3.png)
 
+![img alt](./img/1.step3.png#gh-light-mode-only)
+![img alt](./img/1.step3-dark.png#gh-dark-mode-only)
 
 It is possible to execute a swap in one transaction. To resolve the problem of atomicity we can use the following patterns here:
 - `2 PC - 2 Phase Commit protocol` (And also its extension - 3 phase commit protocol);
 - `Saga Pattern`.
-
 
 ## Two phase commit protocol
 
@@ -51,7 +56,7 @@ Every participant notifies the coordinator whether it can commit to its transact
 - `Coordinator`:  
 The coordinator, based on the response from each participant, decides whether to commit or roll back the transaction. It decides to commit only if all participants indicate that they can commit to their transaction branches. If any participant indicates that it is not ready to commit to its transaction branch (or if it does not respond), the coordinator decides to end the global transaction.
 
-**Commit phase:**  
+**Commit phase:**
 During the commit phase, the coordinator and participants perform the following dialog:
 - `Coordinator`:  
 The coordinator writes the commit record or rollback record to the coordinator's logical log and then directs each participant to either commit or roll back the transaction.
@@ -65,7 +70,9 @@ Let's see how it can be used in the example of a token swap contract. We conside
 In that case the swap contract is a coordinator contract and tokens contracts are participants.
 
 The swap contract makes the following steps:  
-**Prepare phase** 
+
+**Prepare phase**
+
 - `Swap contract:`
 Swap contract sends the messages to token contracts to prepare transfer tokens (Messages can be sent in parallel). In fact, token contracts must lock funds at this stage;
 - `Token contract`:
@@ -73,15 +80,21 @@ Token contracts make all necessary checks, and in case of success, lock funds an
 - `Swap contract`:
 Swap contract handles the messages from the token contracts and decides whether to commit or abort the global transaction. 
 receives tokens B. The situation here is the same as in the first step.
-![img alt](./img/prepare.png)
-**Commit phase**  
+
+![img alt](./img/2.prepare.png#gh-light-mode-only)
+![img alt](./img/2.prepare-dark.png#gh-dark-mode-only)
+
+**Commit phase**
+
 - `Swap contract`:  
 If token contracts confirmed their readiness to execute the transaction, the swap contract sends them a message to commit the state. Otherwise, the swap contract tells them to abort the transaction.
 - `Token contract`:
 Token contracts finally change their state and send replies to the swap contract;
 - `Swap contracts:
 Swap contract handles the messages from the token contracts and saves the result about transaction execution.
-![img alt](./img/commit.png)
+
+![img alt](./img/2.commit.png#gh-light-mode-only)
+![img alt](./img/2.commit-dark.png#gh-dark-mode-only)
 
 Of course, all that workflow handles the case when the gas runs out during the message execution.
 
@@ -94,8 +107,8 @@ Of course, all that workflow handles the case when the gas runs out during the m
 - The coordinator plays an important role: if it fails to send the message then all participants go to the blocked state (in our example: the funds in token contracts are blocked).
 
 ## Three phase commit protocol.
-**Theory**:  
-It is similar to two-phase commit protocol but it tries to solve the problems with blocking the state of participants and to give the participants the opportunity to recover their states themselves.
+
+**Theory**: It is similar to two-phase commit protocol but it tries to solve the problems with blocking the state of participants and to give the participants the opportunity to recover their states themselves.
 
 **Prepare phase:**
 The same steps of two phase commit protocol are followed here:
@@ -139,31 +152,39 @@ The following cases are possible:
 - the swap contract fails itself.
 
 In the case of a fall, if a transaction isn't restarted, the swap contract will not move to the second phase and the token contracts will unlock their state using delayed messages.
-![img alt](./img/3pc-1.png)
+
+![img alt](./img/3.prepare.png#gh-light-mode-only)
+![img alt](./img/3.prepare-dark.png#gh-dark-mode-only)
+
 **Pre-Commit phase**:
 At this stage we can have a failure in the swap contract or in the token contract only due the lack of gas.  To solve this problem we can use gas reservation as follows: 
 - The swap contract receives the information about error in its `handle_signal`;
 - Using gas reservation (so, it’s necessary to care about gas reservations before), the swap contract sends a message to itself to restart the transaction from the second phase. (The same logic can be also used in `prepare phase`).
 
-![img alt](./img/3pc-2.png)
+![img alt](./img/3.precommit.png#gh-light-mode-only)
+![img alt](./img/3.precommit-dark.png#gh-dark-mode-only)
 
 **Commit phase**:  
 As in the previous stage we can have a failure only due to the lack of gas. Here it is not so critical, since at this stage all participants can commit themselves.
 
 ## Saga pattern
-**Theory**:  
+**Theory**:
 A `saga` is a sequence of local transactions. Each local transaction updates the database and publishes a message or event to trigger the next local transaction in the saga. If a local transaction fails because it violates a business rule then the saga executes a series of compensating transactions that undo the changes that were made by the preceding local transactions. Thus, Saga consists of multiple steps whereas `2PC` acts like a single request.  
 There are two ways of coordination sagas:
+
 - `Choreography` - each local transaction publishes domain events that trigger local transactions in other services;
 - `Orchestration` - an orchestrator (object) tells the participants what local transactions to execute.
 
 We will consider the `orchestration based Saga` where there would be an orchestrator (swap contract) to manage the entire operation from one center. 
 
 The swap operation consists of the following steps:
+
 1. Swap contract receives a message to exchange tokens in the liquidity pool. So, it must transfer tokens A from the account to its address and then transfer tokens B to the user.
 2. It creates the first task: transfer tokens from the user to the swap contract. It also creates a compensating transaction for the first task: transfer tokens from the swap contract back to the user. The second task is to transfer tokens from the swap contract to the user.
 3. It starts executing the first task. If the execution fails, it cancels the transaction. If it’s successful, the swap contract executes the second task;
 4. If the execution of the second task is successful, the transaction is completed. Otherwise, the swap contract executes the compensation transaction for the first task.
-![img alt](./img/saga.png)
+
+![img alt](./img/Saga.png#gh-light-mode-only)
+![img alt](./img/Saga-dark.png#gh-dark-mode-only)
 
 It is important to note that compensatory transactions should not fail due to any logical error. They can only fall due to lack of gas. If this happens, then you need to restart the transaction again or use the gas reservation. The `idempotency` of the token contract guarantees that the transaction will be completed to the end without any duplicate transactions.
