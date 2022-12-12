@@ -100,7 +100,7 @@ Of course, all that workflow handles the case when the gas runs out during the m
 
 `Pros:`
 - Messages can be sent in parallel;
-- If cases with a lack of gas are taken into account, then the data consistency is achieved.  
+- If cases with a lack of gas are taken into account, then the data consistency is achieved.
 
 `Cons:`
 - The participants have to wait for the message from the coordinator, they can’t commit or abort themselves;
