@@ -10,7 +10,7 @@ When a program interacts with another one, the transaction becomes `distributed`
 - `Atomicity`: All data changes are treated as if they were a single operation. That is, either all of the modifications are made, or none of them are made;
 - `Consistency`: This property implies that when a transaction begins and ends, the state of data is consistent.
 
-For example, the Ethereum transactions are `atomic`.The global state is changing when all executions finish successfully. If execution fails due to an error, all of its effects (changes in state) are rolled back just as if this particular transaction has never been running. 
+For example, the Ethereum transactions are `atomic`.The global state changes when all executions finish successfully. If execution fails due to an error, all of its effects (changes in state) are rolled back just as if this particular transaction has never been running. 
 
 Many applications  on the blockchain use atomicity features. So, it is important to understand that if you implement an application following the programming paradigm used, for example, on Ethereum, then there will be the problem of not being able to recover the state after a failed transaction. 
 
