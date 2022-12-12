@@ -25,9 +25,6 @@ Consider the following situation: we have a liquidity pool of token A and token 
 
 ![img alt](./img/swap_step1.png)
 
-<!-- <p align="center">
-<img src="./img/swap_step1.png" width="500"/>
-</p> -->
 `2 step`:  A user sends an `ExecuteOrder` message to the swap contract.The swap contract just calculates the amount of tokens a user will receive and saves the new state of the liquidity poll.
 ![img alt](./img/swap_step2.png)
 
