@@ -12,7 +12,7 @@ When a program interacts with another one, the transaction becomes `distributed`
 
 For example, the Ethereum transactions are `atomic`.The global state changes when all executions finish successfully. If execution fails due to an error, all of its effects (changes in state) are rolled back just as if this particular transaction has never been running. 
 
-Many applications  on the blockchain use atomicity features. So, it is important to understand that if you implement an application following the programming paradigm used, for example, on Ethereum, then there will be the problem of not being able to recover the state after a failed transaction. 
+Many applications on the blockchain use atomicity features. So, it is important to understand that if you implement an application following the programming paradigm used, for example, on Ethereum, then there will be the problem of not being able to recover the state after a failed transaction. 
 
 For example, consider the simple exchange, where a user wants to swap tokens A for tokenss B in the liquidity pool. The swap contract will send a message to the token A contract and a message to the token B contract. If one message succeeds and the other one fails for some reason, then the state of the token A contract will be changed and the state of the token B contract will remain unchanged.
 
