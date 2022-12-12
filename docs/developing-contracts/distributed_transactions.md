@@ -62,7 +62,7 @@ If the coordinator issues a message to commit the transaction, it waits to recei
 
 Let's see how it can be used on the example of a token swap contract. We consider the following situation: the account wants to exchange his tokens (let’s call it tokenA) for other tokens (tokenB) using the liquidity pool in the swap contract.
 
-In that case the swap contract is a coordinator contract and tokens contract are participants.
+In that case the swap contract is a coordinator contract and tokens contracts are participants.
 
 The swap contract makes the following steps:  
 **Prepare phase** 
