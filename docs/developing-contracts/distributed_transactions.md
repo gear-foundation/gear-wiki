@@ -159,7 +159,7 @@ In the case of a fall, if a transaction isn't restarted, the swap contract will 
 **Pre-Commit phase**:
 At this stage we can have a failure in the swap contract or in the token contract only due the lack of gas.  To solve this problem we can use gas reservation as follows: 
 - The swap contract receives the information about error in its `handle_signal`;
-- Using gas reservation (so, it’s necessary to care about gas reservations before), the swap contract sends a message to itself to restart the transaction from the second phase. (The same logic can be also used in `prepare phase`).
+- Using gas reservation (so, it’s necessary to care about gas reservations before), the swap contract sends a message to itself to restart the transaction from the second phase. (The same logic can also be used in the `preparation phase`).
 
 ![img alt](./img/3.precommit.png#gh-light-mode-only)
 ![img alt](./img/3.precommit-dark.png#gh-dark-mode-only)
