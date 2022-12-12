@@ -74,7 +74,7 @@ The swap contract makes the following steps:
 **Prepare phase**
 
 - `Swap contract:`
-Swap contract sends the messages to token contracts to prepare transfer tokens (Messages can be sent in parallel). In fact, token contracts must lock funds at this stage;
+Swap contract sends the messages to token contracts to prepare transfer tokens (Messages can be sent in parallel). In fact, token contracts must lock funds at this stage.
 - `Token contract`:
 Token contracts make all necessary checks, and in case of success, lock funds and reply to the swap contract that they are ready to make a transaction.
 - `Swap contract`:
