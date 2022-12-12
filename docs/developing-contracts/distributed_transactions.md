@@ -47,7 +47,7 @@ During the prepare phase, the coordinator and participants perform the following
 - `Coordinator`:  
 The coordinator directs each participant database server to prepare to commit the transaction.
 - `Participants`:  
-Every participant notifies the coordinator whether it can commit its transaction branch.
+Every participant notifies the coordinator whether it can commit to its transaction branch.
 - `Coordinator`:  
 The coordinator, based on the response from each participant, decides whether to commit or roll back the transaction. It decides to commit only if all participants indicate that they can commit their transaction branches. If any participant indicates that it is not ready to commit its transaction branch (or if it does not respond), the coordinator decides to end the global transaction.
 
