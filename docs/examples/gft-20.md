@@ -145,7 +145,7 @@ pub enum Operation {
 
 Since the enum can be changed during upgrading the logic contract, the master contract does not know a particular type of payload structure. That is why it sends payload as `Vec<u8>` instead of enum `Operation`, and upon receiving this message, the logic contract decodes this into the type it expects to receive.  
 During the message `Mint`, `Burn` or `Transfer` (not `locking Transfer` for 2PC)  that occurs between accounts that are in the same storage, the logic contract sends only one message to the storage contract. 
-![img alt](./img/Simple.png)
+![img alt](./img/simple.png)
 When the transfer occurs between 2 different storages, the contract acts as follows:  
 1. The logic contract sends the `DecreaseBalance `message to the storage contract.
 2. The following cases of the message execution are possible:
