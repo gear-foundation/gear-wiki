@@ -118,7 +118,7 @@ The coordinator sends a prepare message to all participants and waits for replie
 If the participants are ready to commit a transaction they send the ready message, otherwise they send no message to the coordinator. 
 - `Coordinator`:  
 Based on replies the coordinator decides either to go to the next state or not. If any of the participants respond with no message or if any of the participants fails to respond within a defined time, the coordinator sends an abort message to every participant.  It is important to highlight the differences from two phase commit protocol:
-   - The coordinator limits the response time from the participant. We can implement by sending a message with an indicated amount of gas or indicated the number of blocks the coordinator is ready to wait;
+   - The coordinator limits the response time from the participant. We can implement this by sending a message with an indicated amount of gas or indicated number of blocks the coordinator is ready to wait;
    - If the coordinator fails at this state, then the participants are able to abort the transaction (i.e. unlock their state) using delayed messages. So, in that phase, the timeout cases abort. 
 
 **Prepare-to-commit phase:**
