@@ -4,7 +4,7 @@ sidebar_position: 8
 
 # Ensuring reliability in asynс programming
 
-One of the key and distinguished features of the Gear Protocol is the Actor model for message-passing communications. Actor model framework enables asynchronous messaging and parallel computation which drastically increases the achievable speed and allows building more complex dApps in an easier way. The state is not shared between programs, the transactions are handled  through communication. If a program sends an asynchronous message to another program, it needs to wait for the reply from that program before it can proceed to the next operation. 
+One of the keys and distinguished features of the Gear Protocol is the Actor model for message-passing communications. Actor model framework enables asynchronous messaging and parallel computation which drastically increases the achievable speed and allows building more complex dApps in an easier way. The state is not shared between programs, the transactions are handled through communication. If a program sends an asynchronous message to another program, it needs to wait for the reply from that program before it can proceed to the next operation. 
 
 When a program interacts with another one, the transaction becomes `distributed`. `Distributed transaction` is a set of operations that are performed across several databases. In our case, operations are performed across actors with their states. The distributed transactions must possess the following features: 
 - `Atomicity`: All data changes are treated as if they were a single operation. That is, either all of the modifications are made, or none of them are made;
