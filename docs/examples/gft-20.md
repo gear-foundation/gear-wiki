@@ -21,7 +21,7 @@ These smart contracts can then be used to create tokenized assets that represent
 
 These tokenized assets are known as fungible tokens as all instances of a given ERC-20 token are the same and they can be used interchangeably. A token that is unique and can not be interchangeable is known as a Non Fungible Token.
 
-Gear provides native implementaion of fungible token (gFT) described in this article. It explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. Anyone can easily create their own application and run it on the Gear Network. The source code is available on [GitHub](https://github.com/gear-dapps/sharded-fungible-token). 
+Gear provides native implementation of fungible token (gFT) described in this article. It explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. Anyone can easily create their own application and run it on the Gear Network. The source code is available on [GitHub](https://github.com/gear-dapps/sharded-fungible-token). 
 
 The implementation of fungible token includes the following contracts:
 - The `master` fungible token that serves as a proxy program that redirects the message to the logic contract;
@@ -34,7 +34,7 @@ The implementation of fungible token includes the following contracts:
 - `Preventing Duplicate Transaction (Maintaining idempotency)`.
 There are two possible risks when sending a transaction: the risk of sending duplicate transactions and the risk of not knowing the status of the transaction due to a network failure. The sender can be assured that the transaction will only be executed once (`idempotency`).  
 - `Atomicity`.  
-Maintaining idempotency makes it possible to implement different protocols for distributed transactions. For example, Saga Protocol. The standard also includes a lock/execute transfer function that allows to implement `2 Phase Commit protocol` (2 PC). 
+Maintaining idempotency makes it possible to implement different protocols for distributed transactions. For example, Saga Protocol. The standard also includes a lock/execute transfer function that allows the implementation of the `2 Phase Commit protocol` (2 PC). 
 
 ### Storage contract architecture
 The storage contract state has the following fields:
@@ -152,9 +152,9 @@ When the transfer occurs between 2 different storages, the contract acts as foll
 - `Success`: The logic contract set the transaction status to `DecreaseSuccess`;
 - `Failure`: The logic contract set the transaction status to `Failure`;
 - The message execution ran out of gas. The system sends a signal to the logic contract. One of  the solutions is to leave status as it was (`InProgress`) since we cannot know for sure the result of the message execution in the storage contract. It is not necessary to handle that case in the `handle_signal` entrypoint.
-3. If the message has executed successfully, the logic contract sends the message `IncreaseBalane` to another storage contract. It is important to notice that the gas can run out here and the status about successful previous message execution will not be saved. But that state can be saved in `handle_signal`.
-4. If the message `IncreaseBalance` has executed successfully, the logic contract saves the status and replies to the main contract. And again here, the `handle_signal` can be used to save that status, if the gas ran out after successful `IncreaseBalance` exectuion.  
-If the gas ran out during the `IncreaseBalance` exectuion in the storage contract, we save the status `DecreaseSuccess`, so that you can not track this case in the `handle_signal` function.  
+3. If the message has executed successfully, the logic contract sends the message `IncreaseBalance` to another storage contract. It is important to notice that the gas can run out here and the status about successful previous message execution will not be saved. But that state can be saved in `handle_signal`.
+4. If the message `IncreaseBalance` has executed successfully, the logic contract saves the status and replies to the main contract. And again here, the `handle_signal` can be used to save that status, if the gas ran out after successful `IncreaseBalance` execution.  
+If the gas ran out during the `IncreaseBalance` execution in the storage contract, we save the status `DecreaseSuccess`, so that you can not track this case in the `handle_signal` function.  
 The case when the message has been executed with failure must be impossible (It can be possible if let’s say there was a problem with the memory of the contract, however, tracking the filling of the storage contract is also the responsibility of the logic contract). The transaction must be rerunned. However, if the error occurs again and again, then you need to return the balance to the sender.
 ![img alt](./img/transfer.png)
 
@@ -188,6 +188,5 @@ The master contract state has the following fields:
     ```
 
 The contract receives a message from the account with `nonce`. It gets the hash of that transaction: it is the hash of the nonce with the account address.   
-So, it is the user's responsibility to track its nonce and increase it. (But it is possible to implement that contract in such a way that it tracks the user number itself, and the field with nonce can be optional.) 
+So, it is the user's responsibility to track its `nonce` and increase it. (But it is possible to implement that contract in such a way that it tracks the user number itself, and the field with `nonce` can be optional.) 
 The main contract just redirects that message to the logic contract indicating the account that sends a message to it. 
-
