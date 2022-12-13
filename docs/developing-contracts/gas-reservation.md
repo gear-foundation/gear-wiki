@@ -6,7 +6,9 @@ sidebar_position: 7
 
 Gas reservation is the powerful feature of Gear Protocol that enables the new approach to smart-contract programming and modern [use cases](../gear/distinctive-features).
 
-Briefly, a program can send a message using gas that was reserved before instead of using gas from the currently processing message.
+Briefly, a program can send a message using gas that was reserved before instead of using gas from the currently processing message. 
+
+One of the key advantage of this feature is an ability of sending [messages delayed](./delayed-messages.md) in time automatically to any actor in the network - a user or another smart contract as well as to **itself**. In fact, a program is able to execute itself **unlimited** number of blocks (provided that enough gas for execution is kept available). 
 
 A program developer can provide a special function in the program's code which takes some defined amount of gas from the amount available for this program and reserves it. A reservation gets a unique identifier that can be used by a program to get this reserved gas and use it later. 
 To reserve the amount of gas for further usage use the following function:
