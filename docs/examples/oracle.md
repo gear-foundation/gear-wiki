@@ -7,19 +7,16 @@ sidebar_position: 23
 
 ## What is Oracle?
 
-Blockchain oracles are combination of smart contracts and off-chain entities that connect blockchains to external systems(api, etc..), allowing other smart contracts to execute depending on real-world inputs and outputs. Oracles give the Web 3.0 ecosystem a method to connect to existing legacy systems, data sources and advanced calculations.
+Blockchain oracles are a combination of smart contracts and off-chain entities that connect blockchains to external systems(api, etc..), allowing other smart contracts to execute depending on real-world inputs and outputs. Oracles give the Web3 ecosystem a method to connect to existing legacy systems, data sources and advanced calculations.
 
-These smart contracts can then be used to obtain external data which can't exists in blockchain space. In general oracles are used for:
-
-- Fetching aggregated tokens prices in fiat(USD, EUR, etc..)
-
-- Quering Web 2.0 API
-
+These smart contracts can then be used to obtain external data which can't exist in blockchain space. In general oracles are used for:
+- Fetching aggregated tokens prices in fiat (USD, EUR, etc..)
+- Quering Web2 API
 - Obtaining prices for different securities
 
-Moreover, oracles allow the creation of lending / dex protocols, which form an important part of DeFi.
+Moreover, oracles allow the creation of lending / DEX protocols, which form an important part of DeFi.
 
-Gear provides native implementaion of randomness oracle, which provide ability to use random numbers in smart contracts. It can be used as is or modified to suit your own scenarios. Anyone can easily create their own oracle and run it on the Gear Network. The source code is available on [GitHub](https://github.com/gear-dapps/oracle).
+Gear provides an example of the native implementation of randomness oracle, which provides an ability to use random numbers in smart contracts. It can be used as is or modified to suit your own scenarios. Anyone can easily create their own oracle and run it on the Gear Network. The source code is available on [GitHub](https://github.com/gear-dapps/oracle).
 
 ## Storage Structure
 
@@ -80,7 +77,7 @@ pub struct Random {
 ## Oracle functions
 
 ```rust
-    /// `Manager` method for specifing `value` for provided `round`.
+    /// `Manager` method for specifying `value` for provided `round`.
     pub fn set_random_value(&mut self, round: u128, value: &state::Random)
 
     /// Updates current `manager` to `new_manager`.
