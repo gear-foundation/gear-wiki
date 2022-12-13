@@ -7,7 +7,7 @@ sidebar_position: 3
 
 ## What is ERC-20?
 
-ERC-20 is a standard that’s used for creating and issuing smart contracts on the Ethereum blockchain. It was created by Ethereum developers on behalf of the Ethereum community in 2015, and it was officially recognised in 2017.
+ERC-20 is a standard that’s used for creating and issuing smart contracts on the Ethereum blockchain. It was created by Ethereum developers on behalf of the Ethereum community in 2015, and it was officially recognized in 2017.
 
 These smart contracts can then be used to create tokenized assets that represent anything on the Ethereum blockchain like:
 
@@ -25,7 +25,7 @@ Gear provides native implementation of fungible token (gFT) described in this ar
 
 The implementation of fungible token includes the following contracts:
 - The `master` fungible token that serves as a proxy program that redirects the message to the logic contract;
-- The token `logic` contract that includes the realization of main standard token functions.The logic is placed in a separate contract in order to be able to add functions without losing the address of the fungible token and the contract state;
+- The token `logic` contract that includes the realization of main standard token functions. The logic is placed in a separate contract in order to be able to add functions without losing the address of the fungible token and the contract state;
 - The several `storage` contracts that store the balances of the users.
 
 ![img alt](./img/overall_ft_arch.png)
@@ -57,7 +57,7 @@ The storage contract state has the following fields:
 The messages that the storage accepts:
 - `Increase balance`: the storage increases the balance of the indicated account;
 - `Decrease balance`: The storage decreases the balance of the indicated account;
-- `Approve`: The storage allow the account to give another account  an approval to transfer his tokens;
+- `Approve`: The storage allows the account to give another account an approval to transfer his tokens;
 - `Transfer`: Transfer tokens from one account to another. The message is called from the logic contract when the token transfer occurs in one storage.
 - `Clear`: Remove the hash of the executed transaction.
 
@@ -76,24 +76,24 @@ ftoken_id: ActorId
   The `Transaction` is the following struct:
     ```rust
     pub struct Transaction {
-    msg_source: ActorId,
-    operation: Operation,
-    status: TransactionStatus,
+        msg_source: ActorId,
+        operation: Operation,
+        status: TransactionStatus,
     }
     ```
     Where `msg_source` is an account that sends a message to the main contract. `Operation` is the action that the logic contract should process and `status` is the transaction status. It is the following enum:
     ```rust
     pub enum TransactionStatus {
-    InProgress,
-    Success,
-    DecreaseSuccess,
-    Failure,
-    Rerun,
-    Locked,
+        InProgress,
+        Success,
+        DecreaseSuccess,
+        Failure,
+        Rerun,
+        Locked,
     }
     ```
    -  `InProgress` - the transaction execution started;
-   - `Success` or `Failure` - the transaction was completed (successfully or not).  In this case, the logic contract does nothing, but only sends a response that the transaction with this hash has already been completed.
+   - `Success` or `Failure` - the transaction was completed (successfully or not). In this case, the logic contract does nothing, but only sends a response that the transaction with this hash has already been completed.
   - `DecreaseSuccess` - this status is related to a transfer transaction that occurs between accounts located in different storage. It means that the decrease part has successfully been executed and it’s necessary to complete the increase part of transaction;
   - `Locked`- the transaction is executed in 2 messages (2 phase commit protocol), the first message (`Lock`) was executed and the contract expects to receive either `Commit` or `Abort` messages;
 - The code hash of the storage contract. The logic contract is able to create a new storage contract when it is necessary. Now the storage creation is implemented as follows: the logic contract takes the first letter of the account address. If the storage contract for this letter is created, then it stores the balance of this account in this contract. If not, it creates a new storage contract
@@ -108,10 +108,10 @@ ftoken_id: ActorId
 The logic contract receives from the master contract the following message:
 ```rust
 Message {
-       transaction_hash: H256,
-       account: ActorId,
-       payload: Vec<u8>,
-   },
+    transaction_hash: H256,
+    account: ActorId,
+    payload: Vec<u8>,
+},
 ```
 The `account` is an actor who sends the message to the master contract. The payload is the encoded operation the logic contract has to process:
 ```rust
@@ -149,19 +149,19 @@ During the message `Mint`, `Burn` or `Transfer` (not `locking Transfer` for 2PC)
 When the transfer occurs between 2 different storages, the contract acts as follows:
 1. The logic contract sends the `DecreaseBalance `message to the storage contract.
 2. The following cases of the message execution are possible:
-- `Success`: The logic contract set the transaction status to `DecreaseSuccess`;
-- `Failure`: The logic contract set the transaction status to `Failure`;
-- The message execution ran out of gas. The system sends a signal to the logic contract. One of  the solutions is to leave status as it was (`InProgress`) since we cannot know for sure the result of the message execution in the storage contract. It is not necessary to handle that case in the `handle_signal` entrypoint.
-3. If the message has executed successfully, the logic contract sends the message `IncreaseBalance` to another storage contract. It is important to notice that the gas can run out here and the status about successful previous message execution will not be saved. But that state can be saved in `handle_signal`.
-4. If the message `IncreaseBalance` has executed successfully, the logic contract saves the status and replies to the main contract. And again here, the `handle_signal` can be used to save that status, if the gas ran out after successful `IncreaseBalance` execution.
+- `Success`: The logic contract sets the transaction status to `DecreaseSuccess`;
+- `Failure`: The logic contract sets the transaction status to `Failure`;
+- The message execution ran out of gas. The system sends a signal to the logic contract. One of the solutions is to leave status as it was (`InProgress`) since we cannot know for sure the result of the message execution in the storage contract. It is not necessary to handle that case in the `handle_signal` entrypoint.
+3. If the message has been executed successfully, the logic contract sends the message `IncreaseBalance` to another storage contract. It is important to notice that the gas can run out here and the status of the successful previous message execution will not be saved. But that state can be saved in `handle_signal`.
+4. If the message `IncreaseBalance` has been executed successfully, the logic contract saves the status and replies to the main contract. And again here, the `handle_signal` can be used to save that status, if the gas ran out after successful `IncreaseBalance` execution.
 If the gas ran out during the `IncreaseBalance` execution in the storage contract, we save the status `DecreaseSuccess`, so that you can not track this case in the `handle_signal` function.
-The case when the message has been executed with failure must be impossible (It can be possible if let’s say there was a problem with the memory of the contract, however, tracking the filling of the storage contract is also the responsibility of the logic contract). The transaction must be rerunned. However, if the error occurs again and again, then you need to return the balance to the sender.
+The case when the message has been executed with failure must be impossible (It can be possible if let’s say there was a problem with the memory of the contract, however, tracking the filling of the storage contract is also the responsibility of the logic contract). The transaction must be rerun. However, if the error occurs again and again, then you need to return the balance to the sender.
 ![img alt](./img/transfer.png)
 
-When the `transfer` is occurs in two transactions (2 PC):
+When the `transfer` occurs in two transactions (2 PC):
 1. The logic contract sends the message `DecreaseBalance` to the storage contract. If it is successful, it sets the status to `Lock`.
 ![img alt](./img/lock.png)
-2. In the next step, the logic contract must receive either `Сommit` or an `Abort` action. If it receives a `Сommit` message, it just sets the transaction status to `Success`. Otherwise it sends the message `IncreaseBalance` to the storage contract.
+2. In the next step, the logic contract must receive either `Сommit` or an `Abort` action. If it receives a `Сommit` message, it just sets the transaction status to `Success`. Otherwise, it sends the message `IncreaseBalance` to the storage contract.
 ![img alt](./img/commit_abort.png)
 
 ### The master contract architecture
