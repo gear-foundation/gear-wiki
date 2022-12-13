@@ -1,5 +1,6 @@
 ---
-sidebar_position: 8
+sidebar_label: System Signals
+sidebar_position: 9
 ---
 
 # System signals

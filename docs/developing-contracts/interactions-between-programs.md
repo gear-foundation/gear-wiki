@@ -1,5 +1,5 @@
 ---
-sidebar_label: Asynchronous programming
+sidebar_label: Asynchronous Programming
 sidebar_position: 5
 ---
 

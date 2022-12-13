@@ -1,5 +1,5 @@
 ---
-sidebar_label: State functions
+sidebar_label: State Functions
 sidebar_position: 3
 ---
 

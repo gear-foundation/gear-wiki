@@ -1,5 +1,5 @@
 ---
-sidebar_label: Data encoding/decoding
+sidebar_label: Data Encoding/Decoding
 sidebar_position: 4
 ---
 

@@ -1,4 +1,5 @@
 ---
+sidebar_label: Consistency and Reliability
 sidebar_position: 8
 ---
 
@@ -7,10 +8,10 @@ sidebar_position: 8
 One of the keys and distinguished features of the Gear Protocol is the Actor model for message-passing communications. Actor model framework enables asynchronous messaging and parallel computation which drastically increases the achievable speed and allows building more complex dApps in an easier way. The state is not shared between programs, the transactions are handled through communication. If a program sends an asynchronous message to another program, it needs to wait for the reply from that program before it can proceed to the next operation. 
 
 When a program interacts with another one, the transaction becomes `distributed`. `Distributed transaction` is a set of operations that are performed across several databases. In our case, operations are performed across actors with their states. The distributed transactions must possess the following features: 
-- `Atomicity`: All data changes are treated as if they were a single operation. That is, either all of the modifications are made, or none of them are made;
-- `Consistency`: This property implies that when a transaction begins and ends, the state of data is consistent.
+- `Atomicity` - all data changes are treated as if they were a single operation. That is, either all of the modifications are made, or none of them are made;
+- `Consistency` - this property implies that when a transaction begins and ends, the state of data is consistent.
 
-For example, the Ethereum transactions are `atomic`.The global state changes when all executions finish successfully. If execution fails due to an error, all of its effects (changes in state) are rolled back just as if this particular transaction has never been running. 
+For example, the Ethereum transactions are `atomic`. The global state changes when all executions finish successfully. If execution fails due to an error, all of its effects (changes in state) are rolled back just as if this particular transaction has never been running. 
 
 Many applications on the blockchain use atomicity features. So, it is important to understand that if you implement an application following the programming paradigm used, for example, on Ethereum, then there will be the problem of not being able to recover the state after a failed transaction. 
 

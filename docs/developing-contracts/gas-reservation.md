@@ -2,7 +2,7 @@
 sidebar_position: 7
 ---
 
-# Gas reservation
+# Gas Reservation
 
 Gas reservation is the powerful feature of Gear Protocol that enables the new approach to smart-contract programming and modern [use cases](../gear/distinctive-features).
 
