@@ -174,21 +174,21 @@ Gear provides a demo environment that emulates the real Gear decentralized netwo
 
     ![Finalizing account](./img/getting-started/polkadot-add-acc-3.png)
 
-5. Go to [idea.gear-tech.io](https://idea.gear-tech.io). You will be prompted to grant access to your account for Gear Tech application, click "Yes, allow this application access".
+5. Go to **[idea.gear-tech.io](https://idea.gear-tech.io)**. You will be prompted to grant access to your account for Gear Tech application, click "Yes, allow this application access".
 
     ![Allow access](./img/getting-started/polkadot-access.png)
 
-6. Click the `Connect` button on top-right to select an account that will be connected to Gear Tech.
-
-    ![Connect account](./img/getting-started/connect-account.png)
-
-7. Make sure you are connected to the `Gear Staging Testnet V4`. The network name is on the top left corner of the page.
+6. Make sure you are connected to the `Gear Staging Testnet V4`. The network name is on the bottom left corner of the page.
 
     ![Network name](./img/getting-started/idea-network.png)
 
-8. You may switch the network by clicking on the network name.
+7. You may switch the network by clicking on the network name.
 
     ![Switch network](./img/getting-started/switch-network.png)
+
+8.    Click the `Connect` button on top-right to select an account that will be connected to Gear Tech.
+
+    ![Connect account](./img/getting-started/connect-account.png)
 
 9. In accordance with the Actor model, smart contracts are uploaded to a network via messages. Gear node charges a gas fee during message processing. Your account balance needs to have enough funds to upload a smart-contract to the `TestNet`. Click the following button to get test balance:
 
@@ -219,16 +219,15 @@ Gear provides a demo environment that emulates the real Gear decentralized netwo
 The red dot status for a program indicates init failure. Try to upload the program again with increased **Gas limit**.
 :::
 
-4. Once your program is uploaded, head to the `Recently uploaded programs` section and find your program.
+4. Once your program is uploaded, head to the `Programs` section and find your program.
 
     ![Recently uploaded programs](./img/getting-started/recent.png)
 
 ### Send message to a program
 
-1. Now, try sending your newly uploaded program a message to see how it responds! Use this button:
-   ![Send button](./img/getting-started/send-message.png)
+1. Now, try sending your newly uploaded program a message to see how it responds! Click the <kbd>Send message</kbd> button.
 
-2. In the `Payload` field of the opened dialog type `PING`. Click <kbd>Calculate Gas</kbd> button, the Gas limit will be set automatically. Now click the <kbd>Send request</kbd> button.
+2. In the `Payload` field of the opened dialog type `PING`. Click <kbd>Calculate Gas</kbd> button, the Gas limit will be set automatically. Now click the <kbd>Send Message</kbd> button.
 
     ![Send form](./img/getting-started/send-request.png)
 
@@ -238,7 +237,7 @@ The red dot status for a program indicates init failure. Try to upload the progr
 
     ![Log](./img/getting-started/message-log.png)
 
-5. Press `Mailbox` tab at the top of page to enter the mailbox and find the reply.
+5. Press the <kbd>Mailbox</kbd> button to enter the mailbox and find the reply.
 
     ![Mailbox reply](./img/getting-started/mailbox-reply.png)
 
