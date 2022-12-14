@@ -44,10 +44,6 @@ const urlList = [
         "from": "/idea/idea-overview"
     },
     {
-        "to": "/docs/idea/online-ide",
-        "from": "/idea/online-ide"
-    },
-    {
         "to": "/docs/idea/account/create-account",
         "from": "/idea/account/create-account"
     },
