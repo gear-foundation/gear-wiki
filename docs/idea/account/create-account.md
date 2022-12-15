@@ -12,13 +12,13 @@ Account represents an identity - typically a person or an organization, that is 
 There are several ways to create a Substrate account, depending on whether you are using a desktop or a mobile device.
 
 There are two main features that make up an account - an address and a key:
-- An address is the public aspect of the account. This is essentially a location that can be shared with others in order to send transactions to and from. 
-- A key is the private part of the account. This is what enables you as an account owner to access the address. The only way to access your account is via your private key (using the mnemonic phrase, seed, or your account's JSON file and a password). 
+- An address is the public aspect of the account. This is essentially a location that can be shared with others in order to send transactions to and from.
+- A key is the private part of the account. This is what enables you as an account owner to access the address. The only way to access your account is via your private key (using the mnemonic phrase, seed, or your account's JSON file and a password).
 
 ### Storing your accounts
 
 :::tip
-**Seed phrase***
+**Seed phrase**
 
 Your seed or mnemonic phrase is the key to your account. If you lose seed you will lose access to your account. We recommend that you store your seed in secure places like encrypted hard drives, non-digital devices or ideally, paper. Never share your private key with anyone.
 :::
@@ -75,7 +75,7 @@ Congratulations, your wallet has been successfully created!
 
 ### Via Polkadot.js browser extension
 
-The polkadot.js browser extension is the original application created by Parity Technologies for managing Substate accounts. This method involves installing the polkadot.js plugin and using it as a “virtual vault” that’s separate from your browser to store your private keys and sign transactions.
+The polkadot.js browser extension is the original application created by Parity Technologies for managing Substate accounts. This method involves installing the polkadot.js plugin and using it as a "virtual vault" that's separate from your browser to store your private keys and sign transactions.
 
 1. You can install the extension via the following links.
 
@@ -85,23 +85,23 @@ Install on [FireFox](https://addons.mozilla.org/en-US/firefox/addon/polkadot-js-
 
 2. Open the extension by clicking on the logo in the menu bar
 
-3. Click the large plus button to create a new account. Alternatively, you can navigate to the smaller plus icon in the top right and select “Create New Account”.
+3. Click the large plus button to create a new account. Alternatively, you can navigate to the smaller plus icon in the top right and select "Create New Account".
 
 [img alt](./img/create-account-1.png)
 
-4. Save the `seed phrase` in a safe place using the security advices at the beginning of this article. 
+4. Save the `seed phrase` in a safe place using the security advices at the beginning of this article.
 
 ![img alt](./img/create-account-2.png)
 
- 5. Specify the name of your account and a strong password for making transactions. Click “Add the account with the generated seed”.
+ 5. Specify the name of your account and a strong password for making transactions. Click "Add the account with the generated seed".
 
 ![img alt](./img/create-account-3.png)
 
 :::note
-The password that you choose here will be used to encrypt this account’s information. You will need to re-enter it when attempting to process any kind of outgoing transaction, or when using it to cryptographically sign a message. This password is stored locally on the browser extension.
+The password that you choose here will be used to encrypt this account's information. You will need to re-enter it when attempting to process any kind of outgoing transaction, or when using it to cryptographically sign a message. This password is stored locally on the browser extension.
 :::
 
-You’ve now successfully created a new account using the polkadot.js browser extension.
+You've now successfully created a new account using the polkadot.js browser extension.
 
 ### Via mobile app
 
@@ -127,12 +127,12 @@ And then `import` the generated seed phrase into any convenient wallet.
 
 #### Is this account portable?
 
-> Yes, you can access your account on a different device or wallet of your choice as long as you have the account’s seed
+> Yes, you can access your account on a different device or wallet of your choice as long as you have the account's seed
 > phrase or JSON file associated with the account.
 
 #### Can I transact directly in the polkadot.js browser extension?
 
-> There isn’t functionality to make transactions directly in the polkadot.js browser extension. 
+> There isn't functionality to make transactions directly in the polkadot.js browser extension.
 > To make transactions, you need to launch [Gear Idea](https://idea.gear-tech.io) on your browser.
 > Before you can make any transactions, you have to allow Gear Idea to access your account.
 > The browser extension is what holds your account information. You choose which websites get to access this information.
