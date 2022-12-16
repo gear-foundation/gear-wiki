@@ -11,7 +11,7 @@ Decentralized exchanges, on the other hand, are simply a set of smart contracts.
 While transactions on a centralized exchange are recorded on that exchange’s internal database, DEX transactions are settled directly on the blockchain.
 DEXs are usually built on open-source code, meaning that anyone interested can see exactly how they work. That also means that developers can adapt existing code to create new competing projects — which is how Uniswap’s code has been adapted by an entire host of DEXs with “swap” in their names like Sushiswap and Pancakeswap.
 
-The exchange uses [Gear fungible tokens (GFT-20)](/examples/gft-20) underneath for the tokens and [Gear-lib FT wrapper](https://github.com/gear-dapps/gear-lib/tree/master/src/fungible_token) for the pair to keep track of the liquidity.
+The exchange uses [Gear fungible tokens (GFT-20)](/docs/examples/gft-20) underneath for the tokens and [Gear-lib FT wrapper](https://github.com/gear-dapps/gear-lib/tree/master/lib/src/fungible_token) for the pair to keep track of the liquidity.
 
 ### Math
 As it was said all the prices are algorithmically calculated. Investors provide funds to the liquidity pools and price is calculated according to the amount of tokens in the reserves using the following formula: <br/><br/>
@@ -500,4 +500,4 @@ The source code of this example of DEX pair smart contract and the example of an
 
 See also an example of the smart contract testing implementation based on `gtest`: [gear-dapps/dex/tree/master/pair/tests](https://github.com/gear-dapps/dex/tree/master/pair/tests).
 
-For more details about testing smart contracts written on Gear, refer to the [Program Testing](/developing-contracts/testing) article.
+For more details about testing smart contracts written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.
