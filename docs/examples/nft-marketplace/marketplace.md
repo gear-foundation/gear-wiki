@@ -11,13 +11,14 @@ NFT marketplace is a contract where you can buy and sell non-fungible tokens for
 
 A smart contract examples created by Gear are available on GitHub so anyone can easily create their own NFT marketplace application and run it on the Gear Network:
 - [Gear Non-Fungible Token](https://github.com/gear-dapps/non-fungible-token/tree/master/nft). 
-- [NFT marketplace](https://github.com/gear-dapps/non-fungible-token/tree/master/nft-marketplace).
+- [NFT marketplace](https://github.com/gear-dapps/nft-marketplace).
 
 This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios.
 
-Gear also [provides](https://github.com/gear-tech/gear-js/tree/master/apps/marketplace) an example implementation of the [NFT Marketplace's](https://marketplace.gear-tech.io/) user interface to demonstrate its interaction with smart contracts in the Gear Network.
+Gear also [provides](https://github.com/gear-tech/gear-js/tree/master/apps/marketplace) an example implementation of the NFT Marketplace's user interface to demonstrate its interaction with smart contracts in the Gear Network.
 
- You can watch a video on how to get the NFT Marketplace application up and running and its capabilities here: **https://youtu.be/4suveOT3O-Y**.
+<!-- You can watch a video on how to get the NFT Marketplace application up and running and its capabilities here: **https://youtu.be/4suveOT3O-Y**.
+-->
 
 ## Logic
 The contract state:
@@ -274,11 +275,12 @@ Withdraw {
 
 ## User interface
 
-A [Ready-to-Use application](https://marketplace.gear-tech.io/) example provides a user interface that interacts with [gNFT](https://github.com/gear-dapps/non-fungible-token/tree/master/nft) and [Marketplace](https://github.com/gear-dapps/non-fungible-token/tree/master/nft-marketplace) smart contracts running in Gear Network.
-- Gear Non-Fundible Token contract enables creation of NFT tokens, proves an ownership of a digital assets, check [this article](https://wiki.gear-tech.io/examples/gnft-721) for details.
+A Ready-to-Use application example provides a user interface that interacts with [gNFT](https://github.com/gear-dapps/non-fungible-token/tree/master/nft) and [Marketplace](https://github.com/gear-dapps/nft-marketplace) smart contracts running in Gear Network.
+- Gear Non-Fundible Token contract enables creation of NFT tokens, proves an ownership of a digital assets, check [this article](../gnft-721.md) for details.
 - NFT Marketplace contract enables to buy and sell non-fungible tokens for fungible tokens, hold the NFT auctions and make/accept purchase offers on NFTs.
 
-This video demonstrates how to configure and run Markeplace application on your own and explains the user interaction workflow: **https://youtu.be/4suveOT3O-Y**
+<!-- This video demonstrates how to configure and run Markeplace application on your own and explains the user interaction workflow: **https://youtu.be/4suveOT3O-Y** 
+-->
 
 ![img alt](./../img/nft-marketplace.png)
 
@@ -304,11 +306,9 @@ REACT_APP_MARKETPLACE_CONTRACT_ADDRESS
 
 ### Simple NFT
 
-Another example of an interface that demonstrates how to work with a smart contract can be found at the link: https://nft.gear-tech.io.
+Another example of an interface that demonstrates how to work with a smart contract is a Simple NFT application example that is available on [GitHub](https://github.com/gear-tech/gear-js/tree/master/apps/nft).
 
-It implements the ability to mint NFTs, view all NFTs minted by any account in the contract, as well as view NFTs that someone has approved to the current account (`AprovedToMe`) with the possibility of further transfer to another account (this option is not available in the [NFT Marketplace](https://marketplace.gear-tech.io/) application).
-
-A Simple NFT application example is available on [GitHub](https://github.com/gear-tech/gear-js/tree/master/apps/nft).
+It implements the ability to mint NFTs, view all NFTs minted by any account in the contract, as well as view NFTs that someone has approved to the current account (`AprovedToMe`) with the possibility of further transfer to another account (this option is not available in the full NFT Marketplace application).
 
 ### How to run
 
@@ -325,7 +325,7 @@ Open http://localhost:3000 to view it in the browser.
 
 ## Source code
 
-The source code of this example of NFT marketplace smart contract and the example of an implementation of its testing is available on [Gear-dapps](https://github.com/gear-dapps/non-fungible-token/tree/master/nft-marketplace).
+The source code of this example of NFT marketplace smart contract and the example of an implementation of its testing is available on [Gear-dapps](https://github.com/gear-dapps/nft-marketplace).
 
 The Gear JS application code is available in [Gear-tech/gear-js](https://github.com/gear-tech/gear-js/tree/master/apps/marketplace).
 

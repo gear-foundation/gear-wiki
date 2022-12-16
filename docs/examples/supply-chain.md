@@ -6,13 +6,9 @@ sidebar_position: 12
 
 ## Introduction
 
-:::note
-
-This article explains at a superficial level the purpose and logic of this smart contract. For a more detailed technical description, see its [documentation on the dapps documentation portal](https://dapps.gear.rs/supply_chain) and [source code](#source-code).
-
-:::
-
 In logistics, a supply chain is a system for tracking and delivering to an end consumer various items. As a rule, such systems can't work without a lot of paperwork and other layers of bureaucracy. All of this costs a lot of time and money and increases the likelihood of an accidental error or, worst of all, a fraud. With the help of smart contract and blockchain technologies, it is possible to eliminate these problems by making a supply chain more efficient, reliable and transparent.
+
+The source code of the Supply Chain smart conrtact example is avaialble on [GitHub](https://github.com/gear-dapps/supply-chain).
 
 ## Logic
 
