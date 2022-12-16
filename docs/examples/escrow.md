@@ -8,9 +8,7 @@ sidebar_position: 9
 
 An escrow is a special wallet to which some assets (e.g. money or stocks) are deposited and stored until certain conditions are met. In terms of smart contracts, an escrow is a wallet that is stored on a blockchain and, like a regular escrow, can receive some assets (e.g. a cryptocurrency or fungible tokens (like [Gear fungible tokens - gFT](gft-20.md) in this example)) from one user and, when certain conditions are met, send them to another.
 
-This article explains at a superficial level the purpose and logic of this smart contract. For a more detailed technical description, see its [documentation on the dapps documentation portal](https://dapps.gear.rs/escrow_io) and [source code](#source-code).
-
-You can watch a video on how to get the Escrow application up and running and its capabilities here: **https://youtu.be/CD8j4epEY4E**.
+This article explains at a superficial level the purpose and logic of this smart contract. The source code of the smart contract example is available on [GitHub](https://github.com/gear-dapps/escrow).
 
 ## Logic
 
@@ -166,7 +164,7 @@ pub enum EscrowState {
 
 ## User interface
 
-A [Ready-to-Use application](https://escrow.gear-tech.io/) example provides a user interface that interacts with [Escrow](https://github.com/gear-dapps/escrow) smart contract running in Gear Network.
+A Ready-to-Use application example provides a user interface that interacts with Escrow smart contract running in Gear Network.
 
 This video demonstrates how to configure and run Escrow application on your own and explains the user interaction workflow: **https://youtu.be/CD8j4epEY4E**
 
@@ -194,6 +192,6 @@ In case of issues with the application, try to switch to another network or run 
 
 ## Source code
 
-The source code of this example of an escrow smart contract and an implementation of its testing is available on [GitHub](https://github.com/gear-dapps/escrow). They can be used as is or modified to suit your own scenarios.
+The source code of the Escrow smart contract example as well as its testing implementation is available on [GitHub](https://github.com/gear-dapps/escrow). They can be used as is or modified to suit your own scenarios.
 
 For more details about testing smart contracts written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.

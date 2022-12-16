@@ -28,7 +28,7 @@ If you want to check out the code available for both the router and the channel 
 
 # The Gear Feeds website
 
-You can use this [link](https://workshop.gear-tech.io) to get to the Gear Feeds website.
+The Demo Gear Feeds application is avaialble at **[https://workshop.gear-tech.io](https://workshop.gear-tech.io)**.
 
 First, log in using your [Polkadot.js extension wallet](https://polkadot.js.org/extension/).
 
@@ -48,5 +48,7 @@ When viewing your own channel, you can add posts to it (you will have to conduct
 
 # Conclusion
 Gear Feeds is an example of a full-fledged application with core logic being in a decentralized application implemented via Smart Contracts on Gear. We hope to see more exciting projects inspired by Gear feeds and recent platform improvements created by our community members! :)
+
+The source code for both Channel and Routar is available on [GitHub](https://github.com/gear-dapps/feeds).
 
 For more details about testing smart contracts written on Gear, refer to this article: [Program Testing](/docs/developing-contracts/testing).
