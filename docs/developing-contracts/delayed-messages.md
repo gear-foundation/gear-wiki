@@ -5,11 +5,11 @@ sidebar_position: 8
 
 # Delayed messages for smart contracts automation
 
-To continue functioning, usual smart contracts on other blockchains require the help of external and centralized resources. They cannot auto-execute themselves. That means that their code will not run and make state changes on blockchain until triggered by an on-chain transaction.
+The usual way that smart contracts on other blockchains continue to function is by relying on external, centralized resources. This means that the code of these contracts will not run and make changes to the blockchain's state until it is triggered by an on-chain transaction.
 
-The external transaction serves as a “poke” to wake the smart contract up and initiate its logic. For example, we can start the auction by sending a message to the auction contract. When the auction time has passed, it is necessary to process the result of the auction. However, the result will not be processed until someone sends an appropriate message to the contract.
+The external transaction serves as a "poke" to activate the smart contract and initiate its logic. For instance, we can start an auction by sending a message to the auction contract. When the auction time has passed, the contract will need to process the result of the auction. However, this will not happen until someone sends the appropriate message to the contract to trigger this action.
 
-Gear Protocol solves this via introducing delayed messaging functionality. The smart contracts in Gear Networks are able to execute themself **unlimited** number of blocks (provided that enough gas for execution is kept available). The [gas reservation](./gas-reservation.md) option allows you to ensure this. So the need of having centralized components for dApps eliminates, making them functioning **totally on-chain**.
+Gear Protocol solves this issue by introducing delayed messaging functionality. The smart contracts in Gear Networks are able to execute themselves an **unlimited** number of blocks, as long as enough gas for execution is kept available. The [gas reservation](./gas-reservation.md) option allows you to ensure this. As a result the need for including centralized components in dApps is eliminated, allowing them to function **totally on-chain**.
 
 ```rust
 msg::send_delayed(program, payload, value, delay)

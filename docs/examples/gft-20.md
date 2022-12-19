@@ -75,7 +75,7 @@ The state of the logic contract consist of the following fields:
 ```rust
 ftoken_id: ActorId
 ```
-- The transactions. As in the storage contract, the logic contract receives the hash of the transaction that is being executed and stores the result of its execution. But unlike the storage contract, where message executions are atomic, the logic contract has to keep track of which message is being executed and at what stage it is.
+- The transactions. As in the storage contract, the logic contract receives the hash of the transaction that is being executed and stores the result of its execution. But unlike the storage contract, where message executions are atomic, the logic contract has to keep track of which message is being executed and what stage it is at.
 
   ```rust
   transactions: HashMap<H256, Transaction>
@@ -103,7 +103,7 @@ ftoken_id: ActorId
     ```
    -  `InProgress` - the transaction execution started;
    - `Success` or `Failure` - the transaction was completed (successfully or not). In this case, the logic contract does nothing, but only sends a response that the transaction with this hash has already been completed.
-  - `DecreaseSuccess` - this status is related to a transfer transaction that occurs between accounts located in different storage. It means that the decrease part has successfully been executed and it’s necessary to complete the increase part of transaction;
+  - `DecreaseSuccess` - this status is related to a transfer transaction that occurs between accounts located in different storage. It means that the decrease part has successfully been executed and it’s now necessary to complete the increase part of the transaction;
   - `Locked`- the transaction is executed in 2 messages (2 phase commit protocol), the first message (`Lock`) was executed and the contract expects to receive either `Commit` or `Abort` messages;
 - The code hash of the storage contract. The logic contract is able to create a new storage contract when it is necessary. Now the storage creation is implemented as follows: the logic contract takes the first letter of the account address. If the storage contract for this letter is created, then it stores the balance of this account in this contract. If not, it creates a new storage contract
 
