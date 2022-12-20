@@ -1,5 +1,5 @@
 ---
-sidebar_label: Create program
+sidebar_label: Create Program
 sidebar_position: 6
 ---
 

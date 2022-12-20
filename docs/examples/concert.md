@@ -99,8 +99,8 @@ pub enum ConcertAction {
 ```
 
 ## Conclusion
-A source code of the contract example provided by Gear is available on GitHub: [`concert/src/lib.rs`](https://github.com/gear-dapps/concert/blob/master/src/lib.rs).
+A source code of the contract example provided by Gear is available on GitHub: [`concert/src`](https://github.com/gear-dapps/concert/tree/master/src).
 
-See also an example of the smart contract testing implementation based on gtest: [`concert/tests/concert_tests.rs`](https://github.com/gear-dapps/concert/blob/master/tests/concert_tests.rs).
+See also an example of the smart contract testing implementation based on [gtest](https://github.com/gear-dapps/concert/tree/master/tests).
 
 For more details about testing smart contracts written on Gear, refer to this article: [Program Testing](/docs/developing-contracts/testing).

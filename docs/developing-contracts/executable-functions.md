@@ -1,5 +1,5 @@
 ---
-sidebar_label: Executable functions
+sidebar_label: Executable Functions
 sidebar_position: 1
 ---
 
@@ -11,7 +11,7 @@ The program is the main unit of the Gear Protocol. Each program in the Gear netw
 
 Any program can contain up to 3 entry points that perform various functions in the program lifecycle: `init()`, `handle()`, `handle_reply()`. All of them are optional, but any program required to have at least one fn: `init()` or `handle()`.
 
-Another special system entry point introduced by the Gear Protocol is `handle_signal()`. It allows the system to communicate with programs if it is necessary to notify (signal) that some event related to the program's messages has happened.
+Another special system entry point introduced by the Gear Protocol is `handle_signal()`. It allows the system to communicate with programs if it is necessary to notify (signal) that some event related to the program's messages has happened. For more details and examples, check the article about [System signals](./system-signals.md).
 
 ### init()
 

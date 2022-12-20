@@ -1,6 +1,6 @@
 ---
 sidebar_label: Upload Program
-sidebar_position: 9
+sidebar_position: 10
 ---
 
 # Upload smart contracts
@@ -28,7 +28,7 @@ There are several ways to upload a program:
 
 ### Upload via Gear GUI
 
-The easiest way to upload the program is to use the “Upload program” option in the official website [idea.gear-tech.io](https://idea.gear-tech.io).
+The easiest way to upload the program is to use the “Upload program” option in the Gear Idea portal - **[idea.gear-tech.io](https://idea.gear-tech.io)**.
 
 ![img alt](./img/idea-upload.png)
 

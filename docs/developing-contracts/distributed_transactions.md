@@ -1,39 +1,37 @@
 ---
+sidebar_label: Consistency and Reliability
 sidebar_position: 8
 ---
 
 # Ensuring reliability in asynс programming
 
-One of the keys and distinguished features of the Gear Protocol is the Actor model for message-passing communications. Actor model framework enables asynchronous messaging and parallel computation which drastically increases the achievable speed and allows building more complex dApps in an easier way. The state is not shared between programs, the transactions are handled through communication. If a program sends an asynchronous message to another program, it needs to wait for the reply from that program before it can proceed to the next operation. 
+One of the key features of the Gear Protocol is its use of the Actor model for message-passing communication. The Actor model framework enables asynchronous messaging and parallel computation, which  drastically improves the achievable speed and scalability of dApps. In the Actor model, programs do not share state and instead communicate with each other through messages. If a program sends an asynchronous message to another program, it has to wait for a reply from the other program before it can proceed with the next operation.
 
-When a program interacts with another one, the transaction becomes `distributed`. `Distributed transaction` is a set of operations that are performed across several databases. In our case, operations are performed across actors with their states. The distributed transactions must possess the following features: 
-- `Atomicity`: All data changes are treated as if they were a single operation. That is, either all of the modifications are made, or none of them are made;
-- `Consistency`: This property implies that when a transaction begins and ends, the state of data is consistent.
+When a program interacts with another program, the transaction becomes "distributed." A distributed transaction is a set of operations performed across multiple databases or, in the case of the Gear Protocol, across multiple actors with their own states. Distributed transactions must possess these properties:
+- Atomicity - all data changes are treated as if they were a single operation. That is, either all of the modifications are made, or none of them are made;
+- Consistency - this property implies that when a transaction begins and ends, the state of data is consistent.
 
-For example, the Ethereum transactions are `atomic`.The global state changes when all executions finish successfully. If execution fails due to an error, all of its effects (changes in state) are rolled back just as if this particular transaction has never been running. 
+For example, transactions on the Ethereum blockchain are atomic, meaning that if a transaction fails due to an error, all of its effects on the global state are rolled back as if the transaction never occurred. Many blockchain applications rely on the atomicity of transactions, but this can be a problem when building asynchronous applications using the programming paradigm used on Ethereum, as you may encounter the problem of not being able to recover program state after a failed transaction. 
 
-Many applications on the blockchain use atomicity features. So, it is important to understand that if you implement an application following the programming paradigm used, for example, on Ethereum, then there will be the problem of not being able to recover the state after a failed transaction. 
+Consider a simple token exchange where a user wants to swap tokens A for tokens B in a liquidity pool. The swap contract would send a message to the token A contract and a message to the token B contract. If one of these messages succeeds and the other fails for some reason, the state of the token A contract would be changed while the state of the token B contract would remain unchanged. This can cause inconsistencies in the state of the data and make it difficult to recover from failed transactions. As a result, it is important to consider different programming paradigms for implementing distributed transactions.
 
-For example, consider the simple exchange, where a user wants to swap tokens A for tokens B in the liquidity pool. The swap contract will send a message to the token A contract and a message to the token B contract. If one message succeeds and the other one fails for some reason, then the state of the token A contract will be changed and the state of the token B contract will remain unchanged.
-
-So, we have to think about another programming paradigm for distributed transactions.
-let's look at different programming methods using the example of a token exchange.
+Let's look at different programming methods using the example of a token exchange.
 
 ## Splitting a token swap transaction into 3 separate transactions
 
 Consider the following situation: we have a liquidity pool of token A and token B, and also a user who wants to exchange his tokens A for tokens B.
 
-`1 step` : A user sends a `MakeOrder` message to the swap contract. During that transaction the contract sends a message to the fungible token contract. The result of executing this message can be a success, a failure. Also, the worst case is the lack of gas when processing a message in the token contract or in the subsequent execution of the swap contract. However, since the token contract supports idempotency, the user can simply restart the transaction and complete it.
+`Step 1` : A user sends a `MakeOrder` message to the swap contract. During that transaction the contract sends a message to the fungible token contract. The result of executing this message can be a success or a failure. The worst case scenario is having a lack of gas when processing a message in the token contract or in the subsequent execution of the swap contract. However, since the token contract supports idempotency, the user can simply restart the transaction and complete it.
 
 ![img alt](./img/1.step1.png#gh-light-mode-only)
 ![img alt](./img/1.step1-dark.png#gh-dark-mode-only)
 
-`2 step`:  A user sends an `ExecuteOrder` message to the swap contract. The swap contract just calculates the amount of tokens a user will receive and saves the new state of the liquidity poll.
+`Step 2`:  A user sends an `ExecuteOrder` message to the swap contract. The swap contract just calculates the amount of tokens a user will receive and saves the new state of the liquidity poll.
 
 ![img alt](./img/1.step2.png#gh-light-mode-only)
 ![img alt](./img/1.step2-dark.png#gh-dark-mode-only)
 
-`3 step`:  A user sends a `Withdraw` message to the swap contract and receives tokens B. The situation here is the same as in the first step.
+`Step 3`:  A user sends a `Withdraw` message to the swap contract and receives tokens B. The situation here is the same as in the first step.
 
 ![img alt](./img/1.step3.png#gh-light-mode-only)
 ![img alt](./img/1.step3-dark.png#gh-dark-mode-only)
@@ -57,6 +55,7 @@ Every participant notifies the coordinator whether it can commit to its transact
 The coordinator, based on the response from each participant, decides whether to commit or roll back the transaction. It decides to commit only if all participants indicate that they can commit to their transaction branches. If any participant indicates that it is not ready to commit to its transaction branch (or if it does not respond), the coordinator decides to end the global transaction.
 
 **Commit phase:**
+
 During the commit phase, the coordinator and participants perform the following dialog:
 - `Coordinator`:  
 The coordinator writes the commit record or rollback record to the coordinator's logical log and then directs each participant to either commit or roll back the transaction.
@@ -87,7 +86,7 @@ receives tokens B. The situation here is the same as in the first step.
 **Commit phase**
 
 - `Swap contract`:  
-If token contracts have confirmed their readiness to execute the transaction, the swap contract sends them a message to commit the state. Otherwise, the swap contract tells them to abort the transaction.
+If token contracts confirm their readiness to execute the transaction, the swap contract sends them a message to commit the state. Otherwise, the swap contract tells them to abort the transaction.
 - `Token contract`:
 Token contracts finally change their state and send replies to the swap contract;
 - `Swap contracts:
@@ -110,14 +109,14 @@ Of course, all that workflow handles the case when the gas runs out during the m
 
 **Theory**: It is similar to two-phase commit protocol but it tries to solve the problems with blocking the state of participants and to give the participants the opportunity to recover their states themselves.
 
-**Preparation phase:**
+**Prepare phase:**
 The same steps of two phase commit protocol are followed here:
 - `Coordinator`:  
 The coordinator sends a prepare message to all participants and waits for replies;
 - `Participants`:  
 If the participants are ready to commit a transaction they send the ready message, otherwise they send no message to the coordinator. 
 - `Coordinator`:  
-Based on replies the coordinator decides either to go to the next state or not. If any of the participants respond with no message or if any of the participants fails to respond within a defined time, the coordinator sends an abort message to every participant. It is important to highlight the differences from two phase commit protocol:
+Based on replies the coordinator decides either to go to the next state or not. If any of the participants respond with no message or if any of the participants fails to respond within a defined time, the coordinator sends an abort message to every participant.  It is important to highlight the differences from two phase commit protocol:
    - The coordinator limits the response time from the participant. We can implement this by sending a message with an indicated amount of gas or indicated number of blocks the coordinator is ready to wait;
    - If the coordinator fails at this state, then the participants are able to abort the transaction (i.e. unlock their state) using delayed messages. So, in that phase, the timeout cases abort. 
 
@@ -125,7 +124,7 @@ Based on replies the coordinator decides either to go to the next state or not. 
 - `Coordinator`:  
 The coordinator sends a prepare-to-commit message to all participants and gets acknowledgements from everyone;
 - `Participants`:  
-Receiving a prepare-to-commit message, a participant knows that the unanimous decision was to commit. As was already mentioned in the preparation phase, if a participant fails to receive this message in time, then it aborts. However, if a participant receives an abort message then it can immediately abort the transaction. 
+Receiving a prepare-to-commit message, a participant knows that the unanimous decision was to commit. As was already mentioned in the prepare phase, if a participant fails to receive this message in time, then it aborts. However, if a participant receives an abort message then it can immediately abort the transaction. 
 The possible problem: the coordinator fails during sending a prepare-to-commit to participants. So some participants are in phase 2, others are in phase 1. It's a disaster because the first group will commit, the second group will abort in case of timeout.
 So we have to make sure that If one of the participants has received a precommit message, they can all commit. If the coordinator falls, any of the participants, being at the second stage, can become the coordinator itself and continue the transaction. 
 - `Coordinator`:  

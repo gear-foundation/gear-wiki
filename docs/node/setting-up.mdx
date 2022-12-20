@@ -16,6 +16,7 @@ This guide covers the steps required to install and run the Gear node.
 There are two ways to get started with the Gear node. First, you can download a pre-built binary file and run it, or second, you can compile the binary file and configure it by yourself. Using a ready-made build is a quick and convenient way to get started as you can skip the installation of Rust and all its dependencies and you can also skip the node compiling process. On the other hand, if you decide that you want to go through the process of creating your development node, it may take about twenty minutes or more depending on your hardware.
 
 :::info
+
 ### System requirements:
 
 Gear node doesn't have any special hardware requirements excepting at least 64 Gbytes of free space on the SSD disk.
@@ -132,7 +133,7 @@ For example, on Ubuntu use:
 sudo apt install -y clang build-essential binaryen cmake protobuf-compiler
 ```
 
-On macOS, you can get a compiler toolset and `binaryen`  by running:
+On macOS, you can get a compiler toolset and `binaryen` by running:
 
 ```bash
 xcode-select --install
@@ -161,6 +162,10 @@ rustup target add wasm32-unknown-unknown --toolchain nightly
 ```bash
 git clone https://github.com/gear-tech/gear.git
 cd gear
+git checkout stable
+
+## Optional
+## If you need to use the latest or experimental Gear functions, you should compile `gear-node` from `master` branch
 ```
 
 ### Compile

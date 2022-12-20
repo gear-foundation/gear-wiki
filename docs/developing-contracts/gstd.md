@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-# Gear library
+# Gear Library
 
 The Gear Protocol’s library `gstd` provides all the necessary and sufficient functions and methods for developing smart-contracts.
 

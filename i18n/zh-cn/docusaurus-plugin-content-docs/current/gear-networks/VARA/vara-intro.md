@@ -4,15 +4,14 @@ sidebar_position: 1
 sidebar_label: 关于 Vara 网络
 ---
 
-**Vara Network** can be considered mostly as a test-bed for optimizations and experiments. It will have the utility of a single-chain, high-performance, lowest latency network. Once it is live, it will live forever and will never lose any user data. It will have very little governance. Gaming, payments and experimental use cases will likely be best suited for Vara.
+Vara 网络可以作为优化和实验的试验平台。它将具有单链、高性能、很低延迟的网络效应。一旦 Vara 上线，它将一直存在，并且永远不会丢失任何用户数据。Vara 将会有非常少的治理。游戏、支付和实验性用例可能最适合 Vara。
 
-The main features of Vara network are:
+Vara 网络的主要特点有：
+- 有史以来最快的去中心化 L1
+- 新功能和优化的测试平台
+- 基于 Substrate，网络稳定，可升级
+- 非常少的治理
 
-- Fastest truly decentralized L1 ever
-- Testbed for new features and optimizations
-- Stable and upgradable network thanks to Substrate
-- Little to no governance
+许多下一代应用程序，如游戏和支付，都需要低延迟执行。Vara 独立网络将为这些应用提供最快的入口，并将解锁新的潜在应用。
 
-Many next-generation apps, like gaming and payments, require low latency execution. The Vara standalone network will provide the fastest on-ramp for these applications and will unlock new potential applications.
-
-```More details - TBD```
+更多信息在逐步更新中。

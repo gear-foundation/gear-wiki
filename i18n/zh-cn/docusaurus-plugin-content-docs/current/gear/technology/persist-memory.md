@@ -4,17 +4,17 @@ sidebar_label: 持久化内存
 sidebar_position: 4
 ---
 
-Another distinguished feature of Gear Protocol is Persistent memory approach. It is what makes development easier, removes a lot of complexity and make protocol memory management match real-life hardware and operating systems.
+Gear Protocol 的另一个突出特点是持久性内存方法。它使开发更容易，消除了很多复杂性，并使协议内存管理与实际硬件和操作系统相匹配。
 
-Programs running in Gear Networks don’t use storage but rather their full state is persisted which ensures much less API surface for blockchain context. It avoids domain-specific language features as well as allows to use much more complex language constructs — persisted boxed closures, futures compositors, etc.
+在 Gear 网络中运行的程序不使用存储，而是将全部状态持久化，这确保了区块链上下文的 API 面要小得多。它避免了特定领域的语言特征，也允许使用更复杂的语言结构--持久化的闭包、合成器等。
 
-Gear Protocol uses clever memory virtualization techniques (despite vanilla Wasm does not), memory allocation and deallocation are first-class syscalls of the protocol. Memory access is also tracked and only required pages are loaded/stored. That allows heap-allocated stack frames of smart contracts stored in the blockchain’s state (typically found in futures and their compositors) to be seamlessly persisted and invoked when needed, preserving their state upon request.
+Gear Protocol 使用了巧妙的内存虚拟化技术 (尽管普通的 Wasm 没有)，内存分配和回收是该协议的第一等系统调用，还会跟踪内存访问，只加载/存储所需的内存页。这使得存储在区块链状态中的智能合约的堆栈框架（通常在期货及其合成器中发现）能够被无缝持久化，并在需要时被调用，在请求时保留其状态。
 
-Program code is stored as an immutable Wasm blob. Each program has a fixed amount of memory which persists between message-handling (so-called static area).
+程序代码存储为一个不可变的 Wasm blob。每个程序都有固定数量的内存，在消息处理之间存在 (所谓的静态区域)。
 
-Gear instance holds individual memory space per program and guarantees it's persistence. A program can read and write only within its own memory space and has no access to the memory space of other programs. Individual memory space is reserved for a program during its initialization and does not require an additional fee (it is included in the program's initialization fee).
+Gear 实例持有每个程序的单独内存空间，并保证持久性。一个程序只能在它自己的内存空间内进行读写，不能访问其他程序的内存空间。单独的内存空间在程序初始化期间为其保留，不需要额外的费用（它包含在程序的初始化的费用中）。
 
-A program can allocate the required amount of memory in blocks of 64KB. Each memory block allocation requires a gas fee. Each page (64KB) is stored separately on the distributed database backend, but at the run time, Gear node constructs continuous runtime memory and allows programs to run on it without reloads.
+程序可以按 64KB 的块分配所需的内存量。每个内存块分配都需要 gas 费。每个页面 (64KB) 单独存储在分布式数据库后端，但在运行时，Gear 节点构造连续运行时内存，并允许程序在其上运行而无需重新加载。
 
 # 内存并行
 

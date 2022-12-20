@@ -13,7 +13,7 @@ When the owner of a given token ID wishes to transfer it to another user, it is 
 
 But there is another approach introduced here. Sometimes you can store NFTs directly on chain without any external storage. This approach helps you not to lose your NFT if there is a problem with the external storage.
 
-This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. The source code is available on [GitHub](https://github.com/gear-dapps/non-fungible-token/tree/master/on-chain-nft).
+This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. The source code is available on [GitHub](https://github.com/gear-dapps/on-chain-nft).
 
 ## Approach
 To successfully implement this approach several things are needed. Firstly, when initializing a collection, one should provide all the possible images of all the layers for a collection. Secondly, when minting alongside with a small metadata, one should provide a combination of layers used for a specific NFT. This approach seems quite costly when initializing, but is relatively cheap when it comes to minting.
@@ -247,10 +247,10 @@ extern "C" fn meta_state() -> *mut [i32; 2] {
 
 ## Conclusion
 
-Gear provides a reusable [library](https://github.com/gear-dapps/non-fungible-token/tree/master/nft/src) with core functionality for the gNFT protocol. By using object composition, that library can be utilized within a custom NFT contract implementation in order to minimize duplication of community available code.
+Gear provides a reusable [library](https://github.com/gear-dapps/gear-lib/tree/master/lib/src/non_fungible_token) with core functionality for the gNFT protocol. By using object composition, that library can be utilized within a custom NFT contract implementation in order to minimize duplication of community available code.
 
-A source code of the on-chain NFT provided by Gear is available on GitHub: [on-chain-nft/src](https://github.com/gear-dapps/non-fungible-token/tree/master/on-chain-nft/src).
+A source code of the on-chain NFT provided by Gear is available on GitHub: [on-chain-nft/src](https://github.com/gear-dapps/on-chain-nft).
 
-See also an example of the smart contract testing implementation based on `gtest`: [on-chain-nft/tests](https://github.com/gear-dapps/non-fungible-token/tree/master/on-chain-nft/tests).
+See also an example of the smart contract testing implementation based on `gtest`: [on-chain-nft/tests](https://github.com/gear-dapps/on-chain-nft/tree/master/tests).
 
 For more details about testing smart contracts written on Gear, refer to this article: [Program Testing](/docs/developing-contracts/testing).

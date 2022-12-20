@@ -12,7 +12,7 @@ Under the hood, a non-fungible token consists of a unique token identifier, or t
 
 When the owner of a given token ID wishes to transfer it to another user, it is easy to verify ownership and reassign the token to a new owner.
 
-This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. Anyone can easily create their own application and run it on the Gear Network. The source code is available on [GitHub](https://github.com/gear-dapps/non-fungible-token).
+This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. Anyone can easily create their own application and run it on the Gear Network. The source code of the Gear NFT smart contract example is available on [GitHub](https://github.com/gear-dapps/non-fungible-token).
 
 ### Default non-fungible-token implementation
 The functions that must be supported by each non-fungible-token contract:
@@ -21,7 +21,7 @@ The functions that must be supported by each non-fungible-token contract:
 - *mint(to, token_id, metadata)* is a function that creates a new token. Metadata can include any information about the token: it can be a link to a specific resource, a description of the token, etc;
 - *burn(from, token_id)* is a function that removes the token with the mentioned *token_id* from the contract.
 
-The default implementation of the NFT contract is provided in the gear library: [gear-lib/non_fungible_token](https://github.com/gear-dapps/gear-lib/tree/master/src/non_fungible_token).
+The default implementation of the NFT contract is provided in the gear library: [gear-lib/non_fungible_token](https://github.com/gear-dapps/gear-lib/tree/master/lib/src/non_fungible_token).
 
 To use the default implementation you should include the packages into your *Cargo.toml* file:
 
@@ -186,10 +186,10 @@ extern "C" fn handle() {
 
 ## Conclusion
 
-Gear provides a reusable [library](https://github.com/gear-dapps/non-fungible-token/tree/master/nft/src) with core functionality for the gNFT protocol. By using object composition, that library can be utilized within a custom NFT contract implementation in order to minimize duplication of community available code.
+Gear provides a reusable [library](https://github.com/gear-dapps/gear-lib/tree/master/lib/src/non_fungible_token) with core functionality for the gNFT protocol. By using object composition, that library can be utilized within a custom NFT contract implementation in order to minimize duplication of community available code.
 
-A source code of the NFT marketplace provided by Gear is available on GitHub: [nft-marketplace/src](https://github.com/gear-dapps/non-fungible-token/tree/master/nft-marketplace/src).
+A source code of the Gear NFT smart contract example based on `gear-lib` is available on GitHub: [gear-dapps/non-fungible-token](https://github.com/gear-dapps/non-fungible-token).
 
-See also an example of the smart contract testing implementation based on `gtest`: [nft-marketplace/tests](https://github.com/gear-dapps/non-fungible-token/tree/master/nft-marketplace/tests).
+See also an example of the smart contract testing implementation based on `gtest`: [gear-dapps/non-fungible-token/tests](https://github.com/gear-dapps/non-fungible-token/tree/master/tests).
 
 For more details about testing smart contracts written on Gear, refer to this article: [Program Testing](/docs/developing-contracts/testing).
