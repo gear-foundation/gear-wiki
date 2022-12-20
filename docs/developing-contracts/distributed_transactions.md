@@ -87,7 +87,7 @@ receives tokens B. The situation here is the same as in the first step.
 **Commit phase**
 
 - `Swap contract`:  
-If token contracts confirmed their readiness to execute the transaction, the swap contract sends them a message to commit the state. Otherwise, the swap contract tells them to abort the transaction.
+If token contracts have confirmed their readiness to execute the transaction, the swap contract sends them a message to commit the state. Otherwise, the swap contract tells them to abort the transaction.
 - `Token contract`:
 Token contracts finally change their state and send replies to the swap contract;
 - `Swap contracts:
@@ -110,14 +110,14 @@ Of course, all that workflow handles the case when the gas runs out during the m
 
 **Theory**: It is similar to two-phase commit protocol but it tries to solve the problems with blocking the state of participants and to give the participants the opportunity to recover their states themselves.
 
-**Prepare phase:**
+**Preparation phase:**
 The same steps of two phase commit protocol are followed here:
 - `Coordinator`:  
 The coordinator sends a prepare message to all participants and waits for replies;
 - `Participants`:  
 If the participants are ready to commit a transaction they send the ready message, otherwise they send no message to the coordinator. 
 - `Coordinator`:  
-Based on replies the coordinator decides either to go to the next state or not. If any of the participants respond with no message or if any of the participants fails to respond within a defined time, the coordinator sends an abort message to every participant.  It is important to highlight the differences from two phase commit protocol:
+Based on replies the coordinator decides either to go to the next state or not. If any of the participants respond with no message or if any of the participants fails to respond within a defined time, the coordinator sends an abort message to every participant. It is important to highlight the differences from two phase commit protocol:
    - The coordinator limits the response time from the participant. We can implement this by sending a message with an indicated amount of gas or indicated number of blocks the coordinator is ready to wait;
    - If the coordinator fails at this state, then the participants are able to abort the transaction (i.e. unlock their state) using delayed messages. So, in that phase, the timeout cases abort. 
 
@@ -125,7 +125,7 @@ Based on replies the coordinator decides either to go to the next state or not. 
 - `Coordinator`:  
 The coordinator sends a prepare-to-commit message to all participants and gets acknowledgements from everyone;
 - `Participants`:  
-Receiving a prepare-to-commit message, a participant knows that the unanimous decision was to commit. As was already mentioned in the prepare phase, if a participant fails to receive this message in time, then it aborts. However, if a participant receives an abort message then it can immediately abort the transaction. 
+Receiving a prepare-to-commit message, a participant knows that the unanimous decision was to commit. As was already mentioned in the preparation phase, if a participant fails to receive this message in time, then it aborts. However, if a participant receives an abort message then it can immediately abort the transaction. 
 The possible problem: the coordinator fails during sending a prepare-to-commit to participants. So some participants are in phase 2, others are in phase 1. It's a disaster because the first group will commit, the second group will abort in case of timeout.
 So we have to make sure that If one of the participants has received a precommit message, they can all commit. If the coordinator falls, any of the participants, being at the second stage, can become the coordinator itself and continue the transaction. 
 - `Coordinator`:  
