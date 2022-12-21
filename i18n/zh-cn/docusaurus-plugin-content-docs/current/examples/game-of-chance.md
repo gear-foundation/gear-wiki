@@ -1,24 +1,24 @@
 ---
-sidebar_label: 彩票
+sidebar_label: Game of chance
 sidebar_position: 9
 ---
 
-# 彩票
+# Game of chance
 
 ## 介绍
 
-任何人都可以轻松创建自己的游戏应用程序，并在 Gear Network 上运行它。为了做到这一点，Gear 创建了一个 Game-of-chance 智能合约的例子，可以在[GitHub](https://github.com/gear-dapps/lottery)上找到。
+任何人都可以轻松创建自己的游戏应用程序，并在 Gear Network 上运行它。为了做到这一点，Gear 创建了一个 Game-of-chance 智能合约的例子，可以在[GitHub](https://github.com/gear-dapps/game-of-chance)上找到。
 
 本文会介绍接口、数据结构、基本功能及其用途。你可以按直接使用，也可以根据自己的场景进行修改。
 
-Gear 还[提供](https://github.com/gear-tech/gear-js/tree/master/apps/lottery)了一个[游戏界面](https://lottery.gear-tech.io/)，展示智能合约的互动。在这个例子中，谁初始化合约，谁就被认为是游戏所有者。只有所有者才有权利开始/结束游戏。玩家通过向合约发送带有赌注的信息，自己加入到机会游戏中。然后玩家监控游戏的状态。赢家是随机决定的。
+Gear 还[提供](https://github.com/gear-tech/gear-js/tree/main/apps/game-of-chance)了一个[游戏界面](https://lottery.gear-tech.io/)，展示智能合约的互动。在这个例子中，谁初始化合约，谁就被认为是游戏所有者。只有所有者才有权利开始/结束游戏。玩家通过向合约发送带有赌注的信息，自己加入到机会游戏中。然后玩家监控游戏的状态。赢家是随机决定的。
 
 你可以在这里观看关于如何启动和运行游戏应用程序，及其如何使用的视频：**https://youtu.be/35StUMjbdFc**。
 
 ## 源文件
 
-1. `lottery/src/lib.rs` - 包含彩票合约的方法体。
-2. `lottery/io/src/lib.rs` - 包含合约的接收和回复信息的枚举和数据结构
+1. `game-of-chance/src/lib.rs` - 包含彩票合约的方法体。
+2. `game-of-chance/io/src/lib.rs` - 包含合约的接收和回复信息的枚举和数据结构
 
 ## 数据结构
 
@@ -49,7 +49,6 @@ struct Lottery {
 `lottery_id` – 当前游戏 id
 
 `lottery_balance` - 游戏中中的总投注额
-
 
 
 `LotteryState` 的数据结构：
@@ -224,17 +223,17 @@ extern "C" fn meta_state() -> *mut [i32; 2] {
 
 ## 用户界面
 
-一个[即用型应用](https://lottery.gear-tech.io/)的例子提供了一个用户界面，与在 Gear Network 中运行的[游戏](https://github.com/gear-dapps/lottery)智能合约进行互动。
+一个[即用型应用](https://lottery.gear-tech.io/)的例子提供了一个用户界面，与在 Gear Network 中运行的[游戏](https://github.com/gear-dapps/game-of-chance)智能合约进行互动。
 
-本视频演示了如何配置和运行 Dapp，并解释了用户互动流程：**https://youtu.be/35StUMjbdFc**
+本视频演示了如何配置和运行 Dapp，并介绍了用户交互流程：**https://youtu.be/35StUMjbdFc**
 
-![img alt](./img/Lottery.png)
+![img alt](./img/game-of-chance.png)
 
-合约源代码可以在 [GitHub](https://github.com/gear-tech/gear-js/tree/master/apps/lottery)找到。
+源代码可以在 [GitHub](https://github.com/gear-tech/gear-js/tree/main/apps/game-of-chance)查看。
 
 ### 在 .env 文件中配置环境变量
 
-为了使应用程序正常运行，需要创建`.env`文件并调整环境变量。[这是个例子](https://github.com/gear-tech/gear-js/blob/master/apps/lottery/.env.example)。
+为了使应用程序正常运行，需要创建`.env`文件并调整环境变量。[这是个例子](https://github.com/gear-tech/gear-js/blob/main/apps/game-of-chance/.env.example)。
 
 
 ```sh
@@ -262,14 +261,14 @@ npm start
 
 ## 总结
 
-Lottery 的源代码可以在 GitHub 找到：[`lottery/src/lib.rs`](https://github.com/gear-tech/apps/blob/master/lottery/src/lib.rs)。
+本合约源代码可以在 GitHub 找到：[`game-of-chance/src/lib.rs`](https://github.com/gear-dapps/game-of-chance/blob/master/src/lib.rs)。
 
 本合约的测试代码基于 gtest：
 
-- [`simple_tests.rs`](https://github.com/gear-dapps/lottery/blob/master/src/simple_tests.rs)
+- [`simple_tests.rs`](https://github.com/gear-dapps/game-of-chance/blob/master/src/simple_tests.rs)
 
-- [`panic_tests.rs`](https://github.com/gear-dapps/lottery/blob/master/src/panic_tests.rs)
+- [`panic_tests.rs`](https://github.com/gear-dapps/game-of-chance/blob/master/src/panic_tests.rs)
 
-- [`token_tests.rs`](https://github.com/gear-dapps/lottery/blob/master/src/token_tests.rs)
+- [`token_tests.rs`](https://github.com/gear-dapps/game-of-chance/blob/master/src/token_tests.rs)
 
 更多关于在 Gear 上测试智能合约的细节，请参考这篇文章：[应用测试](https://wiki.gear-tech.io/zh-cn/developing-contracts/testing/)。
