@@ -17,13 +17,11 @@ Now thanks to Gear Protocol's support for asynchronous messaging, contract devel
 
 The execution of any messages in Gear, including the [system messages](../developing-contracts/system-signals.md)), consumes "gas". The Gear Protocol introduces the concept of [gas reservation](../developing-contracts/gas-reservation.md), which allows for the creation of gas pools that can be used by programs for further execution. Each pool is unique to the program that creates it, and the gas from the pool can be consumed by the program if its "gas_available" is not sufficient.
 
-One of the key benefits of gas reservation is the ability to send **delayed messages** that can be triggered automatically at a specific time in the future. These messages, like any other message in Gear, can invoke a user or another smart contract in the network.
+One of the key benefits of gas reservation is the ability to send **delayed messages** that can be triggered automatically at a specific time in the future. These messages, like any other message in Gear, can invoke another smart contract in the network or appear in the user's mailbox.
 
 Perhaps most interestingly, gas reservation allows a program to send a message to itself at a later time, allowing it to continue execution after a defined period. This effectively enables a smart contract to execute itself an **unlimited** number of times (provided that enough gas is available for the execution).
 
-
-This opens up a wide range of possibilities for the implementation of functional logic related to **continuing messaging automation** in smart contracts. Delayed messages are similar to cron jobs, which cannot be implemented in smart contracts on other blockchain platforms without the use of external resources. The remarkable advantage of this solution is that it eliminates the need for centralized components in dApps, ensuring they function **completely on-chain** and are fully decentralized.
-
+This opens up a wide range of possibilities for the implementation of functional logic related to **continuing messaging automation** in smart contracts. Delayed messages are similar to cron jobs, which cannot be implemented in smart contracts on other blockchain platforms without the use of external resources. The remarkable advantage of this solution is that it eliminates the need for centralized components in dApps, ensuring they function **completely on-chain** and are fully decentralized and autonomous.
 
 ## Use cases
 
