@@ -148,15 +148,15 @@ When the required number of participants is reached, the admin sends a message `
 - A cell with his own property. A player has a right:
    - To add a gear on the cell. The gear can be `Bronze`, `Silver` or `Gold`;
    - To upgrade a gear (from `Bronze` to `Silver` and from `Silver` to `Gold`);
-- Do nothing.  
-During actions `AddGear` and `Upgrade` a player can sell his other properties to the bank if he has not enough balance.
+- Do nothing.
+During actions `AddGear` and `Upgrade` a player can sell his other properties to the bank if he does not have enough balance.
 - A cell with other properties. A player has to pay rent. If he has not enough balance, he can sell his properties to the bank. Otherwise he is declared bankrupt.
-- Cell with properties which no one has bought yet. A player has a right:
+- Sell with properties which no one has bought yet. A player has a right:
   - Buy cell (with option to sell properties to the bank if not enough balance);
   - Do nothing.
 
 - Jail. A player can throw the rolls. If it is double he gets out of the jail and his position is moved for the roll sum. If it is not a double a player can pay a fine or wait for the next round to throw the rolls again.
-- Empty cells. In `Master` contract there are cells that are not filled with anything. The developers themselves can expand the functionality of the game and add different game mechanics.
+- Empty cells. In the `Master` contract there are cells that are not filled with anything. The developers themselves can expand the functionality of the game and add different game mechanics.
 
 ### Player's contract
 `Player` is a contract in which the monopoly game strategy is implemented. It must meet the following requirements:
@@ -169,8 +169,8 @@ During actions `AddGear` and `Upgrade` a player can sell his other properties to
     ```
     That struct contains the information about the state of all players and about the monopoly fields and built gears.  
 - Based on the information received, the strategic contract has to make a move (`BuyCell`, `AddGear`, `Upgrade`, `PayRent`, `ThrowRolls` etc). The move must be the asynchronous message to the monopoly contract.     
-- The move has to be made correctly. For example, if a player is in an already occupied field and try to buy it, then `Master`contract will fine him. Each wrong step is penalized with one point. If a player scores 5 penalty points, it is out of the game.  
+- The move has to be made correctly. For example, if a player is in an already occupied field and tries to buy it, then `Master`contract will fine him. Each wrong step is penalized with one point. If a player scores 5 penalty points, it is out of the game.  
 - After the step a player has to send a reply to the monopoly contract. This way the monopoly contract knows about the completion of the step. The reply can be a simple empty message. 
-- If player's contract doesn’t reply, `Master` contract will remove that player from the game.
-- `Master` contract gives a limited amount of gas per turn. That amount is quite enough for the move, but if player's contract  contains an incorrect logic (for example, an infinite loop), it will be removed from the game. 
+- If a player's contract doesn’t reply, `Master` contract will remove that player from the game.
+- `Master` contract gives a limited amount of gas per turn. That amount is quite enough for the move, but if the player's contract contains an incorrect logic (for example, an infinite loop), it will be removed from the game. 
 
