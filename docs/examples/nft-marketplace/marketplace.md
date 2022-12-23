@@ -19,17 +19,25 @@ Gear also [provides](https://github.com/gear-tech/gear-js/tree/master/apps/marke
 
 <!-- You can watch a video on how to get the NFT Marketplace application up and running and its capabilities here: **https://youtu.be/4suveOT3O-Y**.
 -->
+To use the hashmap you should include `hashbrown` package into your *Cargo.toml* file:
+```toml
+[dependecies]
+# ...
+hashbrown = "0.13.1"
+```
 
 ## Logic
 The contract state:
 ```rust
+use hashbrown::{HashMap, HashSet};
+
 pub struct Market {
     pub admin_id: ActorId,
     pub treasury_id: ActorId,
     pub treasury_fee: u128,
-    pub items: BTreeMap<ContractAndTokenId, Item>,
-    pub approved_nft_contracts: BTreeSet<ActorId>,
-    pub approved_ft_contracts: BTreeSet<ActorId>,
+    pub items: HashMap<ContractAndTokenId, Item>,
+    pub approved_nft_contracts: HashSet<ActorId>,
+    pub approved_ft_contracts: HashSet<ActorId>,
 }
 ```
 - `admin_id` - an account who has the right to approve non-fungible-token and fungible-tokens contracts that can be used in the marketplace contract;

@@ -84,6 +84,12 @@ Admin can view the Stakers list (`GetStakers` message). The admin can update the
 The user first makes a bet (`Stake` message), and then he can receive his reward on demand (`GetReward` message). The user can withdraw part of the amount (`Withdraw` message).
 
 ## Interface
+To use the hashmap you should include `hashbrown` package into your *Cargo.toml* file:
+```toml
+[dependecies]
+# ...
+hashbrown = "0.13.1"
+```
 ### Source files
 1. `staking/src/lib.rs` - contains functions of the 'staking' contract.
 2. `staking/io/src/lib.rs` - contains Enums and structs that the contract receives and sends in the reply.
@@ -93,6 +99,8 @@ The user first makes a bet (`Stake` message), and then he can receive his reward
 The contract has the following structs:
 
 ```rust
+use hashbrown::HashMap;
+
 struct Staking {
     owner: ActorId,
     staking_token_address: ActorId,
@@ -104,7 +112,7 @@ struct Staking {
     reward_total: u128,
     all_produced: u128,
     reward_produced: u128,
-    stakers: BTreeMap<ActorId, Staker>,
+    stakers: HashMap<ActorId, Staker>,
 }
 ```
 where:
@@ -193,7 +201,7 @@ pub enum StakingState {
 }
 
 pub enum StakingStateReply {
-    Stakers(BTreeMap<ActorId, Staker>),
+    Stakers(Vec<(ActorId, Staker)>),
     Staker(Staker),
 }
 ```

@@ -77,19 +77,27 @@ let balance_response: FTEvent = msg::send_and_wait_for_reply(
 2. `lib.rs` - defines the contract logic.
 
 ### Structs
+To use the hashmap you should add the `hashbrown` package into your Cargo.toml file:
+```toml
+[dependecies]
+# ...
+hashbrown = "0.13.1"
+```
 
 The contract has the following structs:
 
 ```rust
+use hashbrown::HashMap;
+
 struct Dao {
     approved_token_program_id: ActorId,
     period_duration: u64,
     voting_period_length: u64,
     grace_period_length: u64,
     total_shares: u128,
-    members: BTreeMap<ActorId, Member>,
+    members: HashMap<ActorId, Member>,
     proposal_id: u128,
-    proposals: BTreeMap<u128, Proposal>,
+    proposals: HashMap<u128, Proposal>,
     locked_funds: u128,
 }
 ```
@@ -197,7 +205,8 @@ async fn submit_vote(
 ```rust
 async fn ragequit(
     &mut self,
-        amount: u128,
+    transaction_id: Option<u64>,
+    amount: u128,
     )
 ```
 

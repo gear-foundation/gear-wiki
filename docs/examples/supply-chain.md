@@ -74,13 +74,13 @@ pub enum ItemState {
 pub struct InitSupplyChain {
     /// Addresses that'll have the right to interact with a supply chain on
     /// behalf of a producer.
-    pub producers: BTreeSet<ActorId>,
+    pub producers: Vec<ActorId>,
     /// Addresses that'll have the right to interact with a supply chain on
     /// behalf of a distributor.
-    pub distributors: BTreeSet<ActorId>,
+    pub distributors: Vec<ActorId>,
     /// Addresses that'll have the right to interact with a supply chain on
     /// behalf of a retailer.
-    pub retailers: BTreeSet<ActorId>,
+    pub retailers: Vec<ActorId>,
 
     /// A FT program address.
     pub ft_program: ActorId,
