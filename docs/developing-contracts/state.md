@@ -100,4 +100,4 @@ fn main() {
 }
 ```
 
-[Learn more](/developing-contracts/metadata) how `metadata` works.
+[Learn more](/docs/developing-contracts/metadata/) how `metadata` works.
