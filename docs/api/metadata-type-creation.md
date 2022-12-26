@@ -18,16 +18,16 @@ To get program metadata use `getProgramMetadata` function:
 ```javascript
 import { getProgramMetadata } from '@gear-js/api';
 
-const meta = getProgramMetadata(`0x...`);
+const metadata = getProgramMetadata(`0x...`);
 
 // The function getProgramMetadata() takes metadata of the program in format of hex string. 
 // It will return object of ProgramMetadata class that has property types that contains all types of the program.
 
-meta.types.init.input; // can be used to encode input message for init entrypoint of the program
-meta.types.init.output; // can be used to decode output message for init entrypoint of the program
+metadata.types.init.input; // can be used to encode input message for init entrypoint of the program
+metadata.types.init.output; // can be used to decode output message for init entrypoint of the program
 // the same thing available for all entrypoints of the program
 
-meta.types.state; // contauns type for decoding state output
+metadata.types.state; // contauns type for decoding state output
 ```
 
 ## StateMetadata
@@ -39,8 +39,8 @@ The function takes meta.wasm as Buffer to read State. It returns object of State
 import { getStateMetadata } from '@gear-js/api';
 
 const fileBuffer = fs.readFileSync('path/to/state.meta.wasm');
-const meta = await getStateMetadata(fileBuffer);
-meta.functions; // is an object whose keys are names of functions and values are objects of input/output types
+const metadata = await getStateMetadata(fileBuffer);
+metadata.functions; // is an object whose keys are names of functions and values are objects of input/output types
 ```
 
 ## Metadata class methods
