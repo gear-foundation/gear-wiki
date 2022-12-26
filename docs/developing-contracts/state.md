@@ -86,4 +86,4 @@ pub trait Metawasm {
 }
 ```
 
-[Learn more]() how Metadata works
+<!-- [Learn more]() how Metadata works -->
