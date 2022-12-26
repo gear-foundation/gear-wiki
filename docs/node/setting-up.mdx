@@ -29,71 +29,6 @@ Depending on your OS you need to download nightly build of Gear node:
 
 ````mdx-code-block
 <Tabs>
-<TabItem value="win64" label="Windows x64" className="unique-tabs" default>
-
-Terminal:
-
-```bash
-curl -O https://get.gear.rs/gear-nightly-windows-x86_64.zip
-```
-
-or
-
-**Windows x64**: [gear-nightly-windows-x86_64.zip](https://get.gear.rs/gear-nightly-windows-x86_64.zip)
-
-Unzip the downloaded package then you can try to run the node:
-
-```
-❯ gear.exe --version
-gear.exe 0.1.0-hashcode
-```
-
-</TabItem>
-<TabItem value="mac-arm" label="MacOS ARM">
-
-Terminal:
-
-```bash
-wget https://get.gear.rs/gear-nightly-macos-m.tar.gz && \
-tar xvf gear-nightly-macos-m.tar.gz && \
-rm gear-nightly-macos-m.tar.gz
-```
-
-or
-
-**macOS M1/M2**: [gear-nightly-macos-m.tar.gz](https://get.gear.rs/gear-nightly-macos-m.tar.gz)
-
-You can try to run the node:
-
-```
-❯ ./gear --version
-gear 0.1.0-hashcode
-```
-
-</TabItem>
-<TabItem value="mac-intel" label="MacOS x64">
-
-Terminal:
-
-```bash
-wget https://get.gear.rs/gear-nightly-macos-x86_64.tar.gz && \
-tar xvf gear-nightly-macos-x86_64.tar.gz && \
-rm gear-nightly-macos-x86_64.tar.gz
-```
-
-or
-
-**macOS Intel x64**: [gear-nightly-macos-x86_64.tar.gz](https://get.gear.rs/gear-nightly-macos-x86_64.tar.gz)
-
-You can try to run the node:
-
-```
-❯ ./gear --version
-gear 0.1.0-hashcode
-```
-
-</TabItem>
-
 <TabItem value="mac-linux" label="Linux x64">
 
 Terminal:
@@ -116,12 +51,83 @@ gear 0.1.0-hashcode
 ```
 
 </TabItem>
+
+<TabItem value="mac-arm" label="MacOS ARM">
+
+Terminal:
+
+```bash
+wget https://get.gear.rs/gear-nightly-macos-m.tar.gz && \
+tar xvf gear-nightly-macos-m.tar.gz && \
+rm gear-nightly-macos-m.tar.gz
+```
+
+or
+
+**macOS M1/M2**: [gear-nightly-macos-m.tar.gz](https://get.gear.rs/gear-nightly-macos-m.tar.gz)
+
+You can try to run the node:
+
+```
+❯ ./gear --version
+gear 0.1.0-hashcode
+```
+
+</TabItem>
+<TabItem value="mac-intel" label="macOS x64">
+
+Terminal:
+
+```bash
+wget https://get.gear.rs/gear-nightly-macos-x86_64.tar.gz && \
+tar xvf gear-nightly-macos-x86_64.tar.gz && \
+rm gear-nightly-macos-x86_64.tar.gz
+```
+
+or
+
+**macOS Intel x64**: [gear-nightly-macos-x86_64.tar.gz](https://get.gear.rs/gear-nightly-macos-x86_64.tar.gz)
+
+You can try to run the node:
+
+```
+❯ ./gear --version
+gear 0.1.0-hashcode
+```
+
+</TabItem>
+
+<TabItem value="win64" label="Windows x64" className="unique-tabs" default>
+
+Terminal:
+
+```bash
+curl -O https://get.gear.rs/gear-nightly-windows-x86_64.zip
+```
+
+or
+
+**Windows x64**: [gear-nightly-windows-x86_64.zip](https://get.gear.rs/gear-nightly-windows-x86_64.zip)
+
+Unzip the downloaded package then you can try to run the node:
+
+```
+❯ gear.exe --version
+gear.exe 0.1.0-hashcode
+```
+
+</TabItem>
 </Tabs>
 ````
 
 ## Compile Gear node by yourself
 
-Compiling the build will take some time and requires the installation of some dependencies:
+Compiling the build will take some time and requires the installation of some dependencies.
+
+:::warning Note
+Windows users may encounter some problems related to the installation of Rust components and dependencies.
+It is highly recommended to use Linux or macOS for compiling Gear node and smart-contracts. 
+:::
 
 ### Prerequisites
 
