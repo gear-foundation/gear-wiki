@@ -11,7 +11,24 @@ You can write your own smart contract or try to build from examples. Let's Rock!
 
 ## Requirements
 
-To develop your first Rust smart-contract you would have to:
+To develop your first Rust smart-contract you would have to install some components.
+
+:::warning Note
+Windows users may encounter some problems related to the installation of Rust components and dependencies.
+It is highly recommended to use Linux or macOS for compiling Gear node and smart-contracts. 
+:::
+
+- Linux users should generally install `GCC` and `Clang`, according to their distribution’s documentation. Also, one should install `binaryen` toolset that contains required `wasm-opt` tool.
+
+    - For example, on Ubuntu use:
+    ```bash
+    sudo apt install -y clang build-essential binaryen cmake protobuf-compiler
+    ```
+    - On macOS, you can get a compiler toolset and `binaryen` by running:
+    ```bash
+    xcode-select --install
+    brew install binaryen
+    ```
 
 - Install Rustup:
 
@@ -19,7 +36,7 @@ To develop your first Rust smart-contract you would have to:
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
     ```
 
-- Add wasm target to your toolchain:
+- Add Wasm target to your toolchain:
 
     ```bash
     rustup toolchain add nightly
