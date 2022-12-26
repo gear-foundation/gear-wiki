@@ -205,7 +205,6 @@ async fn submit_vote(
 ```rust
 async fn ragequit(
     &mut self,
-    transaction_id: Option<u64>,
     amount: u128,
     )
 ```

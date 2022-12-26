@@ -41,7 +41,8 @@ let _transfer_response = msg::send_for_reply_as::<ft_main_io::FTokenAction, FTok
     0,
 )
 .expect("Error in sending a message `FTokenAction::Message`")
-.await;
+.await
+.expect("Error int transfer");
 ```
 
 2. `asserts.rs` - contains asserts functions: `owner_message` and `not_zero_address`. 

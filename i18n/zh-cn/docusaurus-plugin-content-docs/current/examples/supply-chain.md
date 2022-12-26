@@ -53,9 +53,9 @@ enum ItemState {
 
 ```rust
 struct InitSupplyChain {
-    producers: BTreeSet<ActorId>,
-    distributors: BTreeSet<ActorId>,
-    retailers: BTreeSet<ActorId>,
+    producers: Vec<ActorId>,
+    distributors: Vec<ActorId>,
+    retailers: Vec<ActorId>,
 
     ft_program_id: ActorId,
     nft_program_id: ActorId,

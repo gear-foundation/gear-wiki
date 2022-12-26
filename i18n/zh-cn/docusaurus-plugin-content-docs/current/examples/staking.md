@@ -93,10 +93,17 @@ $$
 2. `staking/io/src/lib.rs` - 包含合约在回复中接收和发送的 Enums 和结构。
 
 ### 结构
-
+`Cargo.toml`
+```toml
+[dependecies]
+# ...
+hashbrown = "0.13.1"
+```
 该合约有以下结构：
 
 ```rust
+use hashbrown::HashMap;
+
 struct Staking {
     owner: ActorId,
     staking_token_address: ActorId,
@@ -108,7 +115,7 @@ struct Staking {
     reward_total: u128,
     all_produced: u128,
     reward_produced: u128,
-    stakers: BTreeMap<ActorId, Staker>,
+    stakers: HashMap<ActorId, Staker>,
 }
 ```
 
@@ -192,7 +199,7 @@ pub enum StakingState {
 }
 
 pub enum StakingStateReply {
-    Stakers(BTreeMap<ActorId, Staker>),
+    Stakers(Vec<(ActorId, Staker)>),
     Staker(Staker),
 }
 ```
