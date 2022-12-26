@@ -40,9 +40,15 @@ extern "C" fn state() {
 }
 ```
 
-By default, the `state()` function returns the full State of the contact. Additionally, you can create custom State functions that can later be used on the client side.
+By default, the `state()` function returns the full State of the contact.
 
-To do this, we need to describe the necessary functions inside `metawasm` trait. For example:
+## Custom program to read State
+
+Additionally, you can create your own program for read State. This wrapper will allow you to implement your custom functions for the client side, not depending on the main program.
+
+This has a number of advantages, for example, you will always be able to read the State even if the program changes (provided that the incoming or outgoing types have not changed).
+
+To do this, we need to create an independent program. And to describe the necessary functions inside `metawasm` trait. For example:
 
 ```rust
 // ...
@@ -83,6 +89,14 @@ pub trait Metawasm {
     fn wallet_by_person(person: String, state: Self::State) -> Option<Wallet> {
         state.into_iter().find(|w| w.person == person)
     }
+}
+```
+
+To build `meta.wasm`, the following `build.rs` file in the root of your project is required:
+
+```rust
+fn main() {
+    gear_wasm_builder::build_metawasm();
 }
 ```
 
