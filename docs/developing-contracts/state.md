@@ -8,52 +8,82 @@ sidebar_position: 3
 Persistent data of the Gear smart contract is stored in the same way as in a classic program and does not require initialization of the external storage.
 
 ```rust
-// describe state structure
-pub struct State {
-    votes_received: BTreeMap<String, i32>,
+
+// describe State structure
+#[derive(TypeInfo, Decode, Encode, Clone)]
+pub struct Wallet {
+    pub id: ActorId,
+    pub person: String,
 }
 
-impl State {
-    // Create a state
-    pub const fn new() -> Self {
-        Self {
-            votes_received: BTreeMap::new(),
-        }
-    }
-}
 
-// initialize state itself
-static mut STATE: State = State::new();
+// declare and initialize State
+static mut WALLETS: Vec<Wallet> = Vec::new();
 ```
 
 If you're programming in Rust or other object-oriented languages, you should be familiar with most types. However, the `ActorId` type is something new when developing contracts via the Gear Protocol.
 
 :::info
-`ActorId` is a special type that represents an 32 bytes array and defines any `ID` in Gear.
+`ActorId` is a special type that represents an 32 bytes array and defines any `ID` in Gear Protocol.
 :::
 
 ## State functions
 
-To display the contract status information (similar to the `view` Gear functions), the `meta_state()` is used. It allows you to instantly read the contract status (for example, balance). Reading state is a free function and it does not require any gas costs.
+To display the contract State information (similar to the `view` functions), the `state()` function is used. It allows you to instantly read the contract status (for example, contract balance). Reading State is a free function and does not require gas costs.
+
+To return State use:
 
 ```rust
-// The function meta_state() returns a part of memory with a state
-// In this example if payload is "CONTRACT_STATE" then it returns state
-#[derive(Encode, Decode, TypeInfo)]
-pub struct ContractState {}
-
-static mut STATE: ContractState = ContractState {};
-
 #[no_mangle]
-extern "C" fn meta_state() -> *mut [i32; 2] {
-    let query =
-        String::from_utf8(msg::load_bytes().expect("Unable to load bytes")).expect("Invalid query");
-    let reply = if query == "CONTRACT_STATE" {
-        let encoded = unsafe { STATE.encode() };
-        gstd::util::to_leak_ptr(encoded)
-    } else {
-        gstd::util::to_leak_ptr(vec![])
-    };
-    reply
+extern "C" fn state() {
+    msg::reply(unsafe { WALLETS.clone() }, 0).expect("Failed to share state");
 }
 ```
+
+By default, the `state()` function returns the full State of the contact. Additionally, you can create custom State functions that can later be used on the client side.
+
+To do this, we need to describe the necessary functions inside `metawasm` trait. For example:
+
+```rust
+// ...
+use gmeta::metawasm;
+
+#[metawasm]
+pub trait Metawasm {
+    type State = Vec<Wallet>;
+
+    fn all_wallets(state: Self::State) -> Vec<Wallet> {
+        state
+    }
+
+    fn first_wallet(state: Self::State) -> Option<Wallet> {
+        state.first().cloned()
+    }
+
+    fn last_wallet(state: Self::State) -> Option<Wallet> {
+        state.last().cloned()
+    }
+}
+```
+
+Or more complex example:
+
+```rust
+// ...
+use gmeta::metawasm;
+
+#[metawasm]
+pub trait Metawasm {
+    type State = Vec<Wallet>;
+
+    fn wallet_by_id(id: Id, state: Self::State) -> Option<Wallet> {
+        state.into_iter().find(|w| w.id == id)
+    }
+
+    fn wallet_by_person(person: String, state: Self::State) -> Option<Wallet> {
+        state.into_iter().find(|w| w.person == person)
+    }
+}
+```
+
+[Learn more]() how Metadata works
