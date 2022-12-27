@@ -68,7 +68,7 @@ metadata.getAllTypes();
 metadata.createType(4, { value: 'value' });
 ```
 
-## Types creation
+## Type creation
 
 More information about the basic types and methods of work can be found in the main documentation of Polkadot [here](https://polkadot.js.org/docs/api/start/types.basics)
 
