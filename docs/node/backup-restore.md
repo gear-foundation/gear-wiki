@@ -23,40 +23,7 @@ Let's explore the data that the node stores in this directory.
         └── chains
             ├── dev
             │   └── ...
-            ├── @everyone
-Hello mates!
-
-We have relaunched our network at the next stage.
-
-So it is the right time to update the node binary and join the Gear Staging Testnet V5!
-
-0. We assume you have configured the node according to the official documentation: https://wiki.gear-tech.io/docs/node/node-as-service
-
-1. We recommend cleaning the previous network DB before the update:
-
-sudo systemctl stop gear-node
-gear purge-chain -y
-
-2. Then, update the node executable to the latest version that contains everything needed to connect to the new network.
-
-wget https://get.gear.rs/gear-nightly-linux-x86_64.tar.xz
-sudo tar -xvf gear-nightly-linux-x86_64.tar.xz -C /usr/bin
-rm gear-nightly-linux-x86_64.tar.xz
-
-3. Start the new version (Gear Staging Testnet V5):
-
-sudo systemctl start gear-node
-
-4. (optional) If you care about keeping your peer ID the same as earlier, you can copy the network key from the previous chain:
-
-sudo systemctl stop gear-node
-cd /root/.local/share/gear/chains
-sudo cp gear_staging_testnet_v5/network/secret_ed25519 gear_staging_testnet_v5/network/secret_ed25519
-sudo systemctl start gear-node
-
-More details about the network key are here: https://wiki.gear-tech.io/docs/node/backup-restore#network-key
-
-5. Find your node at https://telemetry.gear-tech.io/ under the Gear Staging Testnet V5 tab.
+            ├── gear_staging_testnet_v5
             │   ├── db
             │   │   └── full
             │   ├── keystore
