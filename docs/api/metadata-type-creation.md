@@ -7,33 +7,33 @@ sidebar_label: Metadata & Type Creation
 
 Metadata allows the interaction between the client side (javascript) and the program (Rust). Metadata is a kind of interface map that can help to identify and order a set of bytes into an understandable structure and indicates what the function it is intended for.
 
-There're 2 types of metadata.
+There're two types of metadata.
 
 ## ProgramMetadata
 
-`ProgramMetadata` is used to encode/decode messages to/from a program as well as to read the whole State of the program. In this case, metadata looks like Hex String and generates automatically while the Gear program is compiling.
+`ProgramMetadata` is used to encode/decode messages to/from a program and to read the program's whole `State`. In this case, metadata looks like a hex string and generates automatically while the Gear program compiles.
 
-To get program metadata use `getProgramMetadata` function:
+To get program metadata, use the `getProgramMetadata` function:
 
 ```javascript
 import { getProgramMetadata } from '@gear-js/api';
 
 const metadata = getProgramMetadata(`0x...`);
 
-// The function getProgramMetadata() takes metadata of the program in format of hex string. 
-// It will return object of ProgramMetadata class that has property types that contains all types of the program.
+// The function getProgramMetadata() takes the program's metadata in the format of a hex string. 
+// It will return an object of the `ProgramMetadata` class with the property `types` containing all program types.
 
 metadata.types.init.input; // can be used to encode input message for init entrypoint of the program
 metadata.types.init.output; // can be used to decode output message for init entrypoint of the program
 // the same thing available for all entrypoints of the program
 
-metadata.types.state; // contauns type for decoding state output
+metadata.types.state; // contains type for decoding state output
 ```
 
 ## StateMetadata
 
-If you are using your own implementation for read program State. To get metadata you should use `StateMetadata` function.
-The function takes meta.wasm as Buffer to read State. It returns object of StateMetadata class that has functions to query program State.
+If you use your own implementation to read a program `State`, you should call the `StateMetadata` function to get metadata.
+The function takes `meta.wasm` as `Buffer` to read the `State`. It returns the object of the `StateMetadata` class that has functions to query the program's `State`.
 
 ```js
 import { getStateMetadata } from '@gear-js/api';
@@ -45,7 +45,7 @@ metadata.functions; // is an object whose keys are names of functions and values
 
 ## Metadata class methods
 
-Both `ProgramMetadata` and `StateMetadata` classes have a few methods that can help to understand what some type is or get the name of some type (because types are represented as number in regestry). Also, there is some method for encoding and decoding data.
+Both `ProgramMetadata` and `StateMetadata` classes have a few methods that can help to understand what some type is or get the name of some type (because types are represented as numbers in the registry). Also, there is some method for encoding and decoding data.
 
 ```js
 import { ProgramMetadata } from '@gear-js/api`;
@@ -58,7 +58,7 @@ metadata.getTypeName(4);
 // returns the structure of this type
 metadata.getTypeDef(4);
 
-// if you need to get type structre with additional field (name, type, kind, len) you have to pass the second argument
+// if you need to get a type structure with an additional field (name, type, kind, len) you have to pass the second argument
 metadata.getTypeDef(4, true); 
 
 // returns all custom types that existed in the registry of the program

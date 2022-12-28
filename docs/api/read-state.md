@@ -5,15 +5,15 @@ sidebar_label: Read State
 
 # Read State
 
-There is two different ways to query program State:
+There are two different ways to query the program `State`:
 
-1. Query the full State of the program. To read the full State of the program you need to have only `metadata` of this program. You can call api.programState.read method to get the state.
+1. Query the full `State` of the program. To read the full `State` of the program, you need to have only the `metadata` of this program. You can call `api.programState.read` method to get the state.
 
 ```javascript
 await api.programState.read({ programId: `0x...` }, programMetadata);
 ```
 
-Also you can read the State of the program at some specific block:
+Also, you can read the `State` of the program at some specific block:
 
 ```javascript
 await api.programState.read(
@@ -22,7 +22,7 @@ await api.programState.read(
 );
 ```
 
-2. If you are using the custom functions to query only specific parts of the program State ([see more](/docs/developing-contracts/metadata#genarete-metadata)), then you should to call `api.programState.readUsingWasm` method:
+2. If you are using the custom functions to query only specific parts of the program State ([see more](/docs/developing-contracts/metadata#genarate-metadata)), then you should to call `api.programState.readUsingWasm` method:
 
 ```js
 // ...

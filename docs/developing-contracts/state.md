@@ -8,16 +8,15 @@ sidebar_position: 3
 Persistent data of the Gear smart contract is stored in the same way as in a classic program and does not require initialization of the external storage.
 
 ```rust
-
-// describe State structure
+// ...
+// describe state structure
 #[derive(TypeInfo, Decode, Encode, Clone)]
 pub struct Wallet {
     pub id: ActorId,
     pub person: String,
 }
 
-
-// declare and initialize State
+// declare and initialize the state
 static mut WALLETS: Vec<Wallet> = Vec::new();
 ```
 
@@ -40,15 +39,15 @@ extern "C" fn state() {
 }
 ```
 
-By default, the `state()` function returns the full State of the contact.
+By default, the `state()` function returns the whole state of the contact.
 
-## Custom program to read State
+## Custom program to read the state
 
-Additionally, you can create your own program for read State. This wrapper will allow you to implement your custom functions for the client side, not depending on the main program.
+Additionally, you can create your own program to read the state. This wrapper will allow you to implement custom functions for the client side, not depending on the main program.
 
-This has a number of advantages, for example, you will always be able to read the State even if the program changes (provided that the incoming or outgoing types have not changed).
+This has a number of advantages, for example, you will always be able to read the state even if the program changes (as long as the incoming or outgoing types have not changed). Or you are creating a service based on an already existing program and you need some of your own functions to get your own chanks of data from the state.
 
-To do this, we need to create an independent program. And to describe the necessary functions inside `metawasm` trait. For example:
+To do this, we need to create an independent program and describe the necessary functions inside the `metawasm` trait. For example:
 
 ```rust
 // ...
