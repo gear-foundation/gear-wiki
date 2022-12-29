@@ -43,7 +43,7 @@ const state = await api.programState.programState(
 
 ## Cookbook
 
-To read state in front-end applications you can use `fetch` browser API to get buffer from `meta.wasm`:
+To read state in JavaScript applications you can use `fetch` browser API to get buffer from `meta.wasm`:
 
 ```javascript
 // ...

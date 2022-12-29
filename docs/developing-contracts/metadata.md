@@ -5,9 +5,9 @@ sidebar_position: 4
 
 # Matadata
 
-Metadata is a kind of interface map that helps to identify a set of bytes into an understandable structure and indicates the function it is intended for. Metadata determines how all incoming and outgoing data will be encoded/decoded.
+Metadata is a kind of interface map that helps to transform a set of bytes into an understandable structure and indicates the function this structure is intended for. Metadata determines how all incoming and outgoing data will be encoded/decoded.
 
-We need metadata for the contract and the client part of the javascript application to understand each other and to be able to exchange data.
+Metadata allows dApp’s parts - the smart-contract and the client side (JavaScript), to understand each other and exchange data.
 
 To describe metadata interface use `gmeta` crate:
 
@@ -41,7 +41,7 @@ As we can see, metadata enables you to determine the expected data at the input/
 
 ## Genarate metadata
 
-To generate metadata, the following `build.rs` file in the root of your project is required:
+To generate metadata, the following `build.rs` file in the root of your project folder is required:
 
 ```rust
 // build.rs
@@ -54,7 +54,7 @@ fn main() {
 }
 ```
 
-As a result of the compilation of the contract, a `meta.txt` file will be generated that can be used in future UI applications. And it looks like a hex string:
+As a result of the smart-contract compilation, a `meta.txt` file will be generated. This metadata file can be used in the UI applications that will interact with this smart-contract. The file’s content looks like a hex string:
 
 ```
 01000000000103000000010500000001090000000102000000010d000000010f0000000111000000000112000000a9094c00083064656d6f5f6d6574615f696f344d657373616765496e6974496e0000080118616d6f756e74040108753800012063757272656e6379080118537472696e6700000400000503000800000502000c083064656d6f5f6d6574615f696f384d657373616765496e69744f7574000008013465786368616e67655f72617465100138526573756c743c75382c2075383e00010c73756d04010875380000100418526573756c740804540104044501040108084f6b040004000000000c457272040004000001000014083064656d6f5f6d6574615f696f244d657373616765496e000004010869641801084964000018083064656d6f5f6d6574615f696f084964000008011c646563696d616c1c010c75363400010c68657820011c5665633c75383e00001c000005060020000002040024083064656d6f5f6d6574615f696f284d6573736167654f7574000004010c7265732801384f7074696f6e3c57616c6c65743e00002804184f7074696f6e040454012c0108104e6f6e6500000010536f6d6504002c00000100002c083064656d6f5f6d6574615f696f1857616c6c6574000008010869641801084964000118706572736f6e300118506572736f6e000030083064656d6f5f6d6574615f696f18506572736f6e000008011c7375726e616d65080118537472696e670001106e616d65080118537472696e6700003400000238003800000504003c083064656d6f5f6d6574615f696f384d6573736167654173796e63496e0000040114656d707479400108282900004000000400004404184f7074696f6e04045401040108104e6f6e6500000010536f6d650400040000010000480000022c00
