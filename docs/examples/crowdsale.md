@@ -18,6 +18,7 @@ Initial funds with which a token is purchased are determined by the Gear fungibl
 1. `messages.rs` - contains function of the fungible token contract. Crowdsale contract interacts with fungible token contract through transfer_tokens function:
 ```rust
 pub async fn transfer_tokens(
+    transaction_id: u64, // - associated transaction id
     token_id: &ActorId, // - the fungible token contract address
     from: &ActorId, // - the sender address
     to: &ActorId, // - the recipient address
@@ -26,18 +27,22 @@ pub async fn transfer_tokens(
 ```
 This function sends a message (the action is defined in the enum IcoAction) and gets a reply (the reply is defined in the enum IcoEvent):
 ```rust
-let _transfer_response = msg::send_for_reply(
-    *token_id,
-    FTAction::Transfer {
-        from: *from,
-        to: *to,
-        amount,
+let _transfer_response = msg::send_for_reply_as::<ft_main_io::FTokenAction, FTokenEvent>(
+    *token_address,
+    FTokenAction::Message {
+        transaction_id,
+        payload: ft_logic_io::Action::Transfer {
+            sender: *from,
+            recipient: *to,
+            amount: amount_tokens,
+        }
+        .encode(),
     },
     0,
 )
-.expect("Error in message")
+.expect("Error in sending a message `FTokenAction::Message`")
 .await
-.expect("Error in transfer");
+.expect("Error int transfer");
 ```
 
 2. `asserts.rs` - contains asserts functions: `owner_message` and `not_zero_address`. 
@@ -61,8 +66,16 @@ pub fn not_zero_address(address: &ActorId, message: &str) {
 3. `lib.rs` - defines the contract logic.
 
 ### Structs
+To use the hashmap you should add the `hashbrown` package into your Cargo.toml file:
+```toml
+[dependecies]
+# ...
+hashbrown = "0.13.1"
+```
 The contract has the following structs:
 ```rust
+use hashbrown::HashMap;
+
 struct IcoContract {
     ico_state: IcoState,
     start_price: u128,
@@ -72,7 +85,9 @@ struct IcoContract {
     tokens_goal: u128,
     owner: ActorId,
     token_address: ActorId,
-    token_holders: BTreeMap<ActorId, u128>,
+    token_holders: HashMap<ActorId, u128>,
+    transaction_id: u64,
+    transactions: HashMap<ActorId, u64>,
 }
 ```
 where:
@@ -102,6 +117,7 @@ async fn start_ico(&mut self, config: IcoAction)
 replies with:
 ```rust
 IcoEvent::SaleStarted {
+    transaction_id,
     duration,
     start_price,
     tokens_goal,

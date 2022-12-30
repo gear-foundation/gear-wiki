@@ -22,6 +22,7 @@ sidebar_position: 18
 
 ```rust
 pub async fn transfer_tokens(
+    transaction_id: u64, // - associated transaction id
     token_id: &ActorId, // - the fungible token contract address
     from: &ActorId, // - the sender address
     to: &ActorId, // - the recipient address
@@ -32,16 +33,20 @@ pub async fn transfer_tokens(
 这个函数发送一个信息（action 在枚举 IcoAction 中定义）并得到一个回复（回复在枚举 IcoEvent 中定义）。
 
 ```rust
-let _transfer_response = msg::send_for_reply(
-    *token_id,
-    FTAction::Transfer {
-        from: *from,
-        to: *to,
-        amount,
+let _transfer_response =  msg::send_for_reply_as::<ft_main_io::FTokenAction, FTokenEvent>(
+    *token_address,
+    FTokenAction::Message {
+        transaction_id,
+        payload: ft_logic_io::Action::Transfer {
+            sender: *from,
+            recipient: *to,
+            amount: amount_tokens,
+        }
+        .encode(),
     },
     0,
 )
-.expect("Error in message")
+.expect("Error in sending a message `FTokenAction::Message`")
 .await
 .expect("Error in transfer");
 ```
@@ -70,10 +75,18 @@ pub fn not_zero_address(address: &ActorId, message: &str) {
 3. `lib.rs` - 定义合约逻辑
 
 ### 代码结构
+`Cargo.toml`
+```toml
+[dependecies]
+# ...
+hashbrown = "0.13.1"
+```
 
 该合约有以下结构：
 
 ```rust
+use hashbrown::HashMap;
+
 struct IcoContract {
     ico_state: IcoState,
     start_price: u128,
@@ -83,7 +96,9 @@ struct IcoContract {
     tokens_goal: u128,
     owner: ActorId,
     token_address: ActorId,
-    token_holders: BTreeMap<ActorId, u128>,
+    token_holders: HashMap<ActorId, u128>,
+    transaction_id: u64,
+    transactions: HashMap<ActorId, u64>,
 }
 ```
 
@@ -118,6 +133,7 @@ async fn start_ico(&mut self, config: IcoAction)
 
 ```rust
 IcoEvent::SaleStarted {
+    transaction_id,
     duration,
     start_price,
     tokens_goal,

@@ -28,20 +28,23 @@ To use the default implementation you should include the packages into your *Car
 ```toml
 gear-lib = { git = "https://github.com/gear-dapps/gear-lib.git" }
 gear-lib-derive = { git = "https://github.com/gear-dapps/gear-lib.git" }
+hashbrown = "0.13.1"
 ```
 
 The states that non-fungible-contract store are defined in the struct `NFTState`:
 
 ```rust
+use hashbrown::HashMap;
+
 #[derive(Debug, Default)]
 pub struct NFTState {
     pub name: String,
     pub symbol: String,
     pub base_uri: String,
-    pub owner_by_id: BTreeMap<TokenId, ActorId>,
-    pub token_approvals: BTreeMap<TokenId, Vec<ActorId>>,
-    pub token_metadata_by_id: BTreeMap<TokenId, Option<TokenMetadata>>,
-    pub tokens_for_owner: BTreeMap<ActorId, Vec<TokenId>>,
+    pub owner_by_id: HashMap<TokenId, ActorId>,
+    pub token_approvals: HashMap<TokenId, Vec<ActorId>>,
+    pub token_metadata_by_id: HashMap<TokenId, Option<TokenMetadata>>,
+    pub tokens_for_owner: HashMap<ActorId, Vec<TokenId>>,
     pub royalties: Option<Royalties>,
 }
 ```
@@ -58,6 +61,7 @@ pub struct NFT {
     pub token: NFTState,
     pub token_id: TokenId,
     pub owner: ActorId,
+    pub transactions: HashMap<H256, NFTEvent>,
 }
 ```
 
@@ -102,6 +106,7 @@ pub struct NFT {
     pub token: NFTState,
     pub token_id: TokenId,
     pub owner: ActorId,
+    pub transactions: HashMap<H256, NFTEvent>,
 }
 
 static mut CONTRACT: Option<NFT> = None;

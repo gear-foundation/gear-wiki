@@ -127,7 +127,7 @@ pub struct GOCState {
     /// See the documentation of [`GOCEvent::Started`].
     pub ending: u64,
     /// Participants of the current game round.
-    pub players: BTreeSet<ActorId>,
+    pub players: Vec<ActorId>,
     /// The current game round prize fund.
     ///
     /// It's calculated by multiplying `participation_cost` and the number
