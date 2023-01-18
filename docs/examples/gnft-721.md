@@ -199,7 +199,7 @@ impl Metadata for NFTMetadata {
     type State = IoNFT;
 }
 ```
-To display the full contract State information, the `state()` function is used:
+To display the full contract state information, the `state()` function is used:
 
 ```rust
 #[no_mangle]
@@ -208,7 +208,7 @@ extern "C" fn state() {
         .expect("Failed to encode or reply with `<NFTMetadata as Metadata>::State` from `state()`");
 }
 ```
-You can also write a separate crate for reading a state, in which you can specify functions that will return the desired values from the `IoNFT` state (For example [gear-dapps/non-fungible-token/state](https://github.com/gear-dapps/non-fungible-token/tree/master/state)):
+To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `IoNFT` state. For example - [gear-dapps/non-fungible-token/state](https://github.com/gear-dapps/non-fungible-token/tree/master/state):
 
 ```rust
 #[metawasm]
