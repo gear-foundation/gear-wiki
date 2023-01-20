@@ -341,7 +341,7 @@ extern "C" fn state() {
         .expect("Failed to encode or reply with `<AppMetadata as Metadata>::State` from `state()`");
 }
 ```
-To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `AuctionInfo` state. For example - [gear-dapps/staking/state](https://github.com/gear-dapps/staking/tree/master/state):
+To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `IoStaking` state. For example - [gear-dapps/staking/state](https://github.com/gear-dapps/staking/tree/master/state):
 
 ```rust
 #[metawasm]
