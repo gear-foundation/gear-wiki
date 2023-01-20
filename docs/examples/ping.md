@@ -59,6 +59,56 @@ mod tests {
 }
 ```
 
+## Program metadata and state
+Metadata interface description:
+
+```rust
+pub struct DemoPingMetadata;
+
+impl Metadata for DemoPingMetadata {
+    type Init = ();
+    type Handle = InOut<Vec<u8>, Vec<u8>>;
+    type Others = ();
+    type Reply = ();
+    type Signal = ();
+    type State = Vec<String>;
+}
+```
+To display the full contract state information, the `state()` function is used:
+
+```rust
+#[no_mangle]
+extern "C" fn state() {
+    msg::reply(unsafe { MESSAGE_LOG.clone() }, 0)
+        .expect("Failed to encode or reply with `<AppMetadata as Metadata>::State` from `state()`");
+}
+```
+To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `Vec<String>` state. For example - [gear-dapps/ping/state](https://github.com/gear-dapps/ping/tree/master/state):
+
+```rust
+#[metawasm]
+pub trait Metawasm {
+    type State = <DemoPingMetadata as Metadata>::State;
+
+    fn get_first_message(state: Self::State) -> String {
+        ...
+    }
+
+    fn get_last_message(state: Self::State) -> String {
+        ...
+    }
+
+    fn get_messages_len(state: Self::State) -> u64 {
+        ...
+    }
+
+    fn get_message(index: u64, state: Self::State) -> String {
+        ...
+    }
+}
+```
+
+## Overview
 The program just sends `PONG` back to the original sender who sent `PING` to it.
 
 GitHub link: https://github.com/gear-dapps/ping
