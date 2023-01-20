@@ -299,6 +299,66 @@ yarn run start
 ```
 -->
 
+## Program metadata and state
+Metadata interface description:
+
+```rust
+pub struct DaoMetadata;
+
+impl Metadata for DaoMetadata {
+    type Init = In<InitDao>;
+    type Handle = InOut<DaoAction, DaoEvent>;
+    type Others = ();
+    type Reply = ();
+    type Signal = ();
+    type State = DaoState;
+}
+```
+To display the full contract state information, the `state()` function is used:
+
+```rust
+#[no_mangle]
+extern "C" fn state() {
+    msg::reply(
+        unsafe {
+            let dao = DAO.as_ref().expect("Uninitialized dao state");
+            let dao_state: DaoState = dao.into();
+            dao_state
+        },
+        0,
+    )
+    .expect("Failed to share state");
+}
+```
+To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `DaoState` state. For example - [gear-dapps/dao/state](https://github.com/gear-dapps/dao/tree/master/state):
+
+```rust
+#[metawasm]
+pub trait Metawasm {
+    type State = <DaoMetadata as Metadata>::State;
+
+    fn is_member(account: ActorId, state: Self::State) -> bool {
+        ...
+    }
+
+    fn is_in_whitelist(account: ActorId, state: Self::State) -> bool {
+        ...
+    }
+
+    fn get_proposal_id(state: Self::State) -> u128 {
+        ...
+    }
+
+    fn get_proposal_info(id: u128, state: Self::State) -> Proposal {
+        ...
+    }
+
+    fn get_member_info(account: ActorId, state: Self::State) -> Member {
+        ...
+    }
+}
+```
+
 ## Source code
 The source code of this example of DAO smart contract and the example of an implementation of its testing is available on [GitHub](https://github.com/gear-dapps/dao-light).
 
