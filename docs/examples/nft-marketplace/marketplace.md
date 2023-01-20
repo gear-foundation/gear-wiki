@@ -318,7 +318,54 @@ Another example of an interface that demonstrates how to work with a smart contr
 
 It implements the ability to mint NFTs, view all NFTs minted by any account in the contract, as well as view NFTs that someone has approved to the current account (`AprovedToMe`) with the possibility of further transfer to another account (this option is not available in the full NFT Marketplace application).
 
-### How to run
+## Program metadata and state
+Metadata interface description:
+
+```rust
+pub struct MarketMetadata;
+
+impl Metadata for MarketMetadata {
+    type Init = In<InitMarket>;
+    type Handle = InOut<MarketAction, MarketEvent>;
+    type Others = ();
+    type Reply = ();
+    type Signal = ();
+    type State = Market;
+}
+```
+To display the full contract state information, the `state()` function is used:
+
+```rust
+#[no_mangle]
+extern "C" fn state() {
+    msg::reply(
+        unsafe {
+            let market = MARKET.as_ref().expect("Uninitialized market state");
+            &(*market).clone()
+        },
+        0,
+    )
+    .expect("Failed to share state");
+}
+```
+To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `Market` state. For example - [gear-dapps/nft-marketplace/state](https://github.com/gear-dapps/nft-marketplace/tree/master/state):
+
+```rust
+#[metawasm]
+pub trait Metawasm {
+    type State = <MarketMetadata as Metadata>::State;
+
+    fn all_items(state: Self::State) -> Vec<Item> {
+        ...
+    }
+
+    fn item_info(args: ItemInfoArgs, state: Self::State) -> Item {
+        ...
+    }
+}
+```
+
+## How to run
 
 Install required dependencies:
 ```sh
