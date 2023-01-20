@@ -376,34 +376,69 @@ pub enum SupplyChainAction {
 }
 ```
 
-### Meta state queries
+### Program metadata and state
+Metadata interface description:
 
 ```rust
-/// Queries a program state.
-///
-/// On failure, returns a [`Default`] value.
-#[derive(Encode, Decode, TypeInfo)]
-pub enum SupplyChainStateQuery {
-    /// Gets [`ItemInfo`].
-    ///
-    /// Returns [`SupplyChainStateReply::ItemInfo`].
-    ItemInfo(ItemId),
+pub struct ContractMetadata;
 
-    /// Gets supply chain [`Participants`].
-    ///
-    /// Returns [`SupplyChainStateReply::Participants`].
-    Participants,
-
-    /// Gets an FT program address used by a supply chain.
-    ///
-    /// Returns [`SupplyChainStateReply::FTProgram`].
-    FTProgram,
-
-    /// Gets an NFT program address used by a supply chain.
-    ///
-    /// Returns [`SupplyChainStateReply::NFTProgram`].
-    NFTProgram,
+impl Metadata for ContractMetadata {
+    type Init = InOut<Initialize, Result<(), Error>>;
+    type Handle = InOut<Action, Result<Event, Error>>;
+    type Reply = ();
+    type Others = ();
+    type Signal = ();
+    type State = State;
 }
+```
+To display the full contract state information, the `state()` function is used:
+
+```rust
+#[no_mangle]
+extern "C" fn state() {
+    reply(common_state())
+        .expect("Failed to encode or reply with `<ContractMetadata as Metadata>::State` from `state()`");
+}
+```
+To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `State` struct. For example - [gear-dapps/supply-chain/state](https://github.com/gear-dapps/supply-chain/tree/master/state):
+
+```rust
+#[metawasm]
+pub trait Metawasm {
+    type State = <ContractMetadata as Metadata>::State;
+
+    fn item_info(item_id: ItemId, state: Self::State) -> Option<ItemInfo> {
+        state.item_info(item_id)
+    }
+
+    fn participants(state: Self::State) -> Participants {
+        state.participants()
+    }
+
+    fn roles(actor: ActorId, state: Self::State) -> Vec<Role> {
+        state.roles(actor)
+    }
+
+    fn existing_items(state: Self::State) -> Vec<(ItemId, ItemInfo)> {
+        state.items
+    }
+
+    fn fungible_token(state: Self::State) -> ActorId {
+        state.fungible_token
+    }
+
+    fn non_fungible_token(state: Self::State) -> ActorId {
+        state.non_fungible_token
+    }
+
+    fn is_action_cached(actor_action: ActorIdInnerSupplyChainAction, state: Self::State) -> bool {
+        let (actor, action) = actor_action;
+
+        state.is_action_cached(actor, action)
+    }
+}
+
+pub type ActorIdInnerSupplyChainAction = (ActorId, InnerAction);
 ```
 
 ## Source code
