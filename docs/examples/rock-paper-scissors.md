@@ -126,45 +126,53 @@ pub enum RevealResult {
 - `GameConfigChanged` is an event that occurs when someone uses `ChangeNextGameConfig` action successfully.
 - `GameStopped` is an event that occurs when the wallet uses `StopGame` action successfully, it returns the IDs of the players who got their reward or got their bet back.
 
-### State
-
-*Requests:*
+### Programm metadata and state
+Metadata interface description:
 
 ```rust
-pub enum State {
-    Config,
-    LobbyList,
-    GameState,
-    CurrentStageTimestamp,
-}
+pub struct ContractMetadata;
 
-pub enum GameStage {
-    Preparation,
-    InProgress(StageDescription),
-    Reveal(StageDescription),
-}
-
-pub struct StageDescription {
-    pub anticipated_players: BTreeSet<ActorId>,
-    pub finished_players: BTreeSet<ActorId>,
+impl Metadata for ContractMetadata {
+    type Init = ();
+    type Handle = ();
+    type Reply = ();
+    type Others = ();
+    type Signal = ();
+    type State = ContractState;
 }
 ```
-
-- `Config` returns `GameConfig` of a current game.
-- `LobbyList` returns a list of all players registered in this game whether they are currently out of the game or not.
-- `GameStage` returns current `GameStage` with the corresponding `StageDescription`, if necessary, where the program user can get information about the players who are anticipated(`anticipated_players`) at this stage or already finished(`finished_players`).
-- `CurrentStageTimestamp` returns timestamp of current stage start.
-
-Each state request has a corresponding reply with the same name.
-
-*Replies:*
+To display the full contract state information, the `state()` function is used:
 
 ```rust
-pub enum StateReply {
-    Config(GameConfig),
-    LobbyList(Vec<ActorId>),
-    GameStage(GameStage),
-    CurrentStageTimestamp(u64),
+#[no_mangle]
+extern "C" fn state() {
+    reply(common_state())
+        .expect("Failed to encode or reply with `<AppMetadata as Metadata>::State` from `state()`");
+}
+```
+To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `AuctionInfo` state. For example - [gear-dapps/rock-paper-scissors/state](https://github.com/gear-dapps/rock-paper-scissors/tree/master/state):
+
+```rust
+
+#[metawasm]
+pub trait Metawasm {
+    type State = <ContractMetadata as Metadata>::State;
+
+    fn config(state: Self::State) -> GameConfig {
+        state.game_config
+    }
+
+    fn lobby_list(state: Self::State) -> Vec<ActorId> {
+        state.lobby
+    }
+
+    fn game_stage(state: Self::State) -> GameStage {
+        state.stage
+    }
+
+    fn current_stage_start_timestamp(state: Self::State) -> u64 {
+        state.current_stage_start_timestamp
+    }
 }
 ```
 
