@@ -248,6 +248,98 @@ extern "C" fn meta_state() -> *mut [i32; 2] {
 }
 ```
 
+### Programm metadata and state
+Metadata interface description:
+
+```rust
+pub struct ContractMetadata;
+
+impl Metadata for ContractMetadata {
+    type Init = In<InitOnChainNFT>;
+    type Handle = InOut<OnChainNFTAction, OnChainNFTEvent>;
+    type Reply = ();
+    type Others = ();
+    type Signal = ();
+    type State = State;
+}
+```
+To display the full contract state information, the `state()` function is used:
+
+```rust
+#[no_mangle]
+extern "C" fn state() {
+    reply(common_state())
+        .expect("Failed to encode or reply with `<AppMetadata as Metadata>::State` from `state()`");
+}
+```
+To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `AuctionInfo` state. For example - [gear-dapps/on-chain-nft/state](https://github.com/gear-dapps/on-chain-nft/tree/master/state):
+
+```rust
+
+#[metawasm]
+pub trait Metawasm {
+    type State = <ContractMetadata as Metadata>::State;
+
+    fn token_uri(token_id: TokenId, state: Self::State) -> Option<Vec<u8>> {
+        let metadata = state
+            .token
+            .token_metadata_by_id
+            .iter()
+            .find(|(id, _)| token_id.eq(id))
+            .and_then(|(_id, metadata)| metadata.clone())
+            .unwrap_or_default();
+        // construct media
+        let mut content: Vec<String> = Vec::new();
+        // check if exists
+
+        if let Some((_id, nft)) = state.nfts.iter().find(|(id, _)| token_id.eq(id)) {
+            for (i, layer_item_id) in nft.iter().enumerate() {
+                if let Some((_id, layer_content)) =
+                    state.layers.iter().find(|(id, _)| (i as u128).eq(id))
+                {
+                    let s = layer_content
+                        .get(*layer_item_id as usize)
+                        .expect("No such layer item");
+                    content.push(s.clone());
+                }
+            }
+        }
+
+        Some(TokenURI { metadata, content }.encode())
+    }
+
+    fn base(query: NFTQuery, state: Self::State) -> Option<Vec<u8>> {
+        let encoded = match query {
+            NFTQuery::NFTInfo => NFTQueryReply::NFTInfo {
+                name: state.token.name.clone(),
+                symbol: state.token.symbol.clone(),
+                base_uri: state.token.base_uri,
+            },
+            NFTQuery::Token { token_id } => NFTQueryReply::Token {
+                token: state.token.token(token_id),
+            },
+            NFTQuery::TokensForOwner { owner } => NFTQueryReply::TokensForOwner {
+                tokens: state.token.tokens_for_owner(&owner),
+            },
+            NFTQuery::TotalSupply => NFTQueryReply::TotalSupply {
+                total_supply: state.token.total_supply(),
+            },
+            NFTQuery::SupplyForOwner { owner } => NFTQueryReply::SupplyForOwner {
+                supply: state.token.supply_for_owner(&owner),
+            },
+            NFTQuery::AllTokens => NFTQueryReply::AllTokens {
+                tokens: state.token.all_tokens(),
+            },
+            NFTQuery::ApprovedTokens { account } => NFTQueryReply::ApprovedTokens {
+                tokens: state.token.approved_tokens(&account),
+            },
+        }
+        .encode();
+        Some(encoded)
+    }
+}
+```
+
 ## Conclusion
 
 Gear provides a reusable [library](https://github.com/gear-dapps/gear-lib/tree/master/lib/src/non_fungible_token) with core functionality for the gNFT protocol. By using object composition, that library can be utilized within a custom NFT contract implementation in order to minimize duplication of community available code.
