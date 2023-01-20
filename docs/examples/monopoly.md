@@ -5,13 +5,13 @@ sidebar_position: 23
 
 # Monopoly game (Syndote)
 
-Syndote is the name of a Monopoly-like decentralized game that works **completely on-chain**. It has no backend or any centralized components, the user interface interacts directly with the smart contract uploaded in the Gear Network. 
+Syndote is the name of a Monopoly-like decentralized game that works **completely on-chain**. It has no backend or any centralized components, the user interface interacts directly with the smart contract uploaded in the Gear Network.
 
 This is a "game strategies battle" where players compete with each other by implementing various playing strategies uploaded as smart-contracts into the network.
 
-Syndote consists of Master contract and Player contracts. Master contract is the main contract that starts and controls the game. Player contracts implement the game strategies that can be unique for each participant of the game. 
+Syndote consists of Master contract and Player contracts. Master contract is the main contract that starts and controls the game. Player contracts implement the game strategies that can be unique for each participant of the game.
 
-After the game starts, all moves in the game take place automatically, but the UI provides an ability to jump to each one individually to analyze the player's strategy. To complete the game and determine the winner, many moves are required, which are processed over several blocks. In order for the Master contract to have enough gas to perform all the moves, the [gas reservation](../developing-contracts/gas-reservation) technology is used.
+After the game starts, all moves in the game take place automatically, but the UI provides an ability to jump to each one individually to analyze the player's strategy. To complete the game and determine the winner, many moves are required, which are processed over several blocks. In order for the Master contract to have enough gas to perform all the moves, the [gas reservation](/developing-contracts/gas-reservation.md) technology is used.
 
 ![img alt](./img/monopoly-1.png)
 
@@ -118,8 +118,8 @@ GameAction::StartRegistration
 ## Smart contracts
 ### Master contract
 
-[Master contract](https://github.com/gear-dapps/syndote/tree/master/syndote) is initialized with monopoly card information (cell cost, special cells: jail, lottery). As was already mentioned, it is given enough gas reservation for automatic play. Before each player's step `Master` contract checks the amount of gas and if it is not enough it will send a message to the game admin to request for another gas reservation.  
-**Players registration**:  
+[Master contract](https://github.com/gear-dapps/syndote/tree/master/syndote) is initialized with monopoly card information (cell cost, special cells: jail, lottery). As was already mentioned, it is given enough gas reservation for automatic play. Before each player's step `Master` contract checks the amount of gas and if it is not enough it will send a message to the game admin to request for another gas reservation.
+**Players registration**:
 Players deploy their strategic contracts and send a message `Register` to `Master` contract. Master contract:
 - Adds the players the list of participants and initializes it with the following structure:
 ```rust
@@ -139,11 +139,11 @@ struct PlayerInfo {
 When the required number of participants is reached, the admin sends a message `Play` to `Master` contract. This message starts an automated game that will scroll through the algorithms of the participants in turn:
 - `Master`contract starts the round. Each round contains 4 steps (Each player makes one step). Before each step `Master` contract checks the states of the participants (whether they are bankrupt or may be there is already a winner);
 - Each step contains the interaction with the strategic contract in turn:
-- If the number of steps in the current round is 4, `Master` contract starts the following round. 
+- If the number of steps in the current round is 4, `Master` contract starts the following round.
 
 ![img alt](./img/monopoly_play.png)
 
-**Strategic messages:**  
+**Strategic messages:**
 [Strategic contracts](https://github.com/gear-dapps/syndote/tree/master/player) send strategic messages depending on the position on the monopoly field. A player may be in one of the following positions:
 - A cell with his own property. A player has a right:
    - To add a gear on the cell. The gear can be `Bronze`, `Silver` or `Gold`;
@@ -167,10 +167,9 @@ During actions `AddGear` and `Upgrade` a player can sell his other properties to
         pub properties: BTreeMap<u8, (Vec<Gear>, Price, Rent)>,
     }
     ```
-    That struct contains the information about the state of all players and about the monopoly fields and built gears.  
-- Based on the information received, the strategic contract has to make a move (`BuyCell`, `AddGear`, `Upgrade`, `PayRent`, `ThrowRolls` etc). The move must be the asynchronous message to the monopoly contract.     
-- The move has to be made correctly. For example, if a player is in an already occupied field and tries to buy it, then `Master`contract will fine him. Each wrong step is penalized with one point. If a player scores 5 penalty points, it is out of the game.  
-- After the step a player has to send a reply to the monopoly contract. This way the monopoly contract knows about the completion of the step. The reply can be a simple empty message. 
+    That struct contains the information about the state of all players and about the monopoly fields and built gears.
+- Based on the information received, the strategic contract has to make a move (`BuyCell`, `AddGear`, `Upgrade`, `PayRent`, `ThrowRolls` etc). The move must be the asynchronous message to the monopoly contract.
+- The move has to be made correctly. For example, if a player is in an already occupied field and tries to buy it, then `Master`contract will fine him. Each wrong step is penalized with one point. If a player scores 5 penalty points, it is out of the game.
+- After the step a player has to send a reply to the monopoly contract. This way the monopoly contract knows about the completion of the step. The reply can be a simple empty message.
 - If a player's contract doesn’t reply, `Master` contract will remove that player from the game.
-- `Master` contract gives a limited amount of gas per turn. That amount is quite enough for the move, but if the player's contract contains an incorrect logic (for example, an infinite loop), it will be removed from the game. 
-
+- `Master` contract gives a limited amount of gas per turn. That amount is quite enough for the move, but if the player's contract contains an incorrect logic (for example, an infinite loop), it will be removed from the game.

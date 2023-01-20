@@ -9,7 +9,7 @@ sidebar_position: 8
 
 外部交易作为一个“戳”来激活智能合约并启动其逻辑。例如，我们可以通过向拍卖合约发送一个消息来启动拍卖。当拍卖时间过去后，合约将需要处理拍卖结果。然而，这将不会发生，直到有人向合同发送适当的消息来触发这一行动。
 
-Gear Protocol 通过引入延迟消息传递功能解决了这个问题。Gear 网络中的智能合约能够执行**无限**数量的区块，只要有足够的 gas 来执行。[gas 预留](./gas-reservation.md)可以保证这一点。因此，在 dApp 中包含中心化组件的需求被消除了，允许它们**完全在链上运行**。
+Gear Protocol 通过引入延迟消息传递功能解决了这个问题。Gear 网络中的智能合约能够执行**无限**数量的区块，只要有足够的 gas 来执行。[gas 预留](/developing-contracts/gas-reservation.md)可以保证这一点。因此，在 dApp 中包含中心化组件的需求被消除了，允许它们**完全在链上运行**。
 
 ```rust
 msg::send_delayed(program, payload, value, delay)
