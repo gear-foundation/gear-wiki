@@ -143,6 +143,7 @@ use gclient::{EventProcessor, GearApi, Result};
 const WASM_PATH: &str = "./target/wasm32-unknown-unknown/release/first_gear_app.opt.wasm";
 
 #[tokio::test]
+#[ignore]
 async fn test_example() -> Result<()> {
     // Create API instance
     let api = GearApi::dev().await?;
@@ -199,8 +200,10 @@ async fn test_example() -> Result<()> {
 Run the following command and wait for all tests to be green:
 
 ```shell
-cargo test --release
+cargo test --release -- --include-ignored
 ```
+
+It's recommended to mark with the `#[ignore]` attribute tests with `gclient` to separate their slow execution of the rest. To execute ignored tests, add the `--include-ignored` flag after a double dash (`--`) as shown above.
 
 Let's explore what we've done in the test function above.
 
