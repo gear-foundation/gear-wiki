@@ -38,6 +38,7 @@ pub struct Market {
     pub items: HashMap<ContractAndTokenId, Item>,
     pub approved_nft_contracts: HashSet<ActorId>,
     pub approved_ft_contracts: HashSet<ActorId>,
+    pub tx_id: TransactionId,
 }
 ```
 - `admin_id` - an account who has the right to approve non-fungible-token and fungible-tokens contracts that can be used in the marketplace contract;
@@ -49,18 +50,21 @@ The marketplace contract is initialized with the following fields;
 - `approved_nft_contracts` - nft contracts accounts that can be listed on the marketplace;
 - `approved_ft_contracts` - 
 fungible token accounts for which it is possible to buy marketplace items;
+- `tx_id` - the id for tracking transactions in the fungible and non-fungible contracts (See the description of [fungible token](/docs/examples/gft-20.md) and [non-fungible token](/docs/examples/gnft-721.md)).
+
 
 The marketplace item has the following struct:
 ```rust
 pub struct Item {
-    pub owner_id: ActorId,
-    pub ft_contract_id: Option<ActorId>,
-    pub price: Option<u128>,
+    pub owner: ActorId,
+    pub ft_contract_id: Option<ContractId>,
+    pub price: Option<Price>,
     pub auction: Option<Auction>,
-    pub offers: Vec<Offer>,
+    pub offers: BTreeMap<(Option<ContractId>, Price), ActorId>,
+    pub tx: Option<(TransactionId, MarketTx)>,
 }
 ```
-- `owner_id` - an item owner;
+- `owner` - an item owner;
 - `ft_contract_id` - a contract of fungible tokens for which that item can be bought. If that field is `None` then the item is on sale for native Gear value;
 - `price` - 
 the item price. `None` field means that the item is not on the sale;
@@ -68,7 +72,35 @@ the item price. `None` field means that the item is not on the sale;
 a field containing information on the current auction. `None` field means that there is no current auction on the item;
 - `offers` - 
 purchase offers made on that item;
+- `tx` - a pending transaction on the item. `None` means that there is no pending transactions. 
 
+`MarketTx` is an enum of possible transactions that can occur with NFT:
+
+```rust
+#[derive(Debug, Encode, Decode, TypeInfo, Clone, PartialEq, Eq)]
+pub enum MarketTx {
+    CreateAuction,
+    Bid {
+        account: ActorId,
+        price: Price,
+    },
+    SettleAuction,
+    Sale {
+        buyer: ActorId,
+    },
+    Offer {
+        ft_id: ContractId,
+        price: Price,
+        account: ActorId,
+    },
+    AcceptOffer,
+    Withdraw {
+        ft_id: ContractId,
+        price: Price,
+        account: ActorId,
+    },
+}
+```
 ### Listing NFTs, changing the price or stopping the sale.
 To list NFT on the marketplace or modify the terms of sale send the following message: 
 ```rust
@@ -81,17 +113,16 @@ To list NFT on the marketplace or modify the terms of sale send the following me
 /// * `nft_contract_id` must be added to `approved_nft_contracts`
 /// * if item already exists, then it cannot be changed if there is an active auction
 ///
-/// Arguments:
-/// * `nft_contract_id`: the NFT contract address
-/// * `token_id`: the NFT id
-/// * `price`: the NFT price (if it is `None` then the item is not on the sale)
-///
-/// /// On success replies [`MarketEvent::MarketDataAdded`].
+/// On success replies [`MarketEvent::MarketDataAdded`].
 AddMarketData {
-    nft_contract_id: ActorId,
-    ft_contract_id: Option<ActorId>,
-    token_id: U256,
-    price: Option<u128>,
+    /// the NFT contract address
+    nft_contract_id: ContractId,
+    /// the fungible token contract address (If it is `None` then the item is traded for the native value)
+    ft_contract_id: Option<ContractId>,
+    /// the NFT id
+    token_id: TokenId,
+    /// the NFT price (if it is `None` then the item is not on the sale)
+    price: Option<Price>,
 }
 ```
 ### NFT purchase.
@@ -106,14 +137,12 @@ To buy NFT send the following message:
 /// * If the NFT is sold for fungible tokens then a buyer must have enough tokens in the fungible token contract.
 /// * There must be no open auction on the item.
 /// 
-/// Arguments:
-/// * `nft_contract_id`: NFT contract address
-/// * `token_id`: the token ID
-/// 
 /// On success replies [`MarketEvent::ItemSold`].
 BuyItem {
-    nft_contract_id: ActorId,
-    token_id: U256,
+    /// NFT contract address
+    nft_contract_id: ContractId,
+    /// the token ID
+    token_id: TokenId,
 }
 ```
 
@@ -126,7 +155,7 @@ pub struct Auction {
     pub bid_period: u64,
     pub started_at: u64,
     pub ended_at: u64,
-    pub current_price: u128,
+    pub current_price: Price,
     pub current_winner: ActorId,
 }
 ```
@@ -145,23 +174,21 @@ The auction is started with the following message:
 /// Requirements:
 /// * Only the item owner can start the auction.
 /// * `nft_contract_id` must be in the list of `approved_nft_contracts`
-/// *  There must be no active auction.
-///
-/// Arguments:
-/// * `nft_contract_id`: the NFT contract address
-/// * `ft_contract_id`: the fungible token contract address that can be used for trading
-/// * `token_id`: the NFT id
-/// * `min_price`: the starting price
-/// * `bid_period`: the time interval. If the auction ends before `exec::blocktimestamp() + bid_period`
-/// then the auction end time is delayed for `bid_period`.
+/// *  There must be no active auction
 /// 
 /// On success replies [`MarketEvent::AuctionCreated`].
 CreateAuction {
-    nft_contract_id: ActorId,
-    ft_contract_id: Option<ActorId>,
-    token_id: U256,
-    min_price: u128,
+    /// the NFT contract address
+    nft_contract_id: ContractId,
+    /// the fungible token contract address (If it is `None` then the item is traded for the native value)
+    ft_contract_id: Option<ContractId>,
+    /// the NFT id
+    token_id: TokenId,
+    /// the starting price
+    min_price: Price,
+    /// the time interval the auction is extended if bid is made if the auction ends before `exec::blocktimestamp() + bid_period`
     bid_period: u64,
+    /// the auction duration
     duration: u64,
 },
 ```
@@ -176,17 +203,15 @@ To add bid to the current auction send the following message:
 /// * If the NFT is sold for a native Gear value, then a buyer must attach a value equal to the price indicated in the arguments.
 /// * If the NFT is sold for fungible tokens then a buyer must have   enough tokens in the fungible token contract.
 /// * `price` must be greater than the current offered price for that item.
-/// 
-/// # Arguments
-/// * `nft_contract_id`: the NFT contract address.
-/// * `token_id`: the NFT id.
-/// * `price`: the offered price.
 ///  
 /// On success replies [`MarketEvent::BidAdded`].
 AddBid {
-    nft_contract_id: ActorId,
-    token_id: U256,
-    price: u128,
+    /// the NFT contract address
+    nft_contract_id: ContractId,
+    /// * `token_id`: the NFT id
+    token_id: TokenId,
+    /// the offered price
+    price: Price,
 },
 ```
 
@@ -196,16 +221,14 @@ If auction period is over then anyone can send message `SettleAuction` that will
 /// 
 /// Requirements:
 /// * The auction must be over.
-/// 
-/// Arguments:
-/// * `nft_contract_id`: the NFT contract address
-/// * `token_id`: the NFT id
 ///   
 /// On successful auction replies [`MarketEvent::AuctionSettled`].
 /// If no bids were made replies [`MarketEvent::AuctionCancelled`].
 SettleAuction {
-    nft_contract_id: ActorId,
-    token_id: U256,
+    /// the NFT contract address
+    nft_contract_id: ContractId,
+    /// the NFT id
+    token_id: TokenId,
 }
 ```
 
@@ -221,18 +244,16 @@ To make offer on the marketplace item send the following message:
 /// * If a user makes an offer in fungible tokens then he must have  enough tokens in the fungible token contract.
 /// * The price can not be equal to 0.
 /// * There must be no identical offers on the item.
-/// 
-/// Arguments:
-/// * `nft_contract_id`: the NFT contract address
-/// * `ft_contract_id`: the FT contract address
-/// * `token_id`: the NFT id
-/// * `price`: the offer price
 ///     
 /// On success replies [`MarketEvent::OfferAdded`].
 AddOffer {
-    nft_contract_id: ActorId,
-    ft_contract_id: Option<ActorId>,
-    token_id: U256,
+    /// the NFT contract address
+    nft_contract_id: ContractId,
+    /// the FT contract address (if it is `None, the offer is made for the native value)
+    ft_contract_id: Option<ContractId>,
+    /// the NFT id
+    token_id: TokenId,
+    /// the offer price
     price: u128,
 },
 ```
@@ -245,17 +266,17 @@ The item owner can accept the offer:
 /// * Only the owner can accept the offer.
 /// * There must be no ongoing auction.
 /// * The offer with indicated hash must exist.
-/// 
-/// Arguments:
-/// * `nft_contract_id`: the NFT contract address
-/// * `token_id`: the NFT id
-/// * `offer_hash`: the offer hash that includes the offer price and the address of fungible token contract.
 ///      
 /// On success replies [`MarketEvent::OfferAccepted`].
 AcceptOffer {
-    nft_contract_id: ActorId,
-    token_id: U256,
-    offer_hash: H256,
+    /// the NFT contract address
+    nft_contract_id: ContractId,
+    /// the NFT id
+    token_id: TokenId,
+    /// the fungible token contract address
+    ft_contract_id: Option<ContractId>,
+    /// the offer price
+    price: Price,
 }
 ```
 The user who made the offer can also withdraw his tokens:
@@ -268,19 +289,20 @@ The user who made the offer can also withdraw his tokens:
 /// * Only the offer creator can withdraw his tokens.
 /// * The offer with indicated hash must exist.
 /// 
-/// Arguments:
-/// * `nft_contract_id`: the NFT contract address
-/// * `token_id`: the NFT id
-/// * `offer_hash`: the offer hash that includes the offer price and the address of fungible token contract.
-/// 
 /// On success replies [`MarketEvent::TokensWithdrawn`].
 Withdraw {
-    nft_contract_id: ActorId,
-    token_id: U256,
-    hash: H256,
+    /// the NFT contract address
+    nft_contract_id: ContractId,
+    /// the FT contract address (if it is `None, the offer is made for the native value)
+    ft_contract_id: Option<ContractId>,
+    /// the NFT id
+    token_id: TokenId,
+    /// The offered price (native value)
+    price: Price,
 },
 ```
-
+## Consistency of contract states
+The `market` contract interacts with `fungible` and `non-fungible` token contracts. Each transaction that changes the states of several contracts is stored in the state until it is completed. Every time a user interacts with an item, the marketplace contract checks for an pending transaction and, if there is one, asks the user to complete it, not allowing to start a new one. The idempotency of the token contracts allows to restart a transaction without duplicate changes what guarantees the state consistency of 3 contracts.
 ## User interface
 
 A Ready-to-Use application example provides a user interface that interacts with [gNFT](https://github.com/gear-dapps/non-fungible-token/tree/master/nft) and [Marketplace](https://github.com/gear-dapps/nft-marketplace) smart contracts running in Gear Network.
