@@ -12,7 +12,7 @@ Imagine a bank vault that requires more than one key to open: That’s a little 
 
 Multisignature proponents argue that multisignature is the most secure and fail-proof way to store cryptocurrency. Even if a thief gets his hands on one of your wallets, for example, they still won’t be able to access your account without the keys to the other wallets in the setup.
 
-This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. Anyone can easily create their own application and run it on the Gear Network. The source code is available on [GitHub](https://github.com/gear-dapps/multisig-wallet). 
+This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. Anyone can easily create their own application and run it on the Gear Network. The source code is available on [GitHub](https://github.com/gear-dapps/multisig-wallet).
 
 ## Logic
 
@@ -121,28 +121,124 @@ pub enum MWEvent {
 - `OwnerReplace` is an event that occurs when the wallet use `ReplaceOwner` action successfully
 - `RequirementChange` is an event that occurs when the wallet use `ChangeRequiredConfirmationsCount` action successfully
 
-### State
 
-*Requests:*
+### Program metadata and state
+Metadata interface description:
 
 ```rust
-pub enum State {
-    ConfirmationsCount(U256),
-    TransactionsCount {
-        pending: bool,
-        executed: bool,
-    },
-    Owners,
-    Confirmations(U256),
-    TransactionIds {
-        from_index: u64,
-        to_index: u64,
-        pending: bool,
-        executed: bool,
-    },
-    IsConfirmed(U256),
-    Description(U256)
+pub struct ContractMetadata;
+
+impl Metadata for ContractMetadata {
+    type Init = In<MWInitConfig>;
+    type Handle = InOut<MWAction, MWEvent>;
+    type Reply = ();
+    type Others = ();
+    type Signal = ();
+    type State = State;
 }
+```
+To display the full contract state information, the `state()` function is used:
+
+```rust
+#[no_mangle]
+extern "C" fn state() {
+    reply(common_state())
+        .expect("Failed to encode or reply with `<ContractMetadata as Metadata>::State` from `state()`");
+}
+```
+To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `State` struct. For example - [gear-dapps/multisig-wallet/state](https://github.com/gear-dapps/multisig-wallet/tree/master/state):
+
+```rust
+#[metawasm]
+pub trait Metawasm {
+    type State = <ContractMetadata as Metadata>::State;
+
+    // Returns number of confirmations of a transaction.
+    // `transaction_id` Transaction ID.
+    // Number of confirmations.
+    fn confirmations_count(transaction_id: TransactionId, state: Self::State) -> Option<u32> {
+        common_confirmations_count(&state, transaction_id)
+    }
+
+    // Returns total number of transactions after filers are applied.
+    // `pending` Include pending transactions.
+    // `executed` Include executed transactions.
+    // Total number of transactions after filters are applied.
+    fn transactions_count(pending_executed: PendingExecuted, state: Self::State) -> u32 {
+        state
+            .transactions
+            .into_iter()
+            .filter(|(_, tx)| {
+                (pending_executed.0 && !tx.executed) || (pending_executed.1 && tx.executed)
+            })
+            .count() as _
+    }
+
+    // Returns list of owners.
+    // List of owner addresses.
+    fn owners(state: Self::State) -> Vec<ActorId> {
+        state.owners
+    }
+
+    // Returns array with owner addresses, which confirmed transaction.
+    // `transaction_id` Transaction ID.
+    // Returns array of owner addresses.
+    fn confirmations(transaction_id: TransactionId, state: Self::State) -> Option<Vec<ActorId>> {
+        state
+            .confirmations
+            .into_iter()
+            .find_map(|(tx_id, confirmations)| (tx_id == transaction_id).then_some(confirmations))
+    }
+
+    // Returns list of transaction IDs in defined range.
+    // `from` Index start position of transaction array.
+    // `to` Index end position of transaction array(not included).
+    // `pending` Include pending transactions.
+    // `executed` Include executed transactions.
+    // `Returns` array of transaction IDs.
+    fn transaction_ids(
+        from_to_pending_executed: FromToPendingExecuted,
+        state: Self::State,
+    ) -> Vec<TransactionId> {
+        let (from, to, pending, executed) = from_to_pending_executed;
+
+        state
+            .transactions
+            .into_iter()
+            .filter(|(_, tx)| (pending && !tx.executed) || (executed && tx.executed))
+            .map(|(id, _)| id)
+            .take(to as _)
+            .skip(from as _)
+            .collect()
+    }
+
+    // Returns the confirmation status of a transaction.
+    // `transaction_id` Transaction ID.
+    fn is_confirmed(transaction_id: TransactionId, state: Self::State) -> bool {
+        let required = state.required;
+
+        if let Some(count) = common_confirmations_count(&state, transaction_id) {
+            count >= required
+        } else {
+            false
+        }
+    }
+
+    // Returns the description of a transaction.
+    // `transaction_id` Transaction ID.
+    fn transaction_description(
+        transaction_id: TransactionId,
+        state: Self::State,
+    ) -> Option<Option<String>> {
+        state
+            .transactions
+            .into_iter()
+            .find_map(|(tx_id, tx)| (tx_id == transaction_id).then_some(tx.description))
+    }
+}
+
+pub type PendingExecuted = (bool, bool);
+pub type FromToPendingExecuted = (u32, u32, bool, bool);
 ```
 
 - `ConfirmationsCount` returns number of confirmations of a transaction whose ID is a parameter.
