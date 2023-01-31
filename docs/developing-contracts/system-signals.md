@@ -13,7 +13,7 @@ First of all, it can be useful to free up resources occupied by the program. A c
 
 In this case, `Futures` remain in memory pages forever. Other messages are not aware of `Futures` associated with other messages. Over time, `Futures` accumulate in the program's memory so eventually a large amount of Futures limits the max amount of space the program can use.
 
-In case a message has been removed from the waitlist due to gas constraints, the system sends a system message (signal) that is baked by an amount of [reserved gas](./gas-reservation.md), which informs the program that it’s message was removed from the waitlist. Based on this info, a program can clean up its used system resources (`Futures`).
+In case a message has been removed from the waitlist due to gas constraints, the system sends a system message (signal) that is baked by an amount of [reserved gas](/docs/developing-contracts/gas-reservation.md), which informs the program that it’s message was removed from the waitlist. Based on this info, a program can clean up its used system resources (`Futures`).
 
 The `gstd` library provides a separate function for reserving gas specifically for system signal messages. It cannot be used for sending other regular cross-actor messages:
 ```rust
