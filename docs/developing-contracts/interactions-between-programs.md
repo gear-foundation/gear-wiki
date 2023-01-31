@@ -9,11 +9,11 @@ Asynchronous interaction between Gear programs is similar to the usual asynchron
 
 ## Program entry points
 
-if a program uses asynchronous messages, its main executable functions change
+If a program's logic implies asynchronous messaging, its main executable functions must differ from those used in synchronous communications.
 
 ### async_init()
 
-In case if there is an asynchronous call in the program initialization, then instead of `init()` we should use `async_init()`:
+In case of an asynchronous call in the program initialization, the `async_init()` must be used instead of `init()`:
 
 ```rust
 #[gstd::async_init]
@@ -24,7 +24,7 @@ async fn init() {
 
 ### main()
 
-The same for asynchronous messages, instead of `handle` `handle_reply` we use `main`:
+The same for asynchronous messages, the `main` must be used instead of `handle` `handle_reply`:
 
 ```rust
 #[gstd::async_main]
@@ -39,7 +39,7 @@ async fn main() {
 
 # Cross-program message
 
-To send message to a Gear program use function `send_for_reply(program, payload, value)`, in this function:
+To send a message to a Gear program, use the `send_for_reply(program, payload, value)` function. In this function:
 - program - the address of the program to send the message for;
 - payload - the message to the program;
 - value - the funds attached to the message.

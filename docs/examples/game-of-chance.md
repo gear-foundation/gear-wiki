@@ -113,36 +113,31 @@ pub enum GOCAction {
 }
 ```
 
-### Meta state reply
+### Program metadata and state
+Metadata interface description:
 
 ```rust
-/// The current game round state.
-#[derive(Debug, Default, Encode, Decode, PartialEq, Eq, PartialOrd, Ord, Clone, TypeInfo)]
-pub struct GOCState {
-    /// The start time (in milliseconds) of the current game round and the
-    /// players entry stage.
-    ///
-    /// If it equals 0, a winner has picked and the round is over.
-    pub started: u64,
-    /// See the documentation of [`GOCEvent::Started`].
-    pub ending: u64,
-    /// Participants of the current game round.
-    pub players: BTreeSet<ActorId>,
-    /// The current game round prize fund.
-    ///
-    /// It's calculated by multiplying `participation_cost` and the number
-    /// of `players`.
-    pub prize_fund: u128,
-    /// See the documentation of [`GOCAction::Start`].
-    pub participation_cost: u128,
-    /// The winner of the previous game round.
-    pub last_winner: ActorId,
-    /// A currency (or a FT contract [`ActorId`]) of the current game round.
-    ///
-    /// See the documentation of [`GOCAction::Start`].
-    pub ft_actor_id: Option<ActorId>,
+pub struct ContractMetadata;
+
+impl Metadata for ContractMetadata {
+    type Init = InOut<Initialize, Result<(), Error>>;
+    type Handle = InOut<Action, Result<Event, Error>>;
+    type Reply = ();
+    type Others = ();
+    type Signal = ();
+    type State = State;
 }
 ```
+To display the full contract state information, the `state()` function is used:
+
+```rust
+#[no_mangle]
+extern "C" fn state() {
+    reply(common_state())
+        .expect("Failed to encode or reply with `<ContractMetadata as Metadata>::State` from `state()`");
+}
+```
+To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `State` struct.
 
 ## Source code
 

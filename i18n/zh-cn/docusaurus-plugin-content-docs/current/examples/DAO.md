@@ -67,18 +67,27 @@ let balance_response: FTEvent = msg::send_and_wait_for_reply(
 
 ## 合约结构
 
+`Cargo.toml`
+```toml
+[dependecies]
+# ...
+hashbrown = "0.13.1"
+```
+
 合约包含了以下结构：
 
 ```rust
+use hashbrown::HashMap;
+
 struct Dao {
     approved_token_program_id: ActorId,
     period_duration: u64,
     voting_period_length: u64,
     grace_period_length: u64,
     total_shares: u128,
-    members: BTreeMap<ActorId, Member>,
+    members: HashMap<ActorId, Member>,
     proposal_id: u128,
-    proposals: BTreeMap<u128, Proposal>,
+    proposals: HashMap<u128, Proposal>,
     locked_funds: u128,
 }
 ```

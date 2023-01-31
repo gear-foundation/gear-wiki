@@ -84,6 +84,12 @@ Admin can view the Stakers list (`GetStakers` message). The admin can update the
 The user first makes a bet (`Stake` message), and then he can receive his reward on demand (`GetReward` message). The user can withdraw part of the amount (`Withdraw` message).
 
 ## Interface
+To use the hashmap you should include `hashbrown` package into your *Cargo.toml* file:
+```toml
+[dependecies]
+# ...
+hashbrown = "0.13.1"
+```
 ### Source files
 1. `staking/src/lib.rs` - contains functions of the 'staking' contract.
 2. `staking/io/src/lib.rs` - contains Enums and structs that the contract receives and sends in the reply.
@@ -93,6 +99,8 @@ The user first makes a bet (`Stake` message), and then he can receive his reward
 The contract has the following structs:
 
 ```rust
+use hashbrown::HashMap;
+
 struct Staking {
     owner: ActorId,
     staking_token_address: ActorId,
@@ -104,7 +112,7 @@ struct Staking {
     reward_total: u128,
     all_produced: u128,
     reward_produced: u128,
-    stakers: BTreeMap<ActorId, Staker>,
+    stakers: HashMap<ActorId, Staker>,
 }
 ```
 where:
@@ -193,7 +201,7 @@ pub enum StakingState {
 }
 
 pub enum StakingStateReply {
-    Stakers(BTreeMap<ActorId, Staker>),
+    Stakers(Vec<(ActorId, Staker)>),
     Staker(Staker),
 }
 ```
@@ -309,27 +317,47 @@ async unsafe fn main() {
 }
 ```
 
-It is also important to have the ability to read the contract state off-chain. It is defined in the `fn meta_state()`. The contract receives a request to read the certain data (the possible requests are defined in struct `StakingState` ) and sends replies. The contract replies about its state are defined in the enum `StakingStateReply`.
+### Programm metadata and state
+Metadata interface description:
+
+```rust
+pub struct AuctionMetadata;
+
+impl Metadata for AuctionMetadata {
+    type Init = ();
+    type Handle = InOut<Action, Event>;
+    type Others = ();
+    type Reply = ();
+    type Signal = ();
+    type State = AuctionInfo;
+}
+```
+To display the full contract state information, the `state()` function is used:
 
 ```rust
 #[no_mangle]
-extern "C" fn meta_state() -> *mut [i32; 2] {
-    let query: StakingState = msg::load().expect("failed to decode input argument");
-    let staking = unsafe { STAKING.get_or_insert(Default::default()) };
+extern "C" fn state() {
+    reply(common_state())
+        .expect("Failed to encode or reply with `<AppMetadata as Metadata>::State` from `state()`");
+}
+```
+To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `IoStaking` state. For example - [gear-dapps/staking/state](https://github.com/gear-dapps/staking/tree/master/state):
 
-    let encoded = match query {
-        StakingState::GetStakers => StakingStateReply::Stakers(staking.stakers.clone()).encode(),
+```rust
+#[metawasm]
+pub trait Metawasm {
+    type State = <StakingMetadata as Metadata>::State;
 
-        StakingState::GetStaker(address) => {
-            if let Some(staker) = staking.stakers.get(&address) {
-                StakingStateReply::Staker(*staker).encode()
-            } else {
-                panic!("meta_state(): Staker {:?} not found", address);
-            }
+    fn get_stakers(state: Self::State) -> Vec<(ActorId, Staker)> {
+        state.stakers
+    }
+
+    fn get_staker(address: ActorId, state: Self::State) -> Staker {
+        match state.stakers.iter().find(|(id, _staker)| address.eq(id)) {
+            Some((_id, staker)) => staker.clone(),
+            None => panic!("Staker with the ID = {address:?} doesn't exists"),
         }
-    };
-
-    gstd::util::to_leak_ptr(encoded)
+    }
 }
 ```
 

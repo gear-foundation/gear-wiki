@@ -103,26 +103,59 @@ pub enum FactoryEvent {
 }
 ```
 
-### State
+### Program metadata and state
+Metadata interface description:
+
 ```rust
+pub struct ContractMetadata;
 
-#[derive(Debug, Encode, Decode, TypeInfo)]
-pub enum FactoryStateQuery {
-    FeeTo,
-    FeeToSetter,
-    PairAddress { token_a: TokenId, token_b: TokenId },
-    AllPairsLength,
-    Owner,
+impl Metadata for ContractMetadata {
+    type Init = In<InitFactory>;
+    type Handle = InOut<FactoryAction, FactoryEvent>;
+    type Reply = ();
+    type Others = ();
+    type Signal = ();
+    type State = State;
+}
+```
+To display the full contract state information, the `state()` function is used:
+
+```rust
+#[no_mangle]
+extern "C" fn state() {
+    reply(common_state())
+        .expect("Failed to encode or reply with `<ContractMetadata as Metadata>::State` from `state()`");
+}
+```
+To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `State` struct. For example - [gear-dapps/dex/factory/state](https://github.com/gear-dapps/dex/tree/master/factory/state):
+
+```rust
+#[metawasm]
+pub trait Metawasm {
+    type State = <ContractMetadata as Metadata>::State;
+
+    fn fee_to(state: Self::State) -> ActorId {
+        state.fee_to
+    }
+
+    fn fee_to_setter(state: Self::State) -> ActorId {
+        state.fee_to_setter
+    }
+
+    fn pair_address(pair: Pair, state: Self::State) -> ActorId {
+        state.pair_address(pair.0, pair.1)
+    }
+
+    fn all_pairs_length(state: Self::State) -> u32 {
+        state.all_pairs_length()
+    }
+
+    fn owner(state: Self::State) -> ActorId {
+        state.owner_id
+    }
 }
 
-#[derive(Debug, Encode, Decode, TypeInfo)]
-pub enum FactoryStateReply {
-    FeeTo { address: ActorId },
-    FeeToSetter { address: ActorId },
-    PairAddress { address: ActorId },
-    AllPairsLength { length: u32 },
-    Owner { address: ActorId },
-}
+type Pair = (FungibleId, FungibleId);
 ```
 
 ### Interfaces
@@ -321,24 +354,52 @@ pub enum PairEvent {
 }
 ```
 
-### State
-The state is pretty straightforward and self-explanatory as well:
+### Program metadata and state
+Metadata interface description:
 
 ```rust
-#[derive(Debug, Encode, Decode, TypeInfo)]
-pub enum PairStateQuery {
-    TokenAddresses,
-    Reserves,
-    Prices,
-    BalanceOf(ActorId),
-}
+pub struct ContractMetadata;
 
-#[derive(Debug, Encode, Decode, TypeInfo)]
-pub enum PairStateReply {
-    TokenAddresses { token0: TokenId, token1: TokenId },
-    Reserves { reserve0: u128, reserve1: u128 },
-    Prices { price0: u128, price1: u128 },
-    Balance(u128),
+impl Metadata for ContractMetadata {
+    type Init = In<InitPair>;
+    type Handle = InOut<PairAction, PairEvent>;
+    type Reply = ();
+    type Others = ();
+    type Signal = ();
+    type State = State;
+}
+```
+To display the full contract state information, the `state()` function is used:
+
+```rust
+#[no_mangle]
+extern "C" fn state() {
+    reply(common_state())
+        .expect("Failed to encode or reply with `<ContractMetadata as Metadata>::State` from `state()`");
+}
+```
+To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `State` struct. For example - [gear-dapps/dex/pair/state](https://github.com/gear-dapps/supply-chain/tree/master/pair/state):
+
+```rust
+#[metawasm]
+pub trait Metawasm {
+    type State = <ContractMetadata as Metadata>::State;
+
+    fn token_addresses(state: Self::State) -> (FungibleId, FungibleId) {
+        state.token_addresses()
+    }
+
+    fn reserves(state: Self::State) -> (u128, u128) {
+        state.reserves()
+    }
+
+    fn prices(state: Self::State) -> (u128, u128) {
+        state.prices()
+    }
+
+    fn balance_of(address: ActorId, state: Self::State) -> u128 {
+        state.balance_of(address)
+    }
 }
 ```
 

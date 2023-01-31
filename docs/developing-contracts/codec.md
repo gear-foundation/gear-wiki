@@ -1,6 +1,6 @@
 ---
 sidebar_label: Data Encoding/Decoding
-sidebar_position: 4
+sidebar_position: 5
 ---
 
 # Data encoding/decoding
@@ -36,31 +36,20 @@ Learn more about SCALE Codec [here](https://github.com/paritytech/parity-scale-c
 
 `scale-info` is a library to describe Rust types, intended for providing information about the structure of encodable SCALE types.
 
-The definitions provide third party tools (e.g. a UI client) with information about how they are able to decode types agnostic of language. The interface that uses `scale-info` for Gear programs is called the `metadata` macro. It defines incoming and outgoing types for all necessary entry points and allows contracts and the client part to understand each other.
+The definitions provide third party tools (e.g. a UI client) with information about how they are able to decode types agnostic of language. The interface that uses `scale-info` for Gear programs is called the `metadata`. It defines incoming and outgoing types for all necessary entry points and allows contracts and the client part to understand each other.
 
-To use `metadata` in contract:
+:::info
+[Learn more](/docs/developing-contracts/metadata) how to use `metadata` in contract.
+:::
+
+To use `scale-info` in your project:
 
 ```toml
 [dependencies]
 
 // ...
-scale-info = { version = "2.2.0", default-features = false }
+scale-info = { version = "2.1.1", default-features = false, features = ["derive"] }
 ```
 
-```rust
-// We define all incoming and outgoing data types in advance
-
-gstd::metadata! {
-    title: "gear program",
-    init:
-        input: String,
-    handle:
-        input: MyAction,
-        output: Vec<u8>,
-    state:
-        input: StateQuery,
-        output: StateReply,
-}
-```
 
 Learn more about `scale-info` [here](https://github.com/paritytech/scale-info)

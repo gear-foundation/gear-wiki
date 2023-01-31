@@ -37,11 +37,14 @@ NFT 合约的默认实现是在 Gear 库中提供的：[gear-lib/non_fungible_to
 ```toml
 gear-lib = { git = "https://github.com/gear-dapps/gear-lib.git" }
 gear-lib-derive = { git = "https://github.com/gear-dapps/gear-lib.git" }
+hashbrown = "0.13.1"
 ```
 
 首先，我们从修改状态和 init 信息开始：
 
 ```rust
+use hashbrown::{HashMap, HashSet};
+
 #[derive(Debug, Default, NFTStateKeeper, NFTCore, NFTMetaState)]
 pub struct OnChainNFT {
     #[NFTStateField]
@@ -49,9 +52,9 @@ pub struct OnChainNFT {
     pub token_id: TokenId,
     pub owner: ActorId,
     pub base_image: String,
-    pub layers: BTreeMap<LayerId, Vec<String>>,
-    pub nfts: BTreeMap<TokenId, Vec<ItemId>>,
-    pub nfts_existence: BTreeSet<String>,
+    pub layers: HashMap<LayerId, Vec<String>>,
+    pub nfts: HashMap<TokenId, Vec<ItemId>>,
+    pub nfts_existence: HashSet<String>,
 }
 ```
 
@@ -62,7 +65,7 @@ pub struct InitOnChainNFT {
     pub symbol: String,
     pub base_uri: String,
     pub base_image: String,
-    pub layers: BTreeMap<LayerId, Vec<String>>,
+    pub layers: Vec<(LayerId, Vec<String>)>,
     pub royalties: Option<Royalties>,
 }
 ```
