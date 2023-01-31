@@ -189,6 +189,65 @@ extern "C" fn handle() {
 }
 ```
 
+### Program metadata and state
+Metadata interface description:
+
+```rust
+pub struct NFTMetadata;
+
+impl Metadata for NFTMetadata {
+    type Init = In<InitNFT>;
+    type Handle = InOut<NFTAction, NFTEvent>;
+    type Reply = ();
+    type Others = ();
+    type Signal = ();
+    type State = IoNFT;
+}
+```
+To display the full contract state information, the `state()` function is used:
+
+```rust
+#[no_mangle]
+extern "C" fn state() {
+    reply(common_state())
+        .expect("Failed to encode or reply with `<NFTMetadata as Metadata>::State` from `state()`");
+}
+```
+To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `IoNFT` state. For example - [gear-dapps/non-fungible-token/state](https://github.com/gear-dapps/non-fungible-token/tree/master/state):
+
+```rust
+#[metawasm]
+pub trait Metawasm {
+    type State = <NFTMetadata as Metadata>::State;
+
+    fn info(state: Self::State) -> NFTQueryReply {
+        ...
+    }
+
+    fn token(token_id: TokenId, state: Self::State) -> Token {
+       ...
+    }
+
+    fn tokens_for_owner(owner: ActorId, state: Self::State) -> Vec<Token> {
+        ...
+    }
+    fn total_supply(state: Self::State) -> u128 {
+        ...
+    }
+
+    fn supply_for_owner(owner: ActorId, state: Self::State) -> u128 {
+       ...
+    }
+
+    fn all_tokens(state: Self::State) -> Vec<Token> {
+       ...
+    }
+
+    fn approved_tokens(account: ActorId, state: Self::State) -> Vec<Token> {
+        ...
+    }   
+}
+```
 ## Conclusion
 
 Gear provides a reusable [library](https://github.com/gear-dapps/gear-lib/tree/master/lib/src/non_fungible_token) with core functionality for the gNFT protocol. By using object composition, that library can be utilized within a custom NFT contract implementation in order to minimize duplication of community available code.

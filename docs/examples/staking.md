@@ -317,27 +317,47 @@ async unsafe fn main() {
 }
 ```
 
-It is also important to have the ability to read the contract state off-chain. It is defined in the `fn meta_state()`. The contract receives a request to read the certain data (the possible requests are defined in struct `StakingState` ) and sends replies. The contract replies about its state are defined in the enum `StakingStateReply`.
+### Programm metadata and state
+Metadata interface description:
+
+```rust
+pub struct AuctionMetadata;
+
+impl Metadata for AuctionMetadata {
+    type Init = ();
+    type Handle = InOut<Action, Event>;
+    type Others = ();
+    type Reply = ();
+    type Signal = ();
+    type State = AuctionInfo;
+}
+```
+To display the full contract state information, the `state()` function is used:
 
 ```rust
 #[no_mangle]
-extern "C" fn meta_state() -> *mut [i32; 2] {
-    let query: StakingState = msg::load().expect("failed to decode input argument");
-    let staking = unsafe { STAKING.get_or_insert(Default::default()) };
+extern "C" fn state() {
+    reply(common_state())
+        .expect("Failed to encode or reply with `<AppMetadata as Metadata>::State` from `state()`");
+}
+```
+To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `IoStaking` state. For example - [gear-dapps/staking/state](https://github.com/gear-dapps/staking/tree/master/state):
 
-    let encoded = match query {
-        StakingState::GetStakers => StakingStateReply::Stakers(staking.stakers.clone()).encode(),
+```rust
+#[metawasm]
+pub trait Metawasm {
+    type State = <StakingMetadata as Metadata>::State;
 
-        StakingState::GetStaker(address) => {
-            if let Some(staker) = staking.stakers.get(&address) {
-                StakingStateReply::Staker(*staker).encode()
-            } else {
-                panic!("meta_state(): Staker {:?} not found", address);
-            }
+    fn get_stakers(state: Self::State) -> Vec<(ActorId, Staker)> {
+        state.stakers
+    }
+
+    fn get_staker(address: ActorId, state: Self::State) -> Staker {
+        match state.stakers.iter().find(|(id, _staker)| address.eq(id)) {
+            Some((_id, staker)) => staker.clone(),
+            None => panic!("Staker with the ID = {address:?} doesn't exists"),
         }
-    };
-
-    gstd::util::to_leak_ptr(encoded)
+    }
 }
 ```
 

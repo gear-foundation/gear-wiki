@@ -9,7 +9,7 @@ sidebar_position: 14
 
 This smart contract example created by Gear represents a Concert tickets distribution with the idea of converting fungible tokens (gFT) to non-fungible tokens (gNFT) in time.
 
-The article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. Anyone can easily create their own application and run it on the Gear Network. The source code is available on [GitHub](https://github.com/gear-dapps/concert). 
+The article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. Anyone can easily create their own application and run it on the Gear Network. The source code is available on [GitHub](https://github.com/gear-dapps/concert).
 
 In this example, a single deployed contract can hold one concert at time. Firstly, all the tickets for the concert come as fungible-tokens. In order to buy tickets one should provide the metadata (e.g. seat/row number) that will later be included in NFTs. When the concert ends, all the fungible tokens of all users (ticket holders) will turn into NFTs.
 
@@ -95,6 +95,51 @@ pub enum ConcertAction {
         amount: u128,
         metadata: Vec<Option<TokenMetadata>>,
     },
+}
+```
+
+### Program metadata and state
+Metadata interface description:
+
+```rust
+pub struct ContractMetadata;
+
+impl Metadata for ContractMetadata {
+    type Init = In<InitConcert>;
+    type Handle = InOut<ConcertAction, ConcertEvent>;
+    type Reply = ();
+    type Others = ();
+    type Signal = ();
+    type State = State;
+}
+```
+To display the full contract state information, the `state()` function is used:
+
+```rust
+#[no_mangle]
+extern "C" fn state() {
+    reply(common_state())
+        .expect("Failed to encode or reply with `<ContractMetadata as Metadata>::State` from `state()`");
+}
+```
+To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `State` struct. For example - [gear-dapps/concert/state](https://github.com/gear-dapps/concert/tree/master/state):
+
+```rust
+#[metawasm]
+pub trait Metawasm {
+    type State = <ContractMetadata as Metadata>::State;
+
+    fn current_concert(state: Self::State) -> CurrentConcert {
+        state.current_concert()
+    }
+
+    fn buyers(state: Self::State) -> Vec<ActorId> {
+        state.buyers
+    }
+
+    fn user_tickets(user: ActorId, state: Self::State) -> Vec<Option<TokenMetadata>> {
+        state.user_tickets(user)
+    }
 }
 ```
 
