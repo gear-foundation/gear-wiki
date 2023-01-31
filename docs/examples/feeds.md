@@ -141,6 +141,6 @@ pub trait Metawasm {
 # Conclusion
 Gear Feeds is an example of a full-fledged application with core logic being in a decentralized application implemented via Smart Contracts on Gear. We hope to see more exciting projects inspired by Gear feeds and recent platform improvements created by our community members! :)
 
-The source code for both Channel and Routar is available on [GitHub](https://github.com/gear-dapps/feeds).
+The source code for both Channel and Router is available on [GitHub](https://github.com/gear-dapps/feeds).
 
 For more details about testing smart contracts written on Gear, refer to this article: [Program Testing](/docs/developing-contracts/testing).
