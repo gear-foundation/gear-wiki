@@ -10,7 +10,7 @@ sidebar_position: 1
 NFT marketplace is a contract where you can buy and sell non-fungible tokens for fungible tokens. The contract also supports holding the NFT auctions and making/accepting purchase offers on NFTs.
 
 A smart contract examples created by Gear are available on GitHub so anyone can easily create their own NFT marketplace application and run it on the Gear Network:
-- [Gear Non-Fungible Token](https://github.com/gear-dapps/non-fungible-token/tree/master/nft). 
+- [Gear Non-Fungible Token](https://github.com/gear-dapps/non-fungible-token/). 
 - [NFT marketplace](https://github.com/gear-dapps/nft-marketplace).
 
 This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios.
@@ -50,7 +50,7 @@ The marketplace contract is initialized with the following fields;
 - `approved_nft_contracts` - nft contracts accounts that can be listed on the marketplace;
 - `approved_ft_contracts` - 
 fungible token accounts for which it is possible to buy marketplace items;
-- `tx_id` - the id for tracking transactions in the fungible and non-fungible contracts (See the description of [fungible token](/docs/examples/gft-20.md) and [non-fungible token](/docs/examples/gnft-721.md)).
+- `tx_id` - the id for tracking transactions in the fungible and non-fungible contracts (See the description of [fungible token](/examples/gft-20.md) and [non-fungible token](/examples/gnft-721.md)).
 
 
 The marketplace item has the following struct:
