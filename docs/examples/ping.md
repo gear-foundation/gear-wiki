@@ -95,7 +95,7 @@ mod contract;
 #[cfg(feature = "binary-vendor")]
 include!(concat!(env!("OUT_DIR"), "/wasm_binary.rs"));
 ```
-This will include the generated WASM binary as 3 constants: WASM_BINARY, WASM_BINARY_OPT and WASM_BINARY_META in the root crate. These constants can be used instead of paths to wasm files in the target directory. You may not use that approach and simply write the contract code in the `lib.rs` file.
+The enabled `binary-vendor` feature will include the generated WASM binary as 3 constants: WASM_BINARY, WASM_BINARY_OPT and WASM_BINARY_META in the root crate. These constants can be used in tests with `gclient` instead of paths to wasm files in the target directory. You may not use that approach and simply write the contract code in the `lib.rs` file.
 
 The `io` crate defines the contract metadata, namely, the state of the program and what messages the program receives and sends.
 ```rust
