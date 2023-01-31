@@ -80,54 +80,47 @@ pub enum Event {
 - `AuctionStarted` is an event that occurs when someone use `Create(CreateConfig)` successfully
 - `AuctionStoped` is an event that occurs when contract owner forcibly ends the auction
 
-### State
-
-*Requests:*
-
-```rust
-pub enum State {
-    TokenPrice(),
-    IsActive(),
-    Info(),
-}
-```
-
-- `TokenPrice` is a state to determine the current price of the NFT being sold
-- `IsActive` is a state to determine if the auction has been ended
-- `Info` is a state which describes an auction to show the user more information
-
-Each state request has a corresponding reply with the same name.
-
-*Replies:*
+### Programm metadata and state
+Metadata interface description:
 
 ```rust
-pub enum StateReply {
-    TokenPrice(u128),
-    IsActive(bool),
-    Info(AuctionInfo),
+pub struct AuctionMetadata;
+
+impl Metadata for AuctionMetadata {
+    type Init = ();
+    type Handle = InOut<Action, Event>;
+    type Others = ();
+    type Reply = ();
+    type Signal = ();
+    type State = AuctionInfo;
 }
 ```
-
-- `TokenPrice` has an associated value with current value in units
-- `IsActive` has an associated value which indicate that auction hasn't been ended
-- `Info` has an associated value of `AuctionInfo` type
-
-#### Structures in state replies:
+To display the full contract state information, the `state()` function is used:
 
 ```rust
-pub struct AuctionInfo {
-    pub nft_contract_actor_id: ActorId,
-    pub token_id: U256,
-    pub token_owner: ActorId,
-    pub starting_price: u128,
+#[no_mangle]
+extern "C" fn state() {
+    reply(common_state()).expect(
+        "Failed to encode or reply with `<AuctionMetadata as Metadata>::State` from `state()`",
+    );
 }
 ```
+To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `AuctionInfo` state. For example - [gear-dapps/dutch-auction/state](https://github.com/gear-dapps/dutch-auction/tree/master/state):
 
+```rust
+#[metawasm]
+pub trait Metawasm {
+    type State = <AuctionMetadata as Metadata>::State;
 
-- `nft_contract_actor_id` is a contract address where auctioneers NFT had been minted
-- `token_id` is an id of NFT in its contract
-- `token_owner` is an address of token owner to send him a reward if someone bought his NFT
-- `starting_price` is the price at which the auction starts and starts descending
+    fn info(mut state: Self::State) -> AuctionInfo {
+        if matches!(state.status, Status::IsRunning) && exec::block_timestamp() >= state.expires_at
+        {
+            state.status = Status::Expired
+        }
+        state
+    }
+}
+```
 
 ## Source code
 

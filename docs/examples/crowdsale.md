@@ -148,6 +148,53 @@ replies with:
 IcoEvent::SaleEnded
 ```
 
+### Programm metadata and state
+Metadata interface description:
+
+```rust
+pub struct CrowdsaleMetadata;
+
+impl Metadata for CrowdsaleMetadata {
+    type Init = ();
+    type Handle = InOut<IcoAction, IcoEvent>;
+    type Others = ();
+    type Reply = ();
+    type Signal = ();
+    type State = State;
+}
+```
+To display the full contract state information, the `state()` function is used:
+
+```rust
+#[no_mangle]
+extern "C" fn state() {
+    reply(common_state()).expect(
+        "Failed to encode or reply with `<ContractMetadata as Metadata>::State` from `state()`",
+    );
+}
+```
+To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `State` state. For example - [gear-dapps/crowdsale/state](https://github.com/gear-dapps/crowdsale/tree/master/state):
+
+```rust
+#[metawasm]
+pub trait Metawasm {
+    type State = <CrowdsaleMetadata as Metadata>::State;
+
+    fn current_price(state: Self::State) -> u128 {
+        state.get_current_price()
+    }
+
+    fn tokens_left(state: Self::State) -> u128 {
+        state.get_balance()
+    }
+
+    fn balance_of(address: ActorId, state: Self::State) -> u128 {
+        state.balance_of(&address)
+    }
+}
+
+```
+
 ## Conclusion
 
 The source code of this example of ICO smart contract and the example of an implementation of its testing is available on [Github](https://github.com/gear-dapps/crowdsale).
