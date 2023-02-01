@@ -203,7 +203,7 @@ Run the following command and wait for all tests to be green:
 cargo test --release -- --include-ignored
 ```
 
-It's recommended to mark with the `#[ignore]` attribute tests with `gclient` to separate their slow execution of the rest. To execute ignored tests with Cargo, add the `--include-ignored` flag after a double dash (`--`) as shown above.
+It's recommended to mark with the `#[ignore]` attribute tests with `gclient` to separate their slow execution from the rest. To execute ignored tests with Cargo, add the `--include-ignored` flag after a double dash (`--`) as shown above.
 
 Let's explore what we've done in the test function above.
 
