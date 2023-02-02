@@ -1,6 +1,6 @@
 ---
 sidebar_label: Consistency and Reliability
-sidebar_position: 8
+sidebar_position: 9
 ---
 
 # Ensuring reliability in asynс programming
@@ -11,7 +11,7 @@ When a program interacts with another program, the transaction becomes "distribu
 - Atomicity - all data changes are treated as if they were a single operation. That is, either all of the modifications are made, or none of them are made;
 - Consistency - this property implies that when a transaction begins and ends, the state of data is consistent.
 
-For example, transactions on the Ethereum blockchain are atomic, meaning that if a transaction fails due to an error, all of its effects on the global state are rolled back as if the transaction never occurred. Many blockchain applications rely on the atomicity of transactions, but this can be a problem when building asynchronous applications using the programming paradigm used on Ethereum, as you may encounter the problem of not being able to recover program state after a failed transaction. 
+For example, transactions on the Ethereum blockchain are atomic, meaning that if a transaction fails due to an error, all of its effects on the global state are rolled back as if the transaction never occurred. Many blockchain applications rely on the atomicity of transactions, but this can be a problem when building asynchronous applications using the programming paradigm used on Ethereum, as you may encounter the problem of not being able to recover program state after a failed transaction.
 
 Consider a simple token exchange where a user wants to swap tokens A for tokens B in a liquidity pool. The swap contract would send a message to the token A contract and a message to the token B contract. If one of these messages succeeds and the other fails for some reason, the state of the token A contract would be changed while the state of the token B contract would remain unchanged. This can cause inconsistencies in the state of the data and make it difficult to recover from failed transactions. As a result, it is important to consider different programming paradigms for implementing distributed transactions.
 
@@ -42,33 +42,33 @@ It is possible to execute a swap in one transaction. To resolve the problem of a
 
 ## Two phase commit protocol
 
-**Theory**:   
+**Theory**:
 We have a coordinator that sends messages to participants. The `two-phase commit protocol` has two parts: the `prepare` phase and the `commit` phase.
 
 **Preparation phase:**
 During the preparation phase, the coordinator and participants perform the following dialog:
-- `Coordinator`:  
+- `Coordinator`:
 The coordinator directs each participant database server to prepare to commit the transaction.
-- `Participants`:  
+- `Participants`:
 Every participant notifies the coordinator whether it can commit to its transaction branch.
-- `Coordinator`:  
+- `Coordinator`:
 The coordinator, based on the response from each participant, decides whether to commit or roll back the transaction. It decides to commit only if all participants indicate that they can commit to their transaction branches. If any participant indicates that it is not ready to commit to its transaction branch (or if it does not respond), the coordinator decides to end the global transaction.
 
 **Commit phase:**
 
 During the commit phase, the coordinator and participants perform the following dialog:
-- `Coordinator`:  
+- `Coordinator`:
 The coordinator writes the commit record or rollback record to the coordinator's logical log and then directs each participant to either commit or roll back the transaction.
-- `Participants`:  
+- `Participants`:
 If the coordinator issued a commit message, the participants commit the transaction by writing the commit record to the logical log and then sending a message to the coordinator acknowledging that the transaction was committed. If the coordinator issued a rollback message, the participants roll back the transaction but do not send an acknowledgment to the coordinator.
-- `Coordinator`:  
+- `Coordinator`:
 If the coordinator issues a message to commit the transaction, it waits to receive acknowledgment from each participant before it ends the global transaction. If the coordinator issued a message to roll back the transaction, it does not wait for acknowledgments from the participants.
 
 Let's see how it can be used in the example of a token swap contract. We consider the following situation: the account wants to exchange his tokens (let’s call it tokenA) for other tokens (tokenB) using the liquidity pool in the swap contract.
 
 In that case the swap contract is a coordinator contract and tokens contracts are participants.
 
-The swap contract makes the following steps:  
+The swap contract makes the following steps:
 
 **Prepare phase**
 
@@ -77,7 +77,7 @@ Swap contract sends the messages to token contracts to prepare transfer tokens (
 - `Token contract`:
 Token contracts make all necessary checks, and in case of success, lock funds and reply to the swap contract that they are ready to make a transaction.
 - `Swap contract`:
-Swap contract handles the messages from the token contracts and decides whether to commit or abort the global transaction. 
+Swap contract handles the messages from the token contracts and decides whether to commit or abort the global transaction.
 receives tokens B. The situation here is the same as in the first step.
 
 ![img alt](./img/2.prepare.png#gh-light-mode-only)
@@ -85,7 +85,7 @@ receives tokens B. The situation here is the same as in the first step.
 
 **Commit phase**
 
-- `Swap contract`:  
+- `Swap contract`:
 If token contracts confirm their readiness to execute the transaction, the swap contract sends them a message to commit the state. Otherwise, the swap contract tells them to abort the transaction.
 - `Token contract`:
 Token contracts finally change their state and send replies to the swap contract;
@@ -111,23 +111,23 @@ Of course, all that workflow handles the case when the gas runs out during the m
 
 **Prepare phase:**
 The same steps of two phase commit protocol are followed here:
-- `Coordinator`:  
+- `Coordinator`:
 The coordinator sends a prepare message to all participants and waits for replies;
-- `Participants`:  
-If the participants are ready to commit a transaction they send the ready message, otherwise they send no message to the coordinator. 
-- `Coordinator`:  
+- `Participants`:
+If the participants are ready to commit a transaction they send the ready message, otherwise they send no message to the coordinator.
+- `Coordinator`:
 Based on replies the coordinator decides either to go to the next state or not. If any of the participants respond with no message or if any of the participants fails to respond within a defined time, the coordinator sends an abort message to every participant.  It is important to highlight the differences from two phase commit protocol:
    - The coordinator limits the response time from the participant. We can implement this by sending a message with an indicated amount of gas or indicated number of blocks the coordinator is ready to wait;
-   - If the coordinator fails at this state, then the participants are able to abort the transaction (i.e. unlock their state) using delayed messages. So, in that phase, the timeout cases abort. 
+   - If the coordinator fails at this state, then the participants are able to abort the transaction (i.e. unlock their state) using delayed messages. So, in that phase, the timeout cases abort.
 
 **Prepare-to-commit phase:**
-- `Coordinator`:  
+- `Coordinator`:
 The coordinator sends a prepare-to-commit message to all participants and gets acknowledgements from everyone;
-- `Participants`:  
-Receiving a prepare-to-commit message, a participant knows that the unanimous decision was to commit. As was already mentioned in the prepare phase, if a participant fails to receive this message in time, then it aborts. However, if a participant receives an abort message then it can immediately abort the transaction. 
+- `Participants`:
+Receiving a prepare-to-commit message, a participant knows that the unanimous decision was to commit. As was already mentioned in the prepare phase, if a participant fails to receive this message in time, then it aborts. However, if a participant receives an abort message then it can immediately abort the transaction.
 The possible problem: the coordinator fails during sending a prepare-to-commit to participants. So some participants are in phase 2, others are in phase 1. It's a disaster because the first group will commit, the second group will abort in case of timeout.
-So we have to make sure that If one of the participants has received a precommit message, they can all commit. If the coordinator falls, any of the participants, being at the second stage, can become the coordinator itself and continue the transaction. 
-- `Coordinator`:  
+So we have to make sure that If one of the participants has received a precommit message, they can all commit. If the coordinator falls, any of the participants, being at the second stage, can become the coordinator itself and continue the transaction.
+- `Coordinator`:
 Having received acknowledgements from all the participants, the coordinator goes to the next phase.
 
 The three-phase commit protocol accomplishes two things:
@@ -144,7 +144,7 @@ If a participant times out waiting for a coordinator, elect a new coordinator.
 
 Let’s get back to our swap contract.
 
-**Preparation phase**:  
+**Preparation phase**:
 The following cases are possible:
 - all token contracts receive the message;
 - the swap contract fails to wait for response from any token contract
@@ -163,18 +163,18 @@ At this stage we can have a failure in the swap contract or in the token contrac
 ![img alt](./img/3.precommit.png#gh-light-mode-only)
 ![img alt](./img/3.precommit-dark.png#gh-dark-mode-only)
 
-**Commit phase**:  
+**Commit phase**:
 As in the previous stage we can have a failure only due to the lack of gas. Here it is not so critical, since at this stage all participants can commit themselves.
 
 ## Saga pattern
 **Theory**:
-A `saga` is a sequence of local transactions. Each local transaction updates the database and publishes a message or event to trigger the next local transaction in the saga. If a local transaction fails because it violates a business rule then the saga executes a series of compensating transactions that undo the changes that were made by the preceding local transactions. Thus, Saga consists of multiple steps whereas `2PC` acts like a single request.  
+A `saga` is a sequence of local transactions. Each local transaction updates the database and publishes a message or event to trigger the next local transaction in the saga. If a local transaction fails because it violates a business rule then the saga executes a series of compensating transactions that undo the changes that were made by the preceding local transactions. Thus, Saga consists of multiple steps whereas `2PC` acts like a single request.
 There are two ways of coordination sagas:
 
 - `Choreography` - each local transaction publishes domain events that trigger local transactions in other services;
 - `Orchestration` - an orchestrator (object) tells the participants what local transactions to execute.
 
-We will consider the `orchestration based Saga` where there would be an orchestrator (swap contract) to manage the entire operation from one center. 
+We will consider the `orchestration based Saga` where there would be an orchestrator (swap contract) to manage the entire operation from one center.
 
 The swap operation consists of the following steps:
 

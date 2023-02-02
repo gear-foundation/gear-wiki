@@ -1,13 +1,13 @@
 ---
 sidebar_label: Upload Program
-sidebar_position: 10
+sidebar_position: 11
 ---
 
 # Upload smart contracts
 
 Following the principles of Actor model for communication, uploading a program in the network is just one of the specific types of transactions that contain a Wasm file as a payload.
 
-Uploading a new program (smart-contract) to the blockchain takes place by calling the custom extrinsic `gear.uploadProgram(code, salt, initPayload, gasLimit, value)`. 
+Uploading a new program (smart-contract) to the blockchain takes place by calling the custom extrinsic `gear.uploadProgram(code, salt, initPayload, gasLimit, value)`.
 Where:
 
 - `code: Bytes` - binary Wasm code
@@ -39,4 +39,3 @@ The Gear-js library provides a simple and intuitive way to connect Gear Componen
 ### Via `gear-program`
 
 `gear-program` is the command line (CLI) utility for interacting with the blockchain network. Refer to [gear-program GitHub repo](https://github.com/gear-tech/gear-program) for details.
-

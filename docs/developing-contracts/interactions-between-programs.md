@@ -1,6 +1,6 @@
 ---
 sidebar_label: Asynchronous Programming
-sidebar_position: 5
+sidebar_position: 6
 ---
 
 # Asynchronous programming

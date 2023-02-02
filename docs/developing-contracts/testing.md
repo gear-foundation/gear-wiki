@@ -1,6 +1,6 @@
 ---
 sidebar_label: Program Testing
-sidebar_position: 11
+sidebar_position: 12
 ---
 
 # How to test a Gear program
