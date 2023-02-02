@@ -24,62 +24,10 @@ This article explains the programming interface, data structure, basic functions
 <!-- In addition, Gear provides an example implementation of the DAO user interface to demonstrate its interaction with the smart contract in the Gear Network. You can watch a video on how to get the DAO application up and running and its capabilities here: **https://youtu.be/6lxr7eojADw**. The source code for the DAO application is available on [GitHub](https://github.com/gear-dapps/dao-app).
 -->
 
-## Interface
-
-### Source files
-
-1. `ft_messages.rs` - contains functions of the fungible token contract. DAO contract interacts with fungible token contract through functions `transfer_tokens` and `balance`:
-
-```rust
-pub async fn transfer_tokens(
-		&mut self,
-		token_id: &ActorId, /// - the fungible token contract address
-		from: &ActorId, /// - the sender address
-		to: &ActorId, /// - the recipient address
-		amount: u128, /// - the amount of tokens
-)
-```
-
-This function sends a message (the action is defined in the enum `FTAction`) and gets a reply (the reply is defined in the enum `FTEvent`):
-
-```rust
-	let transfer_response: FTEvent = msg::send_and_wait_for_reply(
-        *token_id, /// - the fungible token contract address,
-        FTAction::Transfer(transfer_data), /// - action in the fungible token contract
-        0,
-    ).unwrap()
-     .await
-     .expect("Error in transfer tokens");
-```
-
-The function balance is defined in a similar way:
-
-```rust
-pub async fn balance(
-		&mut self,
-		token_id: &ActorId, /// - the fungible token contract address
-		account: &ActorId, /// - the account address
-)
-```
-
-and sends a message:
-
-```rust
-let balance_response: FTEvent = msg::send_and_wait_for_reply(
-        *token_id, /// - the fungible token contract address,
-		FTAction::BalanceOf(H256::from_slice(account.as_ref())) /// - action in the fungible token contract
-        0,
-    ).unwrap()
-     .await
-     .expect("Error in balance response");
-```
-
-2. `lib.rs` - defines the contract logic.
-
-### Structs
+## Logic
 To use the hashmap you should add the `hashbrown` package into your Cargo.toml file:
 ```toml
-[dependecies]
+[dependencies]
 # ...
 hashbrown = "0.13.1"
 ```
@@ -99,6 +47,9 @@ struct Dao {
     proposal_id: u128,
     proposals: HashMap<u128, Proposal>,
     locked_funds: u128,
+    balance: u128,
+    transaction_id: u64,
+    transactions: BTreeMap<u64, DaoAction>,
 }
 ```
 where:
@@ -122,15 +73,14 @@ where:
 
 `locked_funds` - tokens that are locked when a funding proposal is submitted.
 
-Parameters `approved_token_program_id`, `period_duration`, `grace_period_length` are set when initializing a contract. The contract is initialized in the function:
+`balance` - the amount of tokens in the DAO contract.
 
-```rust
-#[no_mangle]
-extern "C" fn init() {
-    ...
-}
-```
+`transaction_id` - the transaction number that is used for tracking transactions in the fungible token contract.
 
+`transactions` - the transaction history.
+
+
+Parameters `approved_token_program_id`, `period_duration`, `grace_period_length` are set when initializing a contract. The contract is initialized 
 with the following struct:
 
 ```rust
@@ -172,92 +122,112 @@ The actions that the contract receives outside are defined in enum `DaoActions`.
 
 ### DAO functions
 
-- Joining the DAO. Users can call that function in order to send the DAO contract the tokens and become the DAO members.
+- Joining the DAO. In order to send the DAO contract the tokens and become the DAO members a user has to send the following message:
 
 ```rust
- async fn deposit(&mut self, amount: u128)
+/// Deposits tokens to DAO
+/// The account gets a share in DAO that is calculated as: (amount * self.total_shares / self.balance)
+///
+/// On success replies with [`DaoEvent::Deposit`]
+Deposit {
+    /// the number of fungible tokens that user wants to deposit to DAO
+    amount: u128,
+},
 ```
 
- - The funding proposal. The 'applicant' is an actor that will be funded.
-
+ - The funding proposal. The 'applicant' is an actor that will be funded:
 ```rust
-async fn submit_funding_proposal(
-        &mut self,
-        applicant: &ActorId,
-        amount: u128,
-        quorum: u128,
-        details: String,
-    )
+/// The proposal of funding.
+///
+/// Requirements:
+///
+/// * The proposal can be submitted only by the existing members;
+/// * The receiver ID can't be the zero;
+/// * The DAO must have enough funds to finance the proposal
+///
+/// On success replies with [`DaoEvent::SubmitFundingProposal`]
+SubmitFundingProposal {
+    /// an actor that will be funded
+    receiver: ActorId,
+    /// the number of fungible tokens that will be sent to the receiver
+    amount: u128,
+    /// a certain threshold of YES votes in order for the proposal to pass
+    quorum: u128,
+    /// the proposal description
+    details: String,
+},
 ```
 
  - The member or the delegate address of the member submit his vote (YES or NO) on the proposal.
 
 ```rust
-async fn submit_vote(
-        &mut self,
-        proposal_id: u128,
-        vote: Vote,
-    )
+/// The member submit a vote (YES or NO) on the proposal.
+///
+/// Requirements:
+/// * The proposal can be submitted only by the existing members;
+/// * The member can vote on the proposal only once;
+/// * Proposal must exist, the voting period must has started and not expired;
+///
+///  On success replies with [`DaoEvent::SubmitVote`]
+SubmitVote {
+    /// the proposal ID
+    proposal_id: u128,
+    /// the member  a member vote (YES or NO)
+    vote: Vote,
+},
 ```
 
  - The right for members to withdraw their capital during the grace period. It can be used when the members don’t agree with the result of the proposal and the acceptance of that proposal can affect their shares. The member can ragequit only if he has voted NO on that proposal.
 
 ```rust
-async fn ragequit(
-    &mut self,
+/// Withdraws the capital of the member
+///
+/// Requirements:
+/// * `msg::source()` must be DAO member;
+/// * The member must have sufficient amount of shares;
+/// * The latest proposal the member voted YES must be processed;
+///
+///  On success replies with [`DaoEvent::RageQuit`]
+RageQuit {
+    /// The amount of shares the member would like to withdraw
     amount: u128,
-    )
+},
 ```
 
  - The proposal processing after the proposal competes during the grace period. If the proposal is accepted, the tribute tokens are deposited into the contract and new shares are minted and issued to the applicant. If the proposal is rejected, the tribute tokens are returned to the applicant.
 
 ```rust
-async fn process_proposal(
-        &mut self,
-        proposal_id: u128
-    )
+/// The proposal processing after the proposal completes during the grace period.
+/// If the proposal is accepted, the indicated amount of tokens are sent to the receiver.
+///
+/// Requirements:
+/// * The previous proposal must be processed;
+/// * The proposal must exist and be ready for processing;
+/// * The proposal must not already be processed.
+///
+/// On success replies with [`DaoEvent::ProcessProposal`]
+ProcessProposal {
+    /// the proposal ID
+    proposal_id: u128,
+},
 ```
-
- - These functions are called in `async fn main()` through enum `DaoAction`.
-
-```rust
-	#[gstd::async_main]
-	async fn main() {
-		let action: DaoAction = msg::load().expect("Could not load Action");
-    	match action {
-            DaoAction::Deposit { amount } => dao.deposit(amount).await,
-            DaoAction::SubmitFundingProposal {
-                applicant,
-                amount,
-                quorum,
-                details,
-            } => {
-                dao.submit_funding_proposal(&applicant, amount, quorum, details)
-                    .await;
-            }
-            ...
-	}
-```
- 2. `state.rs` - defines the `State` and `StateReply` enums.  It is important to have the ability to read the contract state off-chain. It is defined in the `fn meta_state()`.  The contract receives a request to read the certain data (the possible requests are defined in the enum `State`) and sends replies. The contracts replies about its state are defined in the enum `StateReply`.
+- The ability to continue the transaction. Шf the transaction has not been completed due to network failure, the user can send a message `Continue` indicating the transaction id that needs to be completed:
 
 ```rust
-extern "C" fn meta_state() -> *mut [i32; 2] {
-    let state: State = msg::load().expect("failed to decode input argument");
-    let encoded = match state {
-        State::UserStatus(account) => {
-            let role = if dao.is_member(&account) {
-                Role::Member
-            } else {
-                Role::None
-            };
-            StateReply::UserStatus(role).encode()
-        }
-        State::AllProposals => StateReply::AllProposals(dao.proposals.clone()).encode(),
-        ...
-    };
-    gstd::util::to_leak_ptr(encoded)
-}
+ /// Continues the transaction if it fails due to lack of gas
+/// or due to an error in the token contract.
+///
+/// Requirements:
+/// * Transaction must exist.
+///
+/// On success replies with the DaoEvent of continued transaction.
+Continue(
+    /// the transaction ID
+    u64,
+),
 ```
+## Consistency of contract states
+The `DAO` contract interacts with the `fungible` token contract. Each transaction that changes the states of DAO and the fungible token is stored in the state until it is completed. User can complete a pending transaction by sending a message `Continue` indicating the transaction id. The idempotency of the fungible token contract allows to restart a transaction without duplicate changes which guarantees the state consistency of these 2 contracts.
 
 <!--
 ## User interface

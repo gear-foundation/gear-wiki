@@ -64,8 +64,10 @@ pub struct NFT {
     pub transactions: HashMap<H256, NFTEvent>,
 }
 ```
+The `transactions` field is used for contract `idempotency`. 
+There are two possible risks when sending a transaction: the risk of sending duplicate transactions and the risk of not knowing the status of the transaction due to a network failure. The message sender indicates the transaction id, and the token contract obtains the hash of this transaction using the sender's address and the transaction number. If a transaction with such a hash has already been completed, the contract returns the status of this transaction.
 
-To inherit the default logic functions you need to derive NFTCore trait. Accordingly, for reading contracts states you need NFTMetaState trait.
+To inherit the default logic functions you need to derive `NFTCore` trait. Accordingly, for reading contracts states you need the `NFTMetaState` trait.
 
 Let's write the whole implementation of the NFT contract. First, we define the message
 which will initialize the contract and messages that our contract will process:
@@ -80,19 +82,26 @@ pub struct InitNFT {
 
 pub enum NFTAction {
     Mint {
+        transaction_id: u64,
         to: ActorId,
         token_id: TokenId,
     },
     Burn {
+        transaction_id: u64,
         token_id: TokenId,
     },
     Transfer {
+        transaction_id: u64,
         to: ActorId,
         token_id: TokenId,
     },
     Approve {
+        transaction_id: u64,
         to: ActorId,
         token_id: TokenId,
+    },
+    Clear {
+        transaction_hash: H256,
     },
 }
 ```
@@ -123,20 +132,67 @@ extern "C" fn init() {
 }
 
 #[no_mangle]
-extern "C" fn handle() {
-    let action: NFTAction = msg::load().expect("Could not load msg");
-    let nft = unsafe { CONTRACT.get_or_insert(NFT::default()) };
+unsafe extern "C" fn handle() {
+    let action: NFTAction = msg::load().expect("Could not load NFTAction");
+    let nft = CONTRACT.get_or_insert(Default::default());
     match action {
-        NFTAction::Mint { to, token_id } => NFTCore::mint(&to, token_id, None),
-        NFTAction::Burn { token_id } => NFTCore::burn(nft, token_id),
-        NFTAction::Transfer { to, token_id } => NFTCore::transfer(nft, &to, token_id),
-        NFTAction::Approve { to, token_id } => NFTCore::approve(nft, &to, token_id),
-    }
+        NFTAction::Mint {
+            transaction_id,
+            token_metadata,
+        } => {
+            msg::reply(
+                nft.process_transaction(transaction_id, |nft| {
+                    NFTEvent::Transfer(NFTCore::mint(nft, token_metadata))
+                }),
+                0,
+            )
+            .expect("Error during replying with `NFTEvent::Transfer`");
+        }
+        NFTAction::Burn {
+            transaction_id,
+            token_id,
+        } => {
+            msg::reply(
+                nft.process_transaction(transaction_id, |nft| {
+                    NFTEvent::Transfer(NFTCore::burn(nft, token_id))
+                }),
+                0,
+            )
+            .expect("Error during replying with `NFTEvent::Transfer`");
+        }
+        NFTAction::Transfer {
+            transaction_id,
+            to,
+            token_id,
+        } => {
+            msg::reply(
+                nft.process_transaction(transaction_id, |nft| {
+                    NFTEvent::Transfer(NFTCore::transfer(nft, &to, token_id))
+                }),
+                0,
+            )
+            .expect("Error during replying with `NFTEvent::Transfer`");
+        }
+        NFTAction::Approve {
+            transaction_id,
+            to,
+            token_id,
+        } => {
+            msg::reply(
+                nft.process_transaction(transaction_id, |nft| {
+                    NFTEvent::Approval(NFTCore::approve(nft, &to, token_id))
+                }),
+                0,
+            )
+            .expect("Error during replying with `NFTEvent::Approval`");
+        }
+        NFTAction::Clear { transaction_hash } => nft.clear(transaction_hash),
+    };
 }
 ```
 
 ### Developing your non-fungible-token contract
-Next, let's rewrite the implementation of `mint` function. Our `mint` function will create token for the account that send `Mint` message  and require the metadata as an input argument:
+Next, let's rewrite the implementation of the `mint` function. Our `mint` function will create token for the account that send `Mint` message  and require the metadata as an input argument:
 ```rust
 pub enum NFTAction {
     Mint {
@@ -177,15 +233,37 @@ impl MyNFTCore for NFT {
 Accordingly, it is necessary to make changes to the `handle` function:
 ```rust
 #[no_mangle]
-extern "C" fn handle() {
-    let action: NFTAction = msg::load().expect("Could not load msg");
-    let nft = unsafe { CONTRACT.get_or_insert(Default::default()) };
+unsafe extern "C" fn handle() {
+    let action: NFTAction = msg::load().expect("Could not load NFTAction");
+    let nft = CONTRACT.get_or_insert(Default::default());
     match action {
-        NFTAction::Mint { token_metadata } => MyNFTCore::mint(token_metadata),
-        NFTAction::Burn { token_id } => NFTCore::burn(nft, token_id),
-        NFTAction::Transfer { to, token_id } => NFTCore::transfer(nft, &to, token_id),
-        NFTAction::Approve { to, token_id } => NFTCore::approve(nft, &to, token_id),
-    }
+        NFTAction::Mint {
+            transaction_id,
+            token_metadata,
+        } => {
+            msg::reply(
+                nft.process_transaction(transaction_id, |nft| {
+                    NFTEvent::Transfer(MyNFTCore::mint(nft, token_metadata))
+                }),
+                0,
+            )
+            .expect("Error during replying with `NFTEvent::Transfer`");
+        }
+        NFTAction::Burn {
+            transaction_id,
+            token_id,
+        } => {
+            msg::reply(
+                nft.process_transaction(transaction_id, |nft| {
+                    NFTEvent::Transfer(NFTCore::burn(nft, token_id))
+                }),
+                0,
+            )
+            .expect("Error during replying with `NFTEvent::Transfer`");
+        }
+        ...
+        
+    };
 }
 ```
 
