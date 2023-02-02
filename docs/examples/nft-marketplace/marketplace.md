@@ -21,7 +21,7 @@ Gear also [provides](https://github.com/gear-tech/gear-js/tree/master/apps/marke
 -->
 To use the hashmap you should include `hashbrown` package into your *Cargo.toml* file:
 ```toml
-[dependecies]
+[dependencies]
 # ...
 hashbrown = "0.13.1"
 ```
@@ -238,7 +238,7 @@ To make offer on the marketplace item send the following message:
 /// Adds a price offer to the item.
 /// 
 /// Requirements:
-/// * NFT item must exists and be listed on the marketplace.
+/// * NFT items must exist and be listed on the marketplace.
 /// * There must be no ongoing auction on the item.
 /// * If a user makes an offer in native Gear value, then he must attach a value equal to the price indicated in the arguments.
 /// * If a user makes an offer in fungible tokens then he must have  enough tokens in the fungible token contract.
@@ -262,7 +262,7 @@ The item owner can accept the offer:
 /// Accepts an offer.
 /// 
 /// Requirements:
-/// * NFT item must exist and be listed on the marketplace.
+/// * NFT items must exist and be listed on the marketplace.
 /// * Only the owner can accept the offer.
 /// * There must be no ongoing auction.
 /// * The offer with indicated hash must exist.
@@ -285,7 +285,7 @@ The user who made the offer can also withdraw his tokens:
 /// Withdraws tokens.
 /// 
 /// Requirements:
-/// * NFT item must exist and be listed on the marketplace.
+/// * NFT items must exist and be listed on the marketplace.
 /// * Only the offer creator can withdraw his tokens.
 /// * The offer with indicated hash must exist.
 /// 
@@ -302,14 +302,14 @@ Withdraw {
 },
 ```
 ## Consistency of contract states
-The `market` contract interacts with `fungible` and `non-fungible` token contracts. Each transaction that changes the states of several contracts is stored in the state until it is completed. Every time a user interacts with an item, the marketplace contract checks for an pending transaction and, if there is one, asks the user to complete it, not allowing to start a new one. The idempotency of the token contracts allows to restart a transaction without duplicate changes what guarantees the state consistency of 3 contracts.
+The `market` contract interacts with `fungible` and `non-fungible` token contracts. Each transaction that changes the states of several contracts is stored in the state until it is completed. Every time a user interacts with an item, the marketplace contract checks for an pending transaction and, if there is one, asks the user to complete it, not allowing to start a new one. The idempotency of the token contracts allows to restart a transaction without duplicate changes which guarantees the state consistency of 3 contracts.
 ## User interface
 
 A Ready-to-Use application example provides a user interface that interacts with [gNFT](https://github.com/gear-dapps/non-fungible-token/tree/master/nft) and [Marketplace](https://github.com/gear-dapps/nft-marketplace) smart contracts running in Gear Network.
 - Gear Non-Fundible Token contract enables creation of NFT tokens, proves an ownership of a digital assets, check [this article](../gnft-721) for details.
 - NFT Marketplace contract enables to buy and sell non-fungible tokens for fungible tokens, hold the NFT auctions and make/accept purchase offers on NFTs.
 
-<!-- This video demonstrates how to configure and run Markeplace application on your own and explains the user interaction workflow: **https://youtu.be/4suveOT3O-Y** 
+<!-- This video demonstrates how to configure and run Marketplace application on your own and explains the user interaction workflow: **https://youtu.be/4suveOT3O-Y** 
 -->
 
 ![img alt](./../img/nft-marketplace.png)
