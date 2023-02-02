@@ -65,9 +65,9 @@ pub struct NFT {
 }
 ```
 The `transactions` field is used for contract `idempotency`. 
-There are two possible risks when sending a transaction: the risk of sending duplicate transactions and the risk of not knowing the status of the transaction due to a network failure. The message sender indicates the transaction id, and the token contract obtains the hash of this transaction using the sender's address and the transaction number. If a transaction with such a hash have already been completed, the contract returns the status of this transaction.
+There are two possible risks when sending a transaction: the risk of sending duplicate transactions and the risk of not knowing the status of the transaction due to a network failure. The message sender indicates the transaction id, and the token contract obtains the hash of this transaction using the sender's address and the transaction number. If a transaction with such a hash has already been completed, the contract returns the status of this transaction.
 
-To inherit the default logic functions you need to derive NFTCore trait. Accordingly, for reading contracts states you need NFTMetaState trait.
+To inherit the default logic functions you need to derive `NFTCore` trait. Accordingly, for reading contracts states you need the `NFTMetaState` trait.
 
 Let's write the whole implementation of the NFT contract. First, we define the message
 which will initialize the contract and messages that our contract will process:
@@ -192,7 +192,7 @@ unsafe extern "C" fn handle() {
 ```
 
 ### Developing your non-fungible-token contract
-Next, let's rewrite the implementation of `mint` function. Our `mint` function will create token for the account that send `Mint` message  and require the metadata as an input argument:
+Next, let's rewrite the implementation of the `mint` function. Our `mint` function will create token for the account that send `Mint` message  and require the metadata as an input argument:
 ```rust
 pub enum NFTAction {
     Mint {
