@@ -27,7 +27,7 @@ This article explains the programming interface, data structure, basic functions
 ## Logic
 To use the hashmap you should add the `hashbrown` package into your Cargo.toml file:
 ```toml
-[dependecies]
+[dependencies]
 # ...
 hashbrown = "0.13.1"
 ```
@@ -73,9 +73,9 @@ where:
 
 `locked_funds` - tokens that are locked when a funding proposal is submitted.
 
-`balance` - the amount of tokens on DAO contract.
+`balance` - the amount of tokens in the DAO contract.
 
-`transaction_id` - the transaction number that used for tracking transactions in the fungible token contract.
+`transaction_id` - the transaction number that is used for tracking transactions in the fungible token contract.
 
 `transactions` - the transaction history.
 
@@ -161,7 +161,7 @@ SubmitFundingProposal {
  - The member or the delegate address of the member submit his vote (YES or NO) on the proposal.
 
 ```rust
-/// The member submit his vote (YES or NO) on the proposal.
+/// The member submit a vote (YES or NO) on the proposal.
 ///
 /// Requirements:
 /// * The proposal can be submitted only by the existing members;
@@ -203,7 +203,7 @@ RageQuit {
 /// Requirements:
 /// * The previous proposal must be processed;
 /// * The proposal must exist and be ready for processing;
-/// * The proposal must not be already be processed.
+/// * The proposal must not already be processed.
 ///
 /// On success replies with [`DaoEvent::ProcessProposal`]
 ProcessProposal {
@@ -211,7 +211,7 @@ ProcessProposal {
     proposal_id: u128,
 },
 ```
-- The ability to continue the transaction. Шf the transaction has not been completed due to nerwork failure, the user can send a message `Continue` indicating the transaction id that needs to be completed:
+- The ability to continue the transaction. Шf the transaction has not been completed due to network failure, the user can send a message `Continue` indicating the transaction id that needs to be completed:
 
 ```rust
  /// Continues the transaction if it fails due to lack of gas
@@ -227,7 +227,7 @@ Continue(
 ),
 ```
 ## Consistency of contract states
-The `DAO` contract interacts with the `fungible` token contract. Each transaction that changes the states of DAO and the fungible token is stored in the state until it is completed. User can complete a pending transaction sending a message `Continue` indicating the transaction id. The idempotency of the fungible token contract allows to restart a transaction without duplicate changes what guarantees the state consistency of these 2 contracts.
+The `DAO` contract interacts with the `fungible` token contract. Each transaction that changes the states of DAO and the fungible token is stored in the state until it is completed. User can complete a pending transaction by sending a message `Continue` indicating the transaction id. The idempotency of the fungible token contract allows to restart a transaction without duplicate changes which guarantees the state consistency of these 2 contracts.
 
 <!--
 ## User interface
