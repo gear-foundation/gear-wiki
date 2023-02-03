@@ -46,9 +46,101 @@ When viewing your own channel, you can add posts to it (you will have to conduct
 
 ![img alt](./img/my-channel.png)
 
+# Channel program metadata and state
+Metadata interface description:
+
+```rust
+pub struct ChannelMetadata;
+
+impl Metadata for ChannelMetadata {
+    type Init = ();
+    type Handle = InOut<ChannelAction, ChannelOutput>;
+    type Others = ();
+    type Reply = ();
+    type Signal = ();
+    type State = Channel;
+}
+```
+To display the full contract state information, the `state()` function is used:
+
+```rust
+#[no_mangle]
+extern "C" fn state() {
+    msg::reply(
+        unsafe { CHANNEL.clone().expect("Uninitialized channel state") },
+        0,
+    )
+    .expect("Failed to encode or reply with `<AppMetadata as Metadata>::State` from `state()`");
+}
+```
+To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `Channel` state. For example - [gear-dapps/feeds/channel-state](https://github.com/gear-dapps/feeds/tree/master/channel-state):
+
+```rust
+#[metawasm]
+pub trait Metawasm {
+    type State = <ChannelMetadata as Metadata>::State;
+
+    fn all_messages(state: Self::State) -> Vec<Message> {
+        ...
+    }
+}
+```
+
+# Router program metadata and state
+Metadata interface description:
+
+```rust
+pub struct RouterMetadata;
+
+impl Metadata for RouterMetadata {
+    type Init = ();
+    type Handle = InOut<RouterAction, RouterEvent>;
+    type Others = ();
+    type Reply = ();
+    type Signal = ();
+    type State = RouterState;
+}
+```
+To display the full contract state information, the `state()` function is used:
+
+```rust
+#[no_mangle]
+extern "C" fn state() {
+    msg::reply(
+        unsafe {
+            let router = ROUTER.as_ref().expect("Uninitialized router state");
+            let state: RouterState = router.into();
+            state
+        },
+        0,
+    )
+    .expect("Failed to encode or reply with `<AppMetadata as Metadata>::State` from `state()`");
+}
+```
+To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `RouterState` state. For example - [gear-dapps/feeds/router-state](https://github.com/gear-dapps/feeds/tree/master/router-state):
+
+```rust
+#[metawasm]
+pub trait Metawasm {
+    type State = <RouterMetadata as Metadata>::State;
+
+    fn all_channels(state: Self::State) -> Vec<Channel> {
+        ...
+    }
+
+    fn channel(id: ActorId, state: Self::State) -> Channel {
+        ...
+    }
+
+    fn subscribed_to_channels(id: ActorId, state: Self::State) -> Vec<ActorId> {
+        ...
+    }
+}
+```
+
 # Conclusion
 Gear Feeds is an example of a full-fledged application with core logic being in a decentralized application implemented via Smart Contracts on Gear. We hope to see more exciting projects inspired by Gear feeds and recent platform improvements created by our community members! :)
 
-The source code for both Channel and Routar is available on [GitHub](https://github.com/gear-dapps/feeds).
+The source code for both Channel and Router is available on [GitHub](https://github.com/gear-dapps/feeds).
 
 For more details about testing smart contracts written on Gear, refer to this article: [Program Testing](/docs/developing-contracts/testing).

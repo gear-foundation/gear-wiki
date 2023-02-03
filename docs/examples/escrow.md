@@ -190,6 +190,50 @@ In case of issues with the application, try to switch to another network or run 
 
 :::
 
+## Program metadata and state
+Metadata interface description:
+
+```rust
+pub struct EscrowMetadata;
+
+impl Metadata for EscrowMetadata {
+    type Init = In<InitEscrow>;
+    type Handle = InOut<EscrowAction, EscrowEvent>;
+    type Others = ();
+    type Reply = ();
+    type Signal = ();
+    type State = Escrow;
+}
+```
+To display the full contract state information, the `state()` function is used:
+
+```rust
+#[no_mangle]
+extern "C" fn state() {
+    msg::reply(
+        unsafe { ESCROW.clone().expect("Uninitialized escrow state") },
+        0,
+    )
+    .expect("Failed to share state");
+}
+```
+To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `Escrow` state. For example - [gear-dapps/escrow/state](https://github.com/gear-dapps/escrow/tree/master/state):
+
+```rust
+#[metawasm]
+pub trait Metawasm {
+    type State = <EscrowMetadata as Metadata>::State;
+
+    fn info(wallet_id: U256, state: Self::State) -> Wallet {
+        ...
+    }
+
+    fn created_wallets(state: Self::State) -> Vec<(WalletId, Wallet)> {
+        ...
+    }
+}
+```
+
 ## Source code
 
 The source code of the Escrow smart contract example as well as its testing implementation is available on [GitHub](https://github.com/gear-dapps/escrow). They can be used as is or modified to suit your own scenarios.
