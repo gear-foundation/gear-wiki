@@ -1,6 +1,6 @@
 ---
 sidebar_label: Delayed Messages
-sidebar_position: 8
+sidebar_position: 9
 ---
 
 # Delayed messages for smart contracts automation

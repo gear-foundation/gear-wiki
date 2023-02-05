@@ -1,6 +1,6 @@
 ---
 sidebar_label: Metadata
-sidebar_position: 4
+sidebar_position: 5
 ---
 
 # Matadata
@@ -66,7 +66,7 @@ To make it possible to verify metadata for a program, you can use the `metahash(
 
 ```rust
 #[no_mangle]
-// It returns the Hash of metadata. 
+// It returns the Hash of metadata.
 // .metahash is generating automatically while you are using build.rs
 extern "C" fn metahash() {
     let metahash: [u8; 32] = include!("../.metahash");
