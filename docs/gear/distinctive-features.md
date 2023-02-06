@@ -15,7 +15,7 @@ Now thanks to Gear Protocol's support for asynchronous messaging, contract devel
 
 ## Continuing messaging automation
 
-The execution of any messages in Gear, including the [system messages](/developing-contracts/system-signals.md)), consumes "gas". The Gear Protocol introduces the concept of [gas reservation](/developing-contracts/gas-reservation.md), which allows for the creation of gas pools that can be used by programs for further execution. Each pool is unique to the program that creates it, and the gas from the pool can be consumed by the program if its "gas_available" is not sufficient.
+The execution of any messages in Gear, including the [system messages](/developing-contracts/system-signals.md), consumes "gas". The Gear Protocol introduces the concept of [gas reservation](/developing-contracts/gas-reservation.md), which allows for the creation of gas pools that can be used by programs for further execution. Each pool is unique to the program that creates it, and the gas from the pool can be consumed by the program if its "gas_available" is not sufficient.
 
 One of the key benefits of gas reservation is the ability to send **delayed messages** that can be triggered automatically at a specific time in the future. These messages, like any other message in Gear, can invoke another smart contract in the network or appear in the user's mailbox.
 
