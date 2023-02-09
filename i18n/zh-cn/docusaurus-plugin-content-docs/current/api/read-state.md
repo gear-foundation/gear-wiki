@@ -5,32 +5,65 @@ sidebar_label: 读取状态
 
 # 读取状态
 
-以下查询用于读取程序的状态：
+
+有两种不同的方式查询程序的 `State`：
+
+1. 查询程序的完整 `State`。要读取程序的完整`State`，需要有这个程序的 `metadata`。你可以调用 `api.programState.read` 方法来获取状态。
 
 ```javascript
-const metaWasm = fs.readFileSync('path/to/meta.wasm');
-const state = await gearApi.programState.read(programId, metaWasm, inputValue?);
+await api.programState.read({ programId: `0x...` }, programMetadata);
 ```
 
-`programId` is a payload if program expects it in `meta_state`
+此外，你可以在一些特定的块上读取程序的 `State`：
 
-如果程序在 `meta_state` 中期待 `programId`，那么`programId`就是一个消息体。
+```javascript
+await api.programState.read(
+  { programId: `0x...`, at: `0x...` },
+  programMetadata,
+);
+```
 
+2. 如果你使用自定义函数只查询程序状态的特定部分（[更多内容](/docs/developing-contracts/metadata#genarate-metadata)），那么应该调用 `api.programState.readUsingWasm` 方法：
+
+```js
+// ...
+
+const wasm = readFileSync('path/to/state.meta.wasm');
+const metadata = await getStateMetadata(wasm);
+
+const state = await api.programState.readUsingWasm(
+  {
+    programId,
+    fn_name: 'name_of_function_to_execute',
+    wasm,
+    argument: { input: 'payload' },
+  },
+  metadata,
+);
+```
 
 ## Cookbook
 
-要在前端应用程序中读取状态，你可以使用`fetch`浏览器 API 从 meta.wasm 获取。
+要在前端应用程序中读取状态，你可以使用 `fetch` 从 `meta.wasm` 中获取内容：
 
 ```javascript
+// ...
 
-const state = fetch(metaFile)
-      .then((res) => res.arrayBuffer())
-      .then((arrayBuffer) => Buffer.from(arrayBuffer))
-      .then((buffer) =>
-        api.programState.read(ID_CONTRACT_ADDRESS, buffer, {
-          AnyPayload: 'Null',
-        }),
-      )
-      .then((state) => state.toHuman())
+const res = await fetch(metaFile);
+const arrayBuffer = await res.arrayBuffer();
+const buffer = await Buffer.from(arrayBuffer);
+const metadata = await getStateMetadata(buffer);
+
+// get State only of the first wallet
+const firstState = await api.programState.readUsingWasm(
+  { programId, fn_name: 'first_wallet', buffer },
+  metadata,
+);
+
+// get wallet State by id
+const secondState = await api.programState.readUsingWasm(
+  { programId, fn_name: 'wallet_by_id', buffer,  argument: { decimal: 1, hex: '0x01' } },
+  metadata,
+);
 
 ```
