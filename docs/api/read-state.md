@@ -30,7 +30,7 @@ await api.programState.read(
 const wasm = readFileSync('path/to/state.meta.wasm');
 const metadata = await getStateMetadata(wasm);
 
-const state = await api.programState.programState(
+const state = await api.programState.readUsingWasm(
   {
     programId,
     fn_name: 'name_of_function_to_execute',
@@ -59,7 +59,7 @@ const firstState = await api.programState.readUsingWasm(
   metadata,
 );
 
-// get wallet State by id 
+// get wallet State by id
 const secondState = await api.programState.readUsingWasm(
   { programId, fn_name: 'wallet_by_id', buffer,  argument: { decimal: 1, hex: '0x01' } },
   metadata,

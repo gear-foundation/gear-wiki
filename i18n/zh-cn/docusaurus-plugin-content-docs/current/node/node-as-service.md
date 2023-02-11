@@ -1,5 +1,5 @@
 ---
-sidebar_label: '将节点程序配置成服务'
+sidebar_label: 将节点程序配置成服务
 sidebar_position: 2
 ---
 
@@ -13,7 +13,7 @@ sidebar_position: 2
 
 为了将 Gear 节点程序作为 Linux 的服务，你需要参照以下方式来配置 `systemd` 文件：
 
-从 `root` 目录开始:
+从 `root` 目录开始：
 
 ```sh
 cd /etc/systemd/system
@@ -75,13 +75,13 @@ journalctl -u gear-node
 
 使用导航键浏览日志，使用`q`键退出。
 
-你可以通过添加参数`-n 50`来查看最后50行日志：
+你可以通过添加参数`-n 50`来查看最后 50 行日志：
 
 ```sh
 journalctl -u gear-node -n 50
 ```
 
-添加`-f`参数，在连续模式下查看日志的最后一行(按Ctrl+C退出)：
+添加`-f`参数，在连续模式下查看日志的最后一行 (按 Ctrl+C 退出)：
 
 ```sh
 journalctl -u gear-node -fn 50
@@ -90,7 +90,7 @@ journalctl -u gear-node -fn 50
 ## 更新节点版本
 
 你只需要把节点的可执行文件（`gear`）替换成最新版本，然后重新启动执行。
-例如，如果你的Linux可执行文件位于/usr/bin（如我们上面的配置），你要运行：
+例如，如果你的 Linux 可执行文件位于/usr/bin（如我们上面的配置），你要运行：
 
 ```
 wget https://get.gear.rs/gear-nightly-linux-x86_64.tar.xz

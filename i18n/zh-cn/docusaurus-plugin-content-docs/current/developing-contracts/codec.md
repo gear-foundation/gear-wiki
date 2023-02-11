@@ -1,6 +1,6 @@
 ---
 sidebar_label: 数据序列化/反序列化
-sidebar_position: 4
+sidebar_position: 6
 ---
 
 # 数据序列化/反序列化
@@ -27,40 +27,29 @@ enum MyType {
 ```
 
 :::info
-
-我们只需要在使用来自 `gstd` 的包装方法时使用 Encode 和 Decode 特性，例如 `msg::send`，`msg::reply`，`send_for_reply` 等。像 `send_byte` 或`reply_bytes` 这样的方法，我们操作的是字节数组，所以不需要进行解码/编码。
-
+我们只需要在使用 `gstd` 的包装方法时使用 Encode 和 Decode 特性，例如 `msg::send`，`msg::reply`，`send_for_reply` 等。像 `send_byte` 或`reply_bytes` 这样的方法，我们操作的是字节数组，所以不需要进行解码/编码。
 :::
 
 更多的内容请看 [SCALE Codec](https://github.com/paritytech/parity-scale-codec)。
 
 ## `scale-info`
 
-`scale-info` 是一个描述 Rust 类型的库，提供有关可编码 SCALE 类型结构的信息。这些被定义为第三方工具 (例如 UI 客户端) 提供了关于它们如何能够解码不受语言影响的类型的信息。Gear 程序使用 `scale-info` 的接口称为 `metadata` 宏。它为所有必要的入口点定义了传入和传出类型，并允许合约和客户端相互理解。
+`scale-info` 是一个描述 Rust 类型的库，提供有关可编码 SCALE 类型结构的信息。
 
-在合约中使用 `metadata`，`Cargo.toml` 需要添加以下内容：
+这些第三方工具 (例如 UI 客户端) 提供了关于它们如何能够解码不受语言影响的类型的信息。Gear 程序使用 `scale-info` 的接口称为 `metadata`。它为所有必要的入口点定义了输入和输出类型，并允许合约和客户端相互理解。
+
+:::info
+
+如何在合约中使用 `metadata`，请看[链接](/docs/developing-contracts/metadata)
+:::
+
+在项目中使用 `scale-info`：
 
 ```toml
 [dependencies]
 
 // ...
-scale-info = { version = "2.2.0", default-features = false }
-```
-
-```rust
-// We define all incoming and outgoing data types in advance
-
-gstd::metadata! {
-    title: "gear program",
-    init:
-        input: String,
-    handle:
-        input: MyAction,
-        output: Vec<u8>,
-    state:
-        input: StateQuery,
-        output: StateReply,
-}
+scale-info = { version = "2.1.1", default-features = false, features = ["derive"] }
 ```
 
 更多的内容请看 [scale-info](https://github.com/paritytech/scale-info)。

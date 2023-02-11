@@ -39,7 +39,7 @@ extern "C" fn state() {
 }
 ```
 
-By default, the `state()` function returns the whole state of the contact.
+By default, the `state()` function returns the whole state of the contract.
 
 ## Custom program to read the state
 
