@@ -42,7 +42,7 @@ pub struct CreateConfig {
     pub duration: Duration,
 }
 ```
-**To create a new auction you need to have this fields:**
+**To create a new auction you need to have these fields:**
 - `nft_contract_actor_id` is a contract address where auctioneers NFT had been minted
 - `token_owner` is an address of token owner to send him a reward if someone bought his NFT
 - `token_id` is an id of NFT in its contract
