@@ -9,7 +9,7 @@ sidebar_position: 19
 
 A public offering to invest in a brand-new cryptocurrency or other digital asset is known as a cryptocurrency Crowdsale. A crowdsale can be used by new projects to raise money for development and other purposes. It is a time-limited campaign where investors can exchange their cryptocurrencies defined in the campaign to newly proposed tokens. The new tokens are promoted as future functional units after the crowdsale's funding goal is met and the project launches.
 
-An example of a crowdsale smart-contract implementation described in this article is one of many other decentralized applications that can be implemented and laucnhed on Gear. This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. Anyone can easily create their own crowdsale application and run it on the Gear Network.
+An example of a crowdsale smart-contract implementation described in this article is one of many other decentralized applications that can be implemented and launched on Gear. This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. Anyone can easily create their own crowdsale application and run it on the Gear Network.
 
 Initial funds with which a token is purchased are determined by the Gear fungible tokens contract - [gFT](https://wiki.gear-tech.io/examples/gft-20). The contract's source code is available on [GitHub](https://github.com/gear-dapps/crowdsale).
 
