@@ -11,9 +11,9 @@ This smart contract example created by Gear represents a Concert tickets distrib
 
 The article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. Anyone can easily create their own application and run it on the Gear Network. The source code is available on [GitHub](https://github.com/gear-dapps/concert).
 
-In this example, a single deployed contract can hold one concert at time. Firstly, all the tickets for the concert come as fungible-tokens. In order to buy tickets one should provide the metadata (e.g. seat/row number) that will later be included in NFTs. When the concert ends, all the fungible tokens of all users (ticket holders) will turn into NFTs.
+In this example, a single deployed contract can hold one concert at a time. Firstly, all the tickets for the concert come as fungible-tokens. In order to buy tickets one should provide the metadata (e.g. seat/row number) that will later be included in NFTs. When the concert ends, all the fungible tokens of all users (ticket holders) will turn into NFTs.
 
-The idea is simple - all the internal token interactions are handled using the [gMT-1155](gmt-1155.md) contract, which address must be provided upon initiliazing a concert contract.
+The idea is simple - all the internal token interactions are handled using the [gMT-1155](gmt-1155.md) contract, which address must be provided upon initializing a concert contract.
 
 ## Interface
 
