@@ -4,22 +4,49 @@ sidebar_position: 9
 
 # Game of chance
 
-## Introduction
-
-:::note
-
-This article explains at a superficial level the purpose and logic of this smart contract. For a more detailed technical description, see its [documentation on the dApps documentation portal](https://dapps.gear.rs/game_of_chance) and [the source code section](#source-code).
-
-:::
+![img alt](./img/goc.png)
 
 Game of chance is a simple game smart contract with the lottery logic.
 
-There is also an example implementation of the Game of chance's user interface and [its source code](https://github.com/gear-tech/gear-js/tree/main/apps/game-of-chance)) to demonstrate an interaction with smart contracts in the Gear Network.
+- Program source code avalible on [Github](https://github.com/gear-dapps/game-of-chance)
+- dApp UI [Github](https://github.com/gear-dapps/game-of-chance/tree/master/frontend)
 
-<!-- > <iframe width="100%" height="315" src="https://www.youtube.com/embed/35StUMjbdFc" allow="fullscreen"></iframe>
--->
+## How to run 
 
-## Logic
+### ⚒️ Build program
+
+- Get the source code of [GOC contract](https://github.com/gear-dapps/game-of-chance)
+- Build contracts as described in [program/README.md](https://github.com/gear-dapps/game-of-chance/blob/master/README.md).
+
+### 🏗️ Upload program
+
+1. You can deploy program using [idea.gear-tech.io](https://idea.gear-tech.io/).
+2. In the network selector choose `Staging Testnet` or `Development` (in this case, you should have a local node running)
+3. Upload prorgam `game_of_chance.opt.wasm` from `/target/wasm32-unknown-unknown/release/`
+4. Upload metadata file `meta.txt`
+5. Specify `init payload` and calculate gas!
+
+### 🖥️ Run UI
+
+1. Install packages as described in [frontend/README.md](https://github.com/gear-dapps/game-of-chance/blob/master/frontend/README.md)
+2. Configure .evn file. Specify network address and program ID like in the example below:
+
+```sh
+REACT_APP_NODE_ADDRESS=wss://node-workshop.gear.rs:443
+REACT_APP_CONTRACT_ADDRESS=0x45f48855184656f4fa7779e5ec0e3e54be8069a61cf62815e114d04d1b4916b4
+```
+
+3. Run app
+
+```sh
+yarn start
+```
+
+## Program logic
+
+:::note
+For a more detailed technical description, see its [documentation on the dApps documentation portal](https://dapps.gear.rs/game_of_chance) and [the source code section](#source-code).
+:::
 
 During an initialization, the game administrator is assigned. It has the rights to start a new game round and pick a winner after the end of each one. Other actors can participate in a round if they have enough fungible tokens or the native value, they're used to collect prize fund. After the end of the players entry stage, the administrator should execute the action for picking a winner, and this smart contract does it randomly and then sends prize fund to the winner.
 
