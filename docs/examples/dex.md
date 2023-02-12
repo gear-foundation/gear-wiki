@@ -46,7 +46,7 @@ pub enum FactoryAction {
     ///
     /// Deploys a pair exchange contract and saves the info about it.
     /// # Requirements:
-    /// * both `TokenId` MUST be non-zero addreses and represent the actual fungible-token contracts
+    /// * both `TokenId` MUST be non-zero addresses and represent the actual fungible-token contracts
     ///
     /// On success returns `FactoryEvery::PairCreated`
     CreatePair(TokenId, TokenId),
