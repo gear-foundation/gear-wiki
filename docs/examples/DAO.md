@@ -158,15 +158,15 @@ SubmitFundingProposal {
 },
 ```
 
- - The member or the delegate address of the member submit his vote (YES or NO) on the proposal.
+ - The member or the delegate address of the member submits his vote (YES or NO) on the proposal.
 
 ```rust
-/// The member submit a vote (YES or NO) on the proposal.
+/// The member submits a vote (YES or NO) on the proposal.
 ///
 /// Requirements:
 /// * The proposal can be submitted only by the existing members;
 /// * The member can vote on the proposal only once;
-/// * Proposal must exist, the voting period must has started and not expired;
+/// * Proposal must exist, the voting period must have started and not expired;
 ///
 ///  On success replies with [`DaoEvent::SubmitVote`]
 SubmitVote {

@@ -46,7 +46,7 @@ pub enum FactoryAction {
     ///
     /// Deploys a pair exchange contract and saves the info about it.
     /// # Requirements:
-    /// * both `TokenId` MUST be non-zero addresss and represent the actual fungible-token contracts
+    /// * both `TokenId` MUST be non-zero addresses and represent the actual fungible-token contracts
     ///
     /// On success returns `FactoryEvery::PairCreated`
     CreatePair(TokenId, TokenId),
@@ -94,7 +94,7 @@ pub enum FactoryEvent {
         token_b: TokenId,
         /// Pair address (the pair exchange contract).
         pair_address: ActorId,
-        /// The amount of pairs that already were deployed though this factory.
+        /// The amount of pairs that already were deployed through this factory.
         pairs_length: u32,
     },
     FeeToSet(ActorId),
@@ -221,7 +221,7 @@ pub enum PairAction {
     /// Adds a specified amount of both tokens to the pair contract.
     /// # Requirements:
     /// * all the values MUST non-zero positive numbers.
-    /// * `to` MUST be a non-zero adddress.
+    /// * `to` MUST be a non-zero address.
     ///
     /// On success returns `PairEvent::AddedLiquidity`.
     AddLiquidity {
@@ -242,7 +242,7 @@ pub enum PairAction {
     /// Removes a specified amount of liquidity from the pair contact.
     /// # Requirements:
     /// * all the values MUST non-zero positive numbers.
-    /// * `to` MUST be a non-zero adddress.
+    /// * `to` MUST be a non-zero address.
     ///
     /// On success returns `PairEvent::RemovedLiquidity`.
     RemoveLiquidity {
@@ -450,10 +450,10 @@ async fn mint(&mut self, to: ActorId) -> u128;
 // Mint liquidity if fee is on.
 // If fee is on, mint liquidity equivalent to 1/6th of the growth in sqrt(k). So the math if the following.
 // Calculate the sqrt of current k using the reserves. Compare it.
-// If the current one is greater, than calculate the liquidity using the following formula:
+// If the current one is greater, then calculate the liquidity using the following formula:
 // liquidity = (total_supply * (root_k - last_root_k)) / (root_k * 5 + last_root_k).
 // where root_k - is the sqrt of the current product of reserves, and last_root_k - is the sqrt of the previous product.
-// Multiplication by 5 comes from the 1/6 of growrth is sqrt.
+// Multiplication by 5 comes from the 1/6 of growth is sqrt.
 // `reserve0` - MUST be a positive number
 // `reserve1` - MUST be a positive number
 // Arguments:

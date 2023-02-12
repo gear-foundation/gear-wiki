@@ -325,7 +325,7 @@ AddAcceptedChild {
 4. Transferred RMRK token belongs directly to root owner and he transfers RMRK token to his another RMRK token: child RMRK contract sends message `AddAcceptedChild` to new parent RMRK contract.
 5. Transferred RMRK token belongs directly to root owner and he transfers RMRK token to another RMRK token that he doesn’t own: child RMRK contract sends message `AddChild` to new parent RMRK contract.
 
-The `approve` function in RMRK NFT standard is similar to the usual nft standard function, except that `msg::source` must the the `root_owner`:
+The `approve` function in RMRK NFT standard is similar to the usual nft standard function, except that `msg::source` must the `root_owner`:
 ```rust
 /// Approves an account to transfer NFT.
 ///

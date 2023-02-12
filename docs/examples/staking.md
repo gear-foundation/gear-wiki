@@ -67,7 +67,7 @@ $$
 \sum_{t=0}^{t=b} \frac {1} {L(t)} - \sum_{t=0}^{t=a-1} \frac {1} {L(t)}
 $$
 
-So, the equation to calculate the amount of reward that a user will receive from t=a to t=b under the condition the the number of tokens he staked is constant:
+So, the equation to calculate the amount of reward that a user will receive from t=a to t=b under the condition the number of tokens he staked is constant:
 
 $$
 Rk\sum_{t=a}^{t=b} \frac {1} {L(t)} = Rk(\sum_{t=0}^{t=b} \frac {1} {L(t)} - \sum_{t=0}^{t=a-1} \frac {1} {L(t)})
@@ -252,7 +252,7 @@ The reward that the depositor would have received if he had initially paid this 
 fn get_max_reward(&self, amount: u128) -> u128
 ```
 
-Calculates the reward of the staker that is currently avaiable.
+Calculates the reward of the staker that is currently available.
 
 The return value cannot be less than zero according to the algorithm
 ```rust
@@ -365,7 +365,7 @@ pub trait Metawasm {
 
 A source code of the contract example provided by Gear is available on GitHub: [`staking/src/lib.rs`](https://github.com/gear-dapps/staking/blob/master/src/lib.rs).
 
-See also an examples of the smart contract testing implementation based on gtest:
+See also examples of the smart contract testing implementation based on gtest:
 
 - [`simple_test.rs`](https://github.com/gear-dapps/staking/blob/master/tests/simple_test.rs).
 
