@@ -22,3 +22,14 @@ const api = await GearApi.create();
 const submitted = await api.mailbox.claimValue.submit(messageId);
 await api.mailbox.claimValue.signAndSend(...);
 ```
+
+## 等待列表
+
+要读取程序的等待列表，可以使用 `api.waitlist.read` 方法。
+
+```javascript
+const gearApi = await GearApi.create();
+const programId = '0x1234...';
+const waitlist = await api.waitlist.read(programId);
+console.log(waitlist);
+```

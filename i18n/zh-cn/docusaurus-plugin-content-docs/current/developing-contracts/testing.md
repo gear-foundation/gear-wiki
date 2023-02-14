@@ -1,6 +1,6 @@
 ---
 sidebar_label: 合约测试
-sidebar_position: 4
+sidebar_position: 12
 ---
 
 # 如何测试一个程序

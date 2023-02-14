@@ -1,6 +1,6 @@
 ---
 sidebar_label: 一致性和可靠性
-sidebar_position: 8
+sidebar_position: 9
 ---
 
 # 确保异步调度的可靠性
