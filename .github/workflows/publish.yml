@@ -1,6 +1,8 @@
 name: Publish
 
 on:
+  pull_request:
+    branches: [master]
   push:
     branches: [master]
 
@@ -9,21 +11,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "16"
+          node-version: 16
+
+      - name: Install yarn
+        run: sudo npm i -g yarn
 
       - name: Install dependencies
-        run: npm install
+        run: yarn
 
       - name: Build
-        run: npm run build
+        run: yarn build
 
       - name: Deploy
+        if: github.event_name == 'push'
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
