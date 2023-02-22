@@ -1,6 +1,6 @@
 ---
 sidebar_label: 延迟消息
-sidebar_position: 8
+sidebar_position: 9
 ---
 
 # 智能合约自动化延迟消息

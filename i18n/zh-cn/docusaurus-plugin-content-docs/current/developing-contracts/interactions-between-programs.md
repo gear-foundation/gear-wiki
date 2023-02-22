@@ -1,9 +1,9 @@
 ---
-sidebar_label: 异步合约通讯
-sidebar_position: 4
+sidebar_label: 异步合约
+sidebar_position: 6
 ---
 
-# 异步合约通讯
+# 异步合约
 
 Gear 程序之间的异步交互与通常的异步请求类似，在使用`await`并通过发送消息来实现。
 

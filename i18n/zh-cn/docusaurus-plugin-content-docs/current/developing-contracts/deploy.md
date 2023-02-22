@@ -1,6 +1,6 @@
 ---
 sidebar_label: 部署合约
-sidebar_position: 5
+sidebar_position: 11
 ---
 
 # 上传智能合约
