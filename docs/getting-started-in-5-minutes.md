@@ -178,7 +178,7 @@ Gear provides a demo environment that emulates the real Gear decentralized netwo
 
     ![Allow access](./img/getting-started/polkadot-access.png)
 
-6. Make sure you are connected to the `Gear Staging Testnet V5`. The network name is on the bottom left corner of the page.
+6. Make sure you are connected to the `Gear Staging Testnet V6`. The network name is on the bottom left corner of the page.
 
     ![Network name](./img/getting-started/idea-network.png)
 
