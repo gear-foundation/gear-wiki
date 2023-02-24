@@ -18,7 +18,7 @@ The idea for this smart contract is taken from **The Million Dollar Homepage** (
 
 `NFTPixelboardAction::Mint` is used to mint NFTs on a pixelboard. An user can sell his NFTs or paint them using `NFTPixelboardAction::ChangeSaleState` and `NFTPixelboardAction::Paint`, respectively.
 
-`NFTPixelboardStateQuery::Painting` is used to get the entire painting of a pixelboard. An user can get information about NFTs and pixels on a pixelboard using `NFTPixelboardStateQuery::TokenInfo` and `NFTPixelboardStateQuery::PixelInfo`, respectively.
+The `painting()` metafunction is used to get the entire painting of a pixelboard. An user can get information about NFTs and pixels on a pixelboard using the `token_info()` and `pixel_info()` metafunctions, respectively.
 
 ## Interface
 
@@ -74,7 +74,7 @@ pub struct InitNFTPixelboard {
 
 ```rust
 /// Sends a program info about what it should do.
-#[derive(Decode, Encode, TypeInfo, Clone)]
+#[derive(Decode, Encode, TypeInfo, Clone, PartialEq, Eq)]
 pub enum NFTPixelboardAction {
     /// Mints one NFT on a pixelboard with given `token_metadata` & `painting`.
     ///
@@ -182,67 +182,6 @@ pub enum NFTPixelboardAction {
         token_id: TokenId,
         painting: Vec<Color>,
     },
-}
-```
-
-### Meta state queries
-
-```rust
-/// Queries a program state.
-///
-/// On failure, returns a [`Default`] value.
-#[derive(Decode, Encode, TypeInfo)]
-pub enum NFTPixelboardStateQuery {
-    /// Gets a painting from an entire canvas of a pixelboard.
-    ///
-    /// Returns [`NFTPixelboardStateReply::Painting`].
-    Painting,
-
-    /// Gets a pixelboard (canvas) resolution.
-    ///
-    /// Returns [`NFTPixelboardStateReply::Resolution`].
-    Resolution,
-
-    /// Gets the price of a free pixel.
-    ///
-    /// Returns [`NFTPixelboardStateReply::PixelPrice`].
-    PixelPrice,
-
-    /// Gets a block side length.
-    ///
-    /// For more info about this parameter, see
-    /// [`InitNFTPixelboard#structfield.block_side_length`] documentation.
-    ///
-    /// Returns [`NFTPixelboardStateReply::BlockSideLength`].
-    BlockSideLength,
-
-    /// Gets [`Token`] info by pixel coordinates.
-    ///
-    /// Useful, for example, for inspecting a pixelboard by clicking on
-    /// paintings.
-    ///
-    /// Returns [`NFTPixelboardStateReply::PixelInfo`].
-    PixelInfo(Coordinates),
-
-    /// Gets [`Token`] info by its ID.
-    ///
-    /// Returns [`NFTPixelboardStateReply::TokenInfo`].
-    TokenInfo(TokenId),
-
-    /// Gets a resale commission percentage.
-    ///
-    /// Returns [`NFTPixelboardStateReply::CommissionPercentage`].
-    CommissionPercentage,
-
-    /// Gets an FT program address used by a pixelboard.
-    ///
-    /// Returns [`NFTPixelboardStateReply::FTProgram`].
-    FTProgram,
-
-    /// Gets an NFT program address used by a pixelboard.
-    ///
-    /// Returns [`NFTPixelboardStateReply::NFTProgram`].
-    NFTProgram,
 }
 ```
 
