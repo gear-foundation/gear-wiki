@@ -2,15 +2,15 @@
 sidebar_position: 13
 ---
 
-# Testing with `gtest`
+# 使用 `gtest` 进行测试
 
-`gtest` simulates a real network by providing mockups of the user, program, balances, mailbox, etc. Since it does not include parts of the actual blockchain, it is fast and lightweight. But being a model of the blockchain network, `gtest` cannot be a complete reflection of the latter.
+`gtest` 通过提供用户，程序，余额，mailbox 等功能，来模拟真实的网络。由于不包括实际区块链的部件，所以它速度很快而且是轻量级的。但作为区块链网络的模型，`gtest` 不能完全代替后者。
 
-As we said earlier, `gtest` is excellent for unit and integration testing. It is also helpful for debugging Gear program logic. Nothing other than the Rust compiler is required for running tests based on `gtest`. It is predictable and robust when used in continuous integration.
+正如我们前面所说的，`gtest` 非常适合单元测试和集成测试。这也有助于调试 Gear 程序逻辑。运行基于 `gtest` 的测试只需要 Rust 编译器。在持续集成中使用时，它具有可预测性，并且是健壮的。
 
-## Import `gtest` lib
+## 导入 `gtest` 库
 
-To use the `gtest` library, you must import it into your `Cargo.toml` file in the `[dev-dependencies]` block to fetch and compile it for tests only:
+要使用 `gtest` 库，必须把它导入 `Cargo.toml` 文件的 `[dev-dependencies]` 中，才能获取和编译它，以进行测试：
 
 ```toml
 [package]
@@ -29,9 +29,9 @@ gear-wasm-builder = { git = "https://github.com/gear-tech/gear.git", branch = "s
 gtest = { git = "https://github.com/gear-tech/gear.git", branch = "stable" }
 ```
 
-## `gtest` capabilities
+## `gtest` 的能力
 
-- Initialization of the common environment for running smart contracts:
+- 初始化智能合约运行的通用环境：
 ```rust
     // This emulates node's and chain's behavior.
     //
@@ -42,7 +42,8 @@ gtest = { git = "https://github.com/gear-tech/gear.git", branch = "stable" }
     // - minimal program id equal 0x010000..
     let sys = System::new();
 ```
-- Program initialization:
+
+- 程序初始化：
 ```rust
     // Initialization of program structure from file.
     //
@@ -110,13 +111,15 @@ gtest = { git = "https://github.com/gear-tech/gear.git", branch = "stable" }
     // where you didn't save the structure, you may get the object from the system by id.
     let _ = sys.get_program(105);
 ```
-- Getting the program from the system:
+
+- 从系统中获取程序：
 ```rust
     // If you initialize program not in this scope, in cycle, in other conditions,
     // where you didn't save the structure, you may get the object from the system by id.
     let _ = sys.get_program(105);
 ```
-- Initialization of styled `env_logger`:
+
+- `env_logger` 的初始化
 ```rust
     // Initialization of styled `env_logger` to print logs (only from `gwasm` by default) into stdout.
     //
@@ -126,7 +129,8 @@ gtest = { git = "https://github.com/gear-tech/gear.git", branch = "stable" }
     // Gear smart contracts use `gwasm` target with `debug` logging level
     sys.init_logger();
 ```
-- Sending messages:
+
+- 发送消息：
 ```rust
     // To send message to the program need to call one of two program's functions:
     // `send()` or `send_bytes()` (or `send_with_value` and `send_bytes_with_value` if you need to send a message with attached funds).
@@ -144,7 +148,8 @@ gtest = { git = "https://github.com/gear-tech/gear.git", branch = "stable" }
     // First message to the initialized program structure is always the init message.
     let res = program.send_bytes(100001, "INIT MESSAGE");
 ```
-- Processing the result of the program execution:
+
+- 处理程序执行的结果：
 ```rust
     // Any sending functions in the lib returns `RunResult` structure.
     //
@@ -220,7 +225,8 @@ gtest = { git = "https://github.com/gear-tech/gear.git", branch = "stable" }
     assert!(!res.contains(&(ping_pong_id, ping_pong_id, "PONG")));
     assert!(res.contains(&(1, 100001, "PONG")));
 ```
-- Spending blocks:
+
+- 消耗区块：
 ```rust
     // You may control time in the system by spending blocks.
     //
@@ -228,7 +234,8 @@ gtest = { git = "https://github.com/gear-tech/gear.git", branch = "stable" }
     // Same for the timestamp. Note, that for now 1 block in Gear network is 1 sec duration.
     sys.spend_blocks(150);
 ```
-- Reading the program state:
+
+- 读取程序状态：
 ```rust
     // To read the program state you need to call one of two program's functions:
     // `meta_state()` or `meta_state_with_bytes()`.
@@ -276,7 +283,8 @@ gtest = { git = "https://github.com/gear-tech/gear.git", branch = "stable" }
     // you can use `meta_state_empty` or `meta_state_empty_with_bytes` functions
     // without any arguments.
 ```
-- Balance:
+
+- 余额：
 ```rust
     // If you need to send a message with value you have to mint balance for the message sender:
     let user_id = 42;

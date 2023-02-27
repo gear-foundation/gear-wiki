@@ -1,0 +1,210 @@
+---
+sidebar_position: 14
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import CodeBlock from '@theme/CodeBlock';
+
+# 通过 `gclient`测试
+
+`gclient` 作为一个工具，用真实的区块链网络测试 Gear 程序。它通过连接网络来发送 extrinsics 和 RPCs。我们建议使用`gclient`进行端对端测试，以确保程序在真实的区块链世界中按预期运行。
+
+需要强调的是，使用 `gclient` 进行测试需要运行节点作为测试套件的第二部分。`gclient` 通过 WebSocket 协议与节点交互。根据测试的目的，`gclient` 既可以与本地节点通信，也可以与远程节点通信。最好的选择是开发者模式下使用**本地节点**，用于初始调试和持续集成。
+
+使用 `gclient` 测试比 `gclient` 慢，并产生更多的构建工作，所以它更适合作为软件质量控制的最后一环。但是，`gclient` 提供了最准确的测试结果。
+
+## 导入 `gclient` 库
+
+要使用 `gclient` 库，必须把它导入 `Cargo.toml` 文件的 `[dev-dependencies]` 中。此外，你需要添加一些与`gclient`一起使用的 crates :
+
+```toml
+[package]
+name = "first-gear-app"
+version = "0.1.0"
+authors = ["Your Name"]
+edition = "2021"
+
+[dependencies]
+gstd = { git = "https://github.com/gear-tech/gear.git", features = ["debug"], branch = "stable" }
+
+[build-dependencies]
+gear-wasm-builder = { git = "https://github.com/gear-tech/gear.git", branch = "stable" }
+
+[dev-dependencies]
+gclient = { git = "https://github.com/gear-tech/gear.git", branch = "stable" }
+tokio = { version = "1.23.0", features = ["full"] }
+
+[patch.crates-io]
+sp-core = { git = "https://github.com/gear-tech/substrate.git", branch = "gear-stable" }
+sp-runtime = { git = "https://github.com/gear-tech/substrate.git", branch = "gear-stable" }
+```
+
+## 运行节点
+
+最好的方法是访问 https://get.gear.rs ，为你的操作系统下载最新的 node 二进文件制。然后解压软件包并运行节点。在之后的设定中，我们假设节点是在开发者模式下运行。
+
+````mdx-code-block
+<Tabs>
+<TabItem value="win64" label="Windows x64" className="unique-tabs" default>
+
+```shell
+curl -O https://get.gear.rs/gear-nightly-windows-x86_64.zip
+```
+
+或者
+
+**Windows x64**: [gear-nightly-windows-x86_64.zip](https://get.gear.rs/gear-nightly-windows-x86_64.zip)
+
+解压下载的文件，然后运行：
+```shell
+gear.exe --dev
+```
+
+</TabItem>
+<TabItem value="mac-arm" label="MacOS ARM">
+
+Terminal:
+
+```shell
+wget https://get.gear.rs/gear-nightly-macos-m.tar.gz && \
+tar xvf gear-nightly-macos-m.tar.gz && \
+rm gear-nightly-macos-m.tar.gz
+```
+
+在开发者模式下运行节点：
+```shell
+./gear --dev
+```
+
+</TabItem>
+<TabItem value="mac-intel" label="MacOS x64">
+
+Terminal:
+
+```shell
+wget https://get.gear.rs/gear-nightly-macos-x86_64.tar.gz && \
+tar xvf gear-nightly-macos-x86_64.tar.gz && \
+rm gear-nightly-macos-x86_64.tar.gz
+```
+
+在开发者模式下运行节点：
+```shell
+./gear --dev
+```
+
+</TabItem>
+
+<TabItem value="mac-linux" label="Linux x64">
+
+Terminal:
+
+```shell
+wget https://get.gear.rs/gear-nightly-linux-x86_64.tar.xz && \
+tar xvf gear-nightly-linux-x86_64.tar.xz && \
+rm gear-nightly-linux-x86_64.tar.xz
+```
+
+在开发者模式下运行节点：
+```shell
+./gear --dev
+```
+
+</TabItem>
+</Tabs>
+````
+
+打开第二个终端窗口，使用`cargo`运行测试，如[上节所述](/developing-contracts/testing.md#building-a-program-in-test-mode)
+
+## 简单例子
+
+让我们在[入门](getting-started-in-5-minutes.md#creating-your-first-gear-smart-contract) 一节中介绍的 `first-gear-app` 中添加一个端到端测试。
+
+在 `src` 同级目录中添加 `tests` 目录，并在其中创建`end2end.rs`文件。
+
+```
+└── first-gear-app
+    ├── Cargo.toml
+    ├── src
+    │   └── lib.rs
+    └── tests
+        └── end2end.rs
+```
+
+`end2end.rs`:
+
+```rust
+use gclient::{EventProcessor, GearApi, Result};
+
+const WASM_PATH: &str = "./target/wasm32-unknown-unknown/release/first_gear_app.opt.wasm";
+
+#[tokio::test]
+#[ignore]
+async fn test_example() -> Result<()> {
+    // Create API instance
+    let api = GearApi::dev().await?;
+
+    // Subscribe to events
+    let mut listener = api.subscribe().await?;
+
+    // Check that blocks are still running
+    assert!(listener.blocks_running().await?);
+
+    // Calculate gas amount needed for initialization
+    let gas_info = api
+        .calculate_upload_gas(
+            None,
+            gclient::code_from_os(WASM_PATH)?,
+            vec![],
+            0,
+            true,
+            None,
+        )
+        .await?;
+
+    // Upload and init the program
+    let (message_id, program_id, _hash) = api
+        .upload_program_bytes_by_path(
+            WASM_PATH,
+            gclient::bytes_now(),
+            vec![],
+            gas_info.min_limit,
+            0,
+        )
+        .await?;
+
+    assert!(listener.message_processed(message_id).await?.succeed());
+
+    let payload = b"PING".to_vec();
+
+    // Calculate gas amount needed for handling the message
+    let gas_info = api
+        .calculate_handle_gas(None, program_id, payload.clone(), 0, true, None)
+        .await?;
+
+    // Send the PING message
+    let (message_id, _hash) = api
+        .send_message_bytes(program_id, payload, gas_info.min_limit, 0)
+        .await?;
+
+    assert!(listener.message_processed(message_id).await?.succeed());
+
+    Ok(())
+}
+```
+
+运行以下命令，并等待所有的测试结果为绿色。
+
+```shell
+cargo test --release -- --include-ignored
+```
+
+建议使用 `#[ignore]` 属性标记带有 `gclient` 的测试，以将它们的缓慢执行与其他测试分开。要用 Cargo 执行被忽略的测试，请在双破折号（`--`）后面加上 `--include-ignored` 标志，如上所示。
+
+让我们探索下在上面的测试函数中所做的事情。
+
+首先，我们实例化 API，通过调用相应的 extrinsics 来允许与节点交互。然后我们创建一个事件侦听器，因为只有通过订阅事件才能从节点获得反馈。我们使用 API 实例来调用 RPC 调用 (例如，计算处理所需的 gas) 和发送外部数据 (例如，上传程序和发送消息)。事件监听器使我们能够获得操作的结果。
+
+## 关于 `gclient` 的更多信息
+
+请参考 [`gclient` 文档](https://docs.gear.rs/gclient/)了解更多关于其功能和使用情况的信息。
