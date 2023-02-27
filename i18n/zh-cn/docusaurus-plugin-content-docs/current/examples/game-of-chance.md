@@ -9,7 +9,7 @@ sidebar_position: 9
 
 任何人都可以轻松创建自己的游戏应用程序，并在 Gear Network 上运行它。为了做到这一点，Gear 创建了一个 Game-of-chance 智能合约的例子，可以在[GitHub](https://github.com/gear-dapps/game-of-chance)上找到。
 
-本文会介绍接口、数据结构、基本功能及其用途。你可以按直接使用，也可以根据自己的场景进行修改。
+本文会介绍接口、数据结构、基本功能及其用途。代码可以直接使用，也可以根据自己的需求进行修改。
 
 Gear 还[提供](https://github.com/gear-tech/gear-js/tree/main/apps/game-of-chance)了一个[游戏界面](https://lottery.gear-tech.io/)，展示智能合约的互动。在这个例子中，谁初始化合约，谁就被认为是游戏所有者。只有所有者才有权利开始/结束游戏。玩家通过向合约发送带有赌注的信息，自己加入到机会游戏中。然后玩家监控游戏的状态。赢家是随机决定的。
 

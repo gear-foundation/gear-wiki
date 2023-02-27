@@ -9,11 +9,11 @@ sidebar_position: 17
 
 NFT 智能合约的例子展示了当代币资产直接存储在链上的方法。有关 gNFT 智能合约植入的细节，请阅读：[gNFT-721]（/examples/gnft-721）。
 
-当一个给定的代币 ID 的所有者希望将其转让给另一个用户时，很容易验证所有权并将代币重新分配给新的所有者。大多数 NFT 图像（或其他基础资源）被存储在其他地方（如 IPFS），只有元数据被存储在合同中。元数据包括一个名称、一个 ID 和指向外部资源的链接，图像实际存储在那里。
+当一个给定的代币 ID 的所有者希望将其转让给另一个用户时，很容易验证所有权并将代币重新分配给新的所有者。大多数 NFT 图像（或其他基础资源）被存储在其他地方（如 IPFS），只有元数据被存储在合约中。元数据包括一个名称、一个 ID 和指向外部资源的链接，图像实际存储在那里。
 
 但这里还介绍了另一种方法。你可以直接将 NFT 存储在链上，而不需要任何外部存储。这种方法可以帮助你在外部存储出现问题时不会丢失 NFT。
 
-本文介绍了合约接口、数据结构、基本功能并解释了它们的用途。它可以直接使用，也可以根据自己的情况进行修改。源代码可在[GitHub](https://github.com/gear-dapps/non-fungible-token/tree/master/on-chain-nft) 查看。
+本文介绍了合约接口、数据结构、基本功能并解释了它们的用途。代码可以直接使用，也可以根据自己的需求进行修改。源代码可在[GitHub](https://github.com/gear-dapps/non-fungible-token/tree/master/on-chain-nft) 查看。
 
 ## 方法
 
@@ -24,11 +24,11 @@ NFT 智能合约的例子展示了当代币资产直接存储在链上的方法�
 每个不可伪造的代币合约必须支持的功能：
 - *transfer(to, token_id)* - 允许你将带有*token_id*号码的令牌转移到*to*账户
 
-- *approve(approved_account, token_id)* - 允许你将处置代币的权利交给指定的*approved_account*。这个功能在市场或拍卖会上很有用，因为当所有者想出售他的代币时，他们可以把它放在市场/拍卖会上，所以合同将能够在某个时候把这个代币发送给新的所有者
+- *approve(approved_account, token_id)* - 允许你将处置代币的权利交给指定的*approved_account*。这个功能在市场或拍卖会上很有用，因为当所有者想出售他的代币时，他们可以把它放在市场/拍卖会上，所以合约将能够在某个时候把这个代币发送给新的所有者
 
 - *mint(to, token_id, metadata)* - 是一个创建新令牌的函数。元数据可以包括关于令牌的任何信息：它可以是一个指向特定资源的链接，也可以是对令牌的描述，等等。
 
-- *burn(from, token_id)* 用于从合同中移除带有所述*token_id*的令牌。
+- *burn(from, token_id)* 用于从合约中移除带有所述*token_id*的令牌。
 
 NFT 合约的默认实现是在 Gear 库中提供的：[gear-lib/non_fungible_token](https://github.com/gear-dapps/gear-lib/tree/master/src/non_fungible_token)。
 

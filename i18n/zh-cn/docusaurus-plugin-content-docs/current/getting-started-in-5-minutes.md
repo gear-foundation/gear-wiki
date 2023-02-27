@@ -1,26 +1,25 @@
 ---
 title: 快速入门
 sidebar_position: 4
-sidebar_label: '5 分钟快速入门'
+sidebar_label: 5 分钟快速入门
 ---
 
 # 5 分钟入门
 
-本指南提供了在 Gear 网络上运行智能合约的一般概述。它指导您如何编写智能合约，将其编译为 Wasm，并部署到 Gear 网络。
-
+本文基本概括如何在 Gear 网络上运行智能合约。文章会指导开发者如何编写智能合约，将其编译为 Wasm，并部署到 Gear 网络。
 
 在这个例子中，我们将使用一个模拟真实 Gear 去中心化网络的演示环境。
 
 ## 前期准备
 
-1. 为了方便起见，建议您为所有与 Gear 相关的内容创建一个专用目录。本文的其余部分将假设您使用的是所建议的路径。输入以下命令来在 Home 目录创建一个专用文件夹并跳转到文件夹中：
+1. 为了方便起见，建议你为所有与 Gear 相关的内容创建一个专用目录。本文的其余部分将假设你使用的是所建议的路径。输入以下命令来在 Home 目录创建一个专用文件夹并跳转到文件夹中：
 
 ```bash
 mkdir -p ~/gear
 cd ~/gear
 ```
 
-2. 确保您已经安装了在 Rust 中构建智能合约所需的所有工具。我们将使用[ Rustup](https://rustup.rs/) 来安装 Rust 编译器。
+2. 确保已经安装了在 Rust 中构建智能合约所需的所有工具。我们将使用[Rustup](https://rustup.rs/) 来安装 Rust 编译器。
 
 ```bash
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
@@ -164,7 +163,7 @@ Gear 提供了一个模拟真实 Gear 去中心化网络的 demo 环境，可以
 
 ### 创建账户
 
-1. 通过 [https://polkadot.js.org/extension/](https://polkadot.js.org/extension/) 为您的浏览器下载 Polkadot 扩展插件。这个扩展插件可以管理账户并允许用这些账户签名交易。它是一个安全的工具，允许将你的账户注入到任何基于 Substrate 的应用程序。它不执行钱包功能，例如，发送资金。
+1. 通过 [https://polkadot.js.org/extension/](https://polkadot.js.org/extension/) 为浏览器下载 Polkadot 扩展插件。这个扩展插件可以管理账户并允许用这些账户签名交易。它是一个安全的工具，允许将你的账户注入到任何基于 Substrate 的应用程序。它不执行钱包功能，例如，发送资金。
 
 2. 下载完成后，点击 '+' 来创建新的账户：
 

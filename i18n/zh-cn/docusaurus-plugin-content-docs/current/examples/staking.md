@@ -89,7 +89,7 @@ $$
 
 ## 接口
 ### 源文件
-1. `staking/src/lib.rs` - 含有 'staking' 合同的功能。
+1. `staking/src/lib.rs` - 含有 'staking' 合约的功能。
 2. `staking/io/src/lib.rs` - 包含合约在回复中接收和发送的 Enums 和结构。
 
 ### 结构

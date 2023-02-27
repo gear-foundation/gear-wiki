@@ -13,7 +13,7 @@ NFT Marketplace 是一个合约，你可以用同质化代币交易非同质化�
 - [Gear NFT](https://github.com/gear-dapps/non-fungible-token/tree/master/nft).
 - [NFT marketplace](https://github.com/gear-dapps/non-fungible-token/tree/master/nft-marketplace).
 
-本文会介绍接口、数据结构、基本功能，并说明了它们的用途。它可以按原样使用，也可以根据您自己的场景进行修改。
+本文会介绍接口、数据结构、基本功能，并说明了它们的用途。代码可以直接使用，也可以根据自己的需求进行修改。
 
 Gear 还 [提供](https://github.com/gear-tech/gear-js/tree/master/apps/marketplace) 了一个 [NFT Marketplace](https://marketplace.gear-tech.io/) 的用户界面，以展示其与 Gear 网络中智能合约的互动。
 
@@ -37,7 +37,7 @@ pub struct Market {
 - `admin_id` - 有权批准可在 Marketplace 合约中使用的不可替代代币和可替代代币合约的帐户
 
 - `treasury_id` -  销售佣金将被记入的账户
-- `treasury_fee` - 佣金百分比（从 1% 到 5%）。Marketplace 合同被初始化时有以下字段。
+- `treasury_fee` - 佣金百分比（从 1% 到 5%）。Marketplace 合约被初始化时有以下字段。
 
 - `items` - NFT 列表
 - `approved_nft_contracts` -  可以在 Marketplace 上上市的 NFT
@@ -324,9 +324,9 @@ REACT_APP_MARKETPLACE_CONTRACT_ADDRESS
 
 ### Simple NFT
 
-另一个演示如何使用智能合约的例子在：https://nft.gear-tech.io 。
+另一个演示如何使用智能合约的例子在：https://nft.gear-tech.io。
 
-它实现了铸造 NFT 的能力，查看合同中任何账户铸造的所有 NFT，以及查看有人批准到当前账户的 NFT（`AprovedToMe`），并有可能进一步转移到另一个账户（这个选项在[NFT Marketplace](https://marketplace.gear-tech.io/)中不可用）。
+它实现了铸造 NFT 的能力，查看合约中任何账户铸造的所有 NFT，以及查看有人批准到当前账户的 NFT（`AprovedToMe`），并有可能进一步转移到另一个账户（这个选项在[NFT Marketplace](https://marketplace.gear-tech.io/)中不可用）。
 
 Simple NFT 合约例子在 [GitHub](https://github.com/gear-tech/gear-js/tree/master/apps/nft)上。
 
