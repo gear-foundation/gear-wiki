@@ -5,17 +5,62 @@ sidebar_position: 4
 
 # Gear Non-Fungible Token
 
-### Introduction
+![img alt](./img/nft.png)
+
 Non-fungible tokens (NFTs) are unique cryptographic tokens on a blockchain that are used to prove an ownership of a digital asset, such as digital art or gaming assets. The difference from fungible tokens is that the fungible tokens store a value, while non-fungible tokens store a cryptographic certificate.
 
 Under the hood, a non-fungible token consists of a unique token identifier, or token ID, which is mapped to an owner identifier and stored inside a NFT smart contract.<center> <em><strong>token_id</strong></em> → <em><strong>address</strong></em> </center>
 
 When the owner of a given token ID wishes to transfer it to another user, it is easy to verify ownership and reassign the token to a new owner.
 
-This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. Anyone can easily create their own application and run it on the Gear Network. The source code of the Gear NFT smart contract example is available on [GitHub](https://github.com/gear-dapps/non-fungible-token).
+This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. Anyone can easily create their own application and run it on the Gear Network.
+
+## How to run
+
+- Program source code avalible on [Github](https://github.com/gear-dapps/non-fungible-token)
+- dApp UI [Github](https://github.com/gear-dapps/non-fungible-token/tree/master/frontend)
+
+### ⚒️ Build program
+
+- Get the source code of [GOC contract](https://github.com/gear-dapps/non-fungible-token)
+- Build contracts as described in [program/README.md](https://github.com/gear-dapps/non-fungible-token/blob/master/README.md).
+
+### 🏗️ Upload program
+
+1. You can deploy program using [idea.gear-tech.io](https://idea.gear-tech.io/).
+2. In the network selector choose `Staging Testnet` or `Development` (in this case, you should have a local node running)
+3. Upload prorgam `nft.opt.wasm` from `/target/wasm32-unknown-unknown/release/`
+4. Upload metadata file `meta.txt`
+5. Specify `init payload` and calculate gas!
+
+*** Init Payload ***
+
+name (Str) - NFT collection name
+symbol (Str) - NFT collection symbol
+base_uri (Str) - NFT collection base URI
+royalties (Option<Royalties>) - Optional param to specify accounts to pay royalties
+
+### 🖥️ Run UI
+
+1. Install packages as described in [frontend/README.md](https://github.com/gear-dapps/non-fungible-token/blob/master/frontend/README.md)
+2. Configure .evn file. Specify network address and program ID like in the example below:
+
+```sh
+REACT_APP_NODE_ADDRESS=wss://node-workshop.gear.rs:443
+REACT_APP_IPFS_ADDRESS=https://ipfs.gear-tech.io/api/v0
+REACT_APP_IPFS_GATEWAY_ADDRESS=https://ipfs-gw.gear-tech.io/ipfs
+REACT_APP_CONTRACT_ADDRESS=0xdf7b9b10240f827f112da757bb68eb301ee873d6c1015855220f2122996540c4
+```
+
+3. Run app
+
+```sh
+yarn start
+```
 
 ### Default non-fungible-token implementation
 The functions that must be supported by each non-fungible-token contract:
+
 - *transfer(to, token_id)* - is a function that allows you to transfer a token with the *token_id* number to the *to* account;
 - *approve(approved_account, token_id)* - is a function that allows you to give the right to dispose of the token to the specified *approved_account*. This functionality can be useful on marketplaces or auctions as when the owner wants to sell his token, they can put it on a marketplace/auction, so the contract will be able to send this token to the new owner at some point;
 - *mint(to, token_id, metadata)* is a function that creates a new token. Metadata can include any information about the token: it can be a link to a specific resource, a description of the token, etc;
@@ -329,9 +374,5 @@ pub trait Metawasm {
 ## Conclusion
 
 Gear provides a reusable [library](https://github.com/gear-dapps/gear-lib/tree/master/lib/src/non_fungible_token) with core functionality for the gNFT protocol. By using object composition, that library can be utilized within a custom NFT contract implementation in order to minimize duplication of community available code.
-
-A source code of the Gear NFT smart contract example based on `gear-lib` is available on GitHub: [gear-dapps/non-fungible-token](https://github.com/gear-dapps/non-fungible-token).
-
-See also an example of the smart contract testing implementation based on `gtest`: [gear-dapps/non-fungible-token/tests](https://github.com/gear-dapps/non-fungible-token/tree/master/tests).
 
 For more details about testing smart contracts written on Gear, refer to this article: [Program Testing](/docs/developing-contracts/testing).

@@ -5,17 +5,59 @@ sidebar_position: 1
 
 # NFT Marketplace
 
-## Introduction
-
 NFT marketplace is a contract where you can buy and sell non-fungible tokens for fungible tokens. The contract also supports holding the NFT auctions and making/accepting purchase offers on NFTs.
 
 A smart contract examples created by Gear are available on GitHub so anyone can easily create their own NFT marketplace application and run it on the Gear Network:
+
 - [Gear Non-Fungible Token](https://github.com/gear-dapps/non-fungible-token/). 
 - [NFT marketplace](https://github.com/gear-dapps/nft-marketplace).
 
+- Marketplace UI available on [Github](https://github.com/gear-dapps/nft-marketplace/frontend)
+
+
+## How to run 
+
+### ⚒️ Build program
+
+- Get the source code of [GOC contract](https://github.com/gear-dapps/game-of-chance)
+- Build contracts as described in [program/README.md](https://github.com/gear-dapps/game-of-chance/blob/master/README.md).
+
+### 🏗️ Upload program
+
+1. You can deploy program using [idea.gear-tech.io](https://idea.gear-tech.io/).
+2. In the network selector choose `Staging Testnet` or `Development` (in this case, you should have a local node running)
+3. Upload prorgam `game_of_chance.opt.wasm` from `/target/wasm32-unknown-unknown/release/`
+4. Upload metadata file `meta.txt`
+5. Specify `init payload` (Admin(ActorId)) and calculate gas!
+
+### 🖥️ Run UI
+
+1. Install packages
+
+```sh
+yarn install
+```
+
+2. Configure .evn file. Specify network address and program ID like in the example below:
+
+```sh
+REACT_APP_NODE_ADDRESS=wss://node-workshop.gear.rs:443
+REACT_APP_CONTRACT_ADDRESS=0x45f48855184656f4fa7779e5ec0e3e54be8069a61cf62815e114d04d1b4916b4
+```
+
+3. Run app
+
+```sh
+yarn start
+```
+
+
+
+
+
+
 This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios.
 
-Gear also [provides](https://github.com/gear-tech/gear-js/tree/master/apps/marketplace) an example implementation of the NFT Marketplace's user interface to demonstrate its interaction with smart contracts in the Gear Network.
 
 <!-- You can watch a video on how to get the NFT Marketplace application up and running and its capabilities here: **https://youtu.be/4suveOT3O-Y**.
 -->
