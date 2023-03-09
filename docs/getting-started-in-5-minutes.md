@@ -5,128 +5,297 @@ sidebar_position: 4
 
 # Getting started in 5 minutes
 
-This guide provides a general overview of running smart contracts on the Gear network. It guides you through how to write a smart contract, compile it to Wasm and deploy it to the Gear network.
-
-For this example, a demo environment that emulates the real Gear decentralized network will be used.
+This guide provides a general overview of running smart contracts on the networks powered by Gear Protocol (such as the [Vara Network](https://vara-network.io/)). It guides you through how to write a smart contract, compile it to Wasm and deploy it to the Gear network.
 
 ## Prerequisites
 
-1. For your convenience, it is recommended that you create a dedicated directory for everything Gear-related. The rest of the article will assume that you are using the paths suggested. Type to create a folder in your home directory:
+1. Linux users should generally install `GCC` and `Clang`, according to their distribution’s documentation. Also, one needs to install `binaryen` toolset that contains the required wasm-opt tool.
 
-```bash
-mkdir -p ~/gear
-```
+    For example, on Ubuntu use:
+    ```bash
+    sudo apt install -y clang build-essential binaryen
+    ```
+
+    On macOS, you can get a compiler toolset and `binaryen` by running:
+    ```bash
+    xcode-select --install
+    brew install binaryen
+    ```
 
 2. Make sure you have installed all the tools required to build a smart-contract in Rust. [Rustup](https://rustup.rs/) will be used to get Rust compiler ready:
 
-```bash
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-```
+    ```bash
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+    ```
 
 3. Now, let's install a `nightly` version of the toolchain with `rustup`, since Gear uses the most up-to-date features `rustup` provides.
 
-```bash
-rustup toolchain add nightly
-```
+    ```bash
+    rustup toolchain add nightly
+    ```
 
 4. As we will be compiling our Rust smart contract to Wasm, we will need a Wasm compiler. Let's add it to the toolchain.
 
-```bash
-rustup target add wasm32-unknown-unknown --toolchain nightly
-```
+    ```bash
+    rustup target add wasm32-unknown-unknown --toolchain nightly
+    ```
 
 **_Note:_** If you use Windows, download and install [Build Tools for Visual Studio](https://visualstudio.microsoft.com/downloads/?q=build+tools).
 
 ## Creating your first Gear smart contract
 
-1. Let's create a `contracts` directory inside `gear` and `cd` to it.
+1. For your convenience, it is recommended that you create a dedicated directory for everything Gear-related. The rest of the article will assume that you are using the paths suggested. Type to create a folder in your home directory:
 
-```bash
-mkdir -p ~/gear/contracts
-cd ~/gear/contracts
-```
+    ```bash
+    mkdir -p ~/gear
+    ```
 
-2. The next step would be to build a Rust library for our contract.
+2. Let's create a `contracts` directory inside `gear` and `cd` to it.
 
-```bash
-cargo new first-gear-app --lib
-```
+    ```bash
+    mkdir -p ~/gear/contracts
+    cd ~/gear/contracts
+    ```
 
-Now, your `gear/contracts` directory tree should look like this:
+3. The next step would be to build a Rust library for our contract:
 
-```
-└── first-gear-app
-    ├── Cargo.toml
-    └── src
-        └── lib.rs
-```
+    ```bash
+    cargo new first-gear-app --lib
+    cargo new first-gear-app/io --lib
+    cargo new first-gear-app/state --lib
+    ```
 
-3. It's time to write some code. Open `first-gear-app` with your favorite editor. For `VS Code` editor type:
+    Now, your `gear/contracts` directory tree should look like this:
 
-```bash
-code ~/gear/contracts/first-gear-app
-```
+    ```
+    └── first-gear-app  
+        ├── Cargo.toml
+        └── src
+            └── lib.rs
+        └── io
+            ├── Cargo.toml
+            └── src
+                └── lib.rs
+        └── state
+            ├── Cargo.toml
+            └── src
+                └── lib.rs
+    ```
 
-4. Create file `build.rs` with the following code:
+4. It's time to write some code. Open `first-gear-app` with your favorite editor. For `VS Code` editor type:
 
-```rust
-fn main() {
-    gear_wasm_builder::build();
-}
-```
+    ```bash
+    code ~/gear/contracts/first-gear-app
+    ```
 
-and configure `Cargo.toml` in order for our contract to be properly built:
+5. In the `first-gear-app` folder, create the `build.rs` file with the following code:
 
-```toml
-[package]
-name = "first-gear-app"
-version = "0.1.0"
-authors = ["Your Name"]
-edition = "2021"
-
-[dependencies]
-gstd = { git = "https://github.com/gear-tech/gear.git", features = ["debug"], branch = "stable" }
-
-[build-dependencies]
-gear-wasm-builder = { git = "https://github.com/gear-tech/gear.git", branch = "stable" }
-
-[dev-dependencies]
-gtest = { git = "https://github.com/gear-tech/gear.git", branch = "stable" }
-```
-
-5. Replace the default contents of `lib.rs` with the code for our first smart-contract. Open `src/lib.rs` in your editor and paste the following code:
-
-```rust
-#![no_std]
-
-use gstd::{debug, msg, prelude::*};
-
-static mut MESSAGE_LOG: Vec<String> = vec![];
-
-#[no_mangle]
-extern "C" fn handle() {
-    let new_msg = String::from_utf8(msg::load_bytes().expect("Unable to load bytes"))
-        .expect("Invalid message");
-
-    if new_msg == "PING" {
-        msg::reply_bytes("PONG", 0).expect("Unable to reply");
+    ```rust
+    fn main() {
+        gear_wasm_builder::build_with_metadata::<demo_ping_io::DemoPingMetadata>();
     }
+    ```
 
-    unsafe {
-        MESSAGE_LOG.push(new_msg);
+    and configure `Cargo.toml` in order for our contract to be properly built:
 
-        debug!("{:?} total message(s) stored: ", MESSAGE_LOG.len());
+    ```toml
+    [package]
+    name = "first-gear-app"
+    version = "0.1.0"
+    authors = ["Gear Technologies"]
+    edition = "2021"
+    license = "MIT"
 
-        for log in &MESSAGE_LOG {
-            debug!(log);
+    [dependencies]
+    gstd = { git = "https://github.com/gear-tech/gear.git", branch = "testnet", features = ["debug"] }
+
+    [dev-dependencies]
+    gtest = { git = "https://github.com/gear-tech/gear.git", branch = "testnet" }
+
+    [build-dependencies]
+    demo-ping-io = { path = "io" }
+    gear-wasm-builder = { git = "https://github.com/gear-tech/gear.git", branch = "testnet" }
+
+    [features]
+    # Used for inserting constants with WASM binaries (NOT paths) of the contract in
+    # the root crate. Usually these constants used in gclient tests instead of
+    # strings with paths to the binaries in the "target" directory. If you don't
+    # like this approach or don't use gclient tests, you can freely remove this
+    # feature from here and from the rest of the code.
+    binary-vendor = []
+
+    # It's necessary to include all metawasm crates in the workspace section,
+    # otherwise they'll be ignored by Cargo and won't be built.
+    [workspace]
+    members = [
+        "state"
+    ]
+    ```
+
+6. Replace the default contents of `lib.rs` in the `first-gear-app` folder with the code for our first smart-contract.
+
+    This simple smart-contract responds with `PONG` to a `PING` message sent to the contract. Open `src/lib.rs` in your editor and paste the following code:
+
+    ```rust
+    use gstd::{debug, msg, prelude::*};
+
+    static mut MESSAGE_LOG: Vec<String> = vec![];
+
+    #[no_mangle]
+    extern "C" fn handle() {
+        let new_msg = String::from_utf8(msg::load_bytes().expect("Invalid message"))
+            .expect("Unable to create string");
+
+        if new_msg == "PING" {
+            msg::reply_bytes("PONG", 0).expect("Unable to reply");
+        }
+
+        unsafe {
+            MESSAGE_LOG.push(new_msg);
+
+            debug!("{:?} total message(s) stored: ", MESSAGE_LOG.len());
+
+            for log in &MESSAGE_LOG {
+                debug!(log);
+            }
         }
     }
-}
-```
 
-This simple smart-contract responds with `PONG` to a `PING` message sent to the contract.
+    #[no_mangle]
+    extern "C" fn state() {
+        msg::reply(unsafe { MESSAGE_LOG.clone() }, 0)
+            .expect("Failed to encode or reply with `<AppMetadata as Metadata>::State` from `state()`");
+    }
 
-6. Now compile the smart-contract to Wasm
+    #[no_mangle]
+    extern "C" fn metahash() {
+        msg::reply::<[u8; 32]>(include!("../.metahash"), 0)
+            .expect("Failed to encode or reply with `[u8; 32]` from `metahash()`");
+    }
+
+    #[cfg(test)]
+    mod tests {
+        extern crate std;
+
+        use gtest::{Log, Program, System};
+
+        #[test]
+        fn it_works() {
+            let system = System::new();
+            system.init_logger();
+
+            let program = Program::current(&system);
+
+            let res = program.send_bytes(42, "INIT");
+            assert!(res.log().is_empty());
+
+            let res = program.send_bytes(42, "PING");
+            let log = Log::builder().source(1).dest(42).payload_bytes("PONG");
+            assert!(res.contains(&log));
+        }
+    }
+    ```
+
+7. In the `io` folder:
+    1. replace the default content of `src/lib.rs`:
+
+    ```rust
+    #![no_std]
+
+    use gmeta::{InOut, Metadata};
+    use gstd::prelude::*;
+
+    pub struct DemoPingMetadata;
+
+    impl Metadata for DemoPingMetadata {
+        type Init = ();
+        type Handle = InOut<String, String>;
+        type Others = ();
+        type Reply = ();
+        type Signal = ();
+        type State = Vec<String>;
+    }
+    ```
+    2. replace the content of `Cargo.toml`:
+    ```rust
+    [package]
+    name = "demo-ping-io"
+    version = "0.1.0"
+    edition = "2021"
+    authors = ["Gear Technologies"]
+    license = "MIT"
+
+    # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+    [dependencies]
+    gmeta = { git = "https://github.com/gear-tech/gear.git", branch = "testnet" }
+    gstd = { git = "https://github.com/gear-tech/gear.git", branch = "testnet" }
+    ```
+
+7. In the `state` folder:
+    1. create the `build.rs` file with the following code:
+
+    ```rust
+    fn main() {
+    gear_wasm_builder::build_metawasm();
+    }
+    ```
+
+    2. replace the default content of `src/lib.rs`:
+
+    ```rust
+    #![no_std]
+
+    use demo_ping_io::*;
+    use gmeta::{metawasm, Metadata};
+    use gstd::prelude::*;
+
+    #[metawasm]
+    pub mod metafns {
+        pub type State = <DemoPingMetadata as Metadata>::State;
+
+        pub fn get_first_message(state: State) -> String {
+            state.first().expect("Message log is empty!").to_string()
+        }
+
+        pub fn get_last_message(state: State) -> String {
+            state.last().expect("Message log is empty!").to_string()
+        }
+
+        pub fn get_messages_len(state: State) -> u64 {
+            state.len() as u64
+        }
+
+        pub fn get_message(state: State, index: u64) -> String {
+            state
+                .get(index as usize)
+                .expect("Invalid index!")
+                .to_string()
+        }
+    }
+
+    ```
+    3. replace the content of `Cargo.toml`:
+    ```rust
+    [package]
+    name = "demo-ping-state"
+    version = "0.1.0"
+    edition = "2021"
+    license = "MIT"
+    authors = ["Gear Technologies"]
+
+    # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+    [dependencies]
+    gstd = { git = "https://github.com/gear-tech/gear.git", branch = "testnet" }
+    gmeta = { git = "https://github.com/gear-tech/gear.git", branch = "testnet", features = ["codegen"] }
+    demo-ping-io = { path = "../io" }
+
+    [build-dependencies]
+    gear-wasm-builder = { git = "https://github.com/gear-tech/gear.git", branch = "testnet", features = ["metawasm"] }
+    ```    
+
+9. Now compile the smart-contract to Wasm
 
 ```bash
 cd ~/gear/contracts/first-gear-app/
@@ -136,23 +305,26 @@ cargo build --release
 If everything goes well, your working directory should now have a `target` directory that looks like this:
 
 ```
-target
-    ├── CACHEDIR.TAG
-    ├── release
-    │   └── ...
-    └── wasm32-unknown-unknown
-        └── release
-            ├── ...
-            ├── first_gear_app.wasm      <---- this is our built .wasm file
-            ├── first_gear_app.opt.wasm  <---- this is optimized .wasm file
-            └── first_gear_app.meta.wasm <---- this is meta .wasm file
+    ├── meta.txt  
+    ├── target
+        ├── CACHEDIR.TAG
+        ├── meta.txt    
+        ├── release
+        │   └── ...
+        └── wasm32-unknown-unknown
+            └── release
+                ├── ...
+                ├── first_gear_app.wasm      <---- this is our built .wasm file
+                ├── first_gear_app.opt.wasm  <---- this is optimized .wasm file
+                └── first_gear_app.meta.wasm <---- this is meta .wasm file
 ```
 
 The `target/wasm32-unknown-unknown/release` directory contains three Wasm binaries:
 
-- `first_gear_app.wasm` is the output Wasm binary built from source files
 - `first_gear_app.opt.wasm` is the optimized Wasm aimed to be uploaded to the blockchain
-- `first_gear_app.meta.wasm` is the Wasm containing meta information needed to interact with the program
+- `meta.txt` is the Wasm containing meta information needed to interact with the program
+- `first_gear_app.wasm` is the output Wasm binary built from source files
+- `first_gear_app.meta.wasm` is the legacy Wasm containing meta information needed to interact with the program
 
 ## Deploy your Smart Contract to the Testnet
 
