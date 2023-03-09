@@ -5,9 +5,9 @@ sidebar_position: 24
 
 # Decentralized DNS
 
-Decentralized Internet (DNS) demonstrates on-chain server-less approach to web sites and web applications hosting. Unlike server-based DNS built on centralized components and services, decentralized solutions running on the blockchain are characterized by boosted data security, enhanced data reconciliation, minimized system weak points, optimized resource allocation, and demonstrated great fault tolerance. It brings all the benefits of decentralization such as censorship resistance, security resilience, high transparency.
+Decentralized Internet (DNS) demonstrates an on-chain server-less approach to web sites and web applications hosting. Unlike server-based DNS built on centralized components and services, decentralized solutions running on the blockchain are characterized by boosted data security, enhanced data reconciliation, minimized system weak points, optimized resource allocation, and demonstrated great fault tolerance. It brings all the benefits of decentralization such as censorship resistance, security resilience, high transparency.
 
-Briefly the solution consists of DNS program that is uploaded on-chain. It lists programs (smart-contracts) that are also uploaded on-chain and registered in DNS contract as DNS records. Hosted programs may have the user interface that resides on IPFS. The DNS program stores program ids and meta info of their interfaces (name, description and link). 
+Briefly the solution consists of a DNS program that is uploaded on-chain. It lists programs (smart-contracts) that are also uploaded on-chain and registered in DNS contract as DNS records. Hosted programs may have the user interface that resides on IPFS. The DNS program stores program ids and meta info of their interfaces (name, description and link). 
 
 The source code of the smart contract and frontend implementation is available on [GitHub](https://github.com/gear-dapps/DeIn).
 
@@ -39,12 +39,12 @@ pub struct DnsMeta {
 
 4. The next step is to send Metadata to your program using the `SetDnsMeta` enum variant. Where you need to set name, link (that is link to html file on IPFS) and description.
 
-5. To register your dApp in DNS, you need to send a message to the DNS program. You can do it through https://idea.gear-tech.io/ - find DNS program and send message `Register` with the id of your program.
+5. To register your dApp in DNS, you need to send a message to the DNS program. You can do it through https://idea.gear-tech.io/ - find the DNS program and send the message `Register` with the id of your program.
 
 ## Open and use dApp
 
-Firstly you need to download the `dns.html` file from Releases and open it in your browser. If you have your dApp registered in DNS program you will see it in the list of available dApps. Just click the "Open" button and your interface will be opened in the new tab.
+Firstly you need to download the `dns.html` file from Releases and open it in your browser. If you have your dApp registered in the DNS program you will see it in the list of available dApps. Just click the "Open" button and your interface will be opened in the new tab.
 
-## Get dns records
+## Get DNS records
 
-Using via https://idea.gear-tech.io, you can read the state of the DNS program to get records - all or filtered by name, id, pattern.
+Using https://idea.gear-tech.io, you can read the state of the DNS program to get records - all or filtered by name, id, pattern.
