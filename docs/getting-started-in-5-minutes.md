@@ -316,7 +316,7 @@ If everything goes well, your working directory should now have a `target` direc
                 ├── ...
                 ├── first_gear_app.wasm      <---- this is our built .wasm file
                 ├── first_gear_app.opt.wasm  <---- this is optimized .wasm file
-                └── first_gear_app.meta.wasm <---- this is meta .wasm file
+                └── first_gear_app.meta.wasm <---- this is legacy meta .wasm file
 ```
 
 The `target/wasm32-unknown-unknown/release` directory contains three Wasm binaries:
@@ -328,7 +328,7 @@ The `target/wasm32-unknown-unknown/release` directory contains three Wasm binari
 
 ## Deploy your Smart Contract to the Testnet
 
-Gear provides a demo environment that emulates the real Gear decentralized network, available in [idea.gear-tech.io](https://idea.gear-tech.io).
+Gear provides a demo application that implements all of the possibilities of interaction with smart-contracts in Gear networks, available in [idea.gear-tech.io](https://idea.gear-tech.io).
 
 ### Create account
 
@@ -372,7 +372,7 @@ Gear provides a demo environment that emulates the real Gear decentralized netwo
 
 ### Upload program
 
-1. When your account balance is sufficient, click the <kbd>Upload program</kbd> and navigate to the `.opt.wasm` file we have pointed to above.
+1. When your account balance is sufficient, click the <kbd>Upload program</kbd> and navigate to the `.opt.wasm` file we have pointed to above. Also upload the `meta.txt` file.
 
     ![Upload program button](./img/getting-started/upload.png)
 
