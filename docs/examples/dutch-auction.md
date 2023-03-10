@@ -21,6 +21,7 @@ pub enum Action {
     Buy,
     Create(CreateConfig),
     ForceStop,
+    Reward,
 }
 ```
 
@@ -71,14 +72,23 @@ pub enum Event {
         price: u128,
         token_id: U256,
     },
-    AuctionStoped {
+    Bought {
+        price: u128,
+    },
+    AuctionStopped {
         token_owner: ActorId,
         token_id: U256,
+    },
+    Rewarded {
+        price: u128,
     },
 }
 ```
 - `AuctionStarted` is an event that occurs when someone use `Create(CreateConfig)` successfully
 - `AuctionStoped` is an event that occurs when contract owner forcibly ends the auction
+
+## Consistency of contract states
+The `Dutch auction` contract interacts with the `non-fungible` token contract. Each transaction that changes the states of Dutch Auction and the non-fungible token is stored in the state until it is completed. User can complete a pending transaction by sending a message exactly the same as the previous one with indicating the transaction id. The idempotency of the non-fungible token contract allows to restart a transaction without duplicate changes which guarantees the state consistency of these 2 contracts.
 
 ### Programm metadata and state
 Metadata interface description:
@@ -109,10 +119,10 @@ To display only necessary certain values from the state, you need to write a sep
 
 ```rust
 #[metawasm]
-pub trait Metawasm {
-    type State = <AuctionMetadata as Metadata>::State;
+pub mod metafns {
+    pub type State = <AuctionMetadata as Metadata>::State;
 
-    fn info(mut state: Self::State) -> AuctionInfo {
+    pub fn info(mut state: State) -> AuctionInfo {
         if matches!(state.status, Status::IsRunning) && exec::block_timestamp() >= state.expires_at
         {
             state.status = Status::Expired
