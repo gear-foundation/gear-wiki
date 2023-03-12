@@ -237,7 +237,7 @@ This guide provides a general overview of running smart contracts on the network
 
     ```rust
     fn main() {
-    gear_wasm_builder::build_metawasm();
+        gear_wasm_builder::build_metawasm();
     }
     ```
 
