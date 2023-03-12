@@ -71,11 +71,11 @@ This guide provides a general overview of running smart contracts on the network
     └── first-gear-app  
         ├── Cargo.toml
         └── src
-            └── lib.rs
-        └── io
-            ├── Cargo.toml
-            └── src
-                └── lib.rs
+        │   └── lib.rs
+        ├── io
+        │   ├── Cargo.toml
+        │   └── src
+        │       └── lib.rs
         └── state
             ├── Cargo.toml
             └── src
