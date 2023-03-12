@@ -282,8 +282,6 @@ This guide provides a general overview of running smart contracts on the network
     license = "MIT"
     authors = ["Gear Technologies"]
 
-    # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
     [dependencies]
     gstd = { git = "https://github.com/gear-tech/gear.git", branch = "testnet" }
     gmeta = { git = "https://github.com/gear-tech/gear.git", branch = "testnet", features = ["codegen"] }
