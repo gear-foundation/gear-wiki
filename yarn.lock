@@ -5585,9 +5585,9 @@ sass-loader@^10.1.1:
     schema-utils "^3.0.0"
     semver "^7.3.2"
 
-sass@^1.58.3:
-  version "1.58.3"
-  resolved "https://registry.yarnpkg.com/sass/-/sass-1.58.3.tgz#2348cc052061ba4f00243a208b09c40e031f270d"
+sass@^1.59.1:
+  version "1.59.1"
+  resolved "https://registry.yarnpkg.com/sass/-/sass-1.59.1.tgz#bdff824c8328599a434a4808b3bbe02d1a38acfc"
   dependencies:
     chokidar ">=3.0.0 <4.0.0"
     immutable "^4.0.0"
