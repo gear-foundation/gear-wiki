@@ -44,7 +44,7 @@ export { State };
 ## Cookbook
 
 :::info
-In order for these hooks to work, the applicatoin must be wrapped in the appropriate Providers. As it is presented in the [example](https://github.com/gear-tech/gear-js/blob/main/utils/create-gear-app/gear-app-template/template/src/hocs/index.tsx). If you use `cga`, then all the necessary environment has already been provided.
+In order for these hooks to work, the application must be wrapped in the appropriate Providers. As it is presented in the [example](https://github.com/gear-tech/gear-js/blob/main/utils/create-gear-app/gear-app-template/template/src/hocs/index.tsx). If you use `cga`, then all the necessary environment has already been provided.
 :::
 
 ### useApi
