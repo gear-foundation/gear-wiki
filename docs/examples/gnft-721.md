@@ -17,7 +17,7 @@ This article explains the programming interface, data structure, basic functions
 
 ## How to run
 
-- Program source code avalible on [Github](https://github.com/gear-dapps/non-fungible-token)
+- Program source code available on [Github](https://github.com/gear-dapps/non-fungible-token)
 - dApp UI [Github](https://github.com/gear-dapps/non-fungible-token/tree/master/frontend)
 
 ### ⚒️ Build program
@@ -27,9 +27,9 @@ This article explains the programming interface, data structure, basic functions
 
 ### 🏗️ Upload program
 
-1. You can deploy program using [idea.gear-tech.io](https://idea.gear-tech.io/).
+1. You can deploy a program using [idea.gear-tech.io](https://idea.gear-tech.io/).
 2. In the network selector choose `Staging Testnet` or `Development` (in this case, you should have a local node running)
-3. Upload prorgam `nft.opt.wasm` from `/target/wasm32-unknown-unknown/release/`
+3. Upload program `nft.opt.wasm` from `/target/wasm32-unknown-unknown/release/`
 4. Upload metadata file `meta.txt`
 5. Specify `init payload` and calculate gas!
 
@@ -112,7 +112,7 @@ pub struct NFT {
 The `transactions` field is used for contract `idempotency`. 
 There are two possible risks when sending a transaction: the risk of sending duplicate transactions and the risk of not knowing the status of the transaction due to a network failure. The message sender indicates the transaction id, and the token contract obtains the hash of this transaction using the sender's address and the transaction number. If a transaction with such a hash has already been completed, the contract returns the status of this transaction.
 
-To inherit the default logic functions you need to derive `NFTCore` trait. Accordingly, for reading contracts states you need the `NFTMetaState` trait.
+To inherit the default logic functions you need to derive `NFTCore` trait. Accordingly, for reading the state of the contracts you need the `NFTMetaState` trait.
 
 Let's write the whole implementation of the NFT contract. First, we define the message
 which will initialize the contract and messages that our contract will process:
