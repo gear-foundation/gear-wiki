@@ -44,7 +44,7 @@ export { State };
 ## Cookbook
 
 :::info
-In order for these hooks to work, they must be wrapped in the appropriate Providers in the react app. As it is presented in the [example](https://github.com/gear-tech/gear-js/blob/main/utils/create-gear-app/gear-app-template/template/src/hocs/index.tsx). If you use `cga`, then all the necessary environment has already been provided.
+In order for these hooks to work, app must be wrapped in the appropriate Providers. As it is presented in the [example](https://github.com/gear-tech/gear-js/blob/main/utils/create-gear-app/gear-app-template/template/src/hocs/index.tsx). If you use `cga`, then all the necessary environment has already been provided.
 :::
 
 ### useApi
@@ -59,7 +59,7 @@ const { api, isApiReady } = useApi();
 
 ### useAccount
 
-`useAccount` provides interaction with web3 extension, allow to manage accounts from it (for example to sign transaction).
+`useAccount` provides interaction with `Polkadot-js` extension api, allows to manage accounts from it (for example to sign transaction).
 
 ```js
 import { useAccount } from '@gear-js/react-hooks';
@@ -82,7 +82,7 @@ alert.success('success message')
 
 ### useMetadata
 
-This hook is auxiliary and it is not pre-installed in the react-hook library. `useMetadata` allows to convert program's metadata into the required format.
+This hook is auxiliary and it is not pre-installed in the react-hook library. `useMetadata` allows to convert program's metadata (`.txt` file) into the required format.
 
 ```js
 import { useEffect, useState } from 'react';
@@ -97,7 +97,7 @@ export const useMetadata = (source: RequestInfo | URL) => {
 
   useEffect(() => {
     fetch(source)
-      .then((res) => res.text() as Promise<string>)
+      .then((res) => res.text())
       .then((raw) => getProgramMetadata(`0x${raw}`))
       .then((meta) => setData(meta));
   }, [source]);
@@ -163,7 +163,7 @@ function readFullState() {
   const programId = '0x01';
   const { metadata } = useMetadata(meta);
 
-  const { state } = useSendMessage(programId, metadata);
+  const { state } = useReadFullState(programId, metadata);
 
   return state;
 }
@@ -192,12 +192,12 @@ function useProgramState<T>(functionName: string, payload?: any) {
 
 function firstState() {
   const payload = 'some_payload'
-  const { state } = useProgramState('foo_1', useProgramState);
+  const { state } = useProgramState('foo_1', payload);
   return state;
 }
 
 function secondState() {
-  // if program state function doesn't have incoming params
+  // if program state function doesn't have initial payload
   const { state } = useProgramState('foo_2', null);
   return state;
 }
