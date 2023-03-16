@@ -23,7 +23,7 @@ This article explains the programming interface, data structure, basic functions
 ### ⚒️ Build program
 
 - Get the source code of [NFT contract](https://github.com/gear-dapps/non-fungible-token)
-- Build contracts as described in [program/README.md](https://github.com/gear-dapps/non-fungible-token/blob/master/README.md).
+- Build contracts as described in [program/README.md](https://github.com/gear-dapps/non-fungible-token/blob/master/frontend/README.md).
 
 ### 🏗️ Upload program
 
@@ -35,10 +35,10 @@ This article explains the programming interface, data structure, basic functions
 
 *** Init Payload ***
 
-name (Str) - NFT collection name
-symbol (Str) - NFT collection symbol
-base_uri (Str) - NFT collection base URI
-royalties (Option<Royalties>) - Optional param to specify accounts to pay royalties
+name `Str` - NFT collection name
+symbol `Str` - NFT collection symbol
+base_uri `Str` - NFT collection base URI
+royalties `Option<Royalties>` - Optional param to specify accounts to pay royalties
 
 ### 🖥️ Run UI
 

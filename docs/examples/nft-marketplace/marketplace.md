@@ -36,10 +36,10 @@ You can deploy program using [idea.gear-tech.io](https://idea.gear-tech.io/). In
 :::info
 Init payload:
 
-name (Str) - NFT collection name
-symbol (Str) - NFT collection symbol
-base_uri (Str) - NFT collection base URI
-royalties (Option<Royalties>) - Optional param to specify accounts to pay royalties
+- name `Str` - NFT collection name
+- symbol `Str` - NFT collection symbol
+- base_uri `Str` - NFT collection base URI
+- royalties `Option<Royalties>` - Optional param to specify accounts to pay royalties
 :::
 
 *** Marketplace ***
@@ -51,9 +51,9 @@ royalties (Option<Royalties>) - Optional param to specify accounts to pay royalt
 :::info
 InitMarket payload:
 
-admin_id (ActorId) -  marketplace admin
-treasury_id (ActorId) - an account that receives a commission from sales on the marketplace
-treasury_fee (U16) -  sales commission
+- admin_id (ActorId) -  marketplace admin
+- treasury_id (ActorId) - an account that receives a commission from sales on the marketplace
+- treasury_fee (U16) -  sales commission
 :::
 
 ### 🖥️ Run UI
