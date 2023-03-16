@@ -25,7 +25,7 @@ A smart contract examples created by Gear are available on GitHub so anyone can 
 
 ### 🏗️ Upload programs
 
-You can deploy program using [idea.gear-tech.io](https://idea.gear-tech.io/). In the network selector choose `Staging Testnet` or `Development` (in this case, you should have a local node running).
+You can deploy a program using [idea.gear-tech.io](https://idea.gear-tech.io/). In the network selector choose `Staging Testnet` or `Development` (in this case, you should have a local node running).
 
 *** Non-Fungible Token ***
 
@@ -123,7 +123,7 @@ pub struct Market {
 commission percentage (from 1 to 5 percent)
 The marketplace contract is initialized with the following fields;
 - `items` - listed NFTs;
-- `approved_nft_contracts` - nft contracts accounts that can be listed on the marketplace;
+- `approved_nft_contracts` - NFT contracts accounts that can be listed on the marketplace;
 - `approved_ft_contracts` - 
 fungible token accounts for which it is possible to buy marketplace items;
 - `tx_id` - the id for tracking transactions in the fungible and non-fungible contracts (See the description of [fungible token](/examples/gft-20.md) and [non-fungible token](/examples/gnft-721.md)).
@@ -148,7 +148,7 @@ the item price. `None` field means that the item is not on the sale;
 a field containing information on the current auction. `None` field means that there is no current auction on the item;
 - `offers` - 
 purchase offers made on that item;
-- `tx` - a pending transaction on the item. `None` means that there is no pending transactions. 
+- `tx` - a pending transaction on the item. `None` means that there are no pending transactions. 
 
 `MarketTx` is an enum of possible transactions that can occur with NFT:
 
