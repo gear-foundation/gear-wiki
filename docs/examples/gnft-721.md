@@ -22,7 +22,7 @@ This article explains the programming interface, data structure, basic functions
 
 ### ⚒️ Build program
 
-- Get the source code of [GOC contract](https://github.com/gear-dapps/non-fungible-token)
+- Get the source code of [NFT contract](https://github.com/gear-dapps/non-fungible-token)
 - Build contracts as described in [program/README.md](https://github.com/gear-dapps/non-fungible-token/blob/master/README.md).
 
 ### 🏗️ Upload program
