@@ -62,7 +62,7 @@ pub struct InitEscrow {
 /// An enum to send the program info about what it should do.
 ///
 /// After a successful processing of this enum, the program replies with [`EscrowEvent`].
-#[derive(Decode, Encode, TypeInfo)]
+#[derive(Clone, Decode, Encode, TypeInfo)]
 pub enum EscrowAction {
     /// Creates one escrow wallet and replies with its ID.
     ///
@@ -137,28 +137,18 @@ pub enum EscrowAction {
         /// A wallet ID.
         WalletId,
     ),
-}
-```
 
-### Meta state queries
-
-```rust
-/// An enum for requesting the program state.
-///
-/// After a successful processing of this enum, the program replies with [`EscrowStateReply`].
-#[derive(Decode, Encode, TypeInfo)]
-pub enum EscrowState {
-    /// Gets wallet info.
+    /// Continues the transaction if it fails due to lack of gas
+    /// or due to an error in the token contract.
     ///
-    /// On success, returns [`EscrowStateReply::Info`].
-    Info(
-        /// A wallet ID.
-        WalletId,
+    /// # Requirements:
+    /// * `transaction_id` should exists in `transactions` table;
+    ///
+    /// When transaction already processed replies with [`EscrowEvent::TransactionProcessed`].
+    Continue(
+        /// Identifier of suspended transaction.
+        u64,
     ),
-    /// Gets all created wallets.
-    ///
-    /// On success, returns [`EscrowStateReply::CreatedWallets`].
-    CreatedWallets,
 }
 ```
 
@@ -190,6 +180,10 @@ In case of issues with the application, try to switch to another network or run 
 
 :::
 
+## Consistency of contract states
+The `Escrow` contract interacts with the `fungible` token contract. Each transaction that changes the states of Escrow and the fungible token is stored in the state until it is completed. User can complete a pending transaction by sending a message `Continue` indicating the transaction id. The idempotency of the fungible token contract allows to restart a transaction without duplicate changes which guarantees the state consistency of these 2 contracts.
+
+
 ## Program metadata and state
 Metadata interface description:
 
@@ -202,7 +196,7 @@ impl Metadata for EscrowMetadata {
     type Others = ();
     type Reply = ();
     type Signal = ();
-    type State = Escrow;
+    type State = EscrowState;
 }
 ```
 To display the full contract state information, the `state()` function is used:
@@ -221,15 +215,25 @@ To display only necessary certain values from the state, you need to write a sep
 
 ```rust
 #[metawasm]
-pub trait Metawasm {
-    type State = <EscrowMetadata as Metadata>::State;
+pub mod metafns {
+    pub type State = <EscrowMetadata as Metadata>::State;
 
-    fn info(wallet_id: U256, state: Self::State) -> Wallet {
-        ...
+    pub fn info(state: State, wallet_id: U256) -> Wallet {
+        let (_, wallet) = *state
+            .wallets
+            .iter()
+            .find(|(id, _)| id == &wallet_id)
+            .unwrap_or_else(|| panic!("Wallet with the {wallet_id} ID doesn't exist"));
+
+        wallet
     }
 
-    fn created_wallets(state: Self::State) -> Vec<(WalletId, Wallet)> {
-        ...
+    pub fn created_wallets(state: State) -> Vec<(WalletId, Wallet)> {
+        state
+            .wallets
+            .iter()
+            .map(|(wallet_id, wallet)| (*wallet_id, *wallet))
+            .collect()
     }
 }
 ```
