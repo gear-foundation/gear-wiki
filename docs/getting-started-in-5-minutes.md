@@ -96,7 +96,7 @@ This guide provides a general overview of running smart contracts on the network
     }
     ```
 
-    and configure `Cargo.toml` in order for our contract to be properly built:
+and configure `Cargo.toml` in order for our contract to be properly built:
 
     ```toml
     [package]
@@ -134,7 +134,7 @@ This guide provides a general overview of running smart contracts on the network
 
 6. Replace the default contents of `lib.rs` in the `first-gear-app` folder with the code for our first smart-contract.
 
-    This simple smart-contract responds with `PONG` to a `PING` message sent to the contract. Open `src/lib.rs` in your editor and paste the following code:
+This simple smart-contract responds with `PONG` to a `PING` message sent to the contract. Open `src/lib.rs` in your editor and paste the following code:
 
     ```rust
     use gstd::{debug, msg, prelude::*};
@@ -230,7 +230,7 @@ This guide provides a general overview of running smart contracts on the network
     gstd = { git = "https://github.com/gear-tech/gear.git", branch = "testnet" }
     ```
 
-7. In the `state` folder:
+8. In the `state` folder:
     1. create the `build.rs` file with the following code:
 
     ```rust
@@ -354,7 +354,7 @@ Gear provides a demo application that implements all of the possibilities of int
 
     ![Switch network](./img/getting-started/switch-network.png)
 
-8.    Click the `Connect` button on top-right to select an account that will be connected to Gear Tech.
+8. Click the `Connect` button on top-right to select an account that will be connected to Gear Tech.
 
     ![Connect account](./img/getting-started/connect-account.png)
 
