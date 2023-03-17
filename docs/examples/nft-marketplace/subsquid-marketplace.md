@@ -10,6 +10,7 @@ Creating a good and usable frontend for an NFT marketplace web-application requi
 You can look at the [Subsquid documentation](https://docs.subsquid.io/overview/) to learn what the Subsquid architecture is.
 
 Historical data that needs to be indexed, stored, and displayed in the user interface can be (but not limited to):
+
 - Token transfers between accounts
 - Auctions and their bids
 - Offers to buy tokens
@@ -17,6 +18,7 @@ Historical data that needs to be indexed, stored, and displayed in the user inte
 A dApp developer may also want to store other parameters of NFTs, such as - the token owner, the token description, links to media and other references too. With Subsquid, these data points can be quickly accessed without having to query the state of the programs on-chain.
 
 In general Subsquid provides two main components:
+
 - An Archive that indexes all blockchain calls and events.
 - A Squid that gets the data from the Archive and implements specific business logic.
 
@@ -28,7 +30,7 @@ The Processor must be developed as a regular NodeJS package.
 
 Subsquid provides a set of packages that facilitate the development process.
 
-First of all, we need to create a GraphQL scheme describing all entities and relations between them. [Here](https://github.com/gear-tech/gear-integrations/blob/master/Subsquid/nft-marketplace/schema.graphql)  is an example of a scheme that can be used to generate Typeorm models for a database using the `@subsquid/typeorm-codegen` package provided by Subsquid. We chose a Postgres database for storing all the data.
+First of all, we need to create a GraphQL scheme describing all entities and relations between them. [Here](https://github.com/gear-tech/gear-integrations/blob/master/Subsquid/nft-marketplace/schema.graphql) is an example of a scheme that can be used to generate Typeorm models for a database using the `@subsquid/typeorm-codegen` package provided by Subsquid. We chose a Postgres database for storing all the data.
 
 The next step is to create the Processor.
 

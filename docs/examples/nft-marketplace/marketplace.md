@@ -5,20 +5,96 @@ sidebar_position: 1
 
 # NFT Marketplace
 
-## Introduction
+![img alt](./../img/nft-marketplace.png)
 
 NFT marketplace is a contract where you can buy and sell non-fungible tokens for fungible tokens. The contract also supports holding the NFT auctions and making/accepting purchase offers on NFTs.
 
 A smart contract examples created by Gear are available on GitHub so anyone can easily create their own NFT marketplace application and run it on the Gear Network:
+
 - [Gear Non-Fungible Token](https://github.com/gear-dapps/non-fungible-token/). 
 - [NFT marketplace](https://github.com/gear-dapps/nft-marketplace).
 
-This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios.
+- Marketplace UI available on [Github](https://github.com/gear-dapps/nft-marketplace/tree/master/frontend)
 
-Gear also [provides](https://github.com/gear-tech/gear-js/tree/master/apps/marketplace) an example implementation of the NFT Marketplace's user interface to demonstrate its interaction with smart contracts in the Gear Network.
+## How to run 
+
+### ⚒️ Build programs
+
+- Build [NFT contract](https://github.com/gear-dapps/non-fungible-token/) as described in `README.md`
+- Build [Marketplace contract](https://github.com/gear-dapps/nft-marketplace/) as described in `README.md`
+
+### 🏗️ Upload programs
+
+You can deploy a program using [idea.gear-tech.io](https://idea.gear-tech.io/). In the network selector choose `Staging Testnet` or `Development` (in this case, you should have a local node running).
+
+*** Non-Fungible Token ***
+
+1. Upload program `nft.opt.wasm` from `/target/wasm32-unknown-unknown/release/`
+2. Upload metadata file `meta.txt`
+3. Specify `init payload` and calculate gas!
+
+:::info
+Init payload:
+
+- name `Str` - NFT collection name
+- symbol `Str` - NFT collection symbol
+- base_uri `Str` - NFT collection base URI
+- royalties `Option<Royalties>` - Optional param to specify accounts to pay royalties
+:::
+
+*** Marketplace ***
+
+1. Upload program `marketplace.opt.wasm` from `/target/wasm32-unknown-unknown/release/`
+2. Upload metadata file `meta.txt`
+3. Specify `init payload` and calculate gas!
+
+:::info
+InitMarket payload:
+
+- admin_id (ActorId) -  marketplace admin
+- treasury_id (ActorId) - an account that receives a commission from sales on the marketplace
+- treasury_fee (U16) -  sales commission
+:::
+
+### 🖥️ Run UI
+
+1. Install packages
+
+```sh
+yarn install
+```
+
+2. Configure .evn file. Specify network address and program ID like in the example below:
+
+For proper application functioning, one needs to adjust an environment variable parameters. An example is available [here](https://github.com/gear-tech/gear-js/blob/master/apps/marketplace/.env.example).
+
+```sh
+REACT_APP_NODE_ADDRESS=wss://rpc-node.gear-tech.io:443
+REACT_APP_IPFS_ADDRESS=https://ipfs.gear-tech.io/api/v0
+REACT_APP_IPFS_GATEWAY_ADDRESS=https://ipfs-gw.gear-tech.io/ipfs
+REACT_APP_MARKETPLACE_CONTRACT_ADDRESS=0xf8e5add537887643f8aa1ee887754d9b2d8c20d4efd062d6c1dc673cbe390d6f
+REACT_APP_NFT_CONTRACT_ADDRESS=0xa7874ff27e9bac10bf7fd43f4908bb1e273018e15325c16fb35c71966c0c4033
+```
+
+- `REACT_APP_NODE_ADDRESS` is Gear Network address (wss://rpc-node.gear-tech.io:443)
+- `REACT_APP_IPFS_ADDRESS` is address of IPFS to store NFT assets (https://ipfs.gear-tech.io/api/v0 was used for Gear Marketplace implementation)
+- `REACT_APP_IPFS_GATEWAY_ADDRESS` is IPFS Gateway address (https://ipfs-gw.gear-tech.io/ipfs)
+- `REACT_APP_MARKETPLACE_CONTRACT_ADDRESS` is NFT Marketplace contract address in Gear Network
+- `REACT_APP_NFT_CONTRACT_ADDRESS` is Gear Non-Fungible Token contract address in Gear Network
+
+3. Run app
+
+```sh
+yarn start
+```
+
+## Marketplace contract logic
+
+This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios.
 
 <!-- You can watch a video on how to get the NFT Marketplace application up and running and its capabilities here: **https://youtu.be/4suveOT3O-Y**.
 -->
+
 To use the hashmap you should include `hashbrown` package into your *Cargo.toml* file:
 ```toml
 [dependencies]
@@ -47,7 +123,7 @@ pub struct Market {
 commission percentage (from 1 to 5 percent)
 The marketplace contract is initialized with the following fields;
 - `items` - listed NFTs;
-- `approved_nft_contracts` - nft contracts accounts that can be listed on the marketplace;
+- `approved_nft_contracts` - NFT contracts accounts that can be listed on the marketplace;
 - `approved_ft_contracts` - 
 fungible token accounts for which it is possible to buy marketplace items;
 - `tx_id` - the id for tracking transactions in the fungible and non-fungible contracts (See the description of [fungible token](/examples/gft-20.md) and [non-fungible token](/examples/gnft-721.md)).
@@ -72,7 +148,7 @@ the item price. `None` field means that the item is not on the sale;
 a field containing information on the current auction. `None` field means that there is no current auction on the item;
 - `offers` - 
 purchase offers made on that item;
-- `tx` - a pending transaction on the item. `None` means that there is no pending transactions. 
+- `tx` - a pending transaction on the item. `None` means that there are no pending transactions. 
 
 `MarketTx` is an enum of possible transactions that can occur with NFT:
 
@@ -147,6 +223,7 @@ BuyItem {
 ```
 
 ### NFT auction.
+
 The marketplace contract includes the *English auction*. *English auction* is an open auction at an increasing price, where participants openly bid against each other, with each subsequent bid being greater than the previous one.
 
 The auction has the following struct:
@@ -302,43 +379,8 @@ Withdraw {
 },
 ```
 ## Consistency of contract states
+
 The `market` contract interacts with `fungible` and `non-fungible` token contracts. Each transaction that changes the states of several contracts is stored in the state until it is completed. Every time a user interacts with an item, the marketplace contract checks for an pending transaction and, if there is one, asks the user to complete it, not allowing to start a new one. The idempotency of the token contracts allows to restart a transaction without duplicate changes which guarantees the state consistency of 3 contracts.
-## User interface
-
-A Ready-to-Use application example provides a user interface that interacts with [gNFT](https://github.com/gear-dapps/non-fungible-token/tree/master/nft) and [Marketplace](https://github.com/gear-dapps/nft-marketplace) smart contracts running in Gear Network.
-- Gear Non-Fundible Token contract enables creation of NFT tokens, proves an ownership of a digital assets, check [this article](../gnft-721) for details.
-- NFT Marketplace contract enables to buy and sell non-fungible tokens for fungible tokens, hold the NFT auctions and make/accept purchase offers on NFTs.
-
-<!-- This video demonstrates how to configure and run Marketplace application on your own and explains the user interaction workflow: **https://youtu.be/4suveOT3O-Y** 
--->
-
-![img alt](./../img/nft-marketplace.png)
-
-An NFT Marketplace application source code is available on [GitHub](https://github.com/gear-tech/gear-js/tree/master/apps/marketplace).
-
-### Configure basic dApp in .env:
-
-For proper application functioning, one needs to adjust an environment variable parameters. An example is available [here](https://github.com/gear-tech/gear-js/blob/master/apps/marketplace/.env.example).
-
-```sh
-REACT_APP_NODE_ADDRESS
-REACT_APP_IPFS_ADDRESS
-REACT_APP_IPFS_GATEWAY_ADDRESS
-REACT_APP_NFT_CONTRACT_ADDRESS
-REACT_APP_MARKETPLACE_CONTRACT_ADDRESS
-```
-
-- `REACT_APP_NETWORK` is Gear Network address (wss://rpc-node.gear-tech.io:443)
-- `REACT_APP_IPFS_ADDRESS` is address of IPFS to store NFT assets (https://ipfs.gear-tech.io/api/v0 was used for Gear Marketplace implementation)
-- `REACT_APP_IPFS_GATEWAY_ADDRESS` is IPFS Gateway address (https://ipfs-gw.gear-tech.io/ipfs)
-- `REACT_APP_NFT_CONTRACT_ADDRESS` is Gear Non-Fungible Token contract address in Gear Network
-- `REACT_APP_MARKETPLACE_CONTRACT_ADDRESS` is NFT Marketplace contract address in Gear Network
-
-### Simple NFT
-
-Another example of an interface that demonstrates how to work with a smart contract is a Simple NFT application example that is available on [GitHub](https://github.com/gear-tech/gear-js/tree/master/apps/nft).
-
-It implements the ability to mint NFTs, view all NFTs minted by any account in the contract, as well as view NFTs that someone has approved to the current account (`AprovedToMe`) with the possibility of further transfer to another account (this option is not available in the full NFT Marketplace application).
 
 ## Program metadata and state
 Metadata interface description:
@@ -370,6 +412,7 @@ extern "C" fn state() {
     .expect("Failed to share state");
 }
 ```
+
 To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `Market` state. For example - [gear-dapps/nft-marketplace/state](https://github.com/gear-dapps/nft-marketplace/tree/master/state):
 
 ```rust
@@ -386,24 +429,3 @@ pub trait Metawasm {
     }
 }
 ```
-
-## How to run
-
-Install required dependencies:
-```sh
-npm install
-```
-
-Run the app in the development mode:
-```sh
-npm start
-```
-Open http://localhost:3000 to view it in the browser.
-
-## Source code
-
-The source code of this example of NFT marketplace smart contract and the example of an implementation of its testing is available on [Gear-dapps](https://github.com/gear-dapps/nft-marketplace).
-
-The Gear JS application code is available in [Gear-tech/gear-js](https://github.com/gear-tech/gear-js/tree/master/apps/marketplace).
-
-For more details about testing smart contracts written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.
