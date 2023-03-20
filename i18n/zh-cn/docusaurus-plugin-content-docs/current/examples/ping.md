@@ -59,6 +59,6 @@ mod tests {
 }
 ```
 
-该程序只是将 `PONG` 发回向它发送 `PING`的原始发送者。
+该程序只是将 `PONG` 发回向它发送 `PING` 的最初发送者。
 
 GitHub 链接：https://github.com/gear-dapps/ping
