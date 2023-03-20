@@ -194,16 +194,6 @@ pub enum StakingEvent {
     Updated,
     Reward(u128),
 }
-
-pub enum StakingState {
-    GetStakers,
-    GetStaker(ActorId),
-}
-
-pub enum StakingStateReply {
-    Stakers(Vec<(ActorId, Staker)>),
-    Staker(Staker),
-}
 ```
 
 ### Functions
@@ -212,11 +202,12 @@ Staking contract interacts with fungible token contract through function `transf
 
 ```rust
 pub async fn transfer_tokens(
+    &mut self,
     token_address: &ActorId, /// - the token address
 	from: &ActorId, /// - the sender address
 	to: &ActorId, /// - the recipient address
 	amount_tokens: u128 /// - the amount of tokens
-)
+) -> Result<(), Error>
 ```
 
 This function sends a message (the action is defined in the enum `FTAction`) and gets a reply (the reply is defined in the enum `FTEvent`).
@@ -291,29 +282,58 @@ This is the entry point to the program, and the program is waiting for a message
 
 ```rust
 #[gstd::async_main]
-async unsafe fn main() {
+async fn main() {
     let staking = unsafe { STAKING.get_or_insert(Staking::default()) };
 
     let action: StakingAction = msg::load().expect("Could not load Action");
+    let msg_source = msg::source();
 
-    match action {
+    let _reply: Result<StakingEvent, Error> = Err(Error::PreviousTxMustBeCompleted);
+    let _transaction_id = if let Some(Transaction {
+        id,
+        action: pend_action,
+    }) = staking.transactions.get(&msg_source)
+    {
+        if action != *pend_action {
+            reply(_reply).expect("Failed to encode or reply with `Result<StakingEvent, Error>`");
+            return;
+        }
+        *id
+    } else {
+        let transaction_id = staking.current_tid;
+        staking.current_tid = staking.current_tid.saturating_add(1);
+        staking.transactions.insert(
+            msg_source,
+            Transaction {
+                id: transaction_id,
+                action: action.clone(),
+            },
+        );
+        transaction_id
+    };
+    let result = match action {
         StakingAction::Stake(amount) => {
-            staking.stake(amount).await;
+            let result = staking.stake(amount).await;
+            staking.transactions.remove(&msg_source);
+            result
         }
-
         StakingAction::Withdraw(amount) => {
-            staking.withdraw(amount).await;
+            let result = staking.withdraw(amount).await;
+            staking.transactions.remove(&msg_source);
+            result
         }
-
-        StakingAction::SetRewardTotal(reward_total) => {
-            staking.set_reward_total(reward_total);
-            msg::reply(StakingEvent::RewardTotal(reward_total), 0).unwrap();
+        StakingAction::UpdateStaking(config) => {
+            let result = staking.update_staking(config);
+            staking.transactions.remove(&msg_source);
+            result
         }
-
         StakingAction::GetReward => {
-            staking.send_reward().await;
+            let result = staking.send_reward().await;
+            staking.transactions.remove(&msg_source);
+            result
         }
-    }
+    };
+    reply(result).expect("Failed to encode or reply with `Result<StakingEvent, Error>`");
 }
 ```
 
@@ -321,15 +341,15 @@ async unsafe fn main() {
 Metadata interface description:
 
 ```rust
-pub struct AuctionMetadata;
+pub struct StakingMetadata;
 
-impl Metadata for AuctionMetadata {
-    type Init = ();
-    type Handle = InOut<Action, Event>;
+impl Metadata for StakingMetadata {
+    type Init = In<InitStaking>;
+    type Handle = InOut<StakingAction, Result<StakingEvent, Error>>;
     type Others = ();
     type Reply = ();
     type Signal = ();
-    type State = AuctionInfo;
+    type State = IoStaking;
 }
 ```
 To display the full contract state information, the `state()` function is used:
@@ -345,21 +365,27 @@ To display only necessary certain values from the state, you need to write a sep
 
 ```rust
 #[metawasm]
-pub trait Metawasm {
-    type State = <StakingMetadata as Metadata>::State;
+pub mod metafns {
+    pub type State = <StakingMetadata as Metadata>::State;
 
-    fn get_stakers(state: Self::State) -> Vec<(ActorId, Staker)> {
+    pub fn get_stakers(state: State) -> Vec<(ActorId, Staker)> {
         state.stakers
     }
 
-    fn get_staker(address: ActorId, state: Self::State) -> Staker {
-        match state.stakers.iter().find(|(id, _staker)| address.eq(id)) {
-            Some((_id, staker)) => staker.clone(),
-            None => panic!("Staker with the ID = {address:?} doesn't exists"),
-        }
+    pub fn get_staker(state: State, address: ActorId) -> Option<Staker> {
+        state
+            .stakers
+            .iter()
+            .find(|(id, _staker)| address.eq(id))
+            .map(|(_, staker)| staker.clone())
     }
 }
+
 ```
+
+## Consistency of contract states
+The `Staking` contract interacts with the `fungible` token contract. Each transaction that changes the states of Staking and the fungible token is stored in the state until it is completed. User can complete a pending transaction by sending a message exactly the same as the previous one with indicating the transaction id. The idempotency of the fungible token contract allows to restart a transaction without duplicate changes which guarantees the state consistency of these 2 contracts.
+
 
 ## Conclusion
 
