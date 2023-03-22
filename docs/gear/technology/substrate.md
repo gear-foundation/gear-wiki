@@ -23,6 +23,10 @@ It's easy to understand the functions of Substrate by its name. The main Substra
 
 Substrate enables the Gear team to significantly reduce development time and focus on developing the main Gear Protocol components. Rust guarantees security and high performance.
 
+<!--
 Using Substrate allows for a quick connection for Gear Network instances as a parachains into the Polkadot & Kusama networks. The Polkadot Relay Chain and the Gear Network ultimately speak the same language - asynchronous messages. Gear’s unique asynchronous messaging architecture allows the Gear Network to be an effective and easy-to-use parachain of Polkadot network.
+-->
+
+Gear's unique asynchronous messaging architecture enables efficient communication between networks built on Substrate technology. This seamless integration contributes to interoperability for improved network functionality and participation.
 
 But even with Substrate, launching a new blockchain remains relatively expensive and time consuming. But the Gear Protocol allows dApp developers to focus on their projects rather than building and operating an entirely new blockchain from scratch.
