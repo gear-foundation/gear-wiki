@@ -34,7 +34,11 @@ Polkadot and its testnet Kusama are designed to be a fully extensible and scalab
 
 Today Polkadot is one of the fastest-growing multi-chain networks. Although it has an adaptive architecture for building smart-contract platforms and rapid technology development for decentralized applications, it is not a smart contract platform by itself.
 
+<!---
 As a smart contract platform built on Substrate, Gear was built so that it can be used to deploy a Layer-1 parachain on Polkadot or Kusama, or a standalone network independent of Polkadot or Kusama, any of which being a “Gear Network”. A Gear Network enables developers to deploy their dApps in mere minutes in the easiest and most efficient way possible. This will enable developers to build dApps on Polkadot and Kusama to take advantage of the benefits of each unique network without the traditional significant time and financial expense associated with doing so.
+--->
+
+Built on Substrate, Gear Protocol facilitates access to the deployment infrastructure of Layer-1 parachains or a standalone network. Gear simplifies the dApp deployment process thanks to Gear's technical development, software, and utility, which enable network participation and functionality for broader information access and technical support.
 
 There are several components in the Polkadot architecture, namely:
 - Relay Chain
