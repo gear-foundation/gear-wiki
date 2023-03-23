@@ -357,7 +357,7 @@ Gear 提供了一个演示应用程序，实现了与 Gear 网络中智能合约
 
 ![Allow access](./img/getting-started/polkadot-access.png)
 
-6. 确定链接的是 `Gear Staging Testnet V6` 网络。网络名称在页面的左下角。
+6. 确定链接的是 `Gear Staging Testnet V7` 网络。网络名称在页面的左下角。
 
 ![Network name](./img/getting-started/idea-network.png)
 
