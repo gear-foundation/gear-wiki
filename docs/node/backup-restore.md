@@ -23,7 +23,7 @@ Let's explore the data that the node stores in this directory.
         └── chains
             ├── dev
             │   └── ...
-            ├── gear_staging_testnet_v6
+            ├── gear_staging_testnet_v7
             │   ├── db
             │   │   └── full
             │   ├── keystore
@@ -36,7 +36,7 @@ Let's explore the data that the node stores in this directory.
 
 ### Chains
 
-The node can connect to different chains. The chain can be selected using the `--chain` argument. The default chain is the staging test network at the moment. Its data is located in `gear/chains/gear_staging_testnet_v6` directory.
+The node can connect to different chains. The chain can be selected using the `--chain` argument. The default chain is the staging test network at the moment. Its data is located in `gear/chains/gear_staging_testnet_v7` directory.
 
 If you connect to the Vara network, the chain subdirectory name will be `vara_network` resulting in the `gear/chains/vara_network` path.
 
@@ -59,7 +59,7 @@ The database can be deleted and synchronized from scratch at any time. Use the `
 The network private key is used to calculate the unique peer identifier (started with `12D3KooW`). This key is stored in `<chain>/network/secret_ed25519` file. The key file is the binary file containing 32 bytes of the Ed25519 (by default) private key. You can use `hexdump` command to read the key:
 
 ```shell
-hexdump -e '1/1 "%02x"' /root/.local/share/gear/chains/gear_staging_testnet_v6/network/secret_ed25519
+hexdump -e '1/1 "%02x"' /root/.local/share/gear/chains/gear_staging_testnet_v7/network/secret_ed25519
 
 # 42bb2fdd46edfa4f41a5f0f9c1a5a1d407a39bafbce6f07456a2c8d9963c8f5c
 ```
@@ -78,19 +78,19 @@ The network key file cannot be recovered if lost. Therefore, you are to keep it 
 
 ## Moving the node
 
-To move the node to a new server you are to backup then restore the following (provided paths are for default Staging Testnet V6 node's parameters):
+To move the node to a new server you are to backup then restore the following (provided paths are for default Staging Testnet V7 node's parameters):
 
 - The network private key of the node:
 
-    - Linux: `$HOME/.local/share/gear/chains/gear_staging_testnet_v6/network/secret_ed25519`
-    - macOS: `$HOME/Library/Application Support/gear/chains/gear_staging_testnet_v6/network/secret_ed25519`
-    - Windows: `%USERPROFILE%\AppData\Local\gear.exe\chains\gear_staging_testnet_v6\network\secret_ed25519`
+    - Linux: `$HOME/.local/share/gear/chains/gear_staging_testnet_v7/network/secret_ed25519`
+    - macOS: `$HOME/Library/Application Support/gear/chains/gear_staging_testnet_v7/network/secret_ed25519`
+    - Windows: `%USERPROFILE%\AppData\Local\gear.exe\chains\gear_staging_testnet_v7\network\secret_ed25519`
 
 - (optional) The database:
 
-    - Linux: `$HOME/.local/share/gear/chains/gear_staging_testnet_v6/db/full`
-    - macOS: `$HOME/Library/Application Support/gear/chains/gear_staging_testnet_v6/db/full`
-    - Windows: `%USERPROFILE%\AppData\Local\gear.exe\chains\gear_staging_testnet_v6\db\full`
+    - Linux: `$HOME/.local/share/gear/chains/gear_staging_testnet_v7/db/full`
+    - macOS: `$HOME/Library/Application Support/gear/chains/gear_staging_testnet_v7/db/full`
+    - Windows: `%USERPROFILE%\AppData\Local\gear.exe\chains\gear_staging_testnet_v7\db\full`
 
 - (optional) The service configuration if you've configured the node as a service:
 

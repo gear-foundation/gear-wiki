@@ -9,7 +9,7 @@ Typical errors and solutions are described here.
 
 ## Unavailable `LOCK` file
 
-- **Error:** `IO error: While lock file /root/.local/share/gear/chains/gear_staging_testnet_v6/db/full/LOCK: Resource temporarily unavailable`
+- **Error:** `IO error: While lock file /root/.local/share/gear/chains/gear_staging_testnet_v7/db/full/LOCK: Resource temporarily unavailable`
 
 - **Solution:** You seem to be running several Gear node instances. Note that only one node instance is allowed to run. You likely have configured the node as a service and then ran the second instance from the command line. You should either stop the service or don't run the Gear node from the command line.
 
@@ -61,7 +61,7 @@ Typical errors and solutions are described here.
     Also, you may check how many space is used by the blockchain DB:
 
     ```shell
-    du -h $HOME/.local/share/gear/chains/gear_staging_testnet_v6/db/full
+    du -h $HOME/.local/share/gear/chains/gear_staging_testnet_v7/db/full
     ```
 
     Please refer to the [System Requirements](/docs/node/setting-up#system-requirements) to see the minimum disk space required.
