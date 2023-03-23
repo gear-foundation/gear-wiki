@@ -68,7 +68,7 @@ This guide provides a general overview of running smart contracts on the network
     Now, your `gear/contracts` directory tree should look like this:
 
     ```
-    └── first-gear-app  
+    └── first-gear-app
         ├── Cargo.toml
         └── src
         │   └── lib.rs
@@ -289,7 +289,7 @@ This guide provides a general overview of running smart contracts on the network
 
     [build-dependencies]
     gear-wasm-builder = { git = "https://github.com/gear-tech/gear.git", branch = "testnet", features = ["metawasm"] }
-    ```    
+    ```
 
 9. Now compile the smart-contract to Wasm
 
@@ -301,10 +301,10 @@ cargo build --release
 If everything goes well, your working directory should now have a `target` directory that looks like this:
 
 ```
-    ├── meta.txt  
+    ├── meta.txt
     ├── target
         ├── CACHEDIR.TAG
-        ├── meta.txt    
+        ├── meta.txt
         ├── release
         │   └── ...
         └── wasm32-unknown-unknown
@@ -346,7 +346,7 @@ Gear provides a demo application that implements all of the possibilities of int
 
     ![Allow access](./img/getting-started/polkadot-access.png)
 
-6. Make sure you are connected to the `Gear Staging Testnet V6`. The network name is on the bottom left corner of the page.
+6. Make sure you are connected to the `Gear Staging Testnet V7`. The network name is on the bottom left corner of the page.
 
     ![Network name](./img/getting-started/idea-network.png)
 

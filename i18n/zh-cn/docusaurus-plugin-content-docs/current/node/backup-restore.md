@@ -23,7 +23,7 @@ Gear 将节点数据存储在专用目录中。
         └── chains
             ├── dev
             │   └── ...
-            ├── gear_staging_testnet_v6
+            ├── gear_staging_testnet_v7
             │   ├── db
             │   │   └── full
             │   ├── keystore
@@ -36,7 +36,7 @@ Gear 将节点数据存储在专用目录中。
 
 ### 链
 
-节点可以连接到不同的链。可以使用 `--chain` 参数来选择链。目前默认的链是 staging test 网络。它的数据位于 `gear/chains/gear_staging_testnet_v6`目录中。
+节点可以连接到不同的链。可以使用 `--chain` 参数来选择链。目前默认的链是 staging test 网络。它的数据位于 `gear/chains/gear_staging_testnet_v7`目录中。
 
 如果连接到 Vara 网络，链的子目录名称是`vara_network`，路径是 `gear/chains/vara_network`。
 
@@ -59,7 +59,7 @@ Gear 将节点数据存储在专用目录中。
 网络私钥用于计算唯一的节点标识符 (以`12D3KooW`开头)。这个密钥存储在 `<chain>/network/secret_ed25519` 文件中。密钥文件是一个二进制文件，包含了 32 字节 Ed25519 私钥 (默认) 。你可以使用 `hexdump` 命令读取密钥：
 
 ```shell
-hexdump -e '1/1 "%02x"' /root/.local/share/gear/chains/gear_staging_testnet_v6/network/secret_ed25519
+hexdump -e '1/1 "%02x"' /root/.local/share/gear/chains/gear_staging_testnet_v7/network/secret_ed25519
 
 # 42bb2fdd46edfa4f41a5f0f9c1a5a1d407a39bafbce6f07456a2c8d9963c8f5c
 ```
@@ -78,19 +78,19 @@ gear --node-key=42bb2fdd46edfa4f41a5f0f9c1a5a1d407a39bafbce6f07456a2c8d9963c8f5c
 
 ## 迁移节点
 
-要把节点移到新的服务器上，需要备份然后恢复以下内容（提供的路径是默认的 Staging Testnet V6 节点的参数）。
+要把节点移到新的服务器上，需要备份然后恢复以下内容（提供的路径是默认的 Staging Testnet V7 节点的参数）。
 
 - 节点的网络密钥：
 
-    - Linux: `$HOME/.local/share/gear/chains/gear_staging_testnet_v6/network/secret_ed25519`
-    - macOS: `$HOME/Library/Application Support/gear/chains/gear_staging_testnet_v6/network/secret_ed25519`
-    - Windows: `%USERPROFILE%\AppData\Local\gear.exe\chains\gear_staging_testnet_v6\network\secret_ed25519`
+    - Linux: `$HOME/.local/share/gear/chains/gear_staging_testnet_v7/network/secret_ed25519`
+    - macOS: `$HOME/Library/Application Support/gear/chains/gear_staging_testnet_v7/network/secret_ed25519`
+    - Windows: `%USERPROFILE%\AppData\Local\gear.exe\chains\gear_staging_testnet_v7\network\secret_ed25519`
 
 - (可选) 数据库：
 
-    - Linux: `$HOME/.local/share/gear/chains/gear_staging_testnet_v6/db/full`
-    - macOS: `$HOME/Library/Application Support/gear/chains/gear_staging_testnet_v6/db/full`
-    - Windows: `%USERPROFILE%\AppData\Local\gear.exe\chains\gear_staging_testnet_v6\db\full`
+    - Linux: `$HOME/.local/share/gear/chains/gear_staging_testnet_v7/db/full`
+    - macOS: `$HOME/Library/Application Support/gear/chains/gear_staging_testnet_v7/db/full`
+    - Windows: `%USERPROFILE%\AppData\Local\gear.exe\chains\gear_staging_testnet_v7\db\full`
 
 - (可选) 如果你已经将节点配置为服务，则服务配置：
 
