@@ -1343,7 +1343,7 @@
     react-helmet-async "*"
     react-loadable "npm:@docusaurus/react-loadable@5.5.2"
 
-"@docusaurus/plugin-client-redirects@^2.3.1":
+"@docusaurus/plugin-client-redirects@^2.4.0":
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/@docusaurus/plugin-client-redirects/-/plugin-client-redirects-2.4.0.tgz#53117d112ac9cc191deda053af4335e0381b4125"
   integrity sha512-HsS+Dc2ZLWhfpjYJ5LIrOB/XfXZcElcC7o1iA4yIVtiFz+LHhwP863fhqbwSJ1c6tNDOYBH3HwbskHrc/PIn7Q==
@@ -1380,7 +1380,7 @@
     utility-types "^3.10.0"
     webpack "^5.73.0"
 
-"@docusaurus/plugin-content-docs@2.4.0", "@docusaurus/plugin-content-docs@^2.2.0":
+"@docusaurus/plugin-content-docs@2.4.0", "@docusaurus/plugin-content-docs@^2.4.0":
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/@docusaurus/plugin-content-docs/-/plugin-content-docs-2.4.0.tgz#36e235adf902325735b873b4f535205884363728"
   integrity sha512-ic/Z/ZN5Rk/RQo+Io6rUGpToOtNbtPloMR2JcGwC1xT2riMu6zzfSwmBi9tHJgdXH6CB5jG+0dOZZO8QS5tmDg==
@@ -1428,7 +1428,7 @@
     react-json-view "^1.21.3"
     tslib "^2.4.0"
 
-"@docusaurus/plugin-google-analytics@2.4.0", "@docusaurus/plugin-google-analytics@^2.2.0":
+"@docusaurus/plugin-google-analytics@2.4.0", "@docusaurus/plugin-google-analytics@^2.4.0":
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/@docusaurus/plugin-google-analytics/-/plugin-google-analytics-2.4.0.tgz#8062d7a09d366329dfd3ce4e8a619da8624b6cc3"
   integrity sha512-uGUzX67DOAIglygdNrmMOvEp8qG03X20jMWadeqVQktS6nADvozpSLGx4J0xbkblhJkUzN21WiilsP9iVP+zkw==
