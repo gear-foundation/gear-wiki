@@ -42,10 +42,44 @@ This is recommended while you are testing and debugging the program.
 Upload and run Master and Player contracts and register players as described in [Running the game](#running-the-game) section.
 
 ### Run program in Gear Network
-
-1. You can deploy contracts using [idea.gear-tech.io](https://idea.gear-tech.io/).
-2. In the network selector choose Staging Testnet - wss://rpc-node.gear-tech.io network.
-3. Upload and run Master and Player contracts.
+There are two ways to upload the game onto the chain:
+- using the [idea.gear-tech.io](https://idea.gear-tech.io/);
+- using [scripts](https://github.com/gear-dapps/syndote/tree/master/upload-game) on gear-js.
+1. Using IDEA:
+- Deploy contracts using [idea.gear-tech.io](https://idea.gear-tech.io/);
+- In the network selector select the network where you are going to run the game:
+    - Staging Testnet - wss://rpc-node.gear-tech.io network;
+    - Workshop node - wss://node-workshop.gear.rs;
+    - Local node - ws://localhost:9944
+- Upload and run Master and Player contracts.
+2. Using gear-js.
+- Go to folder with [scripts](https://github.com/gear-dapps/syndote/tree/master/upload-game);
+- Install packages:
+```
+make init
+```
+- In the files `players.yaml` and `upload-game.yaml` in the first line indicate the network where you are going to run the game:
+```
+wsAddress: wss://node-workshop.gear.rs
+```
+- Upload the players to the chain:
+```
+make upload-players
+```
+If everything goes well you will see the players addresses:
+![img alt](./img/upload-players.png)
+You will need these addresses to register players in the game.
+- Upload the game. Before running the script that will upload the game, you need to specify the address from which you will run the game. In the 24 line of the file `upload-game.yaml` file paste your address:
+```
+      ChangeAdmin: "0xc4406937dd46aad223aae39dd83981807fa24aff2dd1af72f795c9f1627b0c71"
+```
+This will make you the game admin and allow you to run the game.
+Then run the command:
+```
+make upload-game
+```
+This script upload the game onto the chain and make enough gas reservations. You will see the game address in the terminal:
+![img alt](./img/upload-game.png)
 
 ## 🖥️ Build and run user interface
 
@@ -65,7 +99,6 @@ yarn start
 ```
 
 ## Run the game
-
 ### Run via User interface
 
 1. Go to [idea.gear-tech.io](https://idea.gear-tech.io/), find your uploaded Master contract and click the `Send message` button.
