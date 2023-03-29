@@ -16,7 +16,7 @@ In logistics, a supply chain is a system for tracking and delivering to an end c
 Upload Supply chain contract requires build two auxiliary contracts:
 
 - Build [NFT contract](https://github.com/gear-dapps/non-fungible-token/) as described in `README.md`
-- Build [Shared FT contract](https://github.com/gear-dapps/sharded-fungible-token/) as described in `README.md`
+- Build [Sharded FT contract](https://github.com/gear-dapps/sharded-fungible-token/) as described in `README.md`
 - Build [Supply Chain contract](https://github.com/gear-dapps/supply-chain) as described in `README.md`
 
 ### 🏗️ Upload programs
@@ -31,7 +31,6 @@ You can deploy a program using [idea.gear-tech.io](https://idea.gear-tech.io/). 
 
 :::info
 Init payload:
-
 - name `Str` - NFT collection name
 - symbol `Str` - NFT collection symbol
 - base_uri `Str` - NFT collection base URI
@@ -48,7 +47,6 @@ Init payload:
 
 :::info
 InitFToken payload:
-
 - storage_code_hash (H256) - storage code ID
 - ft_logic_code_hash (H256) - logic code ID
 :::
