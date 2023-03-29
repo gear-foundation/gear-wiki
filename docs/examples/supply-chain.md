@@ -4,11 +4,81 @@ sidebar_position: 12
 
 # Supply chain
 
-## Introduction
-
 In logistics, a supply chain is a system for tracking and delivering to an end consumer various items. As a rule, such systems can't work without a lot of paperwork and other layers of bureaucracy. All of this costs a lot of time and money and increases the likelihood of an accidental error or, worst of all, a fraud. With the help of smart contract and blockchain technologies, it is possible to eliminate these problems by making a supply chain more efficient, reliable and transparent.
 
-The source code of the Supply Chain smart conrtact example is avaialble on [GitHub](https://github.com/gear-dapps/supply-chain).
+- [Supply chain contract](https://github.com/gear-dapps/supply-chain). 
+- [Supply chain UI](https://github.com/gear-dapps/supply-chain/tree/master/frontend).
+
+## How to run 
+
+### ⚒️ Build programs
+
+Upload Supply chain contract requires build two auxiliary contracts:
+
+- Build [NFT contract](https://github.com/gear-dapps/non-fungible-token/) as described in `README.md`
+- Build [Shared FT contract](https://github.com/gear-dapps/sharded-fungible-token/) as described in `README.md`
+- Build [Supply Chain contract](https://github.com/gear-dapps/supply-chain) as described in `README.md`
+
+### 🏗️ Upload programs
+
+You can deploy a program using [idea.gear-tech.io](https://idea.gear-tech.io/). In the network selector choose `Staging Testnet` or `Development` (in this case, you should have a local node running).
+
+*** Non-Fungible Token ***
+
+1. Upload program `nft.opt.wasm` from `/target/wasm32-unknown-unknown/release/`
+2. Upload metadata file `meta.txt`
+3. Specify `init payload` and calculate gas!
+
+:::info
+Init payload:
+
+- name `Str` - NFT collection name
+- symbol `Str` - NFT collection symbol
+- base_uri `Str` - NFT collection base URI
+- royalties `Option<Royalties>` - Optional param to specify accounts to pay royalties
+:::
+
+*** Sharded Fungible Token ***
+
+1. Upload code `ft_logic.opt.wasm` from `/target/wasm32-unknown-unknown/release/`
+2. Upload code `ft_storage.opt.wasm` from `/target/wasm32-unknown-unknown/release/`
+3. Upload program `ft_main.opt.wasm` from `/target/wasm32-unknown-unknown/release/`
+4. Upload metadata file `meta.txt`
+5. Specify `init payload` and calculate gas!
+
+:::info
+InitFToken payload:
+
+- storage_code_hash (H256) - storage code ID
+- ft_logic_code_hash (H256) - logic code ID
+:::
+
+*** Supply Chain ***
+
+1. Upload code `supply_chain.opt.wasm` from `/target/wasm32-unknown-unknown/release/`
+
+### 🖥️ Run UI
+
+1. Install packages
+
+```sh
+yarn install
+```
+
+2. Configure .evn file. Specify network address and program ID like in the example below:
+
+For proper application functioning, one needs to adjust an environment variable parameters. An example is available [here](https://github.com/gear-dapps/supply-chain/blob/master/frontend/.env.example).
+
+```sh
+REACT_APP_NODE_ADDRESS=wss://rpc-node.gear-tech.io
+REACT_APP_CODE_ADDRESS=0x7141c1f9eb7c48063fc7d3a00e7ef157c4a95a83d656efaee910104d429b0de9
+```
+
+3. Run app
+
+```sh
+yarn start
+```
 
 ## Logic
 
