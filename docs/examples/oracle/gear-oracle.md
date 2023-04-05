@@ -1,6 +1,6 @@
 ---
-sidebar_label: Oracle
-sidebar_position: 23
+sidebar_label: Gear Oracle
+sidebar_position: 1
 ---
 
 # Gear Oracle
@@ -37,57 +37,23 @@ pub struct RandomnessOracle {
 ```rust
 #[derive(Debug, Encode, Decode, TypeInfo)]
 pub enum Action {
-    SetRandomValue { round: u128, value: state::Random },
-    GetLastRoundWithRandomValue,
-    UpdateManager(ActorId),
+    RequestValue,
+    ChangeManager(ActorId),
 }
 ```
 
 ```rust
 #[derive(Debug, Encode, Decode, TypeInfo)]
 pub enum Event {
+    NewValue { value: u128 },
     NewManager(ActorId),
-    NewRandomValue {
-        round: u128,
-        value: state::Random,
-    },
-    LastRoundWithRandomValue {
-        round: u128,
-        random_value: state::RandomSeed,
-    },
 }
-```
-
-### Message/Reply structures used in `Action` and `Event`
-
-```rust
-/// Used to represent high and low parts of unsigned 256-bit integer.
-pub type RandomSeed = (u128, u128);
-```
-
-```rust
-#[derive(Debug, Clone, Encode, Decode, TypeInfo)]
-pub struct Random {
-    pub randomness: RandomSeed,
-    pub signature: String,
-    pub prev_signature: String,
-}
-```
-
-## Oracle functions
-
-```rust
-    /// `Manager` method for specifying `value` for provided `round`.
-    pub fn set_random_value(&mut self, round: u128, value: &state::Random)
-
-    /// Updates current `manager` to `new_manager`.
-    pub fn update_manager(&mut self, new_manager: &ActorId)
 ```
 
 ## Conclusion
 
-A source code of the contract example provided by Gear is available on GitHub: [oracle/randomness-oracle/src/lib.rs](https://github.com/gear-dapps/oracle/blob/wip/randomness-oracle/src/lib.rs).
+A source code of the contract example provided by Gear is available on GitHub: [oracle/oracle/src/contract.rs](https://github.com/gear-dapps/oracle/blob/wip/oracle/src/contract.rs).
 
-See also an example of the smart contract testing implementation based on `gtest`: [oracle/randomness-oracle/tests/randomness_oracle.rs](https://github.com/gear-dapps/oracle/blob/wip/randomness-oracle/tests/randomness_oracle.rs).
+See also an example of the smart contract testing implementation based on `gtest` and `gclient`: [oracle/oracle/tests](https://github.com/gear-dapps/oracle/tree/wip/oracle/tests).
 
 For more details about testing smart contracts written on Gear, refer to this article: [Program Testing](/docs/developing-contracts/testing).
