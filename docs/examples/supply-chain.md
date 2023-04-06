@@ -6,10 +6,10 @@ sidebar_position: 12
 
 In logistics, a supply chain is a system for tracking and delivering to an end consumer various items. As a rule, such systems can't work without a lot of paperwork and other layers of bureaucracy. All of this costs a lot of time and money and increases the likelihood of an accidental error or, worst of all, a fraud. With the help of smart contract and blockchain technologies, it is possible to eliminate these problems by making a supply chain more efficient, reliable and transparent.
 
-- [Supply chain contract](https://github.com/gear-dapps/supply-chain). 
+- [Supply chain contract](https://github.com/gear-dapps/supply-chain).
 - [Supply chain UI](https://github.com/gear-dapps/supply-chain/tree/master/frontend).
 
-## How to run 
+## How to run
 
 ### ⚒️ Build programs
 
@@ -132,6 +132,26 @@ pub enum Role {
     Consumer,
 }
 ```
+
+### Item route
+
+1. The item is produced with `ProducerAction::Produce`.
+1. The item is put up for sale with `ProducerAction::PutUpForSale`.
+1. The item is purchased with `DistributorAction::Purchase`.
+1. The purchase is approved or not with `ProducerAction::Approve`. In the latter case the item returns on the **2** step.
+1. The item is shipped with `ProducerAction::Ship`.
+1. The item is received with `DistributorAction::Receive`.
+1. The item is processed with `DistributorAction::Process`.
+1. The item is packaged with `DistributorAction::Package`.
+1. The item is put up for sale with `DistributorAction::PutUpForSale`.
+1. The item is purchased with `RetailerAction::Purchase`.
+1. The purchase is approved or not with `DistributorAction::Approve`. In the latter case the item returns on the **9** step.
+1. The item is shipped with `DistributorAction::Ship`.
+1. The item is received with `RetailerAction::Receive`.
+1. The item is put up for sale with `RetailerAction::PutUpForSale`.
+1. The item is purchased with `ConsumerAction::Purchase`.
+
+The end!
 
 ## Interface
 
