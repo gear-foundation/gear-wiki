@@ -3,11 +3,15 @@ sidebar_label: Executable Functions
 sidebar_position: 1
 ---
 
-# Executable functions
+# Attention developers!
+
+:::important
+ Want to take your blockchain development skills to the next level? Join **[Gear Academy's](https://academy.gear-tech.io/)** free course, "Gear Smart Contract Developer." In this comprehensive course, you'll learn the ins and outs of developing on the Gear blockchain, from deploying programs onto the blockchain and interacting with them, to testing your programs on the Gear network. You'll also gain hands-on experience navigating the `@gear-js` library for interacting with contracts on the client side and developing real-world applications, including contracts and frontends. Don't miss this opportunity to become a pro Gear blockchain developer. Enroll now in Gear Academy's **"[Gear Smart Contract Developer](https://academy.gear-tech.io/course/tamagotchi)"** course!
+:::
+
+## Executable functions, basic structure
 
 The program is the main unit of the Gear Protocol. Each program in the Gear network is an immutable [Wasm](/docs/gear/technology/Wasm) blob and has a fixed amount of memory which persists between message handling (so-called static area).
-
-## Basic structure
 
 Any program can contain up to 3 entry points that perform various functions in the program lifecycle: `init()`, `handle()`, `handle_reply()`. All of them are optional, but any program required to have at least one fn: `init()` or `handle()`.
 
