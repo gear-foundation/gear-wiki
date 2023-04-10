@@ -8,10 +8,10 @@ sidebar_position: 9
 
 Game of chance is a simple game smart contract with the lottery logic.
 
-- Program source code avalible on [Github](https://github.com/gear-dapps/game-of-chance)
+- Program source code available on [Github](https://github.com/gear-dapps/game-of-chance)
 - dApp UI [Github](https://github.com/gear-dapps/game-of-chance/tree/master/frontend)
 
-## How to run 
+## How to run
 
 ### ⚒️ Build program
 
@@ -20,16 +20,16 @@ Game of chance is a simple game smart contract with the lottery logic.
 
 ### 🏗️ Upload program
 
-1. You can deploy program using [idea.gear-tech.io](https://idea.gear-tech.io/).
+1. You can deploy a program using [idea.gear-tech.io](https://idea.gear-tech.io/).
 2. In the network selector choose `Staging Testnet` or `Development` (in this case, you should have a local node running)
-3. Upload prorgam `game_of_chance.opt.wasm` from `/target/wasm32-unknown-unknown/release/`
+3. Upload program `game_of_chance.opt.wasm` from `/target/wasm32-unknown-unknown/release/`
 4. Upload metadata file `meta.txt`
 5. Specify `init payload` and calculate gas!
 
 ### 🖥️ Run UI
 
 1. Install packages as described in [frontend/README.md](https://github.com/gear-dapps/game-of-chance/blob/master/frontend/README.md)
-2. Configure .evn file. Specify network address and program ID like in the example below:
+2. Configure `.env` file. Specify network address and program ID like in the example below:
 
 ```sh
 REACT_APP_NODE_ADDRESS=wss://node-workshop.gear.rs:443
@@ -48,7 +48,7 @@ yarn start
 For a more detailed technical description, see its [documentation on the dApps documentation portal](https://dapps.gear.rs/game_of_chance) and [the source code section](#source-code).
 :::
 
-During an initialization, the game administrator is assigned. It has the rights to start a new game round and pick a winner after the end of each one. Other actors can participate in a round if they have enough fungible tokens or the native value, they're used to collect prize fund. After the end of the players entry stage, the administrator should execute the action for picking a winner, and this smart contract does it randomly and then sends prize fund to the winner.
+During an initialization, the game administrator is assigned. It has the rights to start a new game round and pick a winner after the end of each one. Other actors can participate in a round if they have enough fungible tokens or the native value, they're used to collect prize funds. After the end of the players entry stage, the administrator should execute the action for picking a winner, and this smart contract does it randomly and then sends prize funds to the winner.
 
 ## Interface
 
