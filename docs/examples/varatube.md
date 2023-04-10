@@ -13,7 +13,7 @@ Many web services (in Web2) work on a subscription basis. One of the main featur
 
 This dApp example represents a video-hosting service **[VaraTube](https://github.com/gear-dapps/varatube)** that enables watching videos with a valid subscription that can be renewed automatically.
 
-### Decentralisation aspect
+### Decentralization aspect
 
 In most blockchain networks, each transaction is invoked by a user or another program and must be completed in a single block (transactions are atomic). In general, a smart contract is able to invoke several functions, but only within a single block. In case of an error, the result of execution of all related functions is rolled back (the State does not change).
 
@@ -21,7 +21,7 @@ According to the Actor Model in Gear Protocol, actors exchange messages. One of 
 
 This makes it possible to implement logic when several logically related messages can be spaced apart in time. As a result, extrinsics that are caused by these messages can be executed in different blocks. It is possible for messages to stay in the Waitlist for a long time. This is achieved through [Gas reservation](/developing-contracts/gas-reservation.md) for deferred messages. A program can send a [delayed message](/developing-contracts/delayed-messages.md) to itself over as many blocks as it defines, provided there is enough reserved gas to be in the Waitlist.
 
-State consitency between smart contracts is achieved using techniques described [here](/developing-contracts/distributed_transactions.md).
+State consistency between smart contracts is achieved using techniques described [here](/developing-contracts/distributed_transactions.md).
 
 ## How to run 
 
@@ -32,13 +32,12 @@ State consitency between smart contracts is achieved using techniques described 
 
 ### 🏗️ Upload program
 
-1. You can deploy program using [idea.gear-tech.io](https://idea.gear-tech.io/).
+1. You can deploy a program using [idea.gear-tech.io](https://idea.gear-tech.io/)
 2. In the network selector choose `Staging Testnet` or `Development` in case if you have running a local node
 3. Upload program `varatube.opt.wasm` from `/target/wasm32-unknown-unknown/release/`
 4. Upload metadata file `meta.txt`
 5. Specify `init payload` and calculate gas!
-6. Repeat steps 3-5 for uploading Fungible Token contract `fungible_token.opt.wasm`...
-7. ... ??? ... send message ? mint tokens ?
+6. Repeat steps #3-5 for uploading Fungible Token contract `fungible_token.opt.wasm`...
 
 ### 🖥️ Run UI
 
@@ -69,13 +68,13 @@ yarn start
 
 When a user purchases a subscription, access to the service is open, and after the subscription expires, access is closed.
 
-The interface provides an option whether to enable or disable subscription auto-renewal. And if it is enabled, subscription will be renewed automatically by getting funds from user's balance. 
+The interface provides an option whether to enable or disable subscription auto-renewal. And if it is enabled, the subscription will be renewed automatically by getting funds from the user's. 
 
 There is also an option to cancel the active subscription.
 
-The VaraTube consists of two samrt contracts:
+The VaraTube consists of two smart contracts:
 - [Gear Fungible Token (GFT-20)](/docs/examples/gft-20) contract determines user and service balances required to purchase a subscription and approves Subscription contract to get funds from user's balance.
-- [VaraTube Subscription](https://github.com/gear-dapps/varatube#readme) contract manages service's subscription - its availability, expiration, autorenewal.
+- [VaraTube Subscription](https://github.com/gear-dapps/varatube#readme) contract manages service's subscription - its availability, expiration, auto renewal.
 
 ## Source code
 
