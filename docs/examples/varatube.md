@@ -19,9 +19,9 @@ In most blockchain networks, each transaction is invoked by a user or another pr
 
 According to the Actor Model in Gear Protocol, actors exchange messages. One of the Gear-specific entities is the Waitlist - a database where messages (not transactions) reside.
 
-This makes it possible to implement logic when several logically related messages can be spaced apart in time. As a result, extrinsics that are caused by these messages can be executed in different blocks. It is possible for messages to stay in the Waitlist for a long time. This is achieved through [Gas reservation](../developing-contracts/gas-reservation.md) for deferred messages. A program can send a [delayed message](../developing-contracts/delayed-messages.md) to itself over as many blocks as it defines, provided there is enough reserved gas to be in the Waitlist.
+This makes it possible to implement logic when several logically related messages can be spaced apart in time. As a result, extrinsics that are caused by these messages can be executed in different blocks. It is possible for messages to stay in the Waitlist for a long time. This is achieved through [Gas reservation](/developing-contracts/gas-reservation.md) for deferred messages. A program can send a [delayed message](/developing-contracts/delayed-messages.md) to itself over as many blocks as it defines, provided there is enough reserved gas to be in the Waitlist.
 
-State consitency between smart contracts is achieved using techniques described [here](../developing-contracts/distributed_transactions.md).
+State consitency between smart contracts is achieved using techniques described [here](/developing-contracts/distributed_transactions.md).
 
 ## How to run 
 
