@@ -6,7 +6,7 @@ sidebar_position: 1
 # Attention developers!
 
 :::important
- Want to take your blockchain development skills to the next level? Join **[Gear Academy's](https://academy.gear-tech.io/)** free course, "Gear Smart Contract Developer." In this comprehensive course, you'll learn the ins and outs of developing on the Gear blockchain, from deploying programs onto the blockchain and interacting with them, to testing your programs on the Gear network. You'll also gain hands-on experience navigating the `@gear-js` library for interacting with contracts on the client side and developing real-world applications, including contracts and frontends. Don't miss this opportunity to become a pro Gear blockchain developer. Enroll now in Gear Academy's **"[Gear Smart Contract Developer](https://academy.gear-tech.io/course/tamagotchi)"** course!
+ Want to take your blockchain development skills to the next level? Join **[Gear Academy's](https://academy.gear-tech.io/)** free course, "Gear Smart Contract Developer." In this comprehensive course, you'll learn the ins and outs of developing on the Gear Protocol, from deploying programs onto the blockchain and interacting with them, to testing your programs on the Gear Network. You'll also gain hands-on experience navigating the `@gear-js` library for interacting with contracts on the client side and developing real-world applications, including contracts and frontends. Don't miss this opportunity to become a pro Gear blockchain developer. Enroll now in Gear Academy's **"[Gear Smart Contract Developer](https://academy.gear-tech.io/course/tamagotchi)"** course!
 :::
 
 ## Executable functions, basic structure
