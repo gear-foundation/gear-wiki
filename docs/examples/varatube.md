@@ -27,7 +27,7 @@ State consitency between smart contracts is achieved using techniques described 
 
 ### ⚒️ Build program
 
-- Get the source code of [VaraTube contract](TBD) and [Fungible Token contract](https://github.com/gear-dapps/fungible-token)
+- Get the source code of [VaraTube contract](https://github.com/gear-dapps/varatube/tree/master/src) and [Fungible Token contract](https://github.com/gear-dapps/fungible-token)
 - Build contracts as described in [program/README.md](https://github.com/gear-dapps/varatube#readme).
 
 ### 🏗️ Upload program
@@ -75,14 +75,7 @@ There is also an option to cancel the active subscription.
 
 The VaraTube consists of two samrt contracts:
 - [Gear Fungible Token (GFT-20)](/docs/examples/gft-20) contract determines user and service balances required to purchase a subscription and approves Subscription contract to get funds from user's balance.
-- [VaraTube Subscription](TBD) contract manages service's subscription - its availability, expiration, autorenewal.
-
-
-### Interface
-
-TBD...
-
-
+- [VaraTube Subscription](https://github.com/gear-dapps/varatube#readme) contract manages service's subscription - its availability, expiration, autorenewal.
 
 ## Source code
 
