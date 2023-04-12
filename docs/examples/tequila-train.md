@@ -18,17 +18,17 @@ Each player receives their dominoes, and the number of tiles they receive is aut
 - 7 players: 5 tiles per each player
 - 8 players: 4 tiles per each player
 
-Also, each player gets his own train differetiated by the color. Each player revise his tiles and see if he has matching dot numbers on both sides of one tile. 12 dots is the maximum number of each side. The player with the highest double places it in the center of the Tequila Train Hub. In case if nobody has a tile with matching numbers, each player will receive one additional tile, each player will continue receiving one additional tile till someone will receive the tile with the matching numbers on both sides.
+Also, each player gets their own train differetiated by the color. Each player revise their tiles and see if they have matching dot numbers on both sides of one tile. 12 dots is the maximum number of each side. The player with the highest double places it in the center of the Tequila Train Hub. In case of nobody has a tile with matching numbers, each player will receive one additional tile, each player will continue receiving one additional tile till someone will receive the tile with the matching numbers on both sides.
 
 The domino must be placed so that one end is touching the end of a domino already on the table and such that the end of the new domino matches (shows the same number of dots) the end of the domino it is adjacent to. Unless the tile is a double, the tile can be placed square in any one of the three directions as long as the two matching sides are touching fully.
 
-First player only places the first tile (maximum double) and then the turn goes to the next player. If, in a later turn, the player draws a domino that enables them to start his train, they can only play this one domino. The player can remove his train but he are free to leave it as is (see below).
+First player only places the first tile (maximum double) and then the turn goes to the next player. If, in a later turn, the player draws a domino that enables them to start their train, they can only play this one domino. The player can remove their train but they are free to leave it as is (see below).
 
 If a player is unable to play and the boneyard is empty, the player must simply pass and ensure that a marker is placed upon their train.
 
-In case if a player doesn’t have a matching tile he puts a train in his line and misses his turn. Since he has a train another player can put his tile in the line. For the next turn the player with the train can take additional tile from the tiles pool.
+In case if a player doesn’t have a matching tile they put a train in their line and skip their turn. Since they have a train another player can put their tile in the line. For the next turn the player with the train can take additional tile from the tiles pool.
 
-Anyone who wants to get his train back after playing a domino to his track should drink one shot of tequila or he will leave his train on the board.
+Anyone who wants to get their train back after playing a domino to their track should drink one shot of tequila or they will leave their train on the board.
 
 The aim is to be the first player to get rid of all the dominoes in their hand. As soon as this happens, even if the last tile is a Double, the game ends.
 
@@ -162,7 +162,7 @@ pub struct Players {
 
 Program makes all preparations during initialization.
 
-1. Each player gets his dominoes; the tile count is calculated automatically depending on the player count.
+1. Each player gets their dominoes; the tile count is calculated automatically depending on the player count.
 2. The program tries to find the maximum double through users. If it doesn’t, it adds one tile to each user and repeats this step until double has been found.
 3. Program chooses the double and selects the first user.
 
@@ -179,7 +179,7 @@ extern "C" fn init() {
 Every player move is the command message sent to the program:
 
 1. Pass: skip the turn if there is no tile to place.
-2. Turn: place selected tile to the selected track. Additionally, in certain circumstances the player may get his train back.
+2. Turn: place selected tile to the selected track. Additionally, in certain circumstances the player may get their train back.
 
 ```rust title="contracts/io/src/lib.rs"
 /// Command to the program
@@ -248,4 +248,4 @@ pub enum State {
 
 ## Source code
 
-The source code of the Tequila Train Game smart contract and an implementation of its testing is available on [GitHub](https://github.com/gear-dapps/tequila-train). They can be used as is or modified to suit your own scenarios.
+The source code of the Tequila Train Game smart contract is available on [GitHub](https://github.com/gear-dapps/tequila-train). They can be used as is or modified to suit your own scenarios.
