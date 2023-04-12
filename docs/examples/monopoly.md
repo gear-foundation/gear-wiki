@@ -33,7 +33,7 @@ There are two ways to upload the game onto the chain:
 - using the [idea.gear-tech.io](https://idea.gear-tech.io/);
 - using [`gear-js/cli`](https://github.com/gear-tech/gear-js/tree/main/tools/cli).
 
-1. Using IDEA:
+### 1. Using Gear IDEA portal:
 - In the network selector select the network where you are going to run the game:
     - Staging Testnet - wss://rpc-node.gear-tech.io network;
     - Workshop node - wss://node-workshop.gear.rs;
@@ -44,20 +44,40 @@ There are two ways to upload the game onto the chain:
 
     Currently the single gas reservation amount can be up to 245 000 000 000 since it is not yet possible to make a reservation more than the block gas limit (250 000 000 000). To make sure the Master contract has enough gas to run and complete the game, it is recommended to make at least 5-10 reservations.
 
-2. Using [`gear-js/cli`](https://github.com/gear-tech/gear-js/tree/main/tools/cli) that allows sending transactions to the Gear node based on `yaml` file.
-:
-- Go to folder with [scripts](https://github.com/gear-dapps/syndote/tree/master/upload-game);
+### 2. Using [`gear-js/cli`](https://github.com/gear-tech/gear-js/tree/main/tools/cli) 
+
+It allows sending transactions to the Gear node based on `yaml` file:
+- Go to folder with [scripts](https://github.com/gear-dapps/syndote/tree/master/upload-game):
+    ```
+    cd ./upload-game/
+    ```
+- Upload previously built files into `/programs` folder (replace if necessary): `player.meta.txt`, `syndote.meta.txt`, `player.opt.wasm`, `syndote.opt.wasm`
+    
 - Install `gear-js/cli`:
     ```
     npm install -g @gear-js/cli
     ```
-- Upload the master contract. The `upload-game.yaml` file contains a transaction that will deploy the contract onto the network. Before deploying the account, you need to specify the account as described in [README](https://github.com/gear-tech/gear-js/tree/main/tools/cli). 
-    You can also specify which node you want to deploy the contract on by defining the variable `wsAddress` in the file with transactions:
+- Upload the master contract. 
+
+The `upload-game.yaml` file contains a transaction that will deploy the contract onto the network, check [README](https://github.com/gear-tech/gear-js/tree/main/tools/cli) for more details. 
+
+Customize the following parameters:
+
+    - Specify the accounts using on of these methods - mnemonic phrase, seed or Using well-known account such as `Alice` and `Bob`
+    ```
+    accounts:
+  	alice: 'bottom drive obey lake curtain smoke basket hold race lonely fit walk'
+	bob: //Bob
+	my_account: '0x...seed'
+    transactions:
+	account: alice
+    ```
+    You can also specify which node you want to deploy the contract on by defining the variable `wsAddress` in the file with transactions. If this variable is not defined, the contract will be deployed on the local node which should be running beforehand:
     ```
     wsAddress: wss://node-workshop.gear.rs
     ```
-    If this variable is not defined, the contract will be deployed on the local node which should be running beforehand.
-    Run the command:
+    
+    To deploy the contract, run the command:
     ```
     gear-js workflow upload-game.yaml
     ```
