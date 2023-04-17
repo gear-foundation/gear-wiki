@@ -30,19 +30,21 @@ To launch the game, you need to:
 ## 🏗️ Upload contracts on chain
 
 There are two ways to upload the game onto the chain:
-- using the [idea.gear-tech.io](https://idea.gear-tech.io/);
-- using [`gear-js/cli`](https://github.com/gear-tech/gear-js/tree/main/tools/cli).
+1. Using [Gear IDEA portal](https://idea.gear-tech.io/);
+2. Using [`gear-js/cli`](https://github.com/gear-tech/gear-js/tree/main/tools/cli).
 
 ### 1. Using Gear IDEA portal:
 - In the network selector select the network where you are going to run the game:
     - Staging Testnet - wss://rpc-node.gear-tech.io network;
     - Workshop node - wss://node-workshop.gear.rs;
     - Local node - ws://localhost:9944
-- Upload Master and Player contracts. Save the addresses of the uploaded programs. 
-- Make gas reservations to ensure continuous game execution. Find your uploaded Master contract and click the `Send message` button:
+- Upload Master and Player contracts:
+    - Click the `Upload Program` button and specify `x.opt.wasm` file of the program, also specify the `*.txt` file with metadata for Master and Palyer contracts accordingly.
+    - Save the addresses of the uploaded programs. 
+- Make gas reservations to ensure continuous game execution. 
+    - Find your uploaded Master contract and click the `Send message` button:
     ![img alt](./img/monopoly-gas-reserve.png)
-
-    Currently the single gas reservation amount can be up to 245 000 000 000 since it is not yet possible to make a reservation more than the block gas limit (250 000 000 000). To make sure the Master contract has enough gas to run and complete the game, it is recommended to make at least 5-10 reservations.
+    - Currently the single gas reservation amount can be up to 245 000 000 000 since it is not yet possible to make a reservation more than the block gas limit (250 000 000 000). To make sure the Master contract has enough gas to run and complete the game, it is recommended to make at least 5-10 reservations.
 
 ### 2. Using [`gear-js/cli`](https://github.com/gear-tech/gear-js/tree/main/tools/cli) 
 
@@ -61,7 +63,7 @@ It allows sending transactions to the Gear node based on `yaml` file:
 
 The `upload-game.yaml` file contains a transaction that will deploy the contract onto the network, check [README](https://github.com/gear-tech/gear-js/tree/main/tools/cli) for more details. 
 
-Customize the following parameters:
+- Customize the following parameters:
 
     - Specify the accounts using on of these methods - mnemonic phrase, seed or Using well-known account such as `Alice` and `Bob`
     ```
@@ -72,32 +74,40 @@ Customize the following parameters:
     transactions:
 	account: alice
     ```
-    You can also specify which node you want to deploy the contract on by defining the variable `wsAddress` in the file with transactions. If this variable is not defined, the contract will be deployed on the local node which should be running beforehand:
+    
+- You can also specify which node you want to deploy the contract on by defining the variable `wsAddress` in the file with transactions. If this variable is not defined, the contract will be deployed on the local node which should be running beforehand:
     ```
     wsAddress: wss://node-workshop.gear.rs
     ```
     
-    To deploy the contract, run the command:
+- To deploy the contract, run the command:
     ```
     gear-js workflow upload-game.yaml
     ```
-    If everything goes well, you will see the contract address in the terminal:
+    
+- If everything goes well, you will see the contract address in the terminal:
     ![img alt](./img/upload-game.png)
-    To run the application, it is necessary to save this address and later specify it as a variable in the .env file.
-- Make gas reservations to ensure continuous game execution. Run the command with the master contract address specified:
+    
+- To run the application, it is necessary to save this address and later specify it as a variable in the .env file.
+ 
+- Make gas reservations to ensure continuous game execution. Open `reserve-gas.yaml` file and customize account and node address as described above. Run the command with the master contract address specified:
     ```
-    gear-js workflow reserve-gas.yaml -a program_id='0xf85b8af936c93a9bdba2ce7708dc037294538d99835898ef3596ce113910d201'
+    gear-js workflow reserve-gas.yaml -a program_id='0x60663aaee2971eb60874b63c92e738cc375f3764a1d3b38d65cbc63d8ee8f70c'
     ```
+    
     ![img alt](./img/reserve_gas.png)
-    If everything goes well, you will see a message confirming a successful reservation. Please send this message 5-10 times to ensure uninterrupted gameplay.
+    
+- If everything goes well, you will see a message confirming a successful reservation. Please send this message 5-10 times to ensure uninterrupted gameplay.
 
-- For testing purposes, you can load 4 identical players, whose addresses you will then need to register in the game:
+- Upload players contracts to the network. For testing purposes, you can upload 4 identical player contracts. After initialization in the network, their addresses will be unique and you will then need to register them in the game. Open `players.yaml` file and customize account and node address as described above. Run the command to add players in the game:
     ```
     gear-js workflow players.yaml
     ```
-    You will see the players addresses:
+    
+- You will see the players addresses:
     ![img alt](./img/players.png)
-    Additionally, you can write your own player contract, build it, and place the `.opt.wasm` and `.meta.txt` files into the `upload-game/programs` folder. 
+    
+- Additionally, you can write your own player contract, build it, and place the `.opt.wasm` and `.meta.txt` files into the `upload-game/programs` folder. 
     To deploy your player, specify the necessary files in the `players.yaml` file instead of any existing player.
     ![img alt](./img/my_player.png)
 
@@ -108,13 +118,16 @@ Customize the following parameters:
 ```sh
 yarn install
 ```
-3. Declare environment variables - create new `.env` file, check `.env.example` file to get necessary variables:
+3. Declare environment variables, go to `/frontend/` foler, create new `.env` file, check `.env.example` file to get necessary variables:
     - `REACT_APP_SYNDOTE_NODE_ADDRESS` - in this parameter specify the address of the node on which you deployed the contracts.
     - `REACT_APP_CONTRACT_ADDRESS` - in this parameter specify the address of the deployed master contract. 
 4. Put the latest version of the `syndote.meta.txt` file locally in `src/assets/wasm/` folder, replace if necessary.
+
 :::note
 In order for all features to work as expected, the node and its runtime version should be chosen based on the current `@gear-js/api` version. In case of issues with the application, try to switch to another network or run your own local node and specify its address in the `.env` file. When applicable, make sure the smart contract(s) wasm files are uploaded and running in this network accordingly.
+Also, you can try `npm i --force` in case of `yarn install` issues.
 :::
+
 5. Run the app:
 ```sh
 yarn start
