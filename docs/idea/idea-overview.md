@@ -17,22 +17,14 @@ You can start experimenting right now on https://idea.gear-tech.io/.
 
 React application that provides user interface for working with smart-contracts on Gear IDEA.
 
-[events-listener](https://github.com/gear-tech/gear-js/tree/main/idea/events-listener)
+[indexer](https://github.com/gear-tech/gear-js/tree/master/idea/indexer)
 
-Microservice listens to all the events occuring in the Gear node and sends to the data-storage to store the information about them.
-
-[data-storage](https://github.com/gear-tech/gear-js/tree/main/idea/data-storage)
-
-Microservice responsible for storing metadata of uploaded programs and information about events.
-
-[api-gateway](https://github.com/gear-tech/gear-js/tree/main/idea/api-gateway)
-
-Microservice provides any interaction between the events / meta data store and an external user.
+Microservice is responsible for blockchain indexing and storing information about programs and their messages as well as for storing programs metadata.
 
 [test-balance](https://github.com/gear-tech/gear-js/tree/main/idea/test-balance)
 
 Microservice provides the opportunity to obtain test tokens.
 
-[wasm-compiler](https://github.com/gear-tech/gear-js/tree/main/idea/wasm-compiler)
+[api-gateway](https://github.com/gear-tech/gear-js/tree/main/idea/api-gateway)
 
-Microservice provides the opportunity to compile Rust projects to Wasm.
+Microservice provides any interaction between `indexer` / `test-balance` services and an external user
