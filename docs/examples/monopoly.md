@@ -59,26 +59,24 @@ It allows sending transactions to the Gear node based on `yaml` file:
     ```
     npm install -g @gear-js/cli
     ```
-- Upload the master contract. 
-
-The `upload-game.yaml` file contains a transaction that will deploy the contract onto the network, check [README](https://github.com/gear-tech/gear-js/tree/main/tools/cli) for more details. 
+- Upload the master contract. The `upload-game.yaml` file contains a transaction that will deploy the contract onto the network, check [README](https://github.com/gear-tech/gear-js/tree/main/tools/cli) for more details. 
 
 - Customize the following parameters:
 
     - Specify the accounts using on of these methods - mnemonic phrase, seed or Using well-known account such as `Alice` and `Bob`
-    ```
-    accounts:
-  	alice: 'bottom drive obey lake curtain smoke basket hold race lonely fit walk'
-	bob: //Bob
-	my_account: '0x...seed'
-    transactions:
-	account: alice
-    ```
+	```
+    	accounts:
+  		alice: 'bottom drive obey lake curtain smoke basket hold race lonely fit walk'
+		bob: //Bob
+		my_account: '0x...seed'
+    	transactions:
+		account: alice
+    	```
     
-- You can also specify which node you want to deploy the contract on by defining the variable `wsAddress` in the file with transactions. If this variable is not defined, the contract will be deployed on the local node which should be running beforehand:
-    ```
-    wsAddress: wss://node-workshop.gear.rs
-    ```
+    - You can also specify which node you want to deploy the contract on by defining the variable `wsAddress` in the file with transactions. If this variable is not defined, the contract will be deployed on the local node which should be running beforehand:
+    	```
+    	wsAddress: wss://node-workshop.gear.rs
+    	```
     
 - To deploy the contract, run the command:
     ```
@@ -88,16 +86,16 @@ The `upload-game.yaml` file contains a transaction that will deploy the contract
 - If everything goes well, you will see the contract address in the terminal:
     ![img alt](./img/upload-game.png)
     
-- To run the application, it is necessary to save this address and later specify it as a variable in the .env file.
+- To run the application, it is necessary to save this address and later specify it as a variable in the `.env` file.
  
 - Make gas reservations to ensure continuous game execution. Open `reserve-gas.yaml` file and customize account and node address as described above. Run the command with the master contract address specified:
     ```
     gear-js workflow reserve-gas.yaml -a program_id='0x60663aaee2971eb60874b63c92e738cc375f3764a1d3b38d65cbc63d8ee8f70c'
     ```
     
-    ![img alt](./img/reserve_gas.png)
-    
 - If everything goes well, you will see a message confirming a successful reservation. Please send this message 5-10 times to ensure uninterrupted gameplay.
+    
+    ![img alt](./img/reserve_gas.png)
 
 - Upload players contracts to the network. For testing purposes, you can upload 4 identical player contracts. After initialization in the network, their addresses will be unique and you will then need to register them in the game. Open `players.yaml` file and customize account and node address as described above. Run the command to add players in the game:
     ```
