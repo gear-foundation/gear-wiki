@@ -18,7 +18,7 @@ Each player receives their dominoes, and the number of tiles they receive is aut
 - 7 players: 5 tiles per each player
 - 8 players: 4 tiles per each player
 
-Also, each player gets their own train differetiated by the color. Each player revise their tiles and see if they have matching dot numbers on both sides of one tile. 12 dots is the maximum number of each side. The player with the highest double places it in the center of the Tequila Train Hub. In case of nobody has a tile with matching numbers, each player will receive one additional tile, each player will continue receiving one additional tile till someone will receive the tile with the matching numbers on both sides.
+Also, each player gets their own train differentiated by the color. Each player revise their tiles and see if they have matching dot numbers on both sides of one tile. 12 dots is the maximum number of each side. The player with the highest double places it in the center of the Tequila Train Hub. In case of nobody has a tile with matching numbers, each player will receive one additional tile, each player will continue receiving one additional tile till someone will receive the tile with the matching numbers on both sides.
 
 The domino must be placed so that one end is touching the end of a domino already on the table and such that the end of the new domino matches (shows the same number of dots) the end of the domino it is adjacent to. Unless the tile is a double, the tile can be placed square in any one of the three directions as long as the two matching sides are touching fully.
 
@@ -85,7 +85,7 @@ cd tequila-train
 
 2. Upload the program binary Wasm `contracts/target/wasm32-unknown-unknown/release/tequila_train.opt.wasm` and the meta file `contracts/tequila_train.meta.txt`.
 
-3. Use list of players' IDs as a payload when initializing the program. For example, if you want to play on behalf of **Alice** (`0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d`) and **Bob** (`0x8eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a48`), you are to pass the following init payload:
+3. Use the list of players' IDs as a payload when initializing the program. For example, if you want to play on behalf of **Alice** (`0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d`) and **Bob** (`0x8eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a48`), you are to pass the following init payload:
 
     ```
     [
@@ -152,7 +152,7 @@ cd tequila-train
 
 ## Implementation details
 
-One user (he may be a player or not) uploads the game program and initialize it. Initialization data is a vector of players’ public addresses:
+One user (he may be a player or not) uploads the game program and initializes it. Initialization data is a vector of players’ public addresses:
 
 ```rust title="contracts/io/src/lib.rs"
 pub struct Players {
