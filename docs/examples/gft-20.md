@@ -71,10 +71,6 @@ That storage contract doesn't make any asynchronous calls, so its execution is `
 ### The logic contract architecture
 The state of the logic contract consist of the following fields:
 - The address of the master token contract. The logic contract must execute messages only from that address:
-
-### The logic contract architecture
-The state of the logic contract consist of the following fields:
-- The address of the master token contract. The logic contract must execute messages only from that address:
 ```rust
 ftoken_id: ActorId
 ```
