@@ -295,11 +295,20 @@ This guide provides a general overview of running smart contracts on the network
     gear-wasm-builder = { git = "https://github.com/gear-tech/gear.git", branch = "testnet", features = ["metawasm"] }
     ```
 
-9. Now compile the smart-contract to Wasm
+9. Now compile the smart-contract to Wasm:
+
 
 ```bash
 cd ~/gear/contracts/first-gear-app/
 cargo build --release
+```
+
+or 
+
+```bash
+cd ~/gear/contracts/first-gear-app/
+RUSTFLAGS="-C link-args=--import-memory -C linker-plugin-lto" cargo +nightly build --release --target=wasm32-unknown-unknown
+wasm-proc --path ./target/wasm32-unknown-unknown/release/
 ```
 
 If everything goes well, your working directory should now have a `target` directory that looks like this:
