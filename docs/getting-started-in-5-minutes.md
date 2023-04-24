@@ -303,7 +303,7 @@ cd ~/gear/contracts/first-gear-app/
 cargo build --release
 ```
 
-or 
+Alternatively, we can use `cargo`. But in this case, it is necessary to remove the file `build.rs`
 
 ```bash
 cd ~/gear/contracts/first-gear-app/
