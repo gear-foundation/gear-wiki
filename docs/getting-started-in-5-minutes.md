@@ -125,11 +125,8 @@ This guide provides a general overview of running smart contracts on the network
         let mut counter = unsafe { COUNTER };
 
         match command.as_slice() {
-            // 0x696E63
             b"inc" => counter += 1,
-            // 0x646563
             b"dec" => counter -= 1,
-            // 0x676574
             b"get" => {
                 msg::reply_bytes(format!("{counter}"), 0).expect("Unable to reply");
             }
@@ -144,7 +141,7 @@ This guide provides a general overview of running smart contracts on the network
 
     ```bash
     RUSTFLAGS="-C link-args=--import-memory -C linker-plugin-lto" \
-        cargo +nightly b -r --target=wasm32-unknown-unknown
+        cargo +nightly build --release --target=wasm32-unknown-unknown
     ```
 
     If everything goes well, your working directory should now have a `target` directory that looks like this:
@@ -267,7 +264,7 @@ The red dot status for a program indicates init failure. Try to upload the progr
 
     Now you have sent an increment command to the program. After processing the counter will be incremented to `1`.
 
-5. Repeat the steps 2 with `0x676574` payload (this is `get` command). This will send a get command to the program.
+5. Repeat the step 2 with `0x676574` payload (this is `get` command). This will send a get command to the program.
 
 6. Press the <kbd>Mailbox</kbd> button to enter the mailbox and find the reply.
 
