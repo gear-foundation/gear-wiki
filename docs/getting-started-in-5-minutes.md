@@ -13,17 +13,18 @@ This guide provides a general overview of running smart contracts on the network
 
 ## Prerequisites
 
-1. Linux users should generally install `GCC` and `Clang`, according to their distribution’s documentation. Also, one needs to install `binaryen` toolset that contains the required wasm-opt tool.
+1. Linux users should generally install `GCC` and `Clang`, according to their distribution’s documentation.
 
     For example, on Ubuntu use:
+
     ```bash
-    sudo apt install -y clang build-essential binaryen
+    sudo apt install -y clang build-essential
     ```
 
-    On macOS, you can get a compiler toolset and `binaryen` by running:
+    On macOS, you can get a compiler toolset by running:
+
     ```bash
     xcode-select --install
-    brew install binaryen
     ```
 
 2. Make sure you have installed all the tools required to build a smart-contract in Rust. [Rustup](https://rustup.rs/) will be used to get Rust compiler ready:
@@ -42,6 +43,12 @@ This guide provides a general overview of running smart contracts on the network
 
     ```bash
     rustup target add wasm32-unknown-unknown --toolchain nightly
+    ```
+
+5. Also, you need to install the `wasm-proc` utility that optimizes compiled Wasm to be more compact.
+
+    ```bash
+    cargo install --locked --git https://github.com/gear-tech/gear.git wasm-proc
     ```
 
 **_Note:_** If you use Windows, download and install [Build Tools for Visual Studio](https://visualstudio.microsoft.com/downloads/?q=build+tools).
@@ -64,267 +71,113 @@ This guide provides a general overview of running smart contracts on the network
 3. The next step would be to build a Rust library for our contract:
 
     ```bash
-    cargo new first-gear-app --lib
-    cargo new first-gear-app/io --lib
-    cargo new first-gear-app/state --lib
+    cargo new counter --lib
     ```
 
     Now, your `gear/contracts` directory tree should look like this:
 
     ```
-    └── first-gear-app
-        ├── Cargo.toml
-        └── src
-        │   └── lib.rs
-        ├── io
-        │   ├── Cargo.toml
-        │   └── src
-        │       └── lib.rs
-        └── state
-            ├── Cargo.toml
-            └── src
-                └── lib.rs
+    counter
+    ├── Cargo.toml
+    └── src
+        └── lib.rs
     ```
 
-4. It's time to write some code. Open `first-gear-app` with your favorite editor. For `VS Code` editor type:
+4. It's time to write some code. Open `counter` with your favorite editor. For `VS Code` editor type:
 
     ```bash
-    code ~/gear/contracts/first-gear-app
+    code ~/gear/contracts/counter
     ```
 
-5. In the `first-gear-app` folder, create the `build.rs` file with the following code:
-
-    ```rust
-    fn main() {
-        gear_wasm_builder::build_with_metadata::<demo_ping_io::DemoPingMetadata>();
-    }
-    ```
-
-    and configure `Cargo.toml` in order for our contract to be properly built:
+5. In the `counter` folder, configure `Cargo.toml` in order for our contract to be properly built:
 
     ```toml
     [package]
-    name = "first-gear-app"
+    name = "counter"
     version = "0.1.0"
-    authors = ["Gear Technologies"]
     edition = "2021"
-    license = "MIT"
+
+    # highlight-start
+    [lib]
+    crate-type = ["cdylib"]
+    # highlight-end
 
     [dependencies]
-    gstd = { git = "https://github.com/gear-tech/gear.git", branch = "testnet", features = ["debug"] }
-
-    [dev-dependencies]
-    gtest = { git = "https://github.com/gear-tech/gear.git", branch = "testnet" }
-
-    [build-dependencies]
-    demo-ping-io = { path = "io" }
-    gear-wasm-builder = { git = "https://github.com/gear-tech/gear.git", branch = "testnet" }
-
-    [features]
-    # Used for inserting constants with WASM binaries (NOT paths) of the contract in
-    # the root crate. Usually these constants used in gclient tests instead of
-    # strings with paths to the binaries in the "target" directory. If you don't
-    # like this approach or don't use gclient tests, you can freely remove this
-    # feature from here and from the rest of the code.
-    binary-vendor = []
-
-    # It's necessary to include all metawasm crates in the workspace section,
-    # otherwise they'll be ignored by Cargo and won't be built.
-    [workspace]
-    members = [
-        "state"
-    ]
+    # highlight-next-line
+    gstd = { git = "https://github.com/gear-tech/gear.git", branch = "testnet" }
     ```
 
-6. Replace the default contents of `lib.rs` in the `first-gear-app` folder with the code for our first smart-contract.
+6. Replace the default contents of `lib.rs` in the `counter` folder with the code for our first smart-contract.
 
-    This simple smart-contract responds with `PONG` to a `PING` message sent to the contract. Open `src/lib.rs` in your editor and paste the following code:
+    This simple smart-contract accepts `inc`, `dec`, and `get` commands. Open `src/lib.rs` in your editor and paste the following code:
 
     ```rust
-    use gstd::{debug, msg, prelude::*};
+    #![no_std]
 
-    static mut MESSAGE_LOG: Vec<String> = vec![];
+    use gstd::{msg, prelude::*};
+
+    static mut COUNTER: i32 = 0;
 
     #[no_mangle]
     extern "C" fn handle() {
-        let new_msg = String::from_utf8(msg::load_bytes().expect("Invalid message"))
-            .expect("Unable to create string");
+        let command = msg::load_bytes().expect("Invalid message");
 
-        if new_msg == "PING" {
-            msg::reply_bytes("PONG", 0).expect("Unable to reply");
-        }
+        let mut counter = unsafe { COUNTER };
 
-        unsafe {
-            MESSAGE_LOG.push(new_msg);
-
-            debug!("{:?} total message(s) stored: ", MESSAGE_LOG.len());
-
-            for log in &MESSAGE_LOG {
-                debug!(log);
+        match command.as_slice() {
+            b"inc" => counter += 1,
+            b"dec" => counter -= 1,
+            b"get" => {
+                msg::reply_bytes(format!("{counter}"), 0).expect("Unable to reply");
             }
+            _ => (),
         }
-    }
 
-    #[no_mangle]
-    extern "C" fn state() {
-        msg::reply(unsafe { MESSAGE_LOG.clone() }, 0)
-            .expect("Failed to encode or reply with `<AppMetadata as Metadata>::State` from `state()`");
-    }
-
-    #[no_mangle]
-    extern "C" fn metahash() {
-        msg::reply::<[u8; 32]>(include!("../.metahash"), 0)
-            .expect("Failed to encode or reply with `[u8; 32]` from `metahash()`");
-    }
-
-    #[cfg(test)]
-    mod tests {
-        extern crate std;
-
-        use gtest::{Log, Program, System};
-
-        #[test]
-        fn it_works() {
-            let system = System::new();
-            system.init_logger();
-
-            let program = Program::current(&system);
-
-            let res = program.send_bytes(42, "INIT");
-            assert!(res.log().is_empty());
-
-            let res = program.send_bytes(42, "PING");
-            let log = Log::builder().source(1).dest(42).payload_bytes("PONG");
-            assert!(res.contains(&log));
-        }
+        unsafe { COUNTER = counter };
     }
     ```
 
-7. In the `io` folder:
-    1. replace the default content of `src/lib.rs`:
+7. Now compile the smart-contract to Wasm using `cargo`:
 
-    ```rust
-    #![no_std]
-
-    use gmeta::{InOut, Metadata};
-    use gstd::prelude::*;
-
-    pub struct DemoPingMetadata;
-
-    impl Metadata for DemoPingMetadata {
-        type Init = ();
-        type Handle = InOut<String, String>;
-        type Others = ();
-        type Reply = ();
-        type Signal = ();
-        type State = Vec<String>;
-    }
-    ```
-    2. replace the content of `Cargo.toml`:
-    ```rust
-    [package]
-    name = "demo-ping-io"
-    version = "0.1.0"
-    edition = "2021"
-    authors = ["Gear Technologies"]
-    license = "MIT"
-
-    [dependencies]
-    gmeta = { git = "https://github.com/gear-tech/gear.git", branch = "testnet" }
-    gstd = { git = "https://github.com/gear-tech/gear.git", branch = "testnet" }
+    ```bash
+    RUSTFLAGS="-C link-args=--import-memory -C linker-plugin-lto" \
+        cargo +nightly build --release --target=wasm32-unknown-unknown
     ```
 
-7. In the `state` folder:
-    1. create the `build.rs` file with the following code:
-
-    ```rust
-    fn main() {
-        gear_wasm_builder::build_metawasm();
-    }
-    ```
-
-    2. replace the default content of `src/lib.rs`:
-
-    ```rust
-    #![no_std]
-
-    use demo_ping_io::*;
-    use gmeta::{metawasm, Metadata};
-    use gstd::prelude::*;
-
-    #[metawasm]
-    pub mod metafns {
-        pub type State = <DemoPingMetadata as Metadata>::State;
-
-        pub fn get_first_message(state: State) -> String {
-            state.first().expect("Message log is empty!").to_string()
-        }
-
-        pub fn get_last_message(state: State) -> String {
-            state.last().expect("Message log is empty!").to_string()
-        }
-
-        pub fn get_messages_len(state: State) -> u64 {
-            state.len() as u64
-        }
-
-        pub fn get_message(state: State, index: u64) -> String {
-            state
-                .get(index as usize)
-                .expect("Invalid index!")
-                .to_string()
-        }
-    }
+    If everything goes well, your working directory should now have a `target` directory that looks like this:
 
     ```
-    3. replace the content of `Cargo.toml`:
-    ```rust
-    [package]
-    name = "demo-ping-state"
-    version = "0.1.0"
-    edition = "2021"
-    license = "MIT"
-    authors = ["Gear Technologies"]
-
-    [dependencies]
-    gstd = { git = "https://github.com/gear-tech/gear.git", branch = "testnet" }
-    gmeta = { git = "https://github.com/gear-tech/gear.git", branch = "testnet", features = ["codegen"] }
-    demo-ping-io = { path = "../io" }
-
-    [build-dependencies]
-    gear-wasm-builder = { git = "https://github.com/gear-tech/gear.git", branch = "testnet", features = ["metawasm"] }
+    target
+    ├── ...
+    └── wasm32-unknown-unknown
+        └── release
+            ├── ...
+            └── counter.wasm    <---- this is our built .wasm file
     ```
 
-9. Now compile the smart-contract to Wasm
+8. The last preparing step is to optimize the Wasm binary using `wasm-proc`:
 
-```bash
-cd ~/gear/contracts/first-gear-app/
-cargo build --release
-```
+    ```bash
+    wasm-proc target/wasm32-unknown-unknown/release/counter.wasm
+    ```
 
-If everything goes well, your working directory should now have a `target` directory that looks like this:
+    A new Wasm file will be created:
 
-```
-    ├── meta.txt
-    ├── target
-        ├── CACHEDIR.TAG
-        ├── meta.txt
-        ├── release
-        │   └── ...
-        └── wasm32-unknown-unknown
-            └── release
-                ├── ...
-                ├── first_gear_app.wasm      <---- this is our built .wasm file
-                ├── first_gear_app.opt.wasm  <---- this is optimized .wasm file
-                └── first_gear_app.meta.wasm <---- this is legacy meta .wasm file
-```
+    ```bash
+    target
+    ├── ...
+    └── wasm32-unknown-unknown
+        └── release
+            ├── ...
+            ├── counter.wasm        <---- this is our built .wasm file
+            # highlight-next-line
+            └── counter.opt.wasm    <---- this is optimized .wasm file
+    ```
 
-The `target/wasm32-unknown-unknown/release` directory contains three Wasm binaries:
+    Now the `target/wasm32-unknown-unknown/release` directory contains two required Wasm binaries:
 
-- `first_gear_app.opt.wasm` is the optimized Wasm aimed to be uploaded to the blockchain
-- `meta.txt` is the Wasm containing meta information needed to interact with the program
-- `first_gear_app.wasm` is the output Wasm binary built from source files
-- `first_gear_app.meta.wasm` is the legacy Wasm containing meta information needed to interact with the program
+    - `counter.wasm` is the output Wasm binary built from source files
+    - `counter.opt.wasm` is the optimized Wasm aimed to be uploaded to the blockchain
 
 ## Deploy your Smart Contract to the Testnet
 
@@ -372,7 +225,7 @@ Gear provides a demo application that implements all of the possibilities of int
 
 ### Upload program
 
-1. When your account balance is sufficient, click the <kbd>Upload program</kbd> and navigate to the `.opt.wasm` file we have pointed to above. Also upload the `meta.txt` file.
+1. When your account balance is sufficient, click the <kbd>Upload program</kbd> and navigate to the `.opt.wasm` file we have pointed to above.
 
     ![Upload program button](./img/getting-started/upload.png)
 
@@ -399,7 +252,7 @@ The red dot status for a program indicates init failure. Try to upload the progr
 
 1. Now, try sending your newly uploaded program a message to see how it responds! Click the <kbd>Send message</kbd> button.
 
-2. In the `Payload` field of the opened dialog type `PING`. Click <kbd>Calculate Gas</kbd> button, the Gas limit will be set automatically. Now click the <kbd>Send Message</kbd> button.
+2. In the `Payload` field of the opened dialog type `0x696E63` (this is `inc` encoded in hex). Click <kbd>Calculate Gas</kbd> button, the Gas limit will be set automatically. Now click the <kbd>Send Message</kbd> button.
 
     ![Send form](./img/getting-started/send-request.png)
 
@@ -409,13 +262,17 @@ The red dot status for a program indicates init failure. Try to upload the progr
 
     ![Log](./img/getting-started/message-log.png)
 
-5. Press the <kbd>Mailbox</kbd> button to enter the mailbox and find the reply.
+    Now you have sent an increment command to the program. After processing the counter will be incremented to `1`.
+
+5. Repeat the step 2 with `0x676574` payload (this is `get` command). This will send a get command to the program.
+
+6. Press the <kbd>Mailbox</kbd> button to enter the mailbox and find the reply.
 
     ![Mailbox reply](./img/getting-started/mailbox-reply.png)
 
     :::note
 
-    The reply is in the mailbox for a limited time depending on the gas limit. If you don't see the reply, try resending the `PING` message with the gas limit increasing and go to the mailbox immediately after sending the message.
+    The reply is in the mailbox for a limited time depending on the gas limit. If you don't see the reply, try resending the `0x676574` (`get`) message with the gas limit increasing and go to the mailbox immediately after sending the message.
 
     :::
 ---
