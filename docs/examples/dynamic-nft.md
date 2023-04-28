@@ -62,6 +62,127 @@ pub enum NFTEvent {
 }
 ```
 
+## Examples
+
+For an example, look at this [Auto-changed NFT](https://github.com/gear-dapps/auto-changed-nft) contract. This is a modified dynamic contract in which own dynamic data changes over time periods. We slightly changed the logic of the dynamic nft  contract to suit our needs. 
+
+First, let's change the name of the contract and add a new field `rest_update_periods` in which we store the rest update periods (in our example, we need 2 updates):
+
+```Rust
+pub struct AutoChangedNft {
+    #[NFTStateField]
+    pub token: NFTState,
+    pub token_id: TokenId,
+    pub owner: ActorId,
+    pub transactions: HashMap<H256, NFTEvent>,
+    pub dynamic_data: Vec<u8>,
+    pub rest_update_periods: u32,
+}
+```
+
+At initializing the contract, we send a deferred message that will change the dynamic data of the contract:
+
+```Rust 
+#[no_mangle]
+unsafe extern "C" fn init() {
+    let config: InitNFT = msg::load().expect("Unable to decode InitNFT");
+    if config.royalties.is_some() {
+        config.royalties.as_ref().expect("Unable to g").validate();
+    }
+    let nft = AutoChangedNft {
+        token: NFTState {
+            name: config.name,
+            symbol: config.symbol,
+            base_uri: config.base_uri,
+            royalties: config.royalties,
+            ..Default::default()
+        },
+        owner: msg::source(),
+        rest_update_periods: 2, // for example - two updates
+        ..Default::default()
+    };
+
+    let periods = nft.rest_update_periods;
+    CONTRACT = Some(nft);
+
+    let data = format!("Rest Update Periods: {}", periods)
+        .as_bytes()
+        .to_vec();
+
+    let payload = NFTAction::UpdateDynamicData {
+        transaction_id: 1,
+        data,
+    };
+    msg::send_delayed(exec::program_id(), payload, 0, DELAY).expect("Cant send delayed msg");
+}
+```
+
+Next we will change the `handle()` function, we will add the business logic we need there:
+
+```Rust
+unsafe extern "C" fn handle() {
+    /// ...
+    NFTAction::UpdateDynamicData {
+            transaction_id,
+            data,
+        } => {
+            let payload = nft.process_transaction(transaction_id, |nft| {
+                let data_hash = H256::from(sp_core_hashing::blake2_256(&data));
+                if nft.rest_update_periods > 0 {
+                    nft.dynamic_data = data;
+                    nft.rest_update_periods -= 1;
+                    let periods = nft.rest_update_periods;
+                    let data = format!("Rest Update Periods: {}", periods)
+                        .as_bytes()
+                        .to_vec();
+                    let payload = NFTAction::UpdateDynamicData {
+                        transaction_id: transaction_id + 1,
+                        data,
+                    };
+                    msg::send_delayed(exec::program_id(), payload, 0, DELAY)
+                        .expect("Can't send delayed");
+                } else {
+                    nft.dynamic_data = format!("Expired").as_bytes().to_vec();
+                }
+                NFTEvent::Updated { data_hash }
+            });
+            msg::reply(payload, 0).expect("Error during replying with `NFTEvent::Updated`");
+        }
+
+```
+
+All is ready. Then there was a need to check that it works in tests:
+```Rust
+#[test]
+fn auto_change_success() {
+    let sys = System::new();
+    init_nft(&sys);
+    let nft = sys.get_program(1);
+    let transaction_id: u64 = 0;
+    assert!(!mint(&nft, transaction_id, USERS[0]).main_failed());
+
+    let state: IoNFT = nft.read_state().unwrap();
+    let expected_dynamic_data: Vec<u8> = vec![];
+    assert_eq!(expected_dynamic_data, state.dynamic_data);
+    const DELAY: u32 = 5;
+    
+    sys.spend_blocks(DELAY);
+    let state: IoNFT = nft.read_state().unwrap();
+    let expected_dynamic_data = format!("Rest Update Periods: 2").as_bytes().to_vec();
+    assert_eq!(expected_dynamic_data, state.dynamic_data);
+
+    sys.spend_blocks(DELAY);
+    let state: IoNFT = nft.read_state().unwrap();
+    let expected_dynamic_data = format!("Rest Update Periods: 1").as_bytes().to_vec();
+    assert_eq!(expected_dynamic_data, state.dynamic_data);
+
+    sys.spend_blocks(DELAY);
+    let state: IoNFT = nft.read_state().unwrap();
+    let expected_dynamic_data = format!("Expired").as_bytes().to_vec();
+    assert_eq!(expected_dynamic_data, state.dynamic_data);
+}
+```
+
 ## Conclusion
 
 Gear provides a reusable [library](https://github.com/gear-dapps/gear-lib/tree/master/lib/src/non_fungible_token) with core functionality for the gNFT-4907 protocol. By using object composition, the library can be utilized within a custom NFT contract implementation in order to minimize duplication of community available code.
