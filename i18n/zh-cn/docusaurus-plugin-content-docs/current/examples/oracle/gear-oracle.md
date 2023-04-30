@@ -1,6 +1,6 @@
 ---
-sidebar_label: 预言机
-sidebar_position: 23
+sidebar_label: Gear 预言机
+sidebar_position: 1
 ---
 
 # Gear 预言机
