@@ -183,6 +183,8 @@ fn auto_change_success() {
 }
 ```
 
+Similarly, you can implement other logic, for example, periodically request data from the Oracle.
+
 ## Conclusion
 
 Gear provides a reusable [library](https://github.com/gear-dapps/gear-lib/tree/master/lib/src/non_fungible_token) with core functionality for the gNFT-4907 protocol. By using object composition, the library can be utilized within a custom NFT contract implementation in order to minimize duplication of community available code.
