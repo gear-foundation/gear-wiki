@@ -9,6 +9,82 @@ Gear provides a set of examples that can be used for your familiarization with w
 
 You can write your own smart contract or try to build from examples. Let's Rock!
 
+## Stable environment
+
+All smart contract examples and JS applications have been tested on stable environment that consists of specific development tool versions necessary for implementing, buildg and running smart contracts and JS applications.
+
+
+Current stable release: `v1.0`
+
+
+<table>
+<tr>
+<td width="500"><b> Rust Tools </b></td> <td><b> Version </b></td> <td><b> How to install / access </b></td>
+</tr>
+
+<tr>
+<td> Linux users should generally install `GCC` and `Clang`, according to their distribution’s documentation. Also, one should install `binaryen` toolset that contains required `wasm-opt` tool. </td>
+<td>Latest</td>
+<td>
+For example, on Ubuntu use:
+
+```bash
+sudo apt install -y clang build-essential binaryen cmake protobuf-compiler
+```
+On macOS, you can get a compiler toolset and `binaryen` by running:
+```bash
+xcode-select --install
+brew install binaryen
+```
+</td>
+</tr>
+
+<tr>
+<td> Rustup </td>
+<td> 2023-03-14 </td>
+<td>
+
+```bash
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+``` 
+Add Wasm target to your toolchain
+```bash
+rustup toolchain add nightly
+rustup target add wasm32-unknown-unknown --toolchain nightly
+```
+</td>
+</tr>
+</table>
+
+<table>
+<tr> 
+<td><b>Gear JS Tools</b></td>
+<td><b>Version</b></td>
+<td><b>How to install / access</b></td>
+</tr>
+<tr> 
+<td>Gear JS API</td>
+<td>0.30.6</td>
+<td>Make sure this version is specified in the package.json file of your smart contract repository</td>
+</tr>
+<tr> 
+<td>Gear JS API Hooks</td>
+<td>0.5.16</td>
+<td>Make sure this version is specified in the package.json file of your smart contract repository</td>
+</tr>
+<tr>
+<td>Gear JS API UI kit</td>
+<td>0.5.18</td>
+<td>Make sure this version is specified in the package.json file of your smart contract repository</td>
+</tr>
+</table>
+
+:::warning Note
+Windows users may encounter some problems related to the installation of Rust components and dependencies.
+It is highly recommended to use Linux or macOS for compiling Gear node and smart-contracts. 
+:::
+
+<!--
 ## Requirements
 
 To develop your first Rust smart-contract you would have to install some components.
@@ -42,6 +118,8 @@ It is highly recommended to use Linux or macOS for compiling Gear node and smart
     rustup toolchain add nightly
     rustup target add wasm32-unknown-unknown --toolchain nightly
     ```
+
+-->
 
 ## First steps
 
