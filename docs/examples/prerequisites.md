@@ -23,7 +23,11 @@ Current stable release: `v1.0`
 </tr>
 
 <tr>
-<td> Linux users should generally install `GCC` and `Clang`, according to their distribution’s documentation. Also, one should install `binaryen` toolset that contains required `wasm-opt` tool. </td>
+<td> 
+
+Linux users should generally install `GCC` and `Clang`, according to their distribution’s documentation. Also, one should install `binaryen` toolset that contains required `wasm-opt` tool. 
+
+</td>
 <td>Latest</td>
 <td>
 For example, on Ubuntu use:
@@ -52,6 +56,23 @@ Add Wasm target to your toolchain
 rustup toolchain add nightly
 rustup target add wasm32-unknown-unknown --toolchain nightly
 ```
+</td>
+</tr>
+<tr>
+<td>
+
+Gear Rust libraries: `gstd`, `gtest`, `gmeta`, `gclient`, `gear wasm builder`
+
+</td>
+<td>
+
+commit hash: `663e38a`
+</td>
+<td>
+
+Make sure the correct commit hash version is specified in the `Cargo.toml` file of the smart contract you're working on. For example:
+https://github.com/gear-dapps/app/blob/master/Cargo.toml#L10
+
 </td>
 </tr>
 </table>
