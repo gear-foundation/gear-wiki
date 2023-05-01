@@ -10,7 +10,9 @@ This is an extension of standard [Non-Fungible token](./gnft-721). It proposes a
 
 ### Motivation
 
-Unlike traditional NFTs that represent a static digital asset, dynamic NFTs can have various attributes, properties, or behaviors that can be modified based on certain conditions or user interactions. These changes can be triggered by external factors such as market demand, user preferences, or even real-world events. For example, a dynamic NFT representing a digital artwork may change its appearance or color scheme based on the time of day or weather conditions. 
+Unlike traditional NFTs that represent a static digital asset, dynamic NFTs can have various attributes, properties, or behaviors that can be modified based on certain conditions or user interactions. These changes can be triggered by external factors such as market demand, user preferences, or even real-world events. For example, a dynamic NFT representing a digital artwork may change its appearance or color scheme based on the time of day or weather conditions.
+
+This example demonstrates Gear Protocol's unique features enabling the new user experience for totally on-chain, truly decentralized applications that do not require centralized components. [Delayed messages](/developing-contracts/delayed-messages.md) allows the contract to wake itself after a specified period of time. It is acheived via [gas reservation](/developing-contracts/gas-reservation.md) feature, which allows for the creation of gas pools that can be used by programs for further execution.
 
 ### Details
 
