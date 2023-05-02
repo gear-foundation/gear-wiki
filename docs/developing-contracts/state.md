@@ -54,18 +54,18 @@ To do this, we need to create an independent program and describe the necessary 
 use gmeta::metawasm;
 
 #[metawasm]
-pub trait Metawasm {
-    type State = Vec<Wallet>;
+pub mod metafns {
+    pub type State = Vec<Wallet>;
 
-    fn all_wallets(state: Self::State) -> Vec<Wallet> {
+    pub fn all_wallets(state: State) -> Vec<Wallet> {
         state
     }
 
-    fn first_wallet(state: Self::State) -> Option<Wallet> {
+    pub fn first_wallet(state: State) -> Option<Wallet> {
         state.first().cloned()
     }
 
-    fn last_wallet(state: Self::State) -> Option<Wallet> {
+    pub fn last_wallet(state: State) -> Option<Wallet> {
         state.last().cloned()
     }
 }
@@ -78,14 +78,14 @@ Or more complex example:
 use gmeta::metawasm;
 
 #[metawasm]
-pub trait Metawasm {
-    type State = Vec<Wallet>;
+pub mod metafns {
+    pub type State = Vec<Wallet>;
 
-    fn wallet_by_id(id: Id, state: Self::State) -> Option<Wallet> {
+    pub fn wallet_by_id(state: State, id: Id) -> Option<Wallet> {
         state.into_iter().find(|w| w.id == id)
     }
 
-    fn wallet_by_person(person: String, state: Self::State) -> Option<Wallet> {
+    pub fn wallet_by_person(state: State, person: String) -> Option<Wallet> {
         state.into_iter().find(|w| w.person == person)
     }
 }

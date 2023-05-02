@@ -3,7 +3,7 @@ sidebar_label: Metadata
 sidebar_position: 5
 ---
 
-# Matadata
+# Metadata
 
 Metadata is a kind of interface map that helps to transform a set of bytes into an understandable structure and indicates the function this structure is intended for. Metadata determines how all incoming and outgoing data will be encoded/decoded.
 
