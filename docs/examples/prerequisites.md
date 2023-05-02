@@ -89,7 +89,7 @@ https://github.com/gear-dapps/app/blob/master/Cargo.toml#L10
 <td>Make sure this version is specified in the package.json file of your smart contract repository</td>
 </tr>
 <tr> 
-<td>Gear JS API Hooks</td>
+<td>Gear JS React Hooks</td>
 <td>0.5.16</td>
 <td>Make sure this version is specified in the package.json file of your smart contract repository</td>
 </tr>
