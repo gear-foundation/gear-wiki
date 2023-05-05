@@ -19,7 +19,7 @@ Current stable release: `v1.0`
 
 <table>
 <tr>
-<td width="500"><b> Compiler Tools </b></td> <td><b> Version </b></td> <td><b> How to install / access </b></td>
+<td><b> Compiler Tools</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img width='800'/></td> <td><b> Version </b></td> <td><b> How to install / access </b></td>
 </tr>
 
 <tr>
