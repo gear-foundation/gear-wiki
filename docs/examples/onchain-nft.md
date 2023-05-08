@@ -60,6 +60,8 @@ pub struct InitOnChainNFT {
     pub symbol: String,
     pub base_uri: String,
     pub base_image: String,
+    // Layers MUST be specified in sequence order starting from 0,
+    // otherwise the contract will return the "No such layer" error. 
     pub layers: Vec<(LayerId, Vec<String>)>,
     pub royalties: Option<Royalties>,
 }
