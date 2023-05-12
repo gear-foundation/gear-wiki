@@ -93,9 +93,9 @@ journalctl -u gear-node -fn 50
 例如，如果你的 Linux 可执行文件位于/usr/bin（如我们上面的配置），你要运行：
 
 ```
-wget https://get.gear.rs/gear-nightly-linux-x86_64.tar.xz
-sudo tar -xvf gear-nightly-linux-x86_64.tar.xz -C /usr/bin
-rm gear-nightly-linux-x86_64.tar.xz
+wget https://get.gear.rs/gear-nightly-x86_64-unknown-linux-gnu.tar.xz
+sudo tar -xvf gear-nightly-x86_64-unknown-linux-gnu.tar.xz -C /usr/bin
+rm gear-nightly-x86_64-unknown-linux-gnu.tar.xz
 sudo systemctl restart gear-node
 ```
 
