@@ -7,6 +7,8 @@ sidebar_label: React-hooks
 
 Hooks allow functional components to have access to programs running on Gear networks and significantly simplify the development of front-end applications.
 
+For example, refer to [this article](./../../examples/nft-marketplace/nft-application) that demonstrates the creation of a TypeScript application that connects to an [NFT smart contract](./../../examples/gnft-721) running on the blockchain.
+
 ## Installation
 
 ```sh

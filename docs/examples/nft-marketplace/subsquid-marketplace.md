@@ -1,6 +1,6 @@
 ---
 sidebar_label: Subsquid indexing
-sidebar_position: 1
+sidebar_position: 2
 ---
 
 # Subsquid-based data indexing for NFT Marketplace
