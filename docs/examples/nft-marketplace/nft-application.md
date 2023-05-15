@@ -5,7 +5,7 @@ sidebar_position: 3
 
 # NFT frontend application
 
-This article explains how to create a `TypeScript` application and connect it to an [NFT smart contract](./../gnft-721.md) running in the blockchain.
+This article explains how to create a `TypeScript` application and connect it to an [NFT smart contract](./../gnft-721) running in the blockchain.
 
 ### Preparation
 
