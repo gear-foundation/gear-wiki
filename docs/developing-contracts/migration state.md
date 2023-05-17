@@ -161,3 +161,8 @@ extern "C" fn handle() {
     }
 }
 ```
+
+## Gas consumption
+
+Of course, this operations is not free and it takes gas. 
+For example, even with the maximum possible gas amount of 250_000_000_000 you will be able to upgrade a Fungible token contract containing no more than 19000 balance entries. If you have more entries of balance (or another data) in the state of the contract, then this state must be migrated in parts.
