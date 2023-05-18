@@ -459,7 +459,7 @@ touch src/hooks/api.ts
                 }
             };
 
-            handleMessage(
+            sendMessage(
                 payload,
                 {
                     onSuccess: () => {
