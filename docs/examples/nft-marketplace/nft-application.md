@@ -677,7 +677,7 @@ In the `api.ts` file, we will add hooks for reading the contract state.
 
     function Home() {
 
-    const nfts = useNFTs();
+    const { nfts: state, isNftStateRead: isStateRead } = useNFTs();
     const isAnyNft = nfts?.length;
 
     const getNFTs = () => 
