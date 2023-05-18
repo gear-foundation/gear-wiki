@@ -151,7 +151,7 @@ This article explains how to create a `React` application and connect it to an [
     export { Home };
     ```
 
-6. Now let's go back to the `CreateNft` page. First, we create an input form that includes the NFT `title`, `description`, and `image`:
+6. Now let's go back to the `CreateNft` page. First, we create a form that includes the NFT `title`, `description`, and `image`:
 
     ```typescript 
     import { Button, FileInput, Input } from '@gear-js/ui'
