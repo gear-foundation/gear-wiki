@@ -687,9 +687,7 @@ In the `api.ts` file, we will add hooks for reading the contract state.
         </li>
         ))
         
-        
-    const NFTs = getNFTs();
-
+       
     return (
         <>
         <header className={styles.header}>
