@@ -584,7 +584,7 @@ In the `api.ts` file, we will add hooks for reading the contract state.
         <header className={styles.header}>
             <h2 className={styles.heading}>NFTs</h2>
         </header>
-        {nfts ? (
+        {isNftStateRead ? (
             <>
             {isAnyNft && <ul className={styles.list}>Display NFTs here</ul>}
             {!isAnyNft && <h2>There are no NFTs at the moment</h2>}
