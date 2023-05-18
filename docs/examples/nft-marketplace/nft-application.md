@@ -352,7 +352,7 @@ touch src/hooks/api.ts
         const ipfs = useIPFS();
         const { account }= useAccount();
         const navigate = useNavigate();
-        const handleMessage = useSendNFTMessage();
+        const sendMessage = useSendNFTMessage();
 
         const resetForm = () => {
             setNftForm(NftInitialState);
