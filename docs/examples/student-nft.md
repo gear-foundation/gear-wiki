@@ -60,6 +60,7 @@ pub struct Hw {
 #[derive(Debug, Clone, Encode, Decode, TypeInfo)]
 pub struct Course {
     pub owner: ActorId,
+    pub owner_helpers: Vec<ActorId>,
     pub name: String,
     pub description: String,
     pub lessons: Vec<Lesson>,
@@ -96,6 +97,14 @@ pub enum StudentNftAction {
     CreateCourse {
         name: String,
         description: String,
+    },
+    AddCourseHelper {
+        course_id: CourseId,
+        helper: ActorId,
+    },
+    RemoveCourseHelper {
+        course_id: CourseId,
+        helper: ActorId,
     },
     StartCourse {
         course_id: CourseId,
@@ -140,6 +149,14 @@ pub enum StudentNftEvent {
     CourseCreated {
         owner: ActorId,
         id: CourseId,
+    },
+    CourseHelperAdded {
+        id: CourseId,
+        helper: ActorId,
+    },
+    CourseHelperRemoved {
+        id: CourseId,
+        helper: ActorId,
     },
     CourseStarted {
         user: ActorId,
