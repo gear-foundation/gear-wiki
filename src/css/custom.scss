@@ -22,6 +22,7 @@
   --ifm-global-shadow-lw: transparent;
   --ifm-toc-border-color: transparent;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  --docusaurus-announcement-bar-height: auto !important;
 }
 
 [data-theme='dark'] {
@@ -35,4 +36,31 @@ h1 {
 [data-theme='light'] img[src$='#gh-dark-mode-only'],
 [data-theme='dark'] img[src$='#gh-light-mode-only'] {
   display: none;
+}
+
+div[class^="announcementBar"][role="banner"] {
+  border-bottom-color: #444950;
+
+  line-height: 20px;
+  font-size: 19px;
+  font-weight: bold;
+  padding: 7px 0px;
+  color: #00FFC4;
+  background-color:#188269;
+
+  a {
+    text-decoration:none;
+    color: #000000;
+    background-color: #03FFC4;
+    padding: 2px 12px;
+    border-radius: 4px;
+    transition-duration: 1s;
+    &:hover {
+      /*color: var(--ifm-color-primary) !important; */
+      background-color: #00CDAD;
+  }
+}
+  button.close {
+   color: #00FFC4;
+   }
 }
