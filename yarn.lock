@@ -1448,7 +1448,7 @@
     "@docusaurus/utils-validation" "2.4.1"
     tslib "^2.4.0"
 
-"@docusaurus/plugin-google-tag-manager@2.4.1":
+"@docusaurus/plugin-google-tag-manager@2.4.1", "@docusaurus/plugin-google-tag-manager@^2.4.1":
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/@docusaurus/plugin-google-tag-manager/-/plugin-google-tag-manager-2.4.1.tgz#b99f71aec00b112bbf509ef2416e404a95eb607e"
   integrity sha512-Zg4Ii9CMOLfpeV2nG74lVTWNtisFaH9QNtEw48R5QE1KIwDBdTVaiSA18G1EujZjrzJJzXN79VhINSbOJO/r3g==
