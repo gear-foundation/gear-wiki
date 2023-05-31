@@ -262,6 +262,106 @@ const urlList = [
     {
         "to": "/docs/examples/gft-20",
         "from": "/docs/examples/erc20"
+    },
+    {
+        "to": "/docs/examples/ping",
+        "from": "/ping"
+    },
+    {
+        "to": "/docs/examples/gft-20",
+        "from": "/gft-20"
+    },
+    {
+        "to": "/docs/examples/gnft-721",
+        "from": "/gnft-721"
+    },
+    {
+        "to": "/docs/examples/dynamic-nft",
+        "from": "/dynamic-nft"
+    },
+    {
+        "to": "/docs/examples/gnft-4907",
+        "from": "/gnft-4907"
+    },
+    {
+        "to": "/docs/examples/gmt-1155",
+        "from": "/gmt-1155"
+    },
+    {
+        "to": "/docs/examples/feeds",
+        "from": "/feeds"
+    },
+    {
+        "to": "/docs/examples/DAO",
+        "from": "/DAO"
+    },
+    {
+        "to": "/docs/examples/escrow",
+        "from": "/escrow"
+    },
+    {
+        "to": "/docs/examples/game-of-chance",
+        "from": "/game-of-chance"
+    },
+    {
+        "to": "/docs/examples/dutch-auction",
+        "from": "/dutch-auction"
+    },
+    {
+        "to": "/docs/examples/supply-chain",
+        "from": "/supply-chain"
+    },
+    {
+        "to": "/docs/examples/multisig-wallet",
+        "from": "/multisig-wallet"
+    },
+    {
+        "to": "/docs/examples/concert",
+        "from": "/concert"
+    },
+    {
+        "to": "/docs/examples/rmrk",
+        "from": "/rmrk"
+    },
+    {
+        "to": "/docs/examples/onchain-nft",
+        "from": "/onchain-nft"
+    },
+    {
+        "to": "/docs/examples/staking",
+        "from": "/staking"
+    },
+    {
+        "to": "/docs/examples/crowdsale",
+        "from": "/crowdsale"
+    },
+    {
+        "to": "/docs/examples/rock-paper-scissors",
+        "from": "/rock-paper-scissors"
+    },
+    {
+        "to": "/docs/examples/dex",
+        "from": "/dex"
+    },
+    {
+        "to": "/docs/examples/nft-pixelboard",
+        "from": "/nft-pixelboard"
+    },
+    {
+        "to": "/docs/examples/monopoly",
+        "from": "/monopoly"
+    },
+    {
+        "to": "/docs/examples/dein",
+        "from": "/dein"
+    },
+    {
+        "to": "/docs/examples/varatube",
+        "from": "/varatube"
+    },
+    {
+        "to": "/docs/examples/tequila-train",
+        "from": "/tequila-train"
     }
 ]
 
