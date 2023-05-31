@@ -66,7 +66,7 @@ const { api, isApiReady } = useApi();
 ```js
 import { useAccount } from '@gear-js/react-hooks';
 
-const { account, isAccountReady } = useApi();
+const { account, isAccountReady } = useAccount();
 ```
 
 ### useAlert
