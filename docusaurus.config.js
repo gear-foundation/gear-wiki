@@ -16,12 +16,12 @@ module.exports = {
   organizationName: 'Gear Technologies',
   projectName: 'docs',
   themeConfig: {
-      announcementBar: {
-        id: 'Varathon',
-        content:
-          'Ready to build on the edge of Web3? Join Vara online hackathon - <a target="_blank" href="https://varathon.io/"> Gear up</a>',
-        isCloseable: false,
-      },
+    announcementBar: {
+      id: 'Varathon',
+      content:
+        'Ready to build on the edge of Web3? Join Vara online hackathon - <a target="_blank" href="https://varathon.io/"> Gear up</a>',
+      isCloseable: false,
+    },
     colorMode: {
       defaultMode: 'dark'
     },
@@ -101,6 +101,9 @@ module.exports = {
         googleAnalytics: {
           trackingID: 'UA-213824102-2',
           anonymizeIP: true,
+        },
+        googleTagManager: {
+          containerId: 'GTM-54QDWGN',
         },
       },
     ],
