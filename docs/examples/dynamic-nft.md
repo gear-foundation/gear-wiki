@@ -1,5 +1,5 @@
 ---
-sidebar_label: gNFT (ERC-4907)
+sidebar_label: Dynamic NFT
 sidebar_position: 5
 ---
 
@@ -66,11 +66,11 @@ pub enum NFTEvent {
 
 ## Examples
 
-For an example, look at this [Auto-changed NFT](https://github.com/gear-dapps/auto-changed-nft) contract. This is a modified dynamic contract in which own dynamic data changes over time periods. We slightly changed the logic of the dynamic nft  contract to suit our needs. 
+For an example, look at this [Auto-changed NFT](https://github.com/gear-dapps/auto-changed-nft) contract. This is a modified dynamic contract in which own dynamic data changes over time periods. We slightly changed the logic of the dynamic nft  contract to suit our needs.
 
 First, let's change the name of the contract and add a new field `rest_update_periods` in which we store the rest update periods (in our example, we need 2 updates):
 
-```Rust
+```rust
 pub struct AutoChangedNft {
     #[NFTStateField]
     pub token: NFTState,
@@ -84,7 +84,7 @@ pub struct AutoChangedNft {
 
 At initializing the contract, we send a deferred message that will change the dynamic data of the contract:
 
-```Rust 
+```rust
 #[no_mangle]
 unsafe extern "C" fn init() {
     let config: InitNFT = msg::load().expect("Unable to decode InitNFT");
@@ -121,7 +121,7 @@ unsafe extern "C" fn init() {
 
 Next we will change the `handle()` function, we will add the business logic we need there:
 
-```Rust
+```rust
 unsafe extern "C" fn handle() {
     /// ...
     NFTAction::UpdateDynamicData {
@@ -154,7 +154,7 @@ unsafe extern "C" fn handle() {
 ```
 
 All is ready. Then there was a need to check that it works in tests:
-```Rust
+```rust
 #[test]
 fn auto_change_success() {
     let sys = System::new();
@@ -167,7 +167,7 @@ fn auto_change_success() {
     let expected_dynamic_data: Vec<u8> = vec![];
     assert_eq!(expected_dynamic_data, state.dynamic_data);
     const DELAY: u32 = 5;
-    
+
     sys.spend_blocks(DELAY);
     let state: IoNFT = nft.read_state().unwrap();
     let expected_dynamic_data = format!("Rest Update Periods: 2").as_bytes().to_vec();
