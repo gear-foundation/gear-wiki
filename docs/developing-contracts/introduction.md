@@ -68,3 +68,11 @@ There are a lot of imported functions that can be used by the Gear smart contrac
 ## Basic stages of the Gear smart contract lifecycle
 
 Let's explore the typical lifecycle of a Gear smart contract. We will use the Rust programming language for the examples, but the same principles are applied to any other language that can be compiled into Wasm.
+
+**Step 1.** Write the program code.
+
+You can find the minimal example in the [Getting Started](/docs/getting-started/5-minutes) section. It is a simple program that stores the counter, can increment and decrement it, and return the current value of the counter.
+
+More advanced examples can be found in the Gear dApps organization on GitHub: https://github.com/gear-dapps
+
+**Step 2.** Compile the program into Wasm.
