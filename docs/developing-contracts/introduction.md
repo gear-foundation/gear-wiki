@@ -71,8 +71,29 @@ Let's explore the typical lifecycle of a Gear smart contract. We will use the Ru
 
 **Step 1.** Write the program code.
 
-You can find the minimal example in the [Getting Started](/docs/getting-started/5-minutes) section. It is a simple program that stores the counter, can increment and decrement it, and return the current value of the counter.
+You can find the minimal example in the [Getting Started](/docs/getting-started-in-5-minutes.md) section. It is a simple program that stores the counter, can increment and decrement it, and return the current value of the counter.
 
 More advanced examples can be found in the Gear dApps organization on GitHub: https://github.com/gear-dapps
 
 **Step 2.** Compile the program into Wasm.
+
+We recommend using the [`gear-wasm-builder`](https://docs.gear.rs/gear_wasm_builder/) crate in a custom build script `build.rs`.
+
+Add it to the `[build-dependencies]` section in the `Cargo.toml` file:
+
+```toml
+[build-dependencies]
+gear-wasm-builder = { git = "https://github.io/gear-tech/gear.git", features = ["wasm-opt"] }
+```
+
+And add the following code to the `build.rs` file:
+
+```rust
+fn main() {
+    gear_wasm_builder::build();
+}
+```
+
+You can find built Wasm files in the `target/wasm32-unknown-unknown/release` directory.
+
+**Step 3.** Deploy the program to the blockchain.
