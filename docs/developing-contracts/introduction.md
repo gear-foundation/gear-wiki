@@ -143,7 +143,7 @@ extern "C" fn state() {
 }
 ```
 
-This function is stored in the blockchain in the same Wasm blob with `handle()` and `init()` functions. But despite them, it is not executed using extrinsic and doesn't affect the blockchain state. It can be executed for free by any node with a fully synchronized blockchain state. There is a dedicated [`read_state`](https://docs.gear.rs/pallet_gear_rpc/trait.GearApiServer.html#tymethod.read_state) RPC call for this.
+This function is stored in the blockchain in the same Wasm blob with `handle()` and `init()` functions. But unlike them, it is not executed using extrinsic and doesn't affect the blockchain state. It can be executed for free by any node with a fully synchronized blockchain state. There is a dedicated [`read_state`](https://docs.gear.rs/pallet_gear_rpc/trait.GearApiServer.html#tymethod.read_state) RPC call for this.
 
 The data returned by the `state()` function can be converted to any convenient representation by using a state-conversion program. This is a separate program compiled into Wasm and dedicated to being executed on the off-chain runner. It should contain a set of meta-functions that accept the data returned by the `state()` function and return the data in a convenient format. There is a dedicated [`read_state_using_wasm`](https://docs.gear.rs/pallet_gear_rpc/trait.GearApiServer.html#tymethod.read_state_using_wasm) RPC call for reading the program state using the state-conversion program.
 
@@ -155,4 +155,61 @@ In some cases, it is more convenient to express some concepts in an asynchronous
 
 Under the hood, the `async`/`await` syntax is a kind of syntactic sugar that generates a state machine around [`gstd::exec::wait`](https://docs.gear.rs/gstd/exec/fn.wait.html) and [`gstd::exec::wake`](https://docs.gear.rs/gstd/exec/fn.wake.html) functions. The state machine is stored in the program's persistent memory.
 
+Note that in case of using async functions, you are to declare the `async main()` function with `#[async_main]` attribute instead of the `handle()` function:
+
+```rust
+#[gstd::async_main]
+async fn main() {
+    // Async code here
+}
+```
+
+The initialization function can also be declared as an async function:
+
+```rust
+#[gstd::async_init]
+async fn init() {
+    // Async init code here
+}
+```
+
 You can find more details about asynchronous programming in the [Asynchronous Programming](/docs/developing-contracts/interactions-between-programs.md) section.
+
+### Creating programs from programs
+
+Both users and programs are actors in terms of the Gear smart contract model. Therefore, any actor can create a new program and deploy it to the blockchain.
+
+The only pre-requisite is that the code of the program should be stored in the blockchain. This can be done by using the [`upload_code`](https://docs.gear.rs/pallet_gear/pallet/struct.Pallet.html#method.upload_code) extrinsic that returns an identifier of the uploaded code. The code can be uploaded only once, then it can be used for creating multiple programs.
+
+There are several helper functions for creating programs from programs in the [`gstd::prog`](https://docs.gear.rs/gstd/prog/) module.
+
+More details about creating programs from programs can be found in the [Create Program](/docs/developing-contracts/create.md) section.
+
+### Gas reservation
+
+Gear smart contracts use gas for measuring the complexity of the program execution. The user pays a fee for the gas used by the program. Some part of the gas limit may be reserved during the current execution to be spent later. This gas reserving mechanism can be used to shift the burden of paying for program execution from one user to another. Also, it makes it possible to run some deferred actions using delayed messages described below.
+
+You can find more details about gas reservation in the [Gas Reservation](/docs/developing-contracts/gas-reservation.md) section.
+
+### Delayed messages
+
+Gear smart contracts can send messages to other actors not only during the current execution but also after some time. This mechanism can be used to implement deferred actions.
+
+Use functions with `*_delayed` suffix from [`gstd::msg`](https://docs.gear.rs/gstd/msg/index.html) module to send a delayed message to a program or user. The message will be sent after the specified number of blocks.
+
+More details about delayed messages can be found in the [Delayed Messages](/docs/developing-contracts/delayed-messages.md) section.
+
+### System signals
+
+Sometimes the system that executes the program should communicate with it in some manner. For example, the program should be notified when the rent is not paid. This can be done by using system signals.
+
+The `handle_signal()` function should be declared in the program to handle system signals. It is executed when the program receives a system signal.
+
+```rust
+ #[no_mangle]
+extern "C" fn handle_signal() {
+    // Handle system signal here
+}
+```
+
+You can find more details about system signals in the [System Signals](/docs/developing-contracts/system-signals.md) section.
