@@ -65,6 +65,8 @@ The reply message is similar to the ordinary message, but it has some difference
 
 There are a lot of imported functions that can be used by the Gear smart contract. They are called API functions. These functions are provided by the runtime that executes the Gear smart contract. The most convenient way to use these functions is to use the Gear standard library called [`gstd`](https://docs.gear.rs/gstd/). It is a set of high-level functions that are implemented on top of the low-level API functions.
 
+More details about the Gear standard library can be found in the [Gear Library](/docs/developing-contracts/gstd.md) section.
+
 ## Basic stages of the Gear smart contract lifecycle
 
 Let's explore the typical lifecycle of a Gear smart contract. We will use the Rust programming language for the examples, but the same principles are applied to any other language that can be compiled into Wasm.
@@ -75,7 +77,15 @@ You can find the minimal example in the [Getting Started](/docs/getting-started-
 
 More advanced examples can be found in the Gear dApps organization on GitHub: https://github.com/gear-dapps
 
-**Step 2.** Compile the program into Wasm.
+**Step 2.** Test the program.
+
+We recommend using the [`gtest`](https://docs.gear.rs/gtest/) crate for testing Gear smart contracts. It allows us to write unit tests for the program and run them in the local environment.
+
+The more advanced way to test the program is to use the [`gclient`](https://docs.gear.rs/gclient/) crate that allows you to run the program in the blockchain network. It is useful when you need to test the program in a real environment.
+
+You can find more details about testing in the [Program Testing](/docs/developing-contracts/testing.md) section.
+
+**Step 3.** Compile the program into Wasm.
 
 We recommend using the [`gear-wasm-builder`](https://docs.gear.rs/gear_wasm_builder/) crate in a custom build script `build.rs`.
 
@@ -96,7 +106,7 @@ fn main() {
 
 You can find built Wasm files in the `target/wasm32-unknown-unknown/release` directory.
 
-**Step 3.** Deploy the program to the blockchain.
+**Step 4.** Deploy the program to the blockchain.
 
 Program deployment is a process of storing the program's Wasm code on the blockchain and its initialization. The user pays a fee for the deployment transaction. The program is deployed to the blockchain only once. After that, it can be executed by anyone by sending a message to it.
 
@@ -104,12 +114,45 @@ If initialization fails (for example, the program panics in the `init()` functio
 
 Also, it is important to underline that someone should pay rent for keeping the program in the blockchain after a free period that is equal to 5 million blocks (it is about 2 months for networks with 1 block per second production). It is possible to add funds for rent using the [`pay_program_rent`](https://docs.gear.rs/pallet_gear/pallet/struct.Pallet.html#method.pay_program_rent) extrinsic (by the user) or with the [`gstd::exec::pay_program_rent`](https://docs.gear.rs/gstd/exec/fn.pay_program_rent.html) API function (by the program). If the rent is not paid, the program state changes to pause, its persistent memory is removed from the storage, and the program can't be executed. The program can be resumed by uploading its memory pages to the blockchain and paying the rent.
 
-**Step 4.** Execute the program.
+You can find more details about program deployment in the [Upload Program](/docs/developing-contracts/deploy.md) section.
+
+**Step 5.** Execute the program.
 
 The program can be executed by sending a message to it. The message can be sent by the user or by another program. The user pays a fee for the message execution. The program can send a reply to the message. The reply is sent to the user or program that has sent the original message.
 
-**Step 5.** Terminate the program.
+**Step 6.** Terminate the program.
 
 The program can be terminated by calling the [`gstd::exec::exit`](https://docs.gear.rs/gstd/exec/fn.exit.html) function. Also, the program is paused if the rent is not paid.
 
 The program can't be executed after termination.
+
+## Smart contract key features
+
+Gear smart contracts have a lot of features that make them unique. Let's explore the most important of them.
+
+### State function
+
+Gear smart contracts can store the state in persistent memory. Anyone can read this memory from the blockchain.
+
+To make state reading more convenient, Gear smart contracts can define the `state()` function.
+
+```rust
+#[no_mangle]
+extern "C" fn state() {
+    msg::reply(any_encodable_data, 0).expect("Failed to share state");
+}
+```
+
+This function is stored in the blockchain in the same Wasm blob with `handle()` and `init()` functions. But despite them, it is not executed using extrinsic and doesn't affect the blockchain state. It can be executed for free by any node with a fully synchronized blockchain state. There is a dedicated [`read_state`](https://docs.gear.rs/pallet_gear_rpc/trait.GearApiServer.html#tymethod.read_state) RPC call for this.
+
+The data returned by the `state()` function can be converted to any convenient representation by using a state-conversion program. This is a separate program compiled into Wasm and dedicated to being executed on the off-chain runner. It should contain a set of meta-functions that accept the data returned by the `state()` function and return the data in a convenient format. There is a dedicated [`read_state_using_wasm`](https://docs.gear.rs/pallet_gear_rpc/trait.GearApiServer.html#tymethod.read_state_using_wasm) RPC call for reading the program state using the state-conversion program.
+
+More details about state functions can be found in the [State Functions](/docs/developing-contracts/state.md) section.
+
+### Asynchronous programming
+
+In some cases, it is more convenient to express some concepts in an asynchronous programming style. For example, when you need to wait for a reply from another program or wait for a certain time.
+
+Under the hood, the `async`/`await` syntax is a kind of syntactic sugar that generates a state machine around [`gstd::exec::wait`](https://docs.gear.rs/gstd/exec/fn.wait.html) and [`gstd::exec::wake`](https://docs.gear.rs/gstd/exec/fn.wake.html) functions. The state machine is stored in the program's persistent memory.
+
+You can find more details about asynchronous programming in the [Asynchronous Programming](/docs/developing-contracts/interactions-between-programs.md) section.
