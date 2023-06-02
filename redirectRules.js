@@ -84,7 +84,7 @@ const urlList = [
         "from": "/node/troubleshooting"
     },
     {
-        "to": "/docs/developing-contracts/executable-functions",
+        "to": "/docs/developing-contracts/introduction",
         "from": "/developing-contracts/gear-program"
     },
     {

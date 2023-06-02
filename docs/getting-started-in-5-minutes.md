@@ -279,4 +279,4 @@ The red dot status for a program indicates init failure. Try to upload the progr
 
 ## Further reading
 
-For more info about writing smart contracts for Gear and the specifics behind the smart contract implementation, refer to [this article on Smart Contracts](/docs/developing-contracts/executable-functions).
+For more info about writing smart contracts for Gear and the specifics behind the smart contract implementation, refer to [this article on Smart Contracts](/docs/developing-contracts/introduction.md).

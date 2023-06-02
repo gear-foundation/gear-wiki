@@ -34,7 +34,7 @@ const FeatureList = [
   {
     title: <Translate>Developing smart contracts</Translate>,
     id: 'develop',
-    link: '/docs/developing-contracts/executable-functions',
+    link: '/docs/developing-contracts/introduction',
     description: <Translate>Dive into the main aspects and principles of developing smart contracts on Gear Protocol!</Translate>
   },
   {
