@@ -10,7 +10,7 @@ RMRK is an NFT protocol dedicated to establishing a standard NFT cross-chain inf
 RMRK legos that are already implemented on Gear:
 - Nested NFTs:
     The ability for any NFT to contain other RMRK NFT.
-- Multi-resource NFTs:
+- Catalogs and Equippable NFTs;
 The ability for an NFT to vary its output depending on the context it is being loaded in.
 
 This article explains the programming interface, data structure, basic functions and explains their purpose. The source code is available on [GitHub](https://github.com/gear-dapps/RMRK). 
@@ -21,11 +21,11 @@ The concept of nested NFTs refers to NFTs being able to own other NFTs. So, the 
 
 In the usual NFT standard, NFT owners were stored as mapping from the NFT ids to addresses:
 ```rust
-BTreeMap<TokenId, ActorId>
+HashMap<TokenId, ActorId>
 ```
 In the RMRK NFT standard we store the owners of tokens in the following way:
 ```rust
-BTreeMap<TokenId, RMRKOwner>
+HashMap<TokenId, RMRKOwner>
 
 pub struct RMRKOwner {
     pub token_id: Option<TokenId>,
@@ -103,6 +103,13 @@ AddChild {
     child_token_id: TokenId,
 },
 ```
+
+Thus, the interaction between NFT contracts during the minting of an NFT that belongs to another NFT can be summarized as follows:
+1. The Child NFT contract sends an "AddChild" message to the parent NFT contract.
+2. The parent NFT contract performs all necessary checks. If everything is correct, it adds the NFT to its pending children and responds to the Child NFT contract with a successful execution message.
+3. The Child NFT contract mints the NFT, which is owned by another NFT.
+
+![img alt](./img/rmrk_mint_to_nft.png)
 The root owner or the approved account can accept the child NFT by sending the following message:
 ```rust
 /// Accepts an RMRK child being in the `Pending` status.
@@ -124,7 +131,25 @@ AcceptChild {
 },
 ```
 
-or reject the child NFT with the message:
+The interaction between NFT contracts during the acceptance of a child NFT can be described as follows:
+
+1. The contract checks if the account that sent the message is the root owner of the parent NFT or an approved account. If the account is not approved and the parent NFT is a child of another NFT, a message is sent to its parent to find the root owner (the root owner search algorithm will be provided below).
+
+2. If the account is successfully verified, the child NFT is either accepted.
+
+![img alt](./img/accept_child.png)
+
+Root Owner Search Algorithm:
+
+1. Start with the current parent NFT.
+2. If the current parent NFT is the root owner itself, return its address.
+3. If the current parent NFT has a parent, move to its parent and continue from step 2.
+4. Repeat steps 2 and 3 until reaching the root NFT.
+5. Return the address of the root NFT as the root owner.
+
+![img alt](./img/search_root_owner.png)
+
+The root owner can also reject the child NFT with the message:
 ```rust
 /// Rejects an RMRK child being in the `Pending` status.
 /// It sends a message to the child NFT contract to burn the NFT token from it.
@@ -146,7 +171,7 @@ RejectChild {
 },
 ```
 
-The root owner can also remove the already accepted child from his NFT accepted children:
+or remove the already accepted child from his NFT accepted children:
 ```rust
 /// Removes an RMRK child being in the `Accepted` status.
 /// It sends a message to the child NFT contract to burn the NFT token from it.
@@ -187,6 +212,18 @@ BurnFromParent {
 },
 ```
 The token being burned may also have children in other contracts. When burned, it recursively burns all the children's NFTs.
+
+The interaction between NFT contracts during the removal or rejection of a child NFT can be described as follows:
+
+1. The contract checks if the account that sent the message is the root owner of the parent NFT or an approved account (similar to accepting a child).
+
+2. If the account is successfully verified, a "BurnFromParent" message is sent to the child NFT contract to burn (delete) the NFT.
+
+3. It is possible that the child being burned also has a child of its own. In that case, a "BurnFromParent" message is recursively sent to the grandchild NFT as well.
+
+4. After successful execution of all the aforementioned messages, the child is removed from the pending/accepted children list of the parent NFT.
+
+![img alt](./img/reject_remove_child.png) 
 
 The root owner can also burn the NFT with following message:
 ```rust
@@ -344,29 +381,260 @@ Approve {
     token_id: TokenId,
 },
 ```
-### Multiresource logic
-The Multi Resource NFT standard is a standalone part of RMRK concepts. The idea is that an NFT can have multiple resources. 
+
+### Catalogs and Equippable NFTs
+That functionality allows NFTs to equip owned NFTs in order to gain extra utility or change their appearance. It is also known as composable NFTs. 
+
+A Catalog can be considered a catalog of parts from which an NFT can be composed. 
+
+The Catalog contract state:
+```rust
+#[derive(Debug, Default, Encode, Decode, TypeInfo)]
+pub struct Base {
+    /// Original creator of the Base.
+    /// Admin can add, modify or remove parts from Base.
+    pub admin: ActorId,
+
+    /// Specifies how an NFT should be rendered(svg, audio, mixed, video, png).
+    pub base_type: String,
+
+    /// Provided ny user during Base creation.
+    pub symbol: String,
+
+    /// Mapping from `PartId` to `Part`.
+    pub parts: BTreeMap<PartId, Part>,
+
+    /// Vector of parts that are equippable to all collections
+    pub is_equippable_to_all: Vec<PartId>,
+}
+```
+Parts can be either of the `Slot` type or `Fixed` type. Slots are intended for equippables.
+```rust
+#[derive(Debug, Clone, Default, Encode, Decode, TypeInfo, Eq, PartialEq)]
+pub struct FixedPart {
+    /// An optional zIndex of base part layer.
+    /// specifies the stack order of an element.
+    /// An element with greater stack order is always in front of an element with a lower stack order.
+    pub z: Option<ZIndex>,
+
+    /// The metadata URI of the part.
+    pub metadata_uri: String,
+}
+
+#[derive(Debug, Clone, Encode, Decode, TypeInfo, Eq, PartialEq)]
+pub struct SlotPart {
+    /// Array of whitelisted collections that can be equipped in the given slot. Used with slot parts only.
+    pub equippable: Vec<CollectionId>,
+
+    /// An optional zIndex of base part layer.
+    /// specifies the stack order of an element.
+    /// An element with greater stack order is always in front of an element with a lower stack order.
+    pub z: Option<ZIndex>,
+
+    /// The metadata URI of the part.
+    pub metadata_uri: String,
+}
+```
+The messages that the Catalog contract handles:
+```rust
+#[derive(Debug, Decode, Encode, TypeInfo)]
+pub enum CatalogAction {
+/// Adds parts to catalog contract.
+///
+/// # Requirements:
+/// * The `msg::source()` must be the contract issuer.
+/// * `PartId` must be unique.
+///
+/// # Arguments:
+/// * `BTreeMap<PartId, Part>`: a mapping from `PartId` to fixed or slot `Part`.
+///
+/// On success replies `[CatalogReply::PartsAdded]`.
+AddParts(BTreeMap<PartId, Part>),
+
+/// Adds equippable to slot part.
+///
+/// # Requirements:
+/// * The `msg::source()` must be the contract admin.
+/// * The indicated collection contract must be RMRK contract.
+/// * The token from indicated collections must have composable resource that refers to that base.
+///
+/// # Arguments:
+/// * `collection_ids`: an addresses of RMRK contract.
+///
+/// On success replies `[CatalogReply::EquippableAdded]`.
+AddEquippableAddresses {
+    part_id: PartId,
+    collection_ids: Vec<CollectionId>,
+},
+
+
+ /// Removes parts from the catalog.
+///
+/// # Requirements:
+/// * The `msg::source()` must be the contract issuer.
+/// * The parts with indicated PartIds must exist.
+///
+/// # Arguments:
+/// * `Vec<PartId>`: Part IDs to be removed.
+///
+/// On success replies `[CatalogReply::PartsRemoved]`.
+RemoveParts(Vec<PartId>),
+
+
+/// Removes equippable from the slot part.
+///
+/// # Requirements:
+/// * The `msg::source()` must be the contract issuer.
+/// * Indicated equippable must exist.
+///
+/// # Arguments:
+/// * `collection_id`: an address of RMRK contract.
+///
+/// On success replies `[CatalogReply::EquippableRemoved]`.
+RemoveEquippable {
+    part_id: PartId,
+    collection_id: CollectionId,
+},
+
+/// Checks whether the token from specified collection is in equippable list.
+///
+/// # Arguments:
+/// * `part_id`: the Part Id.
+/// * `collection_id`: an address of RMRK contract.
+/// * `token_id`: the id of the token in RMRK contract.
+///
+/// On success replies `[CatalogReply::Part]`.
+CheckEquippable {
+    part_id: PartId,
+    collection_id: CollectionId,
+},
+
+/// Allows all collections to be equippable into the part
+///
+/// # Arguments:
+/// * `part_id`: the Part Id.
+///
+/// # Requirements:
+/// * The part_id` must be of the Slot type.
+///
+/// On success replies `[CatalogReply::EquippableToAllSet]`.
+SetEquippableToAll {
+    part_id: PartId,
+},
+
+/// Removes the addresses of nft collections from the equippable list.
+///
+/// # Arguments:
+/// * `part_id`: the Part Id.
+///
+/// # Requirements:
+/// * The part_id` must be of the Slot type.
+///
+/// On success replies `[CatalogReply::EqippableAddressesReset]`.
+ResetEquippableAddress {
+    part_id: PartId,
+},
+}
+```
+
+The RMRK contract logic is extended with the struct of assets:
+```rust
+#[derive(Default)]
+pub struct Assets {
+    /// Mapping of uint64 Ids to asset metadata
+    pub assets: HashMap<u64, String>,
+    /// Mapping of uint64 asset ID to corresponding catalog address.
+    pub catalog_addresses: HashMap<u64, ActorId>,
+    /// Mapping of asset_id to equippable_group_ids.
+    pub equippable_group_ids: HashMap<u64, u64>,
+    /// Mapping of asset_id to catalog parts applicable to this asset, both fixed and slot
+    pub part_ids: HashMap<u64, Vec<PartId>>,
+    /// Mapping of tokenId to an array of pending assets
+    pub pending_assets: HashMap<TokenId, Vec<u64>>,
+    /// Mapping of tokenId to an array of active assets
+    pub active_assets: HashMap<TokenId, Vec<u64>>,
+    /// Mapping of tokenId to an array of priorities for active assets
+    pub active_assets_priorities: HashMap<TokenId, Vec<u64>>,
+    /// Mapping of tokenId to new asset, to asset to be replaced
+    pub asset_replacement: HashMap<TokenId, HashMap<u64, u64>>,
+    /// Mapping of `equippable_group_id` to parent contract address and valid `slot_id`.
+    pub valid_parent_slots: HashMap<u64, HashMap<ActorId, PartId>>,
+    /// Mapping of token ID and catalog address to slot part ID to equipment information.
+    /// Used to compose an NFT.
+    pub equipments: HashMap<(TokenId, ActorId), HashMap<PartId, Equipment>>,
+}
+```
+following messages: 
+ ```rust
+ /// Equips a child to a parent's slot.
+///
+/// # Arguments:
+/// * `token_id`: the tokenId of the NFT to be equipped.
+/// * `child_token_id`:
+/// * `child_id`:
+/// * `asset_id`:ID of the asset that we are equipping into
+/// * `slot_part_id`: slotPartId ID of the slot part that we are using to equip
+/// * `child_asset_id`: childAssetId ID of the asset that we are equipping
+///
+/// On success replies [`RMRKEvent::TokenEquipped`].
+Equip {
+    token_id: TokenId,
+    child_token_id: TokenId,
+    child_id: CollectionId,
+    asset_id: u64,
+    slot_part_id: PartId,
+    child_asset_id: u64,
+},
+ ```
+## Source code
+
+The source code of RMRK implementation and the example of an implementation of its testing is available on [GitHub](https://github.com/gear-dapps/RMRK).
+
+
+For more details about testing smart contracts written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.
+
+
+
+### MultiAsset logic
+The Multi Asset NFT standard is a standalone part of RMRK concepts. The idea is that an NFT can have multiple assets. 
 There are four key use cases for NFT multiresource:
 - *Cross-metaverse compatibility*:  for example, NFT with several resources can be used in different games.
 - *Multimedia output*: NFT can be stored in different digital formats (image, video, audio, eBooks or text file).
 - *Media Redundancy*: many NFTs are minted with metadata centralized on a server somewhere or, in some cases, a hardcoded IPFS gateway which can also go down, instead of just an IPFS hash. By adding the same metadata file as different resources, the resilience of the metadata and its referenced media increases exponentially as the chances of all the protocols going down at once become ever less likely.
 - *NFT Evolution*: many NFTs, particularly game related ones, require evolution. 
 RMRK contract can create a contract to store its resources.
-#### **Resource storage contract:**
+#### **Asset storage contract:**
 The storage state:
 ```rust
-#[derive(Debug, Default)]
-pub struct ResourceStorage {
-    pub name: String,
-    // the admin is the rmrk contract that initializes the storage contract
-    pub admin: ActorId,
-    pub resources: BTreeMap<u8, Resource>,
-    pub all_resources: BTreeSet<Resource>,
+#[derive(Default)]
+pub struct Assets {
+    /// Mapping of uint64 Ids to asset metadata
+    pub assets: HashMap<u64, String>,
+    /// Mapping of uint64 asset ID to corresponding catalog address.
+    pub catalog_addresses: HashMap<u64, ActorId>,
+    /// Mapping of asset_id to equippable_group_ids.
+    pub equippable_group_ids: HashMap<u64, u64>,
+    /// Mapping of asset_id to catalog parts applicable to this asset, both fixed and slot
+    pub part_ids: HashMap<u64, Vec<PartId>>,
+    /// Mapping of tokenId to an array of pending assets
+    pub pending_assets: HashMap<TokenId, Vec<u64>>,
+    /// Mapping of tokenId to an array of active assets
+    pub active_assets: HashMap<TokenId, Vec<u64>>,
+    /// Mapping of tokenId to an array of priorities for active assets
+    pub active_assets_priorities: HashMap<TokenId, Vec<u64>>,
+    /// Mapping of tokenId to new asset, to asset to be replaced
+    pub asset_replacement: HashMap<TokenId, HashMap<u64, u64>>,
+    /// Mapping of `equippable_group_id` to parent contract address and valid `slot_id`.
+    pub valid_parent_slots: HashMap<u64, HashMap<ActorId, PartId>>,
+    /// Mapping of token ID and catalog address to slot part ID to equipment information.
+    /// Used to compose an NFT.
+    pub equipments: HashMap<(TokenId, ActorId), HashMap<PartId, Equipment>>,
 }
+
 ```
-To add resource to the token the RMRK contract must send the following message:
+To add asset to the token the RMRK contract must send the following message:
 ```rust
-/// Adds resource entry on resource storage contract.
+/// Adds asset entry on resource storage contract.
 ///
 /// # Requirements:
 /// * The `msg::source()` must be the contract admin (RMRK contract).
@@ -400,7 +668,7 @@ GetResource {
 },
 ```
 
-#### **MultiResource in RMRK contract:**
+#### **MultiAssets in RMRK contract:**
 The RMRK contract admin can add resource to the storage contract through the RMRK contract:
 ```rust
 /// Adds resource entry on resource storage contract.
@@ -511,243 +779,3 @@ SetPriority {
 },
 ```
 
-### Bases and Equippable NFTs
-That functionality allows NFTs to equip owned NFTs in order to gain extra utility or change their appearance. It is also known as composable NFTs.   
-Resources are divided into three types:
-* Basic:
-```rust
-#[derive(Debug, Default, Clone, Encode, Decode, TypeInfo)]
-pub struct BasicResource {
-    /// URI like ipfs hash
-    pub src: String,
-
-    /// If the resource has the thumb property, this will be a URI to a thumbnail of the given
-    /// resource.
-    pub thumb: Option<String>,
-
-    /// Reference to IPFS location of metadata
-    pub metadata_uri: String,
-}
-```
-* Composable:
-```rust
-#[derive(Debug, Default, Clone, Encode, Decode, TypeInfo)]
-pub struct ComposedResource {
-    /// URI like ipfs hash
-    pub src: String,
-
-    /// If the resource has the thumb property, this will be a URI to a thumbnail of the given
-    /// resource.
-    pub thumb: String,
-
-    /// Reference to IPFS location of metadata
-    pub metadata_uri: String,
-
-    // The address of base contract
-    pub base: BaseId,
-
-    //  If a resource is composed, it will have an array of parts that compose it
-    pub parts: Parts,
-}
-```
-* Slot:
-```rust
-#[derive(Debug, Default, Clone, Encode, Decode, TypeInfo)]
-pub struct SlotResource {
-    /// URI like ipfs hash
-    pub src: String,
-
-    /// If the resource has the thumb property, this will be a URI to a thumbnail of the given
-    /// resource.
-    pub thumb: String,
-
-    /// Reference to IPFS location of metadata
-    pub metadata_uri: String,
-
-    // The address of base contract
-    pub base: BaseId,
-
-    /// If the resource has the slot property, it was designed to fit into a specific Base's slot.
-    pub slot: SlotId,
-}
-```
-
-Base contract is a catalogue of parts from which an NFT can be composed. If resource is `Composable` or `Slot` then it refers to `base` contract that contains the information about parts. 
-The base contract state:
-```rust
-#[derive(Debug, Default, Encode, Decode, TypeInfo)]
-pub struct Base {
-    /// Original creator of the Base.
-    /// Issuer can add, modify or remove parts from Base.
-    pub issuer: ActorId,
-
-    /// Specifies how an NFT should be rendered(svg, audio, mixed, video, png).
-    pub base_type: String,
-
-    /// Provided ny user during Base creation.
-    pub symbol: String,
-
-    /// Mapping from `PartId` to `Part`.
-    pub parts: BTreeMap<PartId, Part>,
-}
-```
-Parts can be `Fixed` or `Slot`:
-```rust
-#[derive(Debug, Clone, Default, Encode, Decode, TypeInfo)]
-pub struct FixedPart {
-    /// A unique identifier.
-    pub id: PartId,
-
-    /// An optional zIndex of base part layer.
-    /// specifies the stack order of an element.
-    /// An element with greater stack order is always in front of an element with a lower stack order.
-    pub z: Option<ZIndex>,
-
-    /// An IPFS Uri pointing to main media file of this part.
-    pub src: String,
-}
-
-#[derive(Debug, Clone, Encode, Decode, TypeInfo)]
-pub struct SlotPart {
-    /// A unique identifier.
-    pub id: PartId,
-
-    /// Array of whitelisted collections that can be equipped in the given slot. Used with slot parts only.
-    pub equippable: EquippableList,
-
-    /// An optional zIndex of base part layer.
-    /// specifies the stack order of an element.
-    /// An element with greater stack order is always in front of an element with a lower stack order.
-    pub z: Option<ZIndex>,
-
-    /// An optional IPFS Uri pointing to main media file of this part.
-    pub src: Option<String>,
-}
-```
-The messages that the Base contract handles:
-```rust
-#[derive(Debug, Decode, Encode, TypeInfo)]
-pub enum BaseAction {
-/// Adds parts to base contract.
-///
-/// # Requirements:
-/// * The `msg::source()` must be the contract issuer.
-/// * `PartId` must be unique.
-///
-/// # Arguments:
-/// * `BTreeMap<PartId, Part>`: a mapping from `PartId` to fixed or slot `Part`.
-///
-/// On success replies `[BaseEvent::PartsAdded]`.
-AddParts(BTreeMap<PartId, Part>),
-
-/// Adds equippable to slot part.
-///
-/// # Requirements:
-/// * The `msg::source()` must be the contract issuer.
-/// * The indicated collection contract must be RMRK contract.
-/// * The token from indicated collections must have composable resource that refers to that base.
-///
-/// # Arguments:
-/// * `collection_id`: an address of RMRK contract.
-/// * `token_id`: the id of the token in RMRK contract.
-///
-/// On success replies `[BaseEvent::EquippableAdded]`.
-AddEquippable {
-    collection_id: CollectionId,
-    token_id: TokenId,
-},
-
-/// Removes parts from the base.
-///
-/// # Requirements:
-/// * The `msg::source()` must be the contract issuer.
-/// * The parts with indicated PartIds must exist.
-///
-/// # Arguments:
-/// * `Vec<PartId>`: Part IDs to be removed.
-///
-/// On success replies `[BaseEvent::PartsRemoved]`.
-RemoveParts(Vec<PartId>),
-
-/// Removes equippable from the slot part.
-///
-/// # Requirements:
-/// * The `msg::source()` must be the contract issuer.
-/// * Indicated equippable must exist.
-///
-/// # Arguments:
-/// * `collection_id`: an address of RMRK contract.
-/// * `token_id`: the id of the token in RMRK contract.
-///
-/// On success replies `[BaseEvent::EquippableRemoved]`.
-RemoveEquippable {
-    collection_id: CollectionId,
-    token_id: TokenId,
-},
-
-/// Checks whether the part exists in the Base.
-/// 
-/// # Arguments:
-/// * `PartId`: the Part Id.
-///
-/// On success replies `[BaseEvent::Part]`.
-CheckPart(PartId),
-}
-```
-
-The RMRK contract logic is extended with the following messages: 
- ```rust
-/// Equip a child NFT's resource to a parent's slot.
-/// It sends message to the child contract 
-/// to check whether the child token has the indicated slot resource.
-///
-/// # Requirements:
-/// * The `msg::source()` must be the root owner.
-/// * The child token must have the slot resource with indicated `base_id` and `slot_id`.
-/// * The parent token must have composed resource with indicated `base_id`.
-/// * The parent must not have the equippable with that child token.
-///å
-/// Arguments:
-/// * `token_id`: the ID of the parent token (equippable token).
-/// * `resource_id`: the resource id of the equippable token.
-/// * `child_contract_id`: the child contract address.
-/// * `child_token_id`: the id of the child token that will be equipped.
-/// * `child_resource_id`: the resource id of the child token.
-/// * `base_id`: the address of the base contract.
-/// * `slot_id`: the id of the slot part in the base contract.
-///
-/// On success reply `[RMRKEvent::TokenEquipped]`.
-Equip {
-    token_id: TokenId,
-    resource_id: ResourceId,
-    child_contract_id: ActorId,
-    child_token_id: TokenId,
-    child_resource_id: ResourceId,
-    base_id: BaseId,
-    slot_id: SlotId,
-},
-
-/// Unequip a child NFT's resource from a parent's slot.
-///
-/// # Requirements:
-/// * The `msg::source()` must be the root owner.
-/// * The parent must have the equippable with that child token.
-///
-/// Arguments:
-/// * `token_id`: the ID of the parent token (equippable token).
-/// * `child_contract_id`: the child contract address.
-/// * `child_token_id`: the id of the child token that will be equipped.
-///
-/// On success reply `[RMRKEvent::TokenUnequipped]`.
-Unequip {
-    token_id: TokenId,
-    child_contract_id: ActorId,
-    child_token_id: TokenId,
-},
- ```
-## Source code
-
-The source code of RMRK implementation and the example of an implementation of its testing is available on [GitHub](https://github.com/gear-dapps/RMRK).
-
-
-For more details about testing smart contracts written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.
