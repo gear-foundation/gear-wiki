@@ -19,7 +19,7 @@ module.exports = {
     announcementBar: {
       id: 'Varathon',
       content:
-        'Ready to build on the edge of Web3? Join Vara online hackathon - <a target="_blank" href="https://varathon.io/"> Gear up</a>',
+        'Ready to build on the edge of Web3? Join Vara online hackathon - <a target="_blank" href="https://varathon.io/?utm_source=wiki&utm_medium=banner&utm_campaign=banner"> Gear up</a>',
       isCloseable: false,
     },
     colorMode: {
