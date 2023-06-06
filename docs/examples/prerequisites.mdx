@@ -19,7 +19,7 @@ All smart contract examples and JS applications have been tested on a stable env
 
 You may configure a local development environment according to the information provided below or use a pre-configured Docker image as described in the [Using Docker](#using-docker) section.
 
-Current stable release: `v1.0`
+Current stable release: `v1.1`
 
 
 <table>
@@ -49,7 +49,7 @@ xcode-select --install
 
 <tr>
 <td> Rust </td>
-<td> 2023-03-14 </td>
+<td> 2023-04-25 </td>
 <td>
 
 ```bash
@@ -59,10 +59,6 @@ Add Wasm target to your toolchain:
 ```bash
 rustup toolchain add nightly
 rustup target add wasm32-unknown-unknown --toolchain nightly
-```
-Pin nightly toolchain version to `2023-03-14`:
-```bash
-curl -sSf https://raw.githubusercontent.com/gear-tech/gear/master/scripts/pin-rust-nightly.sh | sh -s 2023-03-14
 ```
 </td>
 </tr>
@@ -74,7 +70,7 @@ Gear Rust libraries: `gstd`, `gtest`, `gmeta`, `gclient`, `gear-wasm-builder`
 </td>
 <td>
 
-commit hash: `5c685d0`
+commit hash: `78dfa07`
 </td>
 <td>
 
@@ -93,12 +89,12 @@ https://github.com/gear-dapps/app/blob/master/Cargo.toml#L10
 </tr>
 <tr>
 <td>Gear JS API</td>
-<td>0.30.6</td>
+<td>0.31.2</td>
 <td>Make sure this version is specified in the package.json file of your smart contract repository</td>
 </tr>
 <tr>
 <td>Gear JS React Hooks</td>
-<td>0.5.16</td>
+<td>0.5.18</td>
 <td>Make sure this version is specified in the package.json file of your smart contract repository</td>
 </tr>
 <tr>
@@ -158,12 +154,14 @@ Our application should compile successfully and the final file `target/wasm32-un
 
 You can use a pre-configured Docker image to build and test your smart contract. The image contains all the necessary tools and dependencies for building and running smart contracts and JS applications.
 
+The source code of the image is available on [GitHub](https://github.com/gear-dapps/gear-env).
+
 To use the image, you need to install Docker on your machine. You can find the installation instructions for your OS on the [Docker website](https://docs.docker.com/get-docker/).
 
 After installing Docker, you can pull the image from the Docker Hub:
 
 ```bash
-docker pull ghcr.io/gear-dapps/gear-env:1.0
+docker pull ghcr.io/gear-dapps/gear-env:stable
 ```
 
 To run the image, use the following command:
@@ -173,14 +171,14 @@ To run the image, use the following command:
 <TabItem value="linux-mac" label="Linux / macOS x86_64">
 
 ```bash
-docker run --rm --name gear-env -itd ghcr.io/gear-dapps/gear-env:1.0 bash
+docker run --rm --name gear-env -itd ghcr.io/gear-dapps/gear-env:stable bash
 ```
 </TabItem>
 
 <TabItem value="mac-arm" label="macOS ARM">
 
 ```bash
-docker run --rm --name gear-env --platform linux/amd64 -itd ghcr.io/gear-dapps/gear-env:1.0 bash
+docker run --rm --name gear-env --platform linux/amd64 -itd ghcr.io/gear-dapps/gear-env:stable bash
 ```
 </TabItem>
 </Tabs>
