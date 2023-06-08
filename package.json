@@ -32,7 +32,7 @@
     "react-dom": "^17.0.2",
     "rehype-katex": "5",
     "remark-math": "^3.0.1",
-    "sass": "^1.62.1",
+    "sass": "^1.63.0",
     "url-loader": "^4.1.1"
   },
   "browserslist": {
