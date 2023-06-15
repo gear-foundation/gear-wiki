@@ -18,7 +18,7 @@ This guide provides a general overview of running smart contracts on the network
     For example, on Ubuntu use:
 
     ```bash
-    sudo apt install -y clang build-essential
+    sudo apt install -y build-essential clang cmake
     ```
 
     On macOS, you can get a compiler toolset by running:
@@ -203,7 +203,7 @@ Gear provides a demo application that implements all of the possibilities of int
 
     ![Allow access](./img/getting-started/polkadot-access.png)
 
-6. Make sure you are connected to the `Gear Staging Testnet V7`. The network name is on the bottom left corner of the page.
+6. Make sure you are connected to the `Vara Stable Testnet`. The network name is on the bottom left corner of the page.
 
     ![Network name](./img/getting-started/idea-network.png)
 
