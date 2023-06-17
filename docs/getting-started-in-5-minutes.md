@@ -89,9 +89,9 @@ This guide provides a general overview of running smart contracts on the network
     code ~/gear/contracts/counter
     ```
 
-5. In the `counter` folder, configure `Cargo.toml` in order for our contract to be properly built:
+5. In the `counter` folder, configure `Cargo.toml` for our contract to be properly built:
 
-    ```ini
+    ```toml
     [package]
     name = "counter"
     version = "0.1.0"
@@ -146,7 +146,7 @@ This guide provides a general overview of running smart contracts on the network
 
     This command is quite verbose, so we can create cargo config and Rust toolchain override files to make it shorter. Create a `.cargo/config.toml` file in the `counter` directory with the following contents:
 
-    ```ini
+    ```toml
     [build]
     target = "wasm32-unknown-unknown"
     rustflags = [
@@ -157,7 +157,7 @@ This guide provides a general overview of running smart contracts on the network
 
     And create a `rust-toolchain.toml` file in the `counter` directory with the following contents:
 
-    ```ini
+    ```toml
     [toolchain]
     channel = "nightly-2023-04-25"
     targets = ["wasm32-unknown-unknown"]
