@@ -189,7 +189,7 @@ The source code of this example of DEX factory smart contract and the example of
 
 See also an example of the smart contract testing implementation based on `gtest`: [gear-dapps/dex/tree/master/factory/tests](https://github.com/gear-dapps/dex/tree/master/factory/tests).
 
-For more details about testing smart contracts written on Gear, refer to the [Program Testing](/developing-contracts/testing) article.
+For more details about testing smart contracts written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.
 
 ## Pair contract description
 The pair contract is where all the exchange magic happens. Each pair contract handles the liquidity provided to this pair only. All swap operations are performed applying the formula in the Math section.
