@@ -55,6 +55,10 @@ module.exports = {
           position: 'right',
         },
         {
+          type: 'docsVersionDropdown',
+          position: 'right',
+        },
+        {
           type: 'localeDropdown',
           position: 'right',
         },
@@ -93,6 +97,19 @@ module.exports = {
             'https://github.com/gear-tech/wiki/edit/master/',
           remarkPlugins: [math],
           rehypePlugins: [katex],
+          lastVersion: 'current',
+          versions: {
+            current: {
+              label: 'Stable',
+              badge: false,
+            },
+            next: {
+              path: 'next',
+              label: 'Unstable 🚧',
+              banner: 'unreleased',
+              badge: true,
+            },
+          },
         },
         blog: false,
         theme: {
