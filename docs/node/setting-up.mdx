@@ -34,9 +34,7 @@ Depending on your OS you need to download nightly build of Gear node:
 Terminal:
 
 ```bash
-wget https://get.gear.rs/gear-nightly-linux-x86_64.tar.xz && \
-tar xvf gear-nightly-linux-x86_64.tar.xz && \
-rm gear-nightly-linux-x86_64.tar.xz
+curl https://get.gear.rs/gear-nightly-linux-x86_64.tar.xz | tar xJ
 ```
 
 or
@@ -57,9 +55,7 @@ gear 0.1.0-hashcode
 Terminal:
 
 ```bash
-wget https://get.gear.rs/gear-nightly-aarch64-apple-darwin.tar.xz && \
-tar xvf gear-nightly-aarch64-apple-darwin.tar.xz && \
-rm gear-nightly-aarch64-apple-darwin.tar.xz
+curl https://get.gear.rs/gear-nightly-aarch64-apple-darwin.tar.xz | tar xJ
 ```
 
 or
@@ -79,9 +75,7 @@ gear 0.1.0-hashcode
 Terminal:
 
 ```bash
-wget https://get.gear.rs/gear-nightly-x86_64-apple-darwin.tar.xz && \
-tar xvf gear-nightly-x86_64-apple-darwin.tar.xz && \
-rm gear-nightly-x86_64-apple-darwin.tar.xz
+curl https://get.gear.rs/gear-nightly-x86_64-apple-darwin.tar.xz | tar xJ
 ```
 
 or
@@ -126,7 +120,7 @@ Compiling the build will take some time and requires the installation of some de
 
 :::warning Note
 Windows users may encounter some problems related to the installation of Rust components and dependencies.
-It is highly recommended to use Linux or macOS for compiling Gear node and smart-contracts. 
+It is highly recommended to use Linux or macOS for compiling Gear node and smart-contracts.
 :::
 
 ### Prerequisites
@@ -171,7 +165,8 @@ cd gear
 git checkout testnet
 
 ## Optional
-## If you need to use the latest or experimental Gear functions, you should compile `gear-node` from `master` branch
+## If you need to use the latest or experimental Gear functions,
+## you should compile `gear-node` from `master` branch.
 ```
 
 ### Compile
@@ -213,7 +208,7 @@ It doesn't matter if you downloaded the prebuild binary or built it yourself. Be
 To run Gear node in dev mode use the following command:
 
 ```bash
-./gear --dev --tmp
+./gear --dev
 ```
 
 ## Command Flags and Options
@@ -229,10 +224,6 @@ gear [subcommand] [options]
 - `--dev`
 
   Run standalone node of Gear network.
-
-- `--tmp`
-
-  Run node with a temporary storage. A temporary directory will be created to store the configuration and will be deleted at the end of the process.
 
 - `purge-chain`
 

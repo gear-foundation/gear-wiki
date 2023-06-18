@@ -36,7 +36,7 @@ Syndote 由 Master 合约和 Player 合约组成。主合约是启动和控制�
 [此处](https://get.gear.rs/) 可以找到 Gear 节点二进制执行文件。
 
 ```sh
-./gear --dev --tmp --unsafe-ws-external --rpc-methods Unsafe --rpc-cors all
+./gear --dev --unsafe-ws-external --rpc-methods Unsafe --rpc-cors all
 ```
 
 按照 [运行游戏](#running-the-game) 部分所述上传并运行 Master 和 Player 合约并注册玩家。

@@ -14,7 +14,7 @@ sidebar_position: 4
 2. 使用开发模式运行节点：
 
 ```bash
-./gear --dev --tmp
+./gear --dev
 ```
 
 3. 访问 https://idea.gear-tech.io/ 并连接到本地开发节点。通过左上方的按钮点击网络切换，选择 Development -> Local node，然后点击切换按钮。使用 Idea 发送消息，读取程序状态等。

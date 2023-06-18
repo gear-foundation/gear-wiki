@@ -14,7 +14,7 @@ To run the Gear node in a dev net mode:
 2. Run the node in dev mode (we assume the executable is in `/usr/bin` directory):
 
 ```bash
-gear --dev --tmp
+gear --dev
 ```
 
 3. Follow https://idea.gear-tech.io/ and connect to a local dev node. Click network selection via the left top button, choose Development -> Local node, and click the Switch button. Use the Idea portal for sending messages, reading the program's state, etc.
