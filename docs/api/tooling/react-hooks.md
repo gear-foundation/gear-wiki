@@ -7,7 +7,7 @@ sidebar_label: React-hooks
 
 Hooks allow functional components to have access to programs running on Gear networks and significantly simplify the development of front-end applications.
 
-For example, refer to [this article](./../../examples/nft-marketplace/nft-application) that demonstrates the creation of a React application that connects to an [NFT smart contract](./../../examples/gnft-721) running on the blockchain.
+For example, refer to [this article](/examples/nft-marketplace/nft-application.md) that demonstrates the creation of a React application that connects to an [NFT smart contract](/examples/gnft-721.md) running on the blockchain.
 
 ## Installation
 
@@ -23,7 +23,7 @@ yarn add @gear-js/react-hooks
 
 ## Getting started
 
-Simple as it is, here's quick example:
+Simple as it is, here's a quick example:
 
 ```jsx
 import { useReadFullState } from '@gear-js/react-hooks';
@@ -46,12 +46,12 @@ export { State };
 ## Cookbook
 
 :::info
-In order for these hooks to work, the application must be wrapped in the appropriate Providers. As it is presented in the [example](https://github.com/gear-tech/gear-js/blob/main/utils/create-gear-app/gear-app-template/template/src/hocs/index.tsx). If you use `cga`, then all the necessary environment has already been provided.
+In order for these hooks to work, the application must be wrapped in the appropriate Providers. As it is presented in the [example](https://github.com/gear-tech/gear-js/blob/main/utils/create-gear-app/gear-app-template/template/src/hocs/index.tsx). If you use `create-gear-app`, then all the necessary environment has already been provided.
 :::
 
 ### useApi
 
-`useApi` provides access to the Gear API connected to the selected PRC-node.
+`useApi` provides access to the Gear API connected to the selected RPC-node.
 
 ```js
 import { useApi } from '@gear-js/react-hooks';
@@ -61,7 +61,7 @@ const { api, isApiReady } = useApi();
 
 ### useAccount
 
-`useAccount` provides interaction with `Polkadot-js` extension api, allows to manage accounts from it (for example to sign transaction).
+`useAccount` provides interaction with `Polkadot-js` extension API, allows to manage accounts from it (for example to sign transactions).
 
 ```js
 import { useAccount } from '@gear-js/react-hooks';
@@ -84,7 +84,7 @@ alert.success('success message')
 
 ### useMetadata
 
-This hook is auxiliary and it is not pre-installed in the react-hook library. `useMetadata` allows to convert program's metadata (`.txt` file) into the required format.
+This hook is auxiliary and it is not pre-installed in the react-hook library. `useMetadata` allows converting the program's metadata (`.txt` file) into the required format.
 
 ```js
 import { useEffect, useState } from 'react';
@@ -173,7 +173,7 @@ function readFullState() {
 
 ### useReadWasmState
 
-`useReadWasmState` allows reading program State using specific functions.
+`useReadWasmState` allows reading program `State` using specific functions.
 
 ```js
 import { useReadWasmState } from '@gear-js/react-hooks';
