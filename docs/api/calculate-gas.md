@@ -58,8 +58,7 @@ console.log(gas.toHuman());
 
 ```javascript
 import { getProgramMetadata } from '@gear-js/api';
-const code = fs.readFileSync('demo_meta.opt.wasm');
-const meta = await getWasmMetadata(fs.readFileSync('demo_meta.opt.wasm'));
+const meta = await getProgramMetadata('0x' + fs.readFileSync('demo_new_meta.meta.txt'));
 const gas = await gearApi.program.calculateGas.handle(
   '0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d', // source id
   '0xa178362715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d', // program id
@@ -79,8 +78,8 @@ console.log(gas.toHuman());
 ### Reply to a message
 
 ```javascript
-const code = fs.readFileSync('demo_async.opt.wasm');
-const meta = await getWasmMetadata(fs.readFileSync('demo_async.opt.wasm'));
+import { getProgramMetadata } from '@gear-js/api';
+const meta = await getProgramMetadata('0x' + fs.readFileSync('demo_async.meta.txt'));
 const gas = await gearApi.program.calculateGas.reply(
   '0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d', // source id
   '0x518e6bc03d274aadb3454f566f634bc2b6aef9ae6faeb832c18ae8300fd72635', // message id
