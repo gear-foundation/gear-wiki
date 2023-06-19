@@ -18,9 +18,9 @@ To get program metadata, use the `getProgramMetadata` function:
 ```javascript
 import { getProgramMetadata } from '@gear-js/api';
 
-const metadata = getProgramMetadata(`0x...`);
+const metadata = getProgramMetadata('0x…');
 
-// The function getProgramMetadata() takes the program's metadata in the format of a hex string. 
+// The function getProgramMetadata() takes the program's metadata in the format of a hex string.
 // It returns an object of the `ProgramMetadata` class with the property `types` containing all program types.
 
 metadata.types.init.input; // can be used to encode input message for init entrypoint of the program
@@ -52,7 +52,7 @@ Both `ProgramMetadata` and `StateMetadata` classes have a few methods that can h
 ```js
 import { ProgramMetadata } from '@gear-js/api`;
 
-const metadata = getProgramMetadata(`0x...`);
+const metadata = getProgramMetadata('0x…');
 
 // returns the name of the type with this index
 metadata.getTypeName(4);
@@ -61,7 +61,7 @@ metadata.getTypeName(4);
 metadata.getTypeDef(4);
 
 // if you need to get a type structure with an additional field (name, type, kind, len) you have to pass the second argument
-metadata.getTypeDef(4, true); 
+metadata.getTypeDef(4, true);
 
 // returns all custom types that existed in the registry of the program
 metadata.getAllTypes();
@@ -79,7 +79,8 @@ If for some reason you need to create a type "manually" to encode/decode any pay
 ```javascript
 import { CreateType } from '@gear-js/api';
 
-// If "TypeName" already registered. Lear more https://polkadot.js.org/docs/api/start/types.create#choosing-how-to-create
+// If "TypeName" already registered.
+// Learn more https://polkadot.js.org/docs/api/start/types.create#choosing-how-to-create
 const result = CreateType.create('TypeName', somePayload);
 
 // Otherwise need to add metadata containing TypeName and all required types
@@ -88,9 +89,9 @@ const result = CreateType.create('TypeName', somePayload, metadata);
 The result of this function is data of type `Codec` and it has the following methods:
 
 ```javascript
-result.toHex(); // - returns a hex represetation of the value
-result.toHuman(); // - returns human-friendly object representation of the value
-result.toString(); //  - returns a string representation of the value
-result.toU8a(); // - encodes the value as a Unit8Array
-result.toJSON(); // - converts the value to JSON
+result.toHex();     // returns a hex represetation of the value
+result.toHuman();   // returns human-friendly object representation of the value
+result.toString();  // returns a string representation of the value
+result.toU8a();     // encodes the value as a Unit8Array
+result.toJSON();    // converts the value to JSON
 ```

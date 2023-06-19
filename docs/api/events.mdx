@@ -185,7 +185,7 @@ gearApi.query.system.events((events) => {
 ### Subscribe to messages sent from a program
 
 ```javascript
-const unsub = api.gearEvents.subscribeToGearEvent(
+const unsub = gearApi.gearEvents.subscribeToGearEvent(
   'UserMessageSent',
   ({
     data: {
@@ -206,7 +206,7 @@ unsub();
 ### Subscribe to messages intended for a program
 
 ```javascript
-const unsub = api.gearEvents.subscribeToGearEvent(
+const unsub = gearApi.gearEvents.subscribeToGearEvent(
   'MessageQueued',
   ({ data: { id, source, destination, entry } }) => {
     console.log({

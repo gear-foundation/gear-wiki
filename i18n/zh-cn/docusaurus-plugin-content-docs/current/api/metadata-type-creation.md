@@ -18,7 +18,7 @@ sidebar_label: 元数据 与 Type Creation
 ```javascript
 import { getProgramMetadata } from '@gear-js/api';
 
-const metadata = getProgramMetadata(`0x...`);
+const metadata = getProgramMetadata('0x…');
 
 // 函数 getProgramMetadata() 以十六进制格式获取程序的元数据
 // 它返回一个 `ProgramMetadata` 类的对象，其属性 `types` 包含所有程序类型
@@ -51,7 +51,7 @@ metadata.functions; //  是一个对象，其键是函数名称，值是输入/�
 ```js
 import { ProgramMetadata } from '@gear-js/api`;
 
-const metadata = getProgramMetadata(`0x...`);
+const metadata = getProgramMetadata('0x…');
 
 // 返回具有此索引的类型的名称
 metadata.getTypeName(4);

@@ -1,6 +1,6 @@
 ---
 sidebar_position: 3
-sidebar_label: Calculate gas
+sidebar_label: Calculate Gas
 ---
 
 # Calculate gas
@@ -42,7 +42,7 @@ console.log(gas.toHuman());
 ### Init (for create_program extrinsic)
 
 ```javascript
-const codeId = '0x...';
+const codeId = '0x…';
 
 const gas = await gearApi.program.calculateGas.initCreate(
   '0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d', // source id
@@ -58,7 +58,7 @@ console.log(gas.toHuman());
 
 ```javascript
 import { getProgramMetadata } from '@gear-js/api';
-const meta = await getProgramMetadata('0x' + fs.readFileSync('demo_new_meta.meta.txt'));
+const metadata = await getProgramMetadata('0x' + fs.readFileSync('demo_new_meta.meta.txt'));
 const gas = await gearApi.program.calculateGas.handle(
   '0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d', // source id
   '0xa178362715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d', // program id
@@ -70,7 +70,7 @@ const gas = await gearApi.program.calculateGas.handle(
   },      // payload
   0,      // value
   false,  // allow other panics
-  meta,
+  metadata,
 );
 console.log(gas.toHuman());
 ```
@@ -79,7 +79,7 @@ console.log(gas.toHuman());
 
 ```javascript
 import { getProgramMetadata } from '@gear-js/api';
-const meta = await getProgramMetadata('0x' + fs.readFileSync('demo_async.meta.txt'));
+const metadata = await getProgramMetadata('0x' + fs.readFileSync('demo_async.meta.txt'));
 const gas = await gearApi.program.calculateGas.reply(
   '0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d', // source id
   '0x518e6bc03d274aadb3454f566f634bc2b6aef9ae6faeb832c18ae8300fd72635', // message id
@@ -87,7 +87,7 @@ const gas = await gearApi.program.calculateGas.reply(
   'PONG', // payload
   0,      // value
   true,   // allow other panics
-  meta,
+  metadata,
 );
 console.log(gas.toHuman());
 ```

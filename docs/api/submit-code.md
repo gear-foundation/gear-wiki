@@ -1,11 +1,11 @@
 ---
 sidebar_position: 5
-sidebar_label: Upload code
+sidebar_label: Upload Code
 ---
 
 # Upload code
 
-If you need to load the program code into the chain without initialization use `api.code.upload` method to create `upload_code` extrinsic:
+If you need to load the program code into the chain without initialization use `GearApi.code.upload` method to create `upload_code` extrinsic:
 
 ```javascript
 const code = fs.readFileSync('path/to/program.opt.wasm');
@@ -25,10 +25,10 @@ gearApi.code.signAndSend(alice, () => {
 
 ## Create program from uploaded code on chain
 
-Use `api.program.create` method to create `create_program` extrinsic:
+Use `GearApi.program.create` method to create `create_program` extrinsic:
 
 ```javascript
-const codeId = '0x...';
+const codeId = '0x…';
 
 const program = {
   codeId,

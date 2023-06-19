@@ -8,22 +8,22 @@ sidebar_label: 读取状态
 
 有两种不同的方式查询程序的 `State`：
 
-1. 查询程序的完整 `State`。要读取程序的完整`State`，需要有这个程序的 `metadata`。你可以调用 `api.programState.read` 方法来获取状态。
+1. 查询程序的完整 `State`。要读取程序的完整`State`，需要有这个程序的 `metadata`。你可以调用 `GearApi.programState.read` 方法来获取状态。
 
 ```javascript
-await api.programState.read({ programId: `0x...` }, programMetadata);
+await gearApi.programState.read({ programId: '0x…' }, programMetadata);
 ```
 
 此外，你可以在一些特定的块上读取程序的 `State`：
 
 ```javascript
-await api.programState.read(
-  { programId: `0x...`, at: `0x...` },
+await gearApi.programState.read(
+  { programId: '0x…', at: '0x…' },
   programMetadata,
 );
 ```
 
-2. 如果你使用自定义函数只查询程序状态的特定部分（[更多内容](/docs/developing-contracts/metadata#genarate-metadata)），那么应该调用 `api.programState.readUsingWasm` 方法：
+2. 如果你使用自定义函数只查询程序状态的特定部分（[更多内容](/docs/developing-contracts/metadata#genarate-metadata)），那么应该调用 `GearApi.programState.readUsingWasm` 方法：
 
 ```js
 // ...
@@ -31,9 +31,9 @@ await api.programState.read(
 const wasm = readFileSync('path/to/state.meta.wasm');
 const metadata = await getStateMetadata(wasm);
 
-const state = await api.programState.readUsingWasm(
+const state = await gearApi.programState.readUsingWasm(
   {
-    programId,
+    programId: '0x…',
     fn_name: 'name_of_function_to_execute',
     wasm,
     argument: { input: 'payload' },
@@ -55,14 +55,14 @@ const buffer = await Buffer.from(arrayBuffer);
 const metadata = await getStateMetadata(buffer);
 
 // get State only of the first wallet
-const firstState = await api.programState.readUsingWasm(
-  { programId, fn_name: 'first_wallet', buffer },
+const firstState = await gearApi.programState.readUsingWasm(
+  { programId: '0x…', fn_name: 'first_wallet', buffer },
   metadata,
 );
 
 // get wallet State by id
-const secondState = await api.programState.readUsingWasm(
-  { programId, fn_name: 'wallet_by_id', buffer,  argument: { decimal: 1, hex: '0x01' } },
+const secondState = await gearApi.programState.readUsingWasm(
+  { programId: '0x…', fn_name: 'wallet_by_id', buffer,  argument: { decimal: 1, hex: '0x01' } },
   metadata,
 );
 

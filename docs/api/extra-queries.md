@@ -56,10 +56,10 @@ extrinsics.forEach((extrinsic) => {
 ## Get transaction fee
 
 ```javascript
-const api = await GearApi.create();
-api.program.submit({ code, gasLimit });
-// same for api.message, api.reply and others
-const paymentInfo = await api.program.paymentInfo(alice);
+const gearApi = await GearApi.create();
+gearApi.program.submit({ code, gasLimit });
+// same for gearApi.message, gearApi.reply and others
+const paymentInfo = await gearApi.program.paymentInfo(alice);
 const transactionFee = paymentInfo.partialFee.toNumber();
 consolg.log(transactionFee);
 ```

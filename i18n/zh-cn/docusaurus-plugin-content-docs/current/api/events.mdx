@@ -175,7 +175,7 @@ import { UnsubscribePromise } from '@polkadot/api/types';
 export function waitForInit(api: GearApi, programId: string): Promise<UnsubscribePromise> {
   let messageId: Hex;
   return new Promise((resolve, reject) => {
-    const unsub = api.query.system.events((events) => {
+    const unsub = gearApi.query.system.events((events) => {
       events.forEach(({ event }) => {
         switch (event.method) {
           case 'MessageEnqueued':
