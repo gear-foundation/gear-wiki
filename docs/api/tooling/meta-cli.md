@@ -3,6 +3,14 @@ sidebar_position: 2
 sidebar_label: Meta CLI
 ---
 
+:::warning Deprecation Notice
+
+This CLI tool is deprecated and will be removed in the future.
+
+Please use `getProgramMetadata` from `@gear-js/api` instead as described [here](/docs/api/metadata-type-creation.md).
+
+:::
+
 # Gear Meta CLI
 
 CLI tool to encode/decode payloads and work with .meta.wasm files.
@@ -21,7 +29,7 @@ yarn global add @gear-js/gear-meta
 
 ## Usage
 
-### Full list of commmands
+### Full list of commands
 
 ```sh
 gear-meta --help
