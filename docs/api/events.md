@@ -24,7 +24,6 @@ unsub();
 **Summary:** When a user successfully sends a message to a program and it gets added to the Gear message queue.
 
 ```rust
-
 MessageQueued {
     /// Generated id of the message.
     id: MessageId,
@@ -60,7 +59,7 @@ UserMessageSent {
 }
 ```
 
-### UserMessageSent
+### UserMessageRead
 
 **Summary:** When a message has been marked as "read" and it has been removed from the `Mailbox`. This event only affects messages, which were already prior inserted into the `Mailbox`.
 
@@ -185,7 +184,7 @@ gearApi.query.system.events((events) => {
 ### Subscribe to messages sent from a program
 
 ```javascript
-const unsub = api.gearEvents.subscribeToGearEvent(
+const unsub = gearApi.gearEvents.subscribeToGearEvent(
   'UserMessageSent',
   ({
     data: {
@@ -193,10 +192,10 @@ const unsub = api.gearEvents.subscribeToGearEvent(
     },
   }) => {
     console.log(`
-  messageId: ${id.toHex()}
-  source: ${source.toHex()}
-  payload: ${payload.toHuman()}
-  `);
+      messageId: ${id.toHex()}
+      source: ${source.toHex()}
+      payload: ${payload.toHuman()}
+    `);
   },
 );
 // Unsubscribe
@@ -206,7 +205,7 @@ unsub();
 ### Subscribe to messages intended for a program
 
 ```javascript
-const unsub = api.gearEvents.subscribeToGearEvent(
+const unsub = gearApi.gearEvents.subscribeToGearEvent(
   'MessageQueued',
   ({ data: { id, source, destination, entry } }) => {
     console.log({
@@ -231,10 +230,10 @@ unsub();
 const unsub = await gearApi.gearEvents.subscribeToTransferEvents(
   ({ data: { from, to, amount } }) => {
     console.log(`
-    Transfer balance:
-    from: ${from.toHex()}
-    to: ${to.toHex()}
-    amount: ${+amount.toString()}
+      Transfer balance:
+      from: ${from.toHex()}
+      to: ${to.toHex()}
+      amount: ${+amount.toString()}
     `);
   },
 );

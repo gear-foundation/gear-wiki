@@ -7,7 +7,7 @@ sidebar_label: Glossary
 
 ### Account
 
-In cryptocurrency systems, a user is represented by an account that has address(es) with specific balances associated with their address. Besides that, an account can contain additional details such as contact information, eligibility for rewards, and more.
+In cryptocurrency systems, a user is represented by an account that has an address(es) with specific balances associated with their address. Besides that, an account can contain additional details such as contact information, eligibility for rewards, and more.
 
 ### Actor
 
@@ -71,15 +71,15 @@ A list of entries containing transactions signed by account owners. A blockchain
 
 ### Memory Parallelism
 
-Memory-level parallelism is a term in computer architecture referring to the ability to have pending multiple memory operations, in particular cache misses or translation lookaside buffer misses, at the same time.
+Memory-level parallelism is a term in computer architecture referring to the ability to have pending multiple memory operations, in particular, cache misses or translation lookaside buffer misses, at the same time.
 
 ### Node
 
 A computer device that runs on a blockchain network for message processing; it can also be a validator (block producer). Node makes the information available to everyone via a connected device.
 
-### Non Fungible Tokens (NFTs)
+### Non-Fungible Tokens (NFTs)
 
-A Non Fungible Token is a unique unit of data that’s represented as a cryptographic token that’s stored on a blockchain.
+A Non-Fungible Token is a unique unit of data that’s represented as a cryptographic token that’s stored on a blockchain.
 
 ### Parachain
 
@@ -111,7 +111,7 @@ Substrate is the modular framework for building customized blockchains and the f
 
 ### Transaction
 
-A record in a digital ledger that represents an atomic event in a blockchain. In case of Gear Protocol transactions can be 4 types: create a program; send a message; dequeue messages; balance transfers.
+A record in a digital ledger that represents an atomic event in a blockchain. In the case of Gear Protocol transactions can be of four types: create a program; send a message; dequeue messages; balance transfers.
 
 ### Validator
 
@@ -127,4 +127,6 @@ Web3 is the third evolution of the internet that is heavily supported by blockch
 
 ### WebAssembly (Wasm)
 
-WebAssembly is a way to run applications in programming languages other than JavaScript as web pages. Essentially, Wasm is just a virtual machine that runs on all modern browsers. But whereas in the past you were required to use JavaScript to run code in a web page, Wasm makes it possible to run code in browsers with programming languages other than JavaScript.
+WebAssembly is a way to run applications in programming languages other than JavaScript as web pages. Essentially, Wasm is just a binary code format to be executed on a virtual machine that runs on all modern browsers. But whereas in the past you were required to use JavaScript to run code on a web page, Wasm makes it possible to run code in browsers written in programming languages other than JavaScript.
+
+While the first implementations of Wasm virtual machines have landed in web browsers, there are also non-browser implementations for general-purpose use, including [Wasmer](https://wasmer.io/), [Wasmtime](https://wasmtime.dev/), etc.

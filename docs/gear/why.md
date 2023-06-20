@@ -1,12 +1,11 @@
 ---
 title: Why do we build Gear?
 sidebar_position: 1
-sidebar_label: Why do we build Gear?
 ---
 
 ## Global aspect
 
-Blockchain technology launched a rapid transition from centralized, server-based internet (Web2) to a decentralized, distributed one (Web3). Its distinctive features are: no single point of failure (the network can still function even if a large proportion of participants are attacked/taken out), censorship resistance, anyone in the network has the possibility to use the service (permissionless).
+Blockchain technology launched a rapid transition from a centralized, server-based internet (Web2) to a decentralized, distributed one (Web3). Its distinctive features are: no single point of failure (the network can still function even if a large proportion of participants are attacked/taken out), censorship resistance, anyone in the network has the possibility to use the service (permissionless).
 
 Web3 introduces new types of decentralized applications (dApps) and assets such as: decentralized finances (DeFi), decentralized currency exchanges (DEX), decentralized marketplaces and gaming platforms, NFTs, Social Tokens and more.
 
@@ -22,11 +21,11 @@ Networks that were at the dawn of blockchain technology have a number of signifi
 - Lack of scalability, low transaction speed, high transaction costs - all of it hinders the growth of applications in Web3
 - Domain-specific development languages lead to high barriers to entry. The need to learn new programming language and paradigms holds back the growth of developers entering Web3
 - Complex and inefficient native consensus protocols
-- Absence of intercommunication between networks 
+- Absence of intercommunication between networks
 
 ## Dotsama ecosystem (Polkadot/Kusama networks)
 
-The solution has been found in Parity technologies, who’re focused on creating a Layer-0 technology that connects blockchains together into one big network - Polkadot.
+The solution has been found in Parity Technologies, which is focused on creating a Layer-0 technology that connects blockchains together into one big network - Polkadot.
 
 Polkadot provides a system in which blockchains coexist and complement each other. Different parallel blockchains (parachains) are built on Substrate as well as Polkadot and connected to the relay chain and have a native connection.This allows for different nodes to run different application logic, keeping each chain on its own platform. All parachains are interconnected, creating a massive network of multifunctional blockchain services. Parachains compose the Layer-1 of the Polkadot ecosystem, the main difference in connection with other standalone Layer-1 blockchain networks like Ethereum, Bitcoin, Solana, etc. is that parachains are connected through Substrate Cumulus library and standalone blockchains through bridges.
 
@@ -49,7 +48,7 @@ There are several components in the Polkadot architecture, namely:
 
 Relay Chain is the heart of Polkadot, responsible for the network’s security, consensus and cross-chain interoperability. It allows specialized blockchains and public blockchains to connect within the unified and interoperable Polkadot network. The Relay Chain can be understood as a Layer-0 platform.
 
-The Relay Chain has minimal functionality, which naturally means that advanced functionality features, like smart contracts for example, are not supported. Other specific work is delegated to the parachains, which each have different implementations and features.
+The Relay Chain has minimal functionality, which naturally means that advanced functionality features, like smart contracts, for example, are not supported. Other specific work is delegated to the parachains, which each have different implementations and features.
 
 The main task of the Relay Chain is to coordinate the overall system and its connected parachains to build a scalable and interoperable network.
 
@@ -61,7 +60,7 @@ Parachains are sovereign blockchains that can have their own tokens and optimize
 
 Parachains must be connected to the Relay Chain to ensure interoperability with other networks. For this, parachains lease a slot for continuous connectivity or they can pay as they go (in this case they are called Parathreads). Parachains compose the Layer-2 of the Polkadot ecosystem.
 
-Parachains are validateable by validators of the Relay Chain and they get their name from the concept of paralleziable chains that run parallel to the main Relay Chain. Due to their parallel nature, they are able to parallelize transaction processing which helps improve scalability of the Polkadot network.
+Parachains are validatable by validators of the Relay Chain and they get their name from the concept of parallelizable chains that run parallel to the main Relay Chain. Due to their parallel nature, they are able to parallelize transaction processing which helps improve the scalability of the Polkadot network.
 
 Parachains optimize their functionality for specific use cases and, in many instances, support their own tokens.
 

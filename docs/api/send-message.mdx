@@ -5,7 +5,7 @@ sidebar_label: Send Message
 
 # Send Message
 
-Use `api.message.send` method to send messages to the program:
+Use `GearApi.message.send` method to send messages to the program:
 
 ```javascript
 try {
@@ -33,14 +33,14 @@ try {
 
 :::note
 
-In real conditions to ensure successful message processing, the calculation of the required gas for processing the message should be performed by using `api.program.calculateGas` method.
+In real conditions to ensure successful message processing, the calculation of the required gas for processing the message should be performed by using `GearApi.program.calculateGas` method.
 
 [more info](/docs/api/calculate-gas)
 :::
 
 ### Send reply message
 
-When you need to reply to a message received from a program, use `api.message.reply`:
+When you need to reply to a message received from a program, use `GearApi.message.reply`:
 
 ```javascript
 try {

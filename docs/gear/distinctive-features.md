@@ -7,7 +7,7 @@ sidebar_label: Gear Distinctive Features
 
 ## Truly decentralized
 
-One of the well-known drawbacks of other-platform’s smart contracts is that they cannot trigger their own functions. Instead, to run certain functions they require an external component or service to trigger on-chain transactions.
+One of the well-known drawbacks of other platforms' smart contracts is that they cannot trigger their own functions. Instead, to run certain functions they require an external component or service to trigger on-chain transactions.
 
 While some smart contract logic may rely on users to initiate transactions and awaken the contract, many cases require a trigger when certain conditions are met, such as reaching a specific point in time or the occurrence of a particular event. In the past, this has either limited the capabilities of smart contracts or required developers to introduce a centralized service to trigger smart contracts.
 
@@ -17,7 +17,7 @@ Now thanks to Gear Protocol's support for asynchronous messaging, contract devel
 
 The execution of any messages in Gear, including the [system messages](/developing-contracts/system-signals.md), consumes "gas". The Gear Protocol introduces the concept of [gas reservation](/developing-contracts/gas-reservation.md), which allows for the creation of gas pools that can be used by programs for further execution. Each pool is unique to the program that creates it, and the gas from the pool can be consumed by the program if its "gas_available" is not sufficient.
 
-One of the key benefits of gas reservation is the ability to send **delayed messages** that can be triggered automatically at a specific time in the future. These messages, like any other message in Gear, can invoke another smart contract in the network or appear in the user's mailbox.
+One of the key benefits of the gas reservation is the ability to send **delayed messages** that can be triggered automatically at a specific time in the future. These messages, like any other message in Gear, can invoke another smart contract in the network or appear in the user's mailbox.
 
 Perhaps most interestingly, gas reservation allows a program to send a message to itself at a later time, allowing it to continue execution after a defined period. This effectively enables a smart contract to execute itself an **unlimited** number of times (provided that enough gas is available for the execution).
 
@@ -44,7 +44,7 @@ Overall, the ability to update NFTs dynamically opens up a wide range of possibi
 
 Tamagotchi is a classic digital pet game where players must care for a virtual creature by providing it food, attention, and other forms of care. As a dynamic NFT, a Tamagotchi can change its appearance based on its properties (such as hunger, fatigue, or happiness) and can notify the user when it needs to be fed or played with. The user can feed the NFT with gas, which is used to send delayed messages that are required to update the Tamagotchi's state.
 
-"Game strategies battle" is a game in which several programs compete with each other using different algorithms or strategies. The game can be based on a variety of classic games, such as checkers, tic-tac-toe, races, or monopoly. Each participant creates a smart contract with their own game strategy and uploads it to the blockchain. The programs then play against each other until someone wins or the gas runs out. If the gas runs out, one of the participants can continue the game by sending a message with more gas. This allows the game to continue indefinitely, with the most effective strategy ultimately emerging as the winner.
+"Game strategies battle" is a game in which several programs compete with each other using different algorithms or strategies. The game can be based on a variety of classic games, such as checkers, tic-tac-toe, races, or Monopoly. Each participant creates a smart contract with their own game strategy and uploads it to the blockchain. The programs then play against each other until someone wins or the gas runs out. If the gas runs out, one of the participants can continue the game by sending a message with more gas. This allows the game to continue indefinitely, with the most effective strategy ultimately emerging as the winner.
 
 ### DeFi
 

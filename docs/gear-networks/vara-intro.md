@@ -22,4 +22,4 @@ There are several ways other than developing and running dApps to support Vara N
 - Become a Nominator by staking tokens and nominating validators. Elected validators that produce blocks redistribute rewards to their nominators.
 - Become Ambassador to create educational awareness, community engagement, and decentralization around Vara Network and Gear Protocol.
 
-For more info about Vara Network and how to become a part of community, refer to **[Vara Wiki](https://wiki.vara-network.io/)**.
+For more info about Vara Network and how to become a part of the community, refer to **[Vara Wiki](https://wiki.vara-network.io/)**.

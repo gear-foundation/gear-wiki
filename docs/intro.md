@@ -1,7 +1,6 @@
 ---
 title: Welcome!
 sidebar_position: 1
-sidebar_label: Welcome!
 slug: /
 ---
 
@@ -9,7 +8,7 @@ Welcome to Gear’s documentation portal. This is the central source of informat
 
 Our Wiki outlines foundational information required, general technology overviews and key advantages of Gear’s technology, including how to implement and run your smart contracts and how to get started with the Gear node setup, while also providing full API details and examples.
 
-All code, libraries, and tools are available on Github with a permissive Apache-2.0 license. Feel free to use the tools and libraries, log issues as you find them, or create pull requests for your bug-bears or features.
+All code, libraries, and tools are available on GitHub. Feel free to use the tools and libraries, log issues as you find them, or create pull requests for your bug-bears or features.
 
 As our project is developing and growing, contributions are more than welcome!
 
@@ -31,11 +30,11 @@ The Gear Protocol provides the most cost-effective way to run smart contracts. P
 
 ### GitHub
 
-Instructions and other development-focused conversation is found on our [GitHub](https://github.com/gear-tech).
+Instructions and other development-focused conversations are found on our [GitHub](https://github.com/gear-tech).
 
 ### Discord
 
-General information and non-technical conversation is found on our [Discord server](https://discord.gg/7BQznC9uD9).
+General information and non-technical conversation are found on our [Discord server](https://discord.gg/7BQznC9uD9).
 
 ### Twitter
 

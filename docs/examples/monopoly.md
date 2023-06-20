@@ -40,13 +40,13 @@ There are two ways to upload the game onto the chain:
     - Local node - ws://localhost:9944
 - Upload Master and Player contracts:
     - Click the `Upload Program` button and specify `x.opt.wasm` file of the program, also specify the `*.txt` file with metadata for Master and Palyer contracts accordingly.
-    - Save the addresses of the uploaded programs. 
-- Make gas reservations to ensure continuous game execution. 
+    - Save the addresses of the uploaded programs.
+- Make gas reservations to ensure continuous game execution.
     - Find your uploaded Master contract and click the `Send message` button:
     ![img alt](./img/monopoly-gas-reserve.png)
     - Currently the single gas reservation amount can be up to 245 000 000 000 since it is not yet possible to make a reservation more than the block gas limit (250 000 000 000). To make sure the Master contract has enough gas to run and complete the game, it is recommended to make at least 5-10 reservations.
 
-### 2. Using [`gear-js/cli`](https://github.com/gear-tech/gear-js/tree/main/tools/cli) 
+### 2. Using [`gear-js/cli`](https://github.com/gear-tech/gear-js/tree/main/tools/cli)
 
 It allows sending transactions to the Gear node based on `yaml` file:
 - Go to folder with [scripts](https://github.com/gear-dapps/syndote/tree/master/upload-game):
@@ -54,12 +54,12 @@ It allows sending transactions to the Gear node based on `yaml` file:
     cd ./upload-game/
     ```
 - Upload previously built files into `/programs` folder (replace if necessary): `player.meta.txt`, `syndote.meta.txt`, `player.opt.wasm`, `syndote.opt.wasm`
-    
+
 - Install `gear-js/cli`:
     ```
     npm install -g @gear-js/cli
     ```
-- Upload the master contract. The `upload-game.yaml` file contains a transaction that will deploy the contract onto the network, check [README](https://github.com/gear-tech/gear-js/tree/main/tools/cli) for more details. 
+- Upload the master contract. The `upload-game.yaml` file contains a transaction that will deploy the contract onto the network, check [README](https://github.com/gear-tech/gear-js/tree/main/tools/cli) for more details.
 
 - Customize the following parameters:
 
@@ -68,44 +68,44 @@ It allows sending transactions to the Gear node based on `yaml` file:
     	accounts:
   		alice: 'bottom drive obey lake curtain smoke basket hold race lonely fit walk'
 		bob: //Bob
-		my_account: '0x...seed'
+		my_account: '0x…seed'
     	transactions:
 		account: alice
     	```
-    
+
     - You can also specify which node you want to deploy the contract on by defining the variable `wsAddress` in the file with transactions. If this variable is not defined, the contract will be deployed on the local node which should be running beforehand:
     	```
     	wsAddress: wss://node-workshop.gear.rs
     	```
-    
+
 - To deploy the contract, run the command:
     ```
     gear-js workflow upload-game.yaml
     ```
-    
+
 - If everything goes well, you will see the contract address in the terminal:
     ![img alt](./img/upload-game.png)
-    
+
 - To run the application, it is necessary to save this address and later specify it as a variable in the `.env` file.
- 
+
 - Make gas reservations to ensure continuous game execution. Open `reserve-gas.yaml` file and customize account and node address as described above. Run the command with the master contract address specified:
     ```
     gear-js workflow reserve-gas.yaml -a program_id='0x60663aaee2971eb60874b63c92e738cc375f3764a1d3b38d65cbc63d8ee8f70c'
     ```
-    
+
 - If everything goes well, you will see a message confirming a successful reservation. Please send this message 5-10 times to ensure uninterrupted gameplay.
-    
+
     ![img alt](./img/reserve_gas.png)
 
 - Upload players contracts to the network. For testing purposes, you can upload 4 identical player contracts. After initialization in the network, their addresses will be unique and you will then need to register them in the game. Open `players.yaml` file and customize account and node address as described above. Run the command to add players in the game:
     ```
     gear-js workflow players.yaml
     ```
-    
+
 - You will see the players addresses:
     ![img alt](./img/players.png)
-    
-- Additionally, you can write your own player contract, build it, and place the `.opt.wasm` and `.meta.txt` files into the `upload-game/programs` folder. 
+
+- Additionally, you can write your own player contract, build it, and place the `.opt.wasm` and `.meta.txt` files into the `upload-game/programs` folder.
     To deploy your player, specify the necessary files in the `players.yaml` file instead of any existing player.
     ![img alt](./img/my_player.png)
 
@@ -118,7 +118,7 @@ yarn install
 ```
 3. Declare environment variables, go to `/frontend/` foler, create new `.env` file, check `.env.example` file to get necessary variables:
     - `REACT_APP_SYNDOTE_NODE_ADDRESS` - in this parameter specify the address of the node on which you deployed the contracts.
-    - `REACT_APP_CONTRACT_ADDRESS` - in this parameter specify the address of the deployed master contract. 
+    - `REACT_APP_CONTRACT_ADDRESS` - in this parameter specify the address of the deployed master contract.
 4. Put the latest version of the `syndote.meta.txt` file locally in `src/assets/wasm/` folder, replace if necessary.
 
 :::note
@@ -132,7 +132,7 @@ yarn start
 ```
 
 ## Run the game
-1. Find the players addresses you have prevously uploaded. 
+1. Find the players addresses you have prevously uploaded.
 
 2. Register players in the application's interface one after another. Each player registration is a transaction that needs to be signed. It is possible to register up to 4 players.
 

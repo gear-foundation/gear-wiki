@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-sidebar_label: Getting started
+sidebar_label: Getting Started
 ---
 
 # Getting started
@@ -39,7 +39,7 @@ You can also connect to a different node:
 
 ```javascript
 const gearApi = await GearApi.create({
-  providerAddress: 'wss://someIP:somePort',
+  providerAddress: 'ws[s]://someIP[:somePort]',
 });
 ```
 
@@ -53,10 +53,10 @@ For connection to local node use:
 ws://127.0.0.1:9944
 ```
 
-For connection to Testnet use:
+For connection to Vara Testnet use:
 
 ```bash
-wss://rpc-node.gear-tech.io
+wss://testnet.vara.rs
 ```
 
 :::
@@ -77,7 +77,9 @@ This simple example describes how to subscribe to a new blocks and get chain spe
 
 ```js
 async function connect() {
-  const gearApi = await GearApi.create();
+  const gearApi = await GearApi.create({
+    providerAddress: 'wss://testnet.vara.rs',
+  });
 
   const [chain, nodeName, nodeVersion] = await Promise.all([
     gearApi.chain(),
@@ -95,6 +97,7 @@ async function connect() {
     );
   });
 }
+
 connect().catch(console.error);
 ```
 

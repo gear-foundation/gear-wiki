@@ -7,7 +7,7 @@ sidebar_label: Upload Program
 
 A smart contract compiled to Wasm can be uploaded to the Gear network as a program. During uploading it is initialized in the network to be able to send and receive messages with other actors in the network (programs and users).
 
-Use `api.program.upload` method to create `upload_program` extrinsic
+Use `GearApi.program.upload` method to create `upload_program` extrinsic
 
 ```javascript
 const code = fs.readFileSync('path/to/program.wasm');
@@ -39,7 +39,7 @@ try {
 
 :::note
 
-For the calculation of the required gas for `init` message processing should use `api.program.calculateGas.initUpload()` method.
+For the calculation of the required gas for `init` message processing should use `GearApi.program.calculateGas.initUpload()` method.
 
 [more info](/docs/api/calculate-gas)
 :::
