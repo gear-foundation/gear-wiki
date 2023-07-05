@@ -1,6 +1,6 @@
 # Gear Wiki
 
-[![Publish Status](https://github.com/gear-tech/wiki/workflows/Publish/badge.svg)](https://github.com/gear-tech/wiki/actions/workflows/publish.yml?query=branch%3Amaster)
+[![Publish Status](https://github.com/gear-foundation/gear-wiki/workflows/Publish/badge.svg)](https://github.com/gear-foundation/gear-wiki/actions/workflows/publish.yml?query=branch%3Amaster)
 
 Welcome to Gear network documentation portal for developers. It provides guides and documentation for everyone who wants to start developing using the Gear ecosystem. While our project is developing and growing, it is a modern knowledge base at the moment. Contributions are welcome!
 
@@ -13,7 +13,7 @@ Welcome to Gear network documentation portal for developers. It provides guides 
 1. Make a local clone of Wiki repository:
 
     ```bash
-    git clone https://github.com/gear-tech/wiki.git
+    git clone https://github.com/gear-foundation/gear-wiki.git
     cd wiki
     ```
 
@@ -52,7 +52,7 @@ For example, if you want run Chinese version, please run `yarn start --locale zh
 
 ## Contribute
 
-If you have anything to write on the Wiki, feel free to open [an issue](https://github.com/gear-tech/wiki/issues/new) or create a [pull request](https://github.com/gear-tech/wiki/pulls).
+If you have anything to write on the Wiki, feel free to open [an issue](https://github.com/gear-foundation/gear-wiki/issues/new) or create a [pull request](https://github.com/gear-foundation/gear-wiki/pulls).
 
 ## License
 
