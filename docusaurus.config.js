@@ -50,7 +50,7 @@ module.exports = {
           position: 'right',
         },
         {
-          href: 'https://github.com/gear-tech/wiki',
+          href: 'https://github.com/gear-foundation/gear-wiki',
           label: 'Contribute',
           position: 'right',
         },
@@ -94,7 +94,7 @@ module.exports = {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
           editUrl:
-            'https://github.com/gear-tech/wiki/edit/master/',
+            'https://github.com/gear-foundation/gear-wiki/edit/master/',
           remarkPlugins: [math],
           rehypePlugins: [katex],
           lastVersion: 'current',
