@@ -34,7 +34,7 @@ As we can see, metadata enables you to determine the expected data at the input/
 
 - `Init` - describes incoming/outgoing types for `init()` function.
 - `Handle` - describes incoming/outgoing types for `handle()` function.
-- `Others` - describes incoming/outgoing types for `main()` function in case of asyncronous interaction.
+- `Others` - describes incoming/outgoing types for `main()` function in case of asynchronous interaction.
 - `Reply` - describes an incoming type of message performed using the `handle_reply` function.
 - `Signal` - describes only the outgoing type from the program while processing the system signal.
 - `State` - describes the types for the queried State
