@@ -6,6 +6,11 @@ on:
   push:
     branches: [master]
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -26,13 +31,27 @@ jobs:
       - name: Build
         run: yarn build
 
-      - name: Deploy
-        if: github.event_name == 'push'
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Setup GitHub Pages
+        # if: github.event_name == 'push' FIXME: Uncomment after testing
+        uses: actions/configure-pages@v3
+
+      - name: Upload Pages artifact
+        # if: github.event_name == 'push' FIXME: Uncomment after testing
+        uses: actions/upload-pages-artifact@v1
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build
-          cname: wiki.gear-tech.io
-          force_orphan: true
-          user_name: 'github-actions[bot]'
-          user_email: 'github-actions[bot]@users.noreply.github.com'
+            path: build
+
+      - name: Deploy
+        # if: github.event_name == 'push' FIXME: Uncomment after testing
+        uses: actions/deploy-pages@v2
+
+      # - name: Deploy
+      #   if: github.event_name == 'push'
+      #   uses: peaceiris/actions-gh-pages@v3
+      #   with:
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      #     publish_dir: ./build
+      #     cname: wiki.gear-tech.io
+      #     force_orphan: true
+      #     user_name: 'github-actions[bot]'
+      #     user_email: 'github-actions[bot]@users.noreply.github.com'
