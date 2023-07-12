@@ -17,11 +17,11 @@ DAOs offer safe alternatives to pooling together money for a particular cause. B
 
 ### DAO application example by Gear
 
-Anyone can easily create their own DAO application and run it on the Gear Network. To do this, Gear created an example of the DAO smart contract, which is available on [GitHub](https://github.com/gear-dapps/dao-light).
+Anyone can easily create their own DAO application and run it on the Gear Network. To do this, Gear created an example of the DAO smart contract, which is available on [GitHub](https://github.com/gear-foundation/dapps-dao-light).
 
 This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios.
 
-<!-- In addition, Gear provides an example implementation of the DAO user interface to demonstrate its interaction with the smart contract in the Gear Network. You can watch a video on how to get the DAO application up and running and its capabilities here: **https://youtu.be/6lxr7eojADw**. The source code for the DAO application is available on [GitHub](https://github.com/gear-dapps/dao-app).
+<!-- In addition, Gear provides an example implementation of the DAO user interface to demonstrate its interaction with the smart contract in the Gear Network. You can watch a video on how to get the DAO application up and running and its capabilities here: **https://youtu.be/6lxr7eojADw**. The source code for the DAO application is available on [GitHub](https://github.com/gear-foundation/dapps-dao-app).
 -->
 
 ## Logic
@@ -80,7 +80,7 @@ where:
 `transactions` - the transaction history.
 
 
-Parameters `approved_token_program_id`, `period_duration`, `grace_period_length` are set when initializing a contract. The contract is initialized 
+Parameters `approved_token_program_id`, `period_duration`, `grace_period_length` are set when initializing a contract. The contract is initialized
 with the following struct:
 
 ```rust
@@ -232,7 +232,7 @@ The `DAO` contract interacts with the `fungible` token contract. Each transactio
 <!--
 ## User interface
 
-A [Ready-to-Use application](https://dao.gear-tech.io/) example provides a user interface that interacts with [DAO](https://github.com/gear-dapps/dao-light) and [gFT](https://github.com/gear-dapps/fungible-token) smart contracts.
+A [Ready-to-Use application](https://dao.gear-tech.io/) example provides a user interface that interacts with [DAO](https://github.com/gear-foundation/dapps-dao-light) and [gFT](https://github.com/gear-foundation/dapps-fungible-token) smart contracts.
 
 Gear Fundible Token enables creation of utility token DAO, check [this article](gft-20.md) for details.
 
@@ -240,7 +240,7 @@ This video demonstrates the entire configuration and user interaction workflow: 
 
 ![img alt](./img/dao-1.jpg)
 
-A DAO application source code is available on [GitHub](https://github.com/gear-dapps/dao-app).
+A DAO application source code is available on [GitHub](https://github.com/gear-foundation/dapps-dao-app).
 
 ### Configure basic dApp in .env:
 
@@ -254,7 +254,7 @@ REACT_APP_CONTRACT_DAO
 - `REACT_APP_CONTRACT_ERC` is Fundible Token contract address
 - `REACT_APP_CONTRACT_DAO` is DAO contract address
 
-An example is available: [here](https://github.com/gear-dapps/dao-app/blob/master/.env.example)
+An example is available: [here](https://github.com/gear-foundation/dapps-dao-app/blob/master/.env.example)
 
 ### How to run
 
@@ -300,7 +300,7 @@ extern "C" fn state() {
     .expect("Failed to share state");
 }
 ```
-To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `DaoState` state. For example - [gear-dapps/dao/state](https://github.com/gear-dapps/dao/tree/master/state):
+To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `DaoState` state. For example - [gear-foundation/dapps-dao/state](https://github.com/gear-foundation/dapps-dao/tree/master/state):
 
 ```rust
 #[metawasm]
@@ -330,11 +330,11 @@ pub trait Metawasm {
 ```
 
 ## Source code
-The source code of this example of DAO smart contract and the example of an implementation of its testing is available on [GitHub](https://github.com/gear-dapps/dao-light).
+The source code of this example of DAO smart contract and the example of an implementation of its testing is available on [GitHub](https://github.com/foundation/dapps-dao-light).
 
-The extended version of DAO that includes admin, membership proposals and delegated voting can be found at [GitHub](https://github.com/gear-dapps/dao).
+The extended version of DAO that includes admin, membership proposals and delegated voting can be found at [GitHub](https://github.com/gear-foundation/dapps-dao).
 
-<!--The application source code is available in: [https://github.com/gear-dapps/dao-app](https://github.com/gear-dapps/dao-app).
+<!--The application source code is available in: [https://github.com/gear-foundation/dapps-dao-app](https://github.com/gear-foundation/dapps-dao-app).
 -->
 
 For more details about testing smart contracts written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.

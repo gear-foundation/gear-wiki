@@ -75,7 +75,7 @@ Let's explore the typical lifecycle of a Gear smart contract. We will use the Ru
 
 You can find the minimal example in the [Getting Started](/docs/getting-started-in-5-minutes.md) section. It is a simple program that stores the counter, can increment and decrement it, and return the current value of the counter.
 
-More advanced examples can be found in the Gear dApps organization on GitHub: https://github.com/gear-dapps
+More advanced examples can be found in the Gear Fooundation organization on GitHub: https://github.com/gear-foundation
 
 **Step 2.** Test the program.
 

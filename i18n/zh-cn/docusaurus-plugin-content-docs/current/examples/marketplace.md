@@ -10,8 +10,8 @@ sidebar_position: 14
 NFT Marketplace 是一个合约，你可以用同质化代币交易非同质化代币。该合约还支持 NFT 拍卖，以及提供/接受 nft 的购买提议。
 
 任何人都可以轻松创建自己的 NFT Marketplace 应用程序，并在 Gear 网络上运行它：
-- [Gear NFT](https://github.com/gear-dapps/non-fungible-token/tree/master/nft).
-- [NFT marketplace](https://github.com/gear-dapps/non-fungible-token/tree/master/nft-marketplace).
+- [Gear NFT](https://github.com/gear-foundation/dapps-non-fungible-token/tree/master/nft).
+- [NFT marketplace](https://github.com/gear-foundation/dapps-non-fungible-token/tree/master/nft-marketplace).
 
 本文会介绍接口、数据结构、基本功能，并说明了它们的用途。它可以按原样使用，也可以根据您自己的场景进行修改。
 
@@ -293,7 +293,7 @@ Withdraw {
 
 ## 用户界面
 
-一个[即用型应用](https://marketplace.gear-tech.io/)的例子提供了一个用户界面，与在 Gear Network 中运行的[gNFT](ttps://github.com/gear-dapps/non-fungible-token/tree/master/nft)和[Marketplace](https://github.com/gear-dapps/non-fungible-token/tree/master/nft-marketplace)智能合约互动。
+一个[即用型应用](https://marketplace.gear-tech.io/)的例子提供了一个用户界面，与在 Gear Network 中运行的[gNFT](ttps://github.com/gear-foundation/dapps-non-fungible-token/tree/master/nft)和[Marketplace](https://github.com/gear-foundation/dapps-non-fungible-token/tree/master/nft-marketplace)智能合约互动。
 
 - Gear Non-Fundible Token 合约可以创建 NFT 代币，证明数字资产的所有权，详情请查看[本文](/examples/gnft-721)。
 - NFT Marketplace 是一个合约，你可以用同质化代币交易非同质化代币。该合约还支持 NFT 拍卖，以及提供/接受 nft 的购买提议。
@@ -346,7 +346,7 @@ npm start
 
 ## 源码
 
-合约源码在 [Gear-dapps](https://github.com/gear-dapps/non-fungible-token/tree/master/nft-marketplace)。
+合约源码在 [Gear-dapps](https://github.com/gear-foundation/dapps-non-fungible-token/tree/master/nft-marketplace)。
 
 前端代码在 [Gear-tech/gear-js](https://github.com/gear-tech/gear-js/tree/master/apps/marketplace).
 

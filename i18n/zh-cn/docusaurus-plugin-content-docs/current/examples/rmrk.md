@@ -16,7 +16,7 @@ RMRK legos 已经在 Gear 上实现：
 - 多资源 NFT：
 NFT 能够根据它被加载的环境而改变其输出。
 
-这篇文章解释了接口、数据结构、基本功能，并解释了它们的用途。源代码可在[GitHub](https://github.com/gear-dapps/RMRK)上找到。
+这篇文章解释了接口、数据结构、基本功能，并解释了它们的用途。源代码可在[GitHub](https://github.com/gear-foundation/dapps-RMRK)上找到。
 
 ## 逻辑
 ### 嵌套逻辑
@@ -561,6 +561,6 @@ SetPriority {
 
 ## 源码
 
-RMRK 的实现在 [GitHub](https://github.com/gear-dapps/RMRK)。
+RMRK 的实现在 [GitHub](https://github.com/gear-foundation/dapps-RMRK)。
 
 更多关于在 Gear 上测试智能合约的细节，请参考这篇文章：[应用测试](https://wiki.gear-tech.io/zh-cn/developing-contracts/testing/)。

@@ -13,11 +13,11 @@ RMRK legos that are already implemented on Gear:
 - Multi-resource NFTs:
 The ability for an NFT to vary its output depending on the context it is being loaded in.
 
-This article explains the programming interface, data structure, basic functions and explains their purpose. The source code is available on [GitHub](https://github.com/gear-dapps/RMRK). 
+This article explains the programming interface, data structure, basic functions and explains their purpose. The source code is available on [GitHub](https://github.com/gear-foundation/dapps-RMRK).
 
 ## Logic
 ### Nesting logic
-The concept of nested NFTs refers to NFTs being able to own other NFTs. So, the NFT owner can be not only an account or a smart contract, but also another NFT. 
+The concept of nested NFTs refers to NFTs being able to own other NFTs. So, the NFT owner can be not only an account or a smart contract, but also another NFT.
 
 In the usual NFT standard, NFT owners were stored as mapping from the NFT ids to addresses:
 ```rust
@@ -116,7 +116,7 @@ The root owner or the approved account can accept the child NFT by sending the f
 /// * `parent_token_id`: is the tokenId of the parent NFT
 /// * `child_token_id`: is the tokenId of the child instance
 ///
-/// On success replies [`RMRKEvent::AcceptedChild`]. 
+/// On success replies [`RMRKEvent::AcceptedChild`].
 AcceptChild {
     parent_token_id: TokenId,
     child_contract_id: ActorId,
@@ -138,7 +138,7 @@ or reject the child NFT with the message:
 /// * `child_contract_id`: is the address of the child RMRK contract.
 /// * `child_token_id`: is the tokenId of the child instance.
 ///
-/// On success replies [`RMRKEvent::RejectedChild`]. 
+/// On success replies [`RMRKEvent::RejectedChild`].
 RejectChild {
     parent_token_id: TokenId,
     child_contract_id: ActorId,
@@ -245,7 +245,7 @@ Transfer {
     token_id: TokenId,
 },
 ```
-If the previous owner is another NFT it sends a message `BurnChild` to the parent contract. 
+If the previous owner is another NFT it sends a message `BurnChild` to the parent contract.
 
 In case of transferring a token to another NFT, the following message is sent:
 ```rust
@@ -276,9 +276,9 @@ In that case child RMRK contract sends message `TransferChild` to parent RMRK co
 /// That message is designed to be sent from another RMRK contracts
 /// when the root owner transfers his child to another parent token within one contract.
 /// If root owner transfers child token from NFT to another his NFT
-/// it adds a child to the NFT  with a status that child had before. 
+/// it adds a child to the NFT  with a status that child had before.
 /// If root owner transfers child token from NFT to another NFT that he does not own
-/// it adds a child to the NFT  with a status `Pending`. 
+/// it adds a child to the NFT  with a status `Pending`.
 ///
 /// # Requirements:
 /// * The `msg::source()` must be a child RMRK contract.
@@ -345,12 +345,12 @@ Approve {
 },
 ```
 ### Multiresource logic
-The Multi Resource NFT standard is a standalone part of RMRK concepts. The idea is that an NFT can have multiple resources. 
+The Multi Resource NFT standard is a standalone part of RMRK concepts. The idea is that an NFT can have multiple resources.
 There are four key use cases for NFT multiresource:
 - *Cross-metaverse compatibility*:  for example, NFT with several resources can be used in different games.
 - *Multimedia output*: NFT can be stored in different digital formats (image, video, audio, eBooks or text file).
 - *Media Redundancy*: many NFTs are minted with metadata centralized on a server somewhere or, in some cases, a hardcoded IPFS gateway which can also go down, instead of just an IPFS hash. By adding the same metadata file as different resources, the resilience of the metadata and its referenced media increases exponentially as the chances of all the protocols going down at once become ever less likely.
-- *NFT Evolution*: many NFTs, particularly game related ones, require evolution. 
+- *NFT Evolution*: many NFTs, particularly game related ones, require evolution.
 RMRK contract can create a contract to store its resources.
 #### **Resource storage contract:**
 The storage state:
@@ -379,7 +379,7 @@ To add resource to the token the RMRK contract must send the following message:
 /// * `thumb`: a string pointing to thumbnail media associated with the resource.
 /// * `metadata_uri`:  a string pointing to a metadata file associated with the resource.
 ///
-/// On success replies [`ResourceEvent::ResourceEntryAdded`]. 
+/// On success replies [`ResourceEvent::ResourceEntryAdded`].
 AddResourceEntry {
     id: u8,
     src: String,
@@ -394,7 +394,7 @@ To get information about whether such a resource exists in the storage or not, s
 /// # Arguments:
 /// * `id`: is a resource identifier.
 ///
-/// On success replies [`ResourceEvent::Resource`]. 
+/// On success replies [`ResourceEvent::Resource`].
 GetResource {
     id: u8,
 },
@@ -512,7 +512,7 @@ SetPriority {
 ```
 
 ### Bases and Equippable NFTs
-That functionality allows NFTs to equip owned NFTs in order to gain extra utility or change their appearance. It is also known as composable NFTs.   
+That functionality allows NFTs to equip owned NFTs in order to gain extra utility or change their appearance. It is also known as composable NFTs.
 Resources are divided into three types:
 * Basic:
 ```rust
@@ -572,7 +572,7 @@ pub struct SlotResource {
 }
 ```
 
-Base contract is a catalogue of parts from which an NFT can be composed. If resource is `Composable` or `Slot` then it refers to `base` contract that contains the information about parts. 
+Base contract is a catalogue of parts from which an NFT can be composed. If resource is `Composable` or `Slot` then it refers to `base` contract that contains the information about parts.
 The base contract state:
 ```rust
 #[derive(Debug, Default, Encode, Decode, TypeInfo)]
@@ -686,7 +686,7 @@ RemoveEquippable {
 },
 
 /// Checks whether the part exists in the Base.
-/// 
+///
 /// # Arguments:
 /// * `PartId`: the Part Id.
 ///
@@ -695,10 +695,10 @@ CheckPart(PartId),
 }
 ```
 
-The RMRK contract logic is extended with the following messages: 
+The RMRK contract logic is extended with the following messages:
  ```rust
 /// Equip a child NFT's resource to a parent's slot.
-/// It sends message to the child contract 
+/// It sends message to the child contract
 /// to check whether the child token has the indicated slot resource.
 ///
 /// # Requirements:
@@ -747,7 +747,7 @@ Unequip {
  ```
 ## Source code
 
-The source code of RMRK implementation and the example of an implementation of its testing is available on [GitHub](https://github.com/gear-dapps/RMRK).
+The source code of RMRK implementation and the example of an implementation of its testing is available on [GitHub](https://github.com/gear-foundation/dapps-RMRK).
 
 
 For more details about testing smart contracts written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.

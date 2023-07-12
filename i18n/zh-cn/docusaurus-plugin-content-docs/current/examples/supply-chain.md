@@ -326,6 +326,6 @@ enum SupplyChainEvent {
 
 ## 源码
 
-供应链的合约源代码可以在 [GitHub](https://github.com/gear-dapps/supply-chain) 找到。
+供应链的合约源代码可以在 [GitHub](https://github.com/gear-foundation/dapps-supply-chain) 找到。
 
 更多关于在 Gear 的测试智能合约的细节，请参考这篇文章：[应用测试](https://wiki.gear-tech.io/zh-cn/developing-contracts/testing/)。

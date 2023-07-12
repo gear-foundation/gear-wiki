@@ -176,8 +176,8 @@ pub enum StateReply {
 
 ## 源码
 
-多签钱包的例子的源代码和其测试的实例源码在 [GitHub](https://github.com/gear-dapps/multisig-wallet)。
+多签钱包的例子的源代码和其测试的实例源码在 [GitHub](https://github.com/gear-foundation/dapps-multisig-wallet)。
 
-同样可以找到基于 `gtest` 实现的智能合约测试范例：[multisig-wallet/tests](https://github.com/gear-dapps/multisig-wallet/tree/master/tests)。
+同样可以找到基于 `gtest` 实现的智能合约测试范例：[multisig-wallet/tests](https://github.com/gear-foundation/dapps-multisig-wallet/tree/master/tests)。
 
 更多关于在 Gear 上测试智能合约的细节，请参考这篇文章：[应用测试](/developing-contracts/testing)。

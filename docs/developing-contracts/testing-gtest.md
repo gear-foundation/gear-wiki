@@ -20,13 +20,13 @@ authors = ["Your Name"]
 edition = "2021"
 
 [dependencies]
-gstd = { git = "https://github.com/gear-tech/gear.git", branch = "stable" }
+gstd = { git = "https://github.com/gear-tech/gear.git", rev = "946ac47" }
 
 [build-dependencies]
-gear-wasm-builder = { git = "https://github.com/gear-tech/gear.git", branch = "stable" }
+gear-wasm-builder = { git = "https://github.com/gear-tech/gear.git", rev = "946ac47" }
 
 [dev-dependencies]
-gtest = { git = "https://github.com/gear-tech/gear.git", branch = "stable" }
+gtest = { git = "https://github.com/gear-tech/gear.git", rev = "946ac47" }
 ```
 
 ## `gtest` capabilities

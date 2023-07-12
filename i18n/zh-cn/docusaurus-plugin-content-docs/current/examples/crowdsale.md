@@ -12,7 +12,7 @@ sidebar_position: 18
 本文所描述的众筹智能合约实现的例子是在 Gear 上实现和发布的去中心化应用之一。这篇文章介绍了接口、数据结构、基本功能，并解释了它们的用途。代码可以直接使用，也可以根据自己的场景进行修改。任何人都可以轻松创建自己的众筹应用，并在 Gear 网络上运行。
 
 购买代币的初始资金由 Gear 同质化代币合约决定 - [gFT](https://wiki.gear-tech.io/examples/gft-20)。
-合约源代码可在[GitHub](https://github.com/gear-dapps/crowdsale)上找到。
+合约源代码可在[GitHub](https://github.com/gear-foundation/dapps-crowdsale)上找到。
 
 ## 界面
 
@@ -172,6 +172,6 @@ IcoEvent::SaleEnded
 
 ## 总结
 
-公开发售合约源码在 [Github](https://github.com/gear-dapps/crowdsale)。
+公开发售合约源码在 [Github](https://github.com/gear-foundation/dapps-crowdsale)。
 
 更多关于在 Gear 上测试智能合约的细节，请参考这篇文章：[程序测试](/developing-contracts/testing.md)。

@@ -23,13 +23,13 @@ sidebar_position: 4
 
 - *burn(from, token_id)* - 是一个函数，用于从合约中删除带有 *token_id* 的代币。
 
-NFT 合约的实现为[gear-contract-libraries/non_fungible_token](https://github.com/gear-dapps/gear-lib/tree/master/src/non_fungible_token)。
+NFT 合约的实现为[gear-contract-libraries/non_fungible_token](https://github.com/gear-foundation/dapps-gear-lib/tree/master/src/non_fungible_token)。
 
 要使用默认实现需要在 *Cargo.toml* 配置：
 
 ```toml
-gear-lib = { git = "https://github.com/gear-dapps/gear-lib.git" }
-gear-lib-derive = { git = "https://github.com/gear-dapps/gear-lib.git" }
+gear-lib = { git = "https://github.com/gear-foundation/dapps-gear-lib.git" }
+gear-lib-derive = { git = "https://github.com/gear-foundation/dapps-gear-lib.git" }
 hashbrown = "0.13.1"
 ```
 
@@ -201,10 +201,10 @@ extern "C" fn handle() {
 
 ## 总结
 
-Gear 提供了一个可重复使用的[库](https://github.com/gear-dapps/non-fungible-token/tree/master/non-fungible-token/src)，具有 gNFT 协议的核心功能。通过使用对象组合，该库可以在自定义的 NFT 合约实现中使用，以减少重复代码。
+Gear 提供了一个可重复使用的[库](https://github.com/gear-foundation/dapps-non-fungible-token/tree/master/non-fungible-token/src)，具有 gNFT 协议的核心功能。通过使用对象组合，该库可以在自定义的 NFT 合约实现中使用，以减少重复代码。
 
-Gear 提供的合约实例的源代码可在 GitHub 上找到 [nft-example/src](https://github.com/gear-dapps/non-fungible-token/tree/master/nft-example/src)。
+Gear 提供的合约实例的源代码可在 GitHub 上找到 [nft-example/src](https://github.com/gear-foundation/dapps-non-fungible-token/tree/master/nft-example/src)。
 
-也请看基于 `gtest` 的智能合约测试实现的例子：[nft-example/tests](https://github.com/gear-dapps/non-fungible-token/tree/master/nft-example/tests)。
+也请看基于 `gtest` 的智能合约测试实现的例子：[nft-example/tests](https://github.com/gear-foundation/dapps-non-fungible-token/tree/master/nft-example/tests)。
 
 关于测试在 Gear 上编写的智能合约的更多细节，请参考这篇文章 [程序测试](/developing-contracts/testing.md)。

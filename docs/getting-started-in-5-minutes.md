@@ -104,7 +104,7 @@ This guide provides a general overview of running smart contracts on the network
 
     [dependencies]
     # highlight-next-line
-    gstd = { git = "https://github.com/gear-tech/gear.git", branch = "testnet" }
+    gstd = { git = "https://github.com/gear-tech/gear.git", rev = "946ac47" }
     ```
 
 6. Replace the default contents of `lib.rs` in the `counter` folder with the code for our first smart-contract.

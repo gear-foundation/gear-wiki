@@ -128,8 +128,8 @@ pub struct TransferInput {
 
 ## 总结
 
-由 Gear 提供的智能合约源码在 Github 上可以找到：[fungible-token/src/lib.rs](https://github.com/gear-dapps/fungible-token/blob/master/src/lib.rs)。
+由 Gear 提供的智能合约源码在 Github 上可以找到：[fungible-token/src/lib.rs](https://github.com/gear-foundation/dapps-fungible-token/blob/master/src/lib.rs)。
 
-同样可以找到基于 `gtest` 实现的智能合约测试范例：[fungible-token/src/tests.rs](https://github.com/gear-dapps/fungible-token/blob/master/src/tests.rs)。
+同样可以找到基于 `gtest` 实现的智能合约测试范例：[fungible-token/src/tests.rs](https://github.com/gear-foundation/dapps-fungible-token/blob/master/src/tests.rs)。
 
 更多关于在 Gear 上测试智能合约的细节，请参考这篇文章：[程序测试](/developing-contracts/testing.md) 。

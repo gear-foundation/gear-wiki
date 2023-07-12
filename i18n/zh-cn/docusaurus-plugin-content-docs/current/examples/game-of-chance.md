@@ -7,7 +7,7 @@ sidebar_position: 9
 
 ## 介绍
 
-任何人都可以轻松创建自己的游戏应用程序，并在 Gear Network 上运行它。为了做到这一点，Gear 创建了一个 Game-of-chance 智能合约的例子，可以在[GitHub](https://github.com/gear-dapps/game-of-chance)上找到。
+任何人都可以轻松创建自己的游戏应用程序，并在 Gear Network 上运行它。为了做到这一点，Gear 创建了一个 Game-of-chance 智能合约的例子，可以在[GitHub](https://github.com/gear-foundation/dapps-game-of-chance)上找到。
 
 本文会介绍接口、数据结构、基本功能及其用途。你可以按直接使用，也可以根据自己的场景进行修改。
 
@@ -223,7 +223,7 @@ extern "C" fn meta_state() -> *mut [i32; 2] {
 
 ## 用户界面
 
-一个[即用型应用](https://lottery.gear-tech.io/)的例子提供了一个用户界面，与在 Gear Network 中运行的[游戏](https://github.com/gear-dapps/game-of-chance)智能合约进行互动。
+一个[即用型应用](https://lottery.gear-tech.io/)的例子提供了一个用户界面，与在 Gear Network 中运行的[游戏](https://github.com/gear-foundation/dapps-game-of-chance)智能合约进行互动。
 
 本视频演示了如何配置和运行 Dapp，并介绍了用户交互流程：**https://youtu.be/35StUMjbdFc**
 
@@ -261,14 +261,14 @@ npm start
 
 ## 总结
 
-本合约源代码可以在 GitHub 找到：[`game-of-chance/src/lib.rs`](https://github.com/gear-dapps/game-of-chance/blob/master/src/lib.rs)。
+本合约源代码可以在 GitHub 找到：[`game-of-chance/src/lib.rs`](https://github.com/gear-foundation/dapps-game-of-chance/blob/master/src/lib.rs)。
 
 本合约的测试代码基于 gtest：
 
-- [`simple_tests.rs`](https://github.com/gear-dapps/game-of-chance/blob/master/src/simple_tests.rs)
+- [`simple_tests.rs`](https://github.com/gear-foundation/dapps-game-of-chance/blob/master/src/simple_tests.rs)
 
-- [`panic_tests.rs`](https://github.com/gear-dapps/game-of-chance/blob/master/src/panic_tests.rs)
+- [`panic_tests.rs`](https://github.com/gear-foundation/dapps-game-of-chance/blob/master/src/panic_tests.rs)
 
-- [`token_tests.rs`](https://github.com/gear-dapps/game-of-chance/blob/master/src/token_tests.rs)
+- [`token_tests.rs`](https://github.com/gear-foundation/dapps-game-of-chance/blob/master/src/token_tests.rs)
 
 更多关于在 Gear 上测试智能合约的细节，请参考这篇文章：[应用测试](https://wiki.gear-tech.io/zh-cn/developing-contracts/testing/)。

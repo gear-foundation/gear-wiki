@@ -11,7 +11,7 @@ sidebar_position: 24
 
 Many web services (in Web2) work on a subscription basis. One of the main features of subscription management is subscription auto-renewal. So that after the expiration of the subscription period, the money is automatically debited from the wallet and the subscription is automatically renewed without user intervention.
 
-This dApp example represents a video-hosting service **[VaraTube](https://github.com/gear-dapps/varatube)** that enables watching videos with a valid subscription that can be renewed automatically.
+This dApp example represents a video-hosting service **[VaraTube](https://github.com/gear-foundation/dapps-varatube)** that enables watching videos with a valid subscription that can be renewed automatically.
 
 ### Decentralization aspect
 
@@ -23,12 +23,12 @@ This makes it possible to implement logic when several logically related message
 
 State consistency between smart contracts is achieved using techniques described [here](/developing-contracts/distributed_transactions.md).
 
-## How to run 
+## How to run
 
 ### ⚒️ Build program
 
-- Get the source code of [VaraTube contract](https://github.com/gear-dapps/varatube/tree/master/src) and [Fungible Token contract](https://github.com/gear-dapps/fungible-token)
-- Build contracts as described in [program/README.md](https://github.com/gear-dapps/varatube#readme).
+- Get the source code of [VaraTube contract](https://github.com/gear-foundation/dapps-varatube/tree/master/src) and [Fungible Token contract](https://github.com/gear-foundation/dapps-fungible-token)
+- Build contracts as described in [program/README.md](https://github.com/gear-foundation/dapps-varatube#readme).
 
 ### 🏗️ Upload program
 
@@ -41,7 +41,7 @@ State consistency between smart contracts is achieved using techniques described
 
 ### 🖥️ Run UI
 
-1. Install packages as described in [frontend/README.md](https://github.com/gear-dapps/varatube/tree/master/frontend#readme)
+1. Install packages as described in [frontend/README.md](https://github.com/gear-foundation/dapps-varatube/tree/master/frontend#readme)
 
 ```sh
 yarn install
@@ -68,16 +68,16 @@ yarn start
 
 When a user purchases a subscription, access to the service is open, and after the subscription expires, access is closed.
 
-The interface provides an option whether to enable or disable subscription auto-renewal. And if it is enabled, the subscription will be renewed automatically by getting funds from the user's. 
+The interface provides an option whether to enable or disable subscription auto-renewal. And if it is enabled, the subscription will be renewed automatically by getting funds from the user's.
 
 There is also an option to cancel the active subscription.
 
 The VaraTube consists of two smart contracts:
 - [Gear Fungible Token (GFT-20)](/docs/examples/gft-20) contract determines user and service balances required to purchase a subscription and approves Subscription contract to get funds from user's balance.
-- [VaraTube Subscription](https://github.com/gear-dapps/varatube#readme) contract manages service's subscription - its availability, expiration, auto renewal.
+- [VaraTube Subscription](https://github.com/gear-foundation/dapps-varatube#readme) contract manages service's subscription - its availability, expiration, auto renewal.
 
 ## Source code
 
-The source code of the VaraTube smart contract including its testing as well as JS frontend web application example is available on [GitHub](https://github.com/gear-dapps/varatube). They can be used as is or modified to suit your own scenarios.
+The source code of the VaraTube smart contract including its testing as well as JS frontend web application example is available on [GitHub](https://github.com/gear-foundation/dapps-varatube). They can be used as is or modified to suit your own scenarios.
 
 For more details about testing smart contracts written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.
