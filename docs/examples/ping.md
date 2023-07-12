@@ -76,14 +76,6 @@ extern "C" fn state() {
     );
 }
 ```
--  `metahash()` function that returns the metadata hash:
-```rust
-#[no_mangle]
-extern "C" fn metahash() {
-    reply(include!("../.metahash"))
-        .expect("Failed to encode or reply with `[u8; 32]` from `metahash()`");
-}
-```
 
 The `lib.rs` file in the `src` directory contains the following code:
 ```
