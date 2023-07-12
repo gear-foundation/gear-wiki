@@ -142,12 +142,9 @@ pub struct Item {
 ```
 - `owner` - an item owner;
 - `ft_contract_id` - a contract of fungible tokens for which that item can be bought. If that field is `None` then the item is on sale for native Gear value;
-- `price` -
-the item price. `None` field means that the item is not on the sale;
-- `auction` -
-a field containing information on the current auction. `None` field means that there is no current auction on the item;
-- `offers` -
-purchase offers made on that item;
+- `price` - the item price. `None` field means that the item is not on the sale;
+- `auction` - a field containing information on the current auction. `None` field means that there is no current auction on the item;
+- `offers` - purchase offers made on that item;
 - `tx` - a pending transaction on the item. `None` means that there are no pending transactions.
 
 `MarketTx` is an enum of possible transactions that can occur with NFT:
