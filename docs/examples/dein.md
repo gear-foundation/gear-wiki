@@ -7,12 +7,12 @@ sidebar_position: 24
 
 Decentralized Internet (DNS) demonstrates an on-chain server-less approach to web sites and web applications hosting. Unlike server-based DNS built on centralized components and services, decentralized solutions running on the blockchain are characterized by boosted data security, enhanced data reconciliation, minimized system weak points, optimized resource allocation, and demonstrated great fault tolerance. It brings all the benefits of decentralization such as censorship resistance, security resilience, high transparency.
 
-Briefly the solution consists of a DNS program that is uploaded on-chain. It lists programs (smart-contracts) that are also uploaded on-chain and registered in DNS contract as DNS records. Hosted programs may have the user interface that resides on IPFS. The DNS program stores program ids and meta info of their interfaces (name, description and link). 
+Briefly the solution consists of a DNS program that is uploaded on-chain. It lists programs (smart-contracts) that are also uploaded on-chain and registered in DNS contract as DNS records. Hosted programs may have the user interface that resides on IPFS. The DNS program stores program ids and meta info of their interfaces (name, description and link).
 
-The source code of the smart contract and frontend implementation is available on [GitHub](https://github.com/gear-dapps/DeIn).
+The source code of the smart contract and frontend implementation is available on [GitHub](https://github.com/gear-foundation/dapps-DeIn).
 Note that its repository contains a git submodule, so cloning should be done with the `--recurse-submodules` flag, i.e.:
 ```
-git clone --recurse-submodules "https://github.com/gear-dapps/DeIn"
+git clone --recurse-submodules "https://github.com/gear-foundation/dapps-DeIn"
 ```
 
 ## Connect your dApp to the Decentralized Internet

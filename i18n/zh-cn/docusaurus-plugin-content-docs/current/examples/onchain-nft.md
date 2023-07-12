@@ -13,7 +13,7 @@ NFT 智能合约的例子展示了当代币资产直接存储在链上的方法�
 
 但这里还介绍了另一种方法。你可以直接将 NFT 存储在链上，而不需要任何外部存储。这种方法可以帮助你在外部存储出现问题时不会丢失 NFT。
 
-本文介绍了合约接口、数据结构、基本功能并解释了它们的用途。它可以直接使用，也可以根据自己的情况进行修改。源代码可在[GitHub](https://github.com/gear-dapps/non-fungible-token/tree/master/on-chain-nft) 查看。
+本文介绍了合约接口、数据结构、基本功能并解释了它们的用途。它可以直接使用，也可以根据自己的情况进行修改。源代码可在[GitHub](https://github.com/gear-foundation/dapps-non-fungible-token/tree/master/on-chain-nft) 查看。
 
 ## 方法
 
@@ -30,13 +30,13 @@ NFT 智能合约的例子展示了当代币资产直接存储在链上的方法�
 
 - *burn(from, token_id)* 用于从合同中移除带有所述*token_id*的令牌。
 
-NFT 合约的默认实现是在 Gear 库中提供的：[gear-lib/non_fungible_token](https://github.com/gear-dapps/gear-lib/tree/master/src/non_fungible_token)。
+NFT 合约的默认实现是在 Gear 库中提供的：[gear-lib/non_fungible_token](https://github.com/gear-foundation/dapps-gear-lib/tree/master/src/non_fungible_token)。
 
 要使用默认的实现，请在 *Cargo.toml* 配置：
 
 ```toml
-gear-lib = { git = "https://github.com/gear-dapps/gear-lib.git" }
-gear-lib-derive = { git = "https://github.com/gear-dapps/gear-lib.git" }
+gear-lib = { git = "https://github.com/gear-foundation/dapps-gear-lib.git" }
+gear-lib-derive = { git = "https://github.com/gear-foundation/dapps-gear-lib.git" }
 hashbrown = "0.13.1"
 ```
 
@@ -261,10 +261,10 @@ extern "C" fn meta_state() -> *mut [i32; 2] {
 
 ## 总结
 
-Gear 为 gNFT 协议的核心功能提供了一个可重复使用的[库](https://github.com/gear-dapps/non-fungible-token/tree/master/nft/src)。通过使用对象组合，该库可以在自定义的 NFT 合约实现中使用，减少可重复代码。
+Gear 为 gNFT 协议的核心功能提供了一个可重复使用的[库](https://github.com/gear-foundation/dapps-non-fungible-token/tree/master/nft/src)。通过使用对象组合，该库可以在自定义的 NFT 合约实现中使用，减少可重复代码。
 
-本合约实现在 GitHub [on-chain-nft/src](https://github.com/gear-dapps/non-fungible-token/tree/master/on-chain-nft/src)上。
+本合约实现在 GitHub [on-chain-nft/src](https://github.com/gear-foundation/dapps-non-fungible-token/tree/master/on-chain-nft/src)上。
 
-同样可以找到基于 `gtest` 实现的智能合约测试范例：`gtest`: [on-chain-nft/tests](https://github.com/gear-dapps/non-fungible-token/tree/master/on-chain-nft/tests)。
+同样可以找到基于 `gtest` 实现的智能合约测试范例：`gtest`: [on-chain-nft/tests](https://github.com/gear-foundation/dapps-non-fungible-token/tree/master/on-chain-nft/tests)。
 
 更多关于在 Gear 上测试智能合约的细节，请参考这篇文章：[应用测试](https://wiki.gear-tech.io/zh-cn/developing-contracts/testing/)。

@@ -253,7 +253,7 @@ extern "C" fn meta_state() -> *mut [i32; 2] {
 
 ## 用户界面
 
-一个 [即用型应用](https://dao.gear-tech.io/)实例提供了一个与[DAO](https://github.com/gear-dapps/dao-light)和[GFT](https://github.com/gear-dapps/fungible-token)智能合约互动的用户界面。
+一个 [即用型应用](https://dao.gear-tech.io/)实例提供了一个与[DAO](https://github.com/gear-foundation/dapps-dao-light)和[GFT](https://github.com/gear-foundation/dapps-fungible-token)智能合约互动的用户界面。
 
 Gear 同质化代币可以创建基于实用代币的 DAO，详情请看[本文](gft-20.md)。
 
@@ -294,8 +294,8 @@ yarn run start
 
 ## 源码
 
-DAO 智能合约的例子的源代码和其测试的实例源码在 [GitHub](https://github.com/gear-dapps/dao-light)。
+DAO 智能合约的例子的源代码和其测试的实例源码在 [GitHub](https://github.com/gear-foundation/dapps-dao-light)。
 
-DAO 扩展版可以管理、会员提案和委托投票，源码在 [https://github.com/gear-dapps/dao-app](https://github.com/gear-dapps/dao-app)。
+DAO 扩展版可以管理、会员提案和委托投票，源码在 [https://github.com/gear-foundation/dapps-dao-app](https://github.com/gear-foundation/dapps-dao-app)。
 
 更多关于在 Gear 上测试智能合约的细节，请参考这篇文章：[应用测试](https://wiki.gear-tech.io/zh-cn/developing-contracts/testing/)。

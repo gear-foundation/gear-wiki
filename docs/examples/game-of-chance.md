@@ -8,15 +8,15 @@ sidebar_position: 9
 
 Game of chance is a simple game smart contract with the lottery logic.
 
-- Program source code available on [Github](https://github.com/gear-dapps/game-of-chance)
-- dApp UI [Github](https://github.com/gear-dapps/game-of-chance/tree/master/frontend)
+- Program source code available on [Github](https://github.com/gear-foundation/dapps-game-of-chance)
+- dApp UI [Github](https://github.com/gear-foundation/dapps-game-of-chance/tree/master/frontend)
 
 ## How to run
 
 ### ⚒️ Build program
 
-- Get the source code of [GOC contract](https://github.com/gear-dapps/game-of-chance)
-- Build contracts as described in [program/README.md](https://github.com/gear-dapps/game-of-chance/blob/master/README.md).
+- Get the source code of [GOC contract](https://github.com/gear-foundation/dapps-game-of-chance)
+- Build contracts as described in [program/README.md](https://github.com/gear-foundation/dapps-game-of-chance/blob/master/README.md).
 
 ### 🏗️ Upload program
 
@@ -28,7 +28,7 @@ Game of chance is a simple game smart contract with the lottery logic.
 
 ### 🖥️ Run UI
 
-1. Install packages as described in [frontend/README.md](https://github.com/gear-dapps/game-of-chance/blob/master/frontend/README.md)
+1. Install packages as described in [frontend/README.md](https://github.com/gear-foundation/dapps-game-of-chance/blob/master/frontend/README.md)
 2. Configure `.env` file. Specify network address and program ID like in the example below:
 
 ```sh
@@ -168,6 +168,6 @@ To display only necessary certain values from the state, you need to write a sep
 
 ## Source code
 
-The source code of the Game of chance smart contract and an implementation of its testing is available on [GitHub](https://github.com/gear-dapps/game-of-chance). They can be used as is or modified to suit your own scenarios.
+The source code of the Game of chance smart contract and an implementation of its testing is available on [GitHub](https://github.com/gear-foundation/dapps-game-of-chance). They can be used as is or modified to suit your own scenarios.
 
 For more details about testing smart contracts written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.

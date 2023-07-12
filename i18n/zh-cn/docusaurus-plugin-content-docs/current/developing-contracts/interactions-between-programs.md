@@ -44,11 +44,13 @@ async fn main() {
 - program - 发送消息的程序的地址
 - payload - 程序的消息
 - value - 附在消息上的资金
+- reply_deposit - 用于为未来的回复处理提供 gas（如果为零则跳过）
 
 ```rust
   pub fn send_for_reply_as<E: Encode, D: Decode>(
     program: ActorId,
     payload: E,
-    value: u128
+    value: u128,
+    reply_deposit: u64
 ) -> Result<CodecMessageFuture<D>>
 ```

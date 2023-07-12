@@ -10,7 +10,7 @@ sidebar_position: 17
 Stacking 类似于银行存款，由于加密货币的简单存储而获得被动收益。
 收入的百分比可能不同 —— 这完全取决于存款的期限。
 
-任何人都可以创建自己的 Staking 合约并在 Gear Network 上运行。Gear 创建了合约，在[GitHub](https://github.com/gear-dapps/staking)上查看。
+任何人都可以创建自己的 Staking 合约并在 Gear Network 上运行。Gear 创建了合约，在[GitHub](https://github.com/gear-foundation/dapps-staking)上查看。
 
 本文解释了接口、数据结构、基本功能并解释了它们的用途。它可以直接使用或修改以适合自己的使用场景。
 
@@ -228,6 +228,7 @@ msg::send_for_reply(
         amount: amount_tokens,
     },
     0,
+    0,
 )
 ```
 
@@ -341,14 +342,14 @@ extern "C" fn meta_state() -> *mut [i32; 2] {
 
 ## 总结
 
-A source code of the contract example provided by Gear is available on GitHub: [`staking/src/lib.rs`](https://github.com/gear-dapps/staking/blob/master/src/lib.rs).
+A source code of the contract example provided by Gear is available on GitHub: [`staking/src/lib.rs`](https://github.com/gear-foundation/dapps-staking/blob/master/src/lib.rs).
 
-合约源码在 Github 上可以找到：[`staking/src/lib.rs`](https://github.com/gear-dapps/staking/blob/master/src/lib.rs)。
+合约源码在 Github 上可以找到：[`staking/src/lib.rs`](https://github.com/gear-foundation/dapps-staking/blob/master/src/lib.rs)。
 
 本合约的测试代码基于 gtest：
 
-- [`simple_test.rs`](https://github.com/gear-dapps/staking/blob/master/tests/simple_test.rs)
+- [`simple_test.rs`](https://github.com/gear-foundation/dapps-staking/blob/master/tests/simple_test.rs)
 
-- [`panic_test.rs`](https://github.com/gear-dapps/staking/blob/master/tests/panic_test.rs)
+- [`panic_test.rs`](https://github.com/gear-foundation/dapps-staking/blob/master/tests/panic_test.rs)
 
 更多关于在 Gear 上测试智能合约的细节，请参考这篇文章：[程序测试](/developing-contracts/testing.md) 。

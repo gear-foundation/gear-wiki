@@ -9,7 +9,7 @@ Introducing Gear React Application Template: Accelerate Your Decentralized App D
 
 Are you looking to swiftly launch your decentralized application (dApp) on Gear-powered blockchains? Look no further! Gear React Application Template, also known as `create-gear-app`, is a pre-configured application template designed to streamline the development process. With its well-thought-out infrastructure and convenient features, it allows developers to quickly create and deploy their dApps on Gear-powered blockchains.
 
-Gear React Application Template can be found on [GitHub](https://github.com/gear-dapps/react-app). This template is packed with a range of benefits and features that make it an ideal choice for developers seeking efficiency and simplicity in their dApp development workflow.
+Gear React Application Template can be found on [GitHub](https://github.com/gear-foundation/dapps-react-app). This template is packed with a range of benefits and features that make it an ideal choice for developers seeking efficiency and simplicity in their dApp development workflow.
 
 ## Features
 
@@ -32,5 +32,5 @@ Furthermore, Gear React Application Template is particularly beneficial for deve
 Simply clone this repo to your local folder:
 
 ```sh
-git clone https://github.com/gear-dapps/react-app.git d-app
+git clone https://github.com/gear-foundation/dapps-react-app.git d-app
 ```

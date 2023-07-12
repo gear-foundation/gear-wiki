@@ -101,8 +101,8 @@ pub enum ConcertAction {
 
 ## 结论
 
-Concert 的源代码和其测试的实例源码在 GitHub 上：[`concert/src/lib.rs`](https://github.com/gear-dapps/concert/blob/master/src/lib.rs)。
+Concert 的源代码和其测试的实例源码在 GitHub 上：[`concert/src/lib.rs`](https://github.com/gear-foundation/dapps-concert/blob/master/src/lib.rs)。
 
-同样可以找到基于 `gtest` 实现的智能合约测试范例：[`concert/tests/concert_tests.rs`](https://github.com/gear-dapps/concert/blob/master/tests/concert_tests.rs)。
+同样可以找到基于 `gtest` 实现的智能合约测试范例：[`concert/tests/concert_tests.rs`](https://github.com/gear-foundation/dapps-concert/blob/master/tests/concert_tests.rs)。
 
 更多关于在 Gear 上测试智能合约的细节，请参考这篇文章：[应用测试](/developing-contracts/testing)。

@@ -78,8 +78,8 @@ pub struct InitConfig {
 
 ## Conclusion
 
-A source code of the contract example provided by Gear is available on GitHub: [oracle/randomness-oracle/src/lib.rs](https://github.com/gear-dapps/oracle/blob/wip/randomness-oracle/src/lib.rs).
+A source code of the contract example provided by Gear is available on GitHub: [oracle/randomness-oracle/src/lib.rs](https://github.com/gear-foundation/dapps-oracle/blob/wip/randomness-oracle/src/lib.rs).
 
-See also an example of the smart contract testing implementation based on `gtest`: [oracle/randomness-oracle/tests/randomness_oracle.rs](https://github.com/gear-dapps/oracle/blob/wip/randomness-oracle/tests/randomness_oracle.rs).
+See also an example of the smart contract testing implementation based on `gtest`: [oracle/randomness-oracle/tests/randomness_oracle.rs](https://github.com/gear-foundation/dapps-oracle/blob/wip/randomness-oracle/tests/randomness_oracle.rs).
 
 For more details about testing smart contracts written on Gear, refer to this article: [Program Testing](/docs/developing-contracts/testing).

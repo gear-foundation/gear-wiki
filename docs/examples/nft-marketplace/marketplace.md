@@ -11,17 +11,17 @@ NFT marketplace is a contract where you can buy and sell non-fungible tokens for
 
 A smart contract examples created by Gear are available on GitHub so anyone can easily create their own NFT marketplace application and run it on the Gear Network:
 
-- [Gear Non-Fungible Token](https://github.com/gear-dapps/non-fungible-token/). 
-- [NFT marketplace](https://github.com/gear-dapps/nft-marketplace).
+- [Gear Non-Fungible Token](https://github.com/gear-foundation/dapps-non-fungible-token/).
+- [NFT marketplace](https://github.com/gear-foundation/dapps-nft-marketplace).
 
-- Marketplace UI available on [Github](https://github.com/gear-dapps/nft-marketplace/tree/master/frontend)
+- Marketplace UI available on [Github](https://github.com/gear-foundation/dapps-nft-marketplace/tree/master/frontend)
 
-## How to run 
+## How to run
 
 ### ⚒️ Build programs
 
-- Build [NFT contract](https://github.com/gear-dapps/non-fungible-token/) as described in `README.md`
-- Build [Marketplace contract](https://github.com/gear-dapps/nft-marketplace/) as described in `README.md`
+- Build [NFT contract](https://github.com/gear-foundation/dapps-non-fungible-token/) as described in `README.md`
+- Build [Marketplace contract](https://github.com/gear-foundation/dapps-nft-marketplace/) as described in `README.md`
 
 ### 🏗️ Upload programs
 
@@ -119,13 +119,13 @@ pub struct Market {
 ```
 - `admin_id` - an account who has the right to approve non-fungible-token and fungible-tokens contracts that can be used in the marketplace contract;
 - `treasury_id` - an account to which sales commission will be credited;
-- `treasury_fee` - 
-commission percentage (from 1 to 5 percent)
+- `treasury_fee` - commission percentage (from 1 to 5 percent)
+
 The marketplace contract is initialized with the following fields;
+
 - `items` - listed NFTs;
 - `approved_nft_contracts` - NFT contracts accounts that can be listed on the marketplace;
-- `approved_ft_contracts` - 
-fungible token accounts for which it is possible to buy marketplace items;
+- `approved_ft_contracts` - fungible token accounts for which it is possible to buy marketplace items;
 - `tx_id` - the id for tracking transactions in the fungible and non-fungible contracts (See the description of [fungible token](/examples/gft-20.md) and [non-fungible token](/examples/gnft-721.md)).
 
 
@@ -142,13 +142,10 @@ pub struct Item {
 ```
 - `owner` - an item owner;
 - `ft_contract_id` - a contract of fungible tokens for which that item can be bought. If that field is `None` then the item is on sale for native Gear value;
-- `price` - 
-the item price. `None` field means that the item is not on the sale;
-- `auction` - 
-a field containing information on the current auction. `None` field means that there is no current auction on the item;
-- `offers` - 
-purchase offers made on that item;
-- `tx` - a pending transaction on the item. `None` means that there are no pending transactions. 
+- `price` - the item price. `None` field means that the item is not on the sale;
+- `auction` - a field containing information on the current auction. `None` field means that there is no current auction on the item;
+- `offers` - purchase offers made on that item;
+- `tx` - a pending transaction on the item. `None` means that there are no pending transactions.
 
 `MarketTx` is an enum of possible transactions that can occur with NFT:
 
@@ -177,8 +174,11 @@ pub enum MarketTx {
     },
 }
 ```
+
 ### Listing NFTs, changing the price or stopping the sale.
-To list NFT on the marketplace or modify the terms of sale send the following message: 
+
+To list NFT on the marketplace or modify the terms of sale send the following message:
+
 ```rust
 /// Adds data on market item.
 /// If the item of that NFT does not exist on the marketplace then it will be listed.
@@ -202,17 +202,18 @@ AddMarketData {
 }
 ```
 ### NFT purchase.
-To buy NFT send the following message: 
+
+To buy NFT send the following message:
 
 ```rust
 /// Sells the NFT.
-/// 
+///
 /// # Requirements:
 /// * The NFT item must exist and be on sale.
 /// * If the NFT is sold for a native Gear value, then a buyer must attach a value equal to the price.
 /// * If the NFT is sold for fungible tokens then a buyer must have enough tokens in the fungible token contract.
 /// * There must be no open auction on the item.
-/// 
+///
 /// On success replies [`MarketEvent::ItemSold`].
 BuyItem {
     /// NFT contract address
@@ -252,7 +253,7 @@ The auction is started with the following message:
 /// * Only the item owner can start the auction.
 /// * `nft_contract_id` must be in the list of `approved_nft_contracts`
 /// *  There must be no active auction
-/// 
+///
 /// On success replies [`MarketEvent::AuctionCreated`].
 CreateAuction {
     /// the NFT contract address
@@ -270,17 +271,17 @@ CreateAuction {
 },
 ```
 
-To add bid to the current auction send the following message:
+To add a bid to the current auction send the following message:
 ```rust
 /// Adds a bid to an ongoing auction.
-/// 
+///
 /// # Requirements:
 /// * The item must exist.
 /// * The auction must exist on the item.
 /// * If the NFT is sold for a native Gear value, then a buyer must attach a value equal to the price indicated in the arguments.
 /// * If the NFT is sold for fungible tokens then a buyer must have   enough tokens in the fungible token contract.
 /// * `price` must be greater than the current offered price for that item.
-///  
+///
 /// On success replies [`MarketEvent::BidAdded`].
 AddBid {
     /// the NFT contract address
@@ -292,13 +293,14 @@ AddBid {
 },
 ```
 
-If auction period is over then anyone can send message `SettleAuction` that will send the NFT to the winner and pay to the owner:
+If the auction period is over then anyone can send a message `SettleAuction` that will send the NFT to the winner and pay to the owner:
+
 ```rust
 /// Settles the auction.
-/// 
+///
 /// Requirements:
 /// * The auction must be over.
-///   
+///
 /// On successful auction replies [`MarketEvent::AuctionSettled`].
 /// If no bids were made replies [`MarketEvent::AuctionCancelled`].
 SettleAuction {
@@ -310,10 +312,12 @@ SettleAuction {
 ```
 
 ### Offers.
-To make offer on the marketplace item send the following message:
+
+To make an offer on the marketplace item send the following message:
+
 ```rust
 /// Adds a price offer to the item.
-/// 
+///
 /// Requirements:
 /// * NFT items must exist and be listed on the marketplace.
 /// * There must be no ongoing auction on the item.
@@ -321,7 +325,7 @@ To make offer on the marketplace item send the following message:
 /// * If a user makes an offer in fungible tokens then he must have  enough tokens in the fungible token contract.
 /// * The price can not be equal to 0.
 /// * There must be no identical offers on the item.
-///     
+///
 /// On success replies [`MarketEvent::OfferAdded`].
 AddOffer {
     /// the NFT contract address
@@ -334,16 +338,18 @@ AddOffer {
     price: u128,
 },
 ```
+
 The item owner can accept the offer:
+
 ```rust
 /// Accepts an offer.
-/// 
+///
 /// Requirements:
 /// * NFT items must exist and be listed on the marketplace.
 /// * Only the owner can accept the offer.
 /// * There must be no ongoing auction.
 /// * The offer with indicated hash must exist.
-///      
+///
 /// On success replies [`MarketEvent::OfferAccepted`].
 AcceptOffer {
     /// the NFT contract address
@@ -356,16 +362,17 @@ AcceptOffer {
     price: Price,
 }
 ```
+
 The user who made the offer can also withdraw his tokens:
 
 ```rust
 /// Withdraws tokens.
-/// 
+///
 /// Requirements:
 /// * NFT items must exist and be listed on the marketplace.
 /// * Only the offer creator can withdraw his tokens.
 /// * The offer with indicated hash must exist.
-/// 
+///
 /// On success replies [`MarketEvent::TokensWithdrawn`].
 Withdraw {
     /// the NFT contract address
@@ -383,6 +390,7 @@ Withdraw {
 The `market` contract interacts with `fungible` and `non-fungible` token contracts. Each transaction that changes the states of several contracts is stored in the state until it is completed. Every time a user interacts with an item, the marketplace contract checks for an pending transaction and, if there is one, asks the user to complete it, not allowing to start a new one. The idempotency of the token contracts allows to restart a transaction without duplicate changes which guarantees the state consistency of 3 contracts.
 
 ## Program metadata and state
+
 Metadata interface description:
 
 ```rust
@@ -397,6 +405,7 @@ impl Metadata for MarketMetadata {
     type State = Market;
 }
 ```
+
 To display the full contract state information, the `state()` function is used:
 
 ```rust
@@ -413,7 +422,7 @@ extern "C" fn state() {
 }
 ```
 
-To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `Market` state. For example - [gear-dapps/nft-marketplace/state](https://github.com/gear-dapps/nft-marketplace/tree/master/state):
+To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `Market` state. For example - [gear-foundation/dapps-nft-marketplace/state](https://github.com/gear-foundation/dapps-nft-marketplace/tree/master/state):
 
 ```rust
 #[metawasm]

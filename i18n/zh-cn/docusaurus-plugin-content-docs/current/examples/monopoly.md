@@ -124,7 +124,7 @@ GameAction::StartRegistration
 ## 智能合约
 ### Master 合约
 
-[Master 合约](https://github.com/gear-dapps/syndote/tree/master/syndote) 使用垄断卡信息（单元成本，特殊单元：监狱，彩票）进行初始化。正如已经提到的，它有足够的 gas 预留以以便自动游戏。在每个玩家的步骤之前，`Master` 合约会检查 gas 量，如果不够，它会向游戏管理员发送一条消息，请求再次预订 gas。
+[Master 合约](https://github.com/gear-foundation/dapps-syndote/tree/master/syndote) 使用垄断卡信息（单元成本，特殊单元：监狱，彩票）进行初始化。正如已经提到的，它有足够的 gas 预留以以便自动游戏。在每个玩家的步骤之前，`Master` 合约会检查 gas 量，如果不够，它会向游戏管理员发送一条消息，请求再次预订 gas。
 
 **玩家注册**:
 
@@ -157,7 +157,7 @@ struct PlayerInfo {
 
 **策略消息：**
 
-[策略合约](https://github.com/gear-dapps/syndote/tree/master/player)  根据垄断场上的位置，发送策略信息。一个玩家可能处于以下位置之一：
+[策略合约](https://github.com/gear-foundation/dapps-syndote/tree/master/player)  根据垄断场上的位置，发送策略信息。一个玩家可能处于以下位置之一：
 
  - 一个 cell 有自己的财产。一个玩家有一个权利：
    - 在单元格上添加一个齿轮。齿轮可以是 `青铜`、`银 `或 `金`；

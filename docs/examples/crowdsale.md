@@ -11,7 +11,7 @@ A public offering to invest in a brand-new cryptocurrency or other digital asset
 
 An example of a crowdsale smart-contract implementation described in this article is one of many other decentralized applications that can be implemented and launched on Gear. This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. Anyone can easily create their own crowdsale application and run it on the Gear Network.
 
-Initial funds with which a token is purchased are determined by the Gear fungible tokens contract - [gFT](https://wiki.gear-tech.io/examples/gft-20). The contract's source code is available on [GitHub](https://github.com/gear-dapps/crowdsale).
+Initial funds with which a token is purchased are determined by the Gear fungible tokens contract - [gFT](https://wiki.gear-tech.io/examples/gft-20). The contract's source code is available on [GitHub](https://github.com/gear-foundation/dapps-crowdsale).
 
 ## Interface
 ### Source files
@@ -23,7 +23,7 @@ pub async fn transfer_tokens(
     from: &ActorId, // - the sender address
     to: &ActorId, // - the recipient address
     amount: u128, // - the amount of tokens
-) 
+)
 ```
 This function sends a message (the action is defined in the enum IcoAction) and gets a reply (the reply is defined in the enum IcoEvent):
 ```rust
@@ -39,13 +39,14 @@ let _transfer_response = msg::send_for_reply_as::<ft_main_io::FTokenAction, FTok
         .encode(),
     },
     0,
+    0,
 )
 .expect("Error in sending a message `FTokenAction::Message`")
 .await
 .expect("Error int transfer");
 ```
 
-2. `asserts.rs` - contains asserts functions: `owner_message` and `not_zero_address`. 
+2. `asserts.rs` - contains asserts functions: `owner_message` and `not_zero_address`.
 - `owner_message` checks if `msg::source()` is equal to `owner`. Otherwise, it panics:
 ```rust
 pub fn owner_message(owner: &ActorId, message: &str) {
@@ -106,7 +107,7 @@ pub struct IcoState {
 - `tokens_sold` - how many tokens were sold
 - `tokens_goal` - how many tokens are we going to sell
 - `owner` - contract owner
-- `token_address` - fungible token address 
+- `token_address` - fungible token address
 - `token_holders` - the list of buyers and the number of tokens they bought
 
 ### Functions
@@ -173,7 +174,7 @@ extern "C" fn state() {
     );
 }
 ```
-To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `State` state. For example - [gear-dapps/crowdsale/state](https://github.com/gear-dapps/crowdsale/tree/master/state):
+To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `State` state. For example - [gear-foundation/dapps-crowdsale/state](https://github.com/gear-foundation/dapps-crowdsale/tree/master/state):
 
 ```rust
 #[metawasm]
@@ -197,6 +198,6 @@ pub trait Metawasm {
 
 ## Conclusion
 
-The source code of this example of ICO smart contract and the example of an implementation of its testing is available on [Github](https://github.com/gear-dapps/crowdsale).
+The source code of this example of ICO smart contract and the example of an implementation of its testing is available on [Github](https://github.com/gear-foundation/dapps-crowdsale).
 
 For more details about testing smart contracts written on Gear, refer to the [Program Testing](https://wiki.gear-tech.io/developing-contracts/testing) article.

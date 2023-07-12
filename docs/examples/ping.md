@@ -7,7 +7,7 @@ sidebar_position: 2
 
 Gear is very easy to write code for!
 
-Let's look at the [minimal program](https://github.com/gear-dapps/app/). It contains the following files:
+Let's look at the [minimal program](https://github.com/gear-foundation/dapps-app/). It contains the following files:
 ```
 .
 ├── io /
@@ -31,7 +31,7 @@ Let's look at the [minimal program](https://github.com/gear-dapps/app/). It cont
 ├── meta.txt
 └── build.rs
 ```
-The code of the program is in the `src/contract.rs` file. The program replies with `Pong` string if the sender sent `Ping` message to it. It also saves how many times a user sent a ping message to the program.  
+The code of the program is in the `src/contract.rs` file. The program replies with `Pong` string if the sender sent `Ping` message to it. It also saves how many times a user sent a ping message to the program.
 So, the program contains:
 - state definition:
 ```rust
@@ -74,14 +74,6 @@ extern "C" fn state() {
     reply(common_state()).expect(
         "Failed to encode or reply with `<ContractMetadata as Metadata>::State` from `state()`",
     );
-}
-```
--  `metahash()` function that returns the metadata hash:
-```rust
-#[no_mangle]
-extern "C" fn metahash() {
-    reply(include!("../.metahash"))
-        .expect("Failed to encode or reply with `[u8; 32]` from `metahash()`");
 }
 ```
 
@@ -146,6 +138,6 @@ pub trait Metawasm {
         state.ping_count(actor)
     }
 }
-``` 
+```
 
 In the tests directory you can see an example of testing the  program using `gclient` and `gtest`. For more details about testing smart contracts written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.

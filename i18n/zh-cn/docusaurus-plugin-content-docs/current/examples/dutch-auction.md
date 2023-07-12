@@ -134,8 +134,8 @@ pub struct AuctionInfo {
 
 ## Source code
 
-荷兰式拍卖的合约源代码可以在 [gear-dapps/dutch-auction](https://github.com/gear-dapps/dutch-auction) 找到。
+荷兰式拍卖的合约源代码可以在 [gear-foundation/dapps-dutch-auction](https://github.com/gear-foundation/dapps-dutch-auction) 找到。
 
-同样可以找到基于 gtest 实现的智能合约测试范例：[gear-dapps/dutch-auction/tree/master/tests](https://github.com/gear-dapps/dutch-auction/tree/master/tests)。
+同样可以找到基于 gtest 实现的智能合约测试范例：[gear-foundation/dapps-dutch-auction/tree/master/tests](https://github.com/gear-foundation/dapps-dutch-auction/tree/master/tests)。
 
 更多关于在 Gear 的测试智能合约的细节，请参考这篇文章：[应用测试](https://wiki.gear-tech.io/zh-cn/developing-contracts/testing/)。

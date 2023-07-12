@@ -10,7 +10,7 @@ A Dutch auction is one of several types of auctions for buying or selling goods.
 
 The auction uses [Gear non-fungible tokens (gNFT)](gnft-721.md) as tradable goods.
 
-The article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. Anyone can easily create their own application and run it on the Gear Network. The source code is available on [GitHub](https://github.com/gear-dapps/dutch-auction).
+The article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. Anyone can easily create their own application and run it on the Gear Network. The source code is available on [GitHub](https://github.com/gear-foundation/dapps-dutch-auction).
 
 ## Contract description
 
@@ -115,7 +115,7 @@ extern "C" fn state() {
     );
 }
 ```
-To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `AuctionInfo` state. For example - [gear-dapps/dutch-auction/state](https://github.com/gear-dapps/dutch-auction/tree/master/state):
+To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `AuctionInfo` state. For example - [gear-foundation/dapps-dutch-auction/state](https://github.com/gear-foundation/dapps-dutch-auction/tree/master/state):
 
 ```rust
 #[metawasm]
@@ -134,8 +134,8 @@ pub mod metafns {
 
 ## Source code
 
-The source code of this example of Dutch Auction smart contract and the example of an implementation of its testing is available on [gear-dapps/dutch-auction](https://github.com/gear-dapps/dutch-auction).
+The source code of this example of Dutch Auction smart contract and the example of an implementation of its testing is available on [gear-foundation/dapps-dutch-auction](https://github.com/gear-foundation/dapps-dutch-auction).
 
-See also an example of the smart contract testing implementation based on `gtest`: [gear-dapps/dutch-auction/tree/master/tests](https://github.com/gear-dapps/dutch-auction/tree/master/tests).
+See also an example of the smart contract testing implementation based on `gtest`: [gear-foundation/dapps-dutch-auction/tree/master/tests](https://github.com/gear-foundation/dapps-dutch-auction/tree/master/tests).
 
 For more details about testing smart contracts written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.

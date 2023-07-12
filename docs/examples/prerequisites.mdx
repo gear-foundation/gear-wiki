@@ -75,7 +75,7 @@ commit hash: `78dfa07`
 <td>
 
 Make sure the correct commit hash version is specified in the `Cargo.toml` file of the smart contract you're working on. For example:
-https://github.com/gear-dapps/app/blob/master/Cargo.toml#L10
+https://github.com/gear-foundation/dapps-app/blob/master/Cargo.toml#L10
 
 </td>
 </tr>
@@ -151,7 +151,7 @@ fn main() {
 ```
 
 `Cargo.toml` is a project manifest in Rust, it contains all metadata necessary for compiling the project.
-Configure the `Cargo.toml` similarly to how it is configured [ping/Cargo.toml](https://github.com/gear-dapps/ping/blob/master/Cargo.toml). You can refer to [Getting Started](/docs/getting-started-in-5-minutes.md) for additional details.
+Configure the `Cargo.toml` similarly to how it is configured [ping/Cargo.toml](https://github.com/gear-foundation/dapps-ping/blob/master/Cargo.toml). You can refer to [Getting Started](/docs/getting-started-in-5-minutes.md) for additional details.
 
 ## Building Rust Contract
 
@@ -167,14 +167,14 @@ Our application should compile successfully and the final file `target/wasm32-un
 
 You can use a pre-configured Docker image to build and test your smart contract. The image contains all the necessary tools and dependencies for building and running smart contracts and JS applications.
 
-The source code of the image is available on [GitHub](https://github.com/gear-dapps/gear-env).
+The source code of the image is available on [GitHub](https://github.com/gear-foundation/gear-env).
 
 To use the image, you need to install Docker on your machine. You can find the installation instructions for your OS on the [Docker website](https://docs.docker.com/get-docker/).
 
 After installing Docker, you can pull the image from the Docker Hub:
 
 ```bash
-docker pull ghcr.io/gear-dapps/gear-env:stable
+docker pull ghcr.io/gear-foundation/gear-env:stable
 ```
 
 To run the image, use the following command:
@@ -184,14 +184,14 @@ To run the image, use the following command:
 <TabItem value="linux-mac" label="Linux / macOS x86_64">
 
 ```bash
-docker run --rm --name gear-env -itd ghcr.io/gear-dapps/gear-env:stable bash
+docker run --rm --name gear-env -itd ghcr.io/gear-foundation/gear-env:stable bash
 ```
 </TabItem>
 
 <TabItem value="mac-arm" label="macOS ARM">
 
 ```bash
-docker run --rm --name gear-env --platform linux/amd64 -itd ghcr.io/gear-dapps/gear-env:stable bash
+docker run --rm --name gear-env --platform linux/amd64 -itd ghcr.io/gear-foundation/gear-env:stable bash
 ```
 </TabItem>
 </Tabs>

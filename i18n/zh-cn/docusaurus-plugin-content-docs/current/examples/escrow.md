@@ -167,7 +167,7 @@ pub enum EscrowState {
 
 ## 用户界面
 
-一个[现成的应用](https://escrow.gear-tech.io/)实例提供了一个与[第三方担保](https://github.com/gear-dapps/dao-light)智能合约互动的用户界面。
+一个[现成的应用](https://escrow.gear-tech.io/)实例提供了一个与[第三方担保](https://github.com/gear-foundation/dapps-dao-light)智能合约互动的用户界面。
 
 
 你也可以通过视频了解如何使用：**https://youtu.be/CD8j4epEY4E**.
@@ -198,6 +198,6 @@ REACT_APP_NODE_ADDRESS
 
 ## 源码
 
-Escrow 的合约源码可以在 [GitHub](https://github.com/gear-dapps/escrow) 找到。
+Escrow 的合约源码可以在 [GitHub](https://github.com/gear-foundation/dapps-escrow) 找到。
 
 更多关于在 Gear 的测试智能合约的细节，请参考这篇文章：[应用测试](/docs/developing-contracts/testing)。

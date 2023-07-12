@@ -49,6 +49,6 @@ sidebar_position: 6
 
 Gear Feeds 是一个成熟的应用程序的例子，其核心逻辑是在 Gear 上通过智能合约实现的去中心化的应用程序。我们希望看到更多由 Gear Feeds 启发的令人兴奋的项目，以及我们的社区成员创造的最近的平台改进！:)
 
-Router 与 Channel 的合约源代码可以在 [gear-dapps/feeds](https://github.com/gear-dapps/multitoken/tree/master/tests)找到。
+Router 与 Channel 的合约源代码可以在 [gear-foundation/dapps-feeds](https://github.com/gear-foundation/dapps-multitoken/tree/master/tests)找到。
 
 更多关于在 Gear 的测试智能合约的细节，请参考这篇文章：[应用测试](https://wiki.gear-tech.io/zh-cn/developing-contracts/testing/)。

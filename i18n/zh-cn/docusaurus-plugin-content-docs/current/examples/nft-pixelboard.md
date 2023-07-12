@@ -247,6 +247,6 @@ pub enum NFTPixelboardStateQuery {
 
 ## 源码
 
-本合约代码实现已在 [GitHub](https://github.com/gear-dapps/nft-pixelboard)上开源。
+本合约代码实现已在 [GitHub](https://github.com/gear-foundation/dapps-nft-pixelboard)上开源。
 
 更多关于在 Gear 上测试智能合约的细节，请参考这篇文章：[应用测试](https://wiki.gear-tech.io/zh-cn/developing-contracts/testing/)。

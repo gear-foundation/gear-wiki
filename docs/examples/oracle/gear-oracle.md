@@ -16,7 +16,7 @@ These smart contracts can then be used to obtain external data which can't exist
 
 Moreover, oracles allow the creation of lending / DEX protocols, which form an important part of DeFi.
 
-Gear provides an example of the native implementation of randomness oracle, which provides an ability to use random numbers in smart contracts. It can be used as is or modified to suit your own scenarios. Anyone can easily create their own oracle and run it on the Gear Network. The source code is available on [GitHub](https://github.com/gear-dapps/oracle).
+Gear provides an example of the native implementation of randomness oracle, which provides an ability to use random numbers in smart contracts. It can be used as is or modified to suit your own scenarios. Anyone can easily create their own oracle and run it on the Gear Network. The source code is available on [GitHub](https://github.com/gear-foundation/dapps-oracle).
 
 ## Storage Structure
 
@@ -52,8 +52,8 @@ pub enum Event {
 
 ## Conclusion
 
-A source code of the contract example provided by Gear is available on GitHub: [oracle/oracle/src/contract.rs](https://github.com/gear-dapps/oracle/blob/wip/oracle/src/contract.rs).
+A source code of the contract example provided by Gear is available on GitHub: [oracle/oracle/src/contract.rs](https://github.com/gear-foundation/dapps-oracle/blob/wip/oracle/src/contract.rs).
 
-See also an example of the smart contract testing implementation based on `gtest` and `gclient`: [oracle/oracle/tests](https://github.com/gear-dapps/oracle/tree/wip/oracle/tests).
+See also an example of the smart contract testing implementation based on `gtest` and `gclient`: [oracle/oracle/tests](https://github.com/gear-foundation/dapps-oracle/tree/wip/oracle/tests).
 
 For more details about testing smart contracts written on Gear, refer to this article: [Program Testing](/docs/developing-contracts/testing).
