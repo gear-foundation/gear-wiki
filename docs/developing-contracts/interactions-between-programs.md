@@ -42,12 +42,14 @@ async fn main() {
 To send a message to a Gear program, use the `send_for_reply(program, payload, value)` function. In this function:
 - program - the address of the program to send the message for;
 - payload - the message to the program;
-- value - the funds attached to the message.
+- value - the funds attached to the message;
+- reply_deposit - used to provide gas for future reply handling (skipped if zero).
 
 ```rust
   pub fn send_for_reply_as<E: Encode, D: Decode>(
     program: ActorId,
     payload: E,
-    value: u128
+    value: u128,
+    reply_deposit: u64
 ) -> Result<CodecMessageFuture<D>>
 ```

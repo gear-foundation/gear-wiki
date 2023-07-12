@@ -26,9 +26,10 @@ If gas has been reserved but no system messages occur during the current executi
 
 It can be useful for a developer when writing communication between programs. Developer can define `my_handle_signal` function and implement some logic there. For example, `Program A` sent a message to `Program B`. `Program A` is waiting for a reply from `Program B` but `Program B` runs out of gas. The current execution will be interrupted, but the system will send a signal to `Program A` and indicates the message identifier during which the execution was interrupted.
 So, `Program A` sends a message and saves the message identifier:
+
 ```rust
 exec::system_reserve_gas(2_000_000_000).expect("Error during system gas reservation");
-let result = msg::send_for_reply(address, payload, value);
+let result = msg::send_for_reply(address, payload, value, reply_deposit);
 
 let (msg_id, msg_future) = if let Ok(msg_future) = result {
     (msg_future.waiting_reply_to, msg_future)

@@ -39,6 +39,7 @@ let _transfer_response = msg::send_for_reply_as::<ft_main_io::FTokenAction, FTok
         .encode(),
     },
     0,
+    0,
 )
 .expect("Error in sending a message `FTokenAction::Message`")
 .await

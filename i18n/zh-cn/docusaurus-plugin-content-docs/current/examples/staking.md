@@ -228,6 +228,7 @@ msg::send_for_reply(
         amount: amount_tokens,
     },
     0,
+    0,
 )
 ```
 
