@@ -24,7 +24,7 @@ impl Metadata for ProgramMetadata {
     type Init = InOut<MessageInitIn, MessageInitOut>;
     type Handle = InOut<MessageIn, MessageOut>;
     type Others = InOut<MessageAsyncIn, Option<u8>>;
-    type Reply = InOut<String, Vec<u16>>;
+    type Reply = String;
     type Signal = ();
     type State = Vec<Wallet>;
 }
@@ -34,8 +34,8 @@ As we can see, metadata enables you to determine the expected data at the input/
 
 - `Init` - describes incoming/outgoing types for `init()` function.
 - `Handle` - describes incoming/outgoing types for `handle()` function.
-- `Others` - describes incoming/outgoing types for `main()` function in case of asyncronius interaction.
-- `Reply` - describes incoming/outgoing types of message performed using the `handle_reply` function.
+- `Others` - describes incoming/outgoing types for `main()` function in case of asyncronous interaction.
+- `Reply` - describes an incoming type of message performed using the `handle_reply` function.
 - `Signal` - describes only the outgoing type from the program while processing the system signal.
 - `State` - describes the types for the queried State
 

@@ -80,8 +80,7 @@ where:
 `transactions` - the transaction history.
 
 
-Parameters `approved_token_program_id`, `period_duration`, `grace_period_length` are set when initializing a contract. The contract is initialized
-with the following struct:
+Parameters `approved_token_program_id`, `period_duration`, `grace_period_length` are set when initializing a contract. The contract is initialized with the following struct:
 
 ```rust
 struct InitDao {

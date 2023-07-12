@@ -119,13 +119,13 @@ pub struct Market {
 ```
 - `admin_id` - an account who has the right to approve non-fungible-token and fungible-tokens contracts that can be used in the marketplace contract;
 - `treasury_id` - an account to which sales commission will be credited;
-- `treasury_fee` -
-commission percentage (from 1 to 5 percent)
+- `treasury_fee` - commission percentage (from 1 to 5 percent)
+
 The marketplace contract is initialized with the following fields;
+
 - `items` - listed NFTs;
 - `approved_nft_contracts` - NFT contracts accounts that can be listed on the marketplace;
-- `approved_ft_contracts` -
-fungible token accounts for which it is possible to buy marketplace items;
+- `approved_ft_contracts` - fungible token accounts for which it is possible to buy marketplace items;
 - `tx_id` - the id for tracking transactions in the fungible and non-fungible contracts (See the description of [fungible token](/examples/gft-20.md) and [non-fungible token](/examples/gnft-721.md)).
 
 
@@ -177,8 +177,11 @@ pub enum MarketTx {
     },
 }
 ```
+
 ### Listing NFTs, changing the price or stopping the sale.
+
 To list NFT on the marketplace or modify the terms of sale send the following message:
+
 ```rust
 /// Adds data on market item.
 /// If the item of that NFT does not exist on the marketplace then it will be listed.
@@ -202,6 +205,7 @@ AddMarketData {
 }
 ```
 ### NFT purchase.
+
 To buy NFT send the following message:
 
 ```rust
@@ -270,7 +274,7 @@ CreateAuction {
 },
 ```
 
-To add bid to the current auction send the following message:
+To add a bid to the current auction send the following message:
 ```rust
 /// Adds a bid to an ongoing auction.
 ///
@@ -292,7 +296,8 @@ AddBid {
 },
 ```
 
-If auction period is over then anyone can send message `SettleAuction` that will send the NFT to the winner and pay to the owner:
+If the auction period is over then anyone can send a message `SettleAuction` that will send the NFT to the winner and pay to the owner:
+
 ```rust
 /// Settles the auction.
 ///
@@ -310,7 +315,9 @@ SettleAuction {
 ```
 
 ### Offers.
-To make offer on the marketplace item send the following message:
+
+To make an offer on the marketplace item send the following message:
+
 ```rust
 /// Adds a price offer to the item.
 ///
@@ -334,7 +341,9 @@ AddOffer {
     price: u128,
 },
 ```
+
 The item owner can accept the offer:
+
 ```rust
 /// Accepts an offer.
 ///
@@ -356,6 +365,7 @@ AcceptOffer {
     price: Price,
 }
 ```
+
 The user who made the offer can also withdraw his tokens:
 
 ```rust
@@ -383,6 +393,7 @@ Withdraw {
 The `market` contract interacts with `fungible` and `non-fungible` token contracts. Each transaction that changes the states of several contracts is stored in the state until it is completed. Every time a user interacts with an item, the marketplace contract checks for an pending transaction and, if there is one, asks the user to complete it, not allowing to start a new one. The idempotency of the token contracts allows to restart a transaction without duplicate changes which guarantees the state consistency of 3 contracts.
 
 ## Program metadata and state
+
 Metadata interface description:
 
 ```rust
@@ -397,6 +408,7 @@ impl Metadata for MarketMetadata {
     type State = Market;
 }
 ```
+
 To display the full contract state information, the `state()` function is used:
 
 ```rust
