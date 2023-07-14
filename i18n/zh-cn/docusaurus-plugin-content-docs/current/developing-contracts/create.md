@@ -13,7 +13,7 @@ sidebar_position: 7
 
 :::info
 你可以通过 [Gear IDEA](https://idea.gear-tech.io/) 提交合约代码，也可以通过 `@gear-js/api` SDK 提交。
-甚至也可以通过 `Gear Program` 命令行提交 —— https://github.com/gear-tech/gear-program。
+甚至也可以通过 `Gear Program` 命令行提交 —— https://github.com/gear-tech/gear/tree/master/gcli。
 :::
 
 代码提交后，可以用来创建一个新的合约：
