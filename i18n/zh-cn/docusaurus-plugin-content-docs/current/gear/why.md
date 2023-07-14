@@ -80,4 +80,4 @@ Polkadot 的核心方面是它能够在链之间路由任意消息。Polkadot �
 
 随着硬件的改进，Gear 网络会自然扩展，因为它利用了 CPU 的所有内核。任何拥有标准计算机的人现在都可以运行 Gear 节点，并且永远如此。凭借可分片设计，Gear 网络可以通过跨多个平行链插槽进行部署来扩展，并且可以作为一个独立的网络进行分片以获得额外的可扩展性。
 
-更多详细内容，请看[Gear 白皮书](https://whitepaper.gear-tech.io/)。
+更多详细内容，请看[Gear 白皮书](https://whitepaper.gear.foundation)。

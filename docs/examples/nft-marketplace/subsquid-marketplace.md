@@ -30,7 +30,7 @@ The Processor must be developed as a regular NodeJS package.
 
 Subsquid provides a set of packages that facilitate the development process.
 
-First of all, we need to create a GraphQL scheme describing all entities and relations between them. [Here](https://github.com/gear-tech/gear-integrations/blob/master/Subsquid/nft-marketplace/schema.graphql) is an example of a scheme that can be used to generate Typeorm models for a database using the `@subsquid/typeorm-codegen` package provided by Subsquid. We chose a Postgres database for storing all the data.
+First of all, we need to create a GraphQL scheme describing all entities and relations between them. [Here](https://github.com/gear-foundation/integrations-subsquid/blob/master/Subsquid/nft-marketplace/schema.graphql) is an example of a scheme that can be used to generate Typeorm models for a database using the `@subsquid/typeorm-codegen` package provided by Subsquid. We chose a Postgres database for storing all the data.
 
 The next step is to create the Processor.
 
@@ -38,13 +38,13 @@ Subsquid provides a really simple way to obtain data from an Archive. Using `@su
 
 In our case we need only `UserMessageSent` events, because they contain all the necessary data.
 
-The payloads of messages received through the processor are represented as bytes. We need program metadata to decode these bytes, so we’ve created a class called [Meta](https://github.com/gear-tech/gear-integrations/blob/master/Subsquid/nft-marketplace/src/meta.ts) that is responsible for decoding these bytes.
+The payloads of messages received through the processor are represented as bytes. We need program metadata to decode these bytes, so we’ve created a class called [Meta](https://github.com/gear-foundation/integrations-subsquid/blob/master/Subsquid/nft-marketplace/src/meta.ts) that is responsible for decoding these bytes.
 
-The `SubsquidBatchProcessor` returns the data in batches, so in order to avoid a large number of read/write operations in the database it’s better to prepare all the data in every batch and save it after the entire batch is processed. To achieve this goal we created a [BatchState](https://github.com/gear-tech/gear-integrations/blob/master/Subsquid/nft-marketplace/src/state.ts) class that is responsible for storing the prepared data before it is written into the database.
+The `SubsquidBatchProcessor` returns the data in batches, so in order to avoid a large number of read/write operations in the database it’s better to prepare all the data in every batch and save it after the entire batch is processed. To achieve this goal we created a [BatchState](https://github.com/gear-foundation/integrations-subsquid/blob/master/Subsquid/nft-marketplace/src/state.ts) class that is responsible for storing the prepared data before it is written into the database.
 
-In case a new NFT program is registered in the marketplace, you may want to index it to get all its historical data. To do this we created [indexNft](https://github.com/gear-tech/gear-integrations/blob/master/Subsquid/nft-marketplace/src/indexNft.ts) function that queries the relevant data from the Archive and writes it into the database.
+In case a new NFT program is registered in the marketplace, you may want to index it to get all its historical data. To do this we created [indexNft](https://github.com/gear-foundation/integrations-subsquid/blob/master/Subsquid/nft-marketplace/src/indexNft.ts) function that queries the relevant data from the Archive and writes it into the database.
 
-The source code of the Subsquid-based indexer components is available on GitHub [here](https://github.com/gear-tech/gear-integrations/tree/master/Subsquid).
+The source code of the Subsquid-based indexer components is available on GitHub [here](https://github.com/gear-foundation/integrations-subsquid/tree/master/Subsquid).
 
 The separate implementation of the NFT marketplace application example that is using indexing data via Subscquid is available in: `TBD`
 

@@ -23,9 +23,9 @@ Syndote 由 Master 合约和 Player 合约组成。主合约是启动和控制�
 
 ## ⚒️ 构建 Master 和 Player 合约
 
-- 获取 [Master 合约](https://github.com/gear-tech/syndote-game/tree/master/program/syndote) 源码 和[Player  合约](https://github.com/gear-tech/syndote-game/tree/master/program/player) 源码。
+- 获取 [Master 合约](https://github.com/gear-foundation/dapps-syndote/tree/master/syndote) 源码 和[Player  合约](https://github.com/gear-foundation/dapps-syndote/tree/master/player) 源码。
 - 根据需要修改玩家的合约以实现最佳游戏策略。
-- 如 [program/README.md](https://github.com/gear-tech/syndote-game/blob/master/program/README.md#building-contracts)所述，构建合约
+- 如 [program/README.md](https://github.com/gear-foundation/dapps-syndote#%EF%B8%8F-build-master-and-player-contracts)所述，构建合约
 
 ## 🏗️ 上传合约到链上
 

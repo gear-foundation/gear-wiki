@@ -83,4 +83,4 @@ The majority of developers and inspirers of the Gear Protocol were directly invo
 
 Gear networks scale naturally as hardware improves as it utilizes all CPU cores. Anyone with a standard computer can run a Gear node today and always. With its shardable design, Gear networks can scale by deploying across multiple parachain slots and can be sharded as a standalone network for additional scalability.
 
-For additional details, refer to the [Gear Whitepaper](https://whitepaper.gear-tech.io/).
+For additional details, refer to the [Gear Whitepaper](https://whitepaper.gear.foundation).

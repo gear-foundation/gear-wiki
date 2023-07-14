@@ -12,7 +12,7 @@ Let’s take for example a contract that implements loan functionality. In this 
 Firstly, to create a program, you have to submit program code to the network using an extrinsic `gear.uploadCode` and get its code hash. Submit program code does not initialize the program.
 
 :::info
-To submit code you can use our GUI at [Gear IDEA](https://idea.gear-tech.io/) or just submit it via @gear-js/api library. Also you can use `Gear Program` CLI - https://github.com/gear-tech/gear-program
+To submit code you can use our GUI at [Gear IDEA](https://idea.gear-tech.io/) or just submit it via @gear-js/api library. Also you can use `Gear Program` CLI - https://github.com/gear-tech/gear/tree/master/gcli
 :::
 
 After the code has been submitted, it can be used to create a new program:
