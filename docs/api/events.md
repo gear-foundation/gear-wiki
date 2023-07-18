@@ -24,17 +24,18 @@ unsub();
 **Summary:** When a user successfully sends a message to a program and it gets added to the Gear message queue.
 
 ```rust
+
 MessageQueued {
     /// Generated id of the message.
     id: MessageId,
     /// Account id of the source of the message.
     source: T::AccountId,
-    /// Program id, who is a destination of the message.
+    /// Program id, who is the message's destination.
     destination: ProgramId,
     /// Entry point for processing of the message.
-    /// On the sending stage, processing function
-    /// of program is always known.
-    entry: Entry,
+    /// On the sending stage, the processing function
+    /// of the program is always known.
+    entry: MessageEntry,
 }
 
 ```
@@ -46,7 +47,7 @@ MessageQueued {
 ```rust
 UserMessageSent {
     /// Message sent.
-    message: StoredMessage,
+    message: UserMessage,
     /// Block number of expiration from `Mailbox`.
     ///
     /// Equals `Some(_)` with block number when message
@@ -67,7 +68,7 @@ UserMessageSent {
 UserMessageRead {
     /// Id of the message read.
     id: MessageId,
-    /// The reason of the reading (removal from `Mailbox`).
+    /// The reason for the reading (removal from `Mailbox`).
     ///
     /// NOTE: See more docs about reasons at `gear_common::event`.
     reason: UserMessageReadReason,
@@ -101,9 +102,9 @@ MessageWaited {
     /// Origin message id, which started messaging chain with programs,
     /// where currently waited message was created.
     ///
-    /// Used for identifying by user, that this message associated
-    /// with him and with the concrete initial message.
-    origin: Option<MessageId>,
+    /// Used to identify by the user that this message associated
+    /// with him and the concrete initial message.
+    origin: Option<GasNodeId<MessageId, ReservationId>>,
     /// The reason of the waiting (addition to `Waitlist`).
     ///
     /// NOTE: See more docs about reasons at `gear_common::event`.
@@ -161,6 +162,24 @@ ProgramChanged {
 }
 ```
 
+### ProgramResumeSessionStarted
+
+**Summary:** Program resume session has been started.
+
+```rust
+ProgramResumeSessionStarted {
+  /// Id of the session.
+  session_id: SessionId,
+  /// Owner of the session.
+  account_id: T::AccountId,
+  /// Id of the program affected.
+  program_id: ProgramId,
+  /// Block number when the session will be removed if not finished.
+  session_end_block: T::BlockNumber
+}
+        
+```
+
 ## Check what the event is
 
 ```javascript
@@ -184,7 +203,7 @@ gearApi.query.system.events((events) => {
 ### Subscribe to messages sent from a program
 
 ```javascript
-const unsub = gearApi.gearEvents.subscribeToGearEvent(
+const unsub = api.gearEvents.subscribeToGearEvent(
   'UserMessageSent',
   ({
     data: {
@@ -192,10 +211,10 @@ const unsub = gearApi.gearEvents.subscribeToGearEvent(
     },
   }) => {
     console.log(`
-      messageId: ${id.toHex()}
-      source: ${source.toHex()}
-      payload: ${payload.toHuman()}
-    `);
+  messageId: ${id.toHex()}
+  source: ${source.toHex()}
+  payload: ${payload.toHuman()}
+  `);
   },
 );
 // Unsubscribe
@@ -205,7 +224,7 @@ unsub();
 ### Subscribe to messages intended for a program
 
 ```javascript
-const unsub = gearApi.gearEvents.subscribeToGearEvent(
+const unsub = api.gearEvents.subscribeToGearEvent(
   'MessageQueued',
   ({ data: { id, source, destination, entry } }) => {
     console.log({
@@ -230,10 +249,10 @@ unsub();
 const unsub = await gearApi.gearEvents.subscribeToTransferEvents(
   ({ data: { from, to, amount } }) => {
     console.log(`
-      Transfer balance:
-      from: ${from.toHex()}
-      to: ${to.toHex()}
-      amount: ${+amount.toString()}
+    Transfer balance:
+    from: ${from.toHex()}
+    to: ${to.toHex()}
+    amount: ${+amount.toString()}
     `);
   },
 );
