@@ -83,7 +83,6 @@ const metadata = await getProgramMetadata('0x' + fs.readFileSync('demo_async.met
 const gas = await gearApi.program.calculateGas.reply(
   '0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d', // source id
   '0x518e6bc03d274aadb3454f566f634bc2b6aef9ae6faeb832c18ae8300fd72635', // message id
-  0,      // exit code
   'PONG', // payload
   0,      // value
   true,   // allow other panics
