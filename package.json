@@ -23,7 +23,7 @@
     "@docusaurus/preset-classic": "^2.4.1",
     "@mdx-js/react": "^1.6.22",
     "@svgr/webpack": "^8.0.1",
-    "clsx": "^1.2.1",
+    "clsx": "^2.0.0",
     "docusaurus-plugin-sass": "^0.2.4",
     "file-loader": "^6.2.0",
     "hast-util-is-element": "2.1.3",
