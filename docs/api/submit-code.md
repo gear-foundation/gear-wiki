@@ -10,9 +10,9 @@ If you need to load the program code into the chain without initialization use `
 ```javascript
 const code = fs.readFileSync('path/to/program.opt.wasm');
 
-const { codeHash } = await gearApi.code.upload(code);
+const { codeHash } = await api.code.upload(code);
 
-gearApi.code.signAndSend(alice, () => {
+api.code.signAndSend(alice, () => {
   events.forEach(({ event: { method, data } }) => {
     if (method === 'ExtrinsicFailed') {
       throw new Error(data.toString());
@@ -25,7 +25,7 @@ gearApi.code.signAndSend(alice, () => {
 
 ## Create program from uploaded code on chain
 
-Use `GearApi.program.create` method to create `create_program` extrinsic:
+Use `api.program.create` method to create `create_program` extrinsic:
 
 ```javascript
 const codeId = '0x…';
@@ -37,7 +37,7 @@ const program = {
   initPayload: somePayload,
 };
 
-const { programId, salt, extrinsic } = gearApi.program.create(program, meta);
+const { programId, salt, extrinsic } = api.program.create(program, meta);
 
 await extrinsic.signAndSend(keyring, (event) => {
   console.log(event.toHuman());

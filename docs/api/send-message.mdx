@@ -5,7 +5,7 @@ sidebar_label: Send Message
 
 # Send Message
 
-Use `GearApi.message.send` method to send messages to the program:
+Use `api.message.send` method to send messages to the program:
 
 ```javascript
 try {
@@ -16,9 +16,9 @@ try {
     value: 1000,
   };
   // In that case payload will be encoded using meta.types.handle.input type
-  let extrinsic = gearApi.message.send(message, meta);
+  let extrinsic = api.message.send(message, meta);
   // So if you want to use another type you can specify it
-  extrinsic = gearApi.message.send(message, meta, meta.types.other.input);
+  extrinsic = api.message.send(message, meta, meta.types.other.input);
 } catch (error) {
   console.error(`${error.name}: ${error.message}`);
 }
@@ -33,14 +33,14 @@ try {
 
 :::note
 
-In real conditions to ensure successful message processing, the calculation of the required gas for processing the message should be performed by using `GearApi.program.calculateGas` method.
+In real conditions to ensure successful message processing, the calculation of the required gas for processing the message should be performed by using `api.program.calculateGas` method.
 
 [more info](/docs/api/calculate-gas)
 :::
 
 ### Send reply message
 
-When you need to reply to a message received from a program, use `GearApi.message.reply`:
+When you need to reply to a message received from a program, use `api.message.reply`:
 
 ```javascript
 try {
@@ -51,7 +51,7 @@ try {
     value: 1000,
   };
   // In this case payload will be encoded using `meta.types.reply.input` type.
-  const extrinsic = gearApi.message.sendReply(reply, meta);
+  const extrinsic = api.message.sendReply(reply, meta);
 } catch (error) {
   console.error(`${error.name}: ${error.message}`);
 }

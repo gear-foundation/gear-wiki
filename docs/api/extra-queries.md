@@ -10,35 +10,35 @@ Here is collected a set of useful code snippets in a question-answer format:
 ### Get block data
 
 ```javascript
-const data = await gearApi.blocks.get(blockNumberOrBlockHash);
+const data = await api.blocks.get(blockNumberOrBlockHash);
 console.log(data.toHuman());
 ```
 
 ### Get block timestamp
 
 ```javascript
-const ts = await gearApi.blocks.getBlockTimestamp(blockNumberOrBlockHash);
+const ts = await api.blocks.getBlockTimestamp(blockNumberOrBlockHash);
 console.log(ts.toNumber());
 ```
 
 ### Get blockHash by block number
 
 ```javascript
-const hash = await gearApi.blocks.getBlockHash(blockNumber);
+const hash = await api.blocks.getBlockHash(blockNumber);
 console.log(hash.toHex());
 ```
 
 ### Get block number by blockhash
 
 ```javascript
-const hash = await gearApi.blocks.getBlockNumber(blockHash);
+const hash = await api.blocks.getBlockNumber(blockHash);
 console.log(hash.toNumber());
 ```
 
 ### Get all block's events
 
 ```javascript
-const events = await gearApi.blocks.getEvents(blockHash);
+const events = await api.blocks.getEvents(blockHash);
 events.forEach((event) => {
   console.log(event.toHuman());
 });
@@ -47,7 +47,7 @@ events.forEach((event) => {
 ### Get all block's extrinsics
 
 ```javascript
-const extrinsics = await gearApi.blocks.getExtrinsics(blockHash);
+const extrinsics = await api.blocks.getExtrinsics(blockHash);
 extrinsics.forEach((extrinsic) => {
   console.log(extrinsic.toHuman());
 });
@@ -56,10 +56,10 @@ extrinsics.forEach((extrinsic) => {
 ## Get transaction fee
 
 ```javascript
-const gearApi = await GearApi.create();
-gearApi.program.submit({ code, gasLimit });
-// same for gearApi.message, gearApi.reply and others
-const paymentInfo = await gearApi.program.paymentInfo(alice);
+const api = await GearApi.create();
+api.program.submit({ code, gasLimit });
+// same for api.message, api.reply and others
+const paymentInfo = await api.program.paymentInfo(alice);
 const transactionFee = paymentInfo.partialFee.toNumber();
 consolg.log(transactionFee);
 ```

@@ -11,7 +11,7 @@ They guarantee successful message processing and to avoid errors like `Gaslimit 
 
 ## Calculate gas for messages
 
-To find out the minimum gas amount required to send extrinsic, use `gearApi.program.calculateGas.[method]`. Depending on the conditions, you can calculate gas for initializing a program or processing a message in `handle()` or `reply()`.
+To find out the minimum gas amount required to send extrinsic, use `api.program.calculateGas.[method]`. Depending on the conditions, you can calculate gas for initializing a program or processing a message in `handle()` or `reply()`.
 
 :::info
 Gas calculation returns the GasInfo object, which contains 5 parameters:
@@ -28,7 +28,7 @@ Gas calculation returns the GasInfo object, which contains 5 parameters:
 ```javascript
 const code = fs.readFileSync('demo_ping.opt.wasm');
 
-const gas = await gearApi.program.calculateGas.initUpload(
+const gas = await api.program.calculateGas.initUpload(
   '0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d', // source id
   code,
   '0x00', // payload
@@ -44,7 +44,7 @@ console.log(gas.toHuman());
 ```javascript
 const codeId = '0x…';
 
-const gas = await gearApi.program.calculateGas.initCreate(
+const gas = await api.program.calculateGas.initCreate(
   '0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d', // source id
   codeId,
   '0x00', // payload
@@ -59,7 +59,7 @@ console.log(gas.toHuman());
 ```javascript
 import { getProgramMetadata } from '@gear-js/api';
 const metadata = await getProgramMetadata('0x' + fs.readFileSync('demo_new_meta.meta.txt'));
-const gas = await gearApi.program.calculateGas.handle(
+const gas = await api.program.calculateGas.handle(
   '0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d', // source id
   '0xa178362715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d', // program id
   {
@@ -80,7 +80,7 @@ console.log(gas.toHuman());
 ```javascript
 import { getProgramMetadata } from '@gear-js/api';
 const metadata = await getProgramMetadata('0x' + fs.readFileSync('demo_async.meta.txt'));
-const gas = await gearApi.program.calculateGas.reply(
+const gas = await api.program.calculateGas.reply(
   '0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d', // source id
   '0x518e6bc03d274aadb3454f566f634bc2b6aef9ae6faeb832c18ae8300fd72635', // message id
   'PONG', // payload
