@@ -1,7 +1,9 @@
 ---
 sidebar_label: Program Rent
-sidebar_position: 5
+sidebar_position: 12
 ---
+
+# Program Rent
 
 Gear Protocol utilizes a rent-based program management system. When developers upload a program (smart contract) to the network, it is assigned an expiration date. The expiration period is measured in blocks.
 
