@@ -10,7 +10,7 @@ Events are generated for certain operations during execution. The following sect
 To subscribe to all events:
 
 ```javascript
-const unsub = await gearApi.query.system.events((events) => {
+const unsub = await api.query.system.events((events) => {
   console.log(events.toHuman());
 });
 // Unsubscribe
@@ -183,15 +183,15 @@ ProgramResumeSessionStarted {
 ## Check what the event is
 
 ```javascript
-gearApi.query.system.events((events) => {
+api.query.system.events((events) => {
   events
-    .filter(({ event }) => gearApi.events.gear.MessageQueued.is(event))
+    .filter(({ event }) => api.events.gear.MessageQueued.is(event))
     .forEach(({ event: { data } }) => {
       console.log(data.toHuman());
     });
 
   events
-    .filter(({ event }) => gearApi.events.balances.Transfer.is(event))
+    .filter(({ event }) => api.events.balances.Transfer.is(event))
     .forEach(({ event: { data } }) => {
       console.log(data.toHuman());
     });
@@ -246,7 +246,7 @@ unsub();
 ### Subscribe to Transfer events
 
 ```javascript
-const unsub = await gearApi.gearEvents.subscribeToTransferEvents(
+const unsub = await api.gearEvents.subscribeToTransferEvents(
   ({ data: { from, to, amount } }) => {
     console.log(`
     Transfer balance:
@@ -263,7 +263,7 @@ unsub();
 ### Subscribe to new blocks
 
 ```javascript
-const unsub = await gearApi.gearEvents.subscribeToNewBlocks((header) => {
+const unsub = await api.gearEvents.subscribeToNewBlocks((header) => {
   console.log(
     `New block with number: ${header.number.toNumber()} and hash: ${header.hash.toHex()}`,
   );
