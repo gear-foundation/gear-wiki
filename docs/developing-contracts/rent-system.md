@@ -28,7 +28,7 @@ After uploading a program, you can observe a similar event:
 }
 ```
 
-## How to extend the eent of the program?
+## How to extend the rent of the program?
 
 To extend the rent period of a program, simply call the special extrinsic `gear.payProgramRent(programId, blockCount)`. [See more](/docs/api/program-rent)
 
@@ -36,7 +36,7 @@ To extend the rent period of a program, simply call the special extrinsic `gear.
 
 Yes. Since the blockchain stores all states for the entire history, you can restore the program's state to the previous block before it was deleted.
 
-## Why does gear use the program rent system?
+## Why does Gear use the program rent system?
 
 - Optimization and efficient resource usage
 - Stimulating utility token usage
