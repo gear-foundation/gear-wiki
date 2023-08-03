@@ -34,7 +34,7 @@ To extend the rent period of a program, simply call the special extrinsic `gear.
 
 ## Can I restore a deleted program?
 
-Yes. Since the blockchain stores all states for the entire history, you can restore the state of the program to the previous block before it was deleted.
+Yes. Since the blockchain stores all states for the entire history, you can restore the program's state to the previous block before it was deleted.
 
 ## Why does gear use the program rent system?
 
