@@ -22,7 +22,7 @@
     "@docusaurus/plugin-google-tag-manager": "^2.4.1",
     "@docusaurus/preset-classic": "^2.4.1",
     "@mdx-js/react": "^1.6.22",
-    "@svgr/webpack": "^8.0.1",
+    "@svgr/webpack": "^8.1.0",
     "clsx": "^2.0.0",
     "docusaurus-plugin-sass": "^0.2.5",
     "file-loader": "^6.2.0",
