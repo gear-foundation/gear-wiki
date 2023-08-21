@@ -23,6 +23,35 @@ Perhaps most interestingly, gas reservation allows a program to send a message t
 
 This opens up a wide range of possibilities for the implementation of functional logic related to **continuing messaging automation** in smart contracts. Delayed messages are similar to cron jobs, which cannot be implemented in smart contracts on other blockchain platforms without the use of external resources. The remarkable advantage of this solution is that it eliminates the need for centralized components in dApps, ensuring they function **completely on-chain** and are fully decentralized and autonomous.
 
+## Payless Transactions
+
+Gear Protocol's Payless Transactions feature introduces a groundbreaking concept to the world of Web3, revolutionizing communication within Gear-powered networks and increasing the adoption of decentralized applications, making their ease of use closer to Web2 services and applications.
+
+This innovative feature empowers actors to issue vouchers that enable specific users to send messages to designated programs without incurring gas fees. This paradigm-shifting approach fosters a sponsorship-like environment for users, transforming the way interactions take place in the Web3 ecosystem.
+
+### Understanding Payless Transactions
+
+At the core of the Payless Transactions feature lies the concept of vouchers. These vouchers are crafted to grant users the ability to send messages to specific programs within the network, all without the burden of gas fees. Each voucher comes with a predetermined allocation of gas, empowering users to initiate interactions without worrying about transaction costs.
+
+### How Payless Transactions Work
+
+1. **Voucher Issuance**: Actors within the Vara Network can issue vouchers, creating a sponsorship mechanism for users. These vouchers are tied to specific programs and include a designated gas allocation.
+
+2. **Message Sending**: Holders of valid vouchers can use them to send messages to the designated program. These messages can include instructions or data, enriching interactions within the network.
+
+3. **Gas-Free Interactions**: Users who has valid vouchers can enjoy gas-free interactions when sending messages. The allocated gas from the voucher covers the associated transaction costs.
+
+### Benefits of Payless Transactions
+
+- Encourages user participation by eliminating the gas fee barrier
+- Reduced сomplexity for dApps adoption
+- Fostering a more inclusive and vibrant network
+- More accessible and user-friendly (Web2-like approach)
+
+### How does it work?
+
+Learn how to create and use vouchers in [this article](/docs/api/vouchers.md).
+
 ## Use cases
 
 For instance, let's consider some use case examples that become achievable:
@@ -41,6 +70,12 @@ There are scenarios in which NFTs are updated:
 Overall, the ability to update NFTs dynamically opens up a wide range of possibilities for their use in a variety of applications.
 
 ### Gaming
+
+Everyone knows that the most successful games are those that are exciting, that you play with pleasure. 
+
+The success of such games depends on the right game mechanics established by the developers. The Gear Protocol offers a tool for developing such games and running them on a decentralized network, like [Vara](https://vara-network.io/). Features such as [delayed messages](/developing-contracts/delayed-messages.md), [payless transactions](/docs/api/vouchers.md), and [gas reservation](/developing-contracts/gas-reservation.md) become essential tools for developers aiming to create successful games on the Gear decentralized network.
+
+Here are a few of the many examples where such functionality would be useful:
 
 Tamagotchi is a classic digital pet game where players must care for a virtual creature by providing it food, attention, and other forms of care. As a dynamic NFT, a Tamagotchi can change its appearance based on its properties (such as hunger, fatigue, or happiness) and can notify the user when it needs to be fed or played with. The user can feed the NFT with gas, which is used to send delayed messages that are required to update the Tamagotchi's state.
 

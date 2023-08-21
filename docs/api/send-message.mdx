@@ -14,6 +14,9 @@ try {
     payload: somePayload,
     gasLimit: 10000000,
     value: 1000,
+    // prepaid: true,
+    // account: accountId,
+    // if you send message with issued voucher
   };
   // In that case payload will be encoded using meta.types.handle.input type
   let extrinsic = api.message.send(message, meta);
@@ -49,6 +52,9 @@ try {
     payload: somePayload,
     gasLimit: 10000000,
     value: 1000,
+    // prepaid: true,
+    // account: accountId,
+    // if you send message with issued voucher
   };
   // In this case payload will be encoded using `meta.types.reply.input` type.
   const extrinsic = api.message.sendReply(reply, meta);
