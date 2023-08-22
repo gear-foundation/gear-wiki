@@ -1,6 +1,7 @@
 ---
 sidebar_label: Program Rent
 sidebar_position: 12
+sidebar_class_name: hidden
 ---
 
 # Program Rent
