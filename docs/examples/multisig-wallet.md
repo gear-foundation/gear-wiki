@@ -12,7 +12,7 @@ Imagine a bank vault that requires more than one key to open: That’s a little 
 
 Multisignature proponents argue that multisignature is the most secure and fail-proof way to store cryptocurrency. Even if a thief gets his hands on one of your wallets, for example, they still won’t be able to access your account without the keys to the other wallets in the setup.
 
-This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. Anyone can easily create their own application and run it on the Gear Network. The source code is available on [GitHub](https://github.com/gear-foundation/dapps-multisig-wallet).
+This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. Anyone can easily create their own application and run it on the Gear Network. The source code is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/multisig-wallet).
 
 ## Logic
 
@@ -146,7 +146,7 @@ extern "C" fn state() {
         .expect("Failed to encode or reply with `<ContractMetadata as Metadata>::State` from `state()`");
 }
 ```
-To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `State` struct. For example - [gear-foundation/dapps-multisig-wallet/state](https://github.com/gear-foundation/dapps-multisig-wallet/tree/master/state):
+To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `State` struct. For example - [multisig-wallet/state](https://github.com/gear-foundation/dapps/tree/master/contracts/multisig-wallet/state):
 
 ```rust
 #[metawasm]
@@ -271,8 +271,8 @@ pub enum StateReply {
 
 ## Source code
 
-The source code of this example of Multisig Wallet smart contract and the example of an implementation of its testing is available on [GitHub](https://github.com/gear-foundation/dapps-multisig-wallet).
+The source code of this example of Multisig Wallet smart contract and the example of an implementation of its testing is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/multisig-wallet).
 
-See also an example of the smart contract testing implementation based on `gtest`: [multisig-wallet/tests](https://github.com/gear-foundation/dapps-multisig-wallet/tree/master/tests).
+See also an example of the smart contract testing implementation based on `gtest`: [multisig-wallet/tests](https://github.com/gear-foundation/dapps/tree/master/contracts/multisig-wallet/tests).
 
 For more details about testing smart contracts written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.

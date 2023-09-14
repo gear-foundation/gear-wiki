@@ -17,13 +17,13 @@ This article explains the programming interface, data structure, basic functions
 
 ## How to run
 
-- Program source code available on [Github](https://github.com/gear-foundation/dapps-non-fungible-token)
-- dApp UI [Github](https://github.com/gear-foundation/dapps-non-fungible-token/tree/master/frontend)
+- Program source code available on [Github](https://github.com/gear-foundation/dapps/tree/master/contracts/non-fungible-token)
+- dApp UI [Github](https://github.com/gear-foundation/dapps/tree/master/frontend/non-fungible-token)
 
 ### ⚒️ Build program
 
-- Get the source code of [NFT contract](https://github.com/gear-foundation/dapps-non-fungible-token)
-- Build contracts as described in [program/README.md](https://github.com/gear-foundation/dapps-non-fungible-token/blob/master/frontend/README.md).
+- Get the source code of [NFT contract](https://github.com/gear-foundation/dapps/tree/master/contracts/non-fungible-token)
+- Build contracts as described in [program/README.md](https://github.com/gear-foundation/dapps/blob/master/contracts/non-fungible-token/README.md).
 
 ### 🏗️ Upload program
 
@@ -42,7 +42,7 @@ royalties `Option<Royalties>` - Optional param to specify accounts to pay royalt
 
 ### 🖥️ Run UI
 
-1. Install packages as described in [frontend/README.md](https://github.com/gear-foundation/dapps-non-fungible-token/blob/master/frontend/README.md)
+1. Install packages as described in [frontend/README.md](https://github.com/gear-foundation/dapps/blob/master/frontend/non-fungible-token/README.md)
 2. Configure .evn file. Specify network address and program ID like in the example below:
 
 ```sh
@@ -66,13 +66,13 @@ The functions that must be supported by each non-fungible-token contract:
 - *mint(to, token_id, metadata)* is a function that creates a new token. Metadata can include any information about the token: it can be a link to a specific resource, a description of the token, etc;
 - *burn(from, token_id)* is a function that removes the token with the mentioned *token_id* from the contract.
 
-The default implementation of the NFT contract is provided in the gear library: [gear-lib/non_fungible_token](https://github.com/gear-foundation/dapps-gear-lib/tree/master/lib/src/non_fungible_token).
+The default implementation of the NFT contract is provided in the gear library: [gear-lib/non_fungible_token](https://github.com/gear-foundation/dapps/blob/master/contracts/gear-lib/src/tokens/non_fungible.rs).
 
 To use the default implementation you should include the packages into your *Cargo.toml* file:
 
 ```toml
-gear-lib = { git = "https://github.com/gear-foundation/dapps-gear-lib.git" }
-gear-lib-derive = { git = "https://github.com/gear-foundation/dapps-gear-lib.git" }
+gear-lib = { git = "https://github.com/gear-foundation/dapps.git" }
+gear-lib-derive = { git = "https://github.com/gear-foundation/dapps.git" }
 hashbrown = "0.13.1"
 ```
 
@@ -336,7 +336,7 @@ extern "C" fn state() {
         .expect("Failed to encode or reply with `<NFTMetadata as Metadata>::State` from `state()`");
 }
 ```
-To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `IoNFT` state. For example - [gear-foundation/dapps-non-fungible-token/state](https://github.com/gear-foundation/dapps-non-fungible-token/tree/master/state):
+To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `IoNFT` state. For example - [non-fungible-token/state](https://github.com/gear-foundation/dapps/tree/master/contracts/non-fungible-token/state):
 
 ```rust
 #[metawasm]
@@ -373,6 +373,6 @@ pub trait Metawasm {
 ```
 ## Conclusion
 
-Gear provides a reusable [library](https://github.com/gear-foundation/dapps-gear-lib/tree/master/lib/src/non_fungible_token) with core functionality for the gNFT protocol. By using object composition, that library can be utilized within a custom NFT contract implementation in order to minimize duplication of community available code.
+Gear provides a reusable [library](https://github.com/gear-foundation/dapps/blob/master/contracts/gear-lib/src/tokens/non_fungible.rs) with core functionality for the gNFT protocol. By using object composition, that library can be utilized within a custom NFT contract implementation in order to minimize duplication of community available code.
 
 For more details about testing smart contracts written on Gear, refer to this article: [Program Testing](/docs/developing-contracts/testing).
