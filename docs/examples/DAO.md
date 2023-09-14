@@ -17,7 +17,7 @@ DAOs offer safe alternatives to pooling together money for a particular cause. B
 
 ### DAO application example by Gear
 
-Anyone can easily create their own DAO application and run it on the Gear Network. To do this, Gear created an example of the DAO smart contract, which is available on [GitHub](https://github.com/gear-foundation/dapps-dao-light).
+Anyone can easily create their own DAO application and run it on the Gear Network. To do this, Gear created an example of the DAO smart contract, which is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/dao-light).
 
 This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios.
 
@@ -299,7 +299,7 @@ extern "C" fn state() {
     .expect("Failed to share state");
 }
 ```
-To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `DaoState` state. For example - [gear-foundation/dapps-dao/state](https://github.com/gear-foundation/dapps-dao/tree/master/state):
+To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `DaoState` state. For example - [dao-light/state](https://github.com/gear-foundation/dapps/tree/master/contracts/dao-light/state):
 
 ```rust
 #[metawasm]
@@ -329,9 +329,9 @@ pub trait Metawasm {
 ```
 
 ## Source code
-The source code of this example of DAO smart contract and the example of an implementation of its testing is available on [GitHub](https://github.com/foundation/dapps-dao-light).
+The source code of this example of DAO smart contract and the example of an implementation of its testing is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/dao-light).
 
-The extended version of DAO that includes admin, membership proposals and delegated voting can be found at [GitHub](https://github.com/gear-foundation/dapps-dao).
+The extended version of DAO that includes admin, membership proposals and delegated voting can be found at [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/dao).
 
 <!--The application source code is available in: [https://github.com/gear-foundation/dapps-dao-app](https://github.com/gear-foundation/dapps-dao-app).
 -->

@@ -11,7 +11,7 @@ A public offering to invest in a brand-new cryptocurrency or other digital asset
 
 An example of a crowdsale smart-contract implementation described in this article is one of many other decentralized applications that can be implemented and launched on Gear. This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. Anyone can easily create their own crowdsale application and run it on the Gear Network.
 
-Initial funds with which a token is purchased are determined by the Gear fungible tokens contract - [gFT](https://wiki.gear-tech.io/examples/gft-20). The contract's source code is available on [GitHub](https://github.com/gear-foundation/dapps-crowdsale).
+Initial funds with which a token is purchased are determined by the Gear fungible tokens contract - [gFT](https://wiki.gear-tech.io/examples/gft-20). The contract's source code is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/crowdsale).
 
 ## Interface
 ### Source files
@@ -174,7 +174,7 @@ extern "C" fn state() {
     );
 }
 ```
-To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `State` state. For example - [gear-foundation/dapps-crowdsale/state](https://github.com/gear-foundation/dapps-crowdsale/tree/master/state):
+To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `State` state. For example - [crowdsale/state](https://github.com/gear-foundation/dapps/tree/master/contracts/crowdsale/state):
 
 ```rust
 #[metawasm]
@@ -198,6 +198,6 @@ pub trait Metawasm {
 
 ## Conclusion
 
-The source code of this example of ICO smart contract and the example of an implementation of its testing is available on [Github](https://github.com/gear-foundation/dapps-crowdsale).
+The source code of this example of ICO smart contract and the example of an implementation of its testing is available on [Github](https://github.com/gear-foundation/dapps/tree/master/contracts/crowdsale).
 
 For more details about testing smart contracts written on Gear, refer to the [Program Testing](https://wiki.gear-tech.io/developing-contracts/testing) article.

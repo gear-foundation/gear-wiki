@@ -11,12 +11,12 @@ Decentralized exchanges, on the other hand, are simply a set of smart contracts.
 While transactions on a centralized exchange are recorded on that exchange’s internal database, DEX transactions are settled directly on the blockchain.
 DEXs are usually built on open-source code, meaning that anyone interested can see exactly how they work. That also means that developers can adapt existing code to create new competing projects — which is how Uniswap’s code has been adapted by an entire host of DEXs with “swap” in their names like Sushiswap and Pancakeswap.
 
-The exchange uses [Gear fungible tokens (GFT-20)](/docs/examples/gft-20) underneath for the tokens and [Gear-lib FT wrapper](https://github.com/gear-foundation/dapps-gear-lib/tree/master/lib/src/fungible_token) for the pair to keep track of the liquidity.
+The exchange uses [Gear fungible tokens (GFT-20)](/docs/examples/gft-20) underneath for the tokens and [Gear-lib FT wrapper](https://github.com/gear-foundation/dapps/blob/master/contracts/gear-lib/src/tokens/fungible.rs) for the pair to keep track of the liquidity.
 
 ### Math
 As it was said all the prices are algorithmically calculated. Investors provide funds to the liquidity pools and price is calculated according to the amount of tokens in the reserves using the following formula: <br/><br/>
 $$reserve0 * reserve1 = K$$, where $$reserve0, reserve1$$ - are the reserves of token0 and token1 respectively provided by the investors, and $$K$$ - is the constant.
-All the prices/amounts all calculated in the way that the $$K$$ <strong>MUST</strong> remain constant. This basically means that the more token0 we have in pool, the lower price of token1 will be when performing a swap.
+All the prices/amounts all calculated in the way that the $$K$$ **MUST** remain constant. This basically means that the more token0 we have in pool, the lower price of token1 will be when performing a swap.
 
 ## Factory contract description
 Taking into account that we might have a large amount of trading pairs, we should have a way to monitor them/deploy another one and etc. That's where a factory comes into play. Factory helps to create a new pair and monitor all the existing pairs.
@@ -127,7 +127,7 @@ extern "C" fn state() {
         .expect("Failed to encode or reply with `<ContractMetadata as Metadata>::State` from `state()`");
 }
 ```
-To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `State` struct. For example - [gear-foundation/dapps-dex/factory/state](https://github.com/gear-foundation/dapps-dex/tree/master/factory/state):
+To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `State` struct. For example - [dex/factory/state](https://github.com/gear-foundation/dapps/tree/master/contracts/dex/factory/state):
 
 ```rust
 #[metawasm]
@@ -185,9 +185,11 @@ async fn create_pair(&mut self, mut token_a: ActorId, mut token_b: ActorId);
 ```
 
 ### Source code
-The source code of this example of DEX factory smart contract and the example of an implementation of its testing is available on [gear-foundation/dapps-dex/tree/master/factory](https://github.com/gear-foundation/dapps-dex/tree/master/factory).
+The source code of this example of DEX factory smart contract and the example of an implementation of its testing is available on [dex/factory](https://github.com/gear-foundation/dapps/tree/master/contracts/dex/factory).
 
-See also an example of the smart contract testing implementation based on `gtest`: [gear-foundation/dapps-dex/tree/master/factory/tests](https://github.com/gear-foundation/dapps-dex/tree/master/factory/tests).
+<!--
+See also an example of the smart contract testing implementation based on `gtest`: [dex/factory/tests](https://github.com/gear-foundation/dapps/tree/master/contracts/dex/factory/tests).
+-->
 
 For more details about testing smart contracts written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.
 
@@ -378,7 +380,7 @@ extern "C" fn state() {
         .expect("Failed to encode or reply with `<ContractMetadata as Metadata>::State` from `state()`");
 }
 ```
-To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `State` struct. For example - [gear-foundation/dapps-dex/pair/state](https://github.com/gear-foundation/dapps-supply-chain/tree/master/pair/state):
+To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `State` struct. For example - [dex/state](https://github.com/gear-foundation/dapps/tree/master/contracts/dex/state):
 
 ```rust
 #[metawasm]
@@ -557,8 +559,8 @@ pub async fn swap_tokens_for_exact(&mut self, amount_out: u128, to: ActorId);
 ```
 
 ### Source code
-The source code of this example of DEX pair smart contract and the example of an implementation of its testing is available on [gear-foundation/dapps-dex/tree/master/pair](https://github.com/gear-foundation/dapps-dex/tree/master/pair).
+The source code of this example of DEX pair smart contract and the example of an implementation of its testing is available on [gear-foundation/dapps/dex](https://github.com/gear-foundation/dapps/tree/master/contracts/dex).
 
-See also an example of the smart contract testing implementation based on `gtest`: [gear-foundation/dapps-dex/tree/master/pair/tests](https://github.com/gear-foundation/dapps-dex/tree/master/pair/tests).
+See also an example of the smart contract testing implementation based on `gtest`: [dex/tests](https://github.com/gear-foundation/dapps/tree/master/contracts/dex/tests).
 
 For more details about testing smart contracts written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.
