@@ -13,7 +13,7 @@ RMRK legos that are already implemented on Gear:
 - Multi-resource NFTs:
 The ability for an NFT to vary its output depending on the context it is being loaded in.
 
-This article explains the programming interface, data structure, basic functions and explains their purpose. The source code is available on [GitHub](https://github.com/gear-foundation/dapps-RMRK).
+This article explains the programming interface, data structure, basic functions and explains their purpose. The source code is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/rmrk).
 
 ## Logic
 ### Nesting logic
@@ -747,7 +747,7 @@ Unequip {
  ```
 ## Source code
 
-The source code of RMRK implementation and the example of an implementation of its testing is available on [GitHub](https://github.com/gear-foundation/dapps-RMRK).
+The source code of RMRK implementation and the example of an implementation of its testing is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/rmrk).
 
 
 For more details about testing smart contracts written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.

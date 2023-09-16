@@ -187,6 +187,6 @@ pub enum NFTPixelboardAction {
 
 ## Source code
 
-The source code of the NFT pixelboard smart contract and an implementation of its testing is available on [GitHub](https://github.com/gear-foundation/dapps-nft-pixelboard). They can be used as is or modified to suit your own scenarios.
+The source code of the NFT pixelboard smart contract and an implementation of its testing is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/nft-pixelboard). They can be used as is or modified to suit your own scenarios.
 
 For more details about testing smart contracts written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.

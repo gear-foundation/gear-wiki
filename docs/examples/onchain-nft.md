@@ -13,7 +13,7 @@ When the owner of a given token ID wishes to transfer it to another user, it is 
 
 But there is another approach introduced here. Sometimes you can store NFTs directly on chain without any external storage. This approach helps you not to lose your NFT if there is a problem with the external storage.
 
-This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. The source code is available on [GitHub](https://github.com/gear-foundation/dapps-on-chain-nft).
+This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. The source code is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/on-chain-nft).
 
 ## Approach
 To successfully implement this approach several things are needed. Firstly, when initializing a collection, one should provide all the possible images of all the layers for a collection. Secondly, when minting alongside with a small metadata, one should provide a combination of layers used for a specific NFT. This approach seems quite costly when initializing, but is relatively cheap when it comes to minting.
@@ -25,13 +25,13 @@ The functions that must be supported by each non-fungible-token contract:
 - *mint(to, token_id, metadata)* is a function that creates a new token. Metadata can include any information about the token: it can be a link to a specific resource, a description of the token, etc;
 - *burn(from, token_id)* is a function that removes the token with the mentioned *token_id* from the contract.
 
-The default implementation of the NFT contract is provided in the gear library: [gear-lib/non_fungible_token](https://github.com/gear-foundation/dapps-gear-lib/tree/master/src/non_fungible_token).
+The default implementation of the NFT contract is provided in the gear library: [gear-lib/non_fungible_token](https://github.com/gear-foundation/dapps/blob/master/contracts/gear-lib/src/tokens/non_fungible.rs).
 
 To use the default implementation you should include the packages into your *Cargo.toml* file:
 
 ```toml
-gear-lib = { git = "https://github.com/gear-foundation/dapps-gear-lib.git" }
-gear-lib-derive = { git = "https://github.com/gear-foundation/dapps-gear-lib.git" }
+gear-lib = { git = "https://github.com/gear-foundation/dapps.git" }
+gear-lib-derive = { git = "https://github.com/gear-foundation/dapps.git" }
 hashbrown = "0.13.1"
 ```
 
@@ -274,7 +274,7 @@ extern "C" fn state() {
         .expect("Failed to encode or reply with `<AppMetadata as Metadata>::State` from `state()`");
 }
 ```
-To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `State` state. For example - [gear-foundation/dapps-on-chain-nft/state](https://github.com/gear-foundation/dapps-on-chain-nft/tree/master/state):
+To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `State` state. For example - [on-chain-nft/state](https://github.com/gear-foundation/dapps/tree/master/contracts/on-chain-nft/state):
 
 ```rust
 
@@ -344,10 +344,10 @@ pub trait Metawasm {
 
 ## Conclusion
 
-Gear provides a reusable [library](https://github.com/gear-foundation/dapps-gear-lib/tree/master/lib/src/non_fungible_token) with core functionality for the gNFT protocol. By using object composition, that library can be utilized within a custom NFT contract implementation in order to minimize duplication of community available code.
+Gear provides a reusable [library](https://github.com/gear-foundation/dapps/blob/master/contracts/gear-lib/src/tokens/non_fungible.rs) with core functionality for the gNFT protocol. By using object composition, that library can be utilized within a custom NFT contract implementation in order to minimize duplication of community available code.
 
-A source code of the on-chain NFT provided by Gear is available on GitHub: [on-chain-nft/src](https://github.com/gear-foundation/dapps-on-chain-nft).
+A source code of the on-chain NFT provided by Gear is available on GitHub: [gear-foundation/dapps/on-chain-nft](https://github.com/gear-foundation/dapps/tree/master/contracts/on-chain-nft).
 
-See also an example of the smart contract testing implementation based on `gtest`: [on-chain-nft/tests](https://github.com/gear-foundation/dapps-on-chain-nft/tree/master/tests).
+See also an example of the smart contract testing implementation based on `gtest`: [on-chain-nft/tests](https://github.com/gear-foundation/dapps/tree/master/contracts/on-chain-nft/tests).
 
 For more details about testing smart contracts written on Gear, refer to this article: [Program Testing](/docs/developing-contracts/testing).

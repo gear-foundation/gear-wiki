@@ -6,8 +6,8 @@ sidebar_position: 12
 
 In logistics, a supply chain is a system for tracking and delivering to an end consumer various items. As a rule, such systems can't work without a lot of paperwork and other layers of bureaucracy. All of this costs a lot of time and money and increases the likelihood of an accidental error or, worst of all, a fraud. With the help of smart contract and blockchain technologies, it is possible to eliminate these problems by making a supply chain more efficient, reliable and transparent.
 
-- [Supply chain contract](https://github.com/gear-foundation/dapps-supply-chain).
-- [Supply chain UI](https://github.com/gear-foundation/dapps-supply-chain/tree/master/frontend).
+- [Supply chain contract](https://github.com/gear-foundation/dapps/tree/master/contracts/supply-chain).
+- [Supply chain UI](https://github.com/gear-foundation/dapps/tree/master/frontend/supply-chain).
 
 ## How to run
 
@@ -15,9 +15,9 @@ In logistics, a supply chain is a system for tracking and delivering to an end c
 
 Upload Supply chain contract requires build two auxiliary contracts:
 
-- Build [NFT contract](https://github.com/gear-foundation/dapps-non-fungible-token/) as described in `README.md`
-- Build [Sharded FT contract](https://github.com/gear-foundation/dapps-sharded-fungible-token/) as described in `README.md`
-- Build [Supply Chain contract](https://github.com/gear-foundation/dapps-supply-chain) as described in `README.md`
+- Build [NFT contract](https://github.com/gear-foundation/dapps/tree/master/contracts/non-fungible-token) as described in `README.md`
+- Build [Sharded FT contract](https://github.com/gear-foundation/dapps/tree/master/contracts/sharded-fungible-token) as described in `README.md`
+- Build [Supply Chain contract](https://github.com/gear-foundation/dapps/tree/master/contracts/supply-chain) as described in `README.md`
 
 ### 🏗️ Upload programs
 
@@ -65,7 +65,7 @@ yarn install
 
 2. Configure .evn file. Specify network address and program ID like in the example below:
 
-For proper application functioning, one needs to adjust an environment variable parameters. An example is available [here](https://github.com/gear-foundation/dapps-supply-chain/blob/master/frontend/.env.example).
+For proper application functioning, one needs to adjust an environment variable parameters. An example is available [here](https://github.com/gear-foundation/dapps/blob/master/frontend/supply-chain/.env.example).
 
 ```sh
 REACT_APP_NODE_ADDRESS=wss://rpc-node.gear-tech.io
@@ -564,7 +564,7 @@ extern "C" fn state() {
         .expect("Failed to encode or reply with `<ContractMetadata as Metadata>::State` from `state()`");
 }
 ```
-To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `State` struct. For example - [gear-foundation/dapps-supply-chain/state](https://github.com/gear-foundation/dapps-supply-chain/tree/master/state):
+To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `State` struct. For example - [supply-chain/state](https://github.com/gear-foundation/dapps/tree/master/contracts/supply-chain/state):
 
 ```rust
 #[metawasm]
@@ -607,6 +607,6 @@ pub type ActorIdInnerSupplyChainAction = (ActorId, InnerAction);
 
 ## Source code
 
-The source code of this example of a supply chain smart contract and an implementation of its testing is available on [GitHub](https://github.com/gear-foundation/dapps-supply-chain). They can be used as is or modified to suit your own scenarios.
+The source code of this example of a supply chain smart contract and an implementation of its testing is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/supply-chain). They can be used as is or modified to suit your own scenarios.
 
 For more details about testing smart contracts written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.

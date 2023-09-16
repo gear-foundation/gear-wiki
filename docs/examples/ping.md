@@ -7,7 +7,7 @@ sidebar_position: 2
 
 Gear is very easy to write code for!
 
-Let's look at the [minimal program](https://github.com/gear-foundation/dapps-app/). It contains the following files:
+Let's look at the [minimal program](https://github.com/gear-foundation/dapps-app). It contains the following files:
 ```
 .
 ├── io /

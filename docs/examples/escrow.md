@@ -8,8 +8,8 @@ sidebar_position: 9
 
 An escrow is a special wallet to which some assets (e.g. money or stocks) are deposited and stored until certain conditions are met. In terms of smart contracts, an escrow is a wallet that is stored on a blockchain and, like a regular escrow, can receive some assets (e.g. a cryptocurrency or fungible tokens (like [Gear fungible tokens - gFT](gft-20.md) in this example)) from one user and, when certain conditions are met, send them to another.
 
-- Program source code is avalible on [Github](https://github.com/gear-foundation/dapps-escrow)
-- dApp UI [Github](https://github.com/gear-foundation/dapps-escrow/tree/master/frontend)
+- Program source code is avalible on [Github](https://github.com/gear-foundation/dapps/tree/master/contracts/escrow)
+- dApp UI [Github](https://github.com/gear-foundation/dapps/tree/master/frontend/escrow)
 
 ## How to run
 
@@ -17,8 +17,8 @@ This video demonstrates how to configure and run Escrow application on your own 
 
 ### ⚒️ Build program
 
-- Get the source code of the [Escrow smart contract](https://github.com/gear-foundation/dapps-escrow)
-- Build contract as described in [program/README.md](https://github.com/gear-foundation/dapps-escrow/blob/master/README.md).
+- Get the source code of the [Escrow smart contract](https://github.com/gear-foundation/dapps/tree/master/contracts/escrow)
+- Build contract as described in [program/README.md](https://github.com/gear-foundation/dapps/blob/master/contracts/escrow/README.md).
 
 ### 🏗️ Upload Сode
 
@@ -30,7 +30,7 @@ This application requires code to create an escrow wallet
 
 ### 🖥️ Run UI
 
-1. Install packages as described in [frontend/README.md](https://github.com/gear-foundation/dapps-escrow/blob/master/frontend/README.md)
+1. Install packages as described in [frontend/README.md](https://github.com/gear-foundation/dapps/blob/master/frontend/escrow/README.md)
 2. Configure .evn file. Specify network address and code ID like in the example below:
 
 ```sh
@@ -46,7 +46,7 @@ yarn start
 
 ## Introduction
 
-This article explains at a superficial level the purpose and logic of this smart contract. The source code of the smart contract example is available on [GitHub](https://github.com/gear-foundation/dapps-escrow).
+This article explains at a superficial level the purpose and logic of this smart contract. The source code of the smart contract example is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/escrow).
 
 ## Logic
 
@@ -221,7 +221,7 @@ extern "C" fn state() {
     .expect("Failed to share state");
 }
 ```
-To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `Escrow` state. For example - [gear-foundation/dapps-escrow/state](https://github.com/gear-foundation/dapps-escrow/tree/master/state):
+To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `Escrow` state. For example - [escrow/state](https://github.com/gear-foundation/dapps/tree/master/contracts/escrow/state):
 
 ```rust
 #[metawasm]
