@@ -11,17 +11,17 @@ NFT marketplace is a contract where you can buy and sell non-fungible tokens for
 
 A smart contract examples created by Gear are available on GitHub so anyone can easily create their own NFT marketplace application and run it on the Gear Network:
 
-- [Gear Non-Fungible Token](https://github.com/gear-foundation/dapps-non-fungible-token/).
-- [NFT marketplace](https://github.com/gear-foundation/dapps-nft-marketplace).
+- [Gear Non-Fungible Token](https://github.com/gear-foundation/dapps/tree/master/contracts/non-fungible-token).
+- [NFT marketplace](https://github.com/gear-foundation/dapps/tree/master/contracts/nft-marketplace).
 
-- Marketplace UI available on [Github](https://github.com/gear-foundation/dapps-nft-marketplace/tree/master/frontend)
+- Marketplace UI available on [Github](https://github.com/gear-foundation/dapps/tree/master/frontend/nft-marketplace)
 
 ## How to run
 
 ### ⚒️ Build programs
 
-- Build [NFT contract](https://github.com/gear-foundation/dapps-non-fungible-token/) as described in `README.md`
-- Build [Marketplace contract](https://github.com/gear-foundation/dapps-nft-marketplace/) as described in `README.md`
+- Build [NFT contract](https://github.com/gear-foundation/dapps/tree/master/contracts/non-fungible-token) as described in `README.md`
+- Build [Marketplace contract](https://github.com/gear-foundation/dapps/tree/master/contracts/nft-marketplace) as described in `README.md`
 
 ### 🏗️ Upload programs
 
@@ -422,7 +422,7 @@ extern "C" fn state() {
 }
 ```
 
-To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `Market` state. For example - [gear-foundation/dapps-nft-marketplace/state](https://github.com/gear-foundation/dapps-nft-marketplace/tree/master/state):
+To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `Market` state. For example - [nft-marketplace/state](https://github.com/gear-foundation/dapps/tree/master/contracts/nft-marketplace/state):
 
 ```rust
 #[metawasm]
