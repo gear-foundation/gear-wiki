@@ -1,6 +1,7 @@
 ---
 sidebar_position: 5
 sidebar_label: Pay Program rent
+sidebar_class_name: hidden
 ---
 
 To pay program rent, use the following JavaScript code:
