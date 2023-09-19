@@ -9,7 +9,7 @@ sidebar_position: 14
 
 This smart contract example created by Gear represents a Concert tickets distribution with the idea of converting fungible tokens (gFT) to non-fungible tokens (gNFT) in time.
 
-The article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. Anyone can easily create their own application and run it on the Gear Network. The source code is available on [GitHub](https://github.com/gear-foundation/dapps-concert).
+The article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. Anyone can easily create their own application and run it on the Gear Network. The source code is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/concert).
 
 In this example, a single deployed contract can hold one concert at a time. Firstly, all the tickets for the concert come as fungible-tokens. In order to buy tickets one should provide the metadata (e.g. seat/row number) that will later be included in NFTs. When the concert ends, all the fungible tokens of all users (ticket holders) will turn into NFTs.
 
@@ -122,7 +122,7 @@ extern "C" fn state() {
         .expect("Failed to encode or reply with `<ContractMetadata as Metadata>::State` from `state()`");
 }
 ```
-To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `State` struct. For example - [gear-foundation/dapps-concert/state](https://github.com/gear-foundation/dapps-concert/tree/master/state):
+To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `State` struct. For example - [concert/state](https://github.com/gear-foundation/dapps/tree/master/contracts/concert/state):
 
 ```rust
 #[metawasm]
@@ -144,8 +144,8 @@ pub trait Metawasm {
 ```
 
 ## Conclusion
-A source code of the contract example provided by Gear is available on GitHub: [`concert/src`](https://github.com/gear-foundation/dapps-concert/tree/master/src).
+A source code of the contract example provided by Gear is available on GitHub: [`concert/src`](https://github.com/gear-foundation/dapps/tree/master/contracts/concert/src).
 
-See also an example of the smart contract testing implementation based on [gtest](https://github.com/gear-foundation/dapps-concert/tree/master/tests).
+See also an example of the smart contract testing implementation based on [gtest](https://github.com/gear-foundation/dapps/tree/master/contracts/concert/tests).
 
 For more details about testing smart contracts written on Gear, refer to this article: [Program Testing](/docs/developing-contracts/testing).

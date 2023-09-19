@@ -10,18 +10,14 @@ sidebar_position: 3
 ERC-20 is a standard that’s used for creating and issuing smart contracts on the Ethereum blockchain. It was created by Ethereum developers on behalf of the Ethereum community in 2015, and it was officially recognized in 2017.
 
 These smart contracts can then be used to create tokenized assets that represent anything on the Ethereum blockchain like:
-
 - In-game currency
-
 - Financial instruments like a share in a company
-
 - Fiat currencies, like USD for example
-
 - Ounces of Gold
 
 These tokenized assets are known as fungible tokens as all instances of a given ERC-20 token are the same and they can be used interchangeably. A token that is unique and can not be interchangeable is known as a Non Fungible Token.
 
-Gear provides native implementation of fungible token (gFT) described in this article. It explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. Anyone can easily create their own application and run it on the Gear Network. The source code is available on [GitHub](https://github.com/gear-foundation/dapps-sharded-fungible-token).
+Gear provides native implementation of fungible token (gFT) described in this article. It explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. Anyone can easily create their own application and run it on the Gear Network. The source code is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/fungible-token).
 
 The implementation of fungible token includes the following contracts:
 - The `master` fungible token that serves as a proxy program that redirects the message to the logic contract;

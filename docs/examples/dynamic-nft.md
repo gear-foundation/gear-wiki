@@ -6,7 +6,7 @@ sidebar_position: 5
 # Gear Dynamic Non-Fungible Token
 
 ### Introduction
-This is an extension of standard [Non-Fungible token](./gnft-721). It proposes an additional dynamic part that can change or evolve over time. The source code of the Gear NFT smart contract example is available on [GitHub](https://github.com/gear-foundation/dapps-dynamic-nft).
+This is an extension of standard [Non-Fungible token](gnft-721). It proposes an additional dynamic part that can change or evolve over time. The source code of the Gear NFT smart contract example is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/dynamic-nft).
 
 ### Motivation
 
@@ -16,13 +16,13 @@ This example demonstrates Gear Protocol's unique features enabling the new user 
 
 ### Details
 
-The default implementation of the NFT contract is provided in the gear library: [gear-lib/non_fungible_token](https://github.com/gear-foundation/dapps-gear-lib/tree/master/lib/src/non_fungible_token).
+The default implementation of the NFT contract is provided in the Gear library: [/gear-lib/src/tokens/non_fungible.rs](https://github.com/gear-foundation/dapps/blob/master/contracts/gear-lib/src/tokens/non_fungible.rs).
 
 To use the default implementation you should include the packages into your *Cargo.toml* file:
 
 ```toml
-gear-lib = { git = "https://github.com/gear-foundation/dapps-gear-lib.git" }
-gear-lib-derive = { git = "https://github.com/gear-foundation/dapps-gear-lib.git" }
+gear-lib = { git = "https://github.com/gear-foundation/dapps/tree/master/contracts/gear-lib.git" }
+gear-lib-derive = { git = "https://github.com/gear-foundation/dapps/tree/master/contracts/gear-lib.git" }
 hashbrown = "0.13"
 ```
 
@@ -41,7 +41,7 @@ pub struct DynamicNft {
     pub dynamic_data: Vec<u8>,
 }
 ```
-In all other cases, everything also corresponds to the usual [non-fungible-token](./gnft-721) contract, except additional specific actions:
+In all other cases, everything also corresponds to the usual [non-fungible-token](gnft-721) contract, except additional specific actions:
 
 ```rust
 #[derive(Debug, Encode, Decode, TypeInfo)]
@@ -66,7 +66,7 @@ pub enum NFTEvent {
 
 ## Examples
 
-For an example, look at this [Auto-changed NFT](https://github.com/gear-foundation/dapps-auto-changed-nft) contract. This is a modified dynamic contract in which own dynamic data changes over time periods. We slightly changed the logic of the dynamic NFT contract to suit our needs.
+For an example, look at this [Auto-changed NFT](https://github.com/gear-foundation/dapps/tree/master/contracts/auto-changed-nft) contract. This is a modified dynamic contract in which own dynamic data changes over time periods. We slightly changed the logic of the dynamic NFT contract to suit our needs.
 
 First, let's change the name of the contract and add a new field `rest_update_periods` in which we store the rest update periods (in our example, we need 2 updates):
 
@@ -189,10 +189,10 @@ Similarly, you can implement other logic, for example, periodically request data
 
 ## Conclusion
 
-Gear provides a reusable [library](https://github.com/gear-foundation/dapps-gear-lib/tree/master/lib/src/non_fungible_token) with core functionality for the gNFT-4907 protocol. By using object composition, the library can be utilized within a custom NFT contract implementation in order to minimize duplication of community available code.
+Gear provides a reusable [library](https://github.com/gear-foundation/dapps/blob/master/contracts/gear-lib/src/tokens/non_fungible.rs) with core functionality for the `gNFT-4907` protocol. By using object composition, the library can be utilized within a custom NFT contract implementation in order to minimize duplication of community available code.
 
-A source code of the Gear NFT smart contract example based on `gear-lib` is available on GitHub: [gear-foundation/dapps-non-fungible-token](https://github.com/gear-foundation/dapps-dynamic-nft).
+A source code of the Gear NFT smart contract example based on `gear-lib` is available on GitHub: [gear-foundation/dapps-non-fungible-token](https://github.com/gear-foundation/dapps/tree/master/contracts/dynamic-nft).
 
-See also an example of the smart contract testing implementation based on `gtest`: [gear-foundation/dapps-non-fungible-token/tests](https://github.com/gear-foundation/dapps-dynamic-nft/tree/master/tests).
+See also an example of the smart contract testing implementation based on `gtest`: [gear-foundation/dapps-non-fungible-token/tests](https://github.com/gear-foundation/dapps/tree/master/contracts/dynamic-nft/tests).
 
 For more details about testing smart contracts written on Gear, refer to this article: [Program Testing](/docs/developing-contracts/testing).

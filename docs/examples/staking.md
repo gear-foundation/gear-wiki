@@ -9,7 +9,7 @@ sidebar_position: 18
 Stacking is an analogue of a bank deposit, receiving passive earnings due to simple storage of cryptomonets.
 The percentage of income may be different – it all depends on the term of the deposit.
 
-Anyone can create their own Staking contract and run it on the Gear Network. To do this, Gear created an example which is available on [GitHub](https://github.com/gear-foundation/dapps-staking).
+Anyone can create their own Staking contract and run it on the Gear Network. To do this, Gear created an example which is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/staking).
 
 This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios.
 
@@ -362,7 +362,7 @@ extern "C" fn state() {
         .expect("Failed to encode or reply with `<AppMetadata as Metadata>::State` from `state()`");
 }
 ```
-To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `IoStaking` state. For example - [gear-foundation/dapps-staking/state](https://github.com/gear-foundation/dapps-staking/tree/master/state):
+To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `IoStaking` state. For example - [staking/state](https://github.com/gear-foundation/dapps/tree/master/contracts/staking/state):
 
 ```rust
 #[metawasm]
@@ -390,12 +390,12 @@ The `Staking` contract interacts with the `fungible` token contract. Each transa
 
 ## Conclusion
 
-A source code of the contract example provided by Gear is available on GitHub: [`staking/src/lib.rs`](https://github.com/gear-foundation/dapps-staking/blob/master/src/lib.rs).
+A source code of the contract example provided by Gear is available on GitHub: [`staking/src/lib.rs`](https://github.com/gear-foundation/dapps/blob/master/contracts/staking/src/lib.rs).
 
 See also examples of the smart contract testing implementation based on gtest:
 
-- [`simple_test.rs`](https://github.com/gear-foundation/dapps-staking/blob/master/tests/simple_test.rs).
+- [`simple_test.rs`](https://github.com/gear-foundation/dapps/blob/master/contracts/staking/tests/simple_test.rs).
 
-- [`panic_test.rs`](https://github.com/gear-foundation/dapps-staking/blob/master/tests/panic_test.rs).
+- [`panic_test.rs`](https://github.com/gear-foundation/dapps/blob/master/contracts/staking/tests/panic_test.rs).
 
 For more details about testing smart contracts written on Gear, refer to this article: [Program testing](/docs/developing-contracts/testing).

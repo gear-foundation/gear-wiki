@@ -6,10 +6,10 @@ sidebar_position: 9
 
 ![img alt](./img/escrow.png)
 
-An escrow is a special wallet to which some assets (e.g. money or stocks) are deposited and stored until certain conditions are met. In terms of smart contracts, an escrow is a wallet that is stored on a blockchain and, like a regular escrow, can receive some assets (e.g. a cryptocurrency or fungible tokens (like [Gear fungible tokens - gFT](gft-20.md) in this example)) from one user and, when certain conditions are met, send them to another.
+An escrow is a special wallet to which certain assets (e.g., money or stocks) are deposited and stored until specific conditions are met. In terms of smart contracts, an escrow is a wallet stored on a blockchain that, like a traditional escrow, can receive assets (e.g., cryptocurrency or fungible tokens, such as [Gear fungible tokens - gFT](gft-20.md) in this example) from one user and, when certain conditions are met, send them to another.
 
-- Program source code is avalible on [Github](https://github.com/gear-foundation/dapps-escrow)
-- dApp UI [Github](https://github.com/gear-foundation/dapps-escrow/tree/master/frontend)
+- Program source code is avalible on [Github](https://github.com/gear-foundation/dapps/tree/master/contracts/escrow)
+- dApp UI [Github](https://github.com/gear-foundation/dapps/tree/master/frontend/escrow)
 
 ## How to run
 
@@ -17,8 +17,8 @@ This video demonstrates how to configure and run Escrow application on your own 
 
 ### ⚒️ Build program
 
-- Get the source code of the [Escrow smart contract](https://github.com/gear-foundation/dapps-escrow)
-- Build contract as described in [program/README.md](https://github.com/gear-foundation/dapps-escrow/blob/master/README.md).
+- Get the source code of the [Escrow smart contract](https://github.com/gear-foundation/dapps/tree/master/contracts/escrow)
+- Build contract as described in [program/README.md](https://github.com/gear-foundation/dapps/blob/master/contracts/escrow/README.md).
 
 ### 🏗️ Upload Сode
 
@@ -30,7 +30,7 @@ This application requires code to create an escrow wallet
 
 ### 🖥️ Run UI
 
-1. Install packages as described in [frontend/README.md](https://github.com/gear-foundation/dapps-escrow/blob/master/frontend/README.md)
+1. Install packages as described in [frontend/README.md](https://github.com/gear-foundation/dapps/blob/master/frontend/escrow/README.md)
 2. Configure .evn file. Specify network address and code ID like in the example below:
 
 ```sh
@@ -46,16 +46,16 @@ yarn start
 
 ## Introduction
 
-This article explains at a superficial level the purpose and logic of this smart contract. The source code of the smart contract example is available on [GitHub](https://github.com/gear-foundation/dapps-escrow).
+This article explains at a superficial level the purpose and logic of this smart contract. The source code of the smart contract example is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/escrow).
 
 ## Logic
 
 * Any user can create an escrow wallet as a buyer or seller.
-* A buyer can make a deposit or confirm a deal and close a wallet.
+* A buyer can make a deposit or confirm a deal and close the wallet.
 * A seller can refund tokens from a paid wallet to a buyer.
-* Both buyer and seller can cancel a deal and close an unpaid wallet.
+* Both the buyer and the seller can cancel a deal and close an unpaid wallet.
 
-One escrow wallet contains info about a `buyer`, a `seller`, wallet `state` and an `amount` of tokens that this wallet can store:
+An escrow wallet contains information about a `buyer`, a `seller`, the wallet `state`, and the `amount` of tokens that this wallet can store:
 
 ```rust
 pub struct Wallet {
@@ -191,8 +191,7 @@ pub enum EscrowAction {
 ```
 
 ## Consistency of contract states
-The `Escrow` contract interacts with the `fungible` token contract. Each transaction that changes the states of Escrow and the fungible token is stored in the state until it is completed. User can complete a pending transaction by sending a message `Continue` indicating the transaction id. The idempotency of the fungible token contract allows to restart a transaction without duplicate changes which guarantees the state consistency of these 2 contracts.
-
+The `Escrow contract` interacts with the `fungible token contract`. Each transaction that modifies the states of the Escrow and the fungible token is stored in the state until it is completed. A user can finalize a pending transaction by sending a Continue message, indicating the transaction ID. The idempotency of the fungible token contract allows for the restarting of a transaction without causing duplicate changes, ensuring the state consistency of these two contracts.
 
 ## Program metadata and state
 Metadata interface description:
@@ -221,7 +220,7 @@ extern "C" fn state() {
     .expect("Failed to share state");
 }
 ```
-To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `Escrow` state. For example - [gear-foundation/dapps-escrow/state](https://github.com/gear-foundation/dapps-escrow/tree/master/state):
+To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `Escrow` state. For example - [gear-foundation/dapps-escrow/state](https://github.com/gear-foundation/dapps/tree/master/contracts/escrow/state):
 
 ```rust
 #[metawasm]

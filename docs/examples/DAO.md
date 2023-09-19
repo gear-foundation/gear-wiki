@@ -9,17 +9,17 @@ sidebar_position: 8
 
 ### What is DAO
 
-A decentralized autonomous organization, or a DAO for short, is a new type of way to run organizations or institutions that enable individuals to work together for a specific cause in transparent, fair and honest ways. DAOs can be thought of as online groups of like-minded individuals that are also collectively owned and managed by the members themselves in equitable ways.
+A decentralized autonomous organization, or DAO for short, is a novel approach to managing organizations or institutions that enables individuals to collaborate for a specific cause in transparent, fair, and honest ways. DAOs can be likened to online communities of like-minded individuals, collectively owned and managed by their members in equitable ways.
 
-Decisions are governed by proposals and votes to ensure that everyone within a decentralized autonomous organization has a voice. This is significant because it means that no central entity can manipulate anything for personal gain or based on personal beliefs.
+Decisions are made through proposals and votes, ensuring that every member within a decentralized autonomous organization has a voice. This is significant because it prevents any central entity from manipulating matters for personal gain or based on personal beliefs.
 
-DAOs offer safe alternatives to pooling together money for a particular cause. But this isn’t just money that can be ordinarily managed by members. For instance, a group could set up a DAO to govern a charity to begin accepting donations and distributing aid accordingly. However, by far the biggest use cases for DAOs at the moment have been decentralized investment funds. This is where a group of investors create a venture fund that pools capital together and votes transparently on where to allocate the capital.
+DAOs provide secure alternatives for pooling funds for a particular cause. It's not limited to ordinary financial management by members. For example, a group could establish a DAO to oversee a charity, accepting donations and distributing aid in an accountable manner. However, the most prominent use cases for DAOs at the moment involve decentralized investment funds. In such scenarios, a group of investors establishes a venture fund that combines capital and transparently votes on its allocation.
 
 ### DAO application example by Gear
 
-Anyone can easily create their own DAO application and run it on the Gear Network. To do this, Gear created an example of the DAO smart contract, which is available on [GitHub](https://github.com/gear-foundation/dapps-dao-light).
+Anyone can easily create their own DAO application and run it on the Gear Network. To facilitate this, Gear has provided an example of the DAO smart contract, which is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/dao-light).
 
-This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios.
+This article explains the programming interface, data structure, basic functions, and their purposes. You can use it as-is or modify it to suit your own scenarios.
 
 <!-- In addition, Gear provides an example implementation of the DAO user interface to demonstrate its interaction with the smart contract in the Gear Network. You can watch a video on how to get the DAO application up and running and its capabilities here: **https://youtu.be/6lxr7eojADw**. The source code for the DAO application is available on [GitHub](https://github.com/gear-foundation/dapps-dao-app).
 -->
@@ -121,7 +121,7 @@ The actions that the contract receives outside are defined in enum `DaoActions`.
 
 ### DAO functions
 
-- Joining the DAO. In order to send the DAO contract the tokens and become the DAO members a user has to send the following message:
+- Joining DAO. To join the DAO and become a DAO member, a user needs to send the following message to the DAO contract:"
 
 ```rust
 /// Deposits tokens to DAO
@@ -157,7 +157,7 @@ SubmitFundingProposal {
 },
 ```
 
- - The member or the delegate address of the member submits his vote (YES or NO) on the proposal.
+ - The member or the delegate address of the member submits their vote (YES or NO) on the proposal.
 
 ```rust
 /// The member submits a vote (YES or NO) on the proposal.
@@ -176,7 +176,7 @@ SubmitVote {
 },
 ```
 
- - The right for members to withdraw their capital during the grace period. It can be used when the members don’t agree with the result of the proposal and the acceptance of that proposal can affect their shares. The member can ragequit only if he has voted NO on that proposal.
+ - Members have the option to withdraw their capital during a grace period. This feature is useful when members disagree with the outcome of a proposal, especially if the acceptance of that proposal could impact their shares. A member can initiate a 'ragequit' only if they have voted 'NO' on the proposal.
 
 ```rust
 /// Withdraws the capital of the member
@@ -193,7 +193,7 @@ RageQuit {
 },
 ```
 
- - The proposal processing after the proposal competes during the grace period. If the proposal is accepted, the tribute tokens are deposited into the contract and new shares are minted and issued to the applicant. If the proposal is rejected, the tribute tokens are returned to the applicant.
+ - The proposal processing occurs after the proposal completes its grace period. If the proposal is accepted, the tribute tokens are deposited into the contract, and new shares are minted and issued to the applicant. In the event of rejection, the tribute tokens are returned to the applicant.
 
 ```rust
 /// The proposal processing after the proposal completes during the grace period.
@@ -210,7 +210,7 @@ ProcessProposal {
     proposal_id: u128,
 },
 ```
-- The ability to continue the transaction. Шf the transaction has not been completed due to network failure, the user can send a message `Continue` indicating the transaction id that needs to be completed:
+- The option to resume the transaction is available. If a transaction hasn't been completed due to a network failure, the user can send a `Continue` message specifying the transaction ID that needs to be finalized:
 
 ```rust
  /// Continues the transaction if it fails due to lack of gas
@@ -227,6 +227,8 @@ Continue(
 ```
 ## Consistency of contract states
 The `DAO` contract interacts with the `fungible` token contract. Each transaction that changes the states of DAO and the fungible token is stored in the state until it is completed. User can complete a pending transaction by sending a message `Continue` indicating the transaction id. The idempotency of the fungible token contract allows to restart a transaction without duplicate changes which guarantees the state consistency of these 2 contracts.
+
+The `DAO` contract interacts with the `fungible token` contract. Every transaction that alters the states of the DAO and the fungible token is recorded in the state until it is finalized. Users can complete a pending transaction by sending a `Continue` message along with the transaction ID. The idempotency feature of the fungible token contract allows transactions to be restarted without duplicating changes, ensuring the state consistency of these two contracts.
 
 <!--
 ## User interface
@@ -299,7 +301,7 @@ extern "C" fn state() {
     .expect("Failed to share state");
 }
 ```
-To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `DaoState` state. For example - [gear-foundation/dapps-dao/state](https://github.com/gear-foundation/dapps-dao/tree/master/state):
+To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `DaoState` state. For example - [gear-foundation/dapps-dao/state](https://github.com/gear-foundation/dapps/tree/master/contracts/dao/state):
 
 ```rust
 #[metawasm]
@@ -329,9 +331,9 @@ pub trait Metawasm {
 ```
 
 ## Source code
-The source code of this example of DAO smart contract and the example of an implementation of its testing is available on [GitHub](https://github.com/foundation/dapps-dao-light).
+The source code for this DAO smart contract example and its testing implementation are available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/dao-light).
 
-The extended version of DAO that includes admin, membership proposals and delegated voting can be found at [GitHub](https://github.com/gear-foundation/dapps-dao).
+The extended version of DAO that includes admin, membership proposals and delegated voting can be found at [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/dao).
 
 <!--The application source code is available in: [https://github.com/gear-foundation/dapps-dao-app](https://github.com/gear-foundation/dapps-dao-app).
 -->

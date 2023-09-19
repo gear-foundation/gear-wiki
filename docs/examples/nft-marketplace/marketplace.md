@@ -7,21 +7,21 @@ sidebar_position: 1
 
 ![img alt](./../img/nft-marketplace.png)
 
-NFT marketplace is a contract where you can buy and sell non-fungible tokens for fungible tokens. The contract also supports holding the NFT auctions and making/accepting purchase offers on NFTs.
+NFT marketplace is a smart contract where you can buy and sell non-fungible tokens for fungible tokens. The contract also supports holding the NFT auctions and making/accepting purchase offers on NFTs.
 
-A smart contract examples created by Gear are available on GitHub so anyone can easily create their own NFT marketplace application and run it on the Gear Network:
+A smart contract examples are available on GitHub so anyone can easily create their own NFT marketplace application and run it on the Gear-powered network:
 
-- [Gear Non-Fungible Token](https://github.com/gear-foundation/dapps-non-fungible-token/).
-- [NFT marketplace](https://github.com/gear-foundation/dapps-nft-marketplace).
+- [Gear Non-Fungible Token](https://github.com/gear-foundation/dapps/tree/master/contracts/non-fungible-token).
+- [NFT marketplace](https://github.com/gear-foundation/dapps/tree/master/contracts/nft-marketplace).
 
-- Marketplace UI available on [Github](https://github.com/gear-foundation/dapps-nft-marketplace/tree/master/frontend)
+- Marketplace UI available on [Github](https://github.com/gear-foundation/dapps/tree/master/frontend/nft-marketplace/frontend)
 
 ## How to run
 
 ### ⚒️ Build programs
 
-- Build [NFT contract](https://github.com/gear-foundation/dapps-non-fungible-token/) as described in `README.md`
-- Build [Marketplace contract](https://github.com/gear-foundation/dapps-nft-marketplace/) as described in `README.md`
+- Build [NFT contract](https://github.com/gear-foundation/dapps/tree/master/contracts/non-fungible-token) as described in `README.md`
+- Build [Marketplace contract](https://github.com/gear-foundation/dapps/tree/master/contracts/nft-marketplace) as described in `README.md`
 
 ### 🏗️ Upload programs
 
@@ -66,7 +66,7 @@ yarn install
 
 2. Configure .evn file. Specify network address and program ID like in the example below:
 
-For proper application functioning, one needs to adjust an environment variable parameters. An example is available [here](https://github.com/gear-tech/gear-js/blob/master/apps/marketplace/.env.example).
+For proper application functioning, one needs to adjust an environment variable parameters. An example is available [here](https://github.com/gear-foundation/dapps/blob/master/frontend/nft-marketplace/frontend/.env.example).
 
 ```sh
 REACT_APP_NODE_ADDRESS=wss://rpc-node.gear-tech.io:443
@@ -76,7 +76,7 @@ REACT_APP_MARKETPLACE_CONTRACT_ADDRESS=0xf8e5add537887643f8aa1ee887754d9b2d8c20d
 REACT_APP_NFT_CONTRACT_ADDRESS=0xa7874ff27e9bac10bf7fd43f4908bb1e273018e15325c16fb35c71966c0c4033
 ```
 
-- `REACT_APP_NODE_ADDRESS` is Gear Network address (wss://rpc-node.gear-tech.io:443)
+- `REACT_APP_NODE_ADDRESS` is Gear Network address (wss://testnet.vara.rs)
 - `REACT_APP_IPFS_ADDRESS` is address of IPFS to store NFT assets (https://ipfs.gear-tech.io/api/v0 was used for Gear Marketplace implementation)
 - `REACT_APP_IPFS_GATEWAY_ADDRESS` is IPFS Gateway address (https://ipfs-gw.gear-tech.io/ipfs)
 - `REACT_APP_MARKETPLACE_CONTRACT_ADDRESS` is NFT Marketplace contract address in Gear Network
@@ -422,7 +422,7 @@ extern "C" fn state() {
 }
 ```
 
-To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `Market` state. For example - [gear-foundation/dapps-nft-marketplace/state](https://github.com/gear-foundation/dapps-nft-marketplace/tree/master/state):
+To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `Market` state. For example - [gear-foundation/dapps-nft-marketplace/state](https://github.com/gear-foundation/dapps/tree/master/contracts/nft-marketplace/state):
 
 ```rust
 #[metawasm]
