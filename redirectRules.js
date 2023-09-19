@@ -284,10 +284,6 @@ const urlList = [
         "from": "/gmt-1155"
     },
     {
-        "to": "/docs/examples/feeds",
-        "from": "/feeds"
-    },
-    {
         "to": "/docs/examples/DAO",
         "from": "/DAO"
     },
