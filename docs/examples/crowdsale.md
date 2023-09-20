@@ -174,7 +174,7 @@ extern "C" fn state() {
     );
 }
 ```
-To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `State` state. For example - [gear-foundation/dapps-crowdsale/state](https://github.com/gear-foundation/dapps/tree/master/contracts/crowdsale/state):
+To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `State` state. For example - [gear-foundation/dapps/crowdsale/state](https://github.com/gear-foundation/dapps/tree/master/contracts/crowdsale/state):
 
 ```rust
 #[metawasm]
