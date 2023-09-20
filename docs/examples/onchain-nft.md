@@ -273,7 +273,7 @@ extern "C" fn state() {
         .expect("Failed to encode or reply with `<AppMetadata as Metadata>::State` from `state()`");
 }
 ```
-To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `State` state. For example - [gear-foundation/dapps-on-chain-nft/state](https://github.com/gear-foundation/dapps/tree/master/contracts/on-chain-nft/state):
+To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `State` state. For example - [gear-foundation/dapps/on-chain-nft/state](https://github.com/gear-foundation/dapps/tree/master/contracts/on-chain-nft/state):
 
 ```rust
 
