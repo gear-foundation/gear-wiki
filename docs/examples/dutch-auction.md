@@ -138,6 +138,6 @@ pub mod metafns {
 
 The source code of this example of Dutch Auction smart contract and the example of an implementation of its testing is available on [gear-foundation/dapps-dutch-auction](https://github.com/gear-foundation/dapps/tree/master/contracts/dutch-auction).
 
-See also an example of the smart contract testing implementation based on `gtest`: [gear-foundation/dapps-dutch-auction/tree/master/tests](https://github.com/gear-foundation/dapps/tree/master/contracts/dutch-auction/tests).
+See also an example of the smart contract testing implementation based on `gtest`: [gear-foundation/dapps/dutch-auction/tests](https://github.com/gear-foundation/dapps/tree/master/contracts/dutch-auction/tests).
 
 For more details about testing smart contracts written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.
