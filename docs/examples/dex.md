@@ -19,7 +19,7 @@ The exchange uses [Gear fungible tokens (GFT-20)](gft-20) underneath for the tok
 ### Math
 As it was said all the prices are algorithmically calculated. Investors provide funds to the liquidity pools and price is calculated according to the amount of tokens in the reserves using the following formula: <br/><br/>
 $$reserve0 * reserve1 = K$$, where $$reserve0, reserve1$$ - are the reserves of token0 and token1 respectively provided by the investors, and $$K$$ - is the constant.
-All the prices/amounts all calculated in the way that the $$K$$ <strong>MUST</strong> remain constant. This basically means that the more token0 we have in pool, the lower price of token1 will be when performing a swap.
+All the prices/amounts are calculated in the way that the $$K$$ **MUST** remain constant. This basically means that the more token0 we have in the pool, the lower price of token1 will be when performing a swap.
 
 ## Factory contract description
 Taking into account that we might have a large amount of trading pairs, we should have a way to monitor them/deploy another one and etc. That's where a factory comes into play. Factory helps to create a new pair and monitor all the existing pairs.
