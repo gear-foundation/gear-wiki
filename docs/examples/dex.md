@@ -14,7 +14,7 @@ While transactions on a centralized exchange are recorded in that exchange's int
 
 DEXs are usually built on open-source code, meaning that anyone interested can see exactly how they work. This also means that developers can adapt existing code to create new competing projects, which is how Uniswap's code has been adapted by a whole host of DEXs with "swap" in their names, such as Sushiswap and Pancakeswap.
 
-The exchange uses [Gear fungible tokens (GFT-20)](gft-20) underneath for the tokens and [Gear-lib FT wrapper](https://github.com/gear-foundation/dapps/tree/master/contracts/gear-lib/src/tokens/fungible) for the pair to keep track of the liquidity.
+The exchange uses [Gear fungible tokens (GFT-20)](gft-20) underneath for the tokens and [Gear-lib FT wrapper](https://github.com/gear-foundation/dapps/tree/master/contracts/gear-lib-old/src/fungible_token) for the pair to keep track of the liquidity.
 
 ### Math
 As it was said all the prices are algorithmically calculated. Investors provide funds to the liquidity pools and price is calculated according to the amount of tokens in the reserves using the following formula: <br/><br/>
