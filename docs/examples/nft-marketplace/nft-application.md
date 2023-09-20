@@ -9,11 +9,11 @@ This article explains how to create a `React` application and connect it to an [
 
 ### Preparation
 
-1. First clone the [frontend-starter](https://github.com/LouiseMedova/gear-app-starter). Install [NodeJs](https://nodejs.org/en/download/) and [NPM](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm). Make sure you have the latest LTS version of the NodeJs installed. 
+1. First clone the [frontend-starter](https://github.com/gear-foundation/dapps/tree/master/frontend/nft-app-starter). Install [NodeJs](https://nodejs.org/en/download/) and [NPM](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm). Make sure you have the latest LTS version of the NodeJs installed. 
 
 2. Then install yarn:
     ```shell
-    npm install --global yarn 
+    yarn install
     ```
 
 3. There is an `.env.example` file. Create your own `.env` file and copy the contents of `.env.example` to your `.env` file. It contains the following variables:
@@ -23,11 +23,7 @@ This article explains how to create a `React` application and connect it to an [
 
 4. Upload the contract to the chain and set up the address in the `.env` file. Place the `meta.txt` file in the `assets/meta` folder and the `nft_state.meta.wasm` file in the `assets/wasm folder`.
 
-5. Install packages:
-    ```shell
-    yarn install
-    ```
-    and run the application:
+5. Run the application:
     ```shell
     yarn start
     ```

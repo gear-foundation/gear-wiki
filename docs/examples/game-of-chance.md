@@ -48,7 +48,7 @@ yarn start
 For a more detailed technical description, see its [documentation on the dApps documentation portal](https://dapps.gear.rs/game_of_chance) and [the source code section](#source-code).
 :::
 
-During an initialization, the game administrator is assigned. It has the rights to start a new game round and pick a winner after the end of each one. Other actors can participate in a round if they have enough fungible tokens or the native value, they're used to collect prize funds. After the end of the players entry stage, the administrator should execute the action for picking a winner, and this smart contract does it randomly and then sends prize funds to the winner.
+During initialization, the game administrator is assigned. The administrator has the rights to start a new game round and select a winner after the end of each one. Other actors can participate in a round if they have enough fungible tokens or the native value they use to contribute to the prize funds. After the players' entry stage ends, the administrator should execute the action to select a winner. This smart contract randomly selects the winner and then sends the prize funds to them.
 
 ## Interface
 
@@ -168,6 +168,6 @@ To display only necessary certain values from the state, you need to write a sep
 
 ## Source code
 
-The source code of the Game of chance smart contract and an implementation of its testing is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/game-of-chance). They can be used as is or modified to suit your own scenarios.
+The source code of the Game of Chance smart contract and an implementation of its testing are available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/frontend/game-of-chance). They can be used as is or modified to suit your own scenarios.
 
 For more details about testing smart contracts written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.

@@ -21,7 +21,7 @@ Upload Supply chain contract requires build two auxiliary contracts:
 
 ### 🏗️ Upload programs
 
-You can deploy a program using [idea.gear-tech.io](https://idea.gear-tech.io/). In the network selector choose `Staging Testnet` or `Development` (in this case, you should have a local node running).
+You can deploy a program using [idea.gear-tech.io](https://idea.gear-tech.io/). In the network selector choose `Vara Stable Testnet` or `Development` (in this case, you should have a local node running).
 
 *** Non-Fungible Token ***
 

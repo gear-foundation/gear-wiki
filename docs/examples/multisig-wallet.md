@@ -6,13 +6,13 @@ sidebar_position: 13
 # Multisig Wallet
 
 ## Introduction
-Multisignature wallets are cryptocurrency wallets that require one or more private keys to sign and send a transaction.
+Multisignature wallets are cryptocurrency wallets that require one or more private keys to sign and authorize a transaction.
 
-Imagine a bank vault that requires more than one key to open: That’s a little how multisignature cryptocurrency wallets work.
+To illustrate, think of a bank vault that demands multiple keys to unlock; this analogy captures the essence of how multisignature cryptocurrency wallets operate.
 
-Multisignature proponents argue that multisignature is the most secure and fail-proof way to store cryptocurrency. Even if a thief gets his hands on one of your wallets, for example, they still won’t be able to access your account without the keys to the other wallets in the setup.
+Advocates of multisignature wallets argue that they offer the most secure and fail-proof method for storing cryptocurrency. Even if a thief were to obtain one of your wallet keys, they would still be unable to access your account without the keys associated with the other wallets in the setup.
 
-This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. Anyone can easily create their own application and run it on the Gear Network. The source code is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/multisig-wallet).
+This article provides an explanation of the programming interface, data structure, basic functions, and their respective purposes. It can be used as-is or customized to fit your specific needs. Anyone can easily create their own application and deploy it on the Gear Network. The source code is accessible on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/multisig-wallet).
 
 ## Logic
 
@@ -146,7 +146,7 @@ extern "C" fn state() {
         .expect("Failed to encode or reply with `<ContractMetadata as Metadata>::State` from `state()`");
 }
 ```
-To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `State` struct. For example - [multisig-wallet/state](https://github.com/gear-foundation/dapps/tree/master/contracts/multisig-wallet/state):
+To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `State` struct. For example - [gear-foundation/dapps/multisig-wallet/state](https://github.com/gear-foundation/dapps/tree/master/contracts/multisig-wallet/state):
 
 ```rust
 #[metawasm]

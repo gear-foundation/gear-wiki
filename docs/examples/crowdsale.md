@@ -7,15 +7,15 @@ sidebar_position: 19
 
 ## Introduction
 
-A public offering to invest in a brand-new cryptocurrency or other digital asset is known as a cryptocurrency Crowdsale. A crowdsale can be used by new projects to raise money for development and other purposes. It is a time-limited campaign where investors can exchange their cryptocurrencies defined in the campaign to newly proposed tokens. The new tokens are promoted as future functional units after the crowdsale's funding goal is met and the project launches.
+A public offering to invest in a brand-new cryptocurrency or other digital asset is known as a cryptocurrency crowdsale. A crowdsale can be used by new projects to raise money for development and other purposes. It is a time-limited campaign during which investors can exchange their cryptocurrencies, as defined in the campaign, for newly proposed tokens. These new tokens are promoted as future functional units once the crowdsale's funding goal is met, and the project launches.
 
-An example of a crowdsale smart-contract implementation described in this article is one of many other decentralized applications that can be implemented and launched on Gear. This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. Anyone can easily create their own crowdsale application and run it on the Gear Network.
+The example of a crowdsale smart contract implementation described in this article is just one of many decentralized applications that can be implemented and launched on Gear. This article explains the programming interface, data structure, basic functions, and their purposes. You can use it as-is or modify it to suit your own scenarios. Anyone can easily create their own crowdsale application and run it on a Gear-powered network.
 
-Initial funds with which a token is purchased are determined by the Gear fungible tokens contract - [gFT](https://wiki.gear-tech.io/examples/gft-20). The contract's source code is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/crowdsale).
+The initial funds used to purchase a token are determined by the Gear fungible tokens contract - [gFT](gft-20). The contract's source code is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/crowdsale).
 
 ## Interface
 ### Source files
-1. `messages.rs` - contains function of the fungible token contract. Crowdsale contract interacts with fungible token contract through transfer_tokens function:
+1. `messages.rs` - contains function of the fungible token contract. Crowdsale contract interacts with the fungible token contract through `transfer_tokens` function:
 ```rust
 pub async fn transfer_tokens(
     transaction_id: u64, // - associated transaction id
@@ -174,7 +174,7 @@ extern "C" fn state() {
     );
 }
 ```
-To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `State` state. For example - [crowdsale/state](https://github.com/gear-foundation/dapps/tree/master/contracts/crowdsale/state):
+To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `State` state. For example - [gear-foundation/dapps/crowdsale/state](https://github.com/gear-foundation/dapps/tree/master/contracts/crowdsale/state):
 
 ```rust
 #[metawasm]

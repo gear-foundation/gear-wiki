@@ -23,17 +23,31 @@ This makes it possible to implement logic when several logically related message
 
 State consistency between smart contracts is achieved using techniques described [here](/developing-contracts/distributed_transactions.md).
 
+## Program logic
+
+![img alt](./img/enable-subscription.png)
+
+When a user purchases a subscription, access to the service is open, and after the subscription expires, access is closed.
+
+The interface provides an option whether to enable or disable subscription auto-renewal. And if it is enabled, the subscription will be renewed automatically by getting funds from the user's.
+
+There is also an option to cancel the active subscription.
+
+The VaraTube consists of two smart contracts:
+- [Gear Fungible Token (GFT-20)](gft-20) contract determines user and service balances required to purchase a subscription and approves Subscription contract to get funds from user's balance.
+- [VaraTube Subscription](https://github.com/gear-foundation/dapps/tree/master/contracts/varatube) contract manages service's subscription - its availability, expiration, auto renewal.
+
 ## How to run
 
 ### ⚒️ Build program
 
 - Get the source code of [VaraTube contract](https://github.com/gear-foundation/dapps/tree/master/contracts/varatube/src) and [Fungible Token contract](https://github.com/gear-foundation/dapps/tree/master/contracts/fungible-token)
-- Build contracts as described in [program/README.md](https://github.com/gear-foundation/dapps/blob/master/contracts/varatube/README.md).
+- Build contracts as described in [README.md](https://github.com/gear-foundation/dapps/tree/master/contracts/fungible-token#readme).
 
 ### 🏗️ Upload program
 
 1. You can deploy a program using [idea.gear-tech.io](https://idea.gear-tech.io/)
-2. In the network selector choose `Staging Testnet` or `Development` in case if you have running a local node
+2. In the network selector choose `Vara Stable Testnet` or `Development` in case if you have running a local node
 3. Upload program `varatube.opt.wasm` from `/target/wasm32-unknown-unknown/release/`
 4. Upload metadata file `meta.txt`
 5. Specify `init payload` and calculate gas!
@@ -41,7 +55,7 @@ State consistency between smart contracts is achieved using techniques described
 
 ### 🖥️ Run UI
 
-1. Install packages as described in [frontend/README.md](https://github.com/gear-foundation/dapps/blob/master/frontend/varatube/README.md)
+1. Download React application repository and install packages as described in [frontend/README.md](https://github.com/gear-foundation/dapps/blob/master/frontend/varatube/README.md)
 
 ```sh
 yarn install
@@ -61,20 +75,6 @@ REACT_APP_FT_CONTRACT_ADDRESS=0xa2677f49725647da5cff15e8a42b2ead9102c387d646ff85
 ```sh
 yarn start
 ```
-
-## Program logic
-
-![img alt](./img/enable-subscription.png)
-
-When a user purchases a subscription, access to the service is open, and after the subscription expires, access is closed.
-
-The interface provides an option whether to enable or disable subscription auto-renewal. And if it is enabled, the subscription will be renewed automatically by getting funds from the user's.
-
-There is also an option to cancel the active subscription.
-
-The VaraTube consists of two smart contracts:
-- [Gear Fungible Token (GFT-20)](/docs/examples/gft-20) contract determines user and service balances required to purchase a subscription and approves Subscription contract to get funds from user's balance.
-- [VaraTube Subscription](https://github.com/gear-foundation/dapps/blob/master/contracts/varatube/README.md) contract manages service's subscription - its availability, expiration, auto renewal.
 
 ## Source code
 

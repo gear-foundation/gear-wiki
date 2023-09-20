@@ -7,31 +7,9 @@ sidebar_position: 2
 
 Gear is very easy to write code for!
 
-Let's look at the [minimal program](https://github.com/gear-foundation/dapps-app). It contains the following files:
-```
-.
-├── io /
-│   ├── src /
-│   │   └── lib.rs
-│   └── Cargo.toml
-├── src/
-│   ├── contract.rs
-│   └── lib.rs
-├── state/
-│   ├── src/
-│   │   ├── lib.rs
-│   │   └── state.rs
-│   ├── Cargo.toml
-│   └── build.rs
-├── tests/
-│   ├── gclient_test.rs
-│   └── test.rs
-├── Cargo.toml
-├── Makefile
-├── meta.txt
-└── build.rs
-```
-The code of the program is in the `src/contract.rs` file. The program replies with `Pong` string if the sender sent `Ping` message to it. It also saves how many times a user sent a ping message to the program.
+Let's look at the [minimal program](https://github.com/gear-foundation/dapps/tree/master/contracts/ping).
+
+The code of the program is in the `src/lib.rs` file. The program replies with `Pong` string if the sender sent `Ping` message to it. It also saves how many times a user sent a ping message to the program.
 So, the program contains:
 - state definition:
 ```rust

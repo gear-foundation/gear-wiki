@@ -7,7 +7,7 @@ sidebar_position: 17
 
 ## Introduction
 
-This NFT smart-contract example demonstrates an approach when the token assets are stored directly on chain. For details related to common gNFT smart-contract implentation, read: [gNFT-721](https://wiki.gear-tech.io/examples/gnft-721).
+This NFT smart-contract example demonstrates an approach when the token assets are stored directly on chain. For details related to common gNFT smart-contract implentation, read: [gNFT-721](gnft-721).
 
 When the owner of a given token ID wishes to transfer it to another user, it is easy to verify ownership and reassign the token to a new owner. Mostly NFTs images (or other base resources) are stored somewhere else (e.g. IPFS) and only the metadata is stored in the contract. Metadata consists of a name, an ID and links to the external resources, where the images are actually stored.
 
@@ -25,13 +25,12 @@ The functions that must be supported by each non-fungible-token contract:
 - *mint(to, token_id, metadata)* is a function that creates a new token. Metadata can include any information about the token: it can be a link to a specific resource, a description of the token, etc;
 - *burn(from, token_id)* is a function that removes the token with the mentioned *token_id* from the contract.
 
-The default implementation of the NFT contract is provided in the gear library: [gear-lib/non_fungible_token](https://github.com/gear-foundation/dapps/blob/master/contracts/gear-lib/src/tokens/non_fungible.rs).
+The default implementation of the NFT contract is provided in the gear library: [gear-lib/non_fungible_token](https://github.com/gear-foundation/dapps/tree/master/contracts/gear-lib/src/tokens).
 
 To use the default implementation you should include the packages into your *Cargo.toml* file:
 
 ```toml
-gear-lib = { git = "https://github.com/gear-foundation/dapps.git" }
-gear-lib-derive = { git = "https://github.com/gear-foundation/dapps.git" }
+gear-lib = { git = "https://github.com/gear-foundation/dapps", tag = "0.3.3" }
 hashbrown = "0.13.1"
 ```
 
@@ -274,7 +273,7 @@ extern "C" fn state() {
         .expect("Failed to encode or reply with `<AppMetadata as Metadata>::State` from `state()`");
 }
 ```
-To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `State` state. For example - [on-chain-nft/state](https://github.com/gear-foundation/dapps/tree/master/contracts/on-chain-nft/state):
+To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `State` state. For example - [gear-foundation/dapps/on-chain-nft/state](https://github.com/gear-foundation/dapps/tree/master/contracts/on-chain-nft/state):
 
 ```rust
 
@@ -344,9 +343,9 @@ pub trait Metawasm {
 
 ## Conclusion
 
-Gear provides a reusable [library](https://github.com/gear-foundation/dapps/blob/master/contracts/gear-lib/src/tokens/non_fungible.rs) with core functionality for the gNFT protocol. By using object composition, that library can be utilized within a custom NFT contract implementation in order to minimize duplication of community available code.
+Gear provides a reusable [library](https://github.com/gear-foundation/dapps/tree/master/contracts/gear-lib/src) with core functionality for the gNFT protocol. By using object composition, that library can be utilized within a custom NFT contract implementation in order to minimize duplication of community available code.
 
-A source code of the on-chain NFT provided by Gear is available on GitHub: [gear-foundation/dapps/on-chain-nft](https://github.com/gear-foundation/dapps/tree/master/contracts/on-chain-nft).
+A source code of the on-chain NFT example is available on GitHub: [on-chain-nft](https://github.com/gear-foundation/dapps/tree/master/contracts/on-chain-nft).
 
 See also an example of the smart contract testing implementation based on `gtest`: [on-chain-nft/tests](https://github.com/gear-foundation/dapps/tree/master/contracts/on-chain-nft/tests).
 

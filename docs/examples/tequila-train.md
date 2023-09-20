@@ -34,7 +34,7 @@ The aim is to be the first player to get rid of all the dominoes in their hand. 
 
 ## How to run
 
-Source code can be found in the GitHub: https://github.com/gear-foundation/dapps/tree/master/contracts/tequila-train
+Source code can be found in the [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/tequila-train).
 
 Clone the repo and enter to the project directory:
 
@@ -81,7 +81,7 @@ cd contracts/tequila-train
 
 ### Upload program and meta to the network
 
-1. Go to https://idea.gear-tech.io/ and choose **Workshop** node (`wss://node-workshop.gear.rs`).
+1. Go to https://idea.gear-tech.io/ and choose **Vara Stable Testnet** node (`wss://testnet.vara.rs`).
 
 2. Upload the program binary Wasm `contracts/target/wasm32-unknown-unknown/release/tequila_train.opt.wasm` and the meta file `contracts/tequila_train.meta.txt`.
 

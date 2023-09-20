@@ -7,18 +7,15 @@ sidebar_position: 4
 
 ![img alt](./img/nft.png)
 
-Non-fungible tokens (NFTs) are unique cryptographic tokens on a blockchain that are used to prove an ownership of a digital asset, such as digital art or gaming assets. The difference from fungible tokens is that the fungible tokens store a value, while non-fungible tokens store a cryptographic certificate.
+Non-fungible tokens (NFTs) are unique cryptographic tokens on a blockchain used to prove ownership of digital assets, such as digital art or gaming assets. The difference from fungible tokens is that fungible tokens store value, while non-fungible tokens store a cryptographic certificate.
 
-Under the hood, a non-fungible token consists of a unique token identifier, or token ID, which is mapped to an owner identifier and stored inside a NFT smart contract.<center> <em><strong>token_id</strong></em> → <em><strong>address</strong></em> </center>
+Under the hood, a non-fungible token consists of a unique token identifier, or token ID, which is mapped to an owner identifier and stored inside an NFT smart contract. <center> <em><strong>token_id</strong></em> → <em><strong>address</strong></em> </center>
 
 When the owner of a given token ID wishes to transfer it to another user, it is easy to verify ownership and reassign the token to a new owner.
 
-This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. Anyone can easily create their own application and run it on the Gear Network.
+This article explains the programming interface, data structure, basic functions, and their purposes. It can be used as-is or modified to suit your scenarios. Anyone can easily create their own application and run it on the Gear-powered network.
 
 ## How to run
-
-- Program source code available on [Github](https://github.com/gear-foundation/dapps/tree/master/contracts/non-fungible-token)
-- dApp UI [Github](https://github.com/gear-foundation/dapps/tree/master/frontend/non-fungible-token)
 
 ### ⚒️ Build program
 
@@ -42,8 +39,11 @@ royalties `Option<Royalties>` - Optional param to specify accounts to pay royalt
 
 ### 🖥️ Run UI
 
-1. Install packages as described in [frontend/README.md](https://github.com/gear-foundation/dapps/blob/master/frontend/non-fungible-token/README.md)
-2. Configure .evn file. Specify network address and program ID like in the example below:
+1. Download the React application repository from [GitHub](https://github.com/gear-foundation/dapps/tree/master/frontend/non-fungible-token).
+
+2. Install packages as described in [frontend/README.md](https://github.com/gear-foundation/dapps/blob/master/frontend/non-fungible-token/README.md)
+
+3. Configure .evn file. Specify network address and program ID like in the example below:
 
 ```sh
 REACT_APP_NODE_ADDRESS=wss://node-workshop.gear.rs:443
@@ -52,7 +52,7 @@ REACT_APP_IPFS_GATEWAY_ADDRESS=https://ipfs-gw.gear-tech.io/ipfs
 REACT_APP_CONTRACT_ADDRESS=0xdf7b9b10240f827f112da757bb68eb301ee873d6c1015855220f2122996540c4
 ```
 
-3. Run app
+4. Run app
 
 ```sh
 yarn start
@@ -66,13 +66,12 @@ The functions that must be supported by each non-fungible-token contract:
 - *mint(to, token_id, metadata)* is a function that creates a new token. Metadata can include any information about the token: it can be a link to a specific resource, a description of the token, etc;
 - *burn(from, token_id)* is a function that removes the token with the mentioned *token_id* from the contract.
 
-The default implementation of the NFT contract is provided in the gear library: [gear-lib/non_fungible_token](https://github.com/gear-foundation/dapps/blob/master/contracts/gear-lib/src/tokens/non_fungible.rs).
+The default implementation of the NFT contract is provided in the Gear library: [gear-lib/non_fungible_token](https://github.com/gear-foundation/dapps/tree/master/contracts/gear-lib/src/tokens).
 
 To use the default implementation you should include the packages into your *Cargo.toml* file:
 
 ```toml
-gear-lib = { git = "https://github.com/gear-foundation/dapps.git" }
-gear-lib-derive = { git = "https://github.com/gear-foundation/dapps.git" }
+gear-lib = { git = "https://github.com/gear-foundation/dapps", tag = "0.3.3" }
 hashbrown = "0.13.1"
 ```
 
@@ -373,6 +372,10 @@ pub trait Metawasm {
 ```
 ## Conclusion
 
-Gear provides a reusable [library](https://github.com/gear-foundation/dapps/blob/master/contracts/gear-lib/src/tokens/non_fungible.rs) with core functionality for the gNFT protocol. By using object composition, that library can be utilized within a custom NFT contract implementation in order to minimize duplication of community available code.
+An NFT smart contract source code is available on [Github](https://github.com/gear-foundation/dapps/tree/master/contracts/non-fungible-token).
+
+The React frontend application can be downloaded [here](https://github.com/gear-foundation/dapps/tree/master/frontend/non-fungible-token).
+
+Gear provides a reusable [library](https://github.com/gear-foundation/dapps/tree/master/contracts/gear-lib/src/tokens) with core functionality for the gNFT protocol. By using object composition, that library can be utilized within a custom NFT contract implementation in order to minimize duplication of community available code.
 
 For more details about testing smart contracts written on Gear, refer to this article: [Program Testing](/docs/developing-contracts/testing).

@@ -23,7 +23,7 @@ To launch the game, you need to:
 
 ## ⚒️ Build Master and Player contracts
 
-- Get the source code of [Master contract](https://github.com/gear-foundation/dapps/tree/master/contracts/syndote) and [Player contract](https://github.com/gear-foundation/dapps/tree/master/contracts/syndote/player).
+- Get the source code of Master and Player contracts from [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/syndote).
 - Modify Player's contract as you wish to achieve optimal game strategy.
 - Build contracts as described in [program/README.md](https://github.com/gear-foundation/dapps/blob/master/contracts/syndote/README.md).
 
@@ -34,6 +34,7 @@ There are two ways to upload the game onto the chain:
 2. Using [`gear-js/cli`](https://github.com/gear-tech/gear-js/tree/main/tools/cli).
 
 ### 1. Using Gear IDEA portal:
+
 - In the network selector select the network where you are going to run the game:
     - Staging Testnet - wss://rpc-node.gear-tech.io network;
     - Workshop node - wss://node-workshop.gear.rs;
@@ -49,7 +50,7 @@ There are two ways to upload the game onto the chain:
 ### 2. Using [`gear-js/cli`](https://github.com/gear-tech/gear-js/tree/main/tools/cli)
 
 It allows sending transactions to the Gear node based on `yaml` file:
-- Go to folder with [scripts](https://github.com/gear-foundation/dapps/blob/master/contracts/syndote/upload-game):
+- Go to folder with [scripts](https://github.com/gear-foundation/dapps/tree/master/frontend/syndote/upload-game):
     ```
     cd ./upload-game/
     ```
@@ -145,7 +146,8 @@ yarn start
 ## Smart contracts
 ### Master contract
 
-[Master contract](https://github.com/gear-foundation/dapps/tree/master/contracts/syndote) is initialized with monopoly card information (cell cost, special cells: jail, lottery). As was already mentioned, it is given enough gas reservation for automatic play. Before each player's step `Master` contract checks the amount of gas and if it is not enough it will send a message to the game admin to request for another gas reservation.
+[Master contract](https://github.com/gear-foundation/dapps/tree/master/contracts/syndote/src) is initialized with monopoly card information (cell cost, special cells: jail, lottery). As was already mentioned, it is given enough gas reservation for automatic play. Before each player's step `Master` contract checks the amount of gas and if it is not enough it will send a message to the game admin to request for another gas reservation.
+
 **Players registration**:
 Players deploy their strategic contracts and send a message `Register` to `Master` contract. Master contract:
 - Adds the players the list of participants and initializes it with the following structure:

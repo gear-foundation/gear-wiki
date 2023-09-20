@@ -390,7 +390,7 @@ The `Staking` contract interacts with the `fungible` token contract. Each transa
 
 ## Conclusion
 
-A source code of the contract example provided by Gear is available on GitHub: [`staking/src/lib.rs`](https://github.com/gear-foundation/dapps/blob/master/contracts/staking/state/src/lib.rs).
+A source code of the contract example provided by Gear is available on GitHub: [`staking/src/lib.rs`](https://github.com/gear-foundation/dapps/blob/master/contracts/staking/src/lib.rs).
 
 See also examples of the smart contract testing implementation based on gtest:
 

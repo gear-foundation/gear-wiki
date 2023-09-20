@@ -749,5 +749,4 @@ Unequip {
 
 The source code of RMRK implementation and the example of an implementation of its testing is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/rmrk).
 
-
 For more details about testing smart contracts written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.
