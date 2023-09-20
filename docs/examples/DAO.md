@@ -301,7 +301,7 @@ extern "C" fn state() {
     .expect("Failed to share state");
 }
 ```
-To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `DaoState` state. For example - [gear-foundation/dapps-dao/state](https://github.com/gear-foundation/dapps/tree/master/contracts/dao/state):
+To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `DaoState` state. For example - [gear-foundation/dapps/dao/state](https://github.com/gear-foundation/dapps/tree/master/contracts/dao/state):
 
 ```rust
 #[metawasm]
