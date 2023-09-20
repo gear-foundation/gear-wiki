@@ -130,7 +130,7 @@ extern "C" fn state() {
         .expect("Failed to encode or reply with `<ContractMetadata as Metadata>::State` from `state()`");
 }
 ```
-To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `State` struct. For example - [gear-foundation/dapps-dex/factory/state](https://github.com/gear-foundation/dapps-dex/tree/master/factory/state):
+To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `State` struct. For example - [gear-foundation/dapps/dex/factory/state](https://github.com/gear-foundation/dapps/tree/master/contracts/dex/factory/state):
 
 ```rust
 #[metawasm]
