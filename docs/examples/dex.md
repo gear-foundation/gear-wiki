@@ -188,7 +188,7 @@ async fn create_pair(&mut self, mut token_a: ActorId, mut token_b: ActorId);
 ```
 
 ### Source code
-The source code of this example of DEX factory smart contract and the example of an implementation of its testing is available on [gear-foundation/dapps-dex/tree/master/factory](https://github.com/gear-foundation/dapps/tree/master/contracts/dex/factory).
+The source code of this example of DEX factory smart contract and the example of an implementation of its testing is available on [gear-foundation/dapps/dex/factory](https://github.com/gear-foundation/dapps/tree/master/contracts/dex/factory).
 
 See also an example of the smart contract testing implementation based on `gtest`: [tests/utils/factory.rs](https://github.com/gear-foundation/dapps/blob/master/contracts/dex/tests/utils/factory.rs).
 
