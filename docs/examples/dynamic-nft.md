@@ -21,8 +21,8 @@ The default implementation of the NFT contract is provided in the Gear library: 
 To use the default implementation you should include the packages into your *Cargo.toml* file:
 
 ```toml
-gear-lib = { git = "https://github.com/gear-foundation/dapps/tree/master/contracts/gear-lib.git" }
-gear-lib-derive = { git = "https://github.com/gear-foundation/dapps/tree/master/contracts/gear-lib.git" }
+gear-lib = { git = "https://github.com/gear-foundation/dapps.git" }
+gear-lib-derive = { git = "https://github.com/gear-foundation/dapps.git" }
 hashbrown = "0.13"
 ```
 
