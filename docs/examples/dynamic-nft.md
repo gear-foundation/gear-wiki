@@ -191,7 +191,7 @@ Similarly, you can implement other logic, for example, periodically request data
 
 Gear provides a reusable [library](https://github.com/gear-foundation/dapps/blob/master/contracts/gear-lib/src/tokens/non_fungible.rs) with core functionality for the `gNFT-4907` protocol. By using object composition, the library can be utilized within a custom NFT contract implementation in order to minimize duplication of community available code.
 
-A source code of the Gear NFT smart contract example based on `gear-lib` is available on GitHub: [gear-foundation/dapps-non-fungible-token](https://github.com/gear-foundation/dapps/tree/master/contracts/dynamic-nft).
+A source code of the Gear NFT smart contract example based on `gear-lib` is available on GitHub: [gear-foundation/dapps/non-fungible-token](https://github.com/gear-foundation/dapps/tree/master/contracts/dynamic-nft).
 
 See also an example of the smart contract testing implementation based on `gtest`: [gear-foundation/dapps/non-fungible-token/tests](https://github.com/gear-foundation/dapps/tree/master/contracts/dynamic-nft/tests).
 
