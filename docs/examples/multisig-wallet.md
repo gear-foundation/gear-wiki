@@ -134,7 +134,7 @@ impl Metadata for ContractMetadata {
     type Reply = ();
     type Others = ();
     type Signal = ();
-    type State = State;
+    type State = Out<State>;
 }
 ```
 To display the full contract state information, the `state()` function is used:
@@ -151,7 +151,7 @@ To display only necessary certain values from the state, you need to write a sep
 ```rust
 #[metawasm]
 pub trait Metawasm {
-    type State = <ContractMetadata as Metadata>::State;
+    type State = multisig_wallet_io::::State;
 
     // Returns number of confirmations of a transaction.
     // `transaction_id` Transaction ID.

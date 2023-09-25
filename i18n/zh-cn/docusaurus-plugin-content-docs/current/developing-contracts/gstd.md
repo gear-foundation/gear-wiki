@@ -113,6 +113,6 @@ use gstd::{debug, msg, prelude::*};
 #[no_mangle]
 extern "C" fn handle() {
     let payload_string: String = msg::load().expect("Unable to decode `String`");
-    debug!("{:?} received message: ", payload_string);
+    debug!("Received message: {payload_string:?}");
 }
 ```

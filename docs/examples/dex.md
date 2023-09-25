@@ -118,7 +118,7 @@ impl Metadata for ContractMetadata {
     type Reply = ();
     type Others = ();
     type Signal = ();
-    type State = State;
+    type State = Out<State>;
 }
 ```
 To display the full contract state information, the `state()` function is used:
@@ -135,7 +135,7 @@ To display only necessary certain values from the state, you need to write a sep
 ```rust
 #[metawasm]
 pub trait Metawasm {
-    type State = <ContractMetadata as Metadata>::State;
+    type State = dex_factory_io::State;
 
     fn fee_to(state: Self::State) -> ActorId {
         state.fee_to
@@ -369,7 +369,7 @@ impl Metadata for ContractMetadata {
     type Reply = ();
     type Others = ();
     type Signal = ();
-    type State = State;
+    type State = Out<State>;
 }
 ```
 To display the full contract state information, the `state()` function is used:
@@ -386,7 +386,7 @@ To display only necessary certain values from the state, you need to write a sep
 ```rust
 #[metawasm]
 pub trait Metawasm {
-    type State = <ContractMetadata as Metadata>::State;
+    type State = dex_io::State;
 
     fn token_addresses(state: Self::State) -> (FungibleId, FungibleId) {
         state.token_addresses()

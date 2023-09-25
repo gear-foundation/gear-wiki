@@ -12,7 +12,7 @@ Metadata allows dApp’s parts - the smart-contract and the client side (JavaScr
 To describe metadata interface use `gmeta` crate:
 
 ```rust
-use gmeta::{InOut, Metadata};
+use gmeta::{InOut, Metadata, Out};
 
 pub struct ProgramMetadata;
 
@@ -26,7 +26,7 @@ impl Metadata for ProgramMetadata {
     type Others = InOut<MessageAsyncIn, Option<u8>>;
     type Reply = String;
     type Signal = ();
-    type State = Vec<Wallet>;
+    type State = Out<Vec<Wallet>>;
 }
 ```
 

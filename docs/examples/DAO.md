@@ -282,7 +282,7 @@ impl Metadata for DaoMetadata {
     type Others = ();
     type Reply = ();
     type Signal = ();
-    type State = DaoState;
+    type State = Out<DaoState>;
 }
 ```
 To display the full contract state information, the `state()` function is used:
@@ -306,7 +306,7 @@ To display only necessary certain values from the state, you need to write a sep
 ```rust
 #[metawasm]
 pub trait Metawasm {
-    type State = <DaoMetadata as Metadata>::State;
+    type State = DaoState;
 
     fn is_member(account: ActorId, state: Self::State) -> bool {
         ...

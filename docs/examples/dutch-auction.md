@@ -104,7 +104,7 @@ impl Metadata for AuctionMetadata {
     type Others = ();
     type Reply = ();
     type Signal = ();
-    type State = AuctionInfo;
+    type State = Out<AuctionInfo>;
 }
 ```
 To display the full contract state information, the `state()` function is used:
@@ -122,7 +122,7 @@ To display only necessary certain values from the state, you need to write a sep
 ```rust
 #[metawasm]
 pub mod metafns {
-    pub type State = <AuctionMetadata as Metadata>::State;
+    pub type State = AuctionInfo;
 
     pub fn info(mut state: State) -> AuctionInfo {
         if matches!(state.status, Status::IsRunning) && exec::block_timestamp() >= state.expires_at

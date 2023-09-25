@@ -19,7 +19,7 @@ The idea is simple - all the internal token interactions are handled using the [
 
 ### Events
 
-```rust
+```rust title="concert/io/src/lib.rs"
 #[derive(Debug, Encode, Decode, TypeInfo)]
 pub enum ConcertEvent {
     Creation {
@@ -110,7 +110,7 @@ impl Metadata for ContractMetadata {
     type Reply = ();
     type Others = ();
     type Signal = ();
-    type State = State;
+    type State = Out<State>;
 }
 ```
 To display the full contract state information, the `state()` function is used:
@@ -127,7 +127,7 @@ To display only necessary certain values from the state, you need to write a sep
 ```rust
 #[metawasm]
 pub trait Metawasm {
-    type State = <ContractMetadata as Metadata>::State;
+    type State = concert_io::State;
 
     fn current_concert(state: Self::State) -> CurrentConcert {
         state.current_concert()

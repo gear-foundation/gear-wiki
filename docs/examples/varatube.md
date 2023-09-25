@@ -47,7 +47,7 @@ The VaraTube consists of two smart contracts:
 ### 🏗️ Upload program
 
 1. You can deploy a program using [idea.gear-tech.io](https://idea.gear-tech.io/)
-2. In the network selector choose `Vara Stable Testnet` or `Development` in case if you have running a local node
+2. In the network selector choose `Vara Network Testnet` or `Development` in case if you have running a local node
 3. Upload program `varatube.opt.wasm` from `/target/wasm32-unknown-unknown/release/`
 4. Upload metadata file `meta.txt`
 5. Specify `init payload` and calculate gas!

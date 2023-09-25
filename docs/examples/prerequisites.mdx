@@ -19,7 +19,7 @@ All smart contract examples and JS applications have been tested on a stable env
 
 You may configure a local development environment according to the information provided below or use a pre-configured Docker image as described in the [Using Docker](#using-docker) section.
 
-Current stable release: `v1.2`
+Current stable release: `v1.3`
 
 
 <table>
@@ -70,7 +70,7 @@ Gear Rust libraries: `gstd`, `gtest`, `gmeta`, `gclient`, `gear-wasm-builder`
 </td>
 <td>
 
-v0.3.3
+v1.0.0
 </td>
 <td>
 
@@ -82,13 +82,13 @@ https://github.com/gear-foundation/dapps/blob/master/contracts/Cargo.toml
 
 <tr>
 <td>
-Vara Stable Testnet
+Vara Network Testnet
 </td>
 <td>
-211
+1000
 </td>
 <td>
-Make sure you are connected to the Vara Stable Testnet. You may switch the network by clicking on the network name in the https://idea.gear-tech.io
+Make sure you are connected to the Vara Network Testnet. You may switch the network by clicking on the network name in the https://idea.gear-tech.io
 </td>
 </tr>
 
@@ -179,23 +179,9 @@ docker pull ghcr.io/gear-foundation/gear-env:stable
 
 To run the image, use the following command:
 
-````mdx-code-block
-<Tabs>
-<TabItem value="linux-mac" label="Linux / macOS x86_64">
-
 ```bash
 docker run --rm --name gear-env -itd ghcr.io/gear-foundation/gear-env:stable bash
 ```
-</TabItem>
-
-<TabItem value="mac-arm" label="macOS ARM">
-
-```bash
-docker run --rm --name gear-env --platform linux/amd64 -itd ghcr.io/gear-foundation/gear-env:stable bash
-```
-</TabItem>
-</Tabs>
-````
 
 The command will run the image in the background and give you access to the container's shell. You can use the following command to access the container's shell:
 

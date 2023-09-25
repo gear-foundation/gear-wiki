@@ -104,7 +104,7 @@ This guide provides a general overview of running smart contracts on the network
 
     [dependencies]
     # highlight-next-line
-    gstd = { git = "https://github.com/gear-tech/gear.git", rev = "946ac47" }
+    gstd = { git = "https://github.com/gear-tech/gear.git", tag = "v1.0.0" }
     ```
 
 6. Replace the default contents of `lib.rs` in the `counter` folder with the code for our first smart-contract.
@@ -229,7 +229,7 @@ Gear provides a demo application that implements all of the possibilities of int
 
     ![Allow access](./img/getting-started/polkadot-access.png)
 
-6. Make sure you are connected to the `Vara Stable Testnet`. The network name is on the bottom left corner of the page.
+6. Make sure you are connected to the `Vara Network Testnet`. The network name is on the bottom left corner of the page.
 
     ![Network name](./img/getting-started/idea-network.png)
 

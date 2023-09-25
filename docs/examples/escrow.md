@@ -34,7 +34,7 @@ This application requires code to create an escrow wallet
 2. Configure .evn file. Specify network address and code ID like in the example below:
 
 ```sh
-REACT_APP_NODE_ADDRESS=wss://node-workshop.gear.rs:443
+REACT_APP_NODE_ADDRESS=wss://testnet.vara-network.io:443
 REACT_APP_CODE_ADDRESS=0xa31fa55b98adf40b0ad18ccda10a3deb8bbb59655fa10971c8046c7f6f959bb9
 ```
 
@@ -205,7 +205,7 @@ impl Metadata for EscrowMetadata {
     type Others = ();
     type Reply = ();
     type Signal = ();
-    type State = EscrowState;
+    type State = Out<EscrowState>;
 }
 ```
 To display the full contract state information, the `state()` function is used:
@@ -225,7 +225,7 @@ To display only necessary certain values from the state, you need to write a sep
 ```rust
 #[metawasm]
 pub mod metafns {
-    pub type State = <EscrowMetadata as Metadata>::State;
+    pub type State = EscrowState;
 
     pub fn info(state: State, wallet_id: U256) -> Wallet {
         let (_, wallet) = *state

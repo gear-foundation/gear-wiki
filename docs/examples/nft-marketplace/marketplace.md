@@ -69,14 +69,14 @@ yarn install
 For proper application functioning, one needs to adjust an environment variable parameters. An example is available [here](https://github.com/gear-foundation/dapps/blob/master/frontend/nft-marketplace/frontend/.env.example).
 
 ```sh
-REACT_APP_NODE_ADDRESS=wss://rpc-node.gear-tech.io:443
+REACT_APP_NODE_ADDRESS=wss://testnet.vara-network.io:443
 REACT_APP_IPFS_ADDRESS=https://ipfs.gear-tech.io/api/v0
 REACT_APP_IPFS_GATEWAY_ADDRESS=https://ipfs-gw.gear-tech.io/ipfs
 REACT_APP_MARKETPLACE_CONTRACT_ADDRESS=0xf8e5add537887643f8aa1ee887754d9b2d8c20d4efd062d6c1dc673cbe390d6f
 REACT_APP_NFT_CONTRACT_ADDRESS=0xa7874ff27e9bac10bf7fd43f4908bb1e273018e15325c16fb35c71966c0c4033
 ```
 
-- `REACT_APP_NODE_ADDRESS` is Gear Network address (wss://testnet.vara.rs)
+- `REACT_APP_NODE_ADDRESS` is Gear Network address (`wss://testnet.vara-network.io`)
 - `REACT_APP_IPFS_ADDRESS` is address of IPFS to store NFT assets (https://ipfs.gear-tech.io/api/v0 was used for Gear Marketplace implementation)
 - `REACT_APP_IPFS_GATEWAY_ADDRESS` is IPFS Gateway address (https://ipfs-gw.gear-tech.io/ipfs)
 - `REACT_APP_MARKETPLACE_CONTRACT_ADDRESS` is NFT Marketplace contract address in Gear Network
@@ -402,7 +402,7 @@ impl Metadata for MarketMetadata {
     type Others = ();
     type Reply = ();
     type Signal = ();
-    type State = Market;
+    type State = Out<Market>;
 }
 ```
 
@@ -424,10 +424,10 @@ extern "C" fn state() {
 
 To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `Market` state. For example - [gear-foundation/dapps-nft-marketplace/state](https://github.com/gear-foundation/dapps/tree/master/contracts/nft-marketplace/state):
 
-```rust
+```rust title="nft-marketplace/state/src/lib.rs"
 #[metawasm]
 pub trait Metawasm {
-    type State = <MarketMetadata as Metadata>::State;
+    type State = Market;
 
     fn all_items(state: Self::State) -> Vec<Item> {
         ...

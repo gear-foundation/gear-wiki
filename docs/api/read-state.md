@@ -12,7 +12,7 @@ There are two different ways to query the program `State`:
 ```javascript
 import { GearApi } from '@gear-js/api';
 const api = await GearApi.create({
-  providerAddress: 'wss://testnet.vara.rs',
+  providerAddress: 'wss://testnet.vara-network.io',
 });
 await api.programState.read({ programId: '0x…' }, programMetadata);
 ```
