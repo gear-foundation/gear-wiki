@@ -39,7 +39,7 @@ As we can see, metadata enables you to determine the expected data at the input/
 - `Signal` - describes only the outgoing type from the program while processing the system signal.
 - `State` - describes the types for the queried State
 
-## Genarate metadata
+## Generate metadata
 
 To generate metadata, the following `build.rs` file in the root of your project folder is required:
 

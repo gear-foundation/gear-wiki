@@ -26,7 +26,7 @@ await api.programState.read(
 );
 ```
 
-2. If you are using the custom functions to query only specific parts of the program State ([see more](/docs/developing-contracts/metadata#genarate-metadata)), then you should call `api.programState.readUsingWasm` method:
+2. If you are using the custom functions to query only specific parts of the program State ([see more](/docs/developing-contracts/metadata#generate-metadata)), then you should call `api.programState.readUsingWasm` method:
 
 ```js
 // ...
