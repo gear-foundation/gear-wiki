@@ -138,7 +138,7 @@ impl Metadata for ContractMetadata {
     type Reply = ();
     type Others = ();
     type Signal = ();
-    type State = ContractState;
+    type State = Out<ContractState>;
 }
 ```
 To display the full contract state information, the `state()` function is used:
@@ -156,7 +156,7 @@ To display only necessary certain values from the state, you need to write a sep
 
 #[metawasm]
 pub trait Metawasm {
-    type State = <ContractMetadata as Metadata>::State;
+    type State = ContractState;
 
     fn config(state: Self::State) -> GameConfig {
         state.game_config

@@ -23,7 +23,7 @@ await gearApi.programState.read(
 );
 ```
 
-2. 如果你使用自定义函数只查询程序状态的特定部分（[更多内容](/docs/developing-contracts/metadata#genarate-metadata)），那么应该调用 `GearApi.programState.readUsingWasm` 方法：
+2. 如果你使用自定义函数只查询程序状态的特定部分（[更多内容](/docs/developing-contracts/metadata#generate-metadata)），那么应该调用 `GearApi.programState.readUsingWasm` 方法：
 
 ```js
 // ...

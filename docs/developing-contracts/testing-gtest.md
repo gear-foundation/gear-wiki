@@ -20,13 +20,13 @@ authors = ["Your Name"]
 edition = "2021"
 
 [dependencies]
-gstd = { git = "https://github.com/gear-tech/gear.git", rev = "946ac47" }
+gstd = { git = "https://github.com/gear-tech/gear.git", tag = "v1.0.0" }
 
 [build-dependencies]
-gear-wasm-builder = { git = "https://github.com/gear-tech/gear.git", rev = "946ac47" }
+gear-wasm-builder = { git = "https://github.com/gear-tech/gear.git", tag = "v1.0.0" }
 
 [dev-dependencies]
-gtest = { git = "https://github.com/gear-tech/gear.git", rev = "946ac47" }
+gtest = { git = "https://github.com/gear-tech/gear.git", tag = "v1.0.0" }
 ```
 
 ## `gtest` capabilities
@@ -228,6 +228,7 @@ gtest = { git = "https://github.com/gear-tech/gear.git", rev = "946ac47" }
     // Same for the timestamp. Note, that for now 1 block in Gear network is 1 sec duration.
     sys.spend_blocks(150);
 ```
+<!--
 - Reading the program state:
 ```rust
     // To read the program state you need to call one of two program's functions:
@@ -276,6 +277,7 @@ gtest = { git = "https://github.com/gear-tech/gear.git", rev = "946ac47" }
     // you can use `meta_state_empty` or `meta_state_empty_with_bytes` functions
     // without any arguments.
 ```
+-->
 - Balance:
 ```rust
     // If you need to send a message with value you have to mint balance for the message sender:

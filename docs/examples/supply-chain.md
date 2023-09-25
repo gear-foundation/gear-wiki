@@ -21,7 +21,7 @@ Upload Supply chain contract requires build two auxiliary contracts:
 
 ### 🏗️ Upload programs
 
-You can deploy a program using [idea.gear-tech.io](https://idea.gear-tech.io/). In the network selector choose `Vara Stable Testnet` or `Development` (in this case, you should have a local node running).
+You can deploy a program using [idea.gear-tech.io](https://idea.gear-tech.io/). In the network selector choose `Vara Network Testnet` or `Development` (in this case, you should have a local node running).
 
 *** Non-Fungible Token ***
 
@@ -552,7 +552,7 @@ impl Metadata for ContractMetadata {
     type Reply = ();
     type Others = ();
     type Signal = ();
-    type State = State;
+    type State = Out<State>;
 }
 ```
 To display the full contract state information, the `state()` function is used:
@@ -569,7 +569,7 @@ To display only necessary certain values from the state, you need to write a sep
 ```rust
 #[metawasm]
 pub trait Metawasm {
-    type State = <ContractMetadata as Metadata>::State;
+    type State = supply_chain_io::State;
 
     fn item_info(item_id: ItemId, state: Self::State) -> Option<ItemInfo> {
         state.item_info(item_id)

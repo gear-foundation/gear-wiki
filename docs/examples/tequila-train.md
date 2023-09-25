@@ -81,7 +81,7 @@ cd contracts/tequila-train
 
 ### Upload program and meta to the network
 
-1. Go to https://idea.gear-tech.io/ and choose **Vara Stable Testnet** node (`wss://testnet.vara.rs`).
+1. Go to https://idea.gear-tech.io/ and choose **Vara Network Testnet** node (`wss://testnet.vara-network.io`).
 
 2. Upload the program binary Wasm `contracts/target/wasm32-unknown-unknown/release/tequila_train.opt.wasm` and the meta file `contracts/tequila_train.meta.txt`.
 
@@ -119,7 +119,7 @@ cd contracts/tequila-train
 3. Change the program ID to the correct one obtained after uploading the program to the network (see previous steps) in `frontend/.env.example.local`.
 
     ```
-    REACT_APP_NODE_ADDRESS=wss://node-workshop.gear.rs
+    REACT_APP_NODE_ADDRESS=wss://testnet.vara-network.io
     REACT_APP_GAME_ADDRESS=0x3c1095f86e129b72fab05384bd9ff30bf32e155b5dd58a797ab8a4a941209a77
     ```
 

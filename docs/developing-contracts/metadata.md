@@ -12,7 +12,7 @@ Metadata allows dApp’s parts - the smart-contract and the client side (JavaScr
 To describe metadata interface use `gmeta` crate:
 
 ```rust
-use gmeta::{InOut, Metadata};
+use gmeta::{InOut, Metadata, Out};
 
 pub struct ProgramMetadata;
 
@@ -26,7 +26,7 @@ impl Metadata for ProgramMetadata {
     type Others = InOut<MessageAsyncIn, Option<u8>>;
     type Reply = String;
     type Signal = ();
-    type State = Vec<Wallet>;
+    type State = Out<Vec<Wallet>>;
 }
 ```
 
@@ -39,7 +39,7 @@ As we can see, metadata enables you to determine the expected data at the input/
 - `Signal` - describes only the outgoing type from the program while processing the system signal.
 - `State` - describes the types for the queried State
 
-## Genarate metadata
+## Generate metadata
 
 To generate metadata, the following `build.rs` file in the root of your project folder is required:
 

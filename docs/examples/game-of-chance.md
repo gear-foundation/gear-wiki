@@ -32,7 +32,7 @@ Game of chance is a simple game smart contract with the lottery logic.
 2. Configure `.env` file. Specify network address and program ID like in the example below:
 
 ```sh
-REACT_APP_NODE_ADDRESS=wss://node-workshop.gear.rs:443
+REACT_APP_NODE_ADDRESS=wss://testnet.vara-network.io:443
 REACT_APP_CONTRACT_ADDRESS=0x45f48855184656f4fa7779e5ec0e3e54be8069a61cf62815e114d04d1b4916b4
 ```
 

@@ -53,10 +53,10 @@ For connection to local node use:
 ws://127.0.0.1:9944
 ```
 
-For connection to Vara Testnet use:
+For connection to Vara Network Testnet use:
 
 ```bash
-wss://testnet.vara.rs
+wss://testnet.vara-network.io
 ```
 
 :::
@@ -78,7 +78,7 @@ This simple example describes how to subscribe to a new blocks and get chain spe
 ```js
 async function connect() {
   const gearApi = await GearApi.create({
-    providerAddress: 'wss://testnet.vara.rs',
+    providerAddress: 'wss://testnet.vara-network.io',
   });
 
   const [chain, nodeName, nodeVersion] = await Promise.all([

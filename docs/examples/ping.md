@@ -83,7 +83,7 @@ impl Metadata for ContractMetadata {
     type Others = ();
     type Reply = ();
     type Signal = ();
-    type State = State;
+    type State = Out<State>;
 }
 
 #[derive(Encode, Decode, TypeInfo, Hash, PartialEq, PartialOrd, Eq, Ord, Clone, Debug, Default)]
@@ -98,7 +98,7 @@ fn main() {
 }
 ```
 
-The `state` is the independent crate for reading the program state. It depends on the `app-io` crate where the type of the contract state is defined:
+The `state` is the independent crate for reading the program state. It depends on the `ping-io` crate where the type of the contract state is defined:
 ```rust
 use app_io::*;
 use gmeta::{metawasm, Metadata};
@@ -106,7 +106,7 @@ use gstd::{prelude::*, ActorId};
 
 #[metawasm]
 pub trait Metawasm {
-    type State = <ContractMetadata as Metadata>::State;
+    type State = ping_io::State;
 
     fn pingers(state: Self::State) -> Vec<ActorId> {
         state.pingers()

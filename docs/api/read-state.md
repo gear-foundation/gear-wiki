@@ -12,7 +12,7 @@ There are two different ways to query the program `State`:
 ```javascript
 import { GearApi } from '@gear-js/api';
 const api = await GearApi.create({
-  providerAddress: 'wss://testnet.vara.rs',
+  providerAddress: 'wss://testnet.vara-network.io',
 });
 await api.programState.read({ programId: '0x…' }, programMetadata);
 ```
@@ -26,7 +26,7 @@ await api.programState.read(
 );
 ```
 
-2. If you are using the custom functions to query only specific parts of the program State ([see more](/docs/developing-contracts/metadata#genarate-metadata)), then you should call `api.programState.readUsingWasm` method:
+2. If you are using the custom functions to query only specific parts of the program State ([see more](/docs/developing-contracts/metadata#generate-metadata)), then you should call `api.programState.readUsingWasm` method:
 
 ```js
 // ...

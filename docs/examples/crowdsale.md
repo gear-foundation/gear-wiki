@@ -161,7 +161,7 @@ impl Metadata for CrowdsaleMetadata {
     type Others = ();
     type Reply = ();
     type Signal = ();
-    type State = State;
+    type State = Out<State>;
 }
 ```
 To display the full contract state information, the `state()` function is used:
@@ -179,7 +179,7 @@ To display only necessary certain values from the state, you need to write a sep
 ```rust
 #[metawasm]
 pub trait Metawasm {
-    type State = <CrowdsaleMetadata as Metadata>::State;
+    type State = crowdsale_io::State;
 
     fn current_price(state: Self::State) -> u128 {
         state.get_current_price()

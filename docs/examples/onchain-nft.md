@@ -261,7 +261,7 @@ impl Metadata for ContractMetadata {
     type Reply = ();
     type Others = ();
     type Signal = ();
-    type State = State;
+    type State = Out<State>;
 }
 ```
 To display the full contract state information, the `state()` function is used:
@@ -279,7 +279,7 @@ To display only necessary certain values from the state, you need to write a sep
 
 #[metawasm]
 pub trait Metawasm {
-    type State = <ContractMetadata as Metadata>::State;
+    type State = on_chain_nft_io::State;
 
     fn token_uri(token_id: TokenId, state: Self::State) -> Option<Vec<u8>> {
         let metadata = state

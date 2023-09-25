@@ -350,7 +350,7 @@ impl Metadata for StakingMetadata {
     type Others = ();
     type Reply = ();
     type Signal = ();
-    type State = IoStaking;
+    type State = Out<IoStaking>;
 }
 ```
 To display the full contract state information, the `state()` function is used:
@@ -367,7 +367,7 @@ To display only necessary certain values from the state, you need to write a sep
 ```rust
 #[metawasm]
 pub mod metafns {
-    pub type State = <StakingMetadata as Metadata>::State;
+    pub type State = IoStaking;
 
     pub fn get_stakers(state: State) -> Vec<(ActorId, Staker)> {
         state.stakers
