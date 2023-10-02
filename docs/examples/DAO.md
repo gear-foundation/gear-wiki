@@ -25,18 +25,9 @@ This article explains the programming interface, data structure, basic functions
 -->
 
 ## Logic
-To use the hashmap you should add the `hashbrown` package into your Cargo.toml file:
-```toml
-[dependencies]
-# ...
-hashbrown = "0.13.1"
-```
-
 The contract has the following structs:
 
-```rust
-use hashbrown::HashMap;
-
+```rust title="dao-light/src/lib.rs"
 struct Dao {
     approved_token_program_id: ActorId,
     period_duration: u64,
@@ -45,11 +36,8 @@ struct Dao {
     total_shares: u128,
     members: HashMap<ActorId, Member>,
     proposal_id: u128,
-    proposals: HashMap<u128, Proposal>,
     locked_funds: u128,
-    balance: u128,
-    transaction_id: u64,
-    transactions: BTreeMap<u64, DaoAction>,
+    proposals: HashMap<u128, Proposal>,
 }
 ```
 where:
@@ -69,53 +57,62 @@ where:
 
 `proposal_id` - the index of the last proposal.
 
-`proposals` - all proposals (the proposal queue).
-
 `locked_funds` - tokens that are locked when a funding proposal is submitted.
 
-`balance` - the amount of tokens in the DAO contract.
+`proposals` - all proposals (the proposal queue).
 
-`transaction_id` - the transaction number that is used for tracking transactions in the fungible token contract.
+Parameters `approved_token_program_id`, `voting_period_length`, `period_duration`, `grace_period_length` are set when initializing a contract. The contract is initialized with the following struct:
 
-`transactions` - the transaction history.
-
-
-Parameters `approved_token_program_id`, `period_duration`, `grace_period_length` are set when initializing a contract. The contract is initialized with the following struct:
-
-```rust
-struct InitDao {
-    approved_token_program_id: ActorId,
-    period_duration: u64,
-    voting_period_length: u64,
-    grace_period_length: u64,
+```rust title="dao-light/io/src/lib.rs"
+pub struct InitDao {
+    pub approved_token_program_id: ActorId,
+    pub voting_period_length: u64,
+    pub period_duration: u64,
+    pub grace_period_length: u64,
 }
 ```
 
 The proposal struct:
 
-```rust
+```rust title="dao-light/io/src/lib.rs"
  pub struct Proposal {
-    pub proposer: ActorId, /// - the member who submitted the proposal
-    pub applicant: ActorId, /// - the applicant who wishes to become a member
-    pub yes_votes: u128, /// - the total number of YES votes for that proposal
-    pub no_votes: u128, /// - the total number of NO votes for that proposal
-    pub quorum: u128, /// - a certain threshold of YES votes in order for the proposal to pass
-    pub processed: bool, /// - true if the proposal has already been processed
-    pub did_pass: bool, /// - true if the proposal has passed
-    pub details: String, /// - proposal details
-    pub starting_period: u64, /// - the start of the voting period
-    pub ended_at: u64, /// - the end of the voting period
-    pub votes_by_member: BTreeMap<ActorId, Vote>, /// - the votes on that proposal by each member
+    pub proposer: ActorId,
+    pub applicant: ActorId,
+    pub yes_votes: u128,
+    pub no_votes: u128,
+    pub quorum: u128,
+    pub amount: u128,
+    pub processed: bool,
+    pub did_pass: bool,
+    pub details: String,
+    pub starting_period: u64,
+    pub ended_at: u64,
+    pub votes_by_member: Vec<(ActorId, Vote)>,
 }
 ```
+- `proposer` - the member who submitted the proposal
+- `applicant`  - the applicant who wishes to become a member
+- `yes_votes` - the total number of YES votes for that proposal
+- `no_votes` - the total number of NO votes for that proposal
+- `quorum` - a certain threshold of YES votes in order for the proposal to pass
+- `amount` - number of fungible tokens for donation
+- `processed`  - true if the proposal has already been processed
+- `did_pass` - true if the proposal has passed
+- `details` - proposal details
+- `starting_period` - the start of the voting period
+- `ended_at` - the end of the voting period
+- `votes_by_member` - the votes on that proposal by each member
+
 The member struct:
 
-```rust
+```rust title="dao-light/io/src/lib.rs"
 pub struct Member {
-    pub shares: u128, /// - the shares of that member
-    pub highest_index_yes_vote: u128, /// - the index of the highest proposal on which the members voted YES (that value is checked when user is going to leave the DAO)
+    pub shares: u128,
+    pub highest_index_yes_vote: Option<u128>,
 }
 ```
+- `shares` - the shares of that member
+- `highest_index_yes_vote`  - - the index of the highest proposal on which the members voted YES (that value is checked when user is going to leave the DAO)
 
 The actions that the contract receives outside are defined in enum `DaoActions`. The contract's replies are defined in the enum `DaoEvents`.
 
@@ -123,7 +120,7 @@ The actions that the contract receives outside are defined in enum `DaoActions`.
 
 - Joining DAO. To join the DAO and become a DAO member, a user needs to send the following message to the DAO contract:"
 
-```rust
+```rust title="dao-light/io/src/lib.rs"
 /// Deposits tokens to DAO
 /// The account gets a share in DAO that is calculated as: (amount * self.total_shares / self.balance)
 ///
@@ -135,7 +132,7 @@ Deposit {
 ```
 
  - The funding proposal. The 'applicant' is an actor that will be funded:
-```rust
+```rust title="dao-light/io/src/lib.rs"
 /// The proposal of funding.
 ///
 /// Requirements:
@@ -147,7 +144,7 @@ Deposit {
 /// On success replies with [`DaoEvent::SubmitFundingProposal`]
 SubmitFundingProposal {
     /// an actor that will be funded
-    receiver: ActorId,
+    applicant: ActorId,
     /// the number of fungible tokens that will be sent to the receiver
     amount: u128,
     /// a certain threshold of YES votes in order for the proposal to pass
@@ -159,7 +156,7 @@ SubmitFundingProposal {
 
  - The member or the delegate address of the member submits their vote (YES or NO) on the proposal.
 
-```rust
+```rust title="dao-light/io/src/lib.rs"
 /// The member submits a vote (YES or NO) on the proposal.
 ///
 /// Requirements:
@@ -178,7 +175,7 @@ SubmitVote {
 
  - Members have the option to withdraw their capital during a grace period. This feature is useful when members disagree with the outcome of a proposal, especially if the acceptance of that proposal could impact their shares. A member can initiate a 'ragequit' only if they have voted 'NO' on the proposal.
 
-```rust
+```rust title="dao-light/io/src/lib.rs"
 /// Withdraws the capital of the member
 ///
 /// Requirements:
@@ -195,7 +192,7 @@ RageQuit {
 
  - The proposal processing occurs after the proposal completes its grace period. If the proposal is accepted, the tribute tokens are deposited into the contract, and new shares are minted and issued to the applicant. In the event of rejection, the tribute tokens are returned to the applicant.
 
-```rust
+```rust title="dao-light/io/src/lib.rs"
 /// The proposal processing after the proposal completes during the grace period.
 /// If the proposal is accepted, the indicated amount of tokens are sent to the receiver.
 ///
@@ -206,31 +203,20 @@ RageQuit {
 ///
 /// On success replies with [`DaoEvent::ProcessProposal`]
 ProcessProposal {
+    /// the actor who was funded
+    applicant: ActorId,
     /// the proposal ID
     proposal_id: u128,
+    /// true if funding proposal has passed
+    did_pass: bool,
 },
 ```
-- The option to resume the transaction is available. If a transaction hasn't been completed due to a network failure, the user can send a `Continue` message specifying the transaction ID that needs to be finalized:
-
-```rust
- /// Continues the transaction if it fails due to lack of gas
-/// or due to an error in the token contract.
-///
-/// Requirements:
-/// * Transaction must exist.
-///
-/// On success replies with the DaoEvent of continued transaction.
-Continue(
-    /// the transaction ID
-    u64,
-),
-```
+<!--
 ## Consistency of contract states
-The `DAO` contract interacts with the `fungible` token contract. Each transaction that changes the states of DAO and the fungible token is stored in the state until it is completed. User can complete a pending transaction by sending a message `Continue` indicating the transaction id. The idempotency of the fungible token contract allows to restart a transaction without duplicate changes which guarantees the state consistency of these 2 contracts.
 
 The `DAO` contract interacts with the `fungible token` contract. Every transaction that alters the states of the DAO and the fungible token is recorded in the state until it is finalized. Users can complete a pending transaction by sending a `Continue` message along with the transaction ID. The idempotency feature of the fungible token contract allows transactions to be restarted without duplicating changes, ensuring the state consistency of these two contracts.
 
-<!--
+
 ## User interface
 
 A [Ready-to-Use application](https://dao.gear-tech.io/) example provides a user interface that interacts with [DAO](https://github.com/gear-foundation/dapps-dao-light) and [gFT](https://github.com/gear-foundation/dapps-fungible-token) smart contracts.
@@ -273,10 +259,10 @@ yarn run start
 ## Program metadata and state
 Metadata interface description:
 
-```rust
-pub struct DaoMetadata;
+```rust title="dao-light/io/src/lib.rs"
+pub struct DaoLightMetadata;
 
-impl Metadata for DaoMetadata {
+impl Metadata for DaoLightMetadata {
     type Init = In<InitDao>;
     type Handle = InOut<DaoAction, DaoEvent>;
     type Others = ();
@@ -287,46 +273,41 @@ impl Metadata for DaoMetadata {
 ```
 To display the full contract state information, the `state()` function is used:
 
-```rust
+```rust title="dao-light/src/lib.rs"
 #[no_mangle]
-extern "C" fn state() {
-    msg::reply(
-        unsafe {
-            let dao = DAO.as_ref().expect("Uninitialized dao state");
-            let dao_state: DaoState = dao.into();
-            dao_state
-        },
-        0,
-    )
-    .expect("Failed to share state");
+extern fn state() {
+    let dao = unsafe { DAO.take().expect("Unexpected error in taking state") };
+    msg::reply::<DaoState>(dao.into(), 0)
+        .expect("Failed to encode or reply with `DaoState` from `state()`");
 }
 ```
 To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `DaoState` state. For example - [gear-foundation/dapps/dao/state](https://github.com/gear-foundation/dapps/tree/master/contracts/dao/state):
 
-```rust
-#[metawasm]
-pub trait Metawasm {
-    type State = DaoState;
+```rust title="dao-light/state/src/lib.rs"
+#[gmeta::metawasm]
+pub mod metafns {
+    pub type State = DaoState;
 
-    fn is_member(account: ActorId, state: Self::State) -> bool {
-        ...
-    }
+    pub fn user_status(state: State, account: ActorId) -> Role {
+    //..
 
-    fn is_in_whitelist(account: ActorId, state: Self::State) -> bool {
-        ...
-    }
+    pub fn all_proposals(state: State) -> Vec<Proposal> {
+    //..
 
-    fn get_proposal_id(state: Self::State) -> u128 {
-        ...
-    }
+    pub fn is_member(state: State, account: ActorId) -> bool {
+    //..
 
-    fn get_proposal_info(id: u128, state: Self::State) -> Proposal {
-        ...
-    }
+    pub fn proposal_id(state: State) -> u128 {
+    //..
 
-    fn get_member_info(account: ActorId, state: Self::State) -> Member {
-        ...
-    }
+    pub fn proposal_info(state: State, proposal_id: u128) -> Proposal {
+    //..
+
+    pub fn member_info(state: State, account: ActorId) -> Member {
+    //..
+
+    pub fn member_power(state: State, account: ActorId) -> u128 {
+    //..
 }
 ```
 

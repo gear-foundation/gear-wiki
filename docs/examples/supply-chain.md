@@ -85,7 +85,7 @@ yarn start
 * Sale, purchase, delivery is made in [Gear fungible tokens (gFT)](gft-20.md).
 
 Item info has the following struct:
-```rust
+```rust title="supply-chain/io/src/lib.rs"
 pub struct ItemInfo {
     /// Item’s producer [`ActorId`].
     pub producer: ActorId,
@@ -108,13 +108,15 @@ pub struct ItemInfo {
 ```
 
 And `ItemState` has the following struct and inner enums:
-```rust
+```rust title="supply-chain/io/src/lib.rs"
 pub struct ItemState {
     pub state: ItemEventState,
     pub by: Role,
 }
-
+```
+```rust title="supply-chain/io/src/lib.rs"
 pub enum ItemEventState {
+    #[default]
     Produced,
     Purchased,
     Received,
@@ -124,11 +126,13 @@ pub enum ItemEventState {
     Approved,
     Shipped,
 }
-
+```
+```rust title="supply-chain/io/src/lib.rs"
 pub enum Role {
     Producer,
     Distributor,
     Retailer,
+    #[default]
     Consumer,
 }
 ```
@@ -157,13 +161,15 @@ The end!
 
 ### Initialization
 
-```rust
+```rust title="supply-chain/io/src/lib.rs"
 /// Initializes the Supply chain contract.
 ///
 /// # Requirements
 /// - Each [`ActorId`] of `producers`, `distributors`, and `retailers` mustn't
 /// equal [`ActorId::zero()`].
 #[derive(Encode, Decode, Hash, TypeInfo, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Clone)]
+#[codec(crate = gstd::codec)]
+#[scale_info(crate = gstd::scale_info)]
 pub struct Initialize {
     /// IDs of actors that'll have the right to interact with a supply chain on
     /// behalf of a producer.
@@ -184,14 +190,17 @@ pub struct Initialize {
 
 ### Actions
 
-```rust
+```rust title="supply-chain/io/src/lib.rs"
 /// Sends the contract info about what it should do.
 #[derive(Encode, Decode, TypeInfo, Debug, PartialEq, Eq, PartialOrd, Ord, Clone)]
+#[codec(crate = gstd::codec)]
+#[scale_info(crate = gstd::scale_info)]
 pub struct Action {
     pub action: InnerAction,
     pub kind: TransactionKind,
 }
-
+```
+```rust title="supply-chain/io/src/lib.rs"
 /// A part of [`Action`].
 ///
 /// Determines how an action will be processed.
@@ -205,34 +214,42 @@ pub struct Action {
 /// [`msg::source()`](gstd::msg::source) is cached.
 /// - Non-asynchronous actions are never cached.
 /// - There's no guarantee every underprocessed asynchronous action will be
-/// cached. Use [`StateQuery::IsActionCached`] to check if some action is cached
-/// for some [`ActorId`].
+/// cached. Use
+/// [`is_action_cached()`](../supply_chain_state/metafns/fn.is_action_cached.html)
+/// to check if some action is cached for some [`ActorId`].
 /// - It's possible to send a retry action with a different payload, and it'll
 /// continue with it because, for some action, not all payload is saved in the
 /// cache (see [`CachedAction`]).
 /// - The cache memory has a limit, so when it's reached every oldest cached
 /// action is replaced with a new one.
-#[derive(
-    Default, Encode, Decode, TypeInfo, Debug, PartialEq, Eq, PartialOrd, Ord, Clone, Copy, Hash,
-)]
+#[derive(Default, Encode, Decode, TypeInfo, Debug, PartialEq, Eq, PartialOrd, Ord, Clone, Copy, Hash)]
+#[codec(crate = gstd::codec)]
+#[scale_info(crate = gstd::scale_info)]
 pub enum TransactionKind {
     #[default]
     New,
     Retry,
 }
-
+```
+```rust title="supply-chain/io/src/lib.rs"
 /// A part of [`Action`].
 #[derive(Encode, Decode, TypeInfo, Debug, PartialEq, Eq, PartialOrd, Ord, Clone)]
+#[codec(crate = gstd::codec)]
+#[scale_info(crate = gstd::scale_info)]
 pub enum InnerAction {
     Producer(ProducerAction),
     Distributor(DistributorAction),
     Retailer(RetailerAction),
     Consumer(ConsumerAction),
 }
+```
+```rust title="supply-chain/io/src/lib.rs"
 /// Actions for a producer.
 ///
 /// Should be used inside [`InnerAction::Producer`].
 #[derive(Encode, Decode, TypeInfo, Debug, PartialEq, Eq, PartialOrd, Ord, Clone)]
+#[codec(crate = gstd::codec)]
+#[scale_info(crate = gstd::scale_info)]
 pub enum ProducerAction {
     /// Produces one item and a corresponding NFT with given `token_metadata`.
     ///
@@ -307,11 +324,14 @@ pub enum ProducerAction {
     /// [`ItemEventState::Shipped`] & [`Role::Producer`].
     Ship(ItemId),
 }
-
+```
+```rust title="supply-chain/io/src/lib.rs"
 /// Actions for a distributor.
 ///
 /// Should be used inside [`InnerAction::Distributor`].
 #[derive(Encode, Decode, TypeInfo, Debug, PartialEq, Eq, PartialOrd, Ord, Clone, Copy, Hash)]
+#[codec(crate = gstd::codec)]
+#[scale_info(crate = gstd::scale_info)]
 pub enum DistributorAction {
     /// Purchases an item from a producer on behalf of a distributor.
     ///
@@ -447,11 +467,14 @@ pub enum DistributorAction {
     /// [`ItemEventState::Shipped`] & [`Role::Distributor`].
     Ship(ItemId),
 }
-
+```
+```rust title="supply-chain/io/src/lib.rs"
 /// Actions for a retailer.
 ///
 /// Should be used inside [`InnerAction::Retailer`].
 #[derive(Encode, Decode, TypeInfo, Debug, PartialEq, Eq, PartialOrd, Ord, Clone, Copy, Hash)]
+#[codec(crate = gstd::codec)]
+#[scale_info(crate = gstd::scale_info)]
 pub enum RetailerAction {
     /// Purchases an item from a distributor on behalf of a retailer.
     ///
@@ -516,11 +539,14 @@ pub enum RetailerAction {
     /// [`ItemEventState::ForSale`] & [`Role::Retailer`].
     PutUpForSale { item_id: ItemId, price: u128 },
 }
-
+```
+```rust title="supply-chain/io/src/lib.rs"
 /// Actions for a consumer.
 ///
 /// Should be used inside [`InnerAction::Consumer`].
 #[derive(Encode, Decode, TypeInfo, Debug, PartialEq, Eq, PartialOrd, Ord, Clone, Copy, Hash)]
+#[codec(crate = gstd::codec)]
+#[scale_info(crate = gstd::scale_info)]
 pub enum ConsumerAction {
     /// Purchases an item from a retailer.
     ///
@@ -543,7 +569,7 @@ pub enum ConsumerAction {
 ### Program metadata and state
 Metadata interface description:
 
-```rust
+```rust title="supply-chain/io/src/lib.rs"
 pub struct ContractMetadata;
 
 impl Metadata for ContractMetadata {
@@ -557,52 +583,72 @@ impl Metadata for ContractMetadata {
 ```
 To display the full contract state information, the `state()` function is used:
 
-```rust
+```rust title="supply-chain/src/lib.rs"
 #[no_mangle]
-extern "C" fn state() {
-    reply(common_state())
-        .expect("Failed to encode or reply with `<ContractMetadata as Metadata>::State` from `state()`");
+extern fn state() {
+    let (contract, _) = unsafe { STATE.take().expect("Unexpected error in taking state") };
+    msg::reply::<State>(contract.into(), 0)
+        .expect("Failed to encode or reply with `State` from `state()`");
 }
 ```
 To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `State` struct. For example - [supply-chain/state](https://github.com/gear-foundation/dapps/tree/master/contracts/supply-chain/state):
 
-```rust
-#[metawasm]
-pub trait Metawasm {
-    type State = supply_chain_io::State;
+```rust title="supply-chain/state/src/lib.rs"
+#[gmeta::metawasm]
+pub mod metafns {
+    pub type State = supply_chain_io::State;
 
-    fn item_info(item_id: ItemId, state: Self::State) -> Option<ItemInfo> {
-        state.item_info(item_id)
+    pub fn item_info(state: State, item_id: ItemId) -> Option<ItemInfo> {
+        state
+            .items
+            .into_iter()
+            .find_map(|(some_item_id, item_info)| (some_item_id == item_id).then_some(item_info))
     }
 
-    fn participants(state: Self::State) -> Participants {
-        state.participants()
+    pub fn participants(state: State) -> Participants {
+        Participants {
+            producers: state.producers,
+            distributors: state.distributors,
+            retailers: state.retailers,
+        }
     }
 
-    fn roles(actor: ActorId, state: Self::State) -> Vec<Role> {
-        state.roles(actor)
+    pub fn roles(state: State, actor: ActorId) -> Vec<Role> {
+        let mut roles = vec![Role::Consumer];
+
+        if state.producers.contains(&actor) {
+            roles.push(Role::Producer);
+        }
+        if state.distributors.contains(&actor) {
+            roles.push(Role::Distributor);
+        }
+        if state.retailers.contains(&actor) {
+            roles.push(Role::Retailer);
+        }
+
+        roles
     }
 
-    fn existing_items(state: Self::State) -> Vec<(ItemId, ItemInfo)> {
+    pub fn existing_items(state: State) -> Vec<(ItemId, ItemInfo)> {
         state.items
     }
 
-    fn fungible_token(state: Self::State) -> ActorId {
+    pub fn fungible_token(state: State) -> ActorId {
         state.fungible_token
     }
 
-    fn non_fungible_token(state: Self::State) -> ActorId {
+    pub fn non_fungible_token(state: State) -> ActorId {
         state.non_fungible_token
     }
 
-    fn is_action_cached(actor_action: ActorIdInnerSupplyChainAction, state: Self::State) -> bool {
-        let (actor, action) = actor_action;
-
-        state.is_action_cached(actor, action)
+    pub fn is_action_cached(state: State, actor: ActorId, action: InnerAction) -> bool {
+        if let Some(action) = action.into() {
+            state.cached_actions.contains(&(actor, action))
+        } else {
+            false
+        }
     }
 }
-
-pub type ActorIdInnerSupplyChainAction = (ActorId, InnerAction);
 ```
 
 ## Source code

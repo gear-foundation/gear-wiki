@@ -23,14 +23,11 @@ To use the default implementation you should include the packages into your *Car
 ```toml
 gear-lib = { git = "https://github.com/gear-foundation/dapps.git" }
 gear-lib-derive = { git = "https://github.com/gear-foundation/dapps.git" }
-hashbrown = "0.13"
 ```
 
 Dynamic NFT contains regular NFT (gnft-721) and additional field  `dynamic_data`:
 
-```rust
-use hashbrown::HashMap;
-
+```rust title="dynamic-nft/src/lib.rs"
 #[derive(Debug, Default, NFTStateKeeper, NFTCore, NFTMetaState)]
 pub struct DynamicNft {
     #[NFTStateField]
@@ -38,12 +35,14 @@ pub struct DynamicNft {
     pub token_id: TokenId,
     pub owner: ActorId,
     pub transactions: HashMap<H256, NFTEvent>,
+    pub collection: Collection,
+    pub config: Config,
     pub dynamic_data: Vec<u8>,
 }
 ```
 In all other cases, everything also corresponds to the usual [non-fungible-token](gnft-721) contract, except additional specific actions:
 
-```rust
+```rust title="dynamic-nft/io/src/lib.rs"
 #[derive(Debug, Encode, Decode, TypeInfo)]
 pub enum NFTAction {
     // ... like a usual NFT contract
@@ -55,9 +54,10 @@ pub enum NFTAction {
 ```
 And features specific events:
 
-```rust
+```rust title="dynamic-nft/io/src/lib.rs"
 #[derive(Clone, Debug, Encode, Decode, TypeInfo)]
 pub enum NFTEvent {
+    // ... like a usual NFT contract
     Updated {
         data_hash: H256,
     },
@@ -68,93 +68,84 @@ pub enum NFTEvent {
 
 For an example, look at this [Auto-changed NFT](https://github.com/gear-foundation/dapps/tree/master/contracts/auto-changed-nft) contract. This is a modified dynamic contract in which own dynamic data changes over time periods. We slightly changed the logic of the dynamic NFT contract to suit our needs.
 
-First, let's change the name of the contract and add a new field `rest_update_periods` in which we store the rest update periods (in our example, we need 2 updates):
+First, let's change the contract name and add new fields:
+`rest_updates_count` - number of periodic updates. 
+`update_period` - interval between automatic updates.
 
-```rust
+```rust title="auto-changed-nft/src/lib.rs"
 pub struct AutoChangedNft {
     #[NFTStateField]
     pub token: NFTState,
     pub token_id: TokenId,
     pub owner: ActorId,
     pub transactions: HashMap<H256, NFTEvent>,
-    pub dynamic_data: Vec<u8>,
-    pub rest_update_periods: u32,
-}
-```
-
-At initializing the contract, we send a deferred message that will change the dynamic data of the contract:
-
-```rust
-#[no_mangle]
-unsafe extern "C" fn init() {
-    let config: InitNFT = msg::load().expect("Unable to decode InitNFT");
-    if config.royalties.is_some() {
-        config.royalties.as_ref().expect("Unable to g").validate();
-    }
-    let nft = AutoChangedNft {
-        token: NFTState {
-            name: config.name,
-            symbol: config.symbol,
-            base_uri: config.base_uri,
-            royalties: config.royalties,
-            ..Default::default()
-        },
-        owner: msg::source(),
-        rest_update_periods: 2, // for example - two updates
-        ..Default::default()
-    };
-
-    let periods = nft.rest_update_periods;
-    CONTRACT = Some(nft);
-
-    let data = format!("Rest Update Periods: {}", periods)
-        .as_bytes()
-        .to_vec();
-
-    let payload = NFTAction::UpdateDynamicData {
-        transaction_id: 1,
-        data,
-    };
-    msg::send_delayed(exec::program_id(), payload, 0, DELAY).expect("Cant send delayed msg");
+    pub collection: Collection,
+    pub config: Config,
+    pub urls: HashMap<TokenId, Vec<String>>,
+    pub rest_updates_count: u32,
+    pub update_period: u32,
 }
 ```
 
 Next we will change the `handle()` function, we will add the business logic we need there:
 
-```rust
+```rust title="auto-changed-nft/src/lib.rs"
 unsafe extern "C" fn handle() {
     /// ...
-    NFTAction::UpdateDynamicData {
-            transaction_id,
-            data,
+        NFTAction::Update {
+            rest_updates_count,
+            token_ids,
         } => {
-            let payload = nft.process_transaction(transaction_id, |nft| {
-                let data_hash = H256::from(sp_core_hashing::blake2_256(&data));
-                if nft.rest_update_periods > 0 {
-                    nft.dynamic_data = data;
-                    nft.rest_update_periods -= 1;
-                    let periods = nft.rest_update_periods;
-                    let data = format!("Rest Update Periods: {}", periods)
-                        .as_bytes()
-                        .to_vec();
-                    let payload = NFTAction::UpdateDynamicData {
-                        transaction_id: transaction_id + 1,
-                        data,
-                    };
-                    msg::send_delayed(exec::program_id(), payload, 0, DELAY)
-                        .expect("Can't send delayed");
-                } else {
-                    nft.dynamic_data = format!("Expired").as_bytes().to_vec();
-                }
-                NFTEvent::Updated { data_hash }
-            });
-            msg::reply(payload, 0).expect("Error during replying with `NFTEvent::Updated`");
+            nft.rest_updates_count = rest_updates_count - 1;
+            nft.update_media(&token_ids);
+            if nft.rest_updates_count == 0 {
+                return;
+            }
+            let action = NFTAction::Update {
+                rest_updates_count: nft.rest_updates_count,
+                token_ids,
+            };
+            let gas_available = exec::gas_available();
+
+            if gas_available <= GAS_FOR_UPDATE {
+                let reservations = unsafe { &mut RESERVATION };
+                let reservation_id = reservations.pop().expect("Need more gas");
+                send_delayed_from_reservation(
+                    reservation_id,
+                    exec::program_id(),
+                    action,
+                    0,
+                    nft.update_period,
+                )
+                .expect("Can't send delayed from reservation");
+            } else {
+                send_delayed(exec::program_id(), action, 0, nft.update_period)
+                    .expect("Can't send delayed");
+            }
+        }
+        NFTAction::StartAutoChanging {
+            updates_count,
+            update_period,
+            token_ids,
+        } => {
+            nft.rest_updates_count = updates_count;
+            nft.update_period = update_period;
+
+            nft.update_media(&token_ids);
+
+            let payload = NFTAction::Update {
+                rest_updates_count: updates_count,
+                token_ids: token_ids.clone(),
+            };
+            let message_id = send_delayed(exec::program_id(), &payload, 0, update_period)
+                .expect("Can't send delayed");
+            nft.reserve_gas();
         }
 
 ```
 
 All is ready. Then there was a need to check that it works in tests:
-```rust
+```rust title="auto-changed-nft/tests/nft_tests.rs"
 #[test]
 fn auto_change_success() {
     let sys = System::new();
@@ -163,25 +154,52 @@ fn auto_change_success() {
     let transaction_id: u64 = 0;
     assert!(!mint(&nft, transaction_id, USERS[0]).main_failed());
 
-    let state: IoNFT = nft.read_state().unwrap();
-    let expected_dynamic_data: Vec<u8> = vec![];
-    assert_eq!(expected_dynamic_data, state.dynamic_data);
-    const DELAY: u32 = 5;
+    let link1 = "link 1";
+    let link2 = "link 2";
+    let link3 = "link 3";
+    let link4 = "link 4";
 
-    sys.spend_blocks(DELAY);
-    let state: IoNFT = nft.read_state().unwrap();
-    let expected_dynamic_data = format!("Rest Update Periods: 2").as_bytes().to_vec();
-    assert_eq!(expected_dynamic_data, state.dynamic_data);
+    let token_id = TokenId::default();
+    assert!(!add_url(&nft, token_id, link1, USERS[0]).main_failed());
+    assert!(!add_url(&nft, token_id, link2, USERS[0]).main_failed());
+    assert!(!add_url(&nft, token_id, link3, USERS[0]).main_failed());
+    assert!(!add_url(&nft, token_id, link4, USERS[0]).main_failed());
 
-    sys.spend_blocks(DELAY);
-    let state: IoNFT = nft.read_state().unwrap();
-    let expected_dynamic_data = format!("Rest Update Periods: 1").as_bytes().to_vec();
-    assert_eq!(expected_dynamic_data, state.dynamic_data);
+    let updates_count = 8;
+    let updates_period = 5;
+    assert!(!start_auto_changing(
+        &nft,
+        vec![token_id],
+        updates_count,
+        updates_period,
+        USERS[0]
+    )
+    .main_failed());
 
-    sys.spend_blocks(DELAY);
-    let state: IoNFT = nft.read_state().unwrap();
-    let expected_dynamic_data = format!("Expired").as_bytes().to_vec();
-    assert_eq!(expected_dynamic_data, state.dynamic_data);
+    // Start update
+    assert_eq!(current_media(&nft, token_id), link1);
+
+    sys.spend_blocks(updates_period);
+    assert_eq!(current_media(&nft, token_id), link4);
+
+    sys.spend_blocks(updates_period);
+    assert_eq!(current_media(&nft, token_id), link3);
+
+    sys.spend_blocks(updates_period);
+    assert_eq!(current_media(&nft, token_id), link2);
+
+    // Media rotation happens
+    sys.spend_blocks(updates_period);
+    assert_eq!(current_media(&nft, token_id), link1);
+
+    sys.spend_blocks(updates_period);
+    assert_eq!(current_media(&nft, token_id), link4);
+
+    sys.spend_blocks(updates_period);
+    assert_eq!(current_media(&nft, token_id), link3);
+
+    sys.spend_blocks(updates_period);
+    assert_eq!(current_media(&nft, token_id), link2);
 }
 ```
 

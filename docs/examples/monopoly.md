@@ -189,10 +189,10 @@ During actions `AddGear` and `Upgrade` a player can sell his other properties to
 ### Player's contract
 `Player` is a contract in which the monopoly game strategy is implemented. It must meet the following requirements:
 - It has to accept the following message from `Master` contract:
-    ```rust
+    ```rust title="syndote/io/src/lib.rs"
     pub struct YourTurn {
-        pub players: BTreeMap<ActorId, PlayerInfo>,
-        pub properties: BTreeMap<u8, (Vec<Gear>, Price, Rent)>,
+        pub players: Vec<(ActorId, PlayerInfo)>,
+        pub properties: Vec<Option<(ActorId, Gears, Price, Rent)>>,
     }
     ```
     That struct contains the information about the state of all players and about the monopoly fields and built gears.

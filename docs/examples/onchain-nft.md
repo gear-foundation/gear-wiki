@@ -31,14 +31,11 @@ To use the default implementation you should include the packages into your *Car
 
 ```toml
 gear-lib = { git = "https://github.com/gear-foundation/dapps", tag = "0.3.3" }
-hashbrown = "0.13.1"
 ```
 
 First, we start by modifying the state and the init message:
 
-```rust
-use hashbrown::{HashMap, HashSet};
-
+```rust title="on-chain-nft/src/lib.rs"
 #[derive(Debug, Default, NFTStateKeeper, NFTCore, NFTMetaState)]
 pub struct OnChainNFT {
     #[NFTStateField]
@@ -52,55 +49,145 @@ pub struct OnChainNFT {
 }
 ```
 
-```rust
+```rust title="on-chain-nft/io/src/lib.rs"
+/// Initializes on-chain NFT
+/// Requirements:
+/// * all fields except `royalties` should be specified
 #[derive(Debug, Encode, Decode, TypeInfo)]
+#[codec(crate = gstd::codec)]
+#[scale_info(crate = gstd::scale_info)]
 pub struct InitOnChainNFT {
+    /// NFT name
     pub name: String,
+    /// NFT symbol
     pub symbol: String,
+    /// NFT base_uri (not applicable in on-chain)
     pub base_uri: String,
+    /// Base Image is base64encoded svg.
+    /// Provides a base layer for all future nfts.
     pub base_image: String,
-    // Layers MUST be specified in sequence order starting from 0,
-    // otherwise the contract will return the "No such layer" error.
+    /// Layers map - mapping of layerid the list of layer items.
+    /// Each layer item is a base64encoded svg.
     pub layers: Vec<(LayerId, Vec<String>)>,
+    /// Royalties for NFT
     pub royalties: Option<Royalties>,
 }
 ```
 
 Next let's rewrite several functions: `mint`, `burn` and `token_uri`. Our `mint` and `burn` functions will behave as one woud expect them to with the addition of slight state modification (e.g. checking against the state, adding/removing). `token_uri` will return an NFT's metadata as well as all the layer content provided for a specified NFT:
-```rust
+```rust title="on-chain-nft/io/src/lib.rs"
 #[derive(Debug, Encode, Decode, TypeInfo)]
+#[codec(crate = gstd::codec)]
+#[scale_info(crate = gstd::scale_info)]
 pub enum OnChainNFTQuery {
+    /// Returns an NFT for a specified `token_id`.
+    ///
+    /// Requirements:
+    /// * `token_id` MUST exist
+    ///
+    /// Arguments:
+    /// * `token_id` - is the id of the NFT
+    ///
+    /// On success, returns TokenURI struct.
     TokenURI { token_id: TokenId },
+    /// Base NFT query. Derived from gear-lib.
     Base(NFTQuery),
 }
 
 #[derive(Debug, Encode, Decode, TypeInfo)]
+#[codec(crate = gstd::codec)]
+#[scale_info(crate = gstd::scale_info)]
 pub enum OnChainNFTAction {
+    /// Mints an NFT consisting of layers provided in the `description` parameter.
+    ///
+    /// Requirements:
+    /// * `description` MUST contain layers and layers' items that EXIST
+    ///
+    /// Arguments:
+    /// * `token_metadata` - is a default token metadata from gear-lib.
+    /// * `description` - is the vector of layer's item id, where
+    /// the index i is the layer id.
+    ///
+    /// On success, returns NFTEvent::Mint from gear-lib.
     Mint {
+        /// Metadata
         token_metadata: TokenMetadata,
+        /// Layers description of an NFT
         description: Vec<ItemId>,
     },
+    /// Burns an NFT.
+    ///
+    /// Requirements:
+    /// * `token_id` MUST exist
+    /// Arguments:
+    ///
+    /// * `token_id` - is the id of the burnt token
+    ///
+    /// On success, returns NFTEvent::Burn from gear-lib.
     Burn {
+        /// Token id to burn.
         token_id: TokenId,
     },
+    /// Transfers an NFT.
+    ///
+    /// Requirements:
+    /// * `token_id` MUST exist
+    /// * `to` MUST be a non-zero addresss
+    ///
+    /// Arguments:
+    /// * `token_id` - is the id of the transferred token
+    ///
+    /// On success, returns NFTEvent::Transfer from gear-lib.
     Transfer {
+        /// A recipient address.
         to: ActorId,
+        /// Token id to transfer.
         token_id: TokenId,
     },
+    /// Approves an account to perform operation upon the specifiefd NFT.
+    ///
+    /// Requirements:
+    /// * `token_id` MUST exist
+    /// * `to` MUST be a non-zero addresss
+    ///
+    /// Arguments:
+    /// * `token_id` - is the id of the transferred token
+    ///
+    /// On success, returns NFTEvent::Approval from gear-lib.
     Approve {
+        /// An account being approved.
         to: ActorId,
+        /// Token id approved for the account.
         token_id: TokenId,
     },
+    /// Transfers payouts from an NFT to an account.
+    ///
+    /// Requirements:
+    /// * `token_id` MUST exist
+    /// * `to` MUST be a non-zero addresss
+    /// * `amount` MUST be a non-zero number
+    ///
+    /// Arguments:
+    /// * `token_id` - is the id of the transferred token
+    ///
+    /// On success, returns NFTEvent::Approval from gear-lib.
     TransferPayout {
+        /// Payout recipient
         to: ActorId,
+        /// Token id to get the payout from.
         token_id: TokenId,
+        /// Payout amount.
         amount: u128,
     },
 }
 
 #[derive(Debug, Encode, Decode, TypeInfo)]
+#[codec(crate = gstd::codec)]
+#[scale_info(crate = gstd::scale_info)]
 pub struct TokenURI {
+    /// Token metadata derived from gear-lib
     pub metadata: TokenMetadata,
+    /// List of base64encoded svgs representing different layers of an NFT.
     pub content: Vec<String>,
 }
 ```
@@ -108,7 +195,7 @@ pub struct TokenURI {
 
 The `TokenMetadata` is also defined in the gear NFT library:
 
-```rust
+```rust title="gear-lib-old/src/non_fungible_token/token.rs" 
 #[derive(Debug, Default, Encode, Decode, Clone, TypeInfo)]
 pub struct TokenMetadata {
     // ex. "CryptoKitty #100"
@@ -122,28 +209,33 @@ pub struct TokenMetadata {
 }
 ```
 Define a trait for our new functions that will extend the default `NFTCore` trait:
-```rust
+```rust title="on-chain-nft/src/lib.rs"
 pub trait OnChainNFTCore: NFTCore {
-    fn mint(&mut self, description: Vec<ItemId>, metadata: TokenMetadata);
-    fn burn(&mut self, token_id: TokenId);
+    fn mint(&mut self, description: Vec<ItemId>, metadata: TokenMetadata) -> NFTTransfer;
+    fn burn(&mut self, token_id: TokenId) -> NFTTransfer;
     fn token_uri(&mut self, token_id: TokenId) -> Option<Vec<u8>>;
 }
 ```
 and write the implementation of that trait:
-```rust
+```rust title="on-chain-nft/src/lib.rs"
 impl OnChainNFTCore for OnChainNFT {
-
     /// Mint an NFT on chain.
     /// `description` - is the vector of ids ,
     ///  where each index represents a layer id, and element represents a layer item id.
     /// `metadata` - is the default metadata provided by gear-lib.
-    fn mint(&mut self, description: Vec<ItemId>, metadata: TokenMetadata) {
+    fn mint(&mut self, description: Vec<ItemId>, metadata: TokenMetadata) -> NFTTransfer {
         // precheck if the layers actually exist
         for (layer_id, layer_item_id) in description.iter().enumerate() {
             if layer_id > self.layers.len() {
                 panic!("No such layer");
             }
-            if *layer_item_id > self.layers.get(&(layer_id as u128)).expect("No such layer").len() as u128 {
+            if *layer_item_id
+                > self
+                    .layers
+                    .get(&(layer_id as u128))
+                    .expect("No such layer")
+                    .len() as u128
+            {
                 panic!("No such item");
             }
         }
@@ -163,15 +255,16 @@ impl OnChainNFTCore for OnChainNFT {
             panic!("Such nft already exists");
         }
         self.nfts_existence.insert(key);
-        NFTCore::mint(self, &msg::source(), self.token_id, Some(metadata));
+        let transfer = NFTCore::mint(self, &msg::source(), self.token_id, Some(metadata));
         self.nfts.insert(self.token_id, description);
         self.token_id = self.token_id.saturating_add(U256::one());
+        transfer
     }
 
     /// Burns an NFT.
     /// `token_id` - is the id of a token. MUST exist.
-    fn burn(&mut self, token_id: TokenId) {
-        NFTCore::burn(self, token_id);
+    fn burn(&mut self, token_id: TokenId) -> NFTTransfer {
+        let transfer = NFTCore::burn(self, token_id);
         let key = self
             .nfts
             .get(&token_id)
@@ -181,6 +274,7 @@ impl OnChainNFTCore for OnChainNFT {
             .collect::<String>();
         self.nfts.remove(&token_id);
         self.nfts_existence.remove(&key);
+        transfer
     }
 
     /// Returns token information - metadata and all the content of all the layers for the NFT.
@@ -209,50 +303,49 @@ impl OnChainNFTCore for OnChainNFT {
 }
 ```
 Accordingly, it is necessary to make changes to the `handle` and `meta_state` functions:
-```rust
+```rust title="on-chain-nft/src/lib.rs"
 #[no_mangle]
-extern "C" fn handle() {
+extern fn handle() {
     let action: OnChainNFTAction = msg::load().expect("Could not load OnChainNFTAction");
     let nft = unsafe { CONTRACT.get_or_insert(Default::default()) };
     match action {
         OnChainNFTAction::Mint {
             description,
             token_metadata,
-        } => OnChainNFTCore::mint(nft, description, token_metadata),
-        OnChainNFTAction::Burn { token_id } => OnChainNFTCore::burn(nft, token_id),
-        OnChainNFTAction::Transfer { to, token_id } => NFTCore::transfer(nft, &to, token_id),
+        } => msg::reply(
+            OnChainNFTEvent::Transfer(OnChainNFTCore::mint(nft, description, token_metadata)),
+            0,
+        ),
+        OnChainNFTAction::Burn { token_id } => msg::reply(
+            OnChainNFTEvent::Transfer(OnChainNFTCore::burn(nft, token_id)),
+            0,
+        ),
+        OnChainNFTAction::Transfer { to, token_id } => msg::reply(
+            OnChainNFTEvent::Transfer(NFTCore::transfer(nft, &to, token_id)),
+            0,
+        ),
         OnChainNFTAction::TransferPayout {
             to,
             token_id,
             amount,
-        } => NFTCore::transfer_payout(nft, &to, token_id, amount),
-        OnChainNFTAction::Approve { to, token_id } => NFTCore::approve(nft, &to, token_id),
+        } => msg::reply(
+            OnChainNFTEvent::TransferPayout(NFTCore::transfer_payout(nft, &to, token_id, amount)),
+            0,
+        ),
+        OnChainNFTAction::Approve { to, token_id } => msg::reply(
+            OnChainNFTEvent::Approval(NFTCore::approve(nft, &to, token_id)),
+            0,
+        ),
     }
+    .expect("Error during replying with `OnChainNFTEvent`");
 }
 
-#[no_mangle]
-extern "C" fn meta_state() -> *mut [i32; 2] {
-    let query: OnChainNFTQuery = msg::load().expect("failed to decode input argument");
-    let nft = unsafe { CONTRACT.get_or_insert(Default::default()) };
-    match query {
-        OnChainNFTQuery::TokenURI { token_id } => {
-            let encoded = OnChainNFTCore::token_uri(nft, token_id)
-                .expect("Error in reading OnChainNFT contract state");
-            gstd::util::to_leak_ptr(encoded)
-        }
-        OnChainNFTQuery::Base(query) => {
-            let encoded =
-                NFTMetaState::proc_state(nft, query).expect("Error in reading NFT contract state");
-            gstd::util::to_leak_ptr(encoded)
-        }
-    }
-}
 ```
 
 ### Programm metadata and state
 Metadata interface description:
 
-```rust
+```rust title="on-chain-nft/io/src/lib.rs"
 pub struct ContractMetadata;
 
 impl Metadata for ContractMetadata {
@@ -266,22 +359,22 @@ impl Metadata for ContractMetadata {
 ```
 To display the full contract state information, the `state()` function is used:
 
-```rust
+```rust title="on-chain-nft/src/lib.rs"
 #[no_mangle]
-extern "C" fn state() {
-    reply(common_state())
-        .expect("Failed to encode or reply with `<AppMetadata as Metadata>::State` from `state()`");
+extern fn state() {
+    let contract = unsafe { CONTRACT.take().expect("Unexpected error in taking state") };
+    msg::reply::<State>(contract.into(), 0)
+        .expect("Failed to encode or reply with `State` from `state()`");
 }
 ```
 To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `State` state. For example - [gear-foundation/dapps/on-chain-nft/state](https://github.com/gear-foundation/dapps/tree/master/contracts/on-chain-nft/state):
 
-```rust
+```rust title="on-chain-nft/state/src/lib.rs"
+#[gmeta::metawasm]
+pub mod metafns {
+    pub type State = on_chain_nft_io::State;
 
-#[metawasm]
-pub trait Metawasm {
-    type State = on_chain_nft_io::State;
-
-    fn token_uri(token_id: TokenId, state: Self::State) -> Option<Vec<u8>> {
+    pub fn token_uri(state: State, token_id: TokenId) -> Option<Vec<u8>> {
         let metadata = state
             .token
             .token_metadata_by_id
@@ -309,7 +402,7 @@ pub trait Metawasm {
         Some(TokenURI { metadata, content }.encode())
     }
 
-    fn base(query: NFTQuery, state: Self::State) -> Option<Vec<u8>> {
+    pub fn base(state: State, query: NFTQuery) -> Option<Vec<u8>> {
         let encoded = match query {
             NFTQuery::NFTInfo => NFTQueryReply::NFTInfo {
                 name: state.token.name.clone(),

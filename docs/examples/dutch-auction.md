@@ -17,7 +17,7 @@ The article explains the programming interface, data structure, basic functions,
 
 ### Actions
 
-```rust
+```rust title="dutch-auction/io/src/auction.rs"
 pub enum Action {
     Buy,
     Create(CreateConfig),
@@ -27,17 +27,16 @@ pub enum Action {
 ```
 
 - `Buy` is an action to buy an GNFT token by current price
-- `Create(CreateConfig)` is an action to create a new auction if the previous one is over or if it's the first auction in this contract.<br/>
+- `Create(CreateConfig)` is an action to create a new auction if the previous one is over or if it's the first auction in this contract.
 - `ForceStop` is an action to force stop an auction if contract owner would prefer to finish it ahead of time
 
 >Note how Dutch Auction is composed; that allows users to reuse its functionality over and over again.
 
 #### Structures in actions:
 
-```rust
+```rust title="dutch-auction/io/src/auction.rs"
 pub struct CreateConfig {
     pub nft_contract_actor_id: ActorId,
-    pub token_owner: ActorId,
     pub token_id: U256,
     pub starting_price: u128,
     pub discount_rate: u128,
@@ -47,27 +46,26 @@ pub struct CreateConfig {
 **To create a new auction you need to have these fields:**
 
 - `nft_contract_actor_id` is the contract address where the auctioneer's NFT has been minted.
-- `token_owner` is the address of the token owner to whom a reward will be sent if someone buys their NFT.
 - `token_id` is the ID of the NFT within its contract.
 - `starting_price` is the initial price at which the auction begins and subsequently decreases.
 - `discount_rate` is the rate at which the price decreases per millisecond over time.
 - `duration` is a property that is needed to set the duration of the auction.
 
-```rust
+```rust title="dutch-auction/io/src/auction.rs"
 pub struct Duration {
-    pub days: u64,
     pub hours: u64,
     pub minutes: u64,
+    pub seconds: u64,
 }
 ```
 
-- `days` amount of days in period
 - `hours` amount of hours in period
 - `minutes` amount of minutes in period
+- `seconds` amount of seconds in period
 
 ### Events
 
-```rust
+```rust title="dutch-auction/io/src/auction.rs"
 pub enum Event {
     AuctionStarted {
         token_owner: ActorId,
@@ -95,12 +93,12 @@ The `Dutch auction` contract interacts with the `non-fungible token` contract. E
 ### Programm metadata and state
 Metadata interface description:
 
-```rust
+```rust title="dutch-auction/io/src/io.rs"
 pub struct AuctionMetadata;
 
 impl Metadata for AuctionMetadata {
     type Init = ();
-    type Handle = InOut<Action, Event>;
+    type Handle = InOut<Action, Result<Event, Error>>;
     type Others = ();
     type Reply = ();
     type Signal = ();
@@ -109,18 +107,18 @@ impl Metadata for AuctionMetadata {
 ```
 To display the full contract state information, the `state()` function is used:
 
-```rust
+```rust title="dutch-auction/src/lib.rs"
 #[no_mangle]
-extern "C" fn state() {
-    reply(common_state()).expect(
-        "Failed to encode or reply with `<AuctionMetadata as Metadata>::State` from `state()`",
-    );
+extern fn state() {
+    let contract = unsafe { AUCTION.take().expect("Unexpected error in taking state") };
+    msg::reply::<AuctionInfo>(contract.into(), 0)
+        .expect("Failed to encode or reply with `AuctionInfo` from `state()`");
 }
 ```
 To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `AuctionInfo` state. For example - [dutch-auction/state](https://github.com/gear-foundation/dapps/tree/master/contracts/dutch-auction/state):
 
-```rust
-#[metawasm]
+```rust title="dutch-auction/state/src/lib.rs"
+#[gmeta::metawasm]
 pub mod metafns {
     pub type State = AuctionInfo;
 
@@ -136,7 +134,7 @@ pub mod metafns {
 
 ## Source code
 
-The source code of this example of Dutch Auction smart contract and the example of an implementation of its testing is available on [gear-foundation/dapps-dutch-auction](https://github.com/gear-foundation/dapps/tree/master/contracts/dutch-auction).
+The source code of this example of Dutch Auction smart contract and the example of an implementation of its testing is available on [gear-foundation/dapp/contracts/dutch-auction](https://github.com/gear-foundation/dapps/tree/master/contracts/dutch-auction).
 
 See also an example of the smart contract testing implementation based on `gtest`: [gear-foundation/dapps/dutch-auction/tests](https://github.com/gear-foundation/dapps/tree/master/contracts/dutch-auction/tests).
 

@@ -57,7 +57,7 @@ This article explains at a superficial level the purpose and logic of this smart
 
 An escrow wallet contains information about a `buyer`, a `seller`, the wallet `state`, and the `amount` of tokens that this wallet can store:
 
-```rust
+```rust title="escrow/io/src/lib.rs"
 pub struct Wallet {
     /// A buyer.
     pub buyer: ActorId,
@@ -65,16 +65,15 @@ pub struct Wallet {
     pub seller: ActorId,
     /// A wallet state.
     pub state: WalletState,
-    /// An amount of tokens that a wallet can have. **Not** a current amount on
-    /// a wallet balance!
+    /// An amount of tokens that a wallet can have. **Not** a current amount on a wallet balance!
     pub amount: u128,
 }
 ```
 
 `WalletState` is an enum that stores a current state of a wallet:
 
-```rust
-enum WalletState {
+```rust title="escrow/io/src/lib.rs"
+pub enum WalletState {
     AwaitingDeposit,
     AwaitingConfirmation,
     Closed,
@@ -85,9 +84,8 @@ enum WalletState {
 
 ### Initialization
 
-```rust
+```rust title="escrow/io/src/lib.rs"
 /// Initializes an escrow program.
-#[derive(Decode, Encode, TypeInfo)]
 pub struct InitEscrow {
     /// Address of a fungible token program.
     pub ft_program_id: ActorId,
@@ -96,11 +94,13 @@ pub struct InitEscrow {
 
 ### Actions
 
-```rust
+```rust title="escrow/io/src/lib.rs"
 /// An enum to send the program info about what it should do.
 ///
 /// After a successful processing of this enum, the program replies with [`EscrowEvent`].
 #[derive(Clone, Decode, Encode, TypeInfo)]
+#[codec(crate = gstd::codec)]
+#[scale_info(crate = gstd::scale_info)]
 pub enum EscrowAction {
     /// Creates one escrow wallet and replies with its ID.
     ///
@@ -196,7 +196,7 @@ The `Escrow contract` interacts with the `fungible token contract`. Each transac
 ## Program metadata and state
 Metadata interface description:
 
-```rust
+```rust title="escrow/io/src/lib.rs"
 pub struct EscrowMetadata;
 
 impl Metadata for EscrowMetadata {
@@ -210,20 +210,17 @@ impl Metadata for EscrowMetadata {
 ```
 To display the full contract state information, the `state()` function is used:
 
-```rust
+```rust title="escrow/src/lib.rs"
 #[no_mangle]
-extern "C" fn state() {
-    msg::reply(
-        unsafe { ESCROW.clone().expect("Uninitialized escrow state") },
-        0,
-    )
-    .expect("Failed to share state");
+extern fn state() {
+    let escrow = unsafe { ESCROW.take().expect("Uninitialized Escrow state") };
+    msg::reply::<EscrowState>(escrow.into(), 0).expect("Failed to share state");
 }
 ```
 To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `Escrow` state. For example - [gear-foundation/dapps-escrow/state](https://github.com/gear-foundation/dapps/tree/master/contracts/escrow/state):
 
-```rust
-#[metawasm]
+```rust title="escrow/state/src/lib.rs"
+#[gmeta::metawasm]
 pub mod metafns {
     pub type State = EscrowState;
 

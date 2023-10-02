@@ -154,9 +154,9 @@ cd contracts/tequila-train
 
 One user (he may be a player or not) uploads the game program and initializes it. Initialization data is a vector of players’ public addresses:
 
-```rust title="contracts/io/src/lib.rs"
+```rust title="tequila-train/io/src/lib.rs"
 pub struct Players {
-    players: Vec<ActorId>,
+    players: Vec<(ActorId, String)>,
 }
 ```
 
@@ -166,13 +166,18 @@ Program makes all preparations during initialization.
 2. The program tries to find the maximum double through users. If it doesn’t, it adds one tile to each user and repeats this step until double has been found.
 3. Program chooses the double and selects the first user.
 
-```rust title="contracts/src/contract.rs"
+```rust title="tequila-train/src/contract.rs"
 #[no_mangle]
-extern "C" fn init() {
-    let players_init: Players = msg::load().expect("Failed to decode `Players'");
+extern fn init() {
+    let maybe_limit: Option<u64> = msg::load().expect("Unexpected invalid payload.");
 
-    // All game initializing logic is inside GameState constructor
-    unsafe { GAME_STATE = GameState::new(&players_init) }
+    unsafe {
+        GAME_LAUNCHER = Some(if let Some(limit) = maybe_limit {
+            GameLauncher::new_with_limit(limit)
+        } else {
+            GameLauncher::default()
+        })
+    }
 }
 ```
 
@@ -181,8 +186,7 @@ Every player move is the command message sent to the program:
 1. Pass: skip the turn if there is no tile to place.
 2. Turn: place selected tile to the selected track. Additionally, in certain circumstances the player may get their train back.
 
-```rust title="contracts/io/src/lib.rs"
-/// Command to the program
+```rust title="tequila-train/io/src/contract.rs"
 pub enum Command {
     Skip,
     Place {
@@ -190,15 +194,24 @@ pub enum Command {
         track_id: u32,
         remove_train: bool,
     },
+    Register {
+        player: ActorId,
+        name: String,
+    },
+    StartGame,
+    RestartGame(
+        /// Optional players limit.
+        Option<u64>,
+    ),
 }
 ```
 
 User interface gets the program state after every action and renders it in the browser.
 
-```rust title="contracts/io/src/lib.rs"
+```rust title="tequila-train/io/src/contract.rs"
 /// The whole game state
 pub struct GameState {
-    pub players: Vec<ActorId>,
+    pub players: Vec<(ActorId, String)>,
     pub tracks: Vec<TrackData>,
     pub shots: Vec<u32>,
     pub start_tile: u32,
@@ -208,19 +221,22 @@ pub struct GameState {
     pub remaining_tiles: BTreeSet<u32>,
     pub state: State,
 }
-
+```
+```rust title="tequila-train/io/src/contract.rs"
 /// Information about the player's track
 pub struct TrackData {
     pub tiles: Vec<Tile>,
     pub has_train: bool,
 }
-
+```
+```rust title="tequila-train/io/src/contract.rs"
 /// Domino tile
 pub struct Tile {
     pub left: Face,
     pub right: Face,
 }
-
+```
+```rust title="tequila-train/io/src/contract.rs"
 /// Tile's face (number of dots)
 pub enum Face {
     Zero,
@@ -237,12 +253,15 @@ pub enum Face {
     Eleven,
     Twelve,
 }
-
+```
+```rust title="tequila-train/io/src/contract.rs"
 /// The state of the game
 pub enum State {
     Playing,
     Stalled,
-    Winner(ActorId),
+    Winner((ActorId, String)),
+    #[default]
+    Registration,
 }
 ```
 
