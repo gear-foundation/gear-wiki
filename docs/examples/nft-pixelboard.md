@@ -24,7 +24,7 @@ The `painting()` metafunction is used to get the entire painting of a pixelboard
 
 ### Initialization
 
-```rust
+```rust title="nft-pixelboard/io/src/lib.rs"
 /// Initializes the NFT pixelboard program.
 ///
 /// # Requirements
@@ -42,6 +42,8 @@ The `painting()` metafunction is used to get the entire painting of a pixelboard
 /// * `ft_program` address mustn't be [`ActorId::zero()`].
 /// * `nft_program` address mustn't be [`ActorId::zero()`].
 #[derive(Decode, Encode, TypeInfo, Clone)]
+#[codec(crate = gstd::codec)]
+#[scale_info(crate = gstd::scale_info)]
 pub struct InitNFTPixelboard {
     /// An address of a pixelboard owner to which minting fees and commissions
     /// on resales will be transferred.
@@ -72,9 +74,11 @@ pub struct InitNFTPixelboard {
 
 ### Actions
 
-```rust
-/// Sends a program info about what it should do.
+```rust title="nft-pixelboard/io/src/lib.rs"
+// Sends a program info about what it should do.
 #[derive(Decode, Encode, TypeInfo, Clone, PartialEq, Eq)]
+#[codec(crate = gstd::codec)]
+#[scale_info(crate = gstd::scale_info)]
 pub enum NFTPixelboardAction {
     /// Mints one NFT on a pixelboard with given `token_metadata` & `painting`.
     ///
@@ -87,7 +91,7 @@ pub enum NFTPixelboardAction {
     /// * `rectangle` coordinates must observe a block layout. In other words,
     /// each `rectangle` coordinate must be a multiple of a block side length in
     /// the canvas. The block side length can be obtained by
-    /// [`NFTPixelboardStateQuery::BlockSideLength`].
+    /// [`block_side_length()`](../nft_pixelboard_state/metafns/fn.block_side_length.html).
     /// * NFT `rectangle` mustn't collide with already minted one.
     /// * `painting` length must equal a pixel count in an NFT
     /// (which can be calculated by multiplying a [width](`Rectangle::width`) &
@@ -98,7 +102,7 @@ pub enum NFTPixelboardAction {
     /// pixel. The area can be calculated by multiplying a
     /// [width](`Rectangle::width`) & [height](`Rectangle::height`) from
     /// `rectangle`. The price of a free pixel can be obtained by
-    /// [`NFTPixelboardStateQuery::PixelPrice`].
+    /// [`pixel_price()`](../nft_pixelboard_state/metafns/fn.pixel_price.html).
     ///
     /// On success, returns [`NFTPixelboardEvent::Minted`].
     ///
@@ -123,16 +127,17 @@ pub enum NFTPixelboardAction {
     /// # Requirements
     /// * An NFT must be minted on a pixelboard.
     /// * An NFT must be for sale. This can be found out by
-    /// [`NFTPixelboardStateQuery::TokenInfo`]. See also the documentation of
+    /// [`token_info()`]. See also the documentation of
     /// [`TokenInfo#structfield.pixel_price`].
     /// * [`msg::source()`] must have enough fungible tokens to buy all pixels
     /// that an NFT occupies. This can be found out by
-    /// [`NFTPixelboardStateQuery::TokenInfo`]. See also the documentation of
+    /// [`token_info()`]. See also the documentation of
     /// [`TokenInfo#structfield.pixel_price`].
     ///
     /// On success, returns [`NFTPixelboardEvent::Bought`].
     ///
     /// [`msg::source()`]: gstd::msg::source
+    /// [`token_info()`]: ../nft_pixelboard_state/metafns/fn.token_info.html
     Buy(TokenId),
 
     /// Changes a sale state of an NFT minted on a pixelboard.
@@ -151,7 +156,7 @@ pub enum NFTPixelboardAction {
     /// **Note:** A commission is included in each NFT resale, so a seller
     /// will receive not all fungible tokens but tokens with a commission
     /// deduction. A commission percentage can be obtained by
-    /// [`NFTPixelboardStateQuery::CommissionPercentage`].
+    /// [`commission_percentage()`](../nft_pixelboard_state/metafns/fn.commission_percentage.html).
     ///
     /// # Requirements
     /// * An NFT must be minted on a pixelboard.
@@ -175,7 +180,7 @@ pub enum NFTPixelboardAction {
     /// * `painting` length must equal a pixel count in an NFT. The count can be
     /// calculated by multiplying a [width](`Rectangle::width`) &
     /// [height](`Rectangle::height`) from a rectangle of the NFT. The NFT
-    /// rectangle can be obtained by [`NFTPixelboardStateQuery::TokenInfo`].
+    /// rectangle can be obtained by [`token_info()`](../nft_pixelboard_state/metafns/fn.token_info.html).
     ///
     /// On success, returns [`NFTPixelboardEvent::Painted`].
     Paint {

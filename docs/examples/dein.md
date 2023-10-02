@@ -19,7 +19,7 @@ git clone --recurse-submodules "https://github.com/gear-foundation/dapps"
 
 1. To connect your program to the Decentralized Internet on Gear Network it's necessary to have a variable of type `Option<DnsMeta>` in your program that will contain metadata of the DNS record:
 
-```rust
+```rust title="ddns/io/src/lib.rs"
 pub struct DnsMeta {
     pub name: String,
     pub link: String,

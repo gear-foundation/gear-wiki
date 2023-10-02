@@ -54,26 +54,29 @@ During initialization, the game administrator is assigned. The administrator has
 
 ### Initialization
 
-```rust
+```rust title="game-of-chance/io/src/lib.rs"
 /// Initializes the Game of chance contract.
 ///
 /// # Requirements
 /// - `admin` mustn't be [`ActorId::zero()`].
-#[derive(Debug, Default, Encode, Decode, PartialEq, Eq, PartialOrd, Ord, Clone, TypeInfo)]
-pub struct GOCInit {
+#[derive(Debug, Default, Encode, Decode, PartialEq, Eq, PartialOrd, Ord, Clone, Copy, TypeInfo, Hash)]
+#[codec(crate = gstd::codec)]
+#[scale_info(crate = gstd::scale_info)]
+pub struct InitGOC {
     /// [`ActorId`] of the game administrator that'll have the rights to
-    /// [start a game round](GOCAction::Start) and
-    /// [pick a winner](GOCAction::PickWinner).
+    /// [`Action::Start`] a game round and [`Action::PickWinner`].
     pub admin: ActorId,
 }
 ```
 
 ### Actions
 
-```rust
+```rust title="game-of-chance/io/src/lib.rs"
 /// Sends a contract info about what it should do.
-#[derive(Debug, Encode, Decode, PartialEq, Eq, PartialOrd, Ord, Clone, Copy, TypeInfo)]
-pub enum GOCAction {
+#[derive(Debug, Encode, Decode, PartialEq, Eq, PartialOrd, Ord, Clone, Copy, TypeInfo, Hash)]
+#[codec(crate = gstd::codec)]
+#[scale_info(crate = gstd::scale_info)]
+pub enum Action {
     /// Starts a game round and allows to participate in it.
     ///
     /// # Requirements
@@ -81,21 +84,21 @@ pub enum GOCAction {
     /// - The current game round must be over.
     /// - `ft_actor_id` mustn't be [`ActorId::zero()`].
     ///
-    /// On success, replies with [`GOCEvent::Started`].
+    /// On success, replies with [`Event::Started`].
     Start {
         /// The duration (in milliseconds) of the players entry stage.
         ///
         /// After that, no one will be able to enter a game round and a winner
         /// should be picked.
         duration: u64,
-        /// The price of participation in a game round.
+        /// The price of a participation in a game round.
         participation_cost: u128,
         /// A currency (or FT contract [`ActorId`]) of a game round.
         ///
         /// Determines fungible tokens in which a prize fund and a participation
         /// cost will be collected. [`None`] means that the native value will be
         /// used instead of fungible tokens.
-        ft_actor_id: Option<ActorId>,
+        fungible_token: Option<ActorId>,
     },
 
     /// Randomly picks a winner from current game round participants (players)
@@ -115,25 +118,25 @@ pub enum GOCAction {
     /// - The players entry stage must be over.
     /// - A winner mustn't already be picked.
     ///
-    /// On success, replies with [`GOCEvent::Winner`].
+    /// On success, replies with [`Event::Winner`].
     PickWinner,
 
     /// Pays a participation cost and adds [`msg::source()`] to the current game
     /// round participants (players).
     ///
-    /// A participation cost and its currency can be queried by the
-    /// `meta_state()` entry function.
+    /// A participation cost and its currency can be queried from the contract
+    /// state.
     ///
     /// # Requirements
     /// - The players entry stage mustn't be over.
     /// - [`msg::source()`] mustn't already participate.
     /// - [`msg::source()`] must have enough currency to pay a participation
     /// cost.
-    /// - If the current game round currency is the native value (`ft_actor_id`
-    /// is [`None`]), [`msg::source()`] must send this action with the amount of
-    /// the value exactly equal to a participation cost.
+    /// - If the current game round currency is the native value
+    /// (`fungible_token` is [`None`]), [`msg::source()`] must send this action
+    /// with the amount of the value exactly equal to a participation cost.
     ///
-    /// On success, replies with [`GOCEvent::PlayerAdded`].
+    /// On success, replies with [`Event::PlayerAdded`].
     ///
     /// [`msg::source()`]: gstd::msg::source
     Enter,
@@ -143,25 +146,26 @@ pub enum GOCAction {
 ### Program metadata and state
 Metadata interface description:
 
-```rust
+```rust title="game-of-chance/io/src/lib.rs"
 pub struct ContractMetadata;
 
 impl Metadata for ContractMetadata {
-    type Init = InOut<Initialize, Result<(), Error>>;
+    type Init = InOut<InitGOC, Result<(), Error>>;
     type Handle = InOut<Action, Result<Event, Error>>;
     type Reply = ();
     type Others = ();
     type Signal = ();
-    type State = State;
+    type State = Out<State>;
 }
 ```
 To display the full contract state information, the `state()` function is used:
 
-```rust
+```rust title="game-of-chance/src/lib.rs"
 #[no_mangle]
-extern "C" fn state() {
-    reply(common_state())
-        .expect("Failed to encode or reply with `<ContractMetadata as Metadata>::State` from `state()`");
+extern fn state() {
+    let contract = unsafe { CONTRACT.take().expect("Unexpected error in taking state") };
+    msg::reply::<State>(contract.into(), 0)
+        .expect("Failed to encode or reply with `IoNFT` from `state()`");
 }
 ```
 To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `State` struct.

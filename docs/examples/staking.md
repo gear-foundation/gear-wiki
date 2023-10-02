@@ -83,13 +83,6 @@ The admin initializes the contract by transmitting information about the staking
 Admin can view the Stakers list (`GetStakers` message). The admin can update the reward that will be distributed (`UpdateStaking` message).
 The user first makes a bet (`Stake` message), and then he can receive his reward on demand (`GetReward` message). The user can withdraw part of the amount (`Withdraw` message).
 
-## Interface
-To use the hashmap you should include `hashbrown` package into your *Cargo.toml* file:
-```toml
-[dependecies]
-# ...
-hashbrown = "0.13.1"
-```
 ### Source files
 1. `staking/src/lib.rs` - contains functions of the 'staking' contract.
 2. `staking/io/src/lib.rs` - contains Enums and structs that the contract receives and sends in the reply.
@@ -98,9 +91,7 @@ hashbrown = "0.13.1"
 
 The contract has the following structs:
 
-```rust
-use hashbrown::HashMap;
-
+```rust title="staking/src/lib.rs"
 struct Staking {
     owner: ActorId,
     staking_token_address: ActorId,
@@ -113,6 +104,8 @@ struct Staking {
     all_produced: u128,
     reward_produced: u128,
     stakers: HashMap<ActorId, Staker>,
+    transactions: BTreeMap<ActorId, Transaction<StakingAction>>,
+    current_tid: TransactionId,
 }
 ```
 where:
@@ -139,8 +132,12 @@ where:
 
 `stakers` - 'map' of the 'stakers'
 
+`transactions` - 'map' of the 'transactions'
 
-```rust
+`current_tid` - current transaction identifier.
+
+
+```rust title="staking/io/src/lib.rs"
 pub struct InitStaking {
     pub staking_token_address: ActorId,
     pub reward_token_address: ActorId,
@@ -159,7 +156,7 @@ where:
 `reward_total` - the reward to be distributed within distribution time
 
 
-```rust
+```rust title="staking/io/src/lib.rs"
 pub struct Staker {
     pub balance: u128,
     pub reward_allowed: u128,
@@ -180,108 +177,122 @@ where:
 
 ### Enums
 
-```rust
+```rust title="staking/io/src/lib.rs"
 pub enum StakingAction {
     Stake(u128),
     Withdraw(u128),
     UpdateStaking(InitStaking),
     GetReward,
 }
-
+```
+```rust title="staking/io/src/lib.rs"
 pub enum StakingEvent {
     StakeAccepted(u128),
-    Withdrawn(u128),
     Updated,
     Reward(u128),
+    Withdrawn(u128),
 }
 ```
 
 ### Functions
 
-Staking contract interacts with fungible token contract through function `transfer_tokens()`.
+Staking contract interacts with fungible token contract through function `transfer_tokens()`. This function sends a message (the action is defined in the enum `FTAction`) and gets a reply (the reply is defined in the enum `FTEvent`).
 
-```rust
-pub async fn transfer_tokens(
+```rust title="staking/src/lib.rs"
+/// Transfers `amount` tokens from `sender` account to `recipient` account.
+/// Arguments:
+/// * `token_address`: token address
+/// * `from`: sender account
+/// * `to`: recipient account
+/// * `amount_tokens`: amount of tokens
+async fn transfer_tokens(
     &mut self,
-    token_address: &ActorId, /// - the token address
-	from: &ActorId, /// - the sender address
-	to: &ActorId, /// - the recipient address
-	amount_tokens: u128 /// - the amount of tokens
-) -> Result<(), Error>
-```
-
-This function sends a message (the action is defined in the enum `FTAction`) and gets a reply (the reply is defined in the enum `FTEvent`).
-
-```rust
-msg::send_for_reply(
-    *token_address, /// - the fungible token contract address
-    FTAction::Transfer {		/// - action in the fungible token-contract
-        from: *from,
-        to: *to,
+    token_address: &ActorId,
+    from: &ActorId,
+    to: &ActorId,
+    amount_tokens: u128,
+) -> Result<(), Error> {
+    let payload = LogicAction::Transfer {
+        sender: *from,
+        recipient: *to,
         amount: amount_tokens,
-    },
-    0,
-    0,
-)
+    };
+
+    let transaction_id = self.current_tid;
+    self.current_tid = self.current_tid.saturating_add(99);
+
+    let payload = FTokenAction::Message {
+        transaction_id,
+        payload,
+    };
+
+    let result = msg::send_for_reply_as(*token_address, payload, 0, 0)?.await?;
+
+    if let FTokenEvent::Err = result {
+        Err(Error::TransferTokens)
+    } else {
+        Ok(())
+    }
+}
 ```
 
 Calculates the reward produced so far
 
-```rust
+```rust title="staking/src/lib.rs"
 fn produced(&mut self) -> u128
 ```
 
 Updates the reward produced so far and calculates tokens per stake
 
-```rust
+```rust title="staking/src/lib.rs"
 fn update_reward(&mut self)
 ```
 
 Calculates the maximum possible reward.
 
 The reward that the depositor would have received if he had initially paid this amount
-```rust
+```rust title="staking/src/lib.rs"
 fn get_max_reward(&self, amount: u128) -> u128
 ```
 
 Calculates the reward of the staker that is currently available.
 
 The return value cannot be less than zero according to the algorithm
-```rust
-fn calc_reward(&mut self) -> u128
+```rust title="staking/src/lib.rs"
+fn calc_reward(&mut self) -> Result<u128, Error> 
 ```
 
 Updates the staking contract.
 
 Sets the reward to be distributed within distribution time
 
-```rust
-fn update_staking(&mut self, config: InitStaking)
+```rust title="staking/src/lib.rs"
+fn update_staking(&mut self, config: InitStaking) -> Result<StakingEvent, Error>
 ```
 
 Stakes the tokens
 
-```rust
-async fn stake(&mut self, amount: u128)
+```rust title="staking/src/lib.rs"
+async fn stake(&mut self, amount: u128) -> Result<StakingEvent, Error> 
 ```
 
 Sends reward to the staker
 
-```rust
-async fn send_reward(&mut self)
+```rust title="staking/src/lib.rs"
+async fn send_reward(&mut self) -> Result<StakingEvent, Error>
 ```
 
 Withdraws the staked the tokens
 
-```rust
-async fn withdraw(&mut self, amount: u128)
+```rust title="staking/src/lib.rs"
+async fn withdraw(&mut self, amount: u128) -> Result<StakingEvent, Error>
 ```
 
 These functions are called in `async fn main()` through enum `StakingAction`.
 
 This is the entry point to the program, and the program is waiting for a message in `StakingAction` format.
 
-```rust
+```rust title="staking/src/lib.rs"
 #[gstd::async_main]
 async fn main() {
     let staking = unsafe { STAKING.get_or_insert(Staking::default()) };
@@ -296,7 +307,8 @@ async fn main() {
     }) = staking.transactions.get(&msg_source)
     {
         if action != *pend_action {
-            reply(_reply).expect("Failed to encode or reply with `Result<StakingEvent, Error>`");
+            msg::reply(_reply, 0)
+                .expect("Failed to encode or reply with `Result<StakingEvent, Error>`");
             return;
         }
         *id
@@ -334,14 +346,14 @@ async fn main() {
             result
         }
     };
-    reply(result).expect("Failed to encode or reply with `Result<StakingEvent, Error>`");
+    msg::reply(result, 0).expect("Failed to encode or reply with `Result<StakingEvent, Error>`");
 }
 ```
 
 ### Programm metadata and state
 Metadata interface description:
 
-```rust
+```rust title="staking/io/src/lib.rs"
 pub struct StakingMetadata;
 
 impl Metadata for StakingMetadata {
@@ -355,17 +367,18 @@ impl Metadata for StakingMetadata {
 ```
 To display the full contract state information, the `state()` function is used:
 
-```rust
+```rust title="staking/src/lib.rs"
 #[no_mangle]
-extern "C" fn state() {
-    reply(common_state())
-        .expect("Failed to encode or reply with `<AppMetadata as Metadata>::State` from `state()`");
+extern fn state() {
+    let staking = unsafe { STAKING.take().expect("Unexpected error in taking state") };
+    msg::reply::<IoStaking>(staking.into(), 0)
+        .expect("Failed to encode or reply with `IoStaking` from `state()`");
 }
 ```
 To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `IoStaking` state. For example - [staking/state](https://github.com/gear-foundation/dapps/tree/master/contracts/staking/state):
 
-```rust
-#[metawasm]
+```rust title="staking/state/src/lib.rs"
+#[gmeta::metawasm]
 pub mod metafns {
     pub type State = IoStaking;
 
@@ -381,7 +394,6 @@ pub mod metafns {
             .map(|(_, staker)| staker.clone())
     }
 }
-
 ```
 
 ## Consistency of contract states

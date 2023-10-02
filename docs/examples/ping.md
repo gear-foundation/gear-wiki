@@ -11,109 +11,94 @@ Let's look at the [minimal program](https://github.com/gear-foundation/dapps/tre
 
 The code of the program is in the `src/lib.rs` file. The program replies with `Pong` string if the sender sent `Ping` message to it. It also saves how many times a user sent a ping message to the program.
 So, the program contains:
-- state definition:
-```rust
-static mut STATE: Option<HashMap<ActorId, u128>> = None;
+- message log definition:
+```rust title="ping/src/lib.rs"
+static mut MESSAGE_LOG: Vec<String> = vec![];
 ```
-- `init` and `handle` entrypoints:
-```rust
+- entry point `handle`:
+```rust title="ping/src/lib.rs"
 #[no_mangle]
-extern "C" fn init() {
-    unsafe { STATE = Some(HashMap::new()) }
-}
+extern fn handle() {
+    let new_msg: String = msg::load().expect("Unable to create string");
 
-#[no_mangle]
-extern "C" fn handle() {
-    process_handle()
-        .expect("Failed to load, decode, encode, or reply with `PingPong` from `handle()`")
-}
-
-fn process_handle() -> Result<(), ContractError> {
-    let payload = msg::load()?;
-
-    if let PingPong::Ping = payload {
-        let pingers = static_mut_state();
-
-        pingers
-            .entry(msg::source())
-            .and_modify(|ping_count| *ping_count = ping_count.saturating_add(1))
-            .or_insert(1);
-
-        reply(PingPong::Pong)?;
+    if new_msg == "PING" {
+        msg::reply_bytes("PONG", 0).expect("Unable to reply");
     }
 
-    Ok(())
+    unsafe {
+        MESSAGE_LOG.push(new_msg);
+
+        debug!("{:?} total message(s) stored: ", MESSAGE_LOG.len());
+
+        for log in &MESSAGE_LOG {
+            debug!("{log:?}");
+        }
+    }
 }
 ```
 - `state` function that allows to read the program state:
-```rust
+```rust title="ping/src/lib.rs"
 #[no_mangle]
-extern "C" fn state() {
-    reply(common_state()).expect(
-        "Failed to encode or reply with `<ContractMetadata as Metadata>::State` from `state()`",
-    );
+extern fn state() {
+    msg::reply(unsafe { MESSAGE_LOG.clone() }, 0)
+        .expect("Failed to encode or reply with `<AppMetadata as Metadata>::State` from `state()`");
 }
 ```
 
-The `lib.rs` file in the `src` directory contains the following code:
-```
+The `io` crate defines the contract metadata.
+```rust title="ping/io/src/lib.rs"
 #![no_std]
 
-#[cfg(not(feature = "binary-vendor"))]
-mod contract;
+use gmeta::{InOut, Metadata, Out};
+use gstd::prelude::*;
 
-#[cfg(feature = "binary-vendor")]
-include!(concat!(env!("OUT_DIR"), "/wasm_binary.rs"));
-```
-The enabled `binary-vendor` feature will include the generated WASM binary as 3 constants: WASM_BINARY, WASM_BINARY_OPT and WASM_BINARY_META in the root crate. These constants can be used in tests with `gclient` instead of paths to wasm files in the target directory. You may not use that approach and simply write the contract code in the `lib.rs` file.
+pub struct DemoPingMetadata;
 
-The `io` crate defines the contract metadata, namely, the state of the program and what messages the program receives and sends.
-```rust
-#[derive(Encode, Decode, TypeInfo, Hash, PartialEq, PartialOrd, Eq, Ord, Clone, Copy, Debug)]
-pub enum PingPong {
-    Ping,
-    Pong,
-}
-
-pub struct ContractMetadata;
-
-impl Metadata for ContractMetadata {
+impl Metadata for DemoPingMetadata {
     type Init = ();
-    type Handle = InOut<PingPong, PingPong>;
+    type Handle = InOut<String, String>;
     type Others = ();
     type Reply = ();
     type Signal = ();
-    type State = Out<State>;
+    type State = Out<Vec<String>>;
 }
-
-#[derive(Encode, Decode, TypeInfo, Hash, PartialEq, PartialOrd, Eq, Ord, Clone, Debug, Default)]
-pub struct State(pub Vec<(ActorId, u128)>);
 ```
-The `ContractMetadata` struct is used in `build.rs` in order to generate `meta.txt` file:
-```rust
-use app_io::ContractMetadata;
+The `DemoPingMetadata` struct is used in `build.rs` in order to generate `meta.txt` file:
+```rust title="ping/build.rs"
+use ping_io::DemoPingMetadata;
 
 fn main() {
-    gear_wasm_builder::build_with_metadata::<ContractMetadata>();
+    gear_wasm_builder::build_with_metadata::<DemoPingMetadata>();
 }
 ```
 
 The `state` is the independent crate for reading the program state. It depends on the `ping-io` crate where the type of the contract state is defined:
-```rust
-use app_io::*;
-use gmeta::{metawasm, Metadata};
-use gstd::{prelude::*, ActorId};
+```rust title="ping/state/src/lib.rs"
+#![no_std]
 
-#[metawasm]
-pub trait Metawasm {
-    type State = ping_io::State;
+use gstd::prelude::*;
 
-    fn pingers(state: Self::State) -> Vec<ActorId> {
-        state.pingers()
+#[gmeta::metawasm]
+pub mod metafns {
+    pub type State = Vec<String>;
+
+    pub fn get_first_message(state: State) -> String {
+        state.first().expect("Message log is empty!").to_string()
     }
 
-    fn ping_count(actor: ActorId, state: Self::State) -> u128 {
-        state.ping_count(actor)
+    pub fn get_last_message(state: State) -> String {
+        state.last().expect("Message log is empty!").to_string()
+    }
+
+    pub fn get_messages_len(state: State) -> u64 {
+        state.len() as u64
+    }
+
+    pub fn get_message(state: State, index: u64) -> String {
+        state
+            .get(index as usize)
+            .expect("Invalid index!")
+            .to_string()
     }
 }
 ```

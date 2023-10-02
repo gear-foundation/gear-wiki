@@ -16,39 +16,47 @@ The initial funds used to purchase a token are determined by the Gear fungible t
 ## Interface
 ### Source files
 1. `messages.rs` - contains function of the fungible token contract. Crowdsale contract interacts with the fungible token contract through `transfer_tokens` function:
-```rust
+```rust title="crowdsale/src/messages.rs"
 pub async fn transfer_tokens(
-    transaction_id: u64, // - associated transaction id
-    token_id: &ActorId, // - the fungible token contract address
-    from: &ActorId, // - the sender address
-    to: &ActorId, // - the recipient address
-    amount: u128, // - the amount of tokens
-)
+    transaction_id: u64,
+    token_address: &ActorId,
+    from: &ActorId,
+    to: &ActorId,
+    amount_tokens: u128,
+) -> Result<(), ()>
 ```
+- `transaction_id` - identifier of the associated transaction
+- `from` is the sender's accounts
+- `to` is recipient account
+- `amount` is number of tokens
+
 This function sends a message (the action is defined in the enum IcoAction) and gets a reply (the reply is defined in the enum IcoEvent):
-```rust
-let _transfer_response = msg::send_for_reply_as::<ft_main_io::FTokenAction, FTokenEvent>(
-    *token_address,
-    FTokenAction::Message {
-        transaction_id,
-        payload: ft_logic_io::Action::Transfer {
-            sender: *from,
-            recipient: *to,
-            amount: amount_tokens,
-        }
-        .encode(),
-    },
-    0,
-    0,
-)
-.expect("Error in sending a message `FTokenAction::Message`")
-.await
-.expect("Error int transfer");
+```rust title="crowdsale/src/messages.rs"
+let reply = msg::send_for_reply_as::<FTokenAction, FTokenEvent>(
+        *token_address,
+        FTokenAction::Message {
+            transaction_id,
+            payload: LogicAction::Transfer {
+                sender: *from,
+                recipient: *to,
+                amount: amount_tokens,
+            },
+        },
+        0,
+        0,
+    )
+    .expect("Error in sending a message `FTokenAction::Message`")
+    .await;
+
+match reply {
+    Ok(FTokenEvent::Ok) => Ok(()),
+    _ => Err(()),
+}
 ```
 
 2. `asserts.rs` - contains asserts functions: `owner_message` and `not_zero_address`.
 - `owner_message` checks if `msg::source()` is equal to `owner`. Otherwise, it panics:
-```rust
+```rust title="crowdsale/src/asserts.rs"
 pub fn owner_message(owner: &ActorId, message: &str) {
     if msg::source() != *owner {
         panic!("{}: Not owner message", message)
@@ -56,7 +64,7 @@ pub fn owner_message(owner: &ActorId, message: &str) {
 }
 ```
 - `not_zero_address` checks if `address` is not equal to `ZERO_ID`. Otherwise, it panics:
-```rust
+```rust title="crowdsale/src/asserts.rs"
 pub fn not_zero_address(address: &ActorId, message: &str) {
     if address == &ZERO_ID {
         panic!("{}: Zero address", message)
@@ -67,16 +75,9 @@ pub fn not_zero_address(address: &ActorId, message: &str) {
 3. `lib.rs` - defines the contract logic.
 
 ### Structs
-To use the hashmap you should add the `hashbrown` package into your Cargo.toml file:
-```toml
-[dependecies]
-# ...
-hashbrown = "0.13.1"
-```
-The contract has the following structs:
-```rust
-use hashbrown::HashMap;
 
+The contract has the following structs:
+```rust title="crowdsale/src/lib.rs"
 struct IcoContract {
     ico_state: IcoState,
     start_price: u128,
@@ -93,7 +94,7 @@ struct IcoContract {
 ```
 where:
 - `ico_state` is `IcoState` struct which consists of:
-```rust
+```rust title="crowdsale/io/src/lib.rs"
 pub struct IcoState {
     pub ico_started: bool, // true if ICO was started
     pub start_time: u64, // time when ICO was started, otherwise is zero
@@ -112,51 +113,51 @@ pub struct IcoState {
 
 ### Functions
 - Starts the ICO. Only owner can call it:
-```rust
+```rust title="crowdsale/src/lib.rs"
 async fn start_ico(&mut self, config: IcoAction)
 ```
 replies with:
-```rust
+```rust title="crowdsale/src/lib.rs"
 IcoEvent::SaleStarted {
-    transaction_id,
+    transaction_id: current_transaction_id,
     duration,
     start_price,
     tokens_goal,
     price_increase_step,
     time_increase_step,
-},
+}
 ```
 
 - Purchase of tokens. Anyone with enough balance can call and buy tokens:
-```rust
+```rust title="crowdsale/src/lib.rs"
 pub fn buy_tokens(&mut self, tokens_cnt: u128)
 ```
 replies with:
-```rust
+```rust title="crowdsale/src/lib.rs"
 IcoEvent::Bought {
-    buyer,
-    amount,
+    buyer: msg::source(),
+    amount: tokens_cnt,
     change,
 }
 ```
 
 - Ends the ICO. Only owner can call it:
-```rust
+```rust title="crowdsale/src/lib.rs"
 async fn end_sale(&mut self)
 ```
 replies with:
-```rust
-IcoEvent::SaleEnded
+```rust title="crowdsale/src/lib.rs"
+IcoEvent::SaleEnded(current_transaction_id)
 ```
 
 ### Programm metadata and state
 Metadata interface description:
 
-```rust
+```rust title="crowdsale/io/src/lib.rs"
 pub struct CrowdsaleMetadata;
 
 impl Metadata for CrowdsaleMetadata {
-    type Init = ();
+    type Init = In<IcoInit>;
     type Handle = InOut<IcoAction, IcoEvent>;
     type Others = ();
     type Reply = ();
@@ -166,30 +167,30 @@ impl Metadata for CrowdsaleMetadata {
 ```
 To display the full contract state information, the `state()` function is used:
 
-```rust
+```rust title="crowdsale/src/lib.rs"
 #[no_mangle]
-extern "C" fn state() {
-    reply(common_state()).expect(
-        "Failed to encode or reply with `<ContractMetadata as Metadata>::State` from `state()`",
-    );
+extern fn state() {
+    let staking = unsafe { ICO_CONTRACT.take().expect("Unexpected error in taking state") };
+    msg::reply::<State>(staking.into(), 0)
+        .expect("Failed to encode or reply with `State` from `state()`");
 }
 ```
 To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `State` state. For example - [gear-foundation/dapps/crowdsale/state](https://github.com/gear-foundation/dapps/tree/master/contracts/crowdsale/state):
 
-```rust
-#[metawasm]
-pub trait Metawasm {
-    type State = crowdsale_io::State;
+```rust title="crowdsale/state/src/lib.rs"
+#[gmeta::metawasm]
+pub mod metafns {
+    pub type State = crowdsale_io::State;
 
-    fn current_price(state: Self::State) -> u128 {
+    pub fn current_price(state: State) -> u128 {
         state.get_current_price()
     }
 
-    fn tokens_left(state: Self::State) -> u128 {
+    pub fn tokens_left(state: State) -> u128 {
         state.get_balance()
     }
 
-    fn balance_of(address: ActorId, state: Self::State) -> u128 {
+    pub fn balance_of(state: State, address: ActorId) -> u128 {
         state.balance_of(&address)
     }
 }

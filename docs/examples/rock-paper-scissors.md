@@ -20,7 +20,7 @@ Anyone can easily create their own decentralized game application and run it on 
 
 First of all someone(admin) should deploy a "Rock Paper Scissors Lizard spock" program with a set of game parameters.
 
-```rust
+```rust title="rock-paper-scissors/io/src/lib.rs"
 pub struct GameConfig {
     pub bet_size: u128,
     pub players_count_limit: u8,
@@ -86,12 +86,73 @@ When the game ends, a new game starts immediately with the new config that was s
 
 ### Actions
 
-```rust
+```rust title="rock-paper-scissors/io/src/lib.rs"
 pub enum Action {
+    /// Registers a player for the game.
+    /// Player must send value to be registered
+    ///
+    /// # Requirements:
+    /// * Game is not in progress yet. E.g. the `GameStage` must be `GameStage::Preparation`
+    /// * `msg::value()` is greater or equal to `bet_size` in the config(refund will return to user).
+    /// * Player not registred yet.
+    /// * Lobby is not full.
+    ///
+    /// On success replies `Event::PlayerRegistred`.
     Register,
+
+    /// Submits player's move to the program in encrypted form.
+    /// Player can't change his move after it.
+    ///
+    /// # Arguments:
+    /// * `Vec<u8>`: is the binary 256-bit blake2b hash of move("0" or "1" or "2" or "3" or "4") + "password".
+    ///
+    /// # Requirements:
+    /// * The `GameStage` must be `GameStage::InProgress(StageDesciption)` where `StageDescription::anticipated_players` must contains `msg::source()`
+    ///
+    /// On success replies `Event::SuccessfulReveal(RevealResult)` where `RevealResult` will correspond to the situation after this reveal.
     MakeMove(Vec<u8>),
+
+    /// Reveals the move of the player, with which players must confirm their moves.
+    /// In this step the program validates that the hash submitted during the moves stage is equal
+    /// to a hashed open string and save this move(first character from string) to determine the winners.
+    ///
+    /// # Arguments:
+    /// * `Vec<u8>`: is the binary move("0" or "1" or "2" or "3" or "4") + "password" that should be equal to binary that was sent in `MakeMove(Vec<u8>)` without hashing.
+    ///
+    /// # Requirements:
+    /// * The hashed(by program) `Reveal` binary must be equal to this round `MakeMove` binary.
+    /// * The `GameStage` must be `GameStage::Reveal(StageDesciption)` where `StageDescription::anticipated_players` must contains `msg::source()`
+    ///
+    /// On success replies `Event::SuccessfulMove(ActorId)` where `ActorId` is the moved player's address.
     Reveal(Vec<u8>),
+
+    /// Changes the game config of the next game.
+    /// When the current game ends, this config will be applied.
+    ///
+    /// # Arguments:
+    /// * `GameConfig`: is the config that will be applied to the next game.
+    ///
+    /// # Requirements:
+    /// * The `msg::source()` must be the owner of the program.
+    /// * `players_count_limit` of the `GameConfig` must be greater than 1
+    /// * `entry_timeout` of the `GameConfig` must be greater than 5000(5 sec)
+    /// * `move_timeout` of the `GameConfig` must be greater than 5000(5 sec)
+    /// * `reveal_timeout` of the `GameConfig` must be greater than 5000(5 sec)
+    ///
+    /// On success replies `Event::GameConfigChanged`.
     ChangeNextGameConfig(GameConfig),
+
+    /// Stops the game.
+    /// This action can be used, for example, to change the configuration of the game,
+    /// or if the players have gone on strike and do not want to continue playing,
+    /// or if the game has gone on for a long time.
+    /// When the admin stops the game, all funds are distributed among the players remaining in the game.
+    /// If the game is in the registration stage, bets will be returned to the entire lobby.
+    ///
+    /// # Requirements:
+    /// * The `msg::source()` must be the owner of the program.
+    ///
+    /// On success replies `Event::GameWasStopped(BTreeSet<ActorId>)` where inside are the players who got the money.
     StopGame,
 }
 ```
@@ -104,15 +165,16 @@ pub enum Action {
 
 ### Events
 
-```rust
+```rust title="rock-paper-scissors/io/src/lib.rs"
 pub enum Event {
-    PlayerRegistred,
+    PlayerRegistered,
     SuccessfulMove(ActorId),
     SuccessfulReveal(RevealResult),
     GameConfigChanged,
     GameStopped(BTreeSet<ActorId>),
 }
-
+```
+```rust title="rock-paper-scissors/io/src/lib.rs"
 pub enum RevealResult {
     Continue,
     NextRoundStarted { players: BTreeSet<ActorId> },
@@ -129,12 +191,12 @@ pub enum RevealResult {
 ### Programm metadata and state
 Metadata interface description:
 
-```rust
+```rust title="rock-paper-scissors/io/src/lib.rs"
 pub struct ContractMetadata;
 
 impl Metadata for ContractMetadata {
-    type Init = ();
-    type Handle = ();
+    type Init = In<GameConfig>;
+    type Handle = InOut<Action, Event>;
     type Reply = ();
     type Others = ();
     type Signal = ();
@@ -143,34 +205,34 @@ impl Metadata for ContractMetadata {
 ```
 To display the full contract state information, the `state()` function is used:
 
-```rust
+```rust title="rock-paper-scissors/src/lib.rs"
 #[no_mangle]
-extern "C" fn state() {
-    reply(common_state())
-        .expect("Failed to encode or reply with `<AppMetadata as Metadata>::State` from `state()`");
+extern fn state() {
+    let game = unsafe { RPS_GAME.take().expect("Unexpected error in taking state") };
+    msg::reply::<ContractState>(game.into(), 0)
+        .expect("Failed to encode or reply with `ContractState` from `state()`");
 }
 ```
 To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `ContractState` state. For example - [rock-paper-scissors/state](https://github.com/gear-foundation/dapps/tree/master/contracts/rock-paper-scissors/state):
 
-```rust
+```rust title="rock-paper-scissors/state/src/lib.rs"
+#[gmeta::metawasm]
+pub mod metafns {
+    pub type State = ContractState;
 
-#[metawasm]
-pub trait Metawasm {
-    type State = ContractState;
-
-    fn config(state: Self::State) -> GameConfig {
+    pub fn config(state: State) -> GameConfig {
         state.game_config
     }
 
-    fn lobby_list(state: Self::State) -> Vec<ActorId> {
+    pub fn lobby_list(state: State) -> Vec<ActorId> {
         state.lobby
     }
 
-    fn game_stage(state: Self::State) -> GameStage {
+    pub fn game_stage(state: State) -> GameStage {
         state.stage
     }
 
-    fn current_stage_start_timestamp(state: Self::State) -> u64 {
+    pub fn current_stage_start_timestamp(state: State) -> u64 {
         state.current_stage_start_timestamp
     }
 }

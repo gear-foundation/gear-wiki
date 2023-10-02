@@ -95,25 +95,16 @@ This article explains the programming interface, data structure, basic functions
 <!-- You can watch a video on how to get the NFT Marketplace application up and running and its capabilities here: **https://youtu.be/4suveOT3O-Y**.
 -->
 
-To use the hashmap you should include `hashbrown` package into your *Cargo.toml* file:
-```toml
-[dependencies]
-# ...
-hashbrown = "0.13.1"
-```
-
 ## Logic
 The contract state:
-```rust
-use hashbrown::{HashMap, HashSet};
-
+```rust title="nft-marketplace/io/src/lib.rs"
 pub struct Market {
     pub admin_id: ActorId,
     pub treasury_id: ActorId,
-    pub treasury_fee: u128,
-    pub items: HashMap<ContractAndTokenId, Item>,
-    pub approved_nft_contracts: HashSet<ActorId>,
-    pub approved_ft_contracts: HashSet<ActorId>,
+    pub treasury_fee: u16,
+    pub items: BTreeMap<(ContractId, TokenId), Item>,
+    pub approved_nft_contracts: BTreeSet<ActorId>,
+    pub approved_ft_contracts: BTreeSet<ActorId>,
     pub tx_id: TransactionId,
 }
 ```
@@ -130,8 +121,9 @@ The marketplace contract is initialized with the following fields;
 
 
 The marketplace item has the following struct:
-```rust
+```rust title="nft-marketplace/io/src/lib.rs"
 pub struct Item {
+    pub token_id: TokenId,
     pub owner: ActorId,
     pub ft_contract_id: Option<ContractId>,
     pub price: Option<Price>,
@@ -140,6 +132,7 @@ pub struct Item {
     pub tx: Option<(TransactionId, MarketTx)>,
 }
 ```
+- `token_id` is the ID of the NFT within its contract.
 - `owner` - an item owner;
 - `ft_contract_id` - a contract of fungible tokens for which that item can be bought. If that field is `None` then the item is on sale for native Gear value;
 - `price` - the item price. `None` field means that the item is not on the sale;
@@ -149,7 +142,7 @@ pub struct Item {
 
 `MarketTx` is an enum of possible transactions that can occur with NFT:
 
-```rust
+```rust title="nft-marketplace/io/src/lib.rs"
 #[derive(Debug, Encode, Decode, TypeInfo, Clone, PartialEq, Eq)]
 pub enum MarketTx {
     CreateAuction,
@@ -179,7 +172,7 @@ pub enum MarketTx {
 
 To list NFT on the marketplace or modify the terms of sale send the following message:
 
-```rust
+```rust title="nft-marketplace/io/src/lib.rs"
 /// Adds data on market item.
 /// If the item of that NFT does not exist on the marketplace then it will be listed.
 /// If the item exists then that action is used to change the price or suspend the sale.
@@ -205,7 +198,7 @@ AddMarketData {
 
 To buy NFT send the following message:
 
-```rust
+```rust title="nft-marketplace/io/src/lib.rs"
 /// Sells the NFT.
 ///
 /// # Requirements:
@@ -228,7 +221,7 @@ BuyItem {
 The marketplace contract includes the *English auction*. *English auction* is an open auction at an increasing price, where participants openly bid against each other, with each subsequent bid being greater than the previous one.
 
 The auction has the following struct:
-```rust
+```rust title="nft-marketplace/io/src/lib.rs"
 pub struct Auction {
     pub bid_period: u64,
     pub started_at: u64,
@@ -245,7 +238,7 @@ pub struct Auction {
 
 The auction is started with the following message:
 
-```rust
+```rust title="nft-marketplace/io/src/lib.rs"
 /// Creates an auction for selected item.
 /// If the NFT item doesn't exist on the marketplace then it will be listed
 ///
@@ -272,7 +265,7 @@ CreateAuction {
 ```
 
 To add a bid to the current auction send the following message:
-```rust
+```rust title="nft-marketplace/io/src/lib.rs"
 /// Adds a bid to an ongoing auction.
 ///
 /// # Requirements:
@@ -295,7 +288,7 @@ AddBid {
 
 If the auction period is over then anyone can send a message `SettleAuction` that will send the NFT to the winner and pay to the owner:
 
-```rust
+```rust title="nft-marketplace/io/src/lib.rs"
 /// Settles the auction.
 ///
 /// Requirements:
@@ -315,7 +308,7 @@ SettleAuction {
 
 To make an offer on the marketplace item send the following message:
 
-```rust
+```rust title="nft-marketplace/io/src/lib.rs"
 /// Adds a price offer to the item.
 ///
 /// Requirements:
@@ -335,13 +328,13 @@ AddOffer {
     /// the NFT id
     token_id: TokenId,
     /// the offer price
-    price: u128,
+    price: Price,
 },
 ```
 
 The item owner can accept the offer:
 
-```rust
+```rust title="nft-marketplace/io/src/lib.rs"
 /// Accepts an offer.
 ///
 /// Requirements:
@@ -365,7 +358,7 @@ AcceptOffer {
 
 The user who made the offer can also withdraw his tokens:
 
-```rust
+```rust title="nft-marketplace/io/src/lib.rs"
 /// Withdraws tokens.
 ///
 /// Requirements:
@@ -393,7 +386,7 @@ The `market` contract interacts with `fungible` and `non-fungible` token contrac
 
 Metadata interface description:
 
-```rust
+```rust title="nft-marketplace/io/src/lib.rs"
 pub struct MarketMetadata;
 
 impl Metadata for MarketMetadata {
@@ -408,33 +401,27 @@ impl Metadata for MarketMetadata {
 
 To display the full contract state information, the `state()` function is used:
 
-```rust
+```rust title="nft-marketplace/src/lib.rs"
 #[no_mangle]
-extern "C" fn state() {
-    msg::reply(
-        unsafe {
-            let market = MARKET.as_ref().expect("Uninitialized market state");
-            &(*market).clone()
-        },
-        0,
-    )
-    .expect("Failed to share state");
+extern fn state() {
+    let market = unsafe { MARKET.as_ref().expect("Uninitialized market state") };
+    msg::reply(market, 0).expect("Failed to share state");
 }
 ```
 
 To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `Market` state. For example - [gear-foundation/dapps-nft-marketplace/state](https://github.com/gear-foundation/dapps/tree/master/contracts/nft-marketplace/state):
 
 ```rust title="nft-marketplace/state/src/lib.rs"
-#[metawasm]
-pub trait Metawasm {
-    type State = Market;
+#[gmeta::metawasm]
+pub mod metafns {
+    pub type State = Market;
 
-    fn all_items(state: Self::State) -> Vec<Item> {
-        ...
+    pub fn all_items(state: State) -> Vec<Item> {
+        nft_marketplace_io::all_items(state)
     }
 
-    fn item_info(args: ItemInfoArgs, state: Self::State) -> Item {
-        ...
+    pub fn item_info(state: State, args: ItemInfoArgs) -> Option<Item> {
+        nft_marketplace_io::item_info(state, &args)
     }
 }
 ```
