@@ -13,7 +13,7 @@ In the world of Web3, zero-knowledge cryptography is a game-changer. It empowers
 
 Machine learning (ML) is a branch of artificial intelligence that enables computers to learn and improve from data, optimizing their performance through iterative processes.
 
-In the context of ZKML, the prover can demonstrate the correctness of ML models without revealing any additional information. This means that the computations are kept secret from the verifier. It's important to note that this mainly involves creating zero-knowledge proofs for the inference step of an ML model, not the training phase. For instance, this technology could be used in the medical industry to apply an ML model to sensitive data, allowing users to learn the model's result without disclosing their input to third parties.
+In the context of ZKML, the prover can demonstrate the correctness of ML models outcome without revealing any additional information. This means that the computations are kept secret from the verifier. It's important to note that this mainly involves creating zero-knowledge proofs for the inference step of an ML model, not the training phase. For instance, this technology could be used in the medical industry to apply an ML model to sensitive data, allowing users to learn the model's result without disclosing their input to third parties.
 
 You can find comprehensive information about ZK and ML on the internet. This article focuses on an example of implementing a zero-knowledge proof application designed for Gear-powered blockchains like the [Vara Network](https://vara-network.io).
 
