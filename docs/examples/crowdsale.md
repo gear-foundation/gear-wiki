@@ -23,7 +23,7 @@ pub async fn transfer_tokens(
     from: &ActorId,
     to: &ActorId,
     amount_tokens: u128,
-) -> Result<(), ()> 
+) -> Result<(), ()>
 ```
 - `transaction_id` - identifier of the associated transaction
 - `from` is the sender's accounts
