@@ -19,7 +19,7 @@ You can find comprehensive information about ZK and ML on the internet. This art
 
 ## ZKML and Gear: A Perfect Match
 
-One of the main challenges in bringing ML to the blockchain world is the high computational cost. Many ML projects struggle to run directly on blockchains due to limited computational resources. When you combine the complex cryptographic operations and interactions of ZK with the extensive calculations of ML, it becomes clear that most blockchains face limitations in terms of transactions per second (TPS), which is a major hurdle for on-chain ML adoption.
+One of the main challenges in bringing ML to the blockchain world is the high computational cost. Many ML projects struggle to run directly on blockchains due to limited computational resources. When you combine the complex cryptographic operations and interactions of ZK with the extensive calculations of ML, it becomes clear that most blockchains face limitations in terms of transaction costs, which is a major hurdle for on-chain ML adoption.
 
 ZK proofs offer a solution to the computational challenges of ML. They allow for off-chain execution of complex computations while enabling the computation to be proven correct on-chain. ZK's efficiency in validation surpasses recomputation, but this advantage is typically limited to processing native transaction data on the blockchain.
 
