@@ -37,7 +37,7 @@ Keep in mind that this example is intended for educational purposes as a technol
 
 This implementation offers the capability to shift resource-intensive computations away from the blockchain while ensuring their integrity. It demonstrates the evaluation of the MNIST machine learning model as an illustrative example. This is accomplished by generating zero-knowledge proofs of computations and subsequently verifying them on-chain.
 
-The associated smart contract allows only one verification session per client. If a client wishes to discard the current verification and submit new inputs, they have the option to execute a purge verification.
+The associated smart contract allows only one verification session per client. If a client wishes to discard the current verification and submit new inputs, they have the option to send a transaction to purge in-progress verification.
 
 ### Workflow
 
