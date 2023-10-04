@@ -19,11 +19,16 @@ The article explains the programming interface, data structure, basic functions,
 
 ```rust title="dutch-auction/io/src/auction.rs"
 pub enum Action {
-    Buy,
+    /// Creates auction
     Create(CreateConfig),
+    /// Buy current NFT
+    Buy,
+    /// Stop Auction
     ForceStop,
+    /// Reward gas to NFT seller
     Reward,
 }
+
 ```
 
 - `Buy` is an action to buy an GNFT token by current price

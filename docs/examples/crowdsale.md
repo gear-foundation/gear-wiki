@@ -23,7 +23,7 @@ pub async fn transfer_tokens(
     from: &ActorId,
     to: &ActorId,
     amount_tokens: u128,
-) -> Result<(), ()>
+) -> Result<(), ()> 
 ```
 - `transaction_id` - identifier of the associated transaction
 - `from` is the sender's accounts
@@ -97,9 +97,9 @@ where:
 ```rust title="crowdsale/io/src/lib.rs"
 pub struct IcoState {
     pub ico_started: bool, // true if ICO was started
-    pub start_time: u64, // time when ICO was started, otherwise is zero
-    pub duration: u64, // duration of the ICO, otherwise is zero
-    pub ico_ended: bool, // true if ICO was ended
+    pub start_time: u64,   // time when ICO was started, otherwise is zero
+    pub duration: u64,     // duration of the ICO, otherwise is zero
+    pub ico_ended: bool,   // true if ICO was ended
 }
 ```
 - `start_price` - initial price of tokens
@@ -170,7 +170,11 @@ To display the full contract state information, the `state()` function is used:
 ```rust title="crowdsale/src/lib.rs"
 #[no_mangle]
 extern fn state() {
-    let staking = unsafe { ICO_CONTRACT.take().expect("Unexpected error in taking state") };
+    let staking = unsafe {
+        ICO_CONTRACT
+            .take()
+            .expect("Unexpected error in taking state")
+    };
     msg::reply::<State>(staking.into(), 0)
         .expect("Failed to encode or reply with `State` from `state()`");
 }
@@ -194,7 +198,6 @@ pub mod metafns {
         state.balance_of(&address)
     }
 }
-
 ```
 
 ## Conclusion
