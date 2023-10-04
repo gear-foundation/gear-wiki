@@ -166,7 +166,7 @@ Program makes all preparations during initialization.
 2. The program tries to find the maximum double through users. If it doesn’t, it adds one tile to each user and repeats this step until double has been found.
 3. Program chooses the double and selects the first user.
 
-```rust title="tequila-train/src/contract.rs"
+```rust title="tequila-train/src/lib.rs"
 #[no_mangle]
 extern fn init() {
     let maybe_limit: Option<u64> = msg::load().expect("Unexpected invalid payload.");
@@ -186,7 +186,7 @@ Every player move is the command message sent to the program:
 1. Pass: skip the turn if there is no tile to place.
 2. Turn: place selected tile to the selected track. Additionally, in certain circumstances the player may get their train back.
 
-```rust title="tequila-train/io/src/contract.rs"
+```rust title="tequila-train/io/src/lib.rs"
 pub enum Command {
     Skip,
     Place {
@@ -208,7 +208,7 @@ pub enum Command {
 
 User interface gets the program state after every action and renders it in the browser.
 
-```rust title="tequila-train/io/src/contract.rs"
+```rust title="tequila-train/io/src/lib.rs"
 /// The whole game state
 pub struct GameState {
     pub players: Vec<(ActorId, String)>,
@@ -222,21 +222,21 @@ pub struct GameState {
     pub state: State,
 }
 ```
-```rust title="tequila-train/io/src/contract.rs"
+```rust title="tequila-train/io/src/lib.rs"
 /// Information about the player's track
 pub struct TrackData {
     pub tiles: Vec<Tile>,
     pub has_train: bool,
 }
 ```
-```rust title="tequila-train/io/src/contract.rs"
+```rust title="tequila-train/io/src/lib.rs"
 /// Domino tile
 pub struct Tile {
     pub left: Face,
     pub right: Face,
 }
 ```
-```rust title="tequila-train/io/src/contract.rs"
+```rust title="tequila-train/io/src/lib.rs"
 /// Tile's face (number of dots)
 pub enum Face {
     Zero,
@@ -254,7 +254,7 @@ pub enum Face {
     Twelve,
 }
 ```
-```rust title="tequila-train/io/src/contract.rs"
+```rust title="tequila-train/io/src/lib.rs"
 /// The state of the game
 pub enum State {
     Playing,

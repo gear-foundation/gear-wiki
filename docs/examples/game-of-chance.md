@@ -59,7 +59,9 @@ During initialization, the game administrator is assigned. The administrator has
 ///
 /// # Requirements
 /// - `admin` mustn't be [`ActorId::zero()`].
-#[derive(Debug, Default, Encode, Decode, PartialEq, Eq, PartialOrd, Ord, Clone, Copy, TypeInfo, Hash)]
+#[derive(
+    Debug, Default, Encode, Decode, PartialEq, Eq, PartialOrd, Ord, Clone, Copy, TypeInfo, Hash,
+)]
 #[codec(crate = gstd::codec)]
 #[scale_info(crate = gstd::scale_info)]
 pub struct InitGOC {

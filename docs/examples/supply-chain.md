@@ -222,7 +222,9 @@ pub struct Action {
 /// cache (see [`CachedAction`]).
 /// - The cache memory has a limit, so when it's reached every oldest cached
 /// action is replaced with a new one.
-#[derive(Default, Encode, Decode, TypeInfo, Debug, PartialEq, Eq, PartialOrd, Ord, Clone, Copy, Hash)]
+#[derive(
+    Default, Encode, Decode, TypeInfo, Debug, PartialEq, Eq, PartialOrd, Ord, Clone, Copy, Hash,
+)]
 #[codec(crate = gstd::codec)]
 #[scale_info(crate = gstd::scale_info)]
 pub enum TransactionKind {
@@ -586,9 +588,8 @@ To display the full contract state information, the `state()` function is used:
 ```rust title="supply-chain/src/lib.rs"
 #[no_mangle]
 extern fn state() {
-    let (contract, _) = unsafe { STATE.take().expect("Unexpected error in taking state") };
-    msg::reply::<State>(contract.into(), 0)
-        .expect("Failed to encode or reply with `State` from `state()`");
+    let state: State = generate_state();
+    msg::reply(state, 0).expect("Failed to encode or reply with `State` from `state()`");
 }
 ```
 To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `State` struct. For example - [supply-chain/state](https://github.com/gear-foundation/dapps/tree/master/contracts/supply-chain/state):

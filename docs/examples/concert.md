@@ -20,7 +20,6 @@ The idea is simple - all the internal token interactions are handled using the [
 ### Events
 
 ```rust title="concert/io/src/lib.rs"
-#[derive(Debug, Encode, Decode, TypeInfo)]
 pub enum ConcertEvent {
     Creation {
         creator: ActorId,
@@ -44,13 +43,13 @@ pub enum ConcertEvent {
 /// `number_of_tickets` - is the amount of FT minted later.
 /// `date` - is the date of the concert holding.
 fn create_concert(
-        &mut self,
-        name: String,
-        description: String,
-        creator: ActorId,
-        number_of_tickets: u128,
-        date: u128,
-){
+    &mut self,
+    name: String,
+    description: String,
+    creator: ActorId,
+    number_of_tickets: u128,
+    date: u128,
+) {
 // ...
 ```
 - `name` - is the name of an upcoming concert.
@@ -61,7 +60,7 @@ fn create_concert(
 
 #### Buy tickets
 ```rust title="concert/src/lib.rs"
-async fn buy_tickets(&mut self, amount: u128, mtd: Vec<Option<TokenMetadata>>){
+async fn buy_tickets(&mut self, amount: u128, mtd: Vec<Option<TokenMetadata>>) {
 // ...
 ```
 - `amount` - is the number of tickets one is trying to purchase.
@@ -69,7 +68,7 @@ async fn buy_tickets(&mut self, amount: u128, mtd: Vec<Option<TokenMetadata>>){
 
 #### Hold a concert
 ```rust title="concert/src/lib.rs"
-async fn hold_concert(&mut self){
+async fn hold_concert(&mut self) {
 // ...
 ```
 >Hold a concert, turning of the FT (aka tickets) into NFTs; the hold a concert functionality is only available to the creator
@@ -86,7 +85,6 @@ pub struct InitConcert {
 
 ### `Action` Structure
 ```rust title="concert/io/src/lib.rs"
-#[derive(Debug, Encode, Decode, TypeInfo)]
 pub enum ConcertAction {
     Create {
         creator: ActorId,

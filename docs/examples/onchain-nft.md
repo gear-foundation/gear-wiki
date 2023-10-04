@@ -196,7 +196,6 @@ pub struct TokenURI {
 The `TokenMetadata` is also defined in the gear NFT library:
 
 ```rust title="gear-lib-old/src/non_fungible_token/token.rs" 
-#[derive(Debug, Default, Encode, Decode, Clone, TypeInfo)]
 pub struct TokenMetadata {
     // ex. "CryptoKitty #100"
     pub name: String,

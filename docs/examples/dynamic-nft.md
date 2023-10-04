@@ -43,7 +43,6 @@ pub struct DynamicNft {
 In all other cases, everything also corresponds to the usual [non-fungible-token](gnft-721) contract, except additional specific actions:
 
 ```rust title="dynamic-nft/io/src/lib.rs"
-#[derive(Debug, Encode, Decode, TypeInfo)]
 pub enum NFTAction {
     // ... like a usual NFT contract
     UpdateDynamicData {
@@ -55,7 +54,6 @@ pub enum NFTAction {
 And features specific events:
 
 ```rust title="dynamic-nft/io/src/lib.rs"
-#[derive(Clone, Debug, Encode, Decode, TypeInfo)]
 pub enum NFTEvent {
     // ... like a usual NFT contract
     Updated {
@@ -90,57 +88,71 @@ pub struct AutoChangedNft {
 Next we will change the `handle()` function, we will add the business logic we need there:
 
 ```rust title="auto-changed-nft/src/lib.rs"
-unsafe extern "C" fn handle() {
+#[no_mangle]
+unsafe extern fn handle() {
     /// ...
-        NFTAction::Update {
+    NFTAction::Update {
+        rest_updates_count,
+        token_ids,
+    } => {
+        gstd::debug!(
+            "Update rest_updates_count: {}, token_ids: {:?}",
             rest_updates_count,
-            token_ids,
-        } => {
-            nft.rest_updates_count = rest_updates_count - 1;
-            nft.update_media(&token_ids);
-            if nft.rest_updates_count == 0 {
-                return;
-            }
-            let action = NFTAction::Update {
-                rest_updates_count: nft.rest_updates_count,
-                token_ids,
-            };
-            let gas_available = exec::gas_available();
-
-            if gas_available <= GAS_FOR_UPDATE {
-                let reservations = unsafe { &mut RESERVATION };
-                let reservation_id = reservations.pop().expect("Need more gas");
-                send_delayed_from_reservation(
-                    reservation_id,
-                    exec::program_id(),
-                    action,
-                    0,
-                    nft.update_period,
-                )
-                .expect("Can't send delayed from reservation");
-            } else {
-                send_delayed(exec::program_id(), action, 0, nft.update_period)
-                    .expect("Can't send delayed");
-            }
+            token_ids
+        );
+        nft.rest_updates_count = rest_updates_count - 1;
+        nft.update_media(&token_ids);
+        if nft.rest_updates_count == 0 {
+            return;
         }
-        NFTAction::StartAutoChanging {
-            updates_count,
-            update_period,
+        let action = NFTAction::Update {
+            rest_updates_count: nft.rest_updates_count,
             token_ids,
-        } => {
-            nft.rest_updates_count = updates_count;
-            nft.update_period = update_period;
-
-            nft.update_media(&token_ids);
-
-            let payload = NFTAction::Update {
-                rest_updates_count: updates_count,
-                token_ids: token_ids.clone(),
-            };
-            let message_id = send_delayed(exec::program_id(), &payload, 0, update_period)
+        };
+        let gas_available = exec::gas_available();
+        gstd::debug!("Update. gas_available: {}", gas_available);
+        if gas_available <= GAS_FOR_UPDATE {
+            let reservations = unsafe { &mut RESERVATION };
+            let reservation_id = reservations.pop().expect("Need more gas");
+            send_delayed_from_reservation(
+                reservation_id,
+                exec::program_id(),
+                action,
+                0,
+                nft.update_period,
+            )
+            .expect("Can't send delayed from reservation");
+        } else {
+            send_delayed(exec::program_id(), action, 0, nft.update_period)
                 .expect("Can't send delayed");
-            nft.reserve_gas();
         }
+    }
+    NFTAction::StartAutoChanging {
+        updates_count,
+        update_period,
+        token_ids,
+    } => {
+        nft.rest_updates_count = updates_count;
+        nft.update_period = update_period;
+
+        nft.update_media(&token_ids);
+
+        let payload = NFTAction::Update {
+            rest_updates_count: updates_count,
+            token_ids: token_ids.clone(),
+        };
+        let message_id = send_delayed(exec::program_id(), &payload, 0, update_period)
+            .expect("Can't send delayed");
+        nft.reserve_gas();
+        gstd::debug!(
+            "send_delayed payload: message_id: {:?}, {:?}, update_period: {} token_ids: {:?}",
+            message_id,
+            payload,
+            update_period,
+            token_ids
+        );
+    }
+};
 
 ```
 
