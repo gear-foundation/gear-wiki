@@ -30,7 +30,7 @@ When you combine this technology with the high-speed, low-cost transactions of G
 This article presents a proof-of-concept implementation of a zero-knowledge proof application designed for Gear-powered blockchains. You can access the source code on [GitHub](https://github.com/gear-foundation/external-zkml-actor).
 
 :::note
-Keep in mind that this example is intended for educational purposes as a technology demonstration. It may contain inaccuracies, suboptimal optimizations, and security vulnerabilities. The solutions used are not recommended for production use.
+Keep in mind that this example is intended for educational purposes as a technology demonstration. For production use, it is recommended to introduce certain optimizations addressing potential performance and security vulnerability issues.
 :::
 
 ### How It Works
