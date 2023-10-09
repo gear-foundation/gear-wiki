@@ -40,4 +40,4 @@ let massage = await api.message.send({
 }, meta);
 ```
 
-This feature is used in our [Battleship Game](/examples/battleship.md), where users have the ability to send messages to a program using a voucher without spending their gas.
+An example of using vouchers is shown in the [Battleship Game](/examples/battleship.md) game. Users without tokens on their balance can make moves by sending messages to a program using a voucher.
