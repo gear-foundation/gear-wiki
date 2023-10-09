@@ -39,3 +39,5 @@ let massage = await api.message.send({
   account: accountId,
 }, meta);
 ```
+
+An example of using vouchers is shown in the [Battleship](/examples/battleship.md) game. Users without tokens on their balance can make moves by sending messages to a program using a voucher.

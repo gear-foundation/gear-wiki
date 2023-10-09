@@ -27,7 +27,7 @@ This opens up a wide range of possibilities for the implementation of functional
 
 Gear Protocol's Payless Transactions feature introduces a groundbreaking concept to the world of Web3, revolutionizing communication within Gear-powered networks and increasing the adoption of decentralized applications, making their ease of use closer to Web2 services and applications.
 
-This innovative feature empowers actors to issue vouchers that enable specific users to send messages to designated programs without incurring gas fees. This paradigm-shifting approach fosters a sponsorship-like environment for users, transforming the way interactions take place in the Web3 ecosystem.
+This innovative feature empowers actors to issue [vouchers](/api/vouchers.md) that enable specific users to send messages to designated programs without incurring gas fees. This paradigm-shifting approach fosters a sponsorship-like environment for users, transforming the way interactions take place in the Web3 ecosystem. An example of using vouchers is shown in the [Battleship](/examples/battleship.md) game. Users without tokens on their balance can make moves by sending messages to a program using a voucher.
 
 ### Understanding Payless Transactions
 

@@ -208,6 +208,7 @@ const filePaths = [
   'supply-chain.md',
   'tequila-train.md',
   'varatube.md',
+  'battleship.md'
 ];
 
 main(filePaths);

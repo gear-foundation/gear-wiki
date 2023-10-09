@@ -39,7 +39,7 @@ Source code can be found in the [GitHub](https://github.com/gear-foundation/dapp
 Clone the repo and enter to the project directory:
 
 ```shell
-git clone https://github.com/gear-foundation/dapps
+git clone https://github.com/gear-foundation/dapps.git
 cd contracts/tequila-train
 ```
 
@@ -77,13 +77,13 @@ cd contracts/tequila-train
     make contracts
     ```
 
-4. Find the program binary `tequila_train.opt.wasm` in `contracts/target/wasm32-unknown-unknown/release` directory, and the meta file `tequila_train.meta.txt` in `contracts` directory.
+4. Find the program binary `tequila_train.opt.wasm` and `tequila_train.meta.txt` in `contracts/target/wasm32-unknown-unknown/release`.
 
 ### Upload program and meta to the network
 
 1. Go to https://idea.gear-tech.io/ and choose **Vara Network Testnet** node (`wss://testnet.vara-network.io`).
 
-2. Upload the program binary Wasm `contracts/target/wasm32-unknown-unknown/release/tequila_train.opt.wasm` and the meta file `contracts/tequila_train.meta.txt`.
+2. Upload the program binary Wasm `contracts/target/wasm32-unknown-unknown/release/tequila_train.opt.wasm` and the meta file `contracts/target/wasm32-unknown-unknown/release/tequila_train.meta.txt`.
 
 3. Use the list of players' IDs as a payload when initializing the program. For example, if you want to play on behalf of **Alice** (`0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d`) and **Bob** (`0x8eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a48`), you are to pass the following init payload:
 
