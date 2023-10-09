@@ -5,15 +5,17 @@ sidebar_position: 27
 
 # Battleship Game
 
-Battleship is a strategic board game in which two players compete to sink an opponent's fleet that is hidden from their view on the playing field. Players place their ships on a grid and then take turns shooting at the squares on the opponent's field to try to find and sink his ships. The goal of the game is to be the first to destroy all of your opponent's ships.
+![battleship](./img/battleship.png)
 
-The game of Battleship requires logical thinking, strategy and luck. Players must place their ships so that they are well hidden from the enemy, with each ship having a different length, which adds variety to the tactics of the game.
+Battleship is a strategic board game in which two players compete to sink an opponent's fleet hidden from their view on the playing field. Players place their ships on a grid and then take turns shooting at squares on the opponent's field to locate and sink their ships. The goal of the game is to be the first to destroy all of your opponent's ships.
 
-Battleship is a popular game, only in our case it works **completely on the chain**. It has no backend or any centralized components, the user interface interacts directly with the smart contract uploaded in the Vara Network.
+The game of Battleship requires logical thinking, strategy, and luck. Players must position their ships to remain well hidden from the enemy, with each ship having a different length, adding variety to the tactics of the game.
 
-Anyone can easily create their own decentralized gaming application and run it on the Gear network. To do this, we have created our own version of the game "Battleship", which you can play against a bot contract, where the winner can be determined by a tense competition. The source code is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/battleship ). This article describes the program interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios.
+"Battleship is a popular game that operates **entirely on-chain**. It has no backend or centralized components; instead, the user interface interacts directly with the smart contract uploaded to the Vara Network.
 
-> **Important notice**: Our implementation is based on the interaction of two contracts: the main game contract and the bot contract that users will interact with during the game, so to successfully load the game into our [Vara Network Testnet](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Ftestnet.vara.rs), it is imperative to begin by uploading the bot program. Subsequently, during the initialization phase of the main game contract, specifying the bot contract's address is a crucial step.
+The source code is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/battleship ). This article describes the program interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios.
+
+> **Important notice**: The implementation is based on the interaction of two contracts: the main game contract and the bot contract that users will interact with during the game. To successfully load the game into the [Vara Network Testnet](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Ftestnet.vara.rs), it is imperative to begin by uploading the bot program. Subsequently, during the initialization phase of the main game contract, specifying the bot contract's address is a crucial step.
 
 ## Implementation details
 
@@ -174,7 +176,7 @@ fn player_move(&mut self, step: u8) {
 ```
 
 Just as in the case of starting a game, we get a reply message from the bot about its move in `handle_reply`. 
-In summary, the interaction between the two contracts is reduced to the ability to receive response messages in a separate function, denoted as `handle_reply()`. The whole implementation of our function looks as follows: 
+In summary, the interaction between the two contracts is reduced to the ability to receive response messages in a separate function, denoted as `handle_reply()`. The whole implementation of the function looks as follows: 
 
 ```rust title="battleship/src/contract.rs"
 #[no_mangle]
