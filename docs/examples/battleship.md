@@ -9,67 +9,17 @@ Battleship is a strategic board game in which two players compete to sink an opp
 
 The game of Battleship requires logical thinking, strategy and luck. Players must place their ships so that they are well hidden from the enemy, with each ship having a different length, which adds variety to the tactics of the game.
 
-Battleship is a popular game, only in our case it works ** completely on the chain **. It has no backend or any centralized components, the user interface interacts directly with the smart contract uploaded in the Gear Network.
+Battleship is a popular game, only in our case it works **completely on the chain**. It has no backend or any centralized components, the user interface interacts directly with the smart contract uploaded in the Vara Network.
 
 Anyone can easily create their own decentralized gaming application and run it on the Gear network. To do this, we have created our own version of the game "Battleship", which you can play against a bot contract, where the winner can be determined by a tense competition. The source code is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/battleship ). This article describes the program interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios.
 
-## How to run
-
-Source code can be found in the [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/battleship).
-
-Clone the repo and enter to the project directory:
-
-```shell
-git clone https://github.com/gear-foundation/dapps.git
-cd contracts/battleship
-```
-
-### ⚒️ Build program
-
-1. Install Rust on your system using the following command:
-
-    ```shell
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-    ```
-
-2. Add specific toolchains using these commands:
-
-    ```shell
-    rustup toolchain add nightly
-    rustup target add wasm32-unknown-unknown --toolchain nightly
-    ```
-
-3. Build the contract using the following command:
-
-    ```shell
-    cargo b -r -p "battleship*"
-    ```
-
-    You can check out our [README.md](https://github.com/gear-foundation/dapps/tree/master/contracts/battleship/README.md), which describes how to build and run contract tests.
-
-
-4. Find the program binary `battleship.opt.wasm`, `battleship_bot.opt.wasm` and `battleship.meta.txt` in `contracts/target/wasm32-unknown-unknown/release`.
-
-### 🏗️ Upload Сode
-
-1. Go to https://idea.gear-tech.io/ and choose **Vara Network Testnet** node (`wss://testnet.vara-network.io`).
-
-2. The first thing to do is ** Upload Code ** binary Wasm program file `contracts/target/wasm32-unknown-unknown/release/battleship_bot.opt.wasm`.
-
-3. Copy the bot-program ID after successful uploading.
-
-4. The second thing to do is ** Upload program ** binary Wasm program file `contracts/target/wasm32-unknown-unknown/release/battleship.opt.wasm` and the meta file `contracts/target/wasm32-unknown-unknown/release/battleship.meta.txt`, where you should specify the address of the bot program during initialization.
-
-5. Copy the program ID after successful uploading.
-
-### 🖥️ Run UI
-... #TODO
+> **Important notice**: Our implementation is based on the interaction of two contracts: the main game contract and the bot contract that users will interact with during the game, so to successfully load the game into our [Vara Network Testnet](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Ftestnet.vara.rs), it is imperative to begin by uploading the bot program. Subsequently, during the initialization phase of the main game contract, specifying the bot contract's address is a crucial step.
 
 ## Implementation details
 
 ### Battleship contract description
 
-The Battleship contract contains the following information
+The Battleship contract contains the following information:
 
 ```rust title="battleship/src/contract.rs"
 struct Battleship {
