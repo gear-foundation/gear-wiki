@@ -1,6 +1,6 @@
 ---
 sidebar_label: Battleship Game
-sidebar_position: 26
+sidebar_position: 27
 ---
 
 # Battleship Game

@@ -39,3 +39,5 @@ let massage = await api.message.send({
   account: accountId,
 }, meta);
 ```
+
+This feature is used in our [Battleship Game](https://wiki.gear-tech.io/docs/examples/battleship), where users have the ability to send messages to a program using a voucher without spending their gas.
