@@ -25,7 +25,11 @@ The source code is available on [GitHub](https://github.com/gear-foundation/dapp
 2. Upload the contract to the [Vara Network Testnet](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Ftestnet.vara.rs)
 > Start by uploading the bot contract, and then proceed to upload the main contract. More information about contract uploading can be found in [Getting Started](../getting-started-in-5-minutes/#deploy-your-smart-contract-to-the-testnet).
 
-3. ...
+3. Build and run user interface 
+> Example build and run commands in the [frontend app example](https://github.com/gear-foundation/dapps/tree/master/frontend/battleship).
+
+4. Build and run the backend to release vouchers as specified in the 
+> More information about this can be found in the [example](https://github.com/gear-foundation/dapps-battleship-backend).
 
 ## Implementation details
 
