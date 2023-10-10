@@ -20,16 +20,16 @@ The source code is available on [GitHub](https://github.com/gear-foundation/dapp
 ## How to run
 
 1. Build a contract
-> More information about this can be found in the [README](https://github.com/gear-foundation/dapps/tree/master/contracts/battleship) Battleship
+> Additional details regarding this matter can be located within the [README](https://github.com/gear-foundation/dapps/tree/master/contracts/battleship) directory of the contract.
 
 2. Upload the contract to the [Vara Network Testnet](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Ftestnet.vara.rs)
-> Start by uploading the bot contract, and then proceed to upload the main contract. More information about contract uploading can be found in [Getting Started](../getting-started-in-5-minutes/#deploy-your-smart-contract-to-the-testnet).
+> Initiate the process by uploading the bot contract, followed by the subsequent upload of the main contract. Further details regarding the process of contract uploading can be located within the [Getting Started](../getting-started-in-5-minutes/#deploy-your-smart-contract-to-the-testnet) section.
 
 3. Build and run user interface 
-> Example build and run commands in the [frontend app example](https://github.com/gear-foundation/dapps/tree/master/frontend/battleship).
+> More information about this can be found in the [README](https://github.com/gear-foundation/dapps/tree/master/frontend/battleship) directory of the frontend.
 
-4. Build and run the backend to release vouchers as specified in the 
-> More information about this can be found in the [example](https://github.com/gear-foundation/dapps-battleship-backend).
+4. Build and run the backend to release vouchers
+> Comprehensive instructions on the voucher execution process are provided within the [README](https://github.com/gear-foundation/dapps-battleship-backend). 
 
 ## Implementation details
 
