@@ -20,10 +20,10 @@ The source code is available on [GitHub](https://github.com/gear-foundation/dapp
 ## How to run
 
 1. Build a contract
-> More information about this can be found in [README](https://github.com/gear-foundation/dapps/tree/master/contracts/battleship) Battleship
+> More information about this can be found in the [README](https://github.com/gear-foundation/dapps/tree/master/contracts/battleship) Battleship
 
 2. Upload the contract to the [Vara Network Testnet](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Ftestnet.vara.rs)
-> Begin by uploading the bot contract and then proceed to upload the main contract. More information about contract uploading can be found in [Getting Started](../getting-started-in-5-minutes/#deploy-your-smart-contract-to-the-testnet).
+> Start by uploading the bot contract, and then proceed to upload the main contract. More information about contract uploading can be found in [Getting Started](../getting-started-in-5-minutes/#deploy-your-smart-contract-to-the-testnet).
 
 3. ...
 
