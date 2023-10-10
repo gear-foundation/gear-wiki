@@ -17,6 +17,20 @@ The source code is available on [GitHub](https://github.com/gear-foundation/dapp
 
 > **Important notice**: The implementation is based on the interaction of two contracts: the main game contract and the bot contract that users will interact with during the game. To successfully load the game into the [Vara Network Testnet](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Ftestnet.vara.rs), it is imperative to begin by uploading the bot program. Subsequently, during the initialization phase of the main game contract, specifying the bot contract's address is a crucial step.
 
+## How to run
+
+1. Build a contract
+> Additional details regarding this matter can be located within the [README](https://github.com/gear-foundation/dapps/tree/master/contracts/battleship) directory of the contract.
+
+2. Upload the contract to the [Vara Network Testnet](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Ftestnet.vara.rs)
+> Initiate the process by uploading the bot contract, followed by the subsequent upload of the main contract. Further details regarding the process of contract uploading can be located within the [Getting Started](../getting-started-in-5-minutes/#deploy-your-smart-contract-to-the-testnet) section.
+
+3. Build and run user interface 
+> More information about this can be found in the [README](https://github.com/gear-foundation/dapps/tree/master/frontend/battleship) directory of the frontend.
+
+4. Build and run the backend to release vouchers
+> Comprehensive instructions on the voucher execution process are provided within the [README](https://github.com/gear-foundation/dapps-battleship-backend). 
+
 ## Implementation details
 
 ### Battleship contract description
@@ -78,7 +92,7 @@ pub enum Entity {
 ```
 ### Initialization
 
-To initialize the game contract, it only needs to be passed the bot's contract address (we will discuss this contract a little later)
+To initialize the game contract, it only needs to be passed the bot's contract address (this contract will be discussed a little later)
 
 ```rust title="battleship/io/src/lib.rs"
 pub struct BattleshipInit {
@@ -135,7 +149,7 @@ fn start_game(&mut self, mut ships: Ships) {
     self.msg_id_to_game_id.insert(msg_id, msg_source);
     msg::reply(BattleshipReply::MessageSentToBot, 0).expect("Error in sending a reply");
 ```
-We store `msg_id` into the `msg_id_to_game_id` variable to use it in `handle_reply` (One of the message processing functions that Gear provides)
+The `msg_id` is stored in the `msg_id_to_game_id` variable to use it in `handle_reply` (One of the message processing functions that Gear provides)
 
 ```rust title="battleship/src/contract.rs"
 #[no_mangle]
@@ -153,7 +167,7 @@ extern fn handle_reply() {
         .expect("Unexpected: Game does not exist");
 ```
 
-With handle_reply we get response messages from the bot, and msg_id_to_game_id in turn helps us get a specific game to change its state.
+Using `handle_reply`, response messages from the bot are obtained, while `msg_id_to_game_id` facilitates the retrieval of a particular game for state modification.
 
 After the game starts, the function `BattleshipAction::Turn { step: u8 }` to make a move is available , where the number of the cell the player is going to shoot at is passed. The program performs a number of checks on the entered data and the game state in order to be able to make a move. If the checks are successful, the program changes the field states and changes the turn to the bot and sends `msg::send_with_gas` to the bot program for it to make its move.
 
@@ -175,7 +189,7 @@ fn player_move(&mut self, step: u8) {
     msg::reply(BattleshipReply::MessageSentToBot, 0).expect("Error in sending a reply");
 ```
 
-Just as in the case of starting a game, we get a reply message from the bot about its move in `handle_reply`. 
+Just as when starting a game, a reply message from the bot regarding its move is received in `handle_reply`.
 In summary, the interaction between the two contracts is reduced to the ability to receive response messages in a separate function, denoted as `handle_reply()`. The whole implementation of the function looks as follows: 
 
 ```rust title="battleship/src/contract.rs"
