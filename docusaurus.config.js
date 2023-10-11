@@ -27,6 +27,7 @@ module.exports = async function config() {
       colorMode: {
         defaultMode: 'dark'
       },
+      image: 'img/ogimage.jpg',
       navbar: {
         title: 'Gear Wiki',
         logo: {
