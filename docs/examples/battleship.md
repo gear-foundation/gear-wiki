@@ -11,7 +11,7 @@ Battleship is a strategic board game in which two players compete to sink an opp
 
 The game of Battleship requires logical thinking, strategy, and luck. Players must position their ships to remain well hidden from the enemy, with each ship having a different length, adding variety to the tactics of the game.
 
-"Battleship is a popular game that operates **entirely on-chain**. It has no backend or centralized components; instead, the user interface interacts directly with the smart contract uploaded to the Vara Network.
+"Battleship is a popular game that operates **entirely on-chain**. The primary game version lacks a backend or centralized components. Nevertheless, there is an option to enable [vouchers](../api/vouchers.md), permitting participation with zero tokens in the balance. However, this requires the activation of the backend (Instructions for voucher integration will be detailed in the article).
 
 The source code is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/battleship ). This article describes the program interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios.
 
@@ -28,7 +28,7 @@ The source code is available on [GitHub](https://github.com/gear-foundation/dapp
 3. Build and run user interface 
 > More information about this can be found in the [README](https://github.com/gear-foundation/dapps/tree/master/frontend/battleship) directory of the frontend.
 
-4. Build and run the backend to release vouchers
+4. **Optional**. Build and run the backend to release vouchers
 > Comprehensive instructions on the voucher execution process are provided within the [README](https://github.com/gear-foundation/dapps-battleship-backend). 
 
 ## Implementation details
