@@ -3,7 +3,7 @@ sidebar_label: Asynchronous Programming
 sidebar_position: 6
 ---
 
-# Asynchronous programming
+# Asynchronous Programming
 
 Asynchronous interaction between Gear programs is similar to the usual asynchronous request in using `await` and implemented by sending a message.
 
@@ -13,7 +13,7 @@ If a program's logic implies asynchronous messaging, its main executable functio
 
 ### async init()
 
-In case of an asynchronous call in the program initialization, the `async init()` must be used instead of `init()`. Also, it should be preceded by the `gstd::async_init` macro:
+In case of an asynchronous call in the program initialization, the `async init()` must be used instead of `init()`. Also, it should be preceded by the [`gstd::async_init`](https://docs.gear.rs/gstd/attr.async_init.html) macro:
 
 ```rust
 #[gstd::async_init]
@@ -24,7 +24,7 @@ async fn init() {
 
 ### async main()
 
-The same for asynchronous messages, the `async main()` must be used instead of `handle()` and `handle_reply()`. Also, it should be preceded by the `gstd::async_main` macro:
+The same for asynchronous messages, the `async main()` must be used instead of `handle()` and `handle_reply()`. Also, it should be preceded by the [`gstd::async_main`](https://docs.gear.rs/gstd/attr.async_main.html) macro:
 
 ```rust
 #[gstd::async_main]
@@ -42,6 +42,7 @@ async fn main() {
 # Cross-program message
 
 To send a message to a Gear program, use the [`msg::send_for_reply()`](https://docs.gear.rs/gstd/msg/fn.send_for_reply.html) function. In this function:
+
 - `program` - the address of the program to send the message for;
 - `payload` - the message to the program;
 - `value` - the funds attached to the message (zero if no value is attached);
