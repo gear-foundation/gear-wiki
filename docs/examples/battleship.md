@@ -11,7 +11,7 @@ Battleship is a strategic board game in which two players compete to sink an opp
 
 The game of Battleship requires logical thinking, strategy, and luck. Players must position their ships to remain well hidden from the enemy, with each ship having a different length, adding variety to the tactics of the game.
 
-"Battleship is a popular game that operates **entirely on-chain**. The primary game version lacks a backend or centralized components. Nevertheless, there is an option to enable [vouchers](../api/vouchers.md), permitting participation with zero tokens in the balance. However, this requires the activation of the backend (Instructions for voucher integration will be detailed in the article).
+"Battleship is a popular game that operates **entirely on-chain**. The primary game version does not have a backend or centralized components. However, there is an option to include [vouchers](../api/vouchers.md) that allow users to play with a zero tokens on their balance. This requires activation of the backend to issue vouchers (instructions for voucher integration will be detailed in the article).
 
 The source code is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/battleship ). This article describes the program interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios.
 
