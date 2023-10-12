@@ -13,7 +13,7 @@ First of all, it can be useful to free up resources occupied by the program. A c
 
 In this case, `Futures` remain in memory pages forever. Other messages are not aware of `Futures` associated with other messages. Over time, `Futures` accumulate in the program's memory so eventually a large amount of Futures limits the max amount of space the program can use.
 
-In case a message has been removed from the waitlist due to gas constraints, the system sends a system message (signal) that is baked by an amount of [reserved gas](./gas-reservation.md), which informs the program that it’s message was removed from the waitlist. Based on this info, a program can clean up its used system resources (`Futures`).
+In case a message has been removed from the waitlist due to gas constraints, the system sends a system message (signal) that is baked by an amount of [reserved gas](/developing-contracts/gas-reservation.md), which informs the program that it’s message was removed from the waitlist. Based on this info, a program can clean up its used system resources (`Futures`).
 
 The `gstd` library provides a separate [`exec::system_reserve_gas`](https://docs.gear.rs/gstd/exec/fn.system_reserve_gas.html) function for reserving gas specifically for system signal messages. It cannot be used for sending other regular cross-actor messages:
 
@@ -27,7 +27,7 @@ If a signal message appears, it uses gas specifically reserved for such kinds of
 
 If gas has been reserved but no system messages occur during the current execution, then this gas returns back from where it was taken. The same relates to gas reserved for non-system messages - gas returns back after a defined number of blocks or by the program’s command.
 
-`handle_signal` has a default implementation if the smart contract has `async init` or/and `async main` functions (see [Asynchronous Programming](./interactions-between-programs.md) for more details about async entry points). To define your own signal handler, you need to use the [`gstd::async_init`](https://docs.gear.rs/gstd/attr.async_init.html)/[`gstd::async_main`](https://docs.gear.rs/gstd/attr.async_main.html) macro with the specified `handle_signal` argument. For example:
+`handle_signal` has a default implementation if the smart contract has `async init` or/and `async main` functions (see [Asynchronous Programming](/developing-contracts/interactions-between-programs.md) for more details about async entry points). To define your own signal handler, you need to use the [`gstd::async_init`](https://docs.gear.rs/gstd/attr.async_init.html)/[`gstd::async_main`](https://docs.gear.rs/gstd/attr.async_main.html) macro with the specified `handle_signal` argument. For example:
 
 ```rust
 #[gstd::async_main(handle_signal = my_handle_signal)]
