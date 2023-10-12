@@ -9,10 +9,12 @@ Business logic of an arbitrary decentralized application may require the program
 
 Let’s take for example a contract that implements loan functionality. In this case, the program developer can create a loan factory contract that will create instances of loan smart contracts on demand and operate them.
 
-Firstly, to create a program, you have to submit program code to the network using an extrinsic `gear.uploadCode` and get its code hash. Submit program code does not initialize the program.
+Firstly, to create a program, you have to submit program code to the network using an extrinsic [`gear.uploadCode`](https://docs.gear.rs/pallet_gear/pallet/struct.Pallet.html#method.upload_code) and get its code hash. Submit program code does not initialize the program.
 
 :::info
+
 To submit code you can use our GUI at [Gear IDEA](https://idea.gear-tech.io/) or just submit it via @gear-js/api library. Also you can use `Gear Program` CLI - https://github.com/gear-tech/gear/tree/master/gcli
+
 :::
 
 After the code has been submitted, it can be used to create a new program:
@@ -28,10 +30,10 @@ extern "C" fn handle() {
 
     // ProgramGenerator returs ProgramId
 
-    let program_id =  ProgramGenerator::create_program_with_gas(submitted_code, b"payload", 10_000_000_000, 0).unwrap();
+    let program_id =  ProgramGenerator::create_program_with_gas(submitted_code, b"payload", 10_000_000_000, 0)
+        .expect("Unable to create program");
 
     msg::send(program_id, b"hello", 0).expect("Unable to send message");
-
 }
 ```
 

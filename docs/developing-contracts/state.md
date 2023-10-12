@@ -8,29 +8,30 @@ sidebar_position: 4
 Persistent data of the Gear smart contract is stored in the same way as in a classic program and does not require initialization of the external storage.
 
 ```rust
-// ...
-// describe state structure
+// Describe state structure
 #[derive(TypeInfo, Decode, Encode, Clone)]
 pub struct Wallet {
     pub id: ActorId,
     pub person: String,
 }
 
-// declare and initialize the state
+// Declare and initialize the state
 static mut WALLETS: Vec<Wallet> = Vec::new();
 ```
 
 If you're programming in Rust or other object-oriented languages, you should be familiar with most types. However, the `ActorId` type is something new when developing contracts via the Gear Protocol.
 
 :::info
-`ActorId` is a special type that represents an 32 bytes array and defines any `ID` in Gear Protocol.
+
+[`ActorId`](https://docs.gear.rs/gstd/struct.ActorId.html) is a special type that represents an 32 bytes array and defines any `ID` in Gear Protocol.
+
 :::
 
 ## State functions
 
-To display the contract State information (similar to the `view` functions), the `state()` function is used. It allows you to instantly read the contract status (for example, contract balance). Reading State is a free function and does not require gas costs.
+To display the contract state information, the `state()` function is used. It allows you to instantly read the contract status (for example, contract balance). Reading state is a free function and does not require gas costs.
 
-To return State use:
+Example of the returning all wallets defined above:
 
 ```rust
 #[no_mangle]
@@ -39,7 +40,20 @@ extern "C" fn state() {
 }
 ```
 
-By default, the `state()` function returns the whole state of the contract.
+Additionally, you can handle incoming payload and return only the necessary part of the state. For example, you can return only the selected wallet:
+
+```rust
+#[no_mangle]
+extern "C" fn state() {
+    let index: usize = msg::load().expect("Unable to decode `usize`");
+    let wallets = unsafe { WALLETS.clone() };
+    if i < wallets.len() => {
+        msg::reply(wallets[i], 0).expect("Failed to share state");
+    } else {
+        panic!("Wallet index out of bounds");
+    }
+}
+```
 
 ## Custom program to read the state
 
@@ -91,7 +105,7 @@ pub mod metafns {
 }
 ```
 
-To build `meta.wasm`, the following `build.rs` file in the root of your project is required:
+To build `*.meta.wasm`, the following `build.rs` file in the root of your project is required:
 
 ```rust
 fn main() {
@@ -99,4 +113,4 @@ fn main() {
 }
 ```
 
-[Learn more](/docs/developing-contracts/metadata/) how `metadata` works.
+[Learn more](./metadata.md) how metadata works.

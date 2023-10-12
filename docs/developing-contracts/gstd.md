@@ -20,7 +20,7 @@ The Gear Protocol allows users and programs to interact with other users and pro
 use gstd::msg;
 ```
 
-Message processing is possible only inside the defined functions `init()`, `handle()` and `hadle_reply()`. They also define the context for processing such messages.
+Message processing is possible only inside the defined functions `init()`, `handle()`, `hadle_reply()`, and `state()`. They also define the context for processing such messages.
 
 - Get a payload of the message currently being processed and decode it:
 
@@ -116,3 +116,14 @@ extern "C" fn handle() {
     debug!("Received message: {payload_string:?}");
 }
 ```
+
+:::note
+
+The `debug!` macro is available only when the `"debug"` feature is enabled for the `gstd` crate.
+
+```toml
+[dependencies]
+gstd = { git = "https://github.com/gear-tech/gear.git", features = ["debug"] }
+```
+
+:::

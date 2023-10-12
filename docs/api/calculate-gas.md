@@ -14,6 +14,7 @@ They guarantee successful message processing and to avoid errors like `Gaslimit 
 To find out the minimum gas amount required to send extrinsic, use `api.program.calculateGas.[method]`. Depending on the conditions, you can calculate gas for initializing a program or processing a message in `handle()` or `reply()`.
 
 :::info
+
 Gas calculation returns the GasInfo object, which contains 5 parameters:
 
 - `min_limit` - minimum gas limit required for the execution
@@ -21,7 +22,8 @@ Gas calculation returns the GasInfo object, which contains 5 parameters:
 - `burned` - number of gas burned during message processing
 - `may_be_returned` - value that can be returned in some cases
 - `waited` - notifies that the message will be added to the waitlist
-  :::
+
+:::
 
 ### Init (for upload_program extrinsic)
 
