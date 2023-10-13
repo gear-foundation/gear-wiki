@@ -4,9 +4,9 @@ sidebar_position: 3
 
 # Mailbox
 
-When the program sends a message to the user, this message is placed in the user's mailbox. Actually, the mailbox is a dedicated storage that keeps a message received from a program.
+When the program sends a message to the user (e.g., using the [`msg::send`](https://docs.gear.rs/gstd/msg/fn.send.html) function), this message is placed in the user's mailbox. Actually, the mailbox is a dedicated storage that keeps a message received from a program.
 
-The user can detect a message received by subscribing to the [`UserMessageSent`](https://docs.gear.rs/pallet_gear/pallet/enum.Event.html#variant.UserMessageSent) event.
+The user can detect a message received by subscribing to the [`UserMessageSent`](https://docs.gear.rs/pallet_gear/pallet/enum.Event.html#variant.UserMessageSent) event. It's important to note that the reply (sent using the [`msg::reply`](https://docs.gear.rs/gstd/msg/fn.reply.html) function) doesn't go to the mailbox, it just generates an event.
 
 When using the IDEA website one should go to the https://idea.gear-tech.io/mailbox section.
 

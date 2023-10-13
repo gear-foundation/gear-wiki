@@ -83,7 +83,7 @@ We recommend using the [`gtest`](https://docs.gear.rs/gtest/) crate for testing 
 
 The more advanced way to test the program is to use the [`gclient`](https://docs.gear.rs/gclient/) crate that allows you to run the program in the blockchain network. It is useful when you need to test the program in a real environment.
 
-You can find more details about testing in the [Program Testing](/docs/developing-contracts/testing.md) section.
+You can find more details about testing in the [Program Testing](./testing.md) section.
 
 **Step 3.** Compile the program into Wasm.
 
@@ -114,7 +114,7 @@ If initialization fails (for example, the program panics in the `init()` functio
 
 Also, it is important to underline that someone should pay rent for keeping the program in the blockchain after a free period that is equal to 5 million blocks (it is about 2 months for networks with 1 block per second production). It is possible to add funds for rent using the [`pay_program_rent`](https://docs.gear.rs/pallet_gear/pallet/struct.Pallet.html#method.pay_program_rent) extrinsic (by the user) or with the [`gstd::exec::pay_program_rent`](https://docs.gear.rs/gstd/exec/fn.pay_program_rent.html) API function (by the program). If the rent is not paid, the program state changes to pause, its persistent memory is removed from the storage, and the program can't be executed. The program can be resumed by uploading its memory pages to the blockchain and paying the rent.
 
-You can find more details about program deployment in the [Upload Program](/docs/developing-contracts/deploy.md) section.
+You can find more details about program deployment in the [Upload Program](./deploy.md) section.
 
 **Step 5.** Execute the program.
 
@@ -147,7 +147,7 @@ This function is stored in the blockchain in the same Wasm blob with `handle()` 
 
 The data returned by the `state()` function can be converted to any convenient representation by using a state-conversion program. This is a separate program compiled into Wasm and dedicated to being executed on the off-chain runner. It should contain a set of meta-functions that accept the data returned by the `state()` function and return the data in a convenient format. There is a dedicated [`read_state_using_wasm`](https://docs.gear.rs/pallet_gear_rpc/trait.GearApiServer.html#tymethod.read_state_using_wasm) RPC call for reading the program state using the state-conversion program.
 
-More details about state functions can be found in the [State Functions](/docs/developing-contracts/state.md) section.
+More details about state functions can be found in the [State Functions](./state.md) section.
 
 ### Asynchronous programming
 
@@ -173,7 +173,7 @@ async fn init() {
 }
 ```
 
-You can find more details about asynchronous programming in the [Asynchronous Programming](/docs/developing-contracts/interactions-between-programs.md) section.
+You can find more details about asynchronous programming in the [Asynchronous Programming](./interactions-between-programs.md) section.
 
 ### Creating programs from programs
 
@@ -183,13 +183,13 @@ The only pre-requisite is that the code of the program should be stored in the b
 
 There are several helper functions for creating programs from programs in the [`gstd::prog`](https://docs.gear.rs/gstd/prog/) module.
 
-More details about creating programs from programs can be found in the [Create Program](/docs/developing-contracts/create.md) section.
+More details about creating programs from programs can be found in the [Create Program](./create.md) section.
 
 ### Gas reservation
 
 Gear smart contracts use gas for measuring the complexity of the program execution. The user pays a fee for the gas used by the program. Some part of the gas limit may be reserved during the current execution to be spent later. This gas reserving mechanism can be used to shift the burden of paying for program execution from one user to another. Also, it makes it possible to run some deferred actions using delayed messages described below.
 
-You can find more details about gas reservation in the [Gas Reservation](/docs/developing-contracts/gas-reservation.md) section.
+You can find more details about gas reservation in the [Gas Reservation](./gas-reservation.md) section.
 
 ### Delayed messages
 
@@ -197,7 +197,7 @@ Gear smart contracts can send messages to other actors not only during the curre
 
 Use functions with `*_delayed` suffix from [`gstd::msg`](https://docs.gear.rs/gstd/msg/index.html) module to send a delayed message to a program or user. The message will be sent after the specified number of blocks.
 
-More details about delayed messages can be found in the [Delayed Messages](/docs/developing-contracts/delayed-messages.md) section.
+More details about delayed messages can be found in the [Delayed Messages](./delayed-messages.md) section.
 
 ### System signals
 
@@ -212,4 +212,12 @@ extern "C" fn handle_signal() {
 }
 ```
 
-You can find more details about system signals in the [System Signals](/docs/developing-contracts/system-signals.md) section.
+You can find more details about system signals in the [System Signals](./system-signals.md) section.
+
+### Reply deposit
+
+Usually the reply sender pays a gas fee for the reply message execution. But sometimes it is more convenient to shift this burden to the program that receives the reply. This can be done by using the reply deposit mechanism.
+
+The reply deposit is a part of the gas limit reserved during the current execution to be spent later. The reserved gas can be used to pay for the reply message execution. To do this, the program should call the [`gstd::exec::reply_deposit`](https://docs.gear.rs/gstd/exec/fn.reply_deposit.html) function. This function provides a gas deposit from the current message to handle the reply message on the given message ID. This message ID should be sent within the execution. Once the destination actor or system sends a reply to it, the gas limit ignores it; if the program gives a deposit, only it will be used for the execution of `handle_reply`.
+
+You can find more details about reply deposit in the [Reply Deposit](./reply-deposit.md) section.
