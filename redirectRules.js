@@ -348,7 +348,7 @@ const urlList = [
         "from": "/dein"
     },
     {
-        "to": "/docs/examples/Infa/varatube",
+        "to": "/docs/examples/Infra/varatube",
         "from": "/varatube"
     },
     {
