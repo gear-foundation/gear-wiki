@@ -240,7 +240,7 @@ const urlList = [
         "from": "/general/contracts"
     },
     {
-        "to": "/docs/general/DeFi",
+        "to": "/docs/general/defi",
         "from": "/general/defi"
     },
     {
@@ -348,7 +348,7 @@ const urlList = [
         "from": "/dein"
     },
     {
-        "to": "/docs/examples/infa/varatube",
+        "to": "/docs/examples/Infa/varatube",
         "from": "/varatube"
     },
     {
