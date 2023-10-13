@@ -132,7 +132,7 @@ const urlList = [
         "from": "/examples/escrow"
     },
     {
-        "to": "/docs/examples/gaming/game-of-chance",
+        "to": "/docs/examples/Gaming/game-of-chance",
         "from": "/examples/lottery"
     },
     {
@@ -140,7 +140,7 @@ const urlList = [
         "from": "/examples/dutch-auction"
     },
     {
-        "to": "/docs/examples/infra/supply-chain",
+        "to": "/docs/examples/Infra/supply-chain",
         "from": "/examples/supply-chain"
     },
     {
@@ -240,7 +240,7 @@ const urlList = [
         "from": "/general/contracts"
     },
     {
-        "to": "/docs/general/defi",
+        "to": "/docs/general/DeFi",
         "from": "/general/defi"
     },
     {
@@ -272,7 +272,7 @@ const urlList = [
         "from": "/gnft-721"
     },
     {
-        "to": "/docs/examples/nfts/dynamic-nft",
+        "to": "/docs/examples/NFTs/dynamic-nft",
         "from": "/dynamic-nft"
     },
     {
@@ -284,31 +284,31 @@ const urlList = [
         "from": "/gmt-1155"
     },
     {
-        "to": "/docs/examples/governance/DAO",
+        "to": "/docs/examples/Governance/DAO",
         "from": "/DAO"
     },
     {
-        "to": "/docs/examples/defi/escrow",
+        "to": "/docs/examples/DeFi/escrow",
         "from": "/escrow"
     },
     {
-        "to": "/docs/examples/gaming/game-of-chance",
+        "to": "/docs/examples/Gaming/game-of-chance",
         "from": "/game-of-chance"
     },
     {
-        "to": "/docs/examples/defi/dutch-auction",
+        "to": "/docs/examples/DeFi/dutch-auction",
         "from": "/dutch-auction"
     },
     {
-        "to": "/docs/examples/infra/supply-chain",
+        "to": "/docs/examples/Infra/supply-chain",
         "from": "/supply-chain"
     },
     {
-        "to": "/docs/examples/defi/multisig-wallet",
+        "to": "/docs/examples/DeFi/multisig-wallet",
         "from": "/multisig-wallet"
     },
     {
-        "to": "/docs/examples/nfts/concert",
+        "to": "/docs/examples/NFTs/concert",
         "from": "/concert"
     },
     {
@@ -316,35 +316,35 @@ const urlList = [
         "from": "/rmrk"
     },
     {
-        "to": "/docs/examples/nfts/onchain-nft",
+        "to": "/docs/examples/NFTs/onchain-nft",
         "from": "/onchain-nft"
     },
     {
-        "to": "/docs/examples/defi/staking",
+        "to": "/docs/examples/DeFi/staking",
         "from": "/staking"
     },
     {
-        "to": "/docs/examples/defi/crowdsale",
+        "to": "/docs/examples/DeFi/crowdsale",
         "from": "/crowdsale"
     },
     {
-        "to": "/docs/examples/gaming/rock-paper-scissors",
+        "to": "/docs/examples/Gaming/rock-paper-scissors",
         "from": "/rock-paper-scissors"
     },
     {
-        "to": "/docs/examples/defi/dex",
+        "to": "/docs/examples/DeFi/dex",
         "from": "/dex"
     },
     {
-        "to": "/docs/examples/nfts/nft-pixelboard",
+        "to": "/docs/examples/NFTs/nft-pixelboard",
         "from": "/nft-pixelboard"
     },
     {
-        "to": "/docs/examples/gaming/monopoly",
+        "to": "/docs/examples/Gaming/monopoly",
         "from": "/monopoly"
     },
     {
-        "to": "/docs/examples/infra/dein",
+        "to": "/docs/examples/Infra/dein",
         "from": "/dein"
     },
     {
@@ -352,7 +352,7 @@ const urlList = [
         "from": "/varatube"
     },
     {
-        "to": "/docs/examples/gaming/tequila-train",
+        "to": "/docs/examples/Gaming/tequila-train",
         "from": "/tequila-train"
     }
 ]
