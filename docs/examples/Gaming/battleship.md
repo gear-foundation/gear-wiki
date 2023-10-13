@@ -331,3 +331,6 @@ See also an example of the smart contract testing implementation based on `gtest
 
 For more details about testing smart contracts written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.
 
+
+
+[def]: ../../api/vouchers.md
