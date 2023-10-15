@@ -108,71 +108,71 @@ const urlList = [
         "from": "/examples/ping"
     },
     {
-        "to": "/docs/examples/gft-20",
+        "to": "/docs/examples/Standards/gft-20",
         "from": "/examples/gft-20"
     },
     {
-        "to": "/docs/examples/gnft-721",
+        "to": "/docs/examples/Standards/gnft-721",
         "from": "/examples/gnft-721"
     },
     {
-        "to": "/docs/examples/gnft-4907",
+        "to": "/docs/examples/Standards/gnft-4907",
         "from": "/examples/gnft-4907"
     },
     {
-        "to": "/docs/examples/gmt-1155",
+        "to": "/docs/examples/Standards/gmt-1155",
         "from": "/examples/gmt-1155"
     },
     {
-        "to": "/docs/examples/DAO",
+        "to": "/docs/examples/Governance/DAO",
         "from": "/examples/DAO"
     },
     {
-        "to": "/docs/examples/escrow",
+        "to": "/docs/examples/DeFi/escrow",
         "from": "/examples/escrow"
     },
     {
-        "to": "/docs/examples/game-of-chance",
+        "to": "/docs/examples/Gaming/game-of-chance",
         "from": "/examples/lottery"
     },
     {
-        "to": "/docs/examples/dutch-auction",
+        "to": "/docs/examples/DeFi/dutch-auction",
         "from": "/examples/dutch-auction"
     },
     {
-        "to": "/docs/examples/supply-chain",
+        "to": "/docs/examples/Infra/supply-chain",
         "from": "/examples/supply-chain"
     },
     {
-        "to": "/docs/examples/multisig-wallet",
+        "to": "/docs/examples/DeFi/multisig-wallet",
         "from": "/examples/multisig-wallet"
     },
     {
-        "to": "/docs/examples/concert",
+        "to": "/docs/examples/NFTs/concert",
         "from": "/examples/concert"
     },
     {
-        "to": "/docs/examples/nft-marketplace/marketplace",
+        "to": "/docs/examples/NFTs/nft-marketplace/marketplace",
         "from": "/examples/marketplace"
     },
     {
-        "to": "/docs/examples/rmrk",
+        "to": "/docs/examples/Standards/rmrk",
         "from": "/examples/rmrk"
     },
     {
-        "to": "/docs/examples/onchain-nft",
+        "to": "/docs/examples/NFTs/onchain-nft",
         "from": "/examples/onchain-nft"
     },
     {
-        "to": "/docs/examples/staking",
+        "to": "/docs/examples/DeFi/staking",
         "from": "/examples/staking"
     },
     {
-        "to": "/docs/examples/crowdsale",
+        "to": "/docs/examples/DeFi/crowdsale",
         "from": "/examples/crowdsale-ico"
     },
     {
-        "to": "/docs/examples/rock-paper-scissors",
+        "to": "/docs/examples/Gaming/rock-paper-scissors",
         "from": "/examples/rock-paper-scissors"
     },
     {
@@ -252,11 +252,11 @@ const urlList = [
         "from": "/general/dao"
     },
     {
-        "to": "/docs/examples/gft-20",
+        "to": "/docs/examples/Standards/gft-20",
         "from": "/examples/erc20"
     },
     {
-        "to": "/docs/examples/gft-20",
+        "to": "/docs/examples/Standards/gft-20",
         "from": "/docs/examples/erc20"
     },
     {
@@ -264,95 +264,95 @@ const urlList = [
         "from": "/ping"
     },
     {
-        "to": "/docs/examples/gft-20",
+        "to": "/docs/examples/Standards/gft-20",
         "from": "/gft-20"
     },
     {
-        "to": "/docs/examples/gnft-721",
+        "to": "/docs/examples/Standards/gnft-721",
         "from": "/gnft-721"
     },
     {
-        "to": "/docs/examples/dynamic-nft",
+        "to": "/docs/examples/NFTs/dynamic-nft",
         "from": "/dynamic-nft"
     },
     {
-        "to": "/docs/examples/gnft-4907",
+        "to": "/docs/examples/Standards/gnft-4907",
         "from": "/gnft-4907"
     },
     {
-        "to": "/docs/examples/gmt-1155",
+        "to": "/docs/examples/Standards/gmt-1155",
         "from": "/gmt-1155"
     },
     {
-        "to": "/docs/examples/DAO",
+        "to": "/docs/examples/Governance/DAO",
         "from": "/DAO"
     },
     {
-        "to": "/docs/examples/escrow",
+        "to": "/docs/examples/DeFi/escrow",
         "from": "/escrow"
     },
     {
-        "to": "/docs/examples/game-of-chance",
+        "to": "/docs/examples/Gaming/game-of-chance",
         "from": "/game-of-chance"
     },
     {
-        "to": "/docs/examples/dutch-auction",
+        "to": "/docs/examples/DeFi/dutch-auction",
         "from": "/dutch-auction"
     },
     {
-        "to": "/docs/examples/supply-chain",
+        "to": "/docs/examples/Infra/supply-chain",
         "from": "/supply-chain"
     },
     {
-        "to": "/docs/examples/multisig-wallet",
+        "to": "/docs/examples/DeFi/multisig-wallet",
         "from": "/multisig-wallet"
     },
     {
-        "to": "/docs/examples/concert",
+        "to": "/docs/examples/NFTs/concert",
         "from": "/concert"
     },
     {
-        "to": "/docs/examples/rmrk",
+        "to": "/docs/examples/Standards/rmrk",
         "from": "/rmrk"
     },
     {
-        "to": "/docs/examples/onchain-nft",
+        "to": "/docs/examples/NFTs/onchain-nft",
         "from": "/onchain-nft"
     },
     {
-        "to": "/docs/examples/staking",
+        "to": "/docs/examples/DeFi/staking",
         "from": "/staking"
     },
     {
-        "to": "/docs/examples/crowdsale",
+        "to": "/docs/examples/DeFi/crowdsale",
         "from": "/crowdsale"
     },
     {
-        "to": "/docs/examples/rock-paper-scissors",
+        "to": "/docs/examples/Gaming/rock-paper-scissors",
         "from": "/rock-paper-scissors"
     },
     {
-        "to": "/docs/examples/dex",
+        "to": "/docs/examples/DeFi/dex",
         "from": "/dex"
     },
     {
-        "to": "/docs/examples/nft-pixelboard",
+        "to": "/docs/examples/NFTs/nft-pixelboard",
         "from": "/nft-pixelboard"
     },
     {
-        "to": "/docs/examples/monopoly",
+        "to": "/docs/examples/Gaming/monopoly",
         "from": "/monopoly"
     },
     {
-        "to": "/docs/examples/dein",
+        "to": "/docs/examples/Infra/dein",
         "from": "/dein"
     },
     {
-        "to": "/docs/examples/varatube",
+        "to": "/docs/examples/Infra/varatube",
         "from": "/varatube"
     },
     {
-        "to": "/docs/examples/tequila-train",
+        "to": "/docs/examples/Gaming/tequila-train",
         "from": "/tequila-train"
     }
 ]

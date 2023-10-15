@@ -295,7 +295,7 @@ Withdraw {
 
 一个[即用型应用](https://marketplace.gear-tech.io/)的例子提供了一个用户界面，与在 Gear Network 中运行的[gNFT](ttps://github.com/gear-foundation/dapps-non-fungible-token/tree/master/nft)和[Marketplace](https://github.com/gear-foundation/dapps-non-fungible-token/tree/master/nft-marketplace)智能合约互动。
 
-- Gear Non-Fundible Token 合约可以创建 NFT 代币，证明数字资产的所有权，详情请查看[本文](/examples/gnft-721)。
+- Gear Non-Fundible Token 合约可以创建 NFT 代币，证明数字资产的所有权，详情请查看[本文](/examples/Standards/gnft-721)。
 - NFT Marketplace 是一个合约，你可以用同质化代币交易非同质化代币。该合约还支持 NFT 拍卖，以及提供/接受 nft 的购买提议。
 
 你也可以观看视频：**https://youtu.be/RdlWUkxlmV4**，中文字幕请看 **https://www.bilibili.com/video/BV1Ya411T7Ks**。
