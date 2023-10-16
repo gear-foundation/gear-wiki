@@ -5,7 +5,7 @@ sidebar_position: 6
 
 # Galactic Express Game
 
-![battleship](../img/galactic-express.png)
+![galactic-express](../img/galactic-express.png)
 
 Galactic Express is a game in which players guide a rocket into space, testing its endurance as it collides with random obstacles. An unpredictable and exciting journey, it challenges players to test their luck and adapt to ever-changing obstacles.
 
@@ -356,7 +356,7 @@ extern fn state() {
 
 ## Source code
 
-The source code of this example of Battleship Game smart contract and the example of an implementation of its testing is available on [gear-foundation/dapp/contracts/galactic-express](https://github.com/gear-foundation/dapps/tree/master/contracts/galactic-express).
+The source code of this example of Galactic-Express Game smart contract and the example of an implementation of its testing is available on [gear-foundation/dapp/contracts/galactic-express](https://github.com/gear-foundation/dapps/tree/master/contracts/galactic-express).
 
 See also an example of the smart contract testing implementation based on `gtest`: [gear-foundation/dapps/galactic-express/tests](https://github.com/gear-foundation/dapps/tree/master/contracts/galactic-express/tests).
 
