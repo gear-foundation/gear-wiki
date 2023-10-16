@@ -7,6 +7,17 @@ sidebar_position: 8
 
 TODO: add a description
 
+## How to run
+
+1. Build a contract
+> Additional details regarding this matter can be located within the [README](https://github.com/gear-foundation/dapps/tree/master/contracts/tamagotchi-battle) directory of the contract.
+
+2. Upload the contract to the [Vara Network Testnet](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Ftestnet.vara.rs)
+> Further details regarding the process of contract uploading can be located within the [Getting Started](../../getting-started-in-5-minutes/#deploy-your-smart-contract-to-the-testnet) section.
+
+3. Build and run user interface 
+> More information about this can be found in the [README](https://github.com/gear-foundation/dapps/tree/master/frontend/tamagotchi-battle/frontend) directory of the frontend.
+
 ## Implementation details
 
 ### Tamagotchi Battle contract description
