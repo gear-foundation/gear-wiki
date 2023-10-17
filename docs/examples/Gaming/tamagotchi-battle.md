@@ -5,7 +5,7 @@ sidebar_position: 8
 
 # Tamagotchi Battle
 
-This game will help you learn how to upload smart contracts (programs) to the server, change their state, use them in connection with other smart contracts and finally just have a good time!
+This game will help you learn how to upload smart contracts (programs) to the blockchain, change their state, use them in connection with other smart contracts and finally just have a good time!
 
 To start, each player must have their own *Tamagotchi smart contract*. Please upload it to the [Vara Network Testnet](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Ftestnet.vara.rs).
 
