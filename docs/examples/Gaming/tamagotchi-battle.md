@@ -15,7 +15,7 @@ You can then register your Tamagotchi as a participant in the battle. Please do 
 
 When all participants are registered the administrator can start the battle (`StartBattle` action). The participants are automatically split into pairs ( `split_into_pairs` function). The state of the pair is placed in struct `Pair`.
 
-During the battle, each player must make a move (`MakeMove` action). A player can attack or defend. Based on the results of two players' moves, the `resolve_battle` function compares their health and determines the winner. The winner has the opportunity to participate in the next round.
+During the battle, each player must make a move (`MakeMove` action). A player can attack or defend. Based on the results of two players' moves, the `resolve_battle` function compares their health and determines the winner. That one has the opportunity to participate in the next round.
 
 After all participants have made moves and the winners have been determined, the administrator can continue the game and start a new round through the `StartBattle` action. The winners are again split into pairs.
 
@@ -107,12 +107,13 @@ pub enum BattleEvent {
 
 ### Logic
 
-The main information is located in the `Battle` structure. The list of possible player actions is contained in `enum Move`. Player achievements are contained in `struct Player`. Players are divided into pairs. Information about each pair is contained in `struct Pair`. 
+The main information is located in the `Battle` structure. Player achievements are contained in `struct Player`. Players are divided into pairs. Information about each pair is contained in `struct Pair`. 
 
-Actions of players and admins are passed to the smart contact via `enum BattleAction`. The list of game events is contained in the `enum BattleEvent`.
+Actions of players and admins are passed to the smart contact via `enum BattleAction`. The list of possible fighters actions is contained in `enum Move`. The list of game events is contained in the `enum BattleEvent`.
 
 The administrator starts the game by calling the function `start_registration`. Players register their Tamagotchi by the `register` function. The administrator starts each new round via calling the `start_battle` function, which also divides the players into pairs in the  `split_into_pairs` function.
-Players make moves by calling the `make_move` function, which in turn calls `make_move_internal`. It determines the result of the battle in each pair, with the health of each Tamagotchi being directly calculated in the `resolve_battle` function.
+
+Players make moves by calling the `make_move` function, which in turn calls `make_move_internal`. This function determines the result of the battle in each pair, with the health of each Tamagotchi being directly calculated in the `resolve_battle` function.
 
 Each player must make a move within the time specified in `TIME_FOR_MOVE`. If a player does not make a move, a delayed message via the `CheckIfMoveMade` action does the move for them. 
 
