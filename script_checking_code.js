@@ -184,31 +184,41 @@ function findMatchingBlock(git_code, wiki_text) {
 // some contracts are commented out because they are subject to correction,
 // after them the necessary lines should be uncommented. 
 const filePaths = [
-  'concert.md',
-  'crowdsale.md',
-  'DAO.md',
-  'dein.md',
-  // 'dex.md',
-  'dutch-auction.md',
-  'dynamic-nft.md',
-  'escrow.md',
-  'game-of-chance.md',
-  // 'gft-20.md',
-  // 'gmt-1155.md',
-  // 'gnft-721.md',
-  'gnft-4907.md',
-  'monopoly.md',
-  'multisig-wallet.md',
-  'nft-pixelboard.md',
-  'onchain-nft.md',
   'ping.md',
-  // 'rmrk.md',
-  'rock-paper-scissors.md',
-  'staking.md',
-  'supply-chain.md',
-  'tequila-train.md',
-  'varatube.md',
-  'battleship.md'
+  'DeFi/crowdsale.md',
+  // 'DeFi/dex.md',
+  'DeFi/dutch-auction.md',
+  'DeFi/escrow.md',
+  'DeFi/multisig-wallet.md',
+  'DeFi/staking.md',
+
+  'Gaming/battleship.md',
+  'Gaming/galactic-express.md',
+  'Gaming/game-of-chance.md',
+  'Gaming/monopoly.md',
+  'Gaming/rock-paper-scissors.md',
+  'Gaming/tamagotchi.md',
+  'Gaming/tamagotchi-battle.md',
+  'Gaming/tequila-train.md',
+  'Governance/DAO.md',
+
+
+  'Infra/dein.md',
+  'Infra/supply-chain.md',
+  'Infra/varatube.md',
+
+  'NFTs/concert.md',
+  'NFTs/dynamic-nft.md',
+  'NFTs/nft-pixelboard.md',
+  'NFTs/onchain-nft.md',
+
+
+  // 'Standards/gft-20.md',
+  // 'Standards/gmt-1155.md',
+  // 'Standards/gnft-721.md',
+  // 'Standards/rmrk.md',
+  'Standards/gnft-4907.md',
+
 ];
 
 main(filePaths);
