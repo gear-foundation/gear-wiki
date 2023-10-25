@@ -33,16 +33,16 @@ This guide provides a general overview of running smart contracts on the network
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
     ```
 
-3. Now, let's install a `nightly` version of the toolchain with `rustup`, since Gear uses the most up-to-date features `rustup` provides. We use `nightly-2023-04-25` as it is the latest version that is compatible with Gear.
+3. Now, let's install a `nightly` version of the toolchain with `rustup`, since Gear uses the most up-to-date features `rustup` provides. We use `nightly-2023-10-14` as it is the latest version that is compatible with Gear.
 
     ```bash
-    rustup toolchain add nightly-2023-04-25
+    rustup toolchain add nightly-2023-10-14
     ```
 
 4. As we will be compiling our Rust smart contract to Wasm, we will need a Wasm compiler. Let's add it to the toolchain.
 
     ```bash
-    rustup target add wasm32-unknown-unknown --toolchain nightly-2023-04-25
+    rustup target add wasm32-unknown-unknown --toolchain nightly-2023-10-14
     ```
 
 5. Also, you need to install the `wasm-proc` utility that optimizes compiled Wasm to be more compact.
@@ -104,7 +104,7 @@ This guide provides a general overview of running smart contracts on the network
 
     [dependencies]
     # highlight-next-line
-    gstd = { git = "https://github.com/gear-tech/gear.git", tag = "v1.0.0" }
+    gstd = { git = "https://github.com/gear-tech/gear.git", tag = "v1.0.1" }
     ```
 
 6. Replace the default contents of `lib.rs` in the `counter` folder with the code for our first smart-contract.
@@ -141,7 +141,7 @@ This guide provides a general overview of running smart contracts on the network
 
     ```bash
     RUSTFLAGS="-C link-args=--import-memory -C linker-plugin-lto" \
-        cargo +nightly-2023-04-25 build --release --target=wasm32-unknown-unknown
+        cargo +nightly-2023-10-14 build --release --target=wasm32-unknown-unknown
     ```
 
     This command is quite verbose, so we can create cargo config and Rust toolchain override files to make it shorter. Create a `.cargo/config.toml` file in the `counter` directory with the following contents:
@@ -159,7 +159,7 @@ This guide provides a general overview of running smart contracts on the network
 
     ```toml
     [toolchain]
-    channel = "nightly-2023-04-25"
+    channel = "nightly-2023-10-14"
     targets = ["wasm32-unknown-unknown"]
     profile = "default"
     ```
