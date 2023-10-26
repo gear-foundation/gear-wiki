@@ -11,7 +11,7 @@ Battleship is a strategic board game in which two players compete to sink an opp
 
 The game of Battleship requires logical thinking, strategy, and luck. Players must position their ships to remain well hidden from the enemy, with each ship having a different length, adding variety to the tactics of the game.
 
-"Battleship is a popular game that operates **entirely on-chain**. The primary game version does not have a backend or centralized components. However, there is an option to include [vouchers](../../api/vouchers.md) that allow users to play with a zero tokens on their balance. This requires activation of the backend to issue vouchers (instructions for voucher integration will be detailed in the article).
+Battleship is a popular game that operates **entirely on-chain**. The primary game version does not have a backend or centralized components. However, there is an option to include [vouchers](../../api/vouchers.md) that allow users to play with a zero tokens on their balance. This requires activation of the backend to issue vouchers (instructions for voucher integration will be detailed in the article).
 
 The source code is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/battleship ). This article describes the program interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios.
 
@@ -20,13 +20,13 @@ The source code is available on [GitHub](https://github.com/gear-foundation/dapp
 ## How to run
 
 1. Build a contract
-> Additional details regarding this matter can be located within the [README](https://github.com/gear-foundation/dapps/tree/master/contracts/battleship) directory of the contract.
+> Additional details regarding this matter can be located within the [README](https://github.com/gear-foundation/dapps/tree/master/contracts/battleship/README.md) directory of the contract.
 
 2. Upload the contract to the [Vara Network Testnet](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Ftestnet.vara.rs)
 > Initiate the process by uploading the bot contract, followed by the subsequent upload of the main contract. Further details regarding the process of contract uploading can be located within the [Getting Started](../../getting-started-in-5-minutes/#deploy-your-smart-contract-to-the-testnet) section.
 
 3. Build and run user interface 
-> More information about this can be found in the [README](https://github.com/gear-foundation/dapps/tree/master/frontend/battleship) directory of the frontend.
+> More information about this can be found in the [README](https://github.com/gear-foundation/dapps/tree/master/frontend/battleship/README.md) directory of the frontend.
 
 4. **Optional**. Build and run the backend to release vouchers
 > Comprehensive instructions on the voucher execution process are provided within the [README](https://github.com/gear-foundation/dapps-battleship-backend). 
