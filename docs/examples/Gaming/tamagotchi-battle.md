@@ -7,7 +7,7 @@ sidebar_position: 8
 
 ![tamagotchi-battle](../img/tamagotchi-battle.png)
 
-Welcome to the exciting world of Tamagotchi Battle! In this fascinating game your faithful companions - Tamagotchi - are ready to fight each other in pursuit of glory and victory. In this game, you need to use your Tamagotchi, which was described in the [previous article](tamagotchi.md).
+Welcome to the exciting world of Tamagotchi Battle! In this fascinating game your faithful companions - Tamagotchi - are ready to fight each other in pursuit of glory and victory. In this game, you will be able to use the tamagotchi that was described in [previous article](tamagotchi.md).
 
 To win, you'll have to skillfully manage your Tamagotchi and apply strategy. Take turns making moves, pave your way to success and, of course, rely on luck. In the Tamagotchi Battle Game, your engaging and exciting strategy can take you to the top.
 

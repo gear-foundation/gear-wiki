@@ -5,6 +5,8 @@ sidebar_position: 7
 
 # Tamagotchi
 
+![tamagotchi](../img/tamagotchi.png)
+
 Tamagotchi is a popular virtual pet game that was created in Japan in the late 1990s. This game provides an opportunity to care for a virtual pet, which is a tiny digital creature that lives on the screen of the device.
 
 The main purpose of the game is to provide care, nurturing and care for your Tamagotchi. The pet requires constant attention: you need to feed it, groom it, play with it and monitor its overall condition. If you don't pay enough attention to your Tamagotchi, it may even die.
@@ -22,7 +24,7 @@ The article explains the programming interface, data structure, basic functions 
 > Further details regarding the process of contract uploading can be located within the [Getting Started](../../getting-started-in-5-minutes/#deploy-your-smart-contract-to-the-testnet) section.
 
 3. Build and run user interface 
-> More information about this can be found in the [README]() directory of the frontend.
+> More information about this can be found in the [README](https://github.com/gear-foundation/dapps/tree/master/frontend/tamagotchi/README.md) directory of the frontend.
 
 ## Implementation details
 
