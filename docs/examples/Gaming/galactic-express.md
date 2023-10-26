@@ -25,6 +25,7 @@ The article explains the programming interface, data structure, basic functions 
 3. Build and run user interface 
 > More information about this can be found in the [README](https://github.com/gear-foundation/dapps/tree/master/frontend/galactic-express/README.md) directory of the frontend.
 
+
 ## Implementation details
 
 ### Contract description
@@ -217,6 +218,7 @@ fn register(&mut self, participant: Participant) -> Result<Event, Error> {
 This function checks the game stage, the number of registered players and the participant's input data.
 
 Input values of fuel and payload cannot be exceeded by predetermined values
+
 
 ```rust title="galactic-express/io/src/lib.rs"
 // maximum fuel value that can be entered by the user
