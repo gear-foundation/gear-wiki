@@ -13,6 +13,10 @@ Sections below describe tools that you can use in your JS application to impleme
 
 The basic API is implemented on the Substrate layer and is the same for all Substrate-based networks. The Gear-JS API code is available on [GitHub](https://github.com/gear-tech/gear-js). Complete API overview can be found on the [Polkadot documentation portal](https://polkadot.js.org/docs/).
 
+:::note
+Since Vara and Vara Testnet can have different runtime versions, they may have different extrinsic signatures. If your application is operating on the Vara Network, it is more convenient to use the `VaraApi` class instead of `GearApi` and `VaraTestnetApi` for the Vara Testnet Network.
+:::
+
 ## Installation
 
 ```sh

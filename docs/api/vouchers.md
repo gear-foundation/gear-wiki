@@ -7,6 +7,10 @@ sidebar_label: Vouchers
 
 Vouchers, issued by any actor empower users with gas-free interactions, enabling them to send messages to specific programs seamlessly.
 
+An example of using vouchers is shown in the [Battleship](/examples/Gaming/battleship.md) game. Users without tokens on their balance can make moves by sending messages to a program using a voucher.
+
+### Issue a voucher
+
 Use `api.voucher.issue` method to issue a new voucher for a user to be used to pay for sending messages to `program_id` program.
 
 ```javascript
@@ -21,23 +25,41 @@ Use `api.voucher.issue` method to issue a new voucher for a user to be used to p
   })
 ```
 
+### Check voucher
+
 Use `api.voucher.exists` method to check that the voucher exists for a particular user and program:
 
 ```javascript
 const voucherExists = await api.voucher.exists(programId, accountId);
 ```
 
-To send message with voucher set `prepaid` flag to `true` in the first argument of `api.message.send` and `api.message.sendReply` methods. Also it's good to specify account ID that is used to send the extrinsic to check whether the voucher exists or not.
+### Send a message using voucher
+
+To send message with voucher you can use `api.voucher.call` method:
 
 ```javascript
-let massage = await api.message.send({
-  destination: destination,
-  payload: somePayload,
-  gasLimit: 10000000,
-  value: 1000,
-  prepaid: true,
-  account: accountId,
-}, meta);
+  const messageTx = api.message.send({
+    destination: destination,
+    payload: somePayload,
+    gasLimit: 10000000,
+    value: 1000
+  }, meta);
+
+  const voucherTx = api.voucher.call({ SendMessage: messageTx });
+  await voucherTx.signAndSend(account, (events) => {
+    console.log(events.toHuman());
+  });
+```
+### Send a reply using voucher
+
+Sending a reply with issued voucher works similar to sending message with voucher:
+
+```javascript
+  const messageTx = api.message.sendReply(...);
+
+  const voucherTx = api.voucher.call({ SendReply: messageTx });
+  await voucherTx.signAndSend(account, (events) => {
+    console.log(events.toHuman());
+  });
 ```
 
-An example of using vouchers is shown in the [Battleship](/examples/Gaming/battleship.md) game. Users without tokens on their balance can make moves by sending messages to a program using a voucher.
