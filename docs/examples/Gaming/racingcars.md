@@ -110,6 +110,8 @@ pub struct Config {
     pub max_speed: u32,
     pub gas_for_round: u64,
     pub time_interval: u32,
+    pub max_distance: u32,
+    pub time: u32,
     pub time_for_game_storage: u64,
 }
 
@@ -120,6 +122,8 @@ pub struct Config {
 * `max_speed` - the maximum speed to which the car can accelerate
 * `gas_for_round` - gas for one round
 * `time_interval` - time after which the game should be deleted using delayed messages
+* `max_distance` - race distance
+* `time` - the time the car travels each turn
 * `time_for_game_storage` - game data storage time
 
 ### Action
