@@ -17,13 +17,14 @@ The article explains the programming interface, data structure, basic functions 
 ## How to run
 
 1. Build a contract
-> Additional details regarding this matter can be located within the [README](https://github.com/gear-foundation/dapps/tree/master/contracts/galactic-express) directory of the contract.
+> Additional details regarding this matter can be located within the [README](https://github.com/gear-foundation/dapps/tree/master/contracts/galactic-express/README.md) directory of the contract.
 
 2. Upload the contract to the [Vara Network Testnet](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Ftestnet.vara.rs)
 > Further details regarding the process of contract uploading can be located within the [Getting Started](../../getting-started-in-5-minutes/#deploy-your-smart-contract-to-the-testnet) section.
 
 3. Build and run user interface 
-> More information about this can be found in the [README](https://github.com/gear-foundation/dapps/tree/master/frontend/galactic-express) directory of the frontend.
+> More information about this can be found in the [README](https://github.com/gear-foundation/dapps/tree/master/frontend/galactic-express/README.md) directory of the frontend.
+
 
 ## Implementation details
 
@@ -218,7 +219,8 @@ This function checks the game stage, the number of registered players and the pa
 
 Input values of fuel and payload cannot be exceeded by predetermined values
 
-```rust title="galactic-express/src/lib.rs"
+
+```rust title="galactic-express/io/src/lib.rs"
 // maximum fuel value that can be entered by the user
 pub const MAX_FUEL: u8 = 100;
 // maximum payload value that can be entered by the user
