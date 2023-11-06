@@ -92,13 +92,13 @@ edition = "2021"
 license = "GPL-3.0"
 
 [dependencies]
-gstd = { git = "https://github.com/gear-tech/gear.git", features = ["debug"], tag = "v1.0.0" }
+gstd = { git = "https://github.com/gear-tech/gear.git", features = ["debug"], tag = "v1.0.1" }
 
 [build-dependencies]
-gear-wasm-builder = { git = "https://github.com/gear-tech/gear.git", tag = "v1.0.0" }
+gear-wasm-builder = { git = "https://github.com/gear-tech/gear.git", tag = "v1.0.1" }
 
 [dev-dependencies]
-gtest = { git = "https://github.com/gear-tech/gear.git", tag = "v1.0.0" }
+gtest = { git = "https://github.com/gear-tech/gear.git", tag = "v1.0.1" }
 ```
 
 5. 用我们的第一个智能合约的代码替换 `lib.rs`。在编辑器中打开 `src/lib.rs` 并粘贴以下代码：
