@@ -47,8 +47,8 @@ Additionally, you can handle incoming payload and return only the necessary part
 extern "C" fn state() {
     let index: usize = msg::load().expect("Unable to decode `usize`");
     let wallets = unsafe { WALLETS.clone() };
-    if i < wallets.len() => {
-        msg::reply(wallets[i], 0).expect("Failed to share state");
+    if index < wallets.len() => {
+        msg::reply(wallets[index], 0).expect("Failed to share state");
     } else {
         panic!("Wallet index out of bounds");
     }
