@@ -40,7 +40,7 @@ $$
 It is possible to generalize the formula:
 
 $$
-r(a, b) = R\sum_{t=a}^{t=b} \frac {l(t)} {L(t)}
+r(a, b) = R\sum_{t=a}^b \frac {l(t)} {L(t)}
 $$
 
 where:

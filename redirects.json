@@ -1,4 +1,4 @@
-const urlList = [
+[
     {
         "to": "/docs/gear/glossary",
         "from": "/gear/glossary"
@@ -356,5 +356,3 @@ const urlList = [
         "from": "/tequila-train"
     }
 ]
-
-module.exports.urlList = urlList;
