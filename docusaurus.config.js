@@ -1,5 +1,5 @@
-import lightCodeTheme from 'prism-react-renderer';///themes/github';
-import darkCodeTheme from 'prism-react-renderer';///themes/dracula';
+import lightCodeTheme from 'prism-react-renderer';
+import darkCodeTheme from 'prism-react-renderer';
 import redirects from './redirects.json';
 
 import remarkMath from 'remark-math';
