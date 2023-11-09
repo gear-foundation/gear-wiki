@@ -6,6 +6,7 @@ sidebar_position: 5
 # Staking
 
 ## Introduction
+
 Stacking is an analogue of a bank deposit, receiving passive earnings due to simple storage of cryptomonets.
 The percentage of income may be different – it all depends on the term of the deposit.
 
@@ -14,21 +15,26 @@ Anyone can create their own Staking contract and run it on the Gear Network. To 
 This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios.
 
 ### Mathematics
+
 You can stake the fungible token into the contract (So you deposit tokens into the staking contract and later claim that token (or another fungible token) for a reward.
-A fixed amount of reward  is minted for certain time interval (it can be a second, minute or day)
+
+A fixed amount of reward is minted for certain time interval (it can be a second, minute or day)
 Rewards are distributed fairly across stakers.
+
 How rewards work:
-Lets we have Alice who stakes 100 tokens and Bob who stakes 50 tokens. Lets in our example reward tokens are minted every minute.
-In total inside the staking contract there are 150 tokens. One week later Alice decided to unstake her tokens. The length of time Alice tokens were staked is 7 * 24 * 60. The amount of reward tokens:
+
+Let's we have Alice who stakes 100 tokens and Bob who stakes 50 tokens. Lets in our example reward tokens are minted every minute.
+
+In total inside the staking contract there are 150 tokens. One week later Alice decided to unstake her tokens. The length of time Alice tokens were staked is $7 ⋅ 24 ⋅ 60$. The amount of reward tokens:
 
 $$
-R * \frac {100} {150} * 7 * 24 * 60
+R ⋅ \frac {100} {150} ⋅ 7 ⋅ 24 ⋅ 60
 $$
 
-Another week later Bob also decides to unstake his 50 tokens. Lets calculate his reward. During the first week he staked 50 tokens out of 150 tokens. During the second week the he staked 50 tokens out of 50. Then his reward:
+Another week later Bob also decides to unstake his 50 tokens. Let's calculate his reward. During the first week, he staked 50 tokens out of 150 tokens. During the second week, he staked 50 tokens out of 50. Then his reward:
 
 $$
-R * (\frac {50} {150} + \frac {50} {50}) * 7 * 24 * 60
+R ⋅ (\frac {50} {150} + \frac {50} {50}) ⋅ 7 ⋅ 24 ⋅ 60
 $$
 
 It is possible to generalize the formula:
@@ -38,24 +44,25 @@ r(a, b) = R\sum_{t=a}^{t=b} \frac {l(t)} {L(t)}
 $$
 
 where:
--	r(a, b) -  reward for user for time interval a <= t <= b;
--	R - rewards minted per minute;
--	L(t) - total staked amount of tokens at time t;
--	l(t) - token staked by user at time t;
+-	$r(a, b)$ - reward for user for time interval $a \le t \le b$;
+-	$R$ - rewards minted per minute;
+-	$L(t)$ - total staked amount of tokens at time $t$;
+-	$l(t)$ - token staked by user at time $t$;
 
-To implement that formula it’s necessary to store l(t) for each user and for each time interval and L(t) for each time interval. In order to compute a reward we have to run a for loop for each time interval. That operation сonsumes a lot of gas and storage.
+
+To implement that formula it’s necessary to store $l(t)$ for each user and for each time interval and $L(t)$ for each time interval. In order to compute a reward we have to run a for loop for each time interval. That operation сonsumes a lot of gas and storage.
 It can be done in a more efficient way:
 
-Let l(t) for a user is constant k for  a <= t <= b. Then:
+Let $l(t)$ for a user is constant $k$ for $a \le t \le b$. Then:
 
 $$
-r(a, b) = R\sum_{t=a}^{t=b} \frac {l(t)} {L(t)} = Rk\sum_{t=a}^{t=b} \frac {1} {L(t)}
+r(a, b) = R\sum_{t=a}^b \frac {l(t)} {L(t)} = Rk\sum_{t=a}^b \frac {1} {L(t)}
 $$
 
 That equation can be further simplified:
 
 $$
-\sum_{t=a}^{t=b} \frac {1} {L(t)} = \frac {1} {L(a)} + \frac {1} {L(a + 1)} + ... + \frac {1} {L(b)} =
+\sum_{t=a}^b \frac {1} {L(t)} = \frac {1} {L(a)} + \frac {1} {L(a + 1)} + ... + \frac {1} {L(b)} =
 $$
 
 $$
@@ -64,13 +71,14 @@ $$
 $$
 
 $$
-\sum_{t=0}^{t=b} \frac {1} {L(t)} - \sum_{t=0}^{t=a-1} \frac {1} {L(t)}
+\sum_{t=0}^b \frac {1} {L(t)} - \sum_{t=0}^{a-1} \frac {1} {L(t)}
 $$
+
 
 So, the equation to calculate the amount of reward that a user will receive from t=a to t=b under the condition the number of tokens he staked is constant:
 
 $$
-Rk\sum_{t=a}^{t=b} \frac {1} {L(t)} = Rk(\sum_{t=0}^{t=b} \frac {1} {L(t)} - \sum_{t=0}^{t=a-1} \frac {1} {L(t)})
+Rk\sum_{t=a}^b \frac {1} {L(t)} = Rk(\sum_{t=0}^b \frac {1} {L(t)} - \sum_{t=0}^{a-1} \frac {1} {L(t)})
 $$
 
 Based on that equation the implementation in the smart contract can be written:
@@ -79,11 +87,15 @@ Based on that equation the implementation in the smart contract can be written:
 ```
 
 ### Contract description
+
 The admin initializes the contract by transmitting information about the staking token, reward token and distribution time (`InitStaking` message).
+
 Admin can view the Stakers list (`GetStakers` message). The admin can update the reward that will be distributed (`UpdateStaking` message).
+
 The user first makes a bet (`Stake` message), and then he can receive his reward on demand (`GetReward` message). The user can withdraw part of the amount (`Withdraw` message).
 
 ### Source files
+
 1. `staking/src/lib.rs` - contains functions of the 'staking' contract.
 2. `staking/io/src/lib.rs` - contains Enums and structs that the contract receives and sends in the reply.
 
@@ -110,31 +122,19 @@ struct Staking {
 ```
 where:
 
-`owner` - the owner of the staking contract
-
-`staking_token_address` - address of the staking token contract
-
-`reward_token_address` - address of the reward token contract
-
-`tokens_per_stake` - the calculated value of tokens per stake
-
-`total_staked` - total amount of deposits
-
-`distribution_time` - time of distribution of reward
-
-`reward_total` - the reward to be distributed within distribution time
-
-`produced_time` - time of `reward_total` update
-
-`all_produced` - the reward received before the update `reward_total`
-
-`reward_produced` - the reward produced so far
-
-`stakers` - 'map' of the 'stakers'
-
-`transactions` - 'map' of the 'transactions'
-
-`current_tid` - current transaction identifier.
+- `owner` - the owner of the staking contract
+- `staking_token_address` - address of the staking token contract
+- `reward_token_address` - address of the reward token contract
+- `tokens_per_stake` - the calculated value of tokens per stake
+- `total_staked` - total amount of deposits
+- `distribution_time` - time of distribution of reward
+- `reward_total` - the reward to be distributed within distribution time
+- `produced_time` - time of `reward_total` update
+- `all_produced` - the reward received before the update `reward_total`
+- `reward_produced` - the reward produced so far
+- `stakers` - 'map' of the 'stakers'
+- `transactions` - 'map' of the 'transactions'
+- `current_tid` - current transaction identifier.
 
 
 ```rust title="staking/io/src/lib.rs"
@@ -147,13 +147,10 @@ pub struct InitStaking {
 ```
 where:
 
-`staking_token_address` - address of the staking token contract
-
-`reward_token_address` - address of the reward token contract
-
-`distribution_time` - time of distribution of reward
-
-`reward_total` - the reward to be distributed within distribution time
+- `staking_token_address` - address of the staking token contract
+- `reward_token_address` - address of the reward token contract
+- `distribution_time` - time of distribution of reward
+- `reward_total` - the reward to be distributed within distribution time
 
 
 ```rust title="staking/io/src/lib.rs"
@@ -166,14 +163,10 @@ pub struct Staker {
 ```
 where:
 
-`balance` - staked amount
-
-`reward_allowed` - the reward that could have been received from the withdrawn amount
-
-`reward_debt` - The reward that the depositor would have received if he had initially paid this amount
-
-`distributed` - total remuneration paid
-
+- `balance` - staked amount
+- `reward_allowed` - the reward that could have been received from the withdrawn amount
+- `reward_debt` - The reward that the depositor would have received if he had initially paid this amount
+- `distributed` - total remuneration paid
 
 ### Enums
 
@@ -259,7 +252,7 @@ Calculates the reward of the staker that is currently available.
 
 The return value cannot be less than zero according to the algorithm
 ```rust title="staking/src/lib.rs"
-fn calc_reward(&mut self) -> Result<u128, Error> 
+fn calc_reward(&mut self) -> Result<u128, Error>
 ```
 
 Updates the staking contract.
@@ -273,7 +266,7 @@ fn update_staking(&mut self, config: InitStaking) -> Result<StakingEvent, Error>
 Stakes the tokens
 
 ```rust title="staking/src/lib.rs"
-async fn stake(&mut self, amount: u128) -> Result<StakingEvent, Error> 
+async fn stake(&mut self, amount: u128) -> Result<StakingEvent, Error>
 ```
 
 Sends reward to the staker
@@ -351,6 +344,7 @@ async fn main() {
 ```
 
 ### Programm metadata and state
+
 Metadata interface description:
 
 ```rust title="staking/io/src/lib.rs"
@@ -365,6 +359,7 @@ impl Metadata for StakingMetadata {
     type State = Out<IoStaking>;
 }
 ```
+
 To display the full contract state information, the `state()` function is used:
 
 ```rust title="staking/src/lib.rs"
@@ -375,6 +370,7 @@ extern fn state() {
         .expect("Failed to encode or reply with `IoStaking` from `state()`");
 }
 ```
+
 To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `IoStaking` state. For example - [staking/state](https://github.com/gear-foundation/dapps/tree/master/contracts/staking/state):
 
 ```rust title="staking/state/src/lib.rs"
@@ -397,6 +393,7 @@ pub mod metafns {
 ```
 
 ## Consistency of contract states
+
 The `Staking` contract interacts with the `fungible` token contract. Each transaction that changes the states of Staking and the fungible token is stored in the state until it is completed. User can complete a pending transaction by sending a message exactly the same as the previous one with indicating the transaction id. The idempotency of the fungible token contract allows to restart a transaction without duplicate changes which guarantees the state consistency of these 2 contracts.
 
 
@@ -407,7 +404,6 @@ A source code of the contract example provided by Gear is available on GitHub: [
 See also examples of the smart contract testing implementation based on gtest:
 
 - [`simple_test.rs`](https://github.com/gear-foundation/dapps/blob/master/contracts/staking/tests/simple_test.rs).
-
 - [`panic_test.rs`](https://github.com/gear-foundation/dapps/blob/master/contracts/staking/tests/panic_test.rs).
 
 For more details about testing smart contracts written on Gear, refer to this article: [Program testing](/docs/developing-contracts/testing).
