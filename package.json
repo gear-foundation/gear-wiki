@@ -33,7 +33,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "rehype-katex": "^7.0.0",
-    "remark-math": "^3.0.1",
+    "remark-math": "^6.0.0",
     "sass": "^1.69.5",
     "url-loader": "^4.1.1"
   },
