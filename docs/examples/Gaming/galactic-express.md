@@ -16,6 +16,40 @@ The article explains the programming interface, data structure, basic functions 
 
 ## How to run
 
+### The gameplay
+
+Everyone can play the game via this link - [Play Galactic Express](https://galactic-express.vara-network.io/).
+
+1. Download the pre-built program file of the game via [this link](https://github.com/gear-foundation/dapps/releases/download/nightly/galactic_express.opt.wasm).
+
+2. Go to [Gear Idea](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Frpc.vara-network.io) portal and Upload the program to the Vara Network:
+
+    a. Connect an account via any supported wallet (VARA tokens are required for gas fees if the program is uploaded to the Vara mainnet, for Vara Network Testent there is an option to request test tokens).
+
+    b. Select the downloaded `.wasm` file to upload, click the `Calculate gas` button, and then the `Upload Program` button, sign the transaction.
+
+![galactic-express](../img/galex_upload.png)
+
+3. Once the game program is uploaded to the network, navigate to `Programs`, copy the program's address and paste it into the [game](https://galactic-express.vara-network.io/).
+
+![galactic-express](../img/galex_address.png)
+
+4. Go to the program's interface, connect the wallet account, paste the address of your program and click `Continue`.
+
+5. Invite up to 3 more friends to play the game - share the program address with them for registration.
+
+6. Players should specify the game parameters for registration - VARA deposit, Payload and Fuel amount and click the `Launch Rocket` button.
+
+![galactic-express](../img/galex-registration.png)
+
+7. As soon as everyone registered, the game's admin clicks the `Launch rocket and start Game` button.
+
+![galactic-express](../img/galex-result.png)
+
+The game's program makes turns considering parameters specified by each player. Click the `Play again` and try another parameters to win, have fun :)
+
+### Run the app locally
+
 1. Build a contract
 > Additional details regarding this matter can be located within the [README](https://github.com/gear-foundation/dapps/tree/master/contracts/galactic-express/README.md) directory of the contract.
 
@@ -24,7 +58,6 @@ The article explains the programming interface, data structure, basic functions 
 
 3. Build and run user interface 
 > More information about this can be found in the [README](https://github.com/gear-foundation/dapps/tree/master/frontend/galactic-express/README.md) directory of the frontend.
-
 
 ## Implementation details
 
