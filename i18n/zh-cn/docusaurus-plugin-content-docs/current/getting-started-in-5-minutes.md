@@ -92,7 +92,7 @@ edition = "2021"
 license = "GPL-3.0"
 
 [dependencies]
-gstd = { git = "https://github.com/gear-tech/gear.git", features = ["debug"], tag = "v1.0.1" }
+gstd = { git = "https://github.com/gear-tech/gear.git", tag = "v1.0.1", features = ["debug"] }
 
 [build-dependencies]
 gear-wasm-builder = { git = "https://github.com/gear-tech/gear.git", tag = "v1.0.1" }

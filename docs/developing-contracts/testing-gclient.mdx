@@ -26,18 +26,14 @@ authors = ["Your Name"]
 edition = "2021"
 
 [dependencies]
-gstd = { git = "https://github.com/gear-tech/gear.git", features = ["debug"], tag = "v1.0.1" }
+gstd = { git = "https://github.com/gear-tech/gear.git", tag = "v1.0.1", features = ["debug"] }
 
 [build-dependencies]
 gear-wasm-builder = { git = "https://github.com/gear-tech/gear.git", tag = "v1.0.1" }
 
 [dev-dependencies]
 gclient = { git = "https://github.com/gear-tech/gear.git", tag = "v1.0.1" }
-tokio = { version = "1.23.0", features = ["full"] }
-
-[patch.crates-io]
-sp-core = { git = "https://github.com/gear-tech/substrate.git", branch = "gear-stable" }
-sp-runtime = { git = "https://github.com/gear-tech/substrate.git", branch = "gear-stable" }
+tokio = { version = "1", features = ["full"] }
 ```
 
 ## Running the node
