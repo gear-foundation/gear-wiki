@@ -123,7 +123,7 @@ The `debug!` macro is available only when the `"debug"` feature is enabled for t
 
 ```toml
 [dependencies]
-gstd = { git = "https://github.com/gear-tech/gear.git", tag = "v1.0.1", features = ["debug"] }
+gstd = { git = "https://github.com/gear-tech/gear.git", tag = "v1.0.2", features = ["debug"] }
 ```
 
 :::
