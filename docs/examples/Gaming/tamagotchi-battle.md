@@ -22,7 +22,7 @@ The article explains the programming interface, data structure, basic functions 
 > Further details regarding the process of contract uploading can be located within the [Getting Started](../../getting-started-in-5-minutes/#deploy-your-smart-contract-to-the-testnet) section.
 
 3. Build and run user interface 
-> More information about this can be found in the [README](https://github.com/gear-foundation/dapps/tree/master/frontend/tamagotchi-battle/frontend/README.md) directory of the frontend.
+> More information about this can be found in the [README](https://github.com/gear-foundation/dapps/blob/master/frontend/apps/tamagotchi-battle/README.md) directory of the frontend.
 
 ## Implementation details
 

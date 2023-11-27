@@ -28,7 +28,7 @@ Also everyone can play the game via this link - [Play Battleship](https://battle
 > Initiate the process by uploading the bot contract, followed by the subsequent upload of the main contract. Further details regarding the process of contract uploading can be located within the [Getting Started](../../getting-started-in-5-minutes/#deploy-your-smart-contract-to-the-testnet) section.
 
 3. Build and run user interface 
-> More information about this can be found in the [README](https://github.com/gear-foundation/dapps/tree/master/frontend/battleship/README.md) directory of the frontend.
+> More information about this can be found in the [README](https://github.com/gear-foundation/dapps/blob/master/frontend/apps/battleship/README.md) directory of the frontend.
 
 4. **Optional**. Build and run the backend to release vouchers
 > Comprehensive instructions on the voucher execution process are provided within the [README](https://github.com/gear-foundation/dapps-battleship-backend). 

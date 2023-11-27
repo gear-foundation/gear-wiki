@@ -49,9 +49,9 @@ There are two ways to upload the game onto the chain:
 ### 2. Using [`gear-js/cli`](https://github.com/gear-tech/gear-js/tree/main/tools/cli)
 
 It allows sending transactions to the Gear node based on `yaml` file:
-- Go to folder with [scripts](https://github.com/gear-foundation/dapps/tree/master/frontend/syndote/upload-game):
+- Go to folder with [scripts](https://github.com/gear-foundation/dapps/tree/master/frontend/dev/syndote-upload-game):
     ```
-    cd ./upload-game/
+    cd ./syndote-upload-game/
     ```
 - Upload previously built files into `/programs` folder (replace if necessary): `player.meta.txt`, `syndote.meta.txt`, `player.opt.wasm`, `syndote.opt.wasm`
 
@@ -111,7 +111,7 @@ It allows sending transactions to the Gear node based on `yaml` file:
 
 ## 🖥️ Build and run user interface
 
-1. Download [this repository](https://github.com/gear-foundation/dapps/tree/master/frontend/syndote) locally and go to the `frontend` folder.
+1. Download [this repository](https://github.com/gear-foundation/dapps/tree/master/frontend/apps/syndote) locally and go to the `frontend` folder.
 2. Install packages:
 ```sh
 yarn install

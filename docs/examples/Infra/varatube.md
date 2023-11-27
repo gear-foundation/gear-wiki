@@ -55,7 +55,7 @@ The VaraTube consists of two smart contracts:
 
 ### 🖥️ Run UI
 
-1. Download React application repository and install packages as described in [frontend/README.md](https://github.com/gear-foundation/dapps/blob/master/frontend/varatube/README.md)
+1. Download React application repository and install packages as described in [frontend/README.md](https://github.com/gear-foundation/dapps/blob/master/frontend/apps/varatube/README.md)
 
 ```sh
 yarn install
