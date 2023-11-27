@@ -93,7 +93,7 @@ Add it to the `[build-dependencies]` section in the `Cargo.toml` file:
 
 ```toml
 [build-dependencies]
-gear-wasm-builder = { git = "https://github.com/gear-tech/gear.git", tag = "v1.0.1", features = ["wasm-opt"] }
+gear-wasm-builder = { git = "https://github.com/gear-tech/gear.git", tag = "v1.0.2", features = ["wasm-opt"] }
 ```
 
 And add the following code to the `build.rs` file:
