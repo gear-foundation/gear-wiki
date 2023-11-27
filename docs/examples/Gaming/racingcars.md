@@ -14,7 +14,7 @@ In a well-known Ethereum-based [0xMonaco](https://0xmonaco.ctf.paradigm.xyz/) ga
 For this example version, the game was refined to enhance its appeal. The game entails a competition where a user races against two pre-uploaded smart contracts on the blockchain. Three cars vie to be the first to cross the finish line in several moves. Both the user and the contract algorithms decide their next move – whether to accelerate or sabotage another car to slow it down.
 
 The source code for the game contract and algorithm examples are available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/car-races). 
-The [frontend application](https://github.com/gear-foundation/dapps/tree/master/frontend/racing-car-game) facilitates gameplay and interacts with the smart contracts.
+The [frontend application](https://github.com/gear-foundation/dapps/tree/master/frontend/apps/racing-car-game) facilitates gameplay and interacts with the smart contracts.
 This article describes the program interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios.
 
 Everyone can play the game via this link - [Play Racing Cars](https://racing.vara-network.io/) (VARA tokens are requred for gas fees).
@@ -28,7 +28,7 @@ Everyone can play the game via this link - [Play Racing Cars](https://racing.var
 > Initiate the process by uploading the bot contract, followed by the subsequent upload of the main contract. Further details regarding the process of contract uploading can be located within the [Getting Started](../../getting-started-in-5-minutes/#deploy-your-smart-contract-to-the-testnet) section.
 
 3. Build and run user interface 
-> More information about this can be found in the [README](https://github.com/gear-foundation/dapps/tree/master/frontend/racing-car-game/README.md) directory of the frontend.
+> More information about this can be found in the [README](https://github.com/gear-foundation/dapps/blob/master/frontend/apps/racing-car-game/README.md) directory of the frontend.
 
 ## Implementation details
 

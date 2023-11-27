@@ -14,7 +14,7 @@ A smart contract examples are available on GitHub so anyone can easily create th
 - [Gear Non-Fungible Token](https://github.com/gear-foundation/dapps/tree/master/contracts/non-fungible-token).
 - [NFT marketplace](https://github.com/gear-foundation/dapps/tree/master/contracts/nft-marketplace).
 
-- Marketplace UI available on [Github](https://github.com/gear-foundation/dapps/tree/master/frontend/nft-marketplace/frontend)
+- Marketplace UI available on [Github](https://github.com/gear-foundation/dapps/tree/master/frontend/apps/nft-marketplace)
 
 ## How to run
 
@@ -66,7 +66,7 @@ yarn install
 
 2. Configure .evn file. Specify network address and program ID like in the example below:
 
-For proper application functioning, one needs to adjust an environment variable parameters. An example is available [here](https://github.com/gear-foundation/dapps/blob/master/frontend/nft-marketplace/frontend/.env.example).
+For proper application functioning, one needs to adjust an environment variable parameters. An example is available [here](https://github.com/gear-foundation/dapps/blob/master/frontend/apps/nft-marketplace/.env.example).
 
 ```sh
 REACT_APP_NODE_ADDRESS=wss://testnet.vara-network.io:443

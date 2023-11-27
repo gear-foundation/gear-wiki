@@ -12,7 +12,7 @@ A classic and simple game in which the user competes against a smart contract op
 Usually, the state of a smart contract advances as the application is utilized. A <u>distinctive feature</u> of this game's contract implementation is its capability to clean up its storage. In other words, as soon as the game session is completed and the results are recorded in the contract, all unnecessary data structures are purged through a special **delayed message**. [Delayed messages](/docs/developing-contracts/delayed-messages) represent one of the various unique features of the Gear Protocol.
 
 The source code is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/tic-tac-toe). 
-The [frontend application](https://github.com/gear-foundation/dapps/tree/master/frontend/tic-tac-toe) facilitates gameplay and interacts with the smart contract.
+The [frontend application](https://github.com/gear-foundation/dapps/tree/master/frontend/apps/tic-tac-toe) facilitates gameplay and interacts with the smart contract.
 This article describes the program interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios.
 
 Everyone can play the game via this link - [Play Tic-Tac-Toe](https://tictactoe.vara-network.io/) (VARA tokens are requred for gas fees).
@@ -26,7 +26,7 @@ Everyone can play the game via this link - [Play Tic-Tac-Toe](https://tictactoe.
 > Initiate the process by uploading the bot contract, followed by the subsequent upload of the main contract. Further details regarding the process of contract uploading can be located within the [Getting Started](../../getting-started-in-5-minutes/#deploy-your-smart-contract-to-the-testnet) section.
 
 3. Build and run user interface 
-> More information about this can be found in the [README](https://github.com/gear-foundation/dapps/tree/master/frontend/tic-tac-toe/README.md) directory of the frontend.
+> More information about this can be found in the [README](https://github.com/gear-foundation/dapps/blob/master/frontend/apps/tic-tac-toe/README.md) directory of the frontend.
 
 ## Implementation details
 

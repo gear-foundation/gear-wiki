@@ -9,7 +9,7 @@ sidebar_position: 5
 Game of chance is a simple game smart contract with the lottery logic.
 
 - Program source code available on [Github](https://github.com/gear-foundation/dapps/tree/master/contracts/game-of-chance)
-- dApp UI [Github](https://github.com/gear-foundation/dapps/tree/master/frontend/game-of-chance)
+- dApp UI [Github](https://github.com/gear-foundation/dapps/tree/master/frontend/apps/game-of-chance)
 
 ## How to run
 
@@ -28,7 +28,7 @@ Game of chance is a simple game smart contract with the lottery logic.
 
 ### 🖥️ Run UI
 
-1. Install packages as described in [frontend/README.md](https://github.com/gear-foundation/dapps/blob/master/frontend/game-of-chance/README.md)
+1. Install packages as described in [frontend/README.md](https://github.com/gear-foundation/dapps/blob/master/frontend/apps/game-of-chance/README.md)
 2. Configure `.env` file. Specify network address and program ID like in the example below:
 
 ```sh
@@ -174,6 +174,6 @@ To display only necessary certain values from the state, you need to write a sep
 
 ## Source code
 
-The source code of the Game of Chance smart contract and an implementation of its testing are available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/frontend/game-of-chance). They can be used as is or modified to suit your own scenarios.
+The source code of the Game of Chance smart contract and an implementation of its testing are available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/frontend/apps/game-of-chance). They can be used as is or modified to suit your own scenarios.
 
 For more details about testing smart contracts written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.

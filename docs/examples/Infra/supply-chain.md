@@ -7,7 +7,7 @@ sidebar_position: 2
 In logistics, a supply chain is a system for tracking and delivering to an end consumer various items. As a rule, such systems can't work without a lot of paperwork and other layers of bureaucracy. All of this costs a lot of time and money and increases the likelihood of an accidental error or, worst of all, a fraud. With the help of smart contract and blockchain technologies, it is possible to eliminate these problems by making a supply chain more efficient, reliable and transparent.
 
 - [Supply chain contract](https://github.com/gear-foundation/dapps/tree/master/contracts/supply-chain).
-- [Supply chain UI](https://github.com/gear-foundation/dapps/tree/master/frontend/supply-chain).
+- [Supply chain UI](https://github.com/gear-foundation/dapps/tree/master/frontend/apps/supply-chain).
 
 ## How to run
 
@@ -65,7 +65,7 @@ yarn install
 
 2. Configure .evn file. Specify network address and program ID like in the example below:
 
-For proper application functioning, one needs to adjust an environment variable parameters. An example is available [here](https://github.com/gear-foundation/dapps/blob/master/frontend/supply-chain/.env.example).
+For proper application functioning, one needs to adjust an environment variable parameters. An example is available [here](https://github.com/gear-foundation/dapps/blob/master/frontend/apps/supply-chain/.env.example).
 
 ```sh
 REACT_APP_NODE_ADDRESS=wss://rpc-node.gear-tech.io

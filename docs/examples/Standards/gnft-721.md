@@ -41,7 +41,7 @@ royalties `Option<Royalties>` - Optional param to specify accounts to pay royalt
 
 1. Download the React application repository from [GitHub](https://github.com/gear-foundation/dapps/tree/master/frontend/non-fungible-token).
 
-2. Install packages as described in [frontend/README.md](https://github.com/gear-foundation/dapps/blob/master/frontend/non-fungible-token/README.md)
+2. Install packages as described in [README.md](https://github.com/gear-foundation/dapps/blob/master/frontend/apps/non-fungible-token/README.md)
 
 3. Configure .evn file. Specify network address and program ID like in the example below:
 
@@ -374,7 +374,7 @@ pub trait Metawasm {
 
 An NFT smart contract source code is available on [Github](https://github.com/gear-foundation/dapps/tree/master/contracts/non-fungible-token).
 
-The React frontend application can be downloaded [here](https://github.com/gear-foundation/dapps/tree/master/frontend/non-fungible-token).
+The React frontend application can be downloaded [here](https://github.com/gear-foundation/dapps/blob/master/frontend/apps/non-fungible-token).
 
 Gear provides a reusable [library](https://github.com/gear-foundation/dapps/tree/master/contracts/gear-lib/src/tokens) with core functionality for the gNFT protocol. By using object composition, that library can be utilized within a custom NFT contract implementation in order to minimize duplication of community available code.
 
