@@ -19,20 +19,22 @@ For example if you run the node as the root user on Linux (`$HOME` = `/root`) th
 
 Let's explore the data that the node stores in this directory.
 
-    └── gear
-        └── chains
-            ├── dev
-            │   └── ...
-            ├── gear_staging_testnet_v7
-            │   ├── db
-            │   │   └── full
-            │   ├── keystore
-            │   └── network
-            └── vara_network
-                ├── db
-                │   └── full
-                ├── keystore
-                └── network
+```
+└── gear
+    └── chains
+        ├── dev
+        │   └── ...
+        ├── gear_staging_testnet_v7
+        │   ├── db
+        │   │   └── full
+        │   ├── keystore
+        │   └── network
+        └── vara_network
+            ├── db
+            │   └── full
+            ├── keystore
+            └── network
+```
 
 ### Chains
 
