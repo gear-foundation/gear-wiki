@@ -5,209 +5,290 @@ sidebar_position: 1
 
 # Gear Fungible Token
 
-## What is ERC-20?
+Contract state:
 
-ERC-20 is a standard that’s used for creating and issuing smart contracts on the Ethereum blockchain. It was created by Ethereum developers on behalf of the Ethereum community in 2015, and it was officially recognized in 2017.
-
-These smart contracts can then be used to create tokenized assets that represent anything on the Ethereum blockchain like:
-- In-game currency
-- Financial instruments like a share in a company
-- Fiat currencies, like USD for example
-- Ounces of Gold
-
-These tokenized assets are known as fungible tokens as all instances of a given ERC-20 token are the same and they can be used interchangeably. A token that is unique and can not be interchangeable is known as a Non Fungible Token.
-
-Gear provides native implementation of fungible token (gFT) described in this article. It explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. Anyone can easily create their own application and run it on the Gear Network. The source code is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/fungible-token).
-
-The implementation of fungible token includes the following contracts:
-- The `master` fungible token that serves as a proxy program that redirects the message to the logic contract;
-- The token `logic` contract that includes the realization of main standard token functions. The logic is placed in a separate contract in order to be able to add functions without losing the address of the fungible token and the contract state;
-- The several `storage` contracts that store the balances of the users.
-
-![img alt](../img/overall_ft_arch.png#gh-light-mode-only)
-![img alt](../img/overall_ft_arch-dark.png#gh-dark-mode-only)
-
-**Features**:
-- `Preventing Duplicate Transaction (Maintaining idempotency)`.
-There are two possible risks when sending a transaction: the risk of sending duplicate transactions and the risk of not knowing the status of the transaction due to a network failure. The sender can be assured that the transaction will only be executed once (`idempotency`).
-- `Atomicity`.
-Maintaining idempotency makes it possible to implement different protocols for distributed transactions. For example, Saga Protocol. The standard also includes a lock/execute transfer function that allows the implementation of the `2 Phase Commit protocol` (2 PC).
-
-### Storage contract architecture
-The storage contract state has the following fields:
-- The address of the logic contract. The storage contract must execute messages received only from that address;
-
-    ```rust
-    ft_logic_id: ActorId
-    ```
-- The executed transactions. In each message the storage contract receives the hash of the transaction that is being executed and stores the result of its execution in the field `Executed`, which is necessary for maintaining `idempotency`. The field `Locked` serves for the transaction that is executed in 2 messages (for 2 phase commit protocol). If the transaction hash already exists in the state, the storage contract checks whether the transaction is two-phase. If it is, then it allows the execution, otherwise it replies with the result of the previous execution.
-
-    ```rust
-    transaction_status: HashMap<H256, (Executed, Locked)>
-    ```
-- Balances of accounts.
-
-    ```rust
-    balances: HashMap<ActorId, u128>
-    ```
-- Approvals of accounts.
-
-    ```rust
-    approvals: HashMap<ActorId, HashMap<ActorId, u128>>
-    ```
-The messages that the storage accepts:
-- `Increase balance`: the storage increases the balance of the indicated account;
-- `Decrease balance`: The storage decreases the balance of the indicated account;
-- `Approve`: The storage allows the account to give another account an approval to transfer his tokens;
-- `Transfer`: Transfer tokens from one account to another. The message is called from the logic contract when the token transfer occurs in one storage.
-- `Clear`: Remove the hash of the executed transaction.
-
-That storage contract doesn't make any asynchronous calls, so its execution is `atomic`.
-
-### The logic contract architecture
-The state of the logic contract consist of the following fields:
-- The address of the master token contract. The logic contract must execute messages only from that address:
 ```rust
-ftoken_id: ActorId
+struct Token 
+    balances: HashMap<ActorId, u128>,
+    allowances: HashMap<ActorId, HashMap<ActorId, u128>>,
+    nonces: HashMap<ActorId, u64>,
+    account_to_tx_ids: HashMap<ActorId, Vec<TxHash>,
+    tx_ids: HashMap<TxHash, (TokenMessage, TxResult)>,
+    deposits: HashMap<ActorId, u128>,
+}
 ```
-- The transactions. As in the storage contract, the logic contract receives the hash of the transaction that is being executed and stores the result of its execution. But unlike the storage contract, where message executions are atomic, the logic contract has to keep track of which message is being executed and what stage it is at.
+where:
+-  `balance`: a mapping or HashMap from account addresses to `u128` value representing the amount of tokens held by the user at that address;
+-  `allowances`: a mapping between an account and another mapping between an authorized spender account and the maximum amount of tokens they are permitted to transfer on behalf of the original account.
+-  `nonces`: a mapping from account to `u32` value, representing the nonce value for each account. The purpose of using nonces in a smart contract is to prevent replay attacks, which occur when an attacker tries to re-submit a previously executed transaction with the same parameters in an attempt to trick the system into processing it again. By incrementing the nonce value for each new transaction initiated by an account, the system can verify that the transaction is unique and has not been executed before. If the caller specifies an incorrect nonce value (i.e. one that is not equal to the current nonce value for their account), the transaction will be rejected, preventing any potential duplicate transactions.
+- `account_to_tx_ids`: a mapping from the account to the transactions executed in the token contract. It is very useful for state consistency, where two parties need to verify that they have the same representation of transactions associated with a specific user. This can provide an added layer of security and confidence in the execution of transactions.
+- `tx_ids`: a mapping from the transaction hash to the correspong message and its execution result. This allows for easy retrieval of transaction information, such as the result of a particular transaction, using the transaction hash as a key. The `TokenMessage` and `TxResult` structures will be described below.
+- `deposits`: a mapping from account to the amount of Vara tokens the account has deposited in the token contract. This deposit serves as collateral for the account to store its transaction history in the contract. To withdraw locked Vara tokens the account has to clear his transaction history. Overall, it is a mechanism for incentivizing users to use the contract's storage efficiently and avoid bloating the contract with unnecessary data.
 
-  ```rust
-  transactions: HashMap<H256, Transaction>
-  ```
-  The `Transaction` is the following struct:
+## Messages Interface
 
-    ```rust
-    pub struct Transaction {
-        msg_source: ActorId,
-        operation: Operation,
-        status: TransactionStatus,
-    }
-    ```
-    Where `msg_source` is an account that sends a message to the main contract. `Operation` is the action that the logic contract should process and `status` is the transaction status. It is the following enum:
-
-    ```rust
-    pub enum TransactionStatus {
-        InProgress,
-        Success,
-        DecreaseSuccess,
-        Failure,
-        Rerun,
-        Locked,
-    }
-    ```
-   -  `InProgress` - the transaction execution started;
-   - `Success` or `Failure` - the transaction was completed (successfully or not). In this case, the logic contract does nothing, but only sends a response that the transaction with this hash has already been completed.
-  - `DecreaseSuccess` - this status is related to a transfer transaction that occurs between accounts located in different storage. It means that the decrease part has successfully been executed and it’s now necessary to complete the increase part of the transaction;
-  - `Locked`- the transaction is executed in 2 messages (2 phase commit protocol), the first message (`Lock`) was executed and the contract expects to receive either `Commit` or `Abort` messages;
-- The code hash of the storage contract. The logic contract is able to create a new storage contract when it is necessary. Now the storage creation is implemented as follows: the logic contract takes the first letter of the account address. If the storage contract for this letter is created, then it stores the balance of this account in this contract. If not, it creates a new storage contract
-
-    ```rust
-    storage_code_hash: H256
-    ```
-- The mapping from letters to the storage addresses.
-
-    ```rust
-    id_to_storage: HashMap<String, ActorId>
-    ```
-
-The logic contract receives from the master contract the following message:
-
+The message the token contract should handle:
 ```rust
-Message {
-    transaction_hash: H256,
-    account: ActorId,
-    payload: Vec<u8>,
-},
+enum TokenMessage {
+    Transfer {
+            nonce: Option<u32>,
+            tx_id: u32,
+            recipient: ActorId,
+            amount: u128,
+    },
+    TransferBatch {
+        nonce: Option<u32>,
+        tx_id: u32,
+        recipients: Vec<ActorId>,
+        amounts: Vec<u128>,
+    },
+    TransferFrom {
+        nonce: Option<u32>,
+        tx_id: u32,
+        sender: ActorId,
+        recipient: ActorId,
+        amount: u128,
+    },
+    TransferFromBatch {
+        nonce: Option<u32>,
+        tx_id: u32,
+        senders: Vec<ActorId>,
+        recipients: Vec<ActorId>,
+        amounts: Vec<u128>,
+    },
+    Approve {
+        nonce: Option<u64>,
+        tx_id: u32,
+        spender: Vec<ActorId>,
+        amount: Vec<u128>,
+    },
+    GetNonce {
+        account: ActorId,
+    },
+    GetTxResult {
+        tx_hash: TxHash,
+    },
+    ClearTxs {
+        account: ActorId,
+    },
+}
 ```
-The `account` is an actor who sends the message to the master contract. The payload is the encoded operation the logic contract has to process:
-
+The contract responds with `Result<TokenReply, TokenError>`, where `TokenReply` is a reply in case of successful message execution, and `TokenError` contains information about the error that occurred during message processing.
 ```rust
-pub enum Operation {
-   Mint {
-       recipient: ActorId,
-       amount: u128,
-   },
-   Burn {
-       sender: ActorId,
-       amount: u128,
-   },
-   Transfer {
-       sender: ActorId,
-       recipient: ActorId,
-       amount: u128,
-   },
-   LockTransfer {
-       sender: ActorId,
-       recipient: ActorId,
-       amount: u128,
-   },
-   Commit,
-   Abort,
-   Approve {
-       approved_account: ActorId,
-       amount: u128,
-   },
+enum TokenReply {
+    TokensTransferred,
+    TokenTransferredInBatch {
+        errors: Option<(
+            recipients: Vec<ActorId>,
+            amounts: Vec<u128>,
+            errors: Vec<TokenError>
+        )>,
+    },
+    TokenTransferredFromInBatch {
+        errors: Option<(
+            senders: Vec<ActorId>,
+            recipients: Vec<ActorId>,
+            amounts: Vec<u128>,
+            errors: Vec<TokenError>
+        )>,
+    },
+    TokensApproved,
+    NonceOfAccount {
+        nonce: u32,
+    },
+    TxResult {
+        result: (TokenMessage, TxResult)
+    },
+    TxsCleared,
+}
+```
+Error that can occur during messages handling:
+```rust 
+enum TokenError {
+    NotAllowedToTransfer,
+    NotEnoughBalance,
+    ZeroAccount,
+}
+```
+The result of the message handling can be the following:
+```rust
+enum TxResult {
+    Success,
+    Error(TokenError),
+    ErrorsInBatches(Vec<Option<TokenError>)
 }
 ```
 
-Since the enum can be changed during upgrading the logic contract, the master contract does not know a particular type of payload structure. That is why it sends payload as `Vec<u8>` instead of enum `Operation`, and upon receiving this message, the logic contract decodes this into the type it expects to receive.
-During the message `Mint`, `Burn` or `Transfer` (not `locking Transfer` for 2PC)  that occurs between accounts that are in the same storage, the logic contract sends only one message to the storage contract.
-
-![img alt](../img/simple.png#gh-light-mode-only)
-![img alt](../img/simple-dark.png#gh-dark-mode-only)
-
-When the transfer occurs between 2 different storages, the contract acts as follows:
-1. The logic contract sends the `DecreaseBalance `message to the storage contract.
-2. The following cases of the message execution are possible:
-- `Success`: The logic contract sets the transaction status to `DecreaseSuccess`;
-- `Failure`: The logic contract sets the transaction status to `Failure`;
-- The message execution ran out of gas. The system sends a signal to the logic contract. One of the solutions is to leave status as it was (`InProgress`) since we cannot know for sure the result of the message execution in the storage contract. It is not necessary to handle that case in the `handle_signal` entrypoint.
-3. If the message has been executed successfully, the logic contract sends the message `IncreaseBalance` to another storage contract. It is important to notice that the gas can run out here and the status of the successful previous message execution will not be saved. But that state can be saved in `handle_signal`.
-4. If the message `IncreaseBalance` has been executed successfully, the logic contract saves the status and replies to the main contract. And again here, the `handle_signal` can be used to save that status, if the gas ran out after successful `IncreaseBalance` execution.
-If the gas ran out during the `IncreaseBalance` execution in the storage contract, we save the status `DecreaseSuccess`, so that you can not track this case in the `handle_signal` function.
-The case when the message has been executed with failure must be impossible (It can be possible if let’s say there was a problem with the memory of the contract, however, tracking the filling of the storage contract is also the responsibility of the logic contract). The transaction must be rerun. However, if the error occurs again and again, then you need to return the balance to the sender.
-
-![img alt](../img/transfer.png#gh-light-mode-only)
-![img alt](../img/transfer-dark.png#gh-dark-mode-only)
-
-When the `transfer` occurs in two transactions (2 PC):
-1. The logic contract sends the message `DecreaseBalance` to the storage contract. If it is successful, it sets the status to `Lock`.
-
-![img alt](../img/lock.png#gh-light-mode-only)
-![img alt](../img/lock-dark.png#gh-dark-mode-only)
-
-2. In the next step, the logic contract must receive either `Сommit` or an `Abort` action. If it receives a `Сommit` message, it just sets the transaction status to `Success`. Otherwise, it sends the message `IncreaseBalance` to the storage contract.
-
-![img alt](../img/commit_abort.png#gh-light-mode-only)
-![img alt](../img/commit_abort-dark.png#gh-dark-mode-only)
-
-### The master contract architecture
-The master contract state has the following fields:
-- The address of the contract admin. He has the right to upgrade the logic contract:
-
+## Detailed description
+Incoming messages:
+-   The `Transfer` message: transfers tokens from the caller's account to the recipient's account. 
+ `tx_id` field is used for transaction identification and to ensure transaction idempotency. The `nonce` field is optional.
     ```rust
-    admin: ActorId,
+        Transfer {
+            nonce: Option<u32>,
+            tx_id: u32,
+            recipient: ActorId,
+            amount: u128,
+        },
     ```
-- The address of the logic contract:
-
+    In case of successful transaction execution, the contract responds with the message:
     ```rust
-    ft_logic_id: ActorId,
+        Ok(TokenReply::TokenTransferred)
     ```
-- The transaction history:
-
+    In case of an error, the contract responds with `Err(TokenError)` indicating the error that occur during message processing.
+    The Token saves the transaction result to the `tx_ids` field that here can be `TxResult::Success` or `TxResult::Error`.
+    
+- The `TransferBatch` message: transfers tokens in batches, where the arrays `recipients` and `amounts` are of equal length. This means that the value in `amounts[i]` is transferred to `recipients[i]`. 
+The `nonce` and `tx_id` fields apply to the entire batch transfer, not individual transfers within the batch. So if provided, the same nonce and tx_id value should be used for all transfers within the batch.
+    ```rust 
+    TransferBatch {
+        nonce: Option<u32>,
+        tx_id: u32,
+        recipients: Vec<ActorId>,
+        amounts: Vec<u128>,
+    },
+    ```
+     It is possible that some transfers will succeed and some will fail. In case all transfers are successful, the token will reply with:
+     ```rust
+        Ok(TokenReply::TokenTransferredInBatch {
+            errors: None
+        })
+    ```
+    If any transfer fails, the token will indicate it by responding with 
     ```rust
-    transactions: HashMap<H256, TransactionStatus>
+        Ok(TokenReply::TokenTransferredInBatch {
+            errors: Some(
+                recipiens: Vec<ActorId>,
+                amounts: Vec<u128>,
+                errors: Vec<TokenError>,
+            )
+        })
     ```
-    Where the TransactionStatus:
-    ```rust
-    pub enum TransactionStatus {
-        InProgress,
-        Success,
-        Failure,
-    }
-    ```
+    
+    The Token saves the transaction result to the `tx_ids` field that here can be `TxResult::Success` or `TxResult::ErrorsInBatches`.
 
-The contract receives a message from the account with `nonce`. It gets the hash of that transaction: it is the hash of the nonce with the account address.
-So, it is the user's responsibility to track its `nonce` and increase it. (But it is possible to implement that contract in such a way that it tracks the user number itself, and the field with `nonce` can be optional.)
-The main contract just redirects that message to the logic contract indicating the account that sends a message to it.
+- The `TransferFrom` message: transfers the indicated amount from the sender's account to the recipient's account. This message is used to allow a contract to transfer tokens on behalf of a user. 
+The `nonce` field is optional.
+    ```rust
+    TransferFrom {
+        nonce: Option<u32>,
+        tx_id: u32,
+        sender: ActorId,
+        recipient: ActorId,
+        amount: u128,
+    },
+    ```
+     In case of successful transaction execution, the contract responds with the message:
+    ```rust
+        Ok(TokenReply::TokenTransferred)
+    ```
+    In case of an error, the contract responds with `Err(TokenError)` indicating the error that occur during message processing.
+    The Token saves the transaction result to the `tx_ids` field that here can be `TxResult::Success` or `TxResult::Error`.
+- The `TransferFromBatch` message: it is similar to `TransferFrom` but can transfer tokens in batches, where `amounts[i]` is transferred from `sender[i]` to `recipient[i]`. The `nonce` and `tx_id` fields apply to the entire batch transfer, not individual transfers within the batch. So if provided, the same nonce and tx_id value should be used for all transfers within the batch.
+    ```rust
+    TransferFromBatch {
+        nonce: Option<u32>,
+        tx_id: u32,
+        sender: Vec<ActorId>,
+        recipient: Vec<ActorId>,
+        amount: Vec<u128>,
+    },
+    ```
+    It is possible that some transfers will succeed and some will fail. In case all transfers are successful, the token will reply with:
+     ```rust
+        Ok(TokenReply::TokenTransferredFromInBatch {
+            errors: None
+        })
+    ```
+    If any transfer fails, the token will indicate it by responding with 
+    ```rust
+        Ok(TokenReply::TokenTransferredFromInBatch {
+            errors: Some(
+                senders: Vec<ActorId>,
+                recipiens: Vec<ActorId>,
+                amounts: Vec<u128>,
+                errors: Vec<TokenError>,
+            )
+        })
+    ```
+    
+    The Token saves the transaction result to the `tx_ids` field that here can be `TxResult::Success` or `TxResult::ErrorsInBatches`.
+- The `Approve` message: allows the `spender` to withdraw tokens from the `sender's` account, up to the indicated amount. This can be useful in cases where the `sender` wants to authorize another address (the `spender`) to spend a certain amount of tokens from their account, without actually transferring the tokens at that time. The `spender` can later use the `transferFrom` method to withdraw tokens up to the approved amount. This can be particularly useful in scenarios such as decentralized exchanges, where users may want to temporarily authorize the exchange to access their tokens for trading purposes.
+The `nonce` field is optional.
+    ```rust
+    Approve {
+        nonce: Option<u64>,
+        tx_id: u32,
+        spender: Vec<ActorId>,
+        amount: Vec<u128>,
+    },
+    ```
+    In case of successful transaction execution, the contract responds with the message:
+    ```rust
+        Ok(TokenReply::TokensApproved)
+    ```
+    In case of an error, the contract responds with `Err(TokenError)` indicating the error that occur during message processing.
+    The Token saves the transaction result to the `tx_ids` field that here can be `TxResult::Success` or `TxResult::Error`.
+
+- The `GetNonce` message: a request for the `nonce` value of the specified `account`.
+    ```rust
+    GetNonce {
+        account: ActorId,
+    },
+    ```
+    Sends a `reply` with the current nonce of the account. If the account has not yet made a transaction in the token contract, the nonce will be 0.
+    ```rust
+    Ok(TokenReply::NonceOfAccount {
+        nonce,
+    })
+    ```
+- The `GetTxResult` message: a request for the transaction result.
+    ```rust 
+    GetTxResult {
+        tx_hash: TxHash,
+    },
+    ```
+    returns the message that was being processed and the result of the message processing:
+    ```rust
+    Ok(TokenReply::TxResult {
+        result: (TokenMessage, TxResult)
+    })
+    ```
+    
+-  The `ClearTxs` message: clears the transaction history of the specified account and withdraws his deposit.
+ ```rust
+    ClearTxs {
+        account: ActorId,
+    },
+ ```
+
+## Scenarios
+Let's consider a scenario where a user wants to send tokens to a `Swap` contract in order to exchange them later. This can be done using the combination of messages `TransferFrom` and `Approve`:
+
+- To transfer tokens to a swap contract using `transferFrom` and `approve`, the user first needs to approve the swap contract to withdraw a certain amount of tokens from its account. This can be done by sending the a`Approve` message with the `spender` parameter set to the address of the swap contract and the amount parameter set to the desired amount of tokens.
+
+
+- After the approval, the user sends a `Deposit` message to the `Swap` contract, which then sends a `TransferFrom` message to the token contract on behalf of the user's account. The token contract checks if the `Swap` contract is approved to transfer the user's tokens and if so, transfers the tokens to the `Swap` contract and sends a success reply back to the `Swap` contract. The Swap contract records that the user has transferred tokens, sends a reply to the user, and completes the transaction.
+
+![](../img/gft2-std-scenario1.png)
+
+#### Rationality for using the transaction IDs:
+Let's consider the following scenario:
+
+1. The user successfully approved tokens for the `Swap` contract.
+2. The user sent a message to the `Swap` contract, which in turn sent a message to the `Token` contract.
+3. The `Token` contract checked that it could transfer tokens to the `Swap` contract and made the transfer.
+4. The `Token` contract sent a reply to the `Swap` contract about the successful transfer, but at this point, the gas ran out. It turns out that tokens were transferred to the `Swap` contract, but the `Swap` contract did not record it, resulting in an inconsistency in the states.
+
+![](../img/gft2-std-scenario2.png)
+
+Using transaction IDs can achieve transaction idempotency in the token contract. The scenario can be as follows:
+
+1. The user sends a deposit message to the `Swap` contract.
+2. The `Swap` contract records the start of the token transfer with a specific `tx_id` and sends a message to transfer the tokens with the specified `tx_id`.
+
+    If gas runs out somewhere after recording the start of the transfer by the `Swap` contract, the `Swap` contract will show that the token transfer started but was not completed. 
+    The user can send a request to complete the transaction, and the `Swap` contract will send the same message to the `Token` contract with the same `tx_id`. If the `Token` contract has already executed this message with the specified `tx_id`, it will not execute it again, but will only send a reply with the transaction result. 
+    Thus, the `tx_id` can prevent transaction duplication and enables to bring the states of contracts into agreement in case of network failure.
+
+![](../img/gft2-std-scenario3.png)
