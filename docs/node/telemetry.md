@@ -14,7 +14,7 @@ To start sending telemetry messages to the arbitrary telemetry server instance, 
 If you want to participate and share your telemetry, run your node with the flag (we assume the executable is in `/usr/bin` directory):
 
 ```sh
-gear --telemetry-url "ws://telemetry-backend-shard.gear-tech.io:32001/submit 0"
+gear --telemetry-url "wss://telemetry.rs/submit 0"
 ```
 
 Also, you can provide your node name using the `--name` flag:
@@ -26,7 +26,15 @@ gear --name "NODE NAME"
 For example, to start a node with telemetry, run the command:
 
 ```sh
-gear --telemetry-url "ws://telemetry-backend-shard.gear-tech.io:32001/submit 0" --name "My_Gear_node_name"
+gear --telemetry-url "wss://telemetry.rs/submit 0" --name "My_Gear_node_name"
 ```
 
-To check telemetry for currently running nodes, visit the web address: [https://telemetry.gear-tech.io](https://telemetry.gear-tech.io).
+You can send more information (e.g., the validator address) by increasing the verbosity level:
+
+```sh
+gear --telemetry-url "wss://telemetry.rs/submit 1" --name "My_validator_name"
+```
+
+To check telemetry for currently running nodes, visit the web address: [https://telemetry.rs](https://telemetry.rs).
+
+You can find some additional information about monitoring in the [Substrate docs](https://docs.substrate.io/maintain/monitor/).

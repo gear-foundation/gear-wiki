@@ -19,20 +19,20 @@ Note: this will require two terminal sessions (one for each node).
     --chain=local \
     --alice \
     --node-key 0000000000000000000000000000000000000000000000000000000000000001 \
-    --telemetry-url 'ws://telemetry-backend-shard.gear-tech.io:32001/submit 0'
+    --telemetry-url "wss://telemetry.rs/submit 0"
   ```
 
   The Alice node will be run in idle mode at block #0 waiting for the second validator node.
 
   ```
   Gear Node
-  ✌️ version 0.1.0-6dc8d24edd9
-  ❤️ by Gear Technologies, 2021-2022
-  📋 Chain specification: Gear Local Testnet
+  ✌️ version 1.0.2-d02d306f97c
+  ❤️ by Gear Technologies, 2021-2023
+  📋 Chain specification: Vara Local Testnet
   🏷 Node name: Alice
   👤 Role: AUTHORITY
   💾 Database: RocksDb at /tmp/alice/chains/gear_local_testnet/db/full
-  ⛓ Native runtime: gear-610 (gear-1.tx1.au1)
+  ⛓ Native runtime: vara-1020 (vara-1.tx1.au1)
   👶 Creating empty BABE epoch changes on what appears to be first startup.
   Using default protocol ID "sup" because none is configured in the chain specs
   🏷 Local node identity is: 12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp
@@ -53,7 +53,7 @@ Note: this will require two terminal sessions (one for each node).
   💤 Idle (0 peers), best: #0 (0x22c7…6847), finalized #0 (0x22c7…6847), ⬇ 0 ⬆ 0
   ```
 
-  Also, you can find the `Alice` node name on the telemetry site (https://telemetry.gear-tech.io) under the **Gear Local Testnet** tab.
+  Also, you can find the `Alice` node name on the telemetry site (https://telemetry.rs) under the **Gear Local Testnet** tab.
 
 2. In another terminal, use the following command to start Bob's node on a different TCP port (`30334`) and with a chain database location of `/tmp/bob`. The `--bootnodes` option will connect this node to the Alice's one on TCP port `30333`:
 
@@ -65,20 +65,20 @@ Note: this will require two terminal sessions (one for each node).
     --bob \
     --port 30334 \
     --ws-port 9945 \
-    --telemetry-url 'ws://telemetry-backend-shard.gear-tech.io:32001/submit 0'
+    --telemetry-url "wss://telemetry.rs/submit 0"
   ```
 
   After running the second validator the network starts to produce new blocks.
 
   ```
   Gear Node
-  ✌️ version 0.1.0-6dc8d24edd9
-  ❤️ by Gear Technologies, 2021-2022
-  📋 Chain specification: Gear Local Testnet
+  ✌️ version 1.0.2-d02d306f97c
+  ❤️ by Gear Technologies, 2021-2023
+  📋 Chain specification: Vara Local Testnet
   🏷 Node name: Bob
   👤 Role: AUTHORITY
   💾 Database: RocksDb at /tmp/bob/chains/gear_local_testnet/db/full
-  ⛓ Native runtime: gear-610 (gear-1.tx1.au1)
+  ⛓ Native runtime: vara-1020 (vara-1.tx1.au1)
   🔨 Initializing Genesis block/state (state: 0xf470…d2dc, header-hash: 0x22c7…6847)
   👴 Loading GRANDPA authority set from genesis on what appears to be first startup.
   👶 Creating empty BABE epoch changes on what appears to be first startup.

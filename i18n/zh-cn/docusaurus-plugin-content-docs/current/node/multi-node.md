@@ -20,7 +20,7 @@ sidebar_position: 5
     --chain=local \
     --alice \
     --node-key 0000000000000000000000000000000000000000000000000000000000000001 \
-    --telemetry-url 'ws://telemetry-backend-shard.gear-tech.io:32001/submit 0'
+    --telemetry-url "wss://telemetry.rs/submit 0"
   ```
 
 Alice 节点将在 块#0 以空闲模式运行，等待第二个验证节点。
@@ -54,7 +54,7 @@ Alice 节点将在 块#0 以空闲模式运行，等待第二个验证节点。
   💤 Idle (0 peers), best: #0 (0x22c7…6847), finalized #0 (0x22c7…6847), ⬇ 0 ⬆ 0
 ```
 
-另外，你可以在监测网站（https://telemetry.gear-tech.io）的 **Gear Local Testnet** 标签下找到 `Alice` 节点名称。
+另外，你可以在监测网站（https://telemetry.rs）的 **Gear Local Testnet** 标签下找到 `Alice` 节点名称。
 
 2. 在另一个终端，使用下面的命令，在不同的 TCP 端口（30334）上启动 Bob 的节点，链数据库位置在 `/tmp/bob`。`--bootnodes` 选项将使 Bob 节点与 Alice 节点在 TCP `30333` 端口连接。
 
@@ -66,7 +66,7 @@ Alice 节点将在 块#0 以空闲模式运行，等待第二个验证节点。
     --bob \
     --port 30334 \
     --ws-port 9945 \
-    --telemetry-url 'ws://telemetry-backend-shard.gear-tech.io:32001/submit 0'
+    --telemetry-url "wss://telemetry.rs/submit 0"
 ```
 
 运行第二个验证者节点后，网络开始产生新的区块。
