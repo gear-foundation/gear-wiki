@@ -217,17 +217,21 @@ To run Gear node in dev mode use the following command:
 gear [subcommand] [options]
 ```
 
-- `--chain=staging`
+- `--chain=testnet`
 
-  Connect the node to Gear testnet (default option).
+  Connect the node to the test network (default option).
+
+- `--chain=vara`
+
+  Connect the node to the Vara network.
 
 - `--dev`
 
-  Run standalone node of Gear network.
+  Run a local node in development mode for testing purposes. This node will not be connected to any external network and will store the state in temporary storage.
 
 - `purge-chain`
 
-  Remove storage of the selected chain type. Needs to specify the chain connection type `--chain=staging` or `--dev`
+  Remove storage of the selected chain type. Needs to specify the chain connection type `--chain=testnet`, `--chain=vara`, or `--dev`.
 
 - `help`, `--help`
 
