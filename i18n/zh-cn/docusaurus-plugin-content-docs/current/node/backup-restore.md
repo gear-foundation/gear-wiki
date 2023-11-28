@@ -19,20 +19,22 @@ Gear 将节点数据存储在专用目录中。
 
 让我们研究下节点存储在这个目录中的数据。
 
-    └── gear
-        └── chains
-            ├── dev
-            │   └── ...
-            ├── gear_staging_testnet_v7
-            │   ├── db
-            │   │   └── full
-            │   ├── keystore
-            │   └── network
-            └── vara_network
-                ├── db
-                │   └── full
-                ├── keystore
-                └── network
+```
+└── gear
+    └── chains
+        ├── dev
+        │   └── ...
+        ├── gear_staging_testnet_v7
+        │   ├── db
+        │   │   └── full
+        │   ├── keystore
+        │   └── network
+        └── vara_network
+            ├── db
+            │   └── full
+            ├── keystore
+            └── network
+```
 
 ### 链
 
