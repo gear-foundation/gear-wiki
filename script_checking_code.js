@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const fs = require('fs');
 const axios = require('axios');
 const path = require('path');
@@ -7,7 +9,7 @@ const baseUrl = 'https://raw.githubusercontent.com/gear-foundation/dapps/master/
 
 // !!!!!!!!!!! ATTENTION !!!!!!!!!!!
 // This function main() checks ALL md files in the given directory
-// Uncomment when all contracts have been fixed 
+// Uncomment when all contracts have been fixed
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 // async function main() {
@@ -20,7 +22,7 @@ const baseUrl = 'https://raw.githubusercontent.com/gear-foundation/dapps/master/
 //       const filePath = path.join(directoryPath, file);
 //       const fileContent = fs.readFileSync(filePath, 'utf8');
 
-//       // Регулярное выражение для поиска кодовых блоков
+//       // Regex for the code blocks search
 //       const codeBlocksRegex = /```rust\s+title="([^"]+)"\s+([\s\S]+?)```/g;
 
 //       let match;
@@ -54,8 +56,9 @@ async function main(filePaths) {
 
       const split_code = splitCode(wiki_code_section);
       for (const code of split_code) {
-        //console.log(`code: ${code}`);
-        checkCodeInFile(code, title);
+        const found = await checkCodeInFile(code, title);
+        if (!found)
+          process.exit(1);
       }
     }
   }
@@ -98,7 +101,6 @@ async function getFileContents(title) {
     const response = await axios.get(fileUrl);
     if (response.status === 200) {
       const content = response.data;
-      // console.log(`Git:\n${content}`);
       return content;
     } else {
       console.error(`File retrieval error: ${response.status}`);
@@ -113,42 +115,44 @@ async function getFileContents(title) {
 async function checkCodeInFile(wiki_code, title) {
   try {
     const fileContents = await getFileContents(title);
-    
+
     if (fileContents === null) {
       console.log('An error occurred while receiving the file');
       return false;
     }
     const matchingBlock = findMatchingBlock(fileContents, wiki_code);
     if (matchingBlock !== null) {
-      console.log(chalk.green`Ok`);
-      // console.log(matchingBlock);
+      console.log(title, '→', chalk.green`Ok`);
     } else {
-      console.log(chalk.red`!!!!!!!!!!!! Differences in code ${title} !!!!!!!!!!!! \n\n${wiki_code}`);
+      console.error(title, '→', chalk.red`Error`);
+      console.error();
+      console.error(chalk.redBright`${wiki_code}`);
+      console.error();
+      console.error('Check the code: https://github.com/gear-foundation/dapps/blob/master/contracts/' + title);
+      return false;
     }
   } catch (error) {
     console.error(`Error: ${error}`);
     return false;
   }
+  return true;
 }
 
-// this function takes code from github and from the wiki and checks it for presence. 
-// initially removing spaces and ignoring comments 
+// this function takes code from github and from the wiki and checks it for presence.
+// initially removing spaces and ignoring comments
 function findMatchingBlock(git_code, wiki_text) {
   const lines = git_code.split('\n').map(line => line.trim());
-  // console.log(`wiki_text: ${wiki_text}`);
   const wiki_lines = wiki_text.trim().split('\n').map(line => line.trim()).filter(line => !line.startsWith('//') && !line.startsWith('///'));
-  // console.log(`wiki_lines: ${wiki_lines}`);
   // Array to store matching blocks
   const matchingBlocks = [];
 
   for (let startIndex = 0; startIndex < lines.length; startIndex++) {
     const currentLine = lines[startIndex];
-    
+
     if (currentLine.includes(wiki_lines[0])) {
       // If the first line matches, check the sequence of lines
       let match = true;
       let wikiLineIndex = 1; // Index of the next line in wiki_lines
-      // console.log(`lineToCompare: ${lineToCompare}`);
       let i = 1;
       while (wikiLineIndex < wiki_lines.length) {
         const lineToCompare = lines[startIndex + i];
@@ -158,8 +162,6 @@ function findMatchingBlock(git_code, wiki_text) {
           continue;
         }
 
-        // console.log(`lineToCompare: ${lineToCompare}`);
-        // console.log(`wiki_lines: ${wiki_lines[wikiLineIndex]}`);
         if (!lineToCompare.includes(wiki_lines[wikiLineIndex])) {
           match = false;
           break;
@@ -182,7 +184,7 @@ function findMatchingBlock(git_code, wiki_text) {
 }
 
 // some contracts are commented out because they are subject to correction,
-// after them the necessary lines should be uncommented. 
+// after them the necessary lines should be uncommented.
 const filePaths = [
   'ping.md',
   'DeFi/crowdsale.md',
@@ -202,7 +204,6 @@ const filePaths = [
   'Gaming/tequila-train.md',
   'Governance/DAO.md',
 
-
   'Infra/dein.md',
   'Infra/supply-chain.md',
   'Infra/varatube.md',
@@ -211,7 +212,6 @@ const filePaths = [
   'NFTs/dynamic-nft.md',
   'NFTs/nft-pixelboard.md',
   'NFTs/onchain-nft.md',
-
 
   // 'Standards/gft-20.md',
   // 'Standards/gmt-1155.md',
@@ -222,4 +222,3 @@ const filePaths = [
 ];
 
 main(filePaths);
-
