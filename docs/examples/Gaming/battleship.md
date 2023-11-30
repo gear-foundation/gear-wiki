@@ -324,6 +324,61 @@ extern fn state() {
     }
 }
 ```
+## Gaming sessions
+To further enhance the gaming experience and make it more user-friendly, the introduction of gaming sessions offers a significant improvement. Players now have the option to create a trusted game session, during which they are not required to sign every transaction individually. This trusted session creates a new temporary private key, valid for a specific time window, which empowers the temporary account to sign and send specific transactions on behalf of the player.
+
+These sessions allow users to establish predefined rules for interacting with a Dapp, offering the flexibility for unrestricted usage within these guidelines, eliminating the need to authorize each transaction separately.This approach not only facilitates a seamless Dapp experience but also ensures the security of assets, as users can specify the permissible actions for the Dapp.
+
+At the session's conclusion, whether it's the end of the indicated window or when the user decides to terminate it, the temporary key becomes obsolete and is discarded. 
+
+To initiate a session, a player sends a message to the contract (assuming the contract supports this message type):
+```rust
+CreateSession { 
+    key: ActorId, 
+    duration: u64, 
+    allowed_actions: Vec<ActionsForSession>
+    },
+```
+where:
+- `key` is the temporary account playing on the user's behalf;
+- `duration` is the time frame for the session's validity;
+- `allowed_actions` are the messages the temporary account can send.
+
+A session is structured as follows, allowing a player to set it up before starting the game:
+
+```rust
+pub struct Session {
+    // the address of the player who will play on behalf of the user
+    pub key: ActorId,
+    // until what time the session is valid
+    pub expires: u64,
+    // what messages are allowed to be sent by the account (key)
+    pub allowed_actions: Vec<ActionsForSession>,
+}
+```
+
+After creating a session, the player must also fund the temporary account, which can be done via a voucher.
+
+In this example, the messages:
+```rust
+    StartGame { ships: Ships },
+    Turn { step: u8 },
+```
+are now expanded to:
+```rust
+StartGame { ships: Ships, session_for_account: Option<ActorId> },
+Turn { step: u8, session_for_account: Option<ActorId> },
+```
+introducing the option to play either personally or using a pre-established game session. 
+
+If `session_for_account` is `None`, the player plays on their own. If the game proceeds through a session, the address of the player who will be represented in the game should be specified in `session_for_account`. 
+
+The contract then verifies:
+- whether the specified player has a session;
+- whether the message sender matches the key of this session;
+- whether the session is still valid.
+
+Players have the option to delete their session before the game ends, further enhancing control and flexibility in the gaming experience.
 
 ## Source code
 
