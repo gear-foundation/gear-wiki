@@ -56,7 +56,7 @@ The game's program makes turns considering parameters specified by each player. 
 2. Upload the contract to the [Vara Network Testnet](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Ftestnet.vara.rs)
 > Further details regarding the process of contract uploading can be located within the [Getting Started](../../getting-started-in-5-minutes/#deploy-your-smart-contract-to-the-testnet) section.
 
-3. Build and run user interface 
+3. Build and run user interface
 > More information about this can be found in the [README](https://github.com/gear-foundation/dapps/blob/master/frontend/apps/galactic-express/README.md) directory of the frontend.
 
 ## Implementation details
@@ -92,7 +92,7 @@ pub enum Stage {
 }
 ```
 
-The `Participant` structure stores information about its fuel and payload 
+The `Participant` structure stores information about its fuel and payload
 
 ```rust title="galactic-express/io/src/lib.rs"
 pub struct Participant {
@@ -339,7 +339,7 @@ fn turn(
 }
 ```
 
-If a participant crashes for any reason, the player receives zero points and, accordingly, loses the game. If the player successfully completes all three parts of the game, the points are counted to determine the winner. 
+If a participant crashes for any reason, the player receives zero points and, accordingly, loses the game. If the player successfully completes all three parts of the game, the points are counted to determine the winner.
 
 ```rust title="galactic-express/src/lib.rs"
 let mut scores: Vec<(ActorId, u128)> = turns
@@ -353,7 +353,7 @@ let mut scores: Vec<(ActorId, u128)> = turns
                 Turn::Alive {
                     fuel_left,
                     payload_amount,
-                } => *payload_amount as u128 * self.altitude as u128 + *fuel_left as u128,
+                } => (*payload_amount as u128 + *fuel_left as u128) * self.altitude as u128,
                 Turn::Destroyed(_) => 0,
             },
         )

@@ -67,7 +67,7 @@ pub enum NFTEvent {
 For an example, look at this [Auto-changed NFT](https://github.com/gear-foundation/dapps/tree/master/contracts/auto-changed-nft) contract. This is a modified dynamic contract in which own dynamic data changes over time periods. We slightly changed the logic of the dynamic NFT contract to suit our needs.
 
 First, let's change the contract name and add new fields:
-`rest_updates_count` - number of periodic updates. 
+`rest_updates_count` - number of periodic updates.
 `update_period` - interval between automatic updates.
 
 ```rust title="auto-changed-nft/src/lib.rs"
@@ -190,7 +190,6 @@ fn auto_change_success() {
 
     // Start update
     assert_eq!(current_media(&nft, token_id), link1);
-
     sys.spend_blocks(updates_period);
     assert_eq!(current_media(&nft, token_id), link4);
 
