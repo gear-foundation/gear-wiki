@@ -1,7 +1,6 @@
 name: Check code
 
 on:
-  pull_request: # FIXME: Remove me!
   schedule:
     - cron: '0 0 * * *'
 
