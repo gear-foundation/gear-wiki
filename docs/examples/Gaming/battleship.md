@@ -361,8 +361,8 @@ After creating a session, the player must also fund the temporary account, which
 
 In this example, the messages:
 ```rust
-    StartGame { ships: Ships },
-    Turn { step: u8 },
+StartGame { ships: Ships },
+Turn { step: u8 },
 ```
 are now expanded to:
 ```rust
