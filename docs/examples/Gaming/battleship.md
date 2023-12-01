@@ -332,7 +332,7 @@ These sessions allow users to establish predefined rules for interacting with a 
 At the session's conclusion, whether it's the end of the indicated window or when the user decides to terminate it, the temporary key becomes obsolete and is discarded. 
 
 To initiate a session, a player sends a message to the contract (assuming the contract supports this message type):
-```rust
+```rust title="battleship/src/contract.rs"
 CreateSession { 
     key: ActorId, 
     duration: u64, 
