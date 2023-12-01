@@ -324,7 +324,7 @@ extern fn state() {
     }
 }
 ```
-## Gaming sessions
+## Gaming sessions (signless transactions)
 To further enhance the gaming experience and make it more user-friendly, the introduction of gaming sessions offers a significant improvement. Players now have the option to create a trusted game session, during which they are not required to sign every transaction individually. This trusted session creates a new temporary private key, valid for a specific time window, which empowers the temporary account to sign and send specific transactions on behalf of the player.
 
 These sessions allow users to establish predefined rules for interacting with a Dapp, offering the flexibility for unrestricted usage within these guidelines, eliminating the need to authorize each transaction separately. This approach not only facilitates a seamless Dapp experience but also ensures the security of assets, as users can specify the permissible actions for the Dapp.
