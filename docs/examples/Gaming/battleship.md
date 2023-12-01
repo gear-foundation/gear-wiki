@@ -337,7 +337,7 @@ CreateSession {
     key: ActorId, 
     duration: u64, 
     allowed_actions: Vec<ActionsForSession>
-    },
+},
 ```
 where:
 - `key` is the temporary account playing on the user's behalf;
