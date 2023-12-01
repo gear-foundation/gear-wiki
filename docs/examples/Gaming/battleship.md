@@ -346,7 +346,7 @@ where:
 
 A session is structured as follows, allowing a player to set it up before starting the game:
 
-```rust
+```rust title="..."
 pub struct Session {
     // the address of the player who will play on behalf of the user
     pub key: ActorId,
