@@ -25,102 +25,110 @@ Gear node doesn't have any special hardware requirements excepting at least 64 G
 
 ## Install with pre-build binary
 
-Depending on your OS you need to download nightly build of Gear node:
+Depending on your OS you need to download the last release build of Gear node from https://get.gear.rs:
 
 ````mdx-code-block
 <Tabs>
-<TabItem value="mac-linux" label="Linux x64">
+<TabItem value="linux" label="Linux x64" className="unique-tabs" default>
 
 Terminal:
 
 ```bash
-curl https://get.gear.rs/gear-nightly-linux-x86_64.tar.xz | tar xJ
+curl https://get.gear.rs/gear-v1.0.2-x86_64-unknown-linux-gnu.tar.xz | tar xJ
 ```
 
 or
 
-**Linux x64**: [gear-nightly-linux-x86_64.tar.xz](https://get.gear.rs/gear-nightly-linux-x86_64.tar.xz)
+**Linux x64**: [gear-v1.0.2-x86_64-unknown-linux-gnu.tar.xz](https://get.gear.rs/gear-v1.0.2-x86_64-unknown-linux-gnu.tar.xz)
 
 You can try to run the node:
 
 ```
 ❯ ./gear --version
-gear 0.1.0-hashcode
+gear 1.0.2-d02d306f97c
 ```
 
 </TabItem>
 
-<TabItem value="mac-arm" label="MacOS ARM">
+<TabItem value="mac-arm" label="macOS ARM">
 
 Terminal:
 
 ```bash
-curl https://get.gear.rs/gear-nightly-aarch64-apple-darwin.tar.xz | tar xJ
+curl https://get.gear.rs/gear-v1.0.2-aarch64-apple-darwin.tar.xz | tar xJ
 ```
 
 or
 
-**macOS M1/M2**: [gear-nightly-aarch64-apple-darwin.tar.xz](https://get.gear.rs/gear-nightly-aarch64-apple-darwin.tar.xz)
+**macOS ARM**: [gear-v1.0.2-aarch64-apple-darwin.tar.xz](https://get.gear.rs/gear-v1.0.2-aarch64-apple-darwin.tar.xz)
 
 You can try to run the node:
 
 ```
 ❯ ./gear --version
-gear 0.1.0-hashcode
+gear 1.0.2-d02d306f97c
 ```
 
 </TabItem>
-<TabItem value="mac-intel" label="macOS x64">
+<TabItem value="mac-intel" label="macOS Intel x64">
 
 Terminal:
 
 ```bash
-curl https://get.gear.rs/gear-nightly-x86_64-apple-darwin.tar.xz | tar xJ
+curl https://get.gear.rs/gear-v1.0.2-x86_64-apple-darwin.tar.xz | tar xJ
 ```
 
 or
 
-**macOS Intel x64**: [gear-nightly-x86_64-apple-darwin.tar.xz](https://get.gear.rs/gear-nightly-x86_64-apple-darwin.tar.xz)
+**macOS Intel x64**: [gear-v1.0.2-x86_64-apple-darwin.tar.xz](https://get.gear.rs/gear-v1.0.2-x86_64-apple-darwin.tar.xz)
 
 You can try to run the node:
 
 ```
 ❯ ./gear --version
-gear 0.1.0-hashcode
+gear 1.0.2-d02d306f97c
 ```
 
 </TabItem>
 
-<TabItem value="win64" label="Windows x64" className="unique-tabs" default>
+<TabItem value="win64" label="Windows x64">
 
 Terminal:
 
 ```bash
-curl -O https://get.gear.rs/gear-nightly-x86_64-pc-windows-msvc.zip
+curl -O https://get.gear.rs/gear-v1.0.2-x86_64-pc-windows-msvc.zip
 ```
 
 or
 
-**Windows x64**: [gear-nightly-x86_64-pc-windows-msvc.zip](https://get.gear.rs/gear-nightly-x86_64-pc-windows-msvc.zip)
+**Windows x64**: [gear-v1.0.2-x86_64-pc-windows-msvc.zip](https://get.gear.rs/gear-v1.0.2-x86_64-pc-windows-msvc.zip)
 
 Unzip the downloaded package then you can try to run the node:
 
 ```
 ❯ gear.exe --version
-gear.exe 0.1.0-hashcode
+gear.exe 1.0.2-d02d306f97c
 ```
 
 </TabItem>
 </Tabs>
 ````
 
+:::info
+
+You can use [nightly builds](https://get.gear.rs/#gear-nightly) if you want the latest features.
+
+:::
+
 ## Compile Gear node by yourself
 
 Compiling the build will take some time and requires the installation of some dependencies.
 
 :::warning Note
+
 Windows users may encounter some problems related to the installation of Rust components and dependencies.
 It is highly recommended to use Linux or macOS for compiling Gear node and smart-contracts.
+
 :::
 
 ### Prerequisites
@@ -159,15 +167,22 @@ rustup target add wasm32-unknown-unknown --toolchain nightly
 
 ### Clone Gear repo
 
-```bash
+```
 git clone https://github.com/gear-tech/gear.git
 cd gear
-git checkout testnet
-
-## Optional
-## If you need to use the latest or experimental Gear functions,
-## you should compile `gear-node` from `master` branch.
+# Checkout to the latest release tag
+git checkout v1.0.2 -b release-1.0.2
 ```
+
+:::info
+
+If you need to use the latest or experimental Gear functions, you should compile the node from `master` branch. It is the default branch after clone, but you can switch back to the `master` branch using a command:
+
+```bash
+git checkout master
+```
+
+:::
 
 ### Compile
 
