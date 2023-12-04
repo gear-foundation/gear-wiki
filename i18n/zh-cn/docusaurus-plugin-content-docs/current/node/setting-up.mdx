@@ -29,17 +29,17 @@ Gear 节点并不要求特殊的硬件配置，除了建议使用 SSD 硬盘。
 
 ````mdx-code-block
 <Tabs>
-<TabItem value="win64" label="Windows x64" className="unique-tabs" default>
+<TabItem value="win64" label="Windows x86-64" className="unique-tabs" default>
 
 Terminal:
 
 ```bash
-curl -O https://get.gear.rs/gear-nightly-x86_64-pc-windows-msvc.zip
+curl -O https://get.gear.rs/gear-v1.0.2-x86_64-pc-windows-msvc.zip
 ```
 
 或
 
-**Windows x64**: [gear-nightly-x86_64-pc-windows-msvc.zip](https://get.gear.rs/gear-nightly-x86_64-pc-windows-msvc.zip)
+**Windows x86-64**: [gear-v1.0.2-x86_64-pc-windows-msvc.zip](https://get.gear.rs/gear-v1.0.2-x86_64-pc-windows-msvc.zip)
 
 </TabItem>
 <TabItem value="mac-arm" label="MacOS ARM">
@@ -47,45 +47,39 @@ curl -O https://get.gear.rs/gear-nightly-x86_64-pc-windows-msvc.zip
 Terminal:
 
 ```bash
-wget https://get.gear.rs/gear-nightly-aarch64-apple-darwin.tar.xz && \
-tar xvf gear-nightly-aarch64-apple-darwin.tar.xz && \
-rm gear-nightly-aarch64-apple-darwin.tar.xz
+curl https://get.gear.rs/gear-v1.0.2-aarch64-apple-darwin.tar.xz | tar xJ
 ```
 
 或
 
-**macOS M1**: [gear-nightly-aarch64-apple-darwin.tar.xz](https://get.gear.rs/gear-nightly-aarch64-apple-darwin.tar.xz)
+**macOS ARM**: [gear-v1.0.2-aarch64-apple-darwin.tar.xz](https://get.gear.rs/gear-v1.0.2-aarch64-apple-darwin.tar.xz)
 
 </TabItem>
-<TabItem value="mac-intel" label="MacOS x64">
+<TabItem value="mac-intel" label="MacOS x86-64">
 
 Terminal:
 
 ```bash
-wget https://get.gear.rs/gear-nightly-x86_64-apple-darwin.tar.xz && \
-tar xvf gear-nightly-x86_64-apple-darwin.tar.xz && \
-rm gear-nightly-x86_64-apple-darwin.tar.xz
+curl https://get.gear.rs/gear-v1.0.2-x86_64-apple-darwin.tar.xz | tar xJ
 ```
 
 或
 
-**macOS Intel x64**: [gear-nightly-x86_64-apple-darwin.tar.xz](https://get.gear.rs/gear-nightly-x86_64-apple-darwin.tar.xz)
+**macOS x86-64**: [gear-v1.0.2-x86_64-apple-darwin.tar.xz](https://get.gear.rs/gear-v1.0.2-x86_64-apple-darwin.tar.xz)
 
 </TabItem>
 
-<TabItem value="mac-linux" label="Linux x64">
+<TabItem value="mac-linux" label="Linux x86-64">
 
 Terminal:
 
 ```bash
-wget https://get.gear.rs/gear-nightly-x86_64-unknown-linux-gnu.tar.xz && \
-tar xvf gear-nightly-x86_64-unknown-linux-gnu.tar.xz && \
-rm gear-nightly-x86_64-unknown-linux-gnu.tar.xz
+curl https://get.gear.rs/gear-v1.0.2-x86_64-unknown-linux-gnu.tar.xz | tar xJ
 ```
 
 或
 
-**Linux x64**: [gear-nightly-x86_64-unknown-linux-gnu.tar.xz](https://get.gear.rs/gear-nightly-x86_64-unknown-linux-gnu.tar.xz)
+**Linux x86-64**: [gear-v1.0.2-x86_64-unknown-linux-gnu.tar.xz](https://get.gear.rs/gear-v1.0.2-x86_64-unknown-linux-gnu.tar.xz)
 
 </TabItem>
 </Tabs>
