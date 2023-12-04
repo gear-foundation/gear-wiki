@@ -9,7 +9,7 @@ This article explains how to create a `React` application and connect it to an [
 
 ### Preparation
 
-1. First clone the [frontend-starter](https://github.com/gear-foundation/dapps/tree/master/frontend/apps/nft-app-starter). Install [NodeJs](https://nodejs.org/en/download/) and [NPM](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm). Make sure you have the latest LTS version of the NodeJs installed. 
+1. First clone the [frontend-starter](https://github.com/gear-foundation/dapps/tree/master/frontend/templates/gear-app-starter). Install [NodeJs](https://nodejs.org/en/download/) and [NPM](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm). Make sure you have the latest LTS version of the NodeJs installed. 
 
 2. Then install yarn:
     ```shell
