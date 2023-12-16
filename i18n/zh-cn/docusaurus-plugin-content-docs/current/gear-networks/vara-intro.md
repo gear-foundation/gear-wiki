@@ -4,7 +4,7 @@ sidebar_position: 1
 sidebar_label: Vara 网络
 ---
 
-**[Vara Network](https://vara-network.io/)** 是第一个在 Gear 协议之上构建和运行的独立的第 1 层去中心化网络。
+**[Vara Network](https://vara.network/)** 是第一个在 Gear 协议之上构建和运行的独立的第 1 层去中心化网络。
 
 快速和可扩展的非分叉升级的 Vara 网络为下一代游戏、基于金融的应用、实验性功能提供了最佳场所。不仅如此，任何其他现代用例都非常适合在 Vara 上运行。在 Vara 网络上构建生态，对于已经在 Web3 中的开发者和那些从 Web2 迁移过来的开发者来说，都是理想的选择，他们可以在最安全、高效、可扩展的环境中部署他们的去中心化应用程序。
 
@@ -21,4 +21,4 @@ Vara 网络的主要特点：
 - 通过质押代币和提名验证者成为提名人
 - 成为大使，围绕 Vara Network 和 Gear Protocol 建立教育意识、社区参与和去中心化。
 
-有关 Vara Network 的更多信息以及如何参与社区，请访问 **[Vara Wiki](https://wiki.vara-network.io/)**.
+有关 Vara Network 的更多信息以及如何参与社区，请访问 **[Vara Wiki](https://wiki.vara.network/)**.

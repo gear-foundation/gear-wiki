@@ -15,16 +15,16 @@ Battleship is a popular game that operates **entirely on-chain**. The primary ga
 
 The source code is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/battleship ). This article describes the program interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios.
 
-> **Important notice**: The implementation is based on the interaction of two contracts: the main game contract and the bot contract that users will interact with during the game. To successfully load the game into the [Vara Network Testnet](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Ftestnet.vara.rs), it is imperative to upload the bot program first. Subsequently, during the initialization phase of the main game contract, specifying the bot contract's address is a crucial step.
+> **Important notice**: The implementation is based on the interaction of two contracts: the main game contract and the bot contract that users will interact with during the game. To successfully load the game into the [Vara Network Testnet](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Ftestnet.vara.network), it is imperative to upload the bot program first. Subsequently, during the initialization phase of the main game contract, specifying the bot contract's address is a crucial step.
 
-Also everyone can play the game via this link - [Play Battleship](https://battleship.vara-network.io/) (VARA tokens are requred for gas fees).
+Also everyone can play the game via this link - [Play Battleship](https://battleship.vara.network/) (VARA tokens are requred for gas fees).
 
 ## How to run
 
 1. Build a contract
 > Additional details regarding this matter can be located within the [README](https://github.com/gear-foundation/dapps/tree/master/contracts/battleship/README.md) directory of the contract.
 
-2. Upload the contract to the [Vara Network Testnet](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Ftestnet.vara.rs)
+2. Upload the contract to the [Vara Network Testnet](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Ftestnet.vara.network)
 > Initiate the process by uploading the bot contract, followed by the subsequent upload of the main contract. Further details regarding the process of contract uploading can be located within the [Getting Started](../../getting-started-in-5-minutes/#deploy-your-smart-contract-to-the-testnet) section.
 
 3. Build and run user interface

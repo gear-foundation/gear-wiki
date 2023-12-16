@@ -5,7 +5,7 @@ sidebar_position: 10
 
 # Racing Cars - Algorithmic Game
 
-The Racing Cars game revolves around a competition of smart contract algorithms. In essence, participants upload their personalized smart contract strategies, all managed by a central Master contract. These strategies are open to optimization and can be re-uploaded. 
+The Racing Cars game revolves around a competition of smart contract algorithms. In essence, participants upload their personalized smart contract strategies, all managed by a central Master contract. These strategies are open to optimization and can be re-uploaded.
 
 ![Racing Cars](../img/racingcars.png)
 
@@ -13,21 +13,21 @@ In a well-known Ethereum-based [0xMonaco](https://0xmonaco.ctf.paradigm.xyz/) ga
 
 For this example version, the game was refined to enhance its appeal. The game entails a competition where a user races against two pre-uploaded smart contracts on the blockchain. Three cars vie to be the first to cross the finish line in several moves. Both the user and the contract algorithms decide their next move – whether to accelerate or sabotage another car to slow it down.
 
-The source code for the game contract and algorithm examples are available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/car-races). 
+The source code for the game contract and algorithm examples are available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/car-races).
 The [frontend application](https://github.com/gear-foundation/dapps/tree/master/frontend/apps/racing-car-game) facilitates gameplay and interacts with the smart contracts.
 This article describes the program interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios.
 
-Everyone can play the game via this link - [Play Racing Cars](https://racing.vara-network.io/) (VARA tokens are requred for gas fees).
+Everyone can play the game via this link - [Play Racing Cars](https://racing.vara.network/) (VARA tokens are requred for gas fees).
 
 ## How to run
 
 1. Build a contract
 > Additional details regarding this matter can be located within the [README](https://github.com/gear-foundation/dapps/tree/master/contracts/car-races/README.md) directory of the contract.
 
-2. Upload the contract to the [Vara Network Testnet](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Ftestnet.vara.rs)
+2. Upload the contract to the [Vara Network Testnet](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Ftestnet.vara.network)
 > Initiate the process by uploading the bot contract, followed by the subsequent upload of the main contract. Further details regarding the process of contract uploading can be located within the [Getting Started](../../getting-started-in-5-minutes/#deploy-your-smart-contract-to-the-testnet) section.
 
-3. Build and run user interface 
+3. Build and run user interface
 > More information about this can be found in the [README](https://github.com/gear-foundation/dapps/blob/master/frontend/apps/racing-car-game/README.md) directory of the frontend.
 
 ## Implementation details
@@ -79,7 +79,7 @@ pub struct Car {
 
 ### Initialization
 
-To initialize the game contract, it only needs to be passed the game configuration 
+To initialize the game contract, it only needs to be passed the game configuration
 
 ```rust title="car-races/src/lib.rs"
 #[no_mangle]
@@ -415,7 +415,7 @@ impl Metadata for ContractMetadata {
     type State = InOut<StateQuery, StateReply>;
 }
 ```
-One of Gear's features is reading partial states. 
+One of Gear's features is reading partial states.
 
 ```rust title="car-races/io/src/lib.rs"
 pub enum StateQuery {

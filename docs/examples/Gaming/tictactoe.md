@@ -11,21 +11,21 @@ A classic and simple game in which the user competes against a smart contract op
 
 Usually, the state of a smart contract advances as the application is utilized. A <u>distinctive feature</u> of this game's contract implementation is its capability to clean up its storage. In other words, as soon as the game session is completed and the results are recorded in the contract, all unnecessary data structures are purged through a special **delayed message**. [Delayed messages](/docs/developing-contracts/delayed-messages) represent one of the various unique features of the Gear Protocol.
 
-The source code is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/tic-tac-toe). 
+The source code is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/tic-tac-toe).
 The [frontend application](https://github.com/gear-foundation/dapps/tree/master/frontend/apps/tic-tac-toe) facilitates gameplay and interacts with the smart contract.
 This article describes the program interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios.
 
-Everyone can play the game via this link - [Play Tic-Tac-Toe](https://tictactoe.vara-network.io/) (VARA tokens are requred for gas fees).
+Everyone can play the game via this link - [Play Tic-Tac-Toe](https://tictactoe.vara.network/) (VARA tokens are requred for gas fees).
 
 ## How to run
 
 1. Build a contract
 > Additional details regarding this matter can be located within the [README](https://github.com/gear-foundation/dapps/tree/master/contracts/tic-tac-toe/README.md) directory of the contract.
 
-2. Upload the contract to the [Vara Network Testnet](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Ftestnet.vara.rs)
+2. Upload the contract to the [Vara Network Testnet](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Ftestnet.vara.network)
 > Initiate the process by uploading the bot contract, followed by the subsequent upload of the main contract. Further details regarding the process of contract uploading can be located within the [Getting Started](../../getting-started-in-5-minutes/#deploy-your-smart-contract-to-the-testnet) section.
 
-3. Build and run user interface 
+3. Build and run user interface
 > More information about this can be found in the [README](https://github.com/gear-foundation/dapps/blob/master/frontend/apps/tic-tac-toe/README.md) directory of the frontend.
 
 ## Implementation details
@@ -69,7 +69,7 @@ pub enum Mark {
 
 ### Initialization
 
-To initialize the game contract, it only needs to be passed the game configuration 
+To initialize the game contract, it only needs to be passed the game configuration
 
 ```rust title="tic-tac-toe/src/contract.rs"
 #[no_mangle]
@@ -102,7 +102,7 @@ pub struct Config {
 * `s_per_block` - time per block in seconds
 * `gas_to_remove_game` - gas to delete a game using delayed messages
 * `time_interval` - time after which the game should be deleted using delayed messages
-* `turn_deadline_ms` - turnaround time 
+* `turn_deadline_ms` - turnaround time
 
 ### Action
 
@@ -253,7 +253,7 @@ fn send_messages(account: &ActorId, config: &Config) {
     .expect("Error in sending message");
 }
 ```
-But if the game is not over, the turn passes to the bot and the same actions are performed 
+But if the game is not over, the turn passes to the bot and the same actions are performed
 
 ```rust title="tic-tac-toe/src/contract.rs"
 
@@ -305,7 +305,7 @@ impl Metadata for ContractMetadata {
     type State = InOut<StateQuery, StateReply>;
 }
 ```
-One of Gear's features is reading partial states. 
+One of Gear's features is reading partial states.
 
 ```rust title="tic-tac-toe/io/src/lib.rs"
 pub enum StateQuery {
@@ -366,4 +366,3 @@ extern fn state() {
 ## Source code
 
 The source code of this example of Tic-Tac-Toe Game smart contract and the example of an implementation of its testing is available on [gear-foundation/dapp/contracts/tic-tac-toe](https://github.com/gear-foundation/dapps/tree/master/contracts/tic-tac-toe).
-

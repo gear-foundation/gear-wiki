@@ -34,7 +34,7 @@ This application requires code to create an escrow wallet
 2. Configure .evn file. Specify network address and code ID like in the example below:
 
 ```sh
-REACT_APP_NODE_ADDRESS=wss://testnet.vara-network.io:443
+REACT_APP_NODE_ADDRESS=wss://testnet.vara.network:443
 REACT_APP_CODE_ADDRESS=0xa31fa55b98adf40b0ad18ccda10a3deb8bbb59655fa10971c8046c7f6f959bb9
 ```
 
