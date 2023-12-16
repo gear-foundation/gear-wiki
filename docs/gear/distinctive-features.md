@@ -75,7 +75,7 @@ Overall, the ability to update NFTs dynamically opens up a wide range of possibi
 
 Everyone knows that the most successful games are those that are exciting, that you play with pleasure.
 
-The success of such games depends on the right game mechanics established by the developers. The Gear Protocol offers a tool for developing such games and running them on a decentralized network, like [Vara](https://vara-network.io/). Features such as [delayed messages](/developing-contracts/delayed-messages.md), [payless transactions](/docs/api/vouchers.md), and [gas reservation](/developing-contracts/gas-reservation.md) become essential tools for developers aiming to create successful games on the Gear decentralized network.
+The success of such games depends on the right game mechanics established by the developers. The Gear Protocol offers a tool for developing such games and running them on a decentralized network, like [Vara](https://vara.network/). Features such as [delayed messages](/developing-contracts/delayed-messages.md), [payless transactions](/docs/api/vouchers.md), and [gas reservation](/developing-contracts/gas-reservation.md) become essential tools for developers aiming to create successful games on the Gear decentralized network.
 
 Here are a few of the many examples where such functionality would be useful:
 

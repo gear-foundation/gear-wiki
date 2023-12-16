@@ -18,11 +18,11 @@ The article explains the programming interface, data structure, basic functions 
 
 ### The gameplay
 
-Everyone can play the game via this link - [Play Galactic Express](https://galactic-express.vara-network.io/).
+Everyone can play the game via this link - [Play Galactic Express](https://galactic-express.vara.network/).
 
 1. Download the pre-built program file of the game via [this link](https://github.com/gear-foundation/dapps/releases/download/nightly/galactic_express.opt.wasm).
 
-2. Go to [Gear Idea](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Frpc.vara-network.io) portal and Upload the program to the Vara Network:
+2. Go to [Gear Idea](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Frpc.vara.network) portal and Upload the program to the Vara Network:
 
     a. Connect an account via any supported wallet (VARA tokens are required for gas fees if the program is uploaded to the Vara mainnet, for Vara Network Testent there is an option to request test tokens).
 
@@ -30,7 +30,7 @@ Everyone can play the game via this link - [Play Galactic Express](https://galac
 
 ![galactic-express](../img/galex_upload.png)
 
-3. Once the game program is uploaded to the network, navigate to `Programs`, copy the program's address and paste it into the [game](https://galactic-express.vara-network.io/).
+3. Once the game program is uploaded to the network, navigate to `Programs`, copy the program's address and paste it into the [game](https://galactic-express.vara.network/).
 
 ![galactic-express](../img/galex_address.png)
 
@@ -53,7 +53,7 @@ The game's program makes turns considering parameters specified by each player. 
 1. Build a contract
 > Additional details regarding this matter can be located within the [README](https://github.com/gear-foundation/dapps/tree/master/contracts/galactic-express/README.md) directory of the contract.
 
-2. Upload the contract to the [Vara Network Testnet](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Ftestnet.vara.rs)
+2. Upload the contract to the [Vara Network Testnet](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Ftestnet.vara.network)
 > Further details regarding the process of contract uploading can be located within the [Getting Started](../../getting-started-in-5-minutes/#deploy-your-smart-contract-to-the-testnet) section.
 
 3. Build and run user interface

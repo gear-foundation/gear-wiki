@@ -46,7 +46,7 @@ royalties `Option<Royalties>` - Optional param to specify accounts to pay royalt
 3. Configure .evn file. Specify network address and program ID like in the example below:
 
 ```sh
-REACT_APP_NODE_ADDRESS=wss://testnet.vara-network.io:443
+REACT_APP_NODE_ADDRESS=wss://testnet.vara.network:443
 REACT_APP_IPFS_ADDRESS=https://ipfs.gear-tech.io/api/v0
 REACT_APP_IPFS_GATEWAY_ADDRESS=https://ipfs-gw.gear-tech.io/ipfs
 REACT_APP_CONTRACT_ADDRESS=0xdf7b9b10240f827f112da757bb68eb301ee873d6c1015855220f2122996540c4
