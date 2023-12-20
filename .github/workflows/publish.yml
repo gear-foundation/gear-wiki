@@ -41,10 +41,10 @@ jobs:
 
       - name: Upload Pages artifact
         if: github.event_name == 'push'
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v3
         with:
           path: build
 
       - name: Deploy to GitHub Pages
         if: github.event_name == 'push'
-        uses: actions/deploy-pages@v3
+        uses: actions/deploy-pages@v4
