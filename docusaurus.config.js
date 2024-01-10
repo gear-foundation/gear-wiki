@@ -133,7 +133,7 @@ export default {
         label: 'English',
       },
       'zh-cn': {
-        label: '简体中文'
+        label: '简体中文',
       }
     }
   },
