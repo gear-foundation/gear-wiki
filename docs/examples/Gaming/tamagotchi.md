@@ -189,3 +189,7 @@ extern fn state() {
 ## Source code
 
 The source code of this example of Tamagotchi smart contract and the example of an implementation of its testing is available on [gear-foundation/dapp/contracts/tamagotchi](https://github.com/gear-foundation/dapps/tree/master/contracts/tamagotchi).
+
+See also an example of the smart contract testing implementation based on `gtest`: [gear-foundation/dapps/tamagotchi/tests](https://github.com/gear-foundation/dapps/tree/master/contracts/tamagotchi/tests).
+
+For more details about testing smart contracts written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.
