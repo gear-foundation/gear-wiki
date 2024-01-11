@@ -88,7 +88,7 @@ Default ports are:
 
 - P2P: `30333`
 - Prometheus: `9615`
-- HTTP RPC: `9933`
+- HTTP RPC: `9944`
 - WebSocket RPC: `9944`
 
 ## How to see Gear node service logs?
