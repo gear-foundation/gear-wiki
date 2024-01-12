@@ -36,7 +36,7 @@ There are two ways to upload the game onto the chain:
 ### 1. Using Gear IDEA portal:
 
 - In the network selector select the network where you are going to run the game:
-    - Vara Network Testnet - wss://testnet.vara-network.io;
+    - Vara Network Testnet - wss://testnet.vara.network;
     - Local node - ws://localhost:9944
 - Upload Master and Player contracts:
     - Click the `Upload Program` button and specify `x.opt.wasm` file of the program, also specify the `*.txt` file with metadata for Master and Palyer contracts accordingly.
@@ -75,7 +75,7 @@ It allows sending transactions to the Gear node based on `yaml` file:
 
     - You can also specify which node you want to deploy the contract on by defining the variable `wsAddress` in the file with transactions. If this variable is not defined, the contract will be deployed on the local node which should be running beforehand:
     	```
-    	wsAddress: wss://testnet.vara-network.io
+    	wsAddress: wss://testnet.vara.network
     	```
 
 - To deploy the contract, run the command:

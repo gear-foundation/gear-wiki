@@ -15,23 +15,23 @@ Battleship is a popular game that operates **entirely on-chain**. The primary ga
 
 The source code is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/battleship ). This article describes the program interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios.
 
-> **Important notice**: The implementation is based on the interaction of two contracts: the main game contract and the bot contract that users will interact with during the game. To successfully load the game into the [Vara Network Testnet](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Ftestnet.vara.rs), it is imperative to upload the bot program first. Subsequently, during the initialization phase of the main game contract, specifying the bot contract's address is a crucial step.
+> **Important notice**: The implementation is based on the interaction of two contracts: the main game contract and the bot contract that users will interact with during the game. To successfully load the game into the [Vara Network Testnet](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Ftestnet.vara.network), it is imperative to upload the bot program first. Subsequently, during the initialization phase of the main game contract, specifying the bot contract's address is a crucial step.
 
-Also everyone can play the game via this link - [Play Battleship](https://battleship.vara-network.io/) (VARA tokens are requred for gas fees).
+Also everyone can play the game via this link - [Play Battleship](https://battleship.vara.network/) (VARA tokens are requred for gas fees).
 
 ## How to run
 
 1. Build a contract
 > Additional details regarding this matter can be located within the [README](https://github.com/gear-foundation/dapps/tree/master/contracts/battleship/README.md) directory of the contract.
 
-2. Upload the contract to the [Vara Network Testnet](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Ftestnet.vara.rs)
-> Initiate the process by uploading the bot contract, followed by the subsequent upload of the main contract. Further details regarding the process of contract uploading can be located within the [Getting Started](../../getting-started-in-5-minutes/#deploy-your-smart-contract-to-the-testnet) section.
+2. Upload the contract to the [Vara Network Testnet](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Ftestnet.vara.network)
+> Initiate the process by uploading the bot contract, followed by the subsequent upload of the main contract. Further details regarding the process of contract uploading can be located within the [Getting Started](../../getting-started-in-5-minutes#deploy-your-smart-contract-to-the-testnet) section.
 
-3. Build and run user interface 
+3. Build and run user interface
 > More information about this can be found in the [README](https://github.com/gear-foundation/dapps/blob/master/frontend/apps/battleship/README.md) directory of the frontend.
 
 4. **Optional**. Build and run the backend to release vouchers
-> Comprehensive instructions on the voucher execution process are provided within the [README](https://github.com/gear-foundation/dapps-battleship-backend). 
+> Comprehensive instructions on the voucher execution process are provided within the [README](https://github.com/gear-foundation/dapps-battleship-backend).
 
 ## Implementation details
 
@@ -48,9 +48,9 @@ struct Battleship {
 }
 ```
 * `games` - this field contains the addresses of the players and information about their games
-* `msg_id_to_game_id` - this field is responsible for tracking the bot's reply messages 
-* `bot_address` - bot address 
-* `admin` - admin address 
+* `msg_id_to_game_id` - this field is responsible for tracking the bot's reply messages
+* `bot_address` - bot address
+* `admin` - admin address
 
 Where the structure of the "Game" is defined as follows
 
@@ -75,11 +75,11 @@ pub struct Game {
 * `turn` - is a field indicating the turn queue of a move
 * `start_time` - game starting time
 * `end_time` - end game time
-* `total_shots` - number of shots 
+* `total_shots` - number of shots
 * `game_over` - is a field indicating the end of the game
 * `game_result` - is a field indicating who won the game
 
-Field cells can take on different values: 
+Field cells can take on different values:
 
 ```rust title="battleship/io/src/lib.rs"
 pub enum Entity {
@@ -113,7 +113,7 @@ pub enum BattleshipAction {
     // Change the bot contract (available only for admin)
     ChangeBot { bot: ActorId },
     // Clean the contract state (available only for admin);
-    // leave_active_games specifies how to clean it 
+    // leave_active_games specifies how to clean it
     ClearState { leave_active_games: bool },
     // Deletion of a player's game
     DeleteGame { player_address: ActorId },
@@ -192,7 +192,7 @@ fn player_move(&mut self, step: u8) {
 ```
 
 Just as when starting a game, a reply message from the bot regarding its move is received in `handle_reply`.
-In summary, the interaction between the two contracts is reduced to the ability to receive response messages in a separate function, denoted as `handle_reply()`. The whole implementation of the function looks as follows: 
+In summary, the interaction between the two contracts is reduced to the ability to receive response messages in a separate function, denoted as `handle_reply()`. The whole implementation of the function looks as follows:
 
 ```rust title="battleship/src/contract.rs"
 #[no_mangle]
@@ -272,7 +272,7 @@ impl Metadata for BattleshipMetadata {
     type State = InOut<StateQuery, StateReply>;
 }
 ```
-One of Gear's features is reading partial states. 
+One of Gear's features is reading partial states.
 
 ```rust title="battleship/io/src/lib.rs"
 pub enum StateQuery {
@@ -324,6 +324,64 @@ extern fn state() {
     }
 }
 ```
+## Gaming sessions (signless transactions)
+To further enhance the gaming experience and make it more user-friendly, the introduction of gaming sessions offers a significant improvement. Players now have the option to create a trusted game session, during which they are not required to sign every transaction individually. This trusted session creates a new temporary private key, valid for a specific time window, which empowers the temporary account to sign and send specific transactions on behalf of the player.
+
+These sessions allow users to establish predefined rules for interacting with a Dapp, offering the flexibility for unrestricted usage within these guidelines, eliminating the need to authorize each transaction separately. This approach not only facilitates a seamless Dapp experience but also ensures the security of assets, as users can specify the permissible actions for the Dapp.
+
+At the session's conclusion, whether it's the end of the indicated window or when the user decides to terminate it, the temporary key becomes obsolete and is discarded.
+
+To initiate a session, a player sends a message to the contract (assuming the contract supports this message type):
+
+<!-- TODO: Uncomment `title` after adding the code to the master branch -->
+```rust #title="battleship/src/contract.rs"
+CreateSession {
+    key: ActorId,
+    duration: u64,
+    allowed_actions: Vec<ActionsForSession>,
+},
+```
+where:
+- `key` is the temporary account playing on the user's behalf;
+- `duration` is the time frame for the session's validity;
+- `allowed_actions` are the messages the temporary account can send.
+
+A session is structured as follows, allowing a player to set it up before starting the game:
+
+<!-- TODO: Uncomment `title` after adding the code to the master branch -->
+```rust #title="battleship/src/contract.rs"
+pub struct Session {
+    // the address of the player who will play on behalf of the user
+    pub key: ActorId,
+    // until what time the session is valid
+    pub expires: u64,
+    // what messages are allowed to be sent by the account (key)
+    pub allowed_actions: Vec<ActionsForSession>,
+}
+```
+
+After creating a session, the player must also fund the temporary account, which can be done via a voucher.
+
+In this example, the messages:
+```rust
+StartGame { ships: Ships },
+Turn { step: u8 },
+```
+are now expanded to:
+```rust
+StartGame { ships: Ships, session_for_account: Option<ActorId> },
+Turn { step: u8, session_for_account: Option<ActorId> },
+```
+introducing the option to play either personally or using a pre-established game session.
+
+If `session_for_account` is `None`, the player plays on their own. If the game proceeds through a session, the address of the player who will be represented in the game should be specified in `session_for_account`.
+
+The contract then verifies:
+- whether the specified player has a session;
+- whether the message sender matches the key of this session;
+- whether the session is still valid.
+
+Players have the option to delete their session before the game ends, further enhancing control and flexibility in the gaming experience.
 
 ## Source code
 

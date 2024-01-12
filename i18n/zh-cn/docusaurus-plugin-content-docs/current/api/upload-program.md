@@ -38,5 +38,5 @@ try {
 :::note
 对于计算`init`信息处理所需的 gas，应该使用`GearApi.program.calculateGas.initUpload()`。
 
-请看[更多相关信息](/api/calculate-gas)
+请看[更多相关信息](/docs/api/calculate-gas)
 :::

@@ -37,7 +37,7 @@ sudo systemctl stop gear-node
 
 - **解决方式：** `gear-node.service` 配置文件似乎有错误。某些版本的 SystemD 不接受反斜线字符 (`\`) 作为分行符。因此，最好将每个配置项写在一行。
 
-    请参考 https://wiki.gear-tech.io/node/node-as-service，将节点正确配置为服务。
+    请参考 https://wiki.gear-tech.io/docs/node/node-as-service，将节点正确配置为服务。
 
     不要忘记在修复服务配置后重新启动节点：
 
@@ -64,7 +64,7 @@ sudo systemctl stop gear-node
     du -h $HOME/.local/share/gear/chains/gear_staging_testnet_v7/db/full
     ```
 
-    请参考 [系统要求](/node/setting-up#system-requirements)，查看所需的最小磁盘空间。
+    请参考 [系统要求](/docs/node/setting-up#system-requirements)，查看所需的最小磁盘空间。
 
     你需要释放更多的空间，然后裁剪链：
 
@@ -81,7 +81,7 @@ sudo systemctl stop gear-node
 
 - **替代错误：** `runtime requires function imports which are not present on the host`
 
-- **解决方式：** [更新](/node/node-as-service#update-the-node-with-the-new-version)   node 到最新版本。
+- **解决方式：** [更新](/docs/node/node-as-service#update-the-node-with-the-new-version)   node 到最新版本。
 
 ## 服务被锁定
 

@@ -1,0 +1,29 @@
+name: Check code
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install yarn
+        run: sudo npm i -g yarn
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Run checking
+        run: node script_checking_code.js

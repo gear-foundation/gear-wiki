@@ -42,72 +42,85 @@ The best way is to download the latest node binary for your operating system fro
 
 ````mdx-code-block
 <Tabs>
-<TabItem value="win64" label="Windows x64" className="unique-tabs" default>
+<TabItem value="linux" label="Linux x86-64" className="unique-tabs" default>
 
-```shell
-curl -O https://get.gear.rs/gear-nightly-x86_64-pc-windows-msvc.zip
+Terminal:
+
+```bash
+curl https://get.gear.rs/gear-v1.0.2-x86_64-unknown-linux-gnu.tar.xz | tar xJ
 ```
 
 or
 
-**Windows x64**: [gear-nightly-x86_64-pc-windows-msvc.zip](https://get.gear.rs/gear-nightly-x86_64-pc-windows-msvc.zip)
+**Linux x86-64**: [gear-v1.0.2-x86_64-unknown-linux-gnu.tar.xz](https://get.gear.rs/gear-v1.0.2-x86_64-unknown-linux-gnu.tar.xz)
 
-Unzip the downloaded package, then run:
+You can try to run the node:
 
-```shell
-gear.exe --dev
 ```
-
-</TabItem>
-<TabItem value="mac-arm" label="MacOS ARM">
-
-Terminal:
-
-```shell
-wget https://get.gear.rs/gear-nightly-aarch64-apple-darwin.tar.xz && \
-tar xvf gear-nightly-aarch64-apple-darwin.tar.xz && \
-rm gear-nightly-aarch64-apple-darwin.tar.xz
-```
-
-Run the node in development mode:
-
-```shell
-./gear --dev
-```
-
-</TabItem>
-<TabItem value="mac-intel" label="MacOS x64">
-
-Terminal:
-
-```shell
-wget https://get.gear.rs/gear-nightly-x86_64-apple-darwin.tar.xz && \
-tar xvf gear-nightly-x86_64-apple-darwin.tar.xz && \
-rm gear-nightly-x86_64-apple-darwin.tar.xz
-```
-
-Run the node in development mode:
-
-```shell
-./gear --dev
+❯ ./gear --version
+gear 1.0.2-d02d306f97c
 ```
 
 </TabItem>
 
-<TabItem value="mac-linux" label="Linux x64">
+<TabItem value="mac-arm" label="macOS ARM">
 
 Terminal:
 
-```shell
-wget https://get.gear.rs/gear-nightly-x86_64-unknown-linux-gnu.tar.xz && \
-tar xvf gear-nightly-x86_64-unknown-linux-gnu.tar.xz && \
-rm gear-nightly-x86_64-unknown-linux-gnu.tar.xz
+```bash
+curl https://get.gear.rs/gear-v1.0.2-aarch64-apple-darwin.tar.xz | tar xJ
 ```
 
-Run the node in development mode:
+or
 
-```shell
-./gear --dev
+**macOS ARM**: [gear-v1.0.2-aarch64-apple-darwin.tar.xz](https://get.gear.rs/gear-v1.0.2-aarch64-apple-darwin.tar.xz)
+
+You can try to run the node:
+
+```
+❯ ./gear --version
+gear 1.0.2-d02d306f97c
+```
+
+</TabItem>
+<TabItem value="mac-intel" label="macOS x86-64">
+
+Terminal:
+
+```bash
+curl https://get.gear.rs/gear-v1.0.2-x86_64-apple-darwin.tar.xz | tar xJ
+```
+
+or
+
+**macOS x86-64**: [gear-v1.0.2-x86_64-apple-darwin.tar.xz](https://get.gear.rs/gear-v1.0.2-x86_64-apple-darwin.tar.xz)
+
+You can try to run the node:
+
+```
+❯ ./gear --version
+gear 1.0.2-d02d306f97c
+```
+
+</TabItem>
+
+<TabItem value="win64" label="Windows x86-64">
+
+Terminal:
+
+```bash
+curl -O https://get.gear.rs/gear-v1.0.2-x86_64-pc-windows-msvc.zip
+```
+
+or
+
+**Windows x86-64**: [gear-v1.0.2-x86_64-pc-windows-msvc.zip](https://get.gear.rs/gear-v1.0.2-x86_64-pc-windows-msvc.zip)
+
+Unzip the downloaded package then you can try to run the node:
+
+```
+❯ gear.exe --version
+gear.exe 1.0.2-d02d306f97c
 ```
 
 </TabItem>

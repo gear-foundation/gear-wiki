@@ -40,7 +40,7 @@ export default {
           label: 'Docs',
         },
         {
-          href: 'https://www.vara-network.io/',
+          href: 'https://www.vara.network/',
           label: 'Vara Network',
           position: 'right',
         },
@@ -133,7 +133,7 @@ export default {
         label: 'English',
       },
       'zh-cn': {
-        label: '简体中文'
+        label: '简体中文',
       }
     }
   },

@@ -11,7 +11,7 @@ Tamagotchi is a popular virtual pet game that was created in Japan in the late 1
 
 The main purpose of the game is to provide care, nurturing and care for your Tamagotchi. The pet requires constant attention: you need to feed it, groom it, play with it and monitor its overall condition. If you don't pay enough attention to your Tamagotchi, it may even die.
 
-The game develops responsibility and care in the player, and promotes time management skills. Tamagotchi has become an iconic game and has many different versions and modifications. 
+The game develops responsibility and care in the player, and promotes time management skills. Tamagotchi has become an iconic game and has many different versions and modifications.
 
 The article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. Anyone can easily create their own application and run it on the Vara Network. The source code is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/tamagotchi).
 
@@ -20,10 +20,10 @@ The article explains the programming interface, data structure, basic functions 
 1. Build a contract
 > Additional details regarding this matter can be located within the [README](https://github.com/gear-foundation/dapps/tree/master/contracts/tamagotchi/README.md) directory of the contract.
 
-2. Upload the contract to the [Vara Network Testnet](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Ftestnet.vara.rs)
-> Further details regarding the process of contract uploading can be located within the [Getting Started](../../getting-started-in-5-minutes/#deploy-your-smart-contract-to-the-testnet) section.
+2. Upload the contract to the [Vara Network Testnet](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Ftestnet.vara.network)
+> Further details regarding the process of contract uploading can be located within the [Getting Started](../../getting-started-in-5-minutes#deploy-your-smart-contract-to-the-testnet) section.
 
-3. Build and run user interface 
+3. Build and run user interface
 > More information about this can be found in the [README](https://github.com/gear-foundation/dapps/blob/master/frontend/apps/tamagotchi/README.md) directory of the frontend.
 
 ## Implementation details
@@ -46,8 +46,8 @@ struct Tamagotchi {
 }
 ```
 * `name` - pet name
-* `date_of_birth` - pet's date of birth  
-* `owner` - pet owner 
+* `date_of_birth` - pet's date of birth
+* `owner` - pet owner
 * `fed` - is the level of satiety
 * `fed_block` - is the last feeding time
 * `entertained` - is the level of entertainment satisfaction

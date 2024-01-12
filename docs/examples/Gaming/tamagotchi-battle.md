@@ -18,10 +18,10 @@ The article explains the programming interface, data structure, basic functions 
 1. Build a contract
 > Additional details regarding this matter can be located within the [README](https://github.com/gear-foundation/dapps/tree/master/contracts/tamagotchi-battle/README.md) directory of the contract.
 
-2. Upload the contract to the [Vara Network Testnet](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Ftestnet.vara.rs)
-> Further details regarding the process of contract uploading can be located within the [Getting Started](../../getting-started-in-5-minutes/#deploy-your-smart-contract-to-the-testnet) section.
+2. Upload the contract to the [Vara Network Testnet](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Ftestnet.vara.network)
+> Further details regarding the process of contract uploading can be located within the [Getting Started](../../getting-started-in-5-minutes#deploy-your-smart-contract-to-the-testnet) section.
 
-3. Build and run user interface 
+3. Build and run user interface
 > More information about this can be found in the [README](https://github.com/gear-foundation/dapps/blob/master/frontend/apps/tamagotchi-battle/README.md) directory of the frontend.
 
 ## Implementation details
@@ -56,7 +56,7 @@ struct Battle {
 * `completed_games` - the number of pairs that finished the battle
 * `reservations` - reservations id for delayed messages
 
-`Player` structure looks as follows: 
+`Player` structure looks as follows:
 
 ```rust title="tamagotchi-battle/io/src/lib.rs"
 pub struct Player {
@@ -72,16 +72,16 @@ pub struct Player {
 }
 ```
 * `owner` - owner's address
-* `name` - Tamagotchi name 
+* `name` - Tamagotchi name
 * `date_of_birth` - Tamagotchi's birthday
-* `tmg_id` - Tamagotchi id 
-* `defence` - level of protection 
+* `tmg_id` - Tamagotchi id
+* `defence` - level of protection
 * `power` - level of power
 * `health` - level of health
-* `color` - tamagotchi color 
+* `color` - tamagotchi color
 * `victories` - number of victories
 
-`Pair` structure looks as follows: 
+`Pair` structure looks as follows:
 
 ```rust title="tamagotchi-battle/io/src/lib.rs"
 pub struct Pair {
@@ -95,8 +95,8 @@ pub struct Pair {
     pub msg_id: MessageId,
 }
 ```
-* `owner_ids` - it's a Tamagotchi owner's id 
-* `tmg_ids` - it's a Tamagotchi id 
+* `owner_ids` - it's a Tamagotchi owner's id
+* `tmg_ids` - it's a Tamagotchi id
 * `moves` - history of moves
 * `rounds` - current round number/number of rounds
 * `game_is_over` - end-of-game identifier
@@ -208,7 +208,7 @@ async fn register(&mut self, tmg_id: &TamagotchiId) {
     // ...
 ```
 
-To start the game the admin must send the `BattleAction::StartBattle`, where first checks will be carried out, and then there will be a split into pairs. 
+To start the game the admin must send the `BattleAction::StartBattle`, where first checks will be carried out, and then there will be a split into pairs.
 
 ```rust title="tamagotchi-battle/src/lib.rs"
 fn start_battle(&mut self) {
@@ -300,7 +300,7 @@ fn make_move(&mut self, pair_id: PairId, tmg_move: Move) {
 }
 ```
 
-After the move is made again the delayed messages are used for the same purpose, but this case a different type of delayed message is used `msg::send_with_gas_delayed`, where the gas is applied separately 
+After the move is made again the delayed messages are used for the same purpose, but this case a different type of delayed message is used `msg::send_with_gas_delayed`, where the gas is applied separately
 
 ```rust title="tamagotchi-battle/src/lib.rs"
 fn send_delayed_msg_with_gas(pair_id: PairId) -> MessageId {
@@ -333,7 +333,7 @@ if pair.rounds == MAX_STEPS_IN_ROUND && winner.is_none() {
     };
 }
 ```
-2. After each round it re-generates the power and defence of the tamagotchi 
+2. After each round it re-generates the power and defence of the tamagotchi
 ```rust title="tamagotchi-battle/src/lib.rs"
 players[0].power = generate_power(pair.tmg_ids[0]);
 players[0].defence = MAX_POWER - players[0].power;
