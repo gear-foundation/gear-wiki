@@ -78,18 +78,14 @@ Use one of the supported flags when running the node:
     Specify Prometheus exporter TCP Port
 
 --rpc-port <PORT>
-    Specify HTTP RPC server TCP port
-
---ws-port <PORT>
-    Specify WebSockets RPC server TCP port
+    Specify JSON-RPC server TCP port
 ```
 
 Default ports are:
 
 - P2P: `30333`
 - Prometheus: `9615`
-- HTTP RPC: `9944`
-- WebSocket RPC: `9944`
+- WebSocket/HTTP JSON-RPC: `9944`
 
 ## How to see Gear node service logs?
 
