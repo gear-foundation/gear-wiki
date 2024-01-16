@@ -61,10 +61,7 @@ sudo systemctl restart gear-node
     Specify Prometheus exporter TCP Port
 
 --rpc-port <PORT>
-    Specify HTTP RPC server TCP port
-
---ws-port <PORT>
-    Specify WebSockets RPC server TCP port
+    Specify JSON-RPC server TCP port
 ```
 
 ### `Verification failed for block <block-id> received from peer <peer-id>` 遇到以上问题该如何解决？
