@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Gear Library
 
-The Gear Protocol’s library `gstd` provides all the necessary and sufficient functions and methods for developing smart-contracts.
+The Gear Protocol’s library `gstd` provides all the necessary and sufficient functions and methods for developing programs.
 
 ## Importing familiar types via prelude
 
@@ -14,7 +14,7 @@ See more details [here](https://docs.gear.rs/gstd/prelude/index.html).
 
 ## Message handling
 
-The Gear Protocol allows users and programs to interact with other users and programs via messages. Messages can contain a `payload` that will be able to be processed during message execution. Interaction with messages is possible thanks to the module `msg`:
+The Gear Protocol allows users and programs to interact with other users and programs via messages. Messages can contain a `payload` that can be processed during message execution. Interaction with messages is possible thanks to the module `msg`:
 
 ```rust
 use gstd::msg;
@@ -102,9 +102,9 @@ extern "C" fn handle() {
 
 You can read more about program syscalls [here](https://docs.gear.rs/gstd/exec/index.html).
 
-## Logging inside the contracts
+## Logging inside the programs
 
-Macro `gstd::debug` provides an ability to debug contract during program execution:
+Macro `gstd::debug` provides an ability to debug program during program execution:
 
 ```rust
 #![no_std]

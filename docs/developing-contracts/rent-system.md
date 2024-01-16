@@ -6,7 +6,7 @@ sidebar_class_name: hidden
 
 # Program Rent
 
-Gear Protocol utilizes a rent-based program management system. When developers upload a program (smart contract) to the network, its expiration date is assigned. The expiration period is measured in blocks.
+Gear Protocol utilizes a rent-based program management system. When developers upload a program to the network, its expiration date is assigned. The expiration period is measured in blocks.
 
 After the expiration date, the program is automatically removed from storage, unless the owner chooses to extend its life by paying rent. The owner must indicate the number of additional blocks they can pay for, and they need to pay the rent in utility tokens to keep the program active beyond its initial expiration date.
 

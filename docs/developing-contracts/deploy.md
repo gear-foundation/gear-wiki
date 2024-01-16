@@ -3,7 +3,7 @@ sidebar_label: Upload Program
 sidebar_position: 12
 ---
 
-# Upload smart contracts
+# Upload program
 
 Following the principles of Actor model for communication, uploading a program in the network is just one of the specific types of transactions that contain a Wasm file as a payload.
 

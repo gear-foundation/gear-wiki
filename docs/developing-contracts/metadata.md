@@ -7,7 +7,7 @@ sidebar_position: 5
 
 Metadata is a kind of interface map that helps to transform a set of bytes into an understandable structure and indicates the function this structure is intended for. Metadata determines how all incoming and outgoing data will be encoded/decoded.
 
-Metadata allows dApp’s parts - the smart-contract and the client side (JavaScript), to understand each other and exchange data.
+Metadata allows dApp’s parts - the program and the client side (JavaScript), to understand each other and exchange data.
 
 To describe metadata interface use `gmeta` crate:
 
@@ -30,7 +30,7 @@ impl Metadata for ProgramMetadata {
 }
 ```
 
-As we can see, metadata enables you to determine the expected data at the input/output for the contract at each endpoint. Where:
+Metadata enables you to determine the expected data at the input/output for the program at each endpoint. Where:
 
 - `Init` - describes incoming/outgoing types for `init()` function.
 - `Handle` - describes incoming/outgoing types for `handle()` function.
@@ -54,7 +54,7 @@ fn main() {
 }
 ```
 
-As a result of the smart-contract compilation, a `*.meta.txt` file will be generated. This metadata file can be used in the UI applications that will interact with this smart-contract. The file’s content looks like a hex string:
+As a result of the program compilation, a `*.meta.txt` file will be generated. This metadata file can be used in the UI applications that will interact with this program. The file’s content looks like a hex string:
 
 ```
 0002000000010000000001000000000000000000010100000009021c00082c74656d706c6174655f696f2050696e67506f6e670001081050696e6700000010506f6e670001000004000002080008000004080c18000c10106773746418636f6d6d6f6e287072696d6974697665731c4163746f724964000004001001205b75383b2033325d000010000003200000001400140000050300180000050700
