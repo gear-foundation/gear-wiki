@@ -23,7 +23,7 @@ In the usual NFT standard, NFT owners were stored as mapping from the NFT ids to
 ```rust
 BTreeMap<TokenId, ActorId>
 ```
-In the RMRK NFT standard we store the owners of tokens in the following way:
+In the RMRK NFT standard, token owners are stored as follows in the following manner:
 ```rust
 BTreeMap<TokenId, RMRKOwner>
 

@@ -19,7 +19,7 @@ This article explains how to create a `React` application and connect it to an [
 3. There is an `.env.example` file. Create your own `.env` file and copy the contents of `.env.example` to your `.env` file. It contains the following variables:
     - `REACT_APP_NODE_ADDRESS`: This variable defines the node we'll be working on.
     - `REACT_APP_CONTRACT_ADDRESS`: The address of the contract uploaded to the chain.
-    - `REACT_APP_IPFS_ADDRESS` and `REACT_APP_IPFS_GATEWAY_ADDRESS`: These variables are needed when we upload media files to IPFS. 
+    - `REACT_APP_IPFS_ADDRESS` and `REACT_APP_IPFS_GATEWAY_ADDRESS`: These variables are needed when uploading media files to IPFS.
 
 4. Upload the contract to the chain and set up the address in the `.env` file. Place the `meta.txt` file in the `assets/meta` folder and the `nft_state.meta.wasm` file in the `assets/wasm folder`.
 
@@ -67,7 +67,7 @@ This article explains how to create a `React` application and connect it to an [
     const { isAccountReady } = useAccount();
     ```
 
-7. If the `api` is ready and the `account` is connected, it displays the application's pages. Let's navigate to the `pages` folder. The project has only one page `Home`. The `index.tsx` file is also simple:
+7. If the `api` is ready and the `account` is connected, it displays the application's pages. Navigate to the pages folder. The project has only one page `Home`. The `index.tsx` file is also simple:
 
     ```typescript
     import { Route, Routes } from 'react-router-dom';
@@ -88,7 +88,7 @@ This article explains how to create a `React` application and connect it to an [
 
 ### Create-NFT page
 
-1. Let's create a page for NFT creation.
+1. Create a page for NFT creation using the code below:
     ```shell
     mkdir src/pages/create-nft
     touch src/pages/create-nft/CreateNft.tsx
@@ -99,7 +99,7 @@ This article explains how to create a `React` application and connect it to an [
     mv src/assets/styles/CreateNft.module.scss src/pages/create-nft 
     ```
 
-3. Let's start writing the `CreateNft.tsx`:
+3. Start writing the `CreateNft.tsx`:
 
     ```typescript 
     import styles from 'CreateNft.module.scss'
@@ -111,7 +111,7 @@ This article explains how to create a `React` application and connect it to an [
     }
     ```
 
-4. We should declare this page in the `index.tsx` file and also add the route for it:
+4. Declare this page in the `index.tsx` file and also add the route for it::
 
     ```typescript 
     import { Route, Routes } from 'react-router-dom';
@@ -132,7 +132,7 @@ This article explains how to create a `React` application and connect it to an [
     }
     ```
 
-5. Let's create a link to the `CreateNft` page from the `Home` page. In the `Home.tsx` file, let's write:
+5. Create a link to the `CreateNft` page from the `Home` page. In the `Home.tsx` file, write:
 
     ```typescript 
     import { Link } from "react-router-dom";
@@ -147,7 +147,7 @@ This article explains how to create a `React` application and connect it to an [
     export { Home };
     ```
 
-6. Now let's go back to the `CreateNft` page. First, we create a form that includes the NFT `title`, `description`, and `image`:
+6. Go back to the `CreateNft` page. Create a form that includes the NFT `title`, `description`, and `image`:
 
     ```typescript 
     import { Button, FileInput, Input } from '@gear-js/ui'
@@ -176,7 +176,7 @@ This article explains how to create a `React` application and connect it to an [
     }
     ```
 
-7. Let's create a state that will store the NFT's title, description, and image, and add the functions `handleInputChange` and `handleImageChange` that will update this state:
+7. Create a state that will store the NFT's title, description, and image, and add the functions `handleInputChange` and `handleImageChange` that will update this state:
 
     ```typescript 
     import { Button, FileInput, Input } from '@gear-js/ui'
@@ -220,7 +220,7 @@ This article explains how to create a `React` application and connect it to an [
     }
     ```
 
-8. Let's also add the image preview for the uploaded image:
+8. Add the image preview for the uploaded image:
 
     ```typescript
     ...
@@ -253,7 +253,8 @@ This article explains how to create a `React` application and connect it to an [
 ### Upload image and mint NFT
 
 1. Next, we upload the image to IPFS and send a `Mint` message to the contract.
-Install the [IPFS Desktop App](http://docs.ipfs.tech.ipns.localhost:8080/install/ipfs-desktop/#windows).
+
+Upload the image to IPFS and send a `Mint` message to the contract. Install the [IPFS Desktop App](http://docs.ipfs.tech.ipns.localhost:8080/install/ipfs-desktop/#windows).
 
 2. Navigate to `Settings`:
 ![](../../img/ssgQSvY.jpg)
@@ -279,7 +280,7 @@ and configure the `API` of your node:
         },
     ```
 
-3. Now we are ready to upload the files from our application. Let's start writing the function:
+3. Now you can upload the files from the application. Start writing the function:
 
     ```typescript
     ...
@@ -307,14 +308,13 @@ and configure the `API` of your node:
 
     ```
 
-4. Next, we need to send the message to the contract. But before that, let's create the necessary hooks.
-Create a file named `api.ts` in the `hooks` folder.
+4. Next, send the message to the contract. But first, establish the required hooks. Generate a file called `api.ts` in the `hooks` folder.
 
 ```shell
 touch src/hooks/api.ts
 ```
 
-5. We'll define the hook `useNFTMetadata` and `useSendNFTMessage`:
+5. Define the hook `useNFTMetadata` and `useSendNFTMessage`:
 
     ```typescript
     import { useSendMessage } from '@gear-js/react-hooks';
@@ -334,8 +334,7 @@ touch src/hooks/api.ts
     export {useNFTMetadata, useSendNFTMessage}
     ```
 
-6. Let's continue writing the `CreateNft` function. We will create the `payload` message and send it to the contract.
-
+6. Continue continue writing the `CreateNft` function. Create the `payload` message and send it to the contract.
     ```typescript 
     ...
     import { useAccount } from '@gear-js/react-hooks';
@@ -494,13 +493,13 @@ touch src/hooks/api.ts
     }
     ```
 
-In the next section, we will create the `Home` page where we will read and display the minted NFTs.
+The next section covers the creation of the `Home` page for reading and displaying the minted NFTs.
 
 ### Home page
 
-In the `api.ts` file, we will add hooks for reading the contract state.
+In the `api.ts` file, add hooks for reading the contract state.
 
-1. First, let's add `useNFTState<T>`, where `T` is the type we expect to read (for example, `Token`). It will accept the function name and payload if required for the specified function:
+1. First, add `useNFTState<T>`, where `T` is the type expected to be read (for example, `Token`). It’ll accept the function name and payload if required for the specified function:
 
     ```typescript
     import stateMetaWasm from 'assets/wasm/nft_state.meta.wasm'
@@ -524,8 +523,7 @@ In the `api.ts` file, we will add hooks for reading the contract state.
     }
     ```
 
-2. Let's read all the tokens our contract has. First, we'll create the type for a token in a separate folder called `types`:
-
+2. To read all the tokens in the contract, create the type for a token in a separate folder called `types`:
     ```shell
     mkdir types
     touch types/index.ts
@@ -549,7 +547,7 @@ In the `api.ts` file, we will add hooks for reading the contract state.
     export type { Token };
     ```
 
-3. Then we can write the `useNFTs` hook:
+3. Then write the `useNFTs` hook:
 
     ```typescript
     ...
@@ -562,7 +560,7 @@ In the `api.ts` file, we will add hooks for reading the contract state.
     }
     ```
 
-4. Now let's start writing the `Home` page:
+4. Start writing the `Home` page:
 
     ```typescript
 
@@ -594,19 +592,19 @@ In the `api.ts` file, we will add hooks for reading the contract state.
     export { Home };
     ```
 
-5. We read `nfts` using the previously written hook `useNFTs`:
+5. `nfts` are read using the previously written hook `useNFTs`.
 
     ```typescript
     const nfts = useNFTs();
     ```
 
-6. Then we check whether the contract has tokens:
+6. Check whether the contract has tokens: 
 
     ```typescript
     const isAnyNft = !!nfts?.length;
     ```
 
-7. Let's create a component that will display NFT:
+7. Create a component that will display the NFT:
 
     ```
     mkdir pages/home/nft
@@ -642,7 +640,7 @@ In the `api.ts` file, we will add hooks for reading the contract state.
     export { NFT };
     ```
 
-8. Then let's write a function for retrieving all NFTs from the contract in the `Home.tsx` file:
+8. Write a function for retrieving all NFTs from the contract in the `Home.tsx` file:
 
     ```typescript 
     ...

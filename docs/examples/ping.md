@@ -45,7 +45,7 @@ extern fn state() {
 }
 ```
 
-The `io` crate defines the contract metadata.
+The `io` crate defines the program metadata.
 ```rust title="ping/io/src/lib.rs"
 #![no_std]
 
@@ -72,7 +72,7 @@ fn main() {
 }
 ```
 
-The `state` is the independent crate for reading the program state. It depends on the `ping-io` crate where the type of the contract state is defined:
+The `state` is the independent crate for reading the program state. It depends on the `ping-io` crate where the type of the program state is defined:
 ```rust title="ping/state/src/lib.rs"
 #![no_std]
 
@@ -103,4 +103,4 @@ pub mod metafns {
 }
 ```
 
-In the tests directory you can see an example of testing the  program using `gclient` and `gtest`. For more details about testing smart contracts written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.
+In the tests directory, you can see an example of testing the program using `gclient` and `gtest`. For more details about testing programs written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.
