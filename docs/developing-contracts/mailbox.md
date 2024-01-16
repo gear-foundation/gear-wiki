@@ -20,7 +20,7 @@ Let's explore possible user reactions to the mailbox's message.
 
 ## User sends a reply to the message
 
-The program can send a message to the user and wait for a reply from him. The user can reply using a [`send_reply`](https://docs.gear.rs/pallet_gear/pallet/struct.Pallet.html#method.send_reply) extrinsic. The value associated with the message is transferred to the user's account, the message is removed from the mailbox, and the new reply message is added to the message queue.
+The program sends a message to the user, waiting for their reply. Users can respond using a [`send_reply`](https://docs.gear.rs/pallet_gear/pallet/struct.Pallet.html#method.send_reply) extrinsic. The value linked to the message gets transferred to the user's account, removing the message from the mailbox. Simultaneously, the new reply message gets added to the message queue.
 
 ## User claims value from a message in the mailbox
 

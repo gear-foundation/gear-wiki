@@ -3,11 +3,11 @@ sidebar_label: Create Program
 sidebar_position: 7
 ---
 
-# Create program from program
+# Create a program from a program
 
-Business logic of an arbitrary decentralized application may require the program (smart contract) the possibility of creating, initializing and launching one or several other programs in the network. It can be necessary when external parties (users) need access to their own instance of the typical smart contract.
+The business logic of any decentralized application may necessitate enabling the program to create, initialize, and launch one or multiple other programs within the network. This capability becomes crucial when external parties, such as users, require access to their unique instance of the standard program.
 
-Let’s take for example a contract that implements loan functionality. In this case, the program developer can create a loan factory contract that will create instances of loan smart contracts on demand and operate them.
+Let’s take for example a program that implements loan functionality. In this case, the program developer can create a loan factory program that will create instances of loan programs on demand and operate them.
 
 Firstly, to create a program, you have to submit program code to the network using an extrinsic [`gear.uploadCode`](https://docs.gear.rs/pallet_gear/pallet/struct.Pallet.html#method.upload_code) and get its code hash. Submit program code does not initialize the program.
 

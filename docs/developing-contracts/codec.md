@@ -40,11 +40,11 @@ Learn more about SCALE Codec [here](https://github.com/paritytech/parity-scale-c
 
 [`scale-info`](https://docs.rs/scale-info/) is a library to describe Rust types, intended for providing information about the structure of encodable SCALE types.
 
-The definitions provide third party tools (e.g. a UI client) with information about how they are able to decode types agnostic of language. The interface that uses `scale-info` for Gear programs is called **metadata**. It defines incoming and outgoing types for all necessary entry points and allows contracts and the client part to understand each other.
+The definitions provide third party tools (e.g. a UI client) with information about how they are able to decode types agnostic of language. The interface that uses `scale-info` for Gear programs is called **metadata**. It defines incoming and outgoing types for all necessary entry points and allows programs and the client part to understand each other.
 
 :::info
 
-[Learn more](./metadata.md) how to use metadata in contract.
+[Learn more](./metadata.md) how to use metadata in program.
 
 :::
 

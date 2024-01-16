@@ -131,7 +131,7 @@ Open the second terminal window and run tests using `cargo` as it was described 
 
 ## Simple example
 
-Let's add an end-to-end test to our `first-gear-app` introduced in the [Getting Started](getting-started-in-5-minutes.md#creating-your-first-gear-smart-contract) section.
+Let's add an end-to-end test to our `first-gear-app` introduced in the [Getting Started](getting-started-in-5-minutes.md#creating-your-first-gear-program) section.
 
 Add the `tests` directory next to the `src` directory and create the `end2end.rs` file in it.
 
@@ -214,10 +214,13 @@ cargo test --release -- --include-ignored
 
 It's recommended to mark with the `#[ignore]` attribute tests with `gclient` to separate their slow execution from the rest. To execute ignored tests with Cargo, add the `--include-ignored` flag after a double dash (`--`) as shown above.
 
-Let's explore what we've done in the test function above.
+Consider what has been done in the test function above.
 
-Firstly, we instantiate the API that allows interaction with the node by calling correspondent extrinsics. Then we create an event listener, as getting the feedback from the node is possible only by subscribing to events. We use the API instance both for invoking RPC calls (e.g., calculating the gas amount needed for processing) and sending extrinsics (e.g., uploading the program and sending a message). Events listener allows us to get the result of operation.
+First, the API is instantiated to enable interaction with the node through the invocation of corresponding extrinsics. Subsequently, an event listener is created, as obtaining feedback from the node is achievable solely through event subscription. The API instance is used for invoking RPC calls (e.g., calculating the required gas amount for processing) and dispatching extrinsics (e.g., uploading the program and transmitting a message). The event listener facilitates the retrieval of operation results.
 
 ## More details about `gclient`
 
 Please refer to the [`gclient` docs](https://docs.gear.rs/gclient/) for more information about its capabilities and use cases.
+
+
+

@@ -23,13 +23,13 @@ The first is the off-chain testing using a low-level [`gtest`](https://docs.gear
 
 The second is the on-chain testing with a higher level [`gclient`](https://docs.gear.rs/gclient/) crate. It perfectly fits the needs of end-to-end testing.
 
-Although `gclient` is aimed at end-to-end testing, tests can be written as unit or integration tests in terms of Rust. We recommend using the integration-like approach with separate test files in the `tests` directory when using the `gclient` crate.
+Although `gclient` is oriented towards end-to-end testing, tests can be written as unit or integration tests in terms of Rust. It is recommended to use the integration-like approach with separate test files in the `tests` directory when utilizing the `gclient` crate.
 
 ## Building a program in test mode
 
 First, be sure you have a compiled Wasm file of the program you want to test. You can refer to [Getting Started](getting-started-in-5-minutes.md) for additional details.
 
-1. Usually, the following command is used for the regular compilation of Gear smart contracts:
+1. Usually, the following command is used for the regular compilation of Gear programs:
 
     ```bash
     cd ~/gear/contracts/first-gear-app/
@@ -48,7 +48,7 @@ First, be sure you have a compiled Wasm file of the program you want to test. Yo
     cargo test
     ```
 
-    The nightly compiler is required if your contract uses unstable Rust features, and the compiler will ask you to enable `nightly` if necessary.
+    The nightly compiler is required if your program uses unstable Rust features, and the compiler will ask you to enable `nightly` if necessary.
 
     ```bash
     cargo +nightly test
@@ -62,4 +62,4 @@ First, be sure you have a compiled Wasm file of the program you want to test. Yo
 
 ## Dig deeper
 
-In the following two sections, we will describe how to test the Gear program using both `gtest` and `gclient` crates.
+The following two sections outline testing the Gear program using both the `gtest` and `gclient` crates.

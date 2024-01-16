@@ -22,19 +22,13 @@ Please refer to the [Troubleshooting](/docs/node/troubleshooting) section to fin
 
 ## Are there rewards for running nodes?
 
-Running a node in a production network will be incentivized. There are no regular rewards for running nodes in a test net, but participation in community events is also incentivized. Stay tuned.
+Validator nodes in Gear-powered networks, such as [Vara](https://vara.network/), are incentivized according to the Nominated Proof-of-Stake (NPoS) mechanism. Refer to [this article](https://wiki.vara.network/docs/staking/overview) for more details.
 
-## Could we run collator/validator now?
+Additionally, anyone can run a local node for development or/and run local services.
 
-Not at the moment. Stay tuned.
+## Could we run validator now?
 
-## If my node is shown in the telemetry, and syncing blocks, is that all OK?
-
-Yes.
-
-## What do we have to do after running a node?
-
-That's all at the moment, but stay tuned for future updates.
+Yes, anyone can setup a validator in the Vara network. Follow the instructions from the [Validators guide](https://wiki.vara.network/docs/staking/validate).
 
 ## How do I make the node work in the background?
 
@@ -111,11 +105,7 @@ $$
 
 ## Is the node visible in telemetry during syncing?
 
-Yes, it is visible on the telemetry portal - https://telemetry.rs. It will be gray until the block height becomes up to date.
-
-## Should I associate my wallet with the node?
-
-No, not at the moment.
+Only Validator nodes are visible on the telemetry portal - https://telemetry.rs.
 
 ## Is there any command to check for new updates for the node?
 

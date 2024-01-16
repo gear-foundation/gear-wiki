@@ -6,7 +6,7 @@ sidebar_position: 14
 
 `gtest` simulates a real network by providing mockups of the user, program, balances, mailbox, etc. Since it does not include parts of the actual blockchain, it is fast and lightweight. But being a model of the blockchain network, `gtest` cannot be a complete reflection of the latter.
 
-As we said earlier, `gtest` is excellent for unit and integration testing. It is also helpful for debugging Gear program logic. Nothing other than the Rust compiler is required for running tests based on `gtest`. It is predictable and robust when used in continuous integration.
+As mentioned earlier, `gtest` is excellent for unit and integration testing. It is also helpful for debugging Gear program logic. Nothing other than the Rust compiler is required for running tests based on `gtest`. The use of gtest in continuous integration is predictable and robust.
 
 ## Import `gtest` lib
 
@@ -31,7 +31,7 @@ gtest = { git = "https://github.com/gear-tech/gear.git", tag = "v1.0.2" }
 
 ## `gtest` capabilities
 
-- Initialization of the common environment for running smart contracts:
+- Initialization of the common environment for running programs:
 ```rust
     // This emulates node's and chain's behavior.
     //
@@ -123,7 +123,7 @@ gtest = { git = "https://github.com/gear-tech/gear.git", tag = "v1.0.2" }
     // To specify printed logs, set the env variable `RUST_LOG`:
     // `RUST_LOG="target_1=logging_level,target_2=logging_level" cargo test`
     //
-    // Gear smart contracts use `gwasm` target with `debug` logging level
+    // Gear programs use `gwasm` target with `debug` logging level
     sys.init_logger();
 ```
 - Sending messages:
@@ -239,7 +239,7 @@ gtest = { git = "https://github.com/gear-tech/gear.git", tag = "v1.0.2" }
     // The first one requires payload to be CODEC Encodable, while the second requires payload
     // implement `AsRef<[u8]>`, that means to be able to represent as bytes.
     //
-    // Let we have the following contract state and `meta_state` function:
+    // Let we have the following program state and `meta_state` function:
     #[derive(Encode, Decode, TypeInfo)]
     pub struct ContractState {
         a: u128,
