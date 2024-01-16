@@ -7,27 +7,28 @@ sidebar_position: 1
 
 ![img alt](../../img/nft-marketplace.png)
 
-NFT marketplace is a smart contract where you can buy and sell non-fungible tokens for fungible tokens. The contract also supports holding the NFT auctions and making/accepting purchase offers on NFTs.
+NFT marketplace is a program where you can buy and sell non-fungible tokens for fungible tokens. The program also supports holding the NFT auctions and making/accepting purchase offers on NFTs.
 
-A smart contract examples are available on GitHub so anyone can easily create their own NFT marketplace application and run it on the Gear-powered network:
+The following are program examples available on GitHub: 
 
 - [Gear Non-Fungible Token](https://github.com/gear-foundation/dapps/tree/master/contracts/non-fungible-token).
 - [NFT marketplace](https://github.com/gear-foundation/dapps/tree/master/contracts/nft-marketplace).
-
 - Marketplace UI available on [Github](https://github.com/gear-foundation/dapps/tree/master/frontend/apps/nft-marketplace)
+
+Anyone can easily create their own NFT marketplace application and run it on Gear-powered Networks. 
 
 ## How to run
 
 ### ⚒️ Build programs
 
 - Build [NFT contract](https://github.com/gear-foundation/dapps/tree/master/contracts/non-fungible-token) as described in `README.md`
-- Build [Marketplace contract](https://github.com/gear-foundation/dapps/tree/master/contracts/nft-marketplace) as described in `README.md`
+- Build [Marketplace program](https://github.com/gear-foundation/dapps/tree/master/contracts/nft-marketplace) as described in `README.md`
 
 ### 🏗️ Upload programs
 
-You can deploy a program using [idea.gear-tech.io](https://idea.gear-tech.io/). In the network selector choose `Staging Testnet` or `Development` (in this case, you should have a local node running).
+You can deploy a program using [idea.gear-tech.io](https://idea.gear-tech.io/). In the network selector, choose `Staging Testnet` or `Development` (in this case, you should have a local node running).
 
-*** Non-Fungible Token ***
+**Non-Fungible Token**
 
 1. Upload program `nft.opt.wasm` from `/target/wasm32-unknown-unknown/release/`
 2. Upload metadata file `meta.txt`
@@ -35,14 +36,13 @@ You can deploy a program using [idea.gear-tech.io](https://idea.gear-tech.io/). 
 
 :::info
 Init payload:
-
 - name `Str` - NFT collection name
 - symbol `Str` - NFT collection symbol
 - base_uri `Str` - NFT collection base URI
 - royalties `Option<Royalties>` - Optional param to specify accounts to pay royalties
 :::
 
-*** Marketplace ***
+**Marketplace**
 
 1. Upload program `marketplace.opt.wasm` from `/target/wasm32-unknown-unknown/release/`
 2. Upload metadata file `meta.txt`
@@ -79,7 +79,7 @@ REACT_APP_NFT_CONTRACT_ADDRESS=0xa7874ff27e9bac10bf7fd43f4908bb1e273018e15325c16
 - `REACT_APP_NODE_ADDRESS` is Gear Network address (`wss://testnet.vara.network`)
 - `REACT_APP_IPFS_ADDRESS` is address of IPFS to store NFT assets (https://ipfs.gear-tech.io/api/v0 was used for Gear Marketplace implementation)
 - `REACT_APP_IPFS_GATEWAY_ADDRESS` is IPFS Gateway address (https://ipfs-gw.gear-tech.io/ipfs)
-- `REACT_APP_MARKETPLACE_CONTRACT_ADDRESS` is NFT Marketplace contract address in Gear Network
+- `REACT_APP_MARKETPLACE_CONTRACT_ADDRESS` is NFT Marketplace program address in Gear Network
 - `REACT_APP_NFT_CONTRACT_ADDRESS` is Gear Non-Fungible Token contract address in Gear Network
 
 3. Run app
@@ -88,7 +88,7 @@ REACT_APP_NFT_CONTRACT_ADDRESS=0xa7874ff27e9bac10bf7fd43f4908bb1e273018e15325c16
 yarn start
 ```
 
-## Marketplace contract logic
+## Marketplace program logic
 
 This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios.
 
@@ -96,7 +96,7 @@ This article explains the programming interface, data structure, basic functions
 -->
 
 ## Logic
-The contract state:
+The program state:
 ```rust title="nft-marketplace/io/src/lib.rs"
 pub struct Market {
     pub admin_id: ActorId,
@@ -108,11 +108,11 @@ pub struct Market {
     pub tx_id: TransactionId,
 }
 ```
-- `admin_id` - an account who has the right to approve non-fungible-token and fungible-tokens contracts that can be used in the marketplace contract;
+- `admin_id` - an account who has the right to approve non-fungible-token and fungible-tokens contracts that can be used in the marketplace program;
 - `treasury_id` - an account to which sales commission will be credited;
 - `treasury_fee` - commission percentage (from 1 to 5 percent)
 
-The marketplace contract is initialized with the following fields;
+The marketplace program is initialized with the following fields;
 
 - `items` - listed NFTs;
 - `approved_nft_contracts` - NFT contracts accounts that can be listed on the marketplace;
@@ -170,7 +170,7 @@ pub enum MarketTx {
 
 ### Listing NFTs, changing the price or stopping the sale.
 
-To list NFT on the marketplace or modify the terms of sale send the following message:
+To list NFTs on the marketplace or modify the terms of sale, send the following message:
 
 ```rust title="nft-marketplace/io/src/lib.rs"
 /// Adds data on market item.
@@ -196,7 +196,7 @@ AddMarketData {
 ```
 ### NFT purchase.
 
-To buy NFT send the following message:
+To buy NFTs, send the following message:
 
 ```rust title="nft-marketplace/io/src/lib.rs"
 /// Sells the NFT.
@@ -218,7 +218,7 @@ BuyItem {
 
 ### NFT auction.
 
-The marketplace contract includes the *English auction*. *English auction* is an open auction at an increasing price, where participants openly bid against each other, with each subsequent bid being greater than the previous one.
+The marketplace program includes the *English auction*. *English auction* is an open auction at an increasing price, where participants openly bid against each other, with each subsequent bid being greater than the previous one.
 
 The auction has the following struct:
 ```rust title="nft-marketplace/io/src/lib.rs"
@@ -264,7 +264,7 @@ CreateAuction {
 },
 ```
 
-To add a bid to the current auction send the following message:
+Send the following message to add a bid to the currency auction:
 ```rust title="nft-marketplace/io/src/lib.rs"
 /// Adds a bid to an ongoing auction.
 ///
@@ -286,7 +286,7 @@ AddBid {
 },
 ```
 
-If the auction period is over then anyone can send a message `SettleAuction` that will send the NFT to the winner and pay to the owner:
+If the auction period is over, anyone can send the message `SettleAuction` that will send the NFT to the winner and pay the owner:
 
 ```rust title="nft-marketplace/io/src/lib.rs"
 /// Settles the auction.
@@ -306,7 +306,7 @@ SettleAuction {
 
 ### Offers.
 
-To make an offer on the marketplace item send the following message:
+Send the following message to make an offer on the marketplace item:
 
 ```rust title="nft-marketplace/io/src/lib.rs"
 /// Adds a price offer to the item.
@@ -356,7 +356,7 @@ AcceptOffer {
 }
 ```
 
-The user who made the offer can also withdraw his tokens:
+The user who made the offer can also withdraw their tokens:
 
 ```rust title="nft-marketplace/io/src/lib.rs"
 /// Withdraws tokens.
@@ -378,9 +378,9 @@ Withdraw {
     price: Price,
 },
 ```
-## Consistency of contract states
+## Consistency of program states
 
-The `market` contract interacts with `fungible` and `non-fungible` token contracts. Each transaction that changes the states of several contracts is stored in the state until it is completed. Every time a user interacts with an item, the marketplace contract checks for an pending transaction and, if there is one, asks the user to complete it, not allowing to start a new one. The idempotency of the token contracts allows to restart a transaction without duplicate changes which guarantees the state consistency of 3 contracts.
+The `market` program interfaces with both `fungible` and `non-fungible` token contracts. Each transaction that alters the states of multiple programs is temporarily stored until its completion. Whenever a user engages with an item, the marketplace program verifies any pending transactions. If there is one, it prompts the user to finalize it, preventing the initiation of a new transaction. The idempotency inherent in the token contracts enables the restarting of a transaction without redundant changes, ensuring the consistent state of all three programs.
 
 ## Program metadata and state
 
@@ -399,7 +399,7 @@ impl Metadata for MarketMetadata {
 }
 ```
 
-To display the full contract state information, the `state()` function is used:
+To display the full program state information, the `state()` function is used:
 
 ```rust title="nft-marketplace/src/lib.rs"
 #[no_mangle]
