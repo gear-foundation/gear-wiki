@@ -15,17 +15,17 @@ Battleship is a popular game that operates **entirely on-chain**. The primary ga
 
 The source code is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/battleship ). This article describes the program interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios.
 
-> **Important notice**: The implementation is based on the interaction of two contracts: the main game contract and the bot contract that users will interact with during the game. To successfully load the game into the [Vara Network Testnet](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Ftestnet.vara.network), it is imperative to upload the bot program first. Subsequently, during the initialization phase of the main game contract, specifying the bot contract's address is a crucial step.
+> **Important notice**: The implementation is based on the interaction of two programs: the main `game` program and the `bot` program that users will interact with during the game. To successfully load the game into the [Vara Network Testnet](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Ftestnet.vara.network), it is imperative to upload the bot program first. Subsequently, during the initialization phase of the main game program, specifying the bot program's address is a crucial step.
 
-Also everyone can play the game via this link - [Play Battleship](https://battleship.vara.network/) (VARA tokens are requred for gas fees).
+Also, everyone can play the game via this link - [Play Battleship](https://battleship.vara.network/) (VARA tokens are required for gas fees).
 
 ## How to run
 
-1. Build a contract
-> Additional details regarding this matter can be located within the [README](https://github.com/gear-foundation/dapps/tree/master/contracts/battleship/README.md) directory of the contract.
+1. Build a program
+> Additional details regarding this matter can be located within the [README](https://github.com/gear-foundation/dapps/tree/master/contracts/battleship/README.md) directory of the program.
 
-2. Upload the contract to the [Vara Network Testnet](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Ftestnet.vara.network)
-> Initiate the process by uploading the bot contract, followed by the subsequent upload of the main contract. Further details regarding the process of contract uploading can be located within the [Getting Started](../../getting-started-in-5-minutes#deploy-your-smart-contract-to-the-testnet) section.
+2. Upload the program to the [Vara Network Testnet](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Ftestnet.vara.network)
+> Initiate the process by uploading the bot program, followed by the subsequent upload of the main program. Further details regarding the process of program uploading can be located within the [Getting Started](../../getting-started-in-5-minutes#deploy-your-smart-contract-to-the-testnet) section.
 
 3. Build and run user interface
 > More information about this can be found in the [README](https://github.com/gear-foundation/dapps/blob/master/frontend/apps/battleship/README.md) directory of the frontend.
@@ -35,9 +35,9 @@ Also everyone can play the game via this link - [Play Battleship](https://battle
 
 ## Implementation details
 
-### Battleship contract description
+### Battleship program description
 
-The Battleship contract contains the following information:
+The Battleship program contains the following information:
 
 ```rust title="battleship/src/contract.rs"
 struct Battleship {
@@ -94,7 +94,7 @@ pub enum Entity {
 ```
 ### Initialization
 
-To initialize the game contract, it only needs to be passed the bot's contract address (this contract will be discussed a little later)
+To initialize the game program, it only needs to be passed the bot's program address (this program will be discussed a little later)
 
 ```rust title="battleship/io/src/lib.rs"
 pub struct BattleshipInit {
@@ -110,9 +110,9 @@ pub enum BattleshipAction {
     StartGame { ships: Ships },
     // In order to make a move
     Turn { step: u8 },
-    // Change the bot contract (available only for admin)
+    // Change the bot program (available only for admin)
     ChangeBot { bot: ActorId },
-    // Clean the contract state (available only for admin);
+    // Clean the program state (available only for admin);
     // leave_active_games specifies how to clean it
     ClearState { leave_active_games: bool },
     // Deletion of a player's game
@@ -124,18 +124,18 @@ pub enum BattleshipAction {
 
 ```rust title="battleship/io/src/lib.rs"
 pub enum BattleshipReply {
-    // Every time a message is sent to the bot's contract.
+    // Every time a message is sent to the bot's program.
     MessageSentToBot,
     // When the game is over
     EndGame(BattleshipParticipants),
-    // When the bot's contract address changes
+    // When the bot's program address changes
     BotChanged(ActorId),
 }
 ```
 
 ### Logic
 
-After initialization of the program the function to start the game will be available `BattleshipAction::StartGame { ships: Ships }`, where the location of ships is transmitted. The program checks for the correct placement of ships and for the absence of a rolling game at the user. If the checks are successful, the program creates the game and sends a message `msg::send_with_gas` to the bot program to create the game.
+Change to “After initialization of the program, the function to start the game will be available `BattleshipAction::StartGame { ships: Ships }`, where the location of the ships are transmitted. The program verifies the proper placement of ships and ensures the absence of any ongoing games for the user. Upon successful completion of these checks, the program initiates the game creation process and dispatches a message, `msg::send_with_gas`, to the bot program, prompting it to create the game.
 
 ```rust title="battleship/src/contract.rs"
 fn start_game(&mut self, mut ships: Ships) {
@@ -169,9 +169,9 @@ extern fn handle_reply() {
         .expect("Unexpected: Game does not exist");
 ```
 
-Using `handle_reply`, response messages from the bot are obtained, while `msg_id_to_game_id` facilitates the retrieval of a particular game for state modification.
+Using `handle_reply`, the bot retrieves response messages, while `msg_id_to_game_id` facilitates the retrieval of a particular game for state modification.
 
-After the game starts, the function `BattleshipAction::Turn { step: u8 }` to make a move is available , where the number of the cell the player is going to shoot at is passed. The program performs a number of checks on the entered data and the game state in order to be able to make a move. If the checks are successful, the program changes the field states and changes the turn to the bot and sends `msg::send_with_gas` to the bot program for it to make its move.
+After the game starts, the `BattleshipAction::Turn { step: u8 }` function becomes available for executing moves. This function requires the passage of the cell number at which the player intends to shoot. The program conducts thorough checks on the entered data and the game state to ensure a valid move can be made. If the checks pass successfully, the program updates the field states, shifts the turn to the bot and dispatches `msg::send_with_gas` to the bot program for it to make its move.
 
 ```rust title="battleship/src/contract.rs"
 fn player_move(&mut self, step: u8) {
@@ -192,7 +192,7 @@ fn player_move(&mut self, step: u8) {
 ```
 
 Just as when starting a game, a reply message from the bot regarding its move is received in `handle_reply`.
-In summary, the interaction between the two contracts is reduced to the ability to receive response messages in a separate function, denoted as `handle_reply()`. The whole implementation of the function looks as follows:
+In summary, the interaction between the two programs is reduced to the ability to receive response messages in a separate function, denoted as `handle_reply()`. The whole implementation of the function looks as follows:
 
 ```rust title="battleship/src/contract.rs"
 #[no_mangle]
@@ -227,7 +227,7 @@ extern fn handle_reply() {
 }
 ```
 
-### Bot contract
+### Bot program
 
 As for the bot program, it has two functions:
 
@@ -290,7 +290,7 @@ pub enum StateReply {
 }
 ```
 
-To display the contract state information, the `state()` function is used:
+To display the program state information, the `state()` function is used:
 
 ```rust title="battleship/src/contract.rs"
 #[no_mangle]
@@ -331,7 +331,7 @@ These sessions allow users to establish predefined rules for interacting with a 
 
 At the session's conclusion, whether it's the end of the indicated window or when the user decides to terminate it, the temporary key becomes obsolete and is discarded.
 
-To initiate a session, a player sends a message to the contract (assuming the contract supports this message type):
+To initiate a session, a player sends a message to the program (assuming the program supports this message type):
 
 <!-- TODO: Uncomment `title` after adding the code to the master branch -->
 ```rust #title="battleship/src/contract.rs"
@@ -376,7 +376,7 @@ introducing the option to play either personally or using a pre-established game
 
 If `session_for_account` is `None`, the player plays on their own. If the game proceeds through a session, the address of the player who will be represented in the game should be specified in `session_for_account`.
 
-The contract then verifies:
+The program then verifies:
 - whether the specified player has a session;
 - whether the message sender matches the key of this session;
 - whether the session is still valid.
@@ -385,12 +385,11 @@ Players have the option to delete their session before the game ends, further en
 
 ## Source code
 
-The source code of this example of Battleship Game smart contract and the example of an implementation of its testing is available on [gear-foundation/dapp/contracts/battleship](https://github.com/gear-foundation/dapps/tree/master/contracts/battleship).
+The source code of this example of Battleship Game program and the example of an implementation of its testing is available on [gear-foundation/dapp/contracts/battleship](https://github.com/gear-foundation/dapps/tree/master/contracts/battleship).
 
-See also an example of the smart contract testing implementation based on `gtest`: [gear-foundation/dapps/battleship/tests](https://github.com/gear-foundation/dapps/tree/master/contracts/battleship/tests).
+See also an example of the program testing implementation based on `gtest`: [gear-foundation/dapps/battleship/tests](https://github.com/gear-foundation/dapps/tree/master/contracts/battleship/tests).
 
-For more details about testing smart contracts written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.
-
+For more details about testing programs written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.
 
 
 [def]: ../../api/vouchers.md

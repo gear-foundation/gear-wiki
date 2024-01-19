@@ -7,18 +7,16 @@ sidebar_position: 4
 ## Introduction
 
 :::note
-
 This article explains at a superficial level the purpose and logic of this smart contract. For a more detailed technical description, see its [documentation on the dapps documentation portal](https://dapps.gear.rs/nft_pixelboard_io) and [source code](#source-code).
-
 :::
 
-The idea for this smart contract is taken from **The Million Dollar Homepage** ([the Wikipedia article about it](https://en.wikipedia.org/wiki/The_Million_Dollar_Homepage)). In short, this is a website with the 1000 by 1000 pixels canvas where 1 pixel on it costs 1 dollar. Everyone could buy a 10 by 10 pixels block or several such blocks there, paint purchased pixels, and attach some web link to them. NFT pixelboard uses the same logic, but in addition purchased pixel blocks are NFTs, and they can be colored at any time, not just at the time of a purchase, and resold.
+The inspiration for this smart contract comes from **The Million Dollar Homepage** ([referencing its Wikipedia article](https://en.wikipedia.org/wiki/The_Million_Dollar_Homepage)). In brief, it's a website featuring a canvas of 1000 by 1000 pixels, where each pixel costs $1. Anyone can purchase a block of pixels, like 10 by 10, or multiple blocks, paint the acquired pixels, and associate them with a web link. NFT Pixelboard follows the same idea, but with a twist: the bought pixel blocks are NFTs. They can be colored anytime, not just at the purchase and are resellable.
 
 ## Logic
 
-`NFTPixelboardAction::Mint` is used to mint NFTs on a pixelboard. An user can sell his NFTs or paint them using `NFTPixelboardAction::ChangeSaleState` and `NFTPixelboardAction::Paint`, respectively.
+`NFTPixelboardAction::Mint` is utilized for minting NFTs on a pixelboard. Users can sell their NFTs or paint them using `NFTPixelboardAction::ChangeSaleState` and `NFTPixelboardAction::Paint`, respectively.
 
-The `painting()` metafunction is used to get the entire painting of a pixelboard. An user can get information about NFTs and pixels on a pixelboard using the `token_info()` and `pixel_info()` metafunctions, respectively.
+The `painting()` metafunction is used to get the entire painting of a pixelboard. Users can retrieve details about NFTs and pixels on a pixelboard through the `token_info()` and `pixel_info()` metafunctions, respectively.
 
 ## Interface
 
