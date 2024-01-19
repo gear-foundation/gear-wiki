@@ -50,20 +50,20 @@ The game's program makes turns considering parameters specified by each player. 
 
 ### Run the app locally
 
-1. Build a contract
-> Additional details regarding this matter can be located within the [README](https://github.com/gear-foundation/dapps/tree/master/contracts/galactic-express/README.md) directory of the contract.
+1. Build a program
+> Additional details regarding this matter can be located within the [README](https://github.com/gear-foundation/dapps/tree/master/contracts/galactic-express/README.md) directory of the program.
 
-2. Upload the contract to the [Vara Network Testnet](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Ftestnet.vara.network)
-> Further details regarding the process of contract uploading can be located within the [Getting Started](../../getting-started-in-5-minutes#deploy-your-smart-contract-to-the-testnet) section.
+2. Upload the program to the [Vara Network Testnet](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Ftestnet.vara.network)
+> Further details regarding the process of program uploading can be located within the [Getting Started](../../getting-started-in-5-minutes#deploy-your-smart-contract-to-the-testnet) section.
 
 3. Build and run user interface
 > More information about this can be found in the [README](https://github.com/gear-foundation/dapps/blob/master/frontend/apps/galactic-express/README.md) directory of the frontend.
 
 ## Implementation details
 
-### Contract description
+### Program description
 
-The contract contains the following information
+The program contains the following information
 
 ```rust title="galactic-express/src/lib.rs"
 struct Contract {
@@ -377,7 +377,7 @@ impl Metadata for ContractMetadata {
 }
 ```
 
-To display the contract state information, the `state()` function is used:
+To display the program state information, the `state()` function is used:
 
 ```rust title="galactic-express/src/lib.rs"
 #[no_mangle]
@@ -391,8 +391,8 @@ extern fn state() {
 
 ## Source code
 
-The source code of this example of Galactic-Express Game smart contract and the example of an implementation of its testing is available on [gear-foundation/dapp/contracts/galactic-express](https://github.com/gear-foundation/dapps/tree/master/contracts/galactic-express).
+The source code of this example of Galactic-Express Game program and the example of an implementation of its testing is available on [gear-foundation/dapp/contracts/galactic-express](https://github.com/gear-foundation/dapps/tree/master/contracts/galactic-express).
 
-See also an example of the smart contract testing implementation based on `gtest`: [gear-foundation/dapps/galactic-express/tests](https://github.com/gear-foundation/dapps/tree/master/contracts/galactic-express/tests).
+See also an example of the program testing implementation based on `gtest`: [gear-foundation/dapps/galactic-express/tests](https://github.com/gear-foundation/dapps/tree/master/contracts/galactic-express/tests).
 
-For more details about testing smart contracts written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.
+For more details about testing programs written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.

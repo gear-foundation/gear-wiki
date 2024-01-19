@@ -11,7 +11,7 @@ This smart contract example created by Gear represents a Concert tickets distrib
 
 The article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. Anyone can easily create their own application and run it on the Gear Network. The source code is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/concert).
 
-In this example, a single deployed contract can hold one concert at a time. Firstly, all the tickets for the concert come as fungible-tokens. In order to buy tickets one should provide the metadata (e.g. seat/row number) that will later be included in NFTs. When the concert ends, all the fungible tokens of all users (ticket holders) will turn into NFTs.
+In this example, a single deployed contract can hold one concert at a time. Firstly, all the tickets for the concert come as fungible-tokens. In order to buy tickets, one should provide the metadata (e.g. seat/row number) that will later be included in NFTs. When the concert ends, all the fungible tokens of all users (ticket holders) will turn into NFTs.
 
 The idea is simple - all the internal token interactions are handled using the [gMT-1155](../Standards/gmt-1155.md) contract, which address must be provided upon initializing a concert contract.
 
@@ -74,7 +74,7 @@ async fn hold_concert(&mut self) {
 >Hold a concert, turning of the FT (aka tickets) into NFTs; the hold a concert functionality is only available to the creator
 
 ### Init Config
-To successfully initialize a concert contract one should provide an ActorID of a GMT-1155 contract to hold all the tokens manipulations. The sender of this message becomes the owner of the contract.
+To successfully initialize a concert contract, one should provide an ActorID of a GMT-1155 contract to hold all the token manipulations. The sender of this message becomes the owner of the contract.
 
 ```rust title="concert/io/src/lib.rs"
 pub struct InitConcert {

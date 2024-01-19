@@ -5,36 +5,36 @@ sidebar_position: 10
 
 # Racing Cars - Algorithmic Game
 
-The Racing Cars game revolves around a competition of smart contract algorithms. In essence, participants upload their personalized smart contract strategies, all managed by a central Master contract. These strategies are open to optimization and can be re-uploaded.
+The Racing Cars game revolves around a competition of program algorithms. In essence, participants upload their personalized program strategies, all managed by a central Master program. These strategies are open to optimization and can be re-uploaded.
 
 ![Racing Cars](../img/racingcars.png)
 
-In a well-known Ethereum-based [0xMonaco](https://0xmonaco.ctf.paradigm.xyz/) game, central components were necessary to enable multi-block gameplay. However, in the case of Vara, the game operates <u>fully on-chain</u>, thanks to the asynchronous messaging paradigm. Various actors (contracts) communicate with each other, and if a game round can't be accommodated within a single block, it carries over into subsequent ones.
+In a well-known Ethereum-based [0xMonaco](https://0xmonaco.ctf.paradigm.xyz/) game, central components were necessary to enable multi-block gameplay. However, in the case of Vara, the game operates <u>fully on-chain</u>, thanks to the asynchronous messaging paradigm. Various actors (programs) communicate with each other, and if a game round can't be accommodated within a single block, it carries over into subsequent ones.
 
-For this example version, the game was refined to enhance its appeal. The game entails a competition where a user races against two pre-uploaded smart contracts on the blockchain. Three cars vie to be the first to cross the finish line in several moves. Both the user and the contract algorithms decide their next move – whether to accelerate or sabotage another car to slow it down.
+For this example version, the game was refined to enhance its appeal. The game entails a competition where a user races against two pre-uploaded programs on the blockchain. Three cars vie to be the first to cross the finish line in several moves. Both the user and the program algorithms decide their next move – whether to accelerate or sabotage another car to slow it down.
 
-The source code for the game contract and algorithm examples are available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/car-races).
-The [frontend application](https://github.com/gear-foundation/dapps/tree/master/frontend/apps/racing-car-game) facilitates gameplay and interacts with the smart contracts.
+The source code for the game program and algorithm examples are available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/car-races).
+The [frontend application](https://github.com/gear-foundation/dapps/tree/master/frontend/apps/racing-car-game) facilitates gameplay and interacts with the programs.
 This article describes the program interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios.
 
 Everyone can play the game via this link - [Play Racing Cars](https://racing.vara.network/) (VARA tokens are requred for gas fees).
 
 ## How to run
 
-1. Build a contract
-> Additional details regarding this matter can be located within the [README](https://github.com/gear-foundation/dapps/tree/master/contracts/car-races/README.md) directory of the contract.
+1. Build a program
+> Additional details regarding this matter can be located within the [README](https://github.com/gear-foundation/dapps/tree/master/contracts/car-races/README.md) directory of the program.
 
-2. Upload the contract to the [Vara Network Testnet](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Ftestnet.vara.network)
-> Initiate the process by uploading the bot contract, followed by the subsequent upload of the main contract. Further details regarding the process of contract uploading can be located within the [Getting Started](../../getting-started-in-5-minutes#deploy-your-smart-contract-to-the-testnet) section.
+2. Upload the program to the [Vara Network Testnet](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Ftestnet.vara.network)
+> Initiate the process by uploading the bot program, followed by the subsequent upload of the main program. Further details regarding the process of program uploading can be located within the [Getting Started](../../getting-started-in-5-minutes#deploy-your-smart-contract-to-the-testnet) section.
 
 3. Build and run user interface
 > More information about this can be found in the [README](https://github.com/gear-foundation/dapps/blob/master/frontend/apps/racing-car-game/README.md) directory of the frontend.
 
 ## Implementation details
 
-### Contract description
+### Program description
 
-The contract contains the following information
+The program contains the following information
 
 ```rust title="car-races/src/lib.rs"
 pub struct Contract {
@@ -79,7 +79,7 @@ pub struct Car {
 
 ### Initialization
 
-To initialize the game contract, it only needs to be passed the game configuration
+To initialize the game program, it only needs to be passed the game configuration
 
 ```rust title="car-races/src/lib.rs"
 #[no_mangle]
@@ -228,8 +228,8 @@ fn start_game(&mut self) {
     msg::reply(GameReply::GameStarted, 0).expect("Error during reply");
 }
 ```
-Now it's possible to make a move with the command `GameAction::PlayerMove {strategy_action: StrategyAction}`
-This action saves the player's move and changes the game state, after which the move is passed to the bots and a message is sent to the bot's address to make the move.
+
+It's now possible to make a move with the command `GameAction::PlayerMove {strategy_action: StrategyAction}` This action saves the player's move and changes the game state, after which the move is passed to the bots and a message is sent to the bot's address to make the move.
 
 ```rust title="car-races/src/lib.rs"
 fn player_move(&mut self, strategy_move: StrategyAction) {
@@ -270,7 +270,8 @@ fn player_move(&mut self, strategy_move: StrategyAction) {
     self.msg_id_to_game_id.insert(msg_id, player);
 }
 ```
-We receive messages from the machine contract in `handle_reply()`, where the game state also changes depending on what move the bot has made.
+
+Messages from the machine program are received in the `handle_reply()` function, and the game state changes based on the bot's move.
 
 ```rust title="car-races/src/lib.rs"
 #[no_mangle]
@@ -320,8 +321,8 @@ extern fn handle_reply() {
         .expect("Error in sending a msg");
 }
 ```
-At the end of `handle_reply()` the `GameAction::Play` is called, which can only be called by the program itself.
-This action is needed to track the game status and send a message to another bot.
+
+At the end of `handle_reply()`, the `GameAction::Play` is called, which can only be called by the program itself. This action is needed to track the game status and send a message to another bot.
 
 ```rust title="car-races/src/lib.rs"
 fn play(&mut self, account: &ActorId) {
@@ -443,7 +444,7 @@ pub enum StateReply {
 
 ```
 
-To display the contract state information, the `state()` function is used:
+To display the program state information, the `state()` function is used:
 
 ```rust title="car-races/src/lib.rs"
 #[no_mangle]
@@ -494,8 +495,8 @@ extern fn state() {
 
 ## Source code
 
-The source code of this example of Racing Cars Game smart contract and the example of an implementation of its testing is available on [gear-foundation/dapp/contracts/car-races](https://github.com/gear-foundation/dapps/tree/master/contracts/car-races).
+The source code of this example of Racing Cars Game program and the example of an implementation of its testing is available on [gear-foundation/dapp/contracts/car-races](https://github.com/gear-foundation/dapps/tree/master/contracts/car-races).
 
-See also an example of the smart contract testing implementation based on `gtest`: [gear-foundation/dapps/car-races/tests](https://github.com/gear-foundation/dapps/tree/master/contracts/car-races/tests).
+See also an example of the program testing implementation based on `gtest`: [gear-foundation/dapps/car-races/tests](https://github.com/gear-foundation/dapps/tree/master/contracts/car-races/tests).
 
-For more details about testing smart contracts written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.
+For more details about testing programs written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.

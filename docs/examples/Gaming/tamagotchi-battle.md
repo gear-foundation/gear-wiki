@@ -15,20 +15,20 @@ The article explains the programming interface, data structure, basic functions 
 
 ## How to run
 
-1. Build a contract
-> Additional details regarding this matter can be located within the [README](https://github.com/gear-foundation/dapps/tree/master/contracts/tamagotchi-battle/README.md) directory of the contract.
+1. Build a program
+> Additional details regarding this matter can be located within the [README](https://github.com/gear-foundation/dapps/tree/master/contracts/tamagotchi-battle/README.md) directory of the program.
 
-2. Upload the contract to the [Vara Network Testnet](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Ftestnet.vara.network)
-> Further details regarding the process of contract uploading can be located within the [Getting Started](../../getting-started-in-5-minutes#deploy-your-smart-contract-to-the-testnet) section.
+2. Upload the program to the [Vara Network Testnet](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Ftestnet.vara.network)
+> Further details regarding the process of program uploading can be located within the [Getting Started](../../getting-started-in-5-minutes#deploy-your-smart-contract-to-the-testnet) section.
 
 3. Build and run user interface
 > More information about this can be found in the [README](https://github.com/gear-foundation/dapps/blob/master/frontend/apps/tamagotchi-battle/README.md) directory of the frontend.
 
 ## Implementation details
 
-### Tamagotchi Battle contract description
+### Tamagotchi Battle program description
 
-The Tamagotchi Battle contract contains the following information
+The Tamagotchi Battle program contains the following information
 
 ```rust title="tamagotchi-battle/src/lib.rs"
 struct Battle {
@@ -106,7 +106,7 @@ pub struct Pair {
 
 ### Action
 
-The Tamagotchi Battle contract offers the following activities:
+The Tamagotchi Battle program offers the following activities:
 
 ```rust title="tamagotchi-battle/io/src/lib.rs"
 pub enum BattleAction {
@@ -157,7 +157,7 @@ pub enum BattleEvent {
 
 ### Logic
 
-Before the start of the battle, it is necessary to initiate the registration process, during which the status of the game is checked and the terms of the contract are determined.
+Before the start of the battle, it is necessary to initiate the registration process, during which the status of the game is checked and the terms of the program are determined.
 
 ```rust title="tamagotchi-battle/src/lib.rs"
 fn start_registration(&mut self) {
@@ -208,7 +208,7 @@ async fn register(&mut self, tmg_id: &TamagotchiId) {
     // ...
 ```
 
-To start the game the admin must send the `BattleAction::StartBattle`, where first checks will be carried out, and then there will be a split into pairs.
+To start the game, the admin must send the `BattleAction::StartBattle`, where first checks will be carried out, and then there will be a split into pairs.
 
 ```rust title="tamagotchi-battle/src/lib.rs"
 fn start_battle(&mut self) {
@@ -262,7 +262,7 @@ fn send_delayed_msg_from_rsv(
 }
 ```
 
-To make a move a player needs to send a message `BattleAction::MakeMove { pair_id: PairId, tmg_move: Move}` that contains the pair id and the move the player wants to make.
+To make a move, a player needs to send a message `BattleAction::MakeMove { pair_id: PairId, tmg_move: Move}` that contains the pair id and the move the player wants to make.
 
 ```rust title="tamagotchi-battle/src/lib.rs"
 fn make_move(&mut self, pair_id: PairId, tmg_move: Move) {
@@ -300,7 +300,7 @@ fn make_move(&mut self, pair_id: PairId, tmg_move: Move) {
 }
 ```
 
-After the move is made again the delayed messages are used for the same purpose, but this case a different type of delayed message is used `msg::send_with_gas_delayed`, where the gas is applied separately
+After the move is repeated, the delayed messages are used for the same purpose, but in this case, a different type of delayed message is used `msg::send_with_gas_delayed`, where the gas is applied separately.
 
 ```rust title="tamagotchi-battle/src/lib.rs"
 fn send_delayed_msg_with_gas(pair_id: PairId) -> MessageId {
@@ -321,7 +321,7 @@ fn send_delayed_msg_with_gas(pair_id: PairId) -> MessageId {
 After the battle and determination of the winner, the game status is switched to `BattleState::WaitNextRound`, where the winners will fight each other to determine the strongest.
 
 ### Important details
-1. If after a certain number of rounds (`MAX_STEPS_IN_ROUND`), it was not possible to determine the winner, then the one with more health wins
+1. If after a certain number of rounds (`MAX_STEPS_IN_ROUND`), it was not possible to determine the winner, then the one with more health wins.
 ```rust title="tamagotchi-battle/src/lib.rs"
 if pair.rounds == MAX_STEPS_IN_ROUND && winner.is_none() {
     winner = if players[0].health >= players[1].health {
@@ -333,7 +333,8 @@ if pair.rounds == MAX_STEPS_IN_ROUND && winner.is_none() {
     };
 }
 ```
-2. After each round it re-generates the power and defence of the tamagotchi
+2. After each round, it re-generates the power and defense of the Tamagotchi.
+
 ```rust title="tamagotchi-battle/src/lib.rs"
 players[0].power = generate_power(pair.tmg_ids[0]);
 players[0].defence = MAX_POWER - players[0].power;
@@ -341,7 +342,7 @@ players[1].power = generate_power(pair.tmg_ids[1]);
 players[1].defence = MAX_POWER - players[1].power;
 ```
 
-3. In case when one player made a move - attack, and the other player did not make a move, the damage adds up for both the punishment and the attack of the opponent
+3. When a player makes an attack, and the other player doesn't respond, the damage accumulates for both the attacker's strike and the opponent's penalty.
 
 ```rust title="tamagotchi-battle/src/lib.rs"
 [Some(Move::Attack), None] => {
@@ -381,7 +382,7 @@ impl Metadata for BattleMetadata {
 }
 ```
 
-To display the contract state information, the `state()` function is used:
+To display the program state information, the `state()` function is used:
 
 ```rust title="tamagotchi-battle/src/lib.rs"
 #[no_mangle]
@@ -393,8 +394,8 @@ extern fn state() {
 
 ## Source code
 
-The source code of this example of Tamagotchi Battle smart contract and the example of an implementation of its testing is available on [gear-foundation/dapp/contracts/tamagotchi-battle](https://github.com/gear-foundation/dapps/tree/master/contracts/tamagotchi-battle).
+The source code of this example of Tamagotchi Battle program and the example of an implementation of its testing is available on [gear-foundation/dapp/contracts/tamagotchi-battle](https://github.com/gear-foundation/dapps/tree/master/contracts/tamagotchi-battle).
 
-See also an example of the smart contract testing implementation based on `gtest`: [gear-foundation/dapps/tamagotchi-battle/tests](https://github.com/gear-foundation/dapps/tree/master/contracts/tamagotchi-battle/tests).
+See also an example of the smart program testing implementation based on `gtest`: [gear-foundation/dapps/tamagotchi-battle/tests](https://github.com/gear-foundation/dapps/tree/master/contracts/tamagotchi-battle/tests).
 
-For more details about testing smart contracts written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.
+For more details about testing programs written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.

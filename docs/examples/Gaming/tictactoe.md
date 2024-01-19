@@ -5,34 +5,34 @@ sidebar_position: 9
 
 # Tic-Tac-Toe
 
-A classic and simple game in which the user competes against a smart contract operating on the blockchain network.
+A classic and simple game in which the user competes against a program operating on the blockchain network.
 
 ![Tic-Tac-Toe](../img/tictactoe.png)
 
-Usually, the state of a smart contract advances as the application is utilized. A <u>distinctive feature</u> of this game's contract implementation is its capability to clean up its storage. In other words, as soon as the game session is completed and the results are recorded in the contract, all unnecessary data structures are purged through a special **delayed message**. [Delayed messages](/docs/developing-contracts/delayed-messages) represent one of the various unique features of the Gear Protocol.
+Usually, the state of a program advances as the application is utilized. A <u>distinctive feature</u> of this game's program implementation is its capability to clean up its storage. In other words, as soon as the game session is completed and the results are recorded in the program, all unnecessary data structures are purged through a special **delayed message**. [Delayed messages](/docs/developing-contracts/delayed-messages) represent one of the various unique features of the Gear Protocol.
 
 The source code is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/tic-tac-toe).
-The [frontend application](https://github.com/gear-foundation/dapps/tree/master/frontend/apps/tic-tac-toe) facilitates gameplay and interacts with the smart contract.
+The [frontend application](https://github.com/gear-foundation/dapps/tree/master/frontend/apps/tic-tac-toe) facilitates gameplay and interacts with the smart program.
 This article describes the program interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios.
 
 Everyone can play the game via this link - [Play Tic-Tac-Toe](https://tictactoe.vara.network/) (VARA tokens are requred for gas fees).
 
 ## How to run
 
-1. Build a contract
-> Additional details regarding this matter can be located within the [README](https://github.com/gear-foundation/dapps/tree/master/contracts/tic-tac-toe/README.md) directory of the contract.
+1. Build a program
+> Additional details regarding this matter can be located within the [README](https://github.com/gear-foundation/dapps/tree/master/contracts/tic-tac-toe/README.md) directory of the program.
 
-2. Upload the contract to the [Vara Network Testnet](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Ftestnet.vara.network)
-> Initiate the process by uploading the bot contract, followed by the subsequent upload of the main contract. Further details regarding the process of contract uploading can be located within the [Getting Started](../../getting-started-in-5-minutes#deploy-your-smart-contract-to-the-testnet) section.
+2. Upload the program to the [Vara Network Testnet](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Ftestnet.vara.network)
+> Initiate the process by uploading the bot program, followed by the subsequent upload of the main program. Further details regarding the process of program uploading can be located within the [Getting Started](../../getting-started-in-5-minutes#deploy-your-smart-contract-to-the-testnet) section.
 
 3. Build and run user interface
 > More information about this can be found in the [README](https://github.com/gear-foundation/dapps/blob/master/frontend/apps/tic-tac-toe/README.md) directory of the frontend.
 
 ## Implementation details
 
-### Contract description
+### Program description
 
-The contract contains the following information
+The program contains the following information
 
 ```rust title="tic-tac-toe/src/contract.rs"
 struct Game {
@@ -69,7 +69,7 @@ pub enum Mark {
 
 ### Initialization
 
-To initialize the game contract, it only needs to be passed the game configuration
+To initialize the game program, it only needs to be passed the game configuration
 
 ```rust title="tic-tac-toe/src/contract.rs"
 #[no_mangle]
@@ -327,7 +327,7 @@ pub enum StateReply {
 }
 ```
 
-To display the contract state information, the `state()` function is used:
+To display the program state information, the `state()` function is used:
 
 ```rust title="tic-tac-toe/src/contract.rs"
 #[no_mangle]
@@ -365,4 +365,4 @@ extern fn state() {
 
 ## Source code
 
-The source code of this example of Tic-Tac-Toe Game smart contract and the example of an implementation of its testing is available on [gear-foundation/dapp/contracts/tic-tac-toe](https://github.com/gear-foundation/dapps/tree/master/contracts/tic-tac-toe).
+The source code of this example of Tic-Tac-Toe Game program and the example of an implementation of its testing is available on [gear-foundation/dapp/contracts/tic-tac-toe](https://github.com/gear-foundation/dapps/tree/master/contracts/tic-tac-toe).
