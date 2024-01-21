@@ -34,8 +34,8 @@ This article explains the programming interface, data structure, basic functions
 ### Non-fungible-token implementation
 The functions that must be supported by each non-fungible-token contract:
 
-- *transfer(to, token_id)* - is a function that allows you to transfer a token with the `token_id` number to the `to` account;
-- *approve(to, token_id)* - is a function that allows you to give the right to dispose of the token to the specified account `to`. This functionality can be useful on marketplaces or auctions as when the owner wants to sell his token, they can put it on a marketplace/auction, so the contract will be able to send this token to the new owner at some point;
+- *transfer(to, token_id)* - is a function to transfer a token with the number `token_id` to the account `to`;
+- *approve(to, token_id)* - is a function to transfer the right to dispose of the token to the specified account `to`. This functionality can be useful on marketplaces or auctions as when the owner wants to sell his token, they can put it on a marketplace/auction, so the contract will be able to send this token to the new owner at some point;
 - *mint(to, metadata)* is a function that creates a new token to the `to` account. `metadata` can include any information about the token: it can be a link to a specific resource, a description of the token, etc;
 - *burn(token_id)* is a function that removes the token with the mentioned `token_id` from the contract.
 
