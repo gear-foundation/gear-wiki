@@ -8,7 +8,7 @@ sidebar_position: 4
 ## Introduction
 A decentralized exchange (DEX, for short), is a peer-to-peer marketplace where transactions occur directly between cryptocurrency traders. Unlike centralized exchanges like Binance, DEXs don’t allow for exchanges between fiat and cryptocurrencies; instead, they exclusively trade cryptocurrency tokens for other cryptocurrency tokens.
 
-Decentralized exchanges, on the other hand, are essentially a set of smart contracts. They establish the prices of various cryptocurrencies algorithmically and use "liquidity pools," in which investors lock funds in exchange for interest-like rewards, to facilitate trades.
+Decentralized exchanges are essentially a set of programs (smart contracts). They establish the prices of various cryptocurrencies algorithmically and use "liquidity pools," in which investors lock funds in exchange for interest-like rewards, to facilitate trades.
 
 While transactions on a centralized exchange are recorded in that exchange's internal database, DEX transactions are settled directly on the blockchain.
 
@@ -19,14 +19,14 @@ The exchange uses [Gear fungible tokens (GFT-20)](../Standards/gft-20) underneat
 ### Math
 As it was said all the prices are algorithmically calculated. Investors provide funds to the liquidity pools and price is calculated according to the amount of tokens in the reserves using the following formula: <br/><br/>
 $$reserve0 * reserve1 = K$$, where $$reserve0, reserve1$$ - are the reserves of token0 and token1 respectively provided by the investors, and $$K$$ - is the constant.
-All the prices/amounts are calculated in the way that the $$K$$ **MUST** remain constant. This basically means that the more token0 we have in the pool, the lower price of token1 will be when performing a swap.
+All the prices/amounts are calculated in the way that the $$K$$ **MUST** remain constant. This basically means that the more token0 you have in the pool, the lower price of token1 will be when performing a swap.
 
-## Factory contract description
-Taking into account that we might have a large amount of trading pairs, we should have a way to monitor them/deploy another one and etc. That's where a factory comes into play. Factory helps to create a new pair and monitor all the existing pairs.
+## Factory program description
+Taking into account that there might be a large amount of trading pairs, there should be a way to monitor them/deploy another one and etc. That's where a factory comes into play. Factory helps to create a new pair and monitor all the existing pairs.
 
 ### Actions
 
-All of the actions are pretty straightforward. We have an action to initialize a factory, to create a pair and to modify fee related stuff.
+All the actions are straightforward. There’s an action to initialize a factory, create a pair and modify fee related stuff.
 
 ```rust
 
@@ -38,7 +38,7 @@ pub type TokenId = ActorId;
 pub struct InitFactory {
     /// The address that can actually set the fee.
     pub fee_to_setter: ActorId,
-    /// Code hash to successfully deploy a pair with this contract.
+    /// Code hash to successfully deploy a pair with this program.
     pub pair_code_hash: [u8; 32],
 }
 
@@ -47,7 +47,7 @@ pub struct InitFactory {
 pub enum FactoryAction {
     /// Creates an exchange pair
     ///
-    /// Deploys a pair exchange contract and saves the info about it.
+    /// Deploys a pair exchange program and saves the info about it.
     /// # Requirements:
     /// * both `TokenId` MUST be non-zero addresses and represent the actual fungible-token contracts
     ///
@@ -59,7 +59,7 @@ pub enum FactoryAction {
     /// Sets an address where the fees will be sent.
     /// # Requirements:
     /// * `fee_to` MUST be non-zero address
-    /// * action sender MUST be the same as `fee_to_setter` in this contract
+    /// * action sender MUST be the same as `fee_to_setter` in this program
     ///
     /// On success returns `FactoryEvery::FeeToSet`
     SetFeeTo(ActorId),
@@ -69,7 +69,7 @@ pub enum FactoryAction {
     /// Sets an address that will be able to change fee_to
     /// # Requirements:
     /// * `fee_to_setter` MUST be non-zero address
-    /// * action sender MUST be the same as `fee_to_setter` in this contract
+    /// * action sender MUST be the same as `fee_to_setter` in this program
     ///
     /// On success returns `FactoryEvery::FeeToSetterSet`
     SetFeeToSetter(ActorId),
@@ -85,7 +85,7 @@ pub enum FactoryAction {
 
 ### Events
 
-All of the actions above have the exact counterparts:
+All the actions above have the exact counterparts:
 ```rust
 
 #[derive(Debug, Encode, Decode, TypeInfo)]
@@ -95,7 +95,7 @@ pub enum FactoryEvent {
         token_a: TokenId,
         /// The second token address
         token_b: TokenId,
-        /// Pair address (the pair exchange contract).
+        /// Pair address (the pair exchange program).
         pair_address: ActorId,
         /// The amount of pairs that already were deployed through this factory.
         pairs_length: u32,
@@ -121,7 +121,7 @@ impl Metadata for ContractMetadata {
     type State = Out<State>;
 }
 ```
-To display the full contract state information, the `state()` function is used:
+To display the full program state information, the `state()` function is used:
 
 ```rust
 #[no_mangle]
@@ -162,18 +162,18 @@ type Pair = (FungibleId, FungibleId);
 ```
 
 ### Interfaces
-According to the list of actions, we have functions to cover them all:
+According to the list of actions, there are functions to cover all interfaces:
 ```rust
 /// Sets a fee_to address
 /// `fee_to` MUST be a non-zero address
-/// Message source MUST be a fee_to_setter of the contract
+/// Message source MUST be a fee_to_setter of the program
 /// Arguments:
 /// * `fee_to` is a new fee_to address
 fn set_fee_to(&mut self, fee_to: ActorId);
 
 /// Sets a fee_to_setter address
 /// `fee_to_setter` MUST be a non-zero address
-/// Message source MUST be a fee_to_setter of the contract
+/// Message source MUST be a fee_to_setter of the program
 /// Arguments:
 /// * `fee_to_setter` is a new fee_to_setter address
 fn set_fee_to_setter(&mut self, fee_to_setter: ActorId);
@@ -188,14 +188,14 @@ async fn create_pair(&mut self, mut token_a: ActorId, mut token_b: ActorId);
 ```
 
 ### Source code
-The source code of this example of DEX factory smart contract and the example of an implementation of its testing is available on [gear-foundation/dapps/dex/factory](https://github.com/gear-foundation/dapps/tree/master/contracts/dex/factory).
+The source code of this example of DEX factory program and the example of an implementation of its testing is available on [gear-foundation/dapps/dex/factory](https://github.com/gear-foundation/dapps/tree/master/contracts/dex/factory).
 
-See also an example of the smart contract testing implementation based on `gtest`: [tests/utils/factory.rs](https://github.com/gear-foundation/dapps/blob/master/contracts/dex/tests/utils/factory.rs).
+See also an example of the program testing implementation based on `gtest`: [tests/utils/factory.rs](https://github.com/gear-foundation/dapps/blob/master/contracts/dex/tests/utils/factory.rs).
 
-For more details about testing smart contracts written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.
+For more details about testing programs written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.
 
-## Pair contract description
-The pair contract is where all the exchange magic happens. Each pair contract handles the liquidity provided to this pair only. All swap operations are performed applying the formula in the Math section.
+## Pair program description
+The pair program is where all the exchange magic happens. Each pair program handles the liquidity provided to this pair only. All swap operations are performed applying the formula in the Math section.
 
 ### Actions
 ```rust
@@ -205,7 +205,7 @@ pub type TokenId = ActorId;
 /// Initializes a pair.
 ///
 /// # Requirements:
-/// * both `TokenId` MUST be fungible token contracts with a non-zero address.
+/// * both `TokenId` MUST be fungible token programs with a non-zero address.
 /// * factory MUST be a non-zero address.
 #[derive(Debug, Encode, Decode, TypeInfo)]
 pub struct InitPair {
@@ -221,7 +221,7 @@ pub struct InitPair {
 pub enum PairAction {
     /// Adds liquidity to the pair.
     ///
-    /// Adds a specified amount of both tokens to the pair contract.
+    /// Adds a specified amount of both tokens to the pair program.
     /// # Requirements:
     /// * all the values MUST non-zero positive numbers.
     /// * `to` MUST be a non-zero address.
@@ -306,7 +306,7 @@ pub enum PairAction {
 ```
 
 ### Events
-All of the actions above have the exact counterparts:
+All the actions above have the exact counterparts:
 ```rust
 #[derive(Debug, Encode, Decode, TypeInfo)]
 pub enum PairEvent {
@@ -325,9 +325,9 @@ pub enum PairEvent {
         balance0: u128,
         /// The balance of token1.
         balance1: u128,
-        /// The amount of token0 stored on the contract.
+        /// The amount of token0 stored on the program.
         reserve0: u128,
-        /// The amount of token1 stored on the contract.
+        /// The amount of token1 stored on the program.
         reserve1: u128,
     },
     Skim {
@@ -372,7 +372,7 @@ impl Metadata for ContractMetadata {
     type State = Out<State>;
 }
 ```
-To display the full contract state information, the `state()` function is used:
+To display the full program state information, the `state()` function is used:
 
 ```rust
 #[no_mangle]
@@ -407,7 +407,7 @@ pub trait Metawasm {
 ```
 
 ### Interfaces
-To successfully implement all the logic, we should provide additional math methods:
+Additional math methods are provided to successfully implement the logic:
 ```rust
 /// Calculates the amount of token1 for given amount of token0 and reserves
 /// using the simple formula: amount1 = (amount0 * reserve1)/reserve0.
@@ -438,7 +438,7 @@ pub fn get_amount_out(amount_in: u128, reserve_in: u128, reserve_out: u128) -> u
 /// * `reserve_out` - the amount of available token1
 pub fn get_amount_in(amount_out: u128, reserve_in: u128, reserve_out: u128) -> u128;
 ```
-Now we can start implementing the contract. We start by introducing some of the internal methods to handle of the balances/reserves math:
+Now start implementing the program. Start by introducing some of the internal methods to handle of the balances/reserves math:
 
 ```rust
 // A simple wrapper for balance calculations to facilitate mint & burn.
@@ -495,8 +495,7 @@ async fn burn(&mut self, to: ActorId) -> (u128, u128);
 async fn _swap(&mut self, amount0: u128, amount1: u128, to: ActorId, forward: bool);
 ```
 
-After that we can move on with the external methods implementation to cover all of the actions for our contract:
-
+Following this, the external methods will be implemented to encompass all actions specified in the program.
 ```rust
 /// Forces balances to match the reserves.
 /// `to` - MUST be a non-zero address
@@ -560,8 +559,8 @@ pub async fn swap_tokens_for_exact(&mut self, amount_out: u128, to: ActorId);
 ```
 
 ### Source code
-The source code of this example of DEX pair smart contract and the example of an implementation of its testing is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/dex).
+The source code of this example of DEX pair smart and the example of an implementation of its testing is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/dex).
 
-See also an example of the smart contract testing implementation based on `gtest`: [dex/tests](https://github.com/gear-foundation/dapps/tree/master/contracts/dex/tests).
+See also an example of the program testing implementation based on `gtest`: [dex/tests](https://github.com/gear-foundation/dapps/tree/master/contracts/dex/tests).
 
-For more details about testing smart contracts written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.
+For more details about testing programs written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.

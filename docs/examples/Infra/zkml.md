@@ -37,7 +37,7 @@ Keep in mind that this example is intended for educational purposes as a technol
 
 This implementation offers the capability to shift resource-intensive computations away from the blockchain while ensuring their integrity. It demonstrates the evaluation of the [MNIST](https://en.wikipedia.org/wiki/MNIST_database) machine learning model as an illustrative example. This is accomplished by generating zero-knowledge proofs of computations and subsequently verifying them on-chain.
 
-The associated smart contract allows only one verification session per client. If a client wishes to discard the current verification and submit new inputs, they have the option to send a transaction to purge in-progress verification.
+The associated program (smart contract) allows only one verification session per client. If a client wishes to discard the current verification and submit new inputs, they have the option to send a transaction to purge in-progress verification.
 
 ### Workflow
 
@@ -47,7 +47,7 @@ The process of employing zero-knowledge proofs for computations involves four ke
 
 1. `Initializer`: This participant is responsible for deploying the `zk-smart-contract` onto the blockchain and initializing its parameters. During initialization, the structure of the machine learning model is defined, setting the stage for subsequent interactions.
 
-2. `User`: Users of the system (can be a person or another smart contract) interact with the `zk-smart-contract` by submitting their input data, which is intended for processing by the machine learning model. This step demonstrates how external parties can seamlessly engage with the blockchain without directly executing computationally intensive operations.
+2. `User`: Users of the system (can be a person or another program) interact with the `zk-smart-contract` by submitting their input data, which is intended for processing by the machine learning model. This step demonstrates how external parties can seamlessly engage with the blockchain without directly executing computationally intensive operations.
 
 3. `Prover`: The Prover is deployed on a server and continuously polling `zk-smart-contract` to discover new inputs provided by `User`s, computes outputs, and proves computations. The Prover retrieves input from the `zk-smart-contract`, evaluates the machine learning model, and generates a zero-knowledge proof that attests to the validity of the computation. The resulting output of the machine learning model, along with the zero-knowledge proof, is then submitted back to the `zk-smart-contract`.
 

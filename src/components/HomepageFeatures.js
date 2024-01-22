@@ -38,10 +38,10 @@ const FeatureList = [
     description: <Translate>Dive into the main aspects and principles of developing smart contracts on Gear Protocol!</Translate>
   },
   {
-    title: <Translate>Smart contract examples</Translate>,
+    title: <Translate>Program examples</Translate>,
     id: 'examples',
     link: '/docs/examples/prerequisites',
-    description: <Translate>Experiment with our smart contract examples, try to play around with the code and create your own dApp!</Translate>
+    description: <Translate>Experiment with our program examples, try to play around with the code and create your own dApp!</Translate>
   },
 ];
 

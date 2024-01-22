@@ -13,7 +13,7 @@ The auction uses [Gear non-fungible tokens (gNFT)](../Standards/gnft-721.md) as 
 
 The article explains the programming interface, data structure, basic functions, and their respective purposes. It can be used as-is or modified to suit your own scenarios. Anyone can easily create their own application and run it on the Gear Network. The source code is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/dutch-auction).
 
-## Contract description
+## Program description
 
 ### Actions
 
@@ -32,8 +32,8 @@ pub enum Action {
 ```
 
 - `Buy` is an action to buy an GNFT token by current price
-- `Create(CreateConfig)` is an action to create a new auction if the previous one is over or if it's the first auction in this contract.
-- `ForceStop` is an action to force stop an auction if contract owner would prefer to finish it ahead of time
+- `Create(CreateConfig)` is an action to create a new auction if the previous one is over or if it's the first auction in this program.
+- `ForceStop` is an action to force stop an auction if program owner would prefer to finish it ahead of time
 
 >Note how Dutch Auction is composed; that allows users to reuse its functionality over and over again.
 
@@ -50,7 +50,7 @@ pub struct CreateConfig {
 ```
 **To create a new auction you need to have these fields:**
 
-- `nft_contract_actor_id` is the contract address where the auctioneer's NFT has been minted.
+- `nft_contract_actor_id` is the program (smart contract) address where the auctioneer's NFT has been minted.
 - `token_id` is the ID of the NFT within its contract.
 - `starting_price` is the initial price at which the auction begins and subsequently decreases.
 - `discount_rate` is the rate at which the price decreases per millisecond over time.
@@ -90,10 +90,10 @@ pub enum Event {
 }
 ```
 - `AuctionStarted` is an event that occurs when someone use `Create(CreateConfig)` successfully
-- `AuctionStoped` is an event that occurs when contract owner forcibly ends the auction
+- `AuctionStoped` is an event that occurs when program owner forcibly ends the auction
 
-## Consistency of contract states
-The `Dutch auction` contract interacts with the `non-fungible token` contract. Each transaction that modifies the states of the Dutch Auction and the non-fungible token is stored in the state until it is completed. A user can finalize a pending transaction by sending a message that exactly matches the previous one while specifying the transaction ID. The idempotency of the non-fungible token contract allows for the restarting of a transaction without causing duplicate changes, ensuring the state consistency of these two contracts.
+## Consistency of program states
+The `Dutch auction` program interacts with the `non-fungible token` contract. Each transaction that modifies the states of the Dutch Auction and the non-fungible token is stored in the state until it is completed. A user can finalize a pending transaction by sending a message that exactly matches the previous one while specifying the transaction ID. The idempotency of the non-fungible token contract allows for the restarting of a transaction without causing duplicate changes, ensuring the state consistency of these two programs.
 
 ### Programm metadata and state
 Metadata interface description:
@@ -110,7 +110,7 @@ impl Metadata for AuctionMetadata {
     type State = Out<AuctionInfo>;
 }
 ```
-To display the full contract state information, the `state()` function is used:
+To display the full program state information, the `state()` function is used:
 
 ```rust title="dutch-auction/src/lib.rs"
 #[no_mangle]
@@ -139,8 +139,8 @@ pub mod metafns {
 
 ## Source code
 
-The source code of this example of Dutch Auction smart contract and the example of an implementation of its testing is available on [gear-foundation/dapp/contracts/dutch-auction](https://github.com/gear-foundation/dapps/tree/master/contracts/dutch-auction).
+The source code of this example of Dutch Auction program and the example of an implementation of its testing is available on [gear-foundation/dapp/contracts/dutch-auction](https://github.com/gear-foundation/dapps/tree/master/contracts/dutch-auction).
 
-See also an example of the smart contract testing implementation based on `gtest`: [gear-foundation/dapps/dutch-auction/tests](https://github.com/gear-foundation/dapps/tree/master/contracts/dutch-auction/tests).
+See also an example of the program testing implementation based on `gtest`: [gear-foundation/dapps/dutch-auction/tests](https://github.com/gear-foundation/dapps/tree/master/contracts/dutch-auction/tests).
 
-For more details about testing smart contracts written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.
+For more details about testing smart programs written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.

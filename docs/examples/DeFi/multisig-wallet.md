@@ -6,33 +6,32 @@ sidebar_position: 1
 # Multisig Wallet
 
 ## Introduction
+
 Multisignature wallets are cryptocurrency wallets that require one or more private keys to sign and authorize a transaction.
 
-To illustrate, think of a bank vault that demands multiple keys to unlock; this analogy captures the essence of how multisignature cryptocurrency wallets operate.
+To illustrate, think of a bank vault that demands multiple keys to unlock; this analogy captures how multisignature cryptocurrency wallets operate.
 
 Advocates of multisignature wallets argue that they offer the most secure and fail-proof method for storing cryptocurrency. Even if a thief were to obtain one of your wallet keys, they would still be unable to access your account without the keys associated with the other wallets in the setup.
 
-This article provides an explanation of the programming interface, data structure, basic functions, and their respective purposes. It can be used as-is or customized to fit your specific needs. Anyone can easily create their own application and deploy it on the Gear Network. The source code is accessible on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/multisig-wallet).
+This article provides an explanation of the programming interface, data structure, basic functions, and their respective purposes. It can be used as-is or customized to fit your specific needs. Anyone can create an application and deploy it on the Gear Network. The source code is accessible on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/multisig-wallet).
 
 ## Logic
 
-Wallet is owned by one or more owners, and in order for something significant to take place required count of owners should confirm this action.
+The wallet belongs to one or more owners. For any significant action to occur, the necessary number of owners must confirm it. 
 
-Deployer of a contract can choose how many owners are allowed to send transaction from the wallet as well as the minimum number of owners needed to send it (e.g., you could have a 2-of-3 multisig where two out of three assigned private keys are needed, 3-of-5, 5-of-7, etc.).
+The contract deployer can determine the permitted number of owners who can initiate a transaction from the wallet and specify the minimum required owners for the transaction. For instance, they can opt for a 2-of-3 multisig, where two out of three assigned private keys are necessary. The flexibility extends to configurations like 3-of-5, 5-of-7 and so forth.
 
-To send a transaction through multisig wallet one of the owners should send transaction to the wallet with a `SubmitTransaction` action in the payload, and other owners should approve this transaction by `ConfirmTransaction` action until the required amount is reached.
+To send a transaction through multisig wallet, one of the owners should send a transaction to the wallet with a `SubmitTransaction` action in the payload, and other owners should approve this transaction by `ConfirmTransaction` action until the required amount is reached.
 
-In the description of the transaction owner can add some useful information about it.
+The transaction description allows the owner to include helpful information.
 
-The wallet is flexible and users can manage the list of owners and the number of confirmations required.
-
->Of course, we took care of the security of the contract, so adding an owner, removing an owner, replacing an owner and changing required confirmations count can only be done with required confirmations from other owners.
+> The wallet offers flexibility, enabling users to oversee the list of owners and determine the necessary confirmations. Security is a priority in the contract, restricting actions like adding, removing, or replacing owners and altering confirmation counts to only be executed with the requisite confirmations from other owners.
 
 The transaction approval logic is complex, for example:
-1. If the owner submits the transaction and the contract only needs one confirmation to execute the transaction, the contract will firstly add the transaction to the storage, then confirm it by the submitting owner, then execute transaction automatically.
-2. If the owner submits the transaction and the contract needs two or more confirmations to execute the transaction, the contract will firstly add the transaction to the storage, then confirm it by the submitting owner. And to execute this transaction wallet will steel need one or more confirmations. Then another owner send `ConfirmTransaction` action to the contract and if everything is fine, the transaction will be executed automatically
+1. When the owner submits a transaction requiring only one confirmation for execution, the contract adds it to the storage, obtains confirmation from the submitting owner and then automatically executes the transaction.
+2. For transactions needing two or more confirmations, the contract follows a similar process. Initially, it adds the transaction to the storage and secures confirmation from the submitting owner. To execute the transaction, the wallet still requires one or more confirmations. Subsequently, another owner sends a `ConfirmTransaction action to the contract. If all is well, the transaction is executed automatically.
 
-> In most cases a transaction will execute automatically after all confirmations is done. But there is a corner case, if the transaction was confirmed `n` times, and the contract requires `n + 1` or more confirmations, and then the owners change the required confirmations count to `n` or less, owners can either wait for the next confirmation, or simply call `ExecuteTransaction` with corresponding transaction ID to execute it
+> Transactions usually happen automatically when all confirmations are done. However, if a transaction was confirmed `n` times, and the contract needs `n + 1` or more confirmations, and then the owners change it to `n` or less, they can either wait for the next confirmation or just call `ExecuteTransaction` with the transaction ID to execute it.
 
 ## Interface
 

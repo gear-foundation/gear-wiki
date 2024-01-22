@@ -148,7 +148,7 @@ pub mod metafns {
 ```
 
 ## Conclusion
-A source code of the contract example provided by Gear is available on GitHub: [`concert/src`](https://github.com/gear-foundation/dapps/tree/master/contracts/concert/src).
+A source code of the contract example is available on GitHub: [`concert/src`](https://github.com/gear-foundation/dapps/tree/master/contracts/concert/src).
 
 See also an example of the smart contract testing implementation based on [gtest](https://github.com/gear-foundation/dapps/tree/master/contracts/concert/tests).
 

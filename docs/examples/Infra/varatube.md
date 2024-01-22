@@ -9,7 +9,7 @@ sidebar_position: 3
 
 ## About
 
-Many web services (in Web2) work on a subscription basis. One of the main features of subscription management is subscription auto-renewal. So that after the expiration of the subscription period, the money is automatically debited from the wallet and the subscription is automatically renewed without user intervention.
+Web services in Web2 often operate on a subscription model, with a key feature being subscription auto-renewal. This means that once the subscription period ends, the payment is automatically deducted, and the subscription renews seamlessly, requiring no action from the user.
 
 This dApp example represents a video-hosting service **[VaraTube](https://github.com/gear-foundation/dapps/tree/master/contracts/varatube)** that enables watching videos with a valid subscription that can be renewed automatically.
 
@@ -21,7 +21,7 @@ According to the Actor Model in Gear Protocol, actors exchange messages. One of 
 
 This makes it possible to implement logic when several logically related messages can be spaced apart in time. As a result, extrinsics that are caused by these messages can be executed in different blocks. It is possible for messages to stay in the Waitlist for a long time. This is achieved through [Gas reservation](/developing-contracts/gas-reservation.md) for deferred messages. A program can send a [delayed message](/developing-contracts/delayed-messages.md) to itself over as many blocks as it defines, provided there is enough reserved gas to be in the Waitlist.
 
-State consistency between smart contracts is achieved using techniques described [here](/developing-contracts/distributed_transactions.md).
+State consistency between programs is achieved using techniques described [here](/developing-contracts/distributed_transactions.md).
 
 ## Program logic
 
@@ -33,21 +33,21 @@ The interface provides an option whether to enable or disable subscription auto-
 
 There is also an option to cancel the active subscription.
 
-The VaraTube consists of two smart contracts:
-- [Gear Fungible Token (gFT-20)](../Standards/gft-20) contract determines user and service balances required to purchase a subscription and approves Subscription contract to get funds from user's balance.
-- [VaraTube Subscription](https://github.com/gear-foundation/dapps/tree/master/contracts/varatube) contract manages service's subscription - its availability, expiration, auto renewal.
+The VaraTube consists of two programs:
+- [Gear Fungible Token (gFT-20)](../Standards/gft-20) contract determines user and service balances required to purchase a subscription and approves Subscription program to get funds from user's balance.
+- [VaraTube Subscription](https://github.com/gear-foundation/dapps/tree/master/contracts/varatube) program manages service's subscription - its availability, expiration, auto renewal.
 
 ## How to run
 
 ### ⚒️ Build program
 
-- Get the source code of [VaraTube contract](https://github.com/gear-foundation/dapps/tree/master/contracts/varatube/src) and [Fungible Token contract](https://github.com/gear-foundation/dapps/tree/master/contracts/fungible-token)
-- Build contracts as described in [README.md](https://github.com/gear-foundation/dapps/tree/master/contracts/fungible-token#readme).
+- Get the source code of [VaraTube program](https://github.com/gear-foundation/dapps/tree/master/contracts/varatube/src) and [Fungible Token contract](https://github.com/gear-foundation/dapps/tree/master/contracts/fungible-token)
+- Build programs as described in [README.md](https://github.com/gear-foundation/dapps/tree/master/contracts/fungible-token#readme).
 
 ### 🏗️ Upload program
 
 1. You can deploy a program using [idea.gear-tech.io](https://idea.gear-tech.io/)
-2. In the network selector choose `Vara Network Testnet` or `Development` in case if you have running a local node
+2. In the network selector choose `Vara Network Testnet` or `Development` if you have running a local node
 3. Upload program `varatube.opt.wasm` from `/target/wasm32-unknown-unknown/release/`
 4. Upload metadata file `meta.txt`
 5. Specify `init payload` and calculate gas!
@@ -78,6 +78,6 @@ yarn start
 
 ## Source code
 
-The source code of the VaraTube smart contract including its testing as well as JS frontend web application example is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/varatube). They can be used as is or modified to suit your own scenarios.
+The source code of the VaraTube program including its testing as well as JS frontend web application example is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/varatube). They can be used as is or modified to suit your own scenarios.
 
-For more details about testing smart contracts written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.
+For more details about testing programs written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.

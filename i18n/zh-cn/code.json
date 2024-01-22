@@ -155,10 +155,10 @@
   "Dive into the main aspects and principles of developing smart contracts on Gear Protocol!": {
     "message": "全方位深入了解 Gear 协议上智能合约的开发与原理！"
   },
-  "Smart contract examples": {
+  "Program examples": {
     "message": "智能合约范例"
   },
-  "Experiment with our smart contract examples, try to play around with the code and create your own dApp!": {
+  "Experiment with our program examples, try to play around with the code and create your own dApp!": {
     "message": "开启 Gear 智能合约范例之旅，尝试使用代码并创建自己的 dApp！"
   }
 }

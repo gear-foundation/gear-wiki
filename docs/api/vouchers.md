@@ -5,13 +5,13 @@ sidebar_label: Vouchers
 
 # Gas vouchers
 
-Vouchers, issued by any actor empower users with gas-free interactions, enabling them to send messages to specific programs seamlessly.
+Vouchers empower users with gas-free interactions, allowing seamless messaging to specific programs from any actor.
 
 An example of using vouchers is shown in the [Battleship](/examples/Gaming/battleship.md) game. Users without tokens on their balance can make moves by sending messages to a program using a voucher.
 
 ### Issue a voucher
 
-Use `api.voucher.issue` method to issue a new voucher for a user to be used to pay for sending messages to `program_id` program.
+Use the `api.voucher.issue` method to generate a new voucher assigned to a user. This voucher can then be applied for covering the costs associated with sending messages to the specified `program_id` program.
 
 ```javascript
   import { VoucherIssued } from '@gear-js/api';
@@ -35,7 +35,7 @@ const voucherExists = await api.voucher.exists(programId, accountId);
 
 ### Send a message using voucher
 
-To send message with voucher you can use `api.voucher.call` method:
+To send a message with the voucher, you can use `api.voucher.call` method:
 
 ```javascript
   const messageTx = api.message.send({
