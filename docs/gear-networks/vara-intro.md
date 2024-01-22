@@ -20,7 +20,7 @@ The primary features of the Vara Network include:
 - A robust NPoS mechanism for network security and decentralization.
 - Governance by community members - token holders.
 - A stable and upgradable network, facilitated by Substrate.
-- A well-thought-out [token economy](https://wiki.vara.network/docs/tokenomics/) that ensures the long-term sustainability of the network and benefits for its community.
+- A well-thought-out [token economy](https://wiki.vara.network/docs/tokenomics/) that ensures the long-term sustainability of the network and benefits for its community. 
 
 There are several ways other than developing and running dApps to support Vara Network:
 - Become a [Validator](https://wiki.vara.network/docs/staking/validate) by providing computing resources for programs execution, blocks producing and participation in consensus mechanism. It makes the Vara Network secure, performant and censorship-resistant.
