@@ -1,5 +1,5 @@
 ---
-sidebar_label: Monopoly game
+sidebar_label: Monopoly
 sidebar_position: 2
 ---
 

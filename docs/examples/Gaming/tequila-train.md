@@ -2,7 +2,7 @@
 sidebar_position: 3
 ---
 
-# Tequila Train Game
+# Tequila Train
 
 Tequila Train is a game similar to the Mexican Train game but has several differences in rules. Tequila Train involves a hub, trains, and tequila shots, with each player receiving between 4 to 8 tiles at the start. The game has a playable limit of 8 players using 91 tiles.
 
