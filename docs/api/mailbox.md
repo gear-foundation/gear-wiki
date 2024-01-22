@@ -19,7 +19,7 @@ console.log(mailbox);
 
 ## Claim value
 
-To claim value from a message in the mailbox use `api.mailbox.claimValue.submit` method.
+To claim value from a message in the mailbox, use `api.mailbox.claimValue.submit` method.
 
 ```javascript
 const api = await GearApi.create();
@@ -29,7 +29,7 @@ await api.mailbox.claimValue.signAndSend(/* ... */);
 
 ## Waitlist
 
-To read the program's waitlist use `api.waitlist.read` method.
+To read the program's waitlist, use `api.waitlist.read` method.
 
 ```javascript
 const api = await GearApi.create();

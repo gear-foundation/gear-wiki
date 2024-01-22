@@ -17,15 +17,15 @@ DAOs provide secure alternatives for pooling funds for a particular cause. It's 
 
 ### DAO application example by Gear
 
-Anyone can easily create their own DAO application and run it on the Gear Network. To facilitate this, Gear has provided an example of the DAO smart contract, which is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/dao-light).
+Anyone can easily create their own DAO application and run it on the Gear Network. To facilitate this, use an example of the DAO program (smart contract), which is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/dao-light).
 
 This article explains the programming interface, data structure, basic functions, and their purposes. You can use it as-is or modify it to suit your own scenarios.
 
-<!-- In addition, Gear provides an example implementation of the DAO user interface to demonstrate its interaction with the smart contract in the Gear Network. You can watch a video on how to get the DAO application up and running and its capabilities here: **https://youtu.be/6lxr7eojADw**. The source code for the DAO application is available on [GitHub](https://github.com/gear-foundation/dapps-dao-app).
+<!-- In addition, Gear provides an example implementation of the DAO user interface to demonstrate its interaction with the program in the Gear Network. You can watch a video on how to get the DAO application up and running and its capabilities here: **https://youtu.be/6lxr7eojADw**. The source code for the DAO application is available on [GitHub](https://github.com/gear-foundation/dapps-dao-app).
 -->
 
 ## Logic
-The contract has the following structs:
+The program has the following structs:
 
 ```rust title="dao-light/src/lib.rs"
 struct Dao {
@@ -42,7 +42,7 @@ struct Dao {
 ```
 where:
 
-`approved_token_program_id` - the reference to the token contract (ERC20) that users use as pledge to get the share in the DAO.
+`approved_token_program_id` - the reference to the token contract ([gFT20](../Standards/gft-20.md)) that users use as pledge to get the share in the DAO.
 
 `period_duration` - the smallest unit time interval for the DAO, in ms.
 
@@ -61,7 +61,7 @@ where:
 
 `proposals` - all proposals (the proposal queue).
 
-Parameters `approved_token_program_id`, `voting_period_length`, `period_duration`, `grace_period_length` are set when initializing a contract. The contract is initialized with the following struct:
+Parameters `approved_token_program_id`, `voting_period_length`, `period_duration`, `grace_period_length` are set when initializing a program. The program is initialized with the following struct:
 
 ```rust title="dao-light/io/src/lib.rs"
 pub struct InitDao {
@@ -114,11 +114,12 @@ pub struct Member {
 - `shares` - the shares of that member
 - `highest_index_yes_vote`  - - the index of the highest proposal on which the members voted YES (that value is checked when user is going to leave the DAO)
 
-The actions that the contract receives outside are defined in enum `DaoActions`. The contract's replies are defined in the enum `DaoEvents`.
+The actions that the program receives outside are defined in enum `DaoActions`. The program's replies are defined in the enum `DaoEvents`.
 
 ### DAO functions
 
-- Joining DAO. To join the DAO and become a DAO member, a user needs to send the following message to the DAO contract:"
+- Joining a DAO 
+    - To join the DAO and become a DAO member, a user needs to send the following message to the DAO program:
 
 ```rust title="dao-light/io/src/lib.rs"
 /// Deposits tokens to DAO
@@ -131,7 +132,8 @@ Deposit {
 },
 ```
 
- - The funding proposal. The 'applicant' is an actor that will be funded:
+ - The funding proposal. 
+    - The 'applicant' is an actor that will be funded:
 ```rust title="dao-light/io/src/lib.rs"
 /// The proposal of funding.
 ///
@@ -190,7 +192,7 @@ RageQuit {
 },
 ```
 
- - The proposal processing occurs after the proposal completes its grace period. If the proposal is accepted, the tribute tokens are deposited into the contract, and new shares are minted and issued to the applicant. In the event of rejection, the tribute tokens are returned to the applicant.
+ - The proposal processing occurs after the proposal completes its grace period. If the proposal is accepted, the tribute tokens are deposited into the program, and new shares are minted and issued to the applicant. In the event of rejection, the tribute tokens are returned to the applicant.
 
 ```rust title="dao-light/io/src/lib.rs"
 /// The proposal processing after the proposal completes during the grace period.
@@ -212,14 +214,14 @@ ProcessProposal {
 },
 ```
 <!--
-## Consistency of contract states
+## Consistency of program states
 
-The `DAO` contract interacts with the `fungible token` contract. Every transaction that alters the states of the DAO and the fungible token is recorded in the state until it is finalized. Users can complete a pending transaction by sending a `Continue` message along with the transaction ID. The idempotency feature of the fungible token contract allows transactions to be restarted without duplicating changes, ensuring the state consistency of these two contracts.
+The `DAO` program interacts with the `fungible token` program. Every transaction that alters the states of the DAO and the fungible token is recorded in the state until it is finalized. Users can complete a pending transaction by sending a `Continue` message along with the transaction ID. The idempotency feature of the fungible token program allows transactions to be restarted without duplicating changes, ensuring the state consistency of these two programs.
 
 
 ## User interface
 
-A [Ready-to-Use application](https://dao.gear-tech.io/) example provides a user interface that interacts with [DAO](https://github.com/gear-foundation/dapps-dao-light) and [gFT](https://github.com/gear-foundation/dapps-fungible-token) smart contracts.
+A [Ready-to-Use application](https://dao.gear-tech.io/) example provides a user interface that interacts with [DAO](https://github.com/gear-foundation/dapps-dao-light) and [gFT](https://github.com/gear-foundation/dapps-fungible-token) programs.
 
 Gear Fundible Token enables creation of utility token DAO, check [this article](../Standards/gft-20) for details.
 
@@ -239,7 +241,7 @@ REACT_APP_CONTRACT_DAO
 
 - `REACT_APP_NETWORK` is Gear network address (wss://rpc-node.gear-tech.io:443)
 - `REACT_APP_CONTRACT_ERC` is Fundible Token contract address
-- `REACT_APP_CONTRACT_DAO` is DAO contract address
+- `REACT_APP_CONTRACT_DAO` is DAO program address
 
 An example is available: [here](https://github.com/gear-foundation/dapps-dao-app/blob/master/.env.example)
 
@@ -271,7 +273,7 @@ impl Metadata for DaoLightMetadata {
     type State = Out<DaoState>;
 }
 ```
-To display the full contract state information, the `state()` function is used:
+To display the full program state information, the `state()` function is used:
 
 ```rust title="dao-light/src/lib.rs"
 #[no_mangle]
@@ -312,11 +314,11 @@ pub mod metafns {
 ```
 
 ## Source code
-The source code for this DAO smart contract example and its testing implementation are available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/dao-light).
+The source code for this DAO program example and its testing implementation are available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/dao-light).
 
 The extended version of DAO that includes admin, membership proposals and delegated voting can be found at [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/dao).
 
 <!--The application source code is available in: [https://github.com/gear-foundation/dapps-dao-app](https://github.com/gear-foundation/dapps-dao-app).
 -->
 
-For more details about testing smart contracts written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.
+For more details about testing programs written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.

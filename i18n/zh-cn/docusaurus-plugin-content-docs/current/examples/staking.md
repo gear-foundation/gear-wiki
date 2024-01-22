@@ -342,7 +342,7 @@ extern "C" fn meta_state() -> *mut [i32; 2] {
 
 ## 总结
 
-A source code of the contract example provided by Gear is available on GitHub: [`staking/src/lib.rs`](https://github.com/gear-foundation/dapps-staking/blob/master/src/lib.rs).
+A source code of the contract example is available on GitHub: [`staking/src/lib.rs`](https://github.com/gear-foundation/dapps-staking/blob/master/src/lib.rs).
 
 合约源码在 Github 上可以找到：[`staking/src/lib.rs`](https://github.com/gear-foundation/dapps-staking/blob/master/src/lib.rs)。
 

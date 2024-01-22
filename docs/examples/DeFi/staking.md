@@ -7,31 +7,27 @@ sidebar_position: 5
 
 ## Introduction
 
-Stacking is an analogue of a bank deposit, receiving passive earnings due to simple storage of cryptomonets.
-The percentage of income may be different – it all depends on the term of the deposit.
+Staking is an analogue of a bank deposit, receiving passive earnings due to simple storage of cryptomonets. The percentage of income may be different – it all depends on the term of the deposit.
 
-Anyone can create their own Staking contract and run it on the Gear Network. To do this, Gear created an example which is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/staking).
+Anyone can create their own Staking program and run it on the Gear Network. To do this, Gear created an example which is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/staking).
 
 This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios.
 
 ### Mathematics
 
-You can stake the fungible token into the contract (So you deposit tokens into the staking contract and later claim that token (or another fungible token) for a reward.
+You can deposit tokens into the staking program and later claim that token (or another fungible token) for a reward.
 
-A fixed amount of reward is minted for certain time interval (it can be a second, minute or day)
-Rewards are distributed fairly across stakers.
+Staking involves depositing fungible tokens into a program to earn rewards. These rewards, minted at regular intervals (e.g., per minute), are distributed equitably among all stakers.
 
-How rewards work:
+How staking works:
 
-Let's we have Alice who stakes 100 tokens and Bob who stakes 50 tokens. Lets in our example reward tokens are minted every minute.
-
-In total inside the staking contract there are 150 tokens. One week later Alice decided to unstake her tokens. The length of time Alice tokens were staked is $7 ⋅ 24 ⋅ 60$. The amount of reward tokens:
+Consider Alice, staking 100 tokens and Bob, staking 50 tokens. If reward tokens are minted every minute, and after one week Alice decides to unstake her tokens, the total tokens in the staking program remain 150. The duration of Alice's staking period is 7 days and the reward tokens accumulated can be calculated based on this timeframe:
 
 $$
 R ⋅ \frac {100} {150} ⋅ 7 ⋅ 24 ⋅ 60
 $$
 
-Another week later Bob also decides to unstake his 50 tokens. Let's calculate his reward. During the first week, he staked 50 tokens out of 150 tokens. During the second week, he staked 50 tokens out of 50. Then his reward:
+A week later, Bob chooses to unstake his 50 tokens. In the initial week, he staked 50 tokens from 150. In the second week, he staked 50 tokens from 50. Here’s how to determine his reward:
 
 $$
 R ⋅ (\frac {50} {150} + \frac {50} {50}) ⋅ 7 ⋅ 24 ⋅ 60
@@ -49,9 +45,7 @@ where:
 -	$L(t)$ - total staked amount of tokens at time $t$;
 -	$l(t)$ - token staked by user at time $t$;
 
-
-To implement that formula it’s necessary to store $l(t)$ for each user and for each time interval and $L(t)$ for each time interval. In order to compute a reward we have to run a for loop for each time interval. That operation сonsumes a lot of gas and storage.
-It can be done in a more efficient way:
+To apply the formula, one needs to store $l(t)$ for each user and time interval, and $L(t)$ for each time interval. To calculate a reward, a for loop must be executed for each time interval. This process consumes a significant amount of gas and storage. A more efficient approach is feasible:
 
 Let $l(t)$ for a user is constant $k$ for $a \le t \le b$. Then:
 
@@ -81,14 +75,14 @@ $$
 Rk\sum_{t=a}^b \frac {1} {L(t)} = Rk(\sum_{t=0}^b \frac {1} {L(t)} - \sum_{t=0}^{a-1} \frac {1} {L(t)})
 $$
 
-Based on that equation the implementation in the smart contract can be written:
+Based on that equation the implementation in the program can be written:
 ```rust
 (staker.balance * self.tokens_per_stake) / DECIMALS_FACTOR + staker.reward_allowed - staker.reward_debt - staker.distributed
 ```
 
-### Contract description
+### Program description
 
-The admin initializes the contract by transmitting information about the staking token, reward token and distribution time (`InitStaking` message).
+The admin initializes the program by transmitting information about the staking token, reward token and distribution time (`InitStaking` message).
 
 Admin can view the Stakers list (`GetStakers` message). The admin can update the reward that will be distributed (`UpdateStaking` message).
 
@@ -96,12 +90,12 @@ The user first makes a bet (`Stake` message), and then he can receive his reward
 
 ### Source files
 
-1. `staking/src/lib.rs` - contains functions of the 'staking' contract.
-2. `staking/io/src/lib.rs` - contains Enums and structs that the contract receives and sends in the reply.
+1. `staking/src/lib.rs` - contains functions of the 'staking' program.
+2. `staking/io/src/lib.rs` - contains Enums and structs that the program receives and sends in the reply.
 
 ### Structs
 
-The contract has the following structs:
+The program has the following structs:
 
 ```rust title="staking/src/lib.rs"
 struct Staking {
@@ -122,9 +116,9 @@ struct Staking {
 ```
 where:
 
-- `owner` - the owner of the staking contract
-- `staking_token_address` - address of the staking token contract
-- `reward_token_address` - address of the reward token contract
+- `owner` - the owner of the staking program
+- `staking_token_address` - address of the staking token program
+- `reward_token_address` - address of the reward token program
 - `tokens_per_stake` - the calculated value of tokens per stake
 - `total_staked` - total amount of deposits
 - `distribution_time` - time of distribution of reward
@@ -147,8 +141,8 @@ pub struct InitStaking {
 ```
 where:
 
-- `staking_token_address` - address of the staking token contract
-- `reward_token_address` - address of the reward token contract
+- `staking_token_address` - address of the staking token program
+- `reward_token_address` - address of the reward token program
 - `distribution_time` - time of distribution of reward
 - `reward_total` - the reward to be distributed within distribution time
 
@@ -189,7 +183,7 @@ pub enum StakingEvent {
 
 ### Functions
 
-Staking contract interacts with fungible token contract through function `transfer_tokens()`. This function sends a message (the action is defined in the enum `FTAction`) and gets a reply (the reply is defined in the enum `FTEvent`).
+The staking program interacts with fungible token contract through function `transfer_tokens()`. This function sends a message (the action is defined in the enum `FTAction`) and gets a reply (the reply is defined in the enum `FTEvent`).
 
 ```rust title="staking/src/lib.rs"
 /// Transfers `amount` tokens from `sender` account to `recipient` account.
@@ -255,7 +249,7 @@ The return value cannot be less than zero according to the algorithm
 fn calc_reward(&mut self) -> Result<u128, Error>
 ```
 
-Updates the staking contract.
+Updates the staking program.
 
 Sets the reward to be distributed within distribution time
 
@@ -360,7 +354,7 @@ impl Metadata for StakingMetadata {
 }
 ```
 
-To display the full contract state information, the `state()` function is used:
+To display the full program state information, the `state()` function is used:
 
 ```rust title="staking/src/lib.rs"
 #[no_mangle]
@@ -392,18 +386,18 @@ pub mod metafns {
 }
 ```
 
-## Consistency of contract states
+## Consistency of program states
 
-The `Staking` contract interacts with the `fungible` token contract. Each transaction that changes the states of Staking and the fungible token is stored in the state until it is completed. User can complete a pending transaction by sending a message exactly the same as the previous one with indicating the transaction id. The idempotency of the fungible token contract allows to restart a transaction without duplicate changes which guarantees the state consistency of these 2 contracts.
+The `Staking` program interacts with the `fungible` token contract. Each transaction that changes the states of Staking and the fungible token is stored in the state until it is completed. User can complete a pending transaction by sending a message exactly the same as the previous one with indicating the transaction id. The idempotency of the fungible token contract allows to restart a transaction without duplicate changes which guarantees the state consistency of these 2 programs.
 
 
 ## Conclusion
 
-A source code of the contract example provided by Gear is available on GitHub: [`staking/src/lib.rs`](https://github.com/gear-foundation/dapps/blob/master/contracts/staking/src/lib.rs).
+A source code of the program example is available on GitHub: [`staking/src/lib.rs`](https://github.com/gear-foundation/dapps/blob/master/contracts/staking/src/lib.rs).
 
-See also examples of the smart contract testing implementation based on gtest:
+See also examples of the program testing implementation based on gtest:
 
 - [`simple_test.rs`](https://github.com/gear-foundation/dapps/blob/master/contracts/staking/tests/simple_test.rs).
 - [`panic_test.rs`](https://github.com/gear-foundation/dapps/blob/master/contracts/staking/tests/panic_test.rs).
 
-For more details about testing smart contracts written on Gear, refer to this article: [Program testing](/docs/developing-contracts/testing).
+For more details about testing programs written on Gear, refer to this article: [Program testing](/docs/developing-contracts/testing).

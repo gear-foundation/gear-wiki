@@ -1,21 +1,21 @@
 ---
-sidebar_label: Crowdsale smart contract mechanics
+sidebar_label: Crowdsale program mechanics
 sidebar_position: 6
 ---
 
-# Crowdsale smart contract mechanics
+# Crowdsale program mechanics
 
 ## Introduction
 
-A public offering to invest in a brand-new cryptocurrency or other digital asset is known as a cryptocurrency crowdsale. A crowdsale can be used by new projects to raise money for development and other purposes. It is a time-limited campaign during which investors can exchange their cryptocurrencies, as defined in the campaign, for newly proposed tokens. These new tokens are promoted as future functional units once the crowdsale's funding goal is met, and the project launches.
+A public offering to help build brand-new cryptocurrency or other digital assets through crowd contributions is known as a cryptocurrency crowdsale. A crowdsale can be used by new projects to mobilize resources for development and other purposes. It is a time-limited campaign during which crypto owners can exchange their cryptocurrencies for newly proposed tokens, as defined in the campaign. These new tokens are promoted as future functional units once the crowdsale's goal is met and the project launches.
 
-The example of a crowdsale smart contract implementation described in this article is just one of many decentralized applications that can be implemented and launched on Gear. This article explains the programming interface, data structure, basic functions, and their purposes. You can use it as-is or modify it to suit your own scenarios. Anyone can easily create their own crowdsale application and run it on a Gear-powered network.
+The example of a crowdsale program implementation described in this article is just one of many decentralized applications that can be implemented and launched on Gear. This article explains the programming interface, data structure, basic functions and their purposes. You can use it as-is or modify it to suit your scenarios. Anyone can easily create their crowdsale application and run it on a Gear-powered network.
 
-The initial funds used to purchase a token are determined by the Gear fungible tokens contract - [gFT](../Standards/gft-20). The contract's source code is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/crowdsale).
+The initial resources used to acquire tokens are determined by the Gear fungible tokens contract - [gFT](../Standards/gft-20). The program's source code is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/crowdsale).
 
 ## Interface
 ### Source files
-1. `messages.rs` - contains function of the fungible token contract. Crowdsale contract interacts with the fungible token contract through `transfer_tokens` function:
+1. `messages.rs` - contains function of the fungible token contract. Crowdsale program interacts with the fungible token contract through `transfer_tokens` function:
 ```rust title="crowdsale/src/messages.rs"
 pub async fn transfer_tokens(
     transaction_id: u64,
@@ -72,11 +72,11 @@ pub fn not_zero_address(address: &ActorId, message: &str) {
 }
 ```
 
-3. `lib.rs` - defines the contract logic.
+3. `lib.rs` - defines the program logic.
 
 ### Structs
 
-The contract has the following structs:
+The program has the following structs:
 ```rust title="crowdsale/src/lib.rs"
 struct IcoContract {
     ico_state: IcoState,
@@ -107,7 +107,7 @@ pub struct IcoState {
 - `time_increase_step` - the period of time after which the price increases
 - `tokens_sold` - how many tokens were sold
 - `tokens_goal` - how many tokens are we going to sell
-- `owner` - contract owner
+- `owner` - program owner
 - `token_address` - fungible token address
 - `token_holders` - the list of buyers and the number of tokens they bought
 
@@ -165,7 +165,7 @@ impl Metadata for CrowdsaleMetadata {
     type State = Out<State>;
 }
 ```
-To display the full contract state information, the `state()` function is used:
+To display the full program state information, the `state()` function is used:
 
 ```rust title="crowdsale/src/lib.rs"
 #[no_mangle]
@@ -202,6 +202,6 @@ pub mod metafns {
 
 ## Conclusion
 
-The source code of this example of ICO smart contract and the example of an implementation of its testing is available on [Github](https://github.com/gear-foundation/dapps/tree/master/contracts/crowdsale).
+The source code of this example of ICO program and the example of an implementation of its testing is available on [Github](https://github.com/gear-foundation/dapps/tree/master/contracts/crowdsale).
 
-For more details about testing smart contracts written on Gear, refer to the [Program Testing](https://wiki.gear-tech.io/developing-contracts/testing) article.
+For more details about testing programs written on Gear, refer to the [Program Testing](https://wiki.gear-tech.io/developing-contracts/testing) article.

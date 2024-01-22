@@ -5,7 +5,7 @@ sidebar_label: Upload Program
 
 # Upload Program
 
-A smart contract compiled to Wasm can be uploaded to the Gear network as a program. During uploading it is initialized in the network to be able to send and receive messages with other actors in the network (programs and users).
+A program compiled to Wasm can be uploaded to the Gear network. During uploading, it is initialized in the network to be able to send and receive messages with other actors in the network (programs and users).
 
 Use `api.program.upload` method to create `upload_program` extrinsic
 
