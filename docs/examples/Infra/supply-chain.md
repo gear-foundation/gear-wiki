@@ -4,24 +4,24 @@ sidebar_position: 2
 
 # Supply chain
 
-In logistics, a supply chain is a system for tracking and delivering to an end consumer various items. As a rule, such systems can't work without a lot of paperwork and other layers of bureaucracy. All of this costs a lot of time and money and increases the likelihood of an accidental error or, worst of all, a fraud. With the help of smart contract and blockchain technologies, it is possible to eliminate these problems by making a supply chain more efficient, reliable and transparent.
+In logistics, a supply chain is a system for tracking and delivering to an end consumer various items. As a rule, such systems can't work without a lot of paperwork and other layers of bureaucracy. All of this costs a lot of time and money and increases the likelihood of an accidental error or, worst of all, a fraud. With the help of smart contracts (programs) and blockchain technologies, it is possible to eliminate these problems by making a supply chain more efficient, reliable and transparent.
 
-- [Supply chain contract](https://github.com/gear-foundation/dapps/tree/master/contracts/supply-chain).
+- [Supply chain program](https://github.com/gear-foundation/dapps/tree/master/contracts/supply-chain).
 - [Supply chain UI](https://github.com/gear-foundation/dapps/tree/master/frontend/apps/supply-chain).
 
 ## How to run
 
 ### ⚒️ Build programs
 
-Upload Supply chain contract requires build two auxiliary contracts:
+Upload Supply chain program requires build two auxiliary programs:
 
 - Build [NFT contract](https://github.com/gear-foundation/dapps/tree/master/contracts/non-fungible-token) as described in `README.md`
 - Build [Sharded FT contract](https://github.com/gear-foundation/dapps/tree/master/contracts/sharded-fungible-token) as described in `README.md`
-- Build [Supply Chain contract](https://github.com/gear-foundation/dapps/tree/master/contracts/supply-chain) as described in `README.md`
+- Build [Supply Chain program](https://github.com/gear-foundation/dapps/tree/master/contracts/supply-chain) as described in `README.md`
 
 ### 🏗️ Upload programs
 
-You can deploy a program using [idea.gear-tech.io](https://idea.gear-tech.io/). In the network selector choose `Vara Network Testnet` or `Development` (in this case, you should have a local node running).
+You can deploy a program using [idea.gear-tech.io](https://idea.gear-tech.io/). In the network selector, choose `Vara Network Testnet` or `Development` (in this case, you should have a local node running).
 
 *** Non-Fungible Token ***
 
@@ -142,14 +142,14 @@ pub enum Role {
 1. The item is produced with `ProducerAction::Produce`.
 1. The item is put up for sale with `ProducerAction::PutUpForSale`.
 1. The item is purchased with `DistributorAction::Purchase`.
-1. The purchase is approved or not with `ProducerAction::Approve`. In the latter case the item returns on the **2** step.
+1. The purchase is approved or not with `ProducerAction::Approve`. In the latter case, the item returns on the **2** step.
 1. The item is shipped with `ProducerAction::Ship`.
 1. The item is received with `DistributorAction::Receive`.
 1. The item is processed with `DistributorAction::Process`.
 1. The item is packaged with `DistributorAction::Package`.
 1. The item is put up for sale with `DistributorAction::PutUpForSale`.
 1. The item is purchased with `RetailerAction::Purchase`.
-1. The purchase is approved or not with `DistributorAction::Approve`. In the latter case the item returns on the **9** step.
+1. The purchase is approved or not with `DistributorAction::Approve`. In the latter case, the item returns on the **9** step.
 1. The item is shipped with `DistributorAction::Ship`.
 1. The item is received with `RetailerAction::Receive`.
 1. The item is put up for sale with `RetailerAction::PutUpForSale`.
@@ -162,7 +162,7 @@ The end!
 ### Initialization
 
 ```rust title="supply-chain/io/src/lib.rs"
-/// Initializes the Supply chain contract.
+/// Initializes the Supply chain program.
 ///
 /// # Requirements
 /// - Each [`ActorId`] of `producers`, `distributors`, and `retailers` mustn't
@@ -191,7 +191,7 @@ pub struct Initialize {
 ### Actions
 
 ```rust title="supply-chain/io/src/lib.rs"
-/// Sends the contract info about what it should do.
+/// Sends the program info about what it should do.
 #[derive(Encode, Decode, TypeInfo, Debug, PartialEq, Eq, PartialOrd, Ord, Clone)]
 #[codec(crate = gstd::codec)]
 #[scale_info(crate = gstd::scale_info)]
@@ -205,7 +205,7 @@ pub struct Action {
 ///
 /// Determines how an action will be processed.
 ///
-/// The contract has a transaction caching mechanism for a continuation of
+/// The program has a transaction caching mechanism for a continuation of
 /// partially processed asynchronous actions. Most often, the reason of an
 /// underprocession is the lack of gas.
 ///
@@ -270,7 +270,7 @@ pub enum ProducerAction {
     /// Puts a produced item up for sale to distributors for given `price` on
     /// behalf of a producer.
     ///
-    /// Transfers an item's NFT to the Supply chain contract
+    /// Transfers an item's NFT to the Supply chain program
     /// ([`exec::program_id()`](gstd::exec::program_id)).
     ///
     /// # Requirements
@@ -290,7 +290,7 @@ pub enum ProducerAction {
     /// can be shipped (by [`ProducerAction::Ship`]).
     ///
     /// If the purchase is **not** approved, then fungible tokens for it are
-    /// refunded from the Supply chain contract
+    /// refunded from the Supply chain program
     /// ([`exec::program_id()`](gstd::exec::program_id)) to the item's
     /// distributor and item's [`ItemEventState`] changes back to
     /// [`ForSale`](ItemEventState::ForSale).
@@ -362,7 +362,7 @@ pub enum DistributorAction {
     /// Receives a shipped item from a producer on behalf of a distributor.
     ///
     /// Depending on the time spent on a delivery, transfers fungible tokens for
-    /// purchasing the item from the Supply chain contract
+    /// purchasing the item from the Supply chain program
     /// ([`exec::program_id()`](gstd::exec::program_id)) to the item's producer
     /// or, as a penalty for being late, refunds a half or all of them to the
     /// item's distributor ([`msg::source()`]).
@@ -410,7 +410,7 @@ pub enum DistributorAction {
     /// Puts a packaged item up for sale to retailers for given `price` on
     /// behalf of a distributor.
     ///
-    /// Transfers an item's NFT to the Supply chain contract
+    /// Transfers an item's NFT to the Supply chain program
     /// ([`exec::program_id()`](gstd::exec::program_id)).
     ///
     /// # Requirements
@@ -431,7 +431,7 @@ pub enum DistributorAction {
     /// can be shipped (by [`DistributorAction::Ship`]).
     ///
     /// If the purchase is **not** approved, then fungible tokens for it are
-    /// refunded from the Supply chain contract
+    /// refunded from the Supply chain program
     /// ([`exec::program_id()`](gstd::exec::program_id)) to the item's retailer
     /// and item's [`ItemEventState`] changes back to
     /// [`ForSale`](ItemEventState::ForSale).
@@ -506,7 +506,7 @@ pub enum RetailerAction {
     /// Receives a shipped item from a distributor on behalf of a retailer.
     ///
     /// Depending on the time spent on a delivery, transfers fungible tokens for
-    /// purchasing the item from the Supply chain contract
+    /// purchasing the item from the Supply chain program
     /// ([`exec::program_id()`](gstd::exec::program_id)) to the item's
     /// distributor or, as a penalty for being late, refunds a half or all of
     /// them to the item's retailer ([`msg::source()`]).
@@ -528,7 +528,7 @@ pub enum RetailerAction {
     /// Puts a received item up for sale to consumers for given `price` on
     /// behalf of a retailer.
     ///
-    /// Transfers an item's NFT to the Supply chain contract
+    /// Transfers an item's NFT to the Supply chain program
     /// ([`exec::program_id()`](gstd::exec::program_id)).
     ///
     /// # Requirements
@@ -583,7 +583,7 @@ impl Metadata for ContractMetadata {
     type State = Out<State>;
 }
 ```
-To display the full contract state information, the `state()` function is used:
+To display the full program state information, the `state()` function is used:
 
 ```rust title="supply-chain/src/lib.rs"
 #[no_mangle]
@@ -654,6 +654,6 @@ pub mod metafns {
 
 ## Source code
 
-The source code of this example of a supply chain smart contract and an implementation of its testing is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/supply-chain). They can be used as is or modified to suit your own scenarios.
+The source code of this example of a supply chain program and an implementation of its testing is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/supply-chain). They can be used as is or modified to suit your own scenarios.
 
-For more details about testing smart contracts written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.
+For more details about testing programs written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.

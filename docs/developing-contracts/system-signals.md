@@ -27,7 +27,7 @@ If a signal message appears, it uses gas specifically reserved for such kinds of
 
 If gas has been reserved but no system messages occur during the current execution, then this gas returns back from where it was taken. The same relates to gas reserved for non-system messages - gas returns back after a defined number of blocks or by the program’s command.
 
-`handle_signal` has a default implementation if the smart contract has `async init` or/and `async main` functions (see [Asynchronous Programming](/developing-contracts/interactions-between-programs.md) for more details about async entry points). To define your own signal handler, you need to use the [`gstd::async_init`](https://docs.gear.rs/gstd/attr.async_init.html)/[`gstd::async_main`](https://docs.gear.rs/gstd/attr.async_main.html) macro with the specified `handle_signal` argument. For example:
+`handle_signal` has a default implementation if the program has `async init` or/and `async main` functions (see [Asynchronous Programming](/developing-contracts/interactions-between-programs.md) for more details about async entry points). To define your own signal handler, you need to use the [`gstd::async_init`](https://docs.gear.rs/gstd/attr.async_init.html)/[`gstd::async_main`](https://docs.gear.rs/gstd/attr.async_main.html) macro with the specified `handle_signal` argument. For example:
 
 ```rust
 #[gstd::async_main(handle_signal = my_handle_signal)]
@@ -81,4 +81,4 @@ extern "C" fn my_handle_signal() {
 ```
 However, it is important to understand that the execution of `my_handle_signal` should not be long and should not consume a lot of gas. It can be used for tracking failures during the transaction. The program can use the information about failures the next time it is executed.
 
-For programs written using the Gear Protocol's `gstd` library, such signals can be sent to programs automatically under the hood when applicable. If a smart contract developer implements a program using `gcore` or Gear's syscalls, then such signals should be considered in the program's code explicitly.
+For programs written using the Gear Protocol's `gstd` library, such signals can be sent to programs automatically under the hood when applicable. If a developer implements a program using `gcore` or Gear's syscalls, then such signals should be considered in the program's code explicitly.

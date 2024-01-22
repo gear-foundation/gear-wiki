@@ -5,10 +5,10 @@ sidebar_position: 4
 
 # Getting started in 5 minutes
 
-This guide provides a general overview of running smart contracts on the networks powered by Gear Protocol (such as the [Vara Network](https://vara.network/)). It guides you through how to write a smart contract, compile it to Wasm and deploy it to the Gear network.
+This guide provides a general overview of running programs on the networks powered by Gear Protocol (such as the [Vara Network](https://vara.network/)). It guides you through how to write a program, compile it to Wasm and deploy it to the Gear network.
 
 :::important
- Attention developers! Want to take your blockchain development skills to the next level? Join **[Gear Academy's](https://academy.gear.foundation/)** free course, "Gear Smart Contract Developer." In this comprehensive course, you'll learn the ins and outs of developing on the Gear Protocol, from deploying programs onto the blockchain and interacting with them, to testing your programs on the Gear Network. You'll also gain hands-on experience navigating the `@gear-js` library for interacting with contracts on the client side and developing real-world applications, including contracts and frontends. Don't miss this opportunity to become a pro Gear blockchain developer. Enroll now in Gear Academy's **"[Gear Smart Contract Developer](https://academy.gear.foundation/course/tamagotchi)"** course!
+ Attention developers! Want to take your blockchain development skills to the next level? Join **[Gear Academy's](https://academy.gear.foundation/)** free course, "Gear Smart Contract Developer." In this comprehensive course, you'll learn the ins and outs of developing on the Gear Protocol, from deploying programs onto the blockchain and interacting with them, to testing your programs on the Gear Network. You'll also gain hands-on experience navigating the `@gear-js` library for interacting with program on the client side and developing real-world applications, including programs and frontends. Don't miss this opportunity to become a pro Gear blockchain developer. Enroll now in Gear Academy's **"[Gear Smart Contract Developer](https://academy.gear.foundation/course/tamagotchi)"** course!
 :::
 
 ## Prerequisites
@@ -27,7 +27,7 @@ This guide provides a general overview of running smart contracts on the network
     xcode-select --install
     ```
 
-2. Make sure you have installed all the tools required to build a smart-contract in Rust. [Rustup](https://rustup.rs/) will be used to get Rust compiler ready:
+2. Make sure you have installed all the tools required to build a program in Rust. [Rustup](https://rustup.rs/) will be used to get Rust compiler ready:
 
     ```bash
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
@@ -39,7 +39,7 @@ This guide provides a general overview of running smart contracts on the network
     rustup toolchain add nightly-2023-09-18
     ```
 
-4. As we will be compiling our Rust smart contract to Wasm, we will need a Wasm compiler. Let's add it to the toolchain.
+4. As we will be compiling a Rust program to Wasm, we will need a Wasm compiler. Let's add it to the toolchain.
 
     ```bash
     rustup target add wasm32-unknown-unknown --toolchain nightly-2023-09-18
@@ -53,7 +53,7 @@ This guide provides a general overview of running smart contracts on the network
 
 **_Note:_** If you use Windows, download and install [Build Tools for Visual Studio](https://visualstudio.microsoft.com/downloads/?q=build+tools).
 
-## Creating your first Gear smart contract
+## Creating your first Gear program
 
 1. For your convenience, it is recommended that you create a dedicated directory for everything Gear-related. The rest of the article will assume that you are using the paths suggested. Type to create a folder in your home directory:
 
@@ -68,7 +68,7 @@ This guide provides a general overview of running smart contracts on the network
     cd ~/gear/contracts
     ```
 
-3. The next step would be to build a Rust library for our contract:
+3. The next step would be to build a Rust library for our program:
 
     ```bash
     cargo new counter --lib
@@ -89,7 +89,7 @@ This guide provides a general overview of running smart contracts on the network
     code ~/gear/contracts/counter
     ```
 
-5. In the `counter` folder, configure `Cargo.toml` for our contract to be properly built:
+5. In the `counter` folder, configure `Cargo.toml` for our program to be properly built:
 
     ```toml
     [package]
@@ -107,9 +107,9 @@ This guide provides a general overview of running smart contracts on the network
     gstd = { git = "https://github.com/gear-tech/gear.git", tag = "v1.0.2" }
     ```
 
-6. Replace the default contents of `lib.rs` in the `counter` folder with the code for our first smart-contract.
+6. Replace the default contents of `lib.rs` in the `counter` folder with the code for our first program.
 
-    This simple smart-contract accepts `inc`, `dec`, and `get` commands. Open `src/lib.rs` in your editor and paste the following code:
+    This simple program accepts `inc`, `dec`, and `get` commands. Open `src/lib.rs` in your editor and paste the following code:
 
     ```rust
     #![no_std]
@@ -137,7 +137,7 @@ This guide provides a general overview of running smart contracts on the network
     }
     ```
 
-7. Now compile the smart-contract to Wasm using `cargo`:
+7. Now compile the program to Wasm using `cargo`:
 
     ```bash
     RUSTFLAGS="-C link-args=--import-memory -C linker-plugin-lto" \
@@ -164,7 +164,7 @@ This guide provides a general overview of running smart contracts on the network
     profile = "default"
     ```
 
-    Now you can build your smart-contract with a single command:
+    Now you can build your program with a single command:
 
     ```bash
     cargo build --release
@@ -205,7 +205,7 @@ This guide provides a general overview of running smart contracts on the network
     - `counter.wasm` is the output Wasm binary built from source files
     - `counter.opt.wasm` is the optimized Wasm aimed to be uploaded to the blockchain
 
-## Deploy your Smart Contract to the Testnet
+## Deploy your Smart Program to the Testnet
 
 Gear provides a demo application that implements all of the possibilities of interaction with smart-contracts in Gear networks, available at [idea.gear-tech.io](https://idea.gear-tech.io).
 
@@ -241,7 +241,7 @@ Gear provides a demo application that implements all of the possibilities of int
 
     ![Connect account](./img/getting-started/connect-account.png)
 
-9. In accordance with the Actor model, smart contracts are uploaded to a network via messages. Gear node charges a gas fee during message processing. Your account balance needs to have enough funds to upload a smart-contract to the `TestNet`. Click the following button to get the test balance:
+9. In accordance with the Actor model, program are uploaded to a network via messages. Gear node charges a gas fee during message processing. Your account balance needs to have enough funds to upload a program to the `TestNet`. Click the following button to get the test balance:
 
     ![Get balance](./img/getting-started/get-balance.png)
 
@@ -305,4 +305,4 @@ The red dot status for a program indicates init failure. Try to upload the progr
 
 ## Further reading
 
-For more info about writing smart contracts for Gear and the specifics behind the smart contract implementation, refer to [this article on Smart Contracts](/docs/developing-contracts/introduction.md).
+For more info about writing programs for Gear and the specifics behind the program implementation, refer to [this article](/docs/developing-contracts/introduction.md).

@@ -11,11 +11,11 @@ import CodeBlock from '@theme/CodeBlock';
 
 Gear provides a set of examples that can be used for your familiarization with writing programs on Gear or become the basis for your own dApp: [https://github.com/gear-foundation](https://github.com/gear-foundation).
 
-You can write your own smart contract or try to build from examples. Let's Rock!
+You can write your own program or try to build from examples.
 
 ## Stable environment
 
-All smart contract examples and JS applications have been tested on a stable environment that consists of specific development tool versions necessary for implementing, building and running smart contracts and JS applications.
+All program examples and JS applications have been tested on a stable environment that consists of specific development tool versions necessary for implementing, building and running programs and JS applications.
 
 You may configure a local development environment according to the information provided below or use a pre-configured Docker image as described in the [Using Docker](#using-docker) section.
 
@@ -74,7 +74,7 @@ v1.0.2
 </td>
 <td>
 
-Make sure the correct version is tagged in the `Cargo.toml` file of the smart contract you're working on. For example:
+Make sure the correct version is tagged in the `Cargo.toml` file of the program you're working on. For example:
 https://github.com/gear-foundation/dapps/blob/master/contracts/Cargo.toml
 
 </td>
@@ -103,23 +103,23 @@ Make sure you are connected to the Vara Network Testnet. You may switch the netw
 <tr>
 <td>Gear JS API</td>
 <td>0.35.2</td>
-<td>Make sure this version is specified in the package.json file of your smart contract repository</td>
+<td>Make sure this version is specified in the package.json file of your program repository</td>
 </tr>
 <tr>
 <td>Gear JS React Hooks</td>
 <td>0.9.2</td>
-<td>Make sure this version is specified in the package.json file of your smart contract repository</td>
+<td>Make sure this version is specified in the package.json file of your program repository</td>
 </tr>
 <tr>
 <td>Gear JS UI Kit</td>
 <td>0.5.19</td>
-<td>Make sure this version is specified in the package.json file of your smart contract repository</td>
+<td>Make sure this version is specified in the package.json file of your program repository</td>
 </tr>
 </table>
 
 :::warning Note
 Windows users may encounter some problems related to the installation of Rust components and dependencies.
-It is highly recommended to use Linux or macOS for compiling Gear node and smart-contracts.
+It is highly recommended to use Linux or macOS for compiling Gear node and programs.
 :::
 
 ## Previous environment versions
@@ -144,7 +144,7 @@ cargo new gear-app --lib
 The project structure is following:
 
 ```
-  └── gear-app // Your contract dir
+  └── gear-app // Your programt dir
       │
       ├── src // Source files of your program
       │    ├── maybe_some_file.rs // Additional module if needed
@@ -164,9 +164,9 @@ fn main() {
 `Cargo.toml` is a project manifest in Rust, it contains all metadata necessary for compiling the project.
 Configure the `Cargo.toml` similarly to how it is configured [dapp-template/Cargo.toml](https://github.com/gear-foundation/dapp-template/blob/master/Cargo.toml). You can refer to [Getting Started](/docs/getting-started-in-5-minutes.md) for additional details.
 
-## Building Rust Contract
+## Building Rust Program
 
-We should compile our smart contract in the app folder:
+We should compile our program in the app folder:
 
 ```bash
 cargo build --release
@@ -176,7 +176,7 @@ Our application should compile successfully and the final file `target/wasm32-un
 
 ## Using Docker
 
-You can use a pre-configured Docker image to build and test your smart contract. The image contains all the necessary tools and dependencies for building and running smart contracts and JS applications.
+You can use a pre-configured Docker image to build and test your program. The image contains all the necessary tools and dependencies for building and running programs and JS applications.
 
 The source code of the image is available on [GitHub](https://github.com/gear-foundation/gear-env).
 
@@ -200,19 +200,19 @@ The command will run the image in the background and give you access to the cont
 docker exec -it gear-env bash
 ```
 
-Copy a smart contract to be built to the container (here we use the `gear-app` created above):
+Copy a program to be built to the container (Use the `gear-app` created above):
 
 ```bash
 docker cp ./gear-app gear-env:/root
 ```
 
-After that, you can build the smart contract:
+After that, you can build the program:
 
 ```bash
 docker exec -itw /root/gear-app gear-env cargo build --release
 ```
 
-The compiled smart contract will be available in the `target/wasm32-unknown-unknown/release` folder inside the container. Copy it to your local machine:
+The compiled program will be available in the `target/wasm32-unknown-unknown/release` folder inside the container. Copy it to your local machine:
 
 ```bash
 docker cp gear-env:/root/gear-app/target/wasm32-unknown-unknown/release/. ./

@@ -15,4 +15,4 @@ NFTs can represent anything that is not fungible. This means that anything with 
 
 NFTs can be used to represent anything from the deeds to a house to a receipt for a product or service.
 
-In the future, it’s likely that all unique units of data will be represented as NFTs in one way or another because they’re securer ways of storing valuable data and they’re extremely accessible, which makes traditionally illiquid assets much more liquid.
+In the future, all data units will likely be represented as NFTs. This is because they offer secure storage for valuable data and easy accessibility, transforming traditionally illiquid assets into highly liquid ones.

@@ -7,16 +7,16 @@ sidebar_position: 2
 
 ## Introduction
 
-This NFT smart-contract example demonstrates an approach when the token assets are stored directly on chain. For details related to common gNFT smart-contract implentation, read: [gNFT-721](../Standards/gnft-721).
+This example of an NFT smart contract shows a method where token assets are stored on the blockchain itself. To learn about a common implementation of gNFT smart contracts, refer to [gNFT-721](../Standards/gnft-721).
 
-When the owner of a given token ID wishes to transfer it to another user, it is easy to verify ownership and reassign the token to a new owner. Mostly NFTs images (or other base resources) are stored somewhere else (e.g. IPFS) and only the metadata is stored in the contract. Metadata consists of a name, an ID and links to the external resources, where the images are actually stored.
+When a user wants to transfer ownership of a specific token ID to another user, confirming ownership and assigning the token to a new owner is straightforward. Usually, NFT images (or other essential resources) are stored elsewhere, like on IPFS, with only the metadata stored in the contract. The metadata includes a name, an ID, and links to external resources where the images are stored.
 
-But there is another approach introduced here. Sometimes you can store NFTs directly on chain without any external storage. This approach helps you not to lose your NFT if there is a problem with the external storage.
+However, this introduces another method. At times, you can directly store NFTs on the blockchain without relying on external storage. This approach ensures that you don't lose your NFT in case there are issues with external storage.
 
-This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. The source code is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/on-chain-nft).
+This article explains the programming interface, data structure, basic functions, and their purposes. You can use it as is or adapt it for your specific situations. The source code is accessible on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/on-chain-nft).
 
 ## Approach
-To successfully implement this approach several things are needed. Firstly, when initializing a collection, one should provide all the possible images of all the layers for a collection. Secondly, when minting alongside with a small metadata, one should provide a combination of layers used for a specific NFT. This approach seems quite costly when initializing, but is relatively cheap when it comes to minting.
+To implement this approach successfully, you need several things. First, when starting a collection, provide all possible images for all layers in the collection. Second, when minting with small metadata, give a combination of layers used for a specific NFT. This method may seem expensive initially, but it is relatively inexpensive during the minting process.
 
 ## Developing on-chain non-fungible-token contract
 The functions that must be supported by each non-fungible-token contract:
@@ -74,7 +74,8 @@ pub struct InitOnChainNFT {
 }
 ```
 
-Next let's rewrite several functions: `mint`, `burn` and `token_uri`. Our `mint` and `burn` functions will behave as one woud expect them to with the addition of slight state modification (e.g. checking against the state, adding/removing). `token_uri` will return an NFT's metadata as well as all the layer content provided for a specified NFT:
+Next, rewrite the following functions: `mint`, `burn` and `token_uri`. The `mint` and `burn` functions will behave as one woud expect them to with the addition of slight state modification (e.g. checking against the state, adding/removing). `token_uri` will return an NFT's metadata as well as all the layer content provided for a specified NFT:
+
 ```rust title="on-chain-nft/io/src/lib.rs"
 #[derive(Debug, Encode, Decode, TypeInfo)]
 #[codec(crate = gstd::codec)]
@@ -192,8 +193,7 @@ pub struct TokenURI {
 }
 ```
 
-
-The `TokenMetadata` is also defined in the gear NFT library:
+The `TokenMetadata` is also defined in the Gear NFT library:
 
 ```rust title="gear-lib-old/src/non_fungible_token/token.rs" 
 pub struct TokenMetadata {
@@ -207,7 +207,8 @@ pub struct TokenMetadata {
     pub reference: String,
 }
 ```
-Define a trait for our new functions that will extend the default `NFTCore` trait:
+
+Define a trait for the new functions that will extend the default `NFTCore` trait:
 ```rust title="on-chain-nft/src/lib.rs"
 pub trait OnChainNFTCore: NFTCore {
     fn mint(&mut self, description: Vec<ItemId>, metadata: TokenMetadata) -> NFTTransfer;

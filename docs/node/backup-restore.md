@@ -80,7 +80,7 @@ The network key file cannot be recovered if lost. Therefore, you are to keep it 
 
 ## Moving the node
 
-To move the node to a new server you are to backup then restore the following (provided paths are for default Staging Testnet V7 node's parameters):
+To move the node to a new server, you are to backup then restore the following (provided paths are for default Staging Testnet V7 node's parameters):
 
 - The network private key of the node:
 

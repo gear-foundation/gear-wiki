@@ -6,7 +6,7 @@ sidebar_position: 5
 
 ![img alt](../img/goc.png)
 
-Game of chance is a simple game smart contract with the lottery logic.
+Game of chance is a simple game program with the lottery logic.
 
 - Program source code available on [Github](https://github.com/gear-foundation/dapps/tree/master/contracts/game-of-chance)
 - dApp UI [Github](https://github.com/gear-foundation/dapps/tree/master/frontend/apps/game-of-chance)
@@ -16,7 +16,7 @@ Game of chance is a simple game smart contract with the lottery logic.
 ### ⚒️ Build program
 
 - Get the source code of [GOC contract](https://github.com/gear-foundation/dapps/tree/master/contracts/game-of-chance)
-- Build contracts as described in [program/README.md](https://github.com/gear-foundation/dapps/blob/master/contracts/game-of-chance/README.md).
+- Build programs as described in [program/README.md](https://github.com/gear-foundation/dapps/blob/master/contracts/game-of-chance/README.md).
 
 ### 🏗️ Upload program
 
@@ -48,14 +48,14 @@ yarn start
 For a more detailed technical description, see its [documentation on the dApps documentation portal](https://dapps.gear.rs/game_of_chance) and [the source code section](#source-code).
 :::
 
-During initialization, the game administrator is assigned. The administrator has the rights to start a new game round and select a winner after the end of each one. Other actors can participate in a round if they have enough fungible tokens or the native value they use to contribute to the prize funds. After the players' entry stage ends, the administrator should execute the action to select a winner. This smart contract randomly selects the winner and then sends the prize funds to them.
+During initialization, the game administrator is assigned. The administrator has the right to start a new game round and select a winner after the end of each one. Other actors can participate in a round if they have enough fungible tokens or the native asset they use to contribute to the prize funds. After the players' entry stage ends, the administrator should execute the action to select a winner. This program randomly selects the winner and then sends the prize funds to them.
 
 ## Interface
 
 ### Initialization
 
 ```rust title="game-of-chance/io/src/lib.rs"
-/// Initializes the Game of chance contract.
+/// Initializes the Game of chance program.
 ///
 /// # Requirements
 /// - `admin` mustn't be [`ActorId::zero()`].
@@ -74,7 +74,7 @@ pub struct InitGOC {
 ### Actions
 
 ```rust title="game-of-chance/io/src/lib.rs"
-/// Sends a contract info about what it should do.
+/// Sends a program info about what it should do.
 #[derive(Debug, Encode, Decode, PartialEq, Eq, PartialOrd, Ord, Clone, Copy, TypeInfo, Hash)]
 #[codec(crate = gstd::codec)]
 #[scale_info(crate = gstd::scale_info)]
@@ -160,7 +160,7 @@ impl Metadata for ContractMetadata {
     type State = Out<State>;
 }
 ```
-To display the full contract state information, the `state()` function is used:
+To display the full program state information, the `state()` function is used:
 
 ```rust title="game-of-chance/src/lib.rs"
 #[no_mangle]
@@ -174,6 +174,6 @@ To display only necessary certain values from the state, you need to write a sep
 
 ## Source code
 
-The source code of the Game of Chance smart contract and an implementation of its testing are available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/frontend/apps/game-of-chance). They can be used as is or modified to suit your own scenarios.
+The source code of the Game of Chance program and an implementation of its testing are available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/frontend/apps/game-of-chance). They can be used as is or modified to suit your own scenarios.
 
-For more details about testing smart contracts written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.
+For more details about testing programs written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.

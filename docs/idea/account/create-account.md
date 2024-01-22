@@ -7,12 +7,12 @@ sidebar_position: 1
 
 ## Key information and security
 
-Account represents an identity - typically a person or an organization, that is capable of making transactions or holding funds. Users can upload smart-contracts and interact with them through transactions in blockchain networks built on top of Gear Protocol. To make this happen, users need to connect a Substrate account. Gear Idea portal can work with Substrate accounts in any connected Gear-powered networks. Moreover this account can be used for holding funds and making transactions in any network of the Dotsama ecosystem and even [more](https://docs.substrate.io/fundamentals/accounts-addresses-keys/).
+Account represents an identity - typically a person or an organization, that is capable of making transactions or holding assets. Users can upload programs and interact with them through transactions in blockchain networks built on Gear Protocol. To make this happen, users need to connect a Substrate account. Gear Idea portal can work with Substrate accounts in any connected Gear-powered networks. Moreover, this account can be used for holding assets and making transactions in any network of the Dotsama ecosystem and even [more](https://docs.substrate.io/fundamentals/accounts-addresses-keys/).
 
 There are several ways to create a Substrate account, depending on whether you are using a desktop or a mobile device.
 
-There are two main features that make up an account - an address and a key:
-- An address is the public aspect of the account. This is essentially a location that can be shared with others in order to send transactions to and from.
+Two main features make up an account - an address and a key:
+- An address is the public aspect of the account. This is essentially a location that can be shared with others to send transactions to and from.
 - A key is the private part of the account. This is what enables you as an account owner to access the address. The only way to access your account is via your private key (using the mnemonic phrase, seed, or your account's JSON file and a password).
 
 ### Storing your accounts

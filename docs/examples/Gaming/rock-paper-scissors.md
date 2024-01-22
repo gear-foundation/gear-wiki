@@ -12,7 +12,7 @@ A simultaneous, zero-sum game, it has three possible outcomes: a draw, a win or 
 
 One popular five-weapon expansion is "rock paper scissors Spock lizard", invented by Sam Kass and Karen Bryla, which adds "Spock" and "lizard" to the standard three choices. "Spock" is signified with the Star Trek Vulcan salute, while "lizard" is shown by forming the hand into a sock-puppet-like mouth. Spock smashes scissors and vaporizes rock; he is poisoned by lizard and disproved by paper. Lizard poisons Spock and eats paper; it is crushed by rock and decapitated by scissors. This variant was mentioned in a 2005 article in The Times of London and was later the subject of an episode of the American sitcom The Big Bang Theory in 2008 (as rock-paper-scissors-lizard-Spock).
 
-Anyone can easily create their own decentralized game application and run it on the Gear Network. To do this, we have made a "rock paper scissors Spock lizard" game version for multiple players, in which the winner can be determined in several rounds of tense struggle. The source code is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/rock-paper-scissors). This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios.
+Anyone can easily create their own decentralized game application and run it on the Gear Network. To do this, Gear made a "rock paper scissors Spock lizard" game version for multiple players, in which the winner can be determined in several rounds of tense struggle. The source code is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/rock-paper-scissors). This article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios.
 
 ## Logic
 
@@ -56,31 +56,31 @@ The registration stage continues `entry_timeout_ms` milliseconds from the moment
 
 During the move phase, players must choose one of five move options(Rock Paper Scissors Lizard Spock).
 
-To submit a player's choice, the service that provides this capability must allow the player to enter a password or generate a password itself and save it in a local storage. Password is needed to secure user's move from other players, who would really like to see the player's move in the blockchain. After password was generated or entered service should concatenate number of move(Rock - '0', Paper - '1', Scissors - '2', Lizard - '3', Spock - '4') with password and get a string like "2pass". Then service hashes it with 256-bit blake2b, turns into a binary form and sends to the blockchain by `MakeMove(Vec<u8>)` with this hash inside.
+To submit a player's choice, the service allowing this must enable the player to create or input a password, saving it locally. This password is crucial for safeguarding the user's move from other players keen on observing it in the blockchain. Once the password is either generated or entered, the service combines it with the numerical representation of the move (Rock - '0', Paper - '1', Scissors - '2', Lizard - '3', Spock - '4') to form a string, such as "2pass." Subsequently, the service hashes this string using a 256-bit blake2b, transforms it into binary, and transmits it to the blockchain via the `MakeMove(Vec<u8>)` function with the hash embedded.
 
->Player can't change his move.
+>The player is unable to alter their move. 
 
-The moves stage continues before all players is done or `move_timeout_ms` milliseconds since registration has ended or this round has started. After that, the reveal phase begins, and the players can show the moves so that the program can determine the winner.
+The moves stage persists until all players have completed their moves or the specified `move_timeout_ms` milliseconds have elapsed since registration ended or the round began. Following this, the reveal phase initiates, allowing players to display their moves for the program to ascertain the winner.
 
->If time of the moves stage is over, but no one has made a move, stage will be extended by `move_timeout_ms`. And the players can further make their moves.
+>If the moves stage time elapses with no moves made, the stage extends by `move_timeout_ms`, enabling players to proceed with their moves.
 >
->If time of the moves stage is over, but only one player has made a move, this player is declared the winner and receives full reward.
+>In a scenario where the moves stage time elapses, but only one player has made a move, that player is declared the winner and receives the full reward.
 
 ### Reveal
 
-Reveal is a necessary step in protecting the game from cheating. At this stage, the players must confirm their moves. For this they have to repeat password(or service can get it from his storage), repeat move(or service can get it from his storage) and service should just concatenate number of move(Rock - '0', Paper - '1', Scissors - '2', Lizard - '3', Spock - '4') with password and get a string like "2pass", then UTF-8-encoded bytes array from this string and send it to the blockchain by `Reveal(Vec<u8>)` action. In this step the program validates that the hash submitted during the moves stage is equal to a hashed open string and save this move(first character from string) to determine the winners.
+Reveal is a necessary step in protecting the game from cheating. During this phase, players are required to confirm their moves. To achieve this, they need to reiterate the password (or allow the service to retrieve it from their storage) and restate the move (or let the service obtain it from their storage). The service then concatenates the number corresponding to the move (Rock - '0', Paper - '1', Scissors - '2', Lizard - '3', Spock - '4') with the password, creating a string-like `2pass`. Subsequently, the program transforms this string into a UTF-8-encoded byte array and transmits it to the blockchain through the `Reveal(Vec<u8>)` action. In this stage, the program verifies that the hash submitted during the move phase matches a hashed open string and records this move (the first character from the string) to determine the winners.
 
-After all players have finished or the time has expired, the program determines the winning move to figure out the players who will continue to fight for the reward. And players who have chosen the winner move advance to the next round.
+Once all players have completed their moves or the allotted time has elapsed, the program identifies the winning move to determine the players advancing to the next round. Participants selecting the winning move progress to the subsequent round.
 
-> There are situations in which program can't determine the winner move. For example, there is a Stone move, a Paper move and a Scissors move, in this situation the Stone will crush the Scissors, the Scissors will cut the Paper, and the Paper will cover the Stone, then we will not be able to determine the winning move, because all the moves are beaten. In such situations, all players move on to the next round.
+> Certain scenarios exist where the program cannot determine the winning move, such as in the case of a Stone move, a Paper move, and a Scissors move. In such situations, where each move counters the others, all players move on to the next round.
 
-After the program determines the players who have passed to the next round, moves stage starts again and advanced players can make their moves. If there is only one such player, the game ends and the entire reward goes to that player.
+After determining the players advancing to the next round, the move stage restarts, and advanced players make their moves. If only one player remains, the game concludes, and the entire reward is awarded to that player.
 
-When the game ends, a new game starts immediately with the new config that was set by `ChangeNextGameConfig(GameConfig)`. If it has not been installed, the old config will be relevant.
+Upon the conclusion of the game, a new game promptly commences with the new configuration established by `ChangeNextGameConfig(GameConfig)`. If no new configuration is set, the previous one remains in effect.
 
->If time of the reveal stage is over, but no one has made a move, stage will be extended by `reveal_timeout_ms`. And the players can further reveal their moves.
->
->If time of the reveal stage is over, but only one player has revealed a move, this player is declared the winner and receives full reward. A new game starts immediately.
+> In instances where the reveal stage's time expires, but no moves have been made, the stage is extended by `reveal_timeout_ms`, allowing players to reveal their moves.
+> 
+> If the reveal stage's time elapses, but only one player reveals a move, that player is declared the winner, receiving the full reward, and a new game begins immediately.
 
 ## Interface
 
@@ -203,7 +203,7 @@ impl Metadata for ContractMetadata {
     type State = Out<ContractState>;
 }
 ```
-To display the full contract state information, the `state()` function is used:
+To display the full program state information, the `state()` function is used:
 
 ```rust title="rock-paper-scissors/src/lib.rs"
 #[no_mangle]
@@ -242,4 +242,4 @@ pub mod metafns {
 
 The source code of Rock Paper Scissors implementation and the example of an implementation of its testing is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/rock-paper-scissors).
 
-For more details about testing smart contracts written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.
+For more details about testing programs written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.

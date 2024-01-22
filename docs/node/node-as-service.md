@@ -49,7 +49,7 @@ Declaration `ExecStart` points to the location of the `gear` binary file. In thi
 With -- additional launch parameters are indicated, but not mandatory.
 :::
 
-That’s it. We can now start the service.
+That’s it. You can now start the service.
 
 ## Starting the node
 

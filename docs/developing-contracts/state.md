@@ -5,7 +5,7 @@ sidebar_position: 4
 
 # Store data
 
-Persistent data of the Gear smart contract is stored in the same way as in a classic program and does not require initialization of the external storage.
+Persistent data of the Gear program is stored in the same way as in a classic program and does not require initialization of the external storage.
 
 ```rust
 // Describe state structure
@@ -19,7 +19,7 @@ pub struct Wallet {
 static mut WALLETS: Vec<Wallet> = Vec::new();
 ```
 
-If you're programming in Rust or other object-oriented languages, you should be familiar with most types. However, the `ActorId` type is something new when developing contracts via the Gear Protocol.
+If you're programming in Rust or other object-oriented languages, you should be familiar with most types. However, the `ActorId` type is something new when developing programs via the Gear Protocol.
 
 :::info
 
@@ -29,7 +29,7 @@ If you're programming in Rust or other object-oriented languages, you should be 
 
 ## State functions
 
-To display the contract state information, the `state()` function is used. It allows you to instantly read the contract status (for example, contract balance). Reading state is a free function and does not require gas costs.
+To display the program state information, the `state()` function is used. It allows you to instantly read the program status (for example, program balance). Reading state is a free function and does not require gas costs.
 
 Example of the returning all wallets defined above:
 
@@ -61,7 +61,7 @@ Additionally, you can create your own program to read the state. This wrapper wi
 
 This has a number of advantages, for example, you will always be able to read the state even if the program changes (as long as the incoming or outgoing types have not changed). Or you are creating a service based on an already existing program and you need some of your own functions to get your own chanks of data from the state.
 
-To do this, we need to create an independent program and describe the necessary functions inside the `metawasm` trait. For example:
+To do this, create an independent program and describe the necessary functions inside the `metawasm` trait. For example:
 
 ```rust
 // ...

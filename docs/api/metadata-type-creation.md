@@ -5,7 +5,7 @@ sidebar_label: Metadata & Type Creation
 
 # Basics & Metadata / Type creation
 
-Metadata enables interaction between the client side (JavaScript application) and the smart-contract (Rust program). Metadata is a kind of interface map that can help to identify and order a set of bytes into an understandable structure and indicates the function it is intended for.
+Metadata enables interaction between the client side (JavaScript application) and the program (smart-contract). Metadata is a kind of interface map that can help to identify and order a set of bytes into an understandable structure and indicates the function it is intended for.
 
 There are two types of metadata.
 

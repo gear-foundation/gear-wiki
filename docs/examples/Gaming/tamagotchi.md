@@ -17,20 +17,20 @@ The article explains the programming interface, data structure, basic functions 
 
 ## How to run
 
-1. Build a contract
-> Additional details regarding this matter can be located within the [README](https://github.com/gear-foundation/dapps/tree/master/contracts/tamagotchi/README.md) directory of the contract.
+1. Build a program
+> Additional details regarding this matter can be located within the [README](https://github.com/gear-foundation/dapps/tree/master/contracts/tamagotchi/README.md) directory of the program.
 
-2. Upload the contract to the [Vara Network Testnet](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Ftestnet.vara.network)
-> Further details regarding the process of contract uploading can be located within the [Getting Started](../../getting-started-in-5-minutes#deploy-your-smart-contract-to-the-testnet) section.
+2. Upload the program to the [Vara Network Testnet](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Ftestnet.vara.network)
+> Further details regarding the process of program uploading can be located within the [Getting Started](../../getting-started-in-5-minutes#deploy-your-smart-contract-to-the-testnet) section.
 
 3. Build and run user interface
 > More information about this can be found in the [README](https://github.com/gear-foundation/dapps/blob/master/frontend/apps/tamagotchi/README.md) directory of the frontend.
 
 ## Implementation details
 
-### Tamagotchi contract description
+### Tamagotchi program description
 
-The Tamagotchi contract contains the following information
+The Tamagotchi program contains the following information
 
 ```rust title="tamagotchi/src/lib.rs"
 struct Tamagotchi {
@@ -57,7 +57,7 @@ struct Tamagotchi {
 
 ### Initialization
 
-To initialize a game contract, it is only necessary to provide the pet's name.
+To initialize a game program, it is only necessary to provide the pet's name.
 
 ```rust title="tamagotchi/io/src/lib.rs"
 pub struct TmgInit {
@@ -92,7 +92,7 @@ extern fn init() {
 
 ### Action
 
-The Tamagotchi contract offers the following activities:
+The Tamagotchi program offers the following activities:
 
 ```rust title="tamagotchi/io/src/lib.rs"
 pub enum TmgAction {
@@ -175,7 +175,7 @@ impl Metadata for ProgramMetadata {
 }
 ```
 
-To display the contract state information, the `state()` function is used:
+To display the program state information, the `state()` function is used:
 
 ```rust title="tamagotchi/src/lib.rs"
 #[no_mangle]
@@ -188,8 +188,8 @@ extern fn state() {
 
 ## Source code
 
-The source code of this example of Tamagotchi smart contract and the example of an implementation of its testing is available on [gear-foundation/dapp/contracts/tamagotchi](https://github.com/gear-foundation/dapps/tree/master/contracts/tamagotchi).
+The source code of this example of Tamagotchi program and the example of an implementation of its testing is available on [gear-foundation/dapp/contracts/tamagotchi](https://github.com/gear-foundation/dapps/tree/master/contracts/tamagotchi).
 
-See also an example of the smart contract testing implementation based on `gtest`: [gear-foundation/dapps/tamagotchi/tests](https://github.com/gear-foundation/dapps/tree/master/contracts/tamagotchi/tests).
+See also an example of the program testing implementation based on `gtest`: [gear-foundation/dapps/tamagotchi/tests](https://github.com/gear-foundation/dapps/tree/master/contracts/tamagotchi/tests).
 
-For more details about testing smart contracts written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.
+For more details about testing programs written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.
