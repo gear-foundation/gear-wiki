@@ -7,7 +7,7 @@ sidebar_position: 11
 
 ![varaman](../img/vara-man.png)
 
-Vara-man is a classic arcade game, the main character is Vara mouse, who must collect all the coins in the allotted time. In the labyrinth, the main character will encounter cat enemies that must be avoided in order to survive and collect all the coins. 
+Vara-man is a classic arcade game, the main character is Vara mouse, who must collect all the coins in the allotted time. In the labyrinth, the main character will encounter cat enemies that must be avoided in order to survive and collect all the coins.
 
 The source code is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/vara-man). This article describes the program interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. The game has several reward modes, one of which requires connecting the fungible token program that needs to be uploaded separately.
 
@@ -19,12 +19,12 @@ Also everyone can play the game via this link - [Play VaraMan](https://vara-man.
 > Additional details regarding this matter can be located within the [README](https://github.com/gear-foundation/dapps/tree/master/contracts/vara-man/README.md) directory of the program.
 
 2. Upload the program to the [Vara Network Testnet](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Ftestnet.vara.network)
-> Further details regarding the process of program uploading can be located within the [Getting Started](../../getting-started-in-5-minutes#deploy-your-smart-contract-to-the-testnet) section.
+> Further details regarding the process of program uploading can be located within the [Getting Started](../../getting-started-in-5-minutes#deploy-your-program-to-the-testnet) section.
 
 3. Build and run user interface
 > More information about this can be found in the [README](https://github.com/gear-foundation/dapps/blob/master/frontend/apps/vara-man/README.md) directory of the frontend.
 
-4. **Optional**. 
+4. **Optional**.
 > In case of a reward mode in the form of fungible tokens , build the program as described in the [README](https://github.com/gear-foundation/dapps/tree/master/contracts/fungible-token/README.md) and upload the program to the [Vara Network Testnet](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Ftestnet.vara.network). After that it will be necessary to send a message `VaraManAction::ChangeStatus` to the program to put it in status `StartedWithFungibleToken { ft_address }`, where the address of the loaded program should be specified.
 
 
@@ -43,7 +43,7 @@ struct VaraMan {
 ```
 * `games` - this field contains the addresses of the players and information about their games
 * `players` - information about the player according to his address
-* `status` - program status 
+* `status` - program status
 * `config` - program configuration
 * `admins` - admins addresses
 
@@ -74,7 +74,7 @@ pub struct Player {
 * `claimed_gold_coins` - number of gold coins earned
 * `claimed_silver_coins` - number of silver coins earned
 
-The program has several modes: 
+The program has several modes:
 
 ```rust title="vara-man/io/src/lib.rs"
 pub enum Status {
@@ -117,12 +117,12 @@ pub struct Config {
 ```
 
 * `one_coin_in_value` - the price of one coin in the value system
-* `tokens_per_gold_coin_easy` - gold coin price at easy level 
-* `tokens_per_silver_coin_easy` - silver coin price at easy level 
-* `tokens_per_gold_coin_medium` - gold coin price at medium level 
-* `tokens_per_silver_coin_medium` - silver coin price at medium level 
-* `tokens_per_gold_coin_hard` - gold coin price at hard level 
-* `tokens_per_silver_coin_hard` - silver coin price at hard level 
+* `tokens_per_gold_coin_easy` - gold coin price at easy level
+* `tokens_per_silver_coin_easy` - silver coin price at easy level
+* `tokens_per_gold_coin_medium` - gold coin price at medium level
+* `tokens_per_silver_coin_medium` - silver coin price at medium level
+* `tokens_per_gold_coin_hard` - gold coin price at hard level
+* `tokens_per_silver_coin_hard` - silver coin price at hard level
 * `gold_coins` - the maximum number of gold coins earned
 * `silver_coins` - the maximum number of silver coins earned
 * `number_of_lives` - the number of lives given to the players
