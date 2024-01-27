@@ -169,10 +169,10 @@ Program makes all preparations during initialization.
 ```rust title="tequila-train/src/lib.rs"
 #[no_mangle]
 extern fn init() {
-    let maybe_limit: Option<u64> = msg::load().expect("Unexpected invalid payload.");
+    let Init { players_limit } = msg::load().expect("Unexpected invalid payload.");
 
     unsafe {
-        GAME_LAUNCHER = Some(if let Some(limit) = maybe_limit {
+        GAME_LAUNCHER = Some(if let Some(limit) = players_limit {
             GameLauncher::new_with_limit(limit)
         } else {
             GameLauncher::default()
