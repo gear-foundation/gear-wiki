@@ -205,7 +205,7 @@ This guide provides a general overview of running programs on the networks power
     - `counter.wasm` is the output Wasm binary built from source files
     - `counter.opt.wasm` is the optimized Wasm aimed to be uploaded to the blockchain
 
-## Deploy your Smart Program to the Testnet
+## Deploy your program to the Testnet
 
 Gear provides a demo application that implements all of the possibilities of interaction with smart-contracts in Gear networks, available at [idea.gear-tech.io](https://idea.gear-tech.io).
 
@@ -241,7 +241,7 @@ Gear provides a demo application that implements all of the possibilities of int
 
     ![Connect account](./img/getting-started/connect-account.png)
 
-9. In accordance with the Actor model, program are uploaded to a network via messages. Gear node charges a gas fee during message processing. Your account balance needs to have enough funds to upload a program to the `TestNet`. Click the following button to get the test balance:
+9. In accordance with the Actor model, programs are uploaded to a network via messages. Gear node charges a gas fee during message processing. Your account balance needs to have enough funds to upload a program to the `TestNet`. Click the following button to get the test balance:
 
     ![Get balance](./img/getting-started/get-balance.png)
 
