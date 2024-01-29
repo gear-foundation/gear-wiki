@@ -3,7 +3,7 @@ sidebar_label: Tic-Tac-Toe
 sidebar_position: 9
 ---
 
-# Tic-Tac-Toe
+# Tic-Tac-Toe Game
 
 A classic and simple game in which the user competes against a program operating on the blockchain network.
 

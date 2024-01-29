@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-# Supply chain
+# Supply Chain
 
 In logistics, a supply chain is a system for tracking and delivering to an end consumer various items. As a rule, such systems can't work without a lot of paperwork and other layers of bureaucracy. All of this costs a lot of time and money and increases the likelihood of an accidental error or, worst of all, a fraud. With the help of smart contracts (programs) and blockchain technologies, it is possible to eliminate these problems by making a supply chain more efficient, reliable and transparent.
 
