@@ -1,5 +1,5 @@
 ---
-sidebar_label: Battleship Game
+sidebar_label: Battleship
 sidebar_position: 1
 ---
 

@@ -2,7 +2,7 @@
 sidebar_position: 5
 ---
 
-# Game of chance
+# Game of Chance
 
 ![img alt](../img/goc.png)
 

@@ -1,9 +1,9 @@
 ---
-sidebar_label: Monopoly game
+sidebar_label: Monopoly
 sidebar_position: 2
 ---
 
-# Monopoly game (Syndote)
+# Monopoly Game (Syndote)
 
 Syndote is the name of a Monopoly-like decentralized game that works **completely on-chain**. It has no backend or any centralized components, the user interface interacts directly with the program uploaded in the Gear Network.
 

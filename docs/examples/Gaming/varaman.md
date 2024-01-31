@@ -1,9 +1,9 @@
 ---
-sidebar_label: VaraMan
+sidebar_label: Vara-Man
 sidebar_position: 11
 ---
 
-# VaraMan Game
+# Vara-Man Game
 
 ![varaman](../img/vara-man.png)
 
