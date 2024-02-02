@@ -3,84 +3,35 @@ title: Why do we build Gear?
 sidebar_position: 1
 ---
 
-## Global aspect
+### The Global Rise of Web3
 
-Blockchain technology launched a rapid transition from a centralized, server-based internet (Web2) to a decentralized, distributed one (Web3). Its distinctive features are: no single point of failure (the network can still function even if a large proportion of participants are attacked/taken out), censorship resistance, anyone in the network has the possibility to use the service (permissionless).
+Blockchain technology has ignited a global paradigm shift, transitioning from a centralized internet (Web2) to a decentralized, distributed one (Web3). This evolution fosters unique features like:
+- Resilience: The network remains functional even if parts are compromised.
+- Censorship-resistance: Information and control are not subject to external manipulation.
+- Permissionless access: Anyone can participate and utilize the network.
 
-Web3 introduces new types of decentralized applications (dApps) and assets such as: decentralized finances (DeFi), decentralized currency exchanges (DEX), decentralized marketplaces and gaming platforms, NFTs, Social Tokens and more.
-
-Today the industry is still in its infancy, which presents the opportunity for rapid growth. What's more, with the demand for Web3 developers currently at its all time high, adoption seems to be growing faster than ever.
+Web3 fuels the development of innovative decentralized applications (dApps) and assets like Decentralized finance (DeFi), Decentralized exchanges (DEX), Decentralized marketplaces and Gaming platforms, Non-fungible tokens (NFTs), Social tokens and more.
+However, despite its burgeoning potential, Web3 development faces notable challenges:
+- Scaling limitations: Existing solutions often struggle with low transaction speeds and high costs, hindering widespread adoption.
+- Entry barriers: Domain-specific languages create roadblocks for developers, requiring them to learn new paradigms.
+- Complex consensus: Inefficient protocols complicate network operation and maintenance.
+- Network isolation: Fragmented ecosystems impede interoperability and limit application potential.
 
 Gear was built for the purpose of becoming an essential platform for building the Web3 ecosystem.
 
-### Blockchains evolution
+### Addressing the Challenges with Gear Protocol
 
-At their core, blockchains store a history of transactions between parties in a form that can be accessible by anybody. They ensure decentralized, immutable and permissionless access to data in the blockchain.
+Gear Protocol emerges as a powerful response to these challenges, offering a versatile platform for building next-generation Web3 applications. Gear's true strength lies in its broader capabilities:
 
-Networks that were at the dawn of blockchain technology have a number of significant issues:
-- Lack of scalability, low transaction speed, high transaction costs - all of it hinders the growth of applications in Web3
-- Domain-specific development languages lead to high barriers to entry. The need to learn new programming language and paradigms holds back the growth of developers entering Web3
-- Complex and inefficient native consensus protocols
-- Absence of intercommunication between networks
+- **Sovereign Layer-1 Networks** tailored to developer's specific needs, escaping the limitations of pre-defined protocols, enabling complete control over governance, consensus mechanisms, and fee structures.
+- **Scalable Layer-2 Solutions** seamlessly integrating with popular Layer-1 networks (like Ethereum), offloading computationally intensive tasks, significantly reducing on-chain costs and boosting transaction throughput.
+- **Parallel Processing Powerhouse** - Gear scales naturally with hardware advancements, thanks to its unique parallel processing architecture. Run demanding applications on standard computers, ensuring cost-effectiveness and accessibility.
+- **Modular Microservices Mastery** - allows to deploy and manage individual microservices on single nodes or custom networks, optimize resource allocation, simplify maintenance, and achieve fine-grained control over the application's functionality.
+- Unleash the potential of **Zero-Knowledge Proofs** (ZKPs) with Gear's high-performance infrastructure. Develop privacy-preserving applications, including ZKML (Zero-Knowledge Machine Learning), without sacrificing scalability or performance.
+- **Familiar Development Environment** - leverages developers existing skillset supporting widely adopted programming languages like Rust, C, and C++, allowing developers to seamlessly transition to the Gear ecosystem without mastering new complexities.
+- **Collaborative Community** - becoming a part of a thriving developer community enables anyone access a wealth of resources and support, including a growing library of pre-built programs and smart contracts examples, tools, and documentation. Contribute to the development of a vibrant and collaborative ecosystem.
+- Seamlessly deployable as a **parachain within the DotSama** ecosystem. Along with most projects in Dotsama ecosystem, the Gear Protocol uses a Substrate framework. This simplifies the creation of different parachains for specific applications. Substrate provides extensive functionality out-of-the-box and allows one to focus on creating a custom engine on top of the protocol. The majority of developers and inspirers of the Gear Protocol were directly involved in creating Polkadot and Substrate technologies. 
 
-## Dotsama ecosystem (Polkadot/Kusama networks)
-
-The solution has been found in Parity Technologies, which is focused on creating a Layer-0 technology that connects blockchains together into one big network - Polkadot.
-
-Polkadot provides a system in which blockchains coexist and complement each other. Different parallel blockchains (parachains) are built on Substrate as well as Polkadot and connected to the relay chain and have a native connection. This allows for different nodes to run different application logic, keeping each chain on its own platform. All parachains are interconnected, creating a massive network of multifunctional blockchain services. Parachains compose the Layer-1 of the Polkadot ecosystem, the main difference in connection with other standalone Layer-1 blockchain networks like Ethereum, Bitcoin, Solana, etc. is that parachains are connected through Substrate Cumulus library and standalone blockchains through bridges.
-
-Polkadot and its testnet Kusama are designed to be a fully extensible and scalable blockchain development, deployment and interaction test bed. It is built to be a largely future-proof harness able to assimilate new blockchain technology as it becomes available without over-complicated decentralized coordination or hard forks.
-
-Today Polkadot is one of the fastest-growing multi-chain networks. Although it has an adaptive architecture for building smart-contract platforms and rapid technology development for decentralized applications, it is not a smart contract platform by itself.
-
-<!---
-As a smart contract platform built on Substrate, Gear was built so that it can be used to deploy a Layer-1 parachain on Polkadot or Kusama, or a standalone network independent of Polkadot or Kusama, any of which being a “Gear Network”. A Gear Network enables developers to deploy their dApps in mere minutes in the easiest and most efficient way possible. This will enable developers to build dApps on Polkadot and Kusama to take advantage of the benefits of each unique network without the traditional significant time and financial expense associated with doing so.
---->
-
-Built on Substrate, Gear Protocol facilitates access to the deployment infrastructure of Layer-1 parachains or a standalone network. Gear simplifies the dApp deployment process thanks to Gear's technical development, software, and utility, which enable network participation and functionality for broader information access and technical support.
-
-There are several components in the Polkadot architecture, namely:
-- Relay Chain
-- Parachains
-- Bridges
-
-### Relay Chain
-
-Relay Chain is the heart of Polkadot, responsible for the network’s security, consensus and cross-chain interoperability. It allows specialized blockchains and public blockchains to connect within the unified and interoperable Polkadot network. The Relay Chain can be understood as a Layer-0 platform.
-
-The Relay Chain has minimal functionality, which naturally means that advanced functionality features, like smart contracts, for example, are not supported. Other specific work is delegated to the parachains, which each have different implementations and features.
-
-The main task of the Relay Chain is to coordinate the overall system and its connected parachains to build a scalable and interoperable network.
-
-It’s also the Relay Chain that is responsible for the network’s shared security, consensus and cross-chain interoperability.
-
-### Parachains
-
-Parachains are sovereign blockchains that can have their own tokens and optimize their functionality for specific use cases.
-
-Parachains must be connected to the Relay Chain to ensure interoperability with other networks. For this, parachains lease a slot for continuous connectivity or they can pay as they go (in this case they are called Parathreads). Parachains compose the Layer-2 of the Polkadot ecosystem.
-
-Parachains are validatable by validators of the Relay Chain and they get their name from the concept of parallelizable chains that run parallel to the main Relay Chain. Due to their parallel nature, they are able to parallelize transaction processing which helps improve the scalability of the Polkadot network.
-
-Parachains optimize their functionality for specific use cases and, in many instances, support their own tokens.
-
-In order to become a parachain on Polkadot and Kusama, projects have to participate in a [parachain auction](https://parachains.info/auctions).
-
-### Bridges
-
-A blockchain bridge is a special connection that allows the Polkadot ecosystem to connect to and communicate with external networks like Ethereum, Bitcoin and others. Such networks can be considered as Layer-1. A Bridge connection enables the transfer of tokens or arbitrary data from one blockchain to another.
-
-## Gear’s role within the Dotsama ecosystem
-
-<!-- As a Polkadot/Kusama parachain network, Gear Protocol-powered networks are intended for hosting Layer-2 smart contracts. This enables anyone to deploy any dApp on Polkadot and Kusama to take advantage of all the benefits of their ecosystems, yet at the minimal financial expense.
--->
-
-Like Polkadot, the Gear Protocol uses a Substrate framework. This simplifies the creation of different blockchains for specific applications. Substrate provides extensive functionality out-of-the-box and allows one to focus on creating a custom engine on top of the protocol. Projects building on Gear Protocol can seamlessly integrate their solutions into the whole Polkadot/Kusama ecosystem.
-
-The central aspect of Polkadot is its ability to route arbitrary messages between chains. Both Polkadot and Gear networks speak the same language — asynchronous messages — so all the projects built using Gear easily integrate into the Polkadot and Kusama networks. The asynchronous messaging architecture allows Gear networks to be efficient and easy-to-use parachains.
-
-The majority of developers and inspirers of the Gear Protocol were directly involved in creating Polkadot and Substrate technologies. Gear is developing, taking into account, the features of the architecture and design of its older brother. We rely on the high security and flexibility of our product, just like Polkadot.
-
-Gear networks scale naturally as hardware improves as it utilizes all CPU cores. Anyone with a standard computer can run a Gear node today and always. With its shardable design, Gear networks can scale by deploying across multiple parachain slots and can be sharded as a standalone network for additional scalability.
+Anyone with a standard computer can run a [Gear node](../node/setting-up.mdx) today and always. 
 
 For additional details, refer to the [Gear Whitepaper](https://whitepaper.gear.foundation).
