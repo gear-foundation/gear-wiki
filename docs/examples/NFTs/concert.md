@@ -3,17 +3,17 @@ sidebar_label: Concert (FT to NFT transition)
 sidebar_position: 14
 ---
 
-# Concert Contract (FT to NFT transition)
+# Concert Program (FT to NFT transition)
 
 ## Introduction
 
-This smart contract example created by Gear represents a Concert tickets distribution with the idea of converting fungible tokens (gFT) to non-fungible tokens (gNFT) in time.
+This program example created by Gear represents a Concert tickets distribution with the idea of converting fungible tokens (gFT) to non-fungible tokens (gNFT) in time.
 
 The article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. Anyone can easily create their own application and run it on the Gear Network. The source code is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/concert).
 
-In this example, a single deployed contract can hold one concert at a time. Firstly, all the tickets for the concert come as fungible-tokens. In order to buy tickets, one should provide the metadata (e.g. seat/row number) that will later be included in NFTs. When the concert ends, all the fungible tokens of all users (ticket holders) will turn into NFTs.
+In this example, a single deployed program can hold one concert at a time. Firstly, all the tickets for the concert come as fungible-tokens. In order to buy tickets, one should provide the metadata (e.g. seat/row number) that will later be included in NFTs. When the concert ends, all the fungible tokens of all users (ticket holders) will turn into NFTs.
 
-The idea is simple - all the internal token interactions are handled using the [gMT-1155](../Standards/gmt-1155.md) contract, which address must be provided upon initializing a concert contract.
+The idea is simple - all the internal token interactions are handled using the [gMT-1155](../Standards/gmt-1155.md) program, which address must be provided upon initializing a concert program.
 
 ## Interface
 
@@ -49,7 +49,8 @@ fn create_concert(
     creator: ActorId,
     number_of_tickets: u128,
     date: u128,
-) {
+    token_id: u128,
+) -> Result<ConcertEvent, ConcertError> {
 // ...
 ```
 - `name` - is the name of an upcoming concert.
@@ -57,10 +58,15 @@ fn create_concert(
 - `creator` - is the creator of the concert (the creator will have more functionality).
 - `number_of_tickets` - is the amount of FT minted later.
 - `date` - is the date of the concert holding.
+- `token_id` - id token for multitoken transfer.
 
 #### Buy tickets
 ```rust title="concert/src/lib.rs"
-async fn buy_tickets(&mut self, amount: u128, mtd: Vec<Option<TokenMetadata>>) {
+async fn buy_tickets(
+    &mut self,
+    amount: u128,
+    mtd: Vec<Option<TokenMetadata>>,
+) -> Result<ConcertEvent, ConcertError> {
 // ...
 ```
 - `amount` - is the number of tickets one is trying to purchase.
@@ -68,13 +74,13 @@ async fn buy_tickets(&mut self, amount: u128, mtd: Vec<Option<TokenMetadata>>) {
 
 #### Hold a concert
 ```rust title="concert/src/lib.rs"
-async fn hold_concert(&mut self) {
+async fn hold_concert(&mut self) -> Result<ConcertEvent, ConcertError> {
 // ...
 ```
 >Hold a concert, turning of the FT (aka tickets) into NFTs; the hold a concert functionality is only available to the creator
 
 ### Init Config
-To successfully initialize a concert contract, one should provide an ActorID of a GMT-1155 contract to hold all the token manipulations. The sender of this message becomes the owner of the contract.
+To successfully initialize a concert program, one should provide an ActorID of a GMT-1155 program to hold all the token manipulations. The sender of this message becomes the owner of the program.
 
 ```rust title="concert/io/src/lib.rs"
 pub struct InitConcert {
@@ -92,6 +98,7 @@ pub enum ConcertAction {
         description: String,
         number_of_tickets: u128,
         date: u128,
+        token_id: u128,
     },
     Hold,
     BuyTickets {
@@ -109,14 +116,14 @@ pub struct ContractMetadata;
 
 impl Metadata for ContractMetadata {
     type Init = In<InitConcert>;
-    type Handle = InOut<ConcertAction, ConcertEvent>;
+    type Handle = InOut<ConcertAction, Result<ConcertEvent, ConcertError>>;
     type Reply = ();
     type Others = ();
     type Signal = ();
     type State = Out<State>;
 }
 ```
-To display the full contract state information, the `state()` function is used:
+To display the full program state information, the `state()` function is used:
 
 ```rust title="concert/src/lib.rs"
 #[no_mangle]
@@ -126,30 +133,10 @@ extern fn state() {
         .expect("Failed to encode or reply with `State` from `state()`");
 }
 ```
-To display only necessary certain values from the state, you need to write a separate crate. In this crate, specify functions that will return the desired values from the `State` struct. For example - [concert/state](https://github.com/gear-foundation/dapps/tree/master/contracts/concert/state):
-
-```rust title="concert/state/src/lib.rs"
-#[gmeta::metawasm]
-pub mod metafns {
-    pub type State = concert_io::State;
-
-    pub fn current_concert(state: State) -> CurrentConcert {
-        state.current_concert()
-    }
-
-    pub fn buyers(state: State) -> Vec<ActorId> {
-        state.buyers
-    }
-
-    pub fn user_tickets(state: State, user: ActorId) -> Vec<Option<TokenMetadata>> {
-        state.user_tickets(user)
-    }
-}
-```
 
 ## Conclusion
-A source code of the contract example is available on GitHub: [`concert/src`](https://github.com/gear-foundation/dapps/tree/master/contracts/concert/src).
+A source code of the program example is available on GitHub: [`concert/src`](https://github.com/gear-foundation/dapps/tree/master/contracts/concert/src).
 
-See also an example of the smart contract testing implementation based on [gtest](https://github.com/gear-foundation/dapps/tree/master/contracts/concert/tests).
+See also an example of the program testing implementation based on [gtest](https://github.com/gear-foundation/dapps/tree/master/contracts/concert/tests).
 
-For more details about testing smart contracts written on Gear, refer to this article: [Program Testing](/docs/developing-contracts/testing).
+For more details about testing programs written on Gear, refer to this article: [Program Testing](/docs/developing-contracts/testing).
