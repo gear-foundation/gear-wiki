@@ -22,7 +22,7 @@
     "@docusaurus/plugin-google-analytics": "^3.1.1",
     "@docusaurus/plugin-google-tag-manager": "^3.1.1",
     "@docusaurus/preset-classic": "^3.1.1",
-    "@mdx-js/react": "^3.0.0",
+    "@mdx-js/react": "^3.0.1",
     "@svgr/webpack": "^8.1.0",
     "axios": "^1.6.7",
     "clsx": "^2.1.0",
