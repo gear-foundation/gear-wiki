@@ -4,6 +4,7 @@ import redirects from './redirects.json';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 
+/** @type {import('@docusaurus/types').Config} */
 export default {
   title: 'Gear Documentation Portal',
   tagline: 'The place to start developing with Gear',
@@ -76,7 +77,12 @@ export default {
       contextualSearch: true,
       searchParameters: {},
       searchPagePath: 'search',
-    }
+    },
+    docs: {
+      sidebar: {
+        autoCollapseCategories: true,
+      },
+    },
   },
   plugins: [
     'docusaurus-plugin-sass',

@@ -48,7 +48,7 @@ If you want to run with your locale, please use below commands
 yarn start --locale <locale>
 ```
 
-For example, if you want run Chinese version, please run `yarn start --locale zh-cn`.
+For example, if you want to run Chinese version, please run `yarn start --locale zh-cn`.
 
 ## Contribute
 
