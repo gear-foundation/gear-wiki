@@ -34,7 +34,7 @@
     "react-dom": "^18.2.0",
     "rehype-katex": "^7.0.0",
     "remark-math": "^6.0.0",
-    "sass": "^1.70.0",
+    "sass": "^1.71.1",
     "url-loader": "^4.1.1"
   },
   "browserslist": {
