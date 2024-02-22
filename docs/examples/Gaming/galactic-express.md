@@ -66,9 +66,10 @@ The game's program makes turns considering parameters specified by each player. 
 The program contains the following information
 
 ```rust title="galactic-express/src/lib.rs"
-struct Contract {
+pub struct Game {
     admin: ActorId,
-    session_id: u128,
+    admin_name: String,
+    bid: u128,
     altitude: u16,
     weather: Weather,
     reward: u128,
@@ -77,7 +78,6 @@ struct Contract {
 ```
 
 * `admin` - game admin
-* `session_id` - session identifier (game counter)
 * `altitude` - flight altitude of the session
 * `weather` - session weather conditions
 * `reward` - session award
@@ -86,7 +86,7 @@ struct Contract {
 There are two possible states: one during the registration stage and the other when the final results are already available
 
 ```rust title="galactic-express/io/src/lib.rs"
-pub enum Stage {
+pub enum StageState {
     Registration(Vec<(ActorId, Participant)>),
     Results(Results),
 }
@@ -96,6 +96,8 @@ The `Participant` structure stores information about its fuel and payload
 
 ```rust title="galactic-express/io/src/lib.rs"
 pub struct Participant {
+    pub id: ActorId,
+    pub name: String,
     pub fuel_amount: u8,
     pub payload_amount: u8,
 }
@@ -107,6 +109,7 @@ The `Results` record all possible events during the players' turns and the numbe
 pub struct Results {
     pub turns: Vec<Vec<(ActorId, Turn)>>,
     pub rankings: Vec<(ActorId, u128)>,
+    pub participants: Vec<(ActorId, Participant)>,
 }
 ```
 
@@ -137,7 +140,6 @@ fn process_init() -> Result<(), Error> {
     unsafe {
         STATE = Some((
             Contract {
-                admin: msg::source(),
                 ..Default::default()
             },
             TransactionManager::new(),
@@ -152,14 +154,26 @@ fn process_init() -> Result<(), Error> {
 
 ```rust title="galactic-express/io/src/lib.rs"
 pub enum Action {
-    // applies when you need to change admins
-    ChangeAdmin(ActorId),
     // creates a new game session
-    CreateNewSession,
+    CreateNewSession {
+        name: String,
+    },
     // action for player registration
-    Register(Participant),
+    Register {
+        creator: ActorId,
+        participant: Participant,
+    },
+    CancelRegistration,
+    DeletePlayer {
+        player_id: ActorId,
+    },
+    CancelGame,
+    LeaveGame,
     // start the game (only available to admin)
-    StartGame(Participant),
+    StartGame {
+        fuel_amount: u8,
+        payload_amount: u8,
+    },
 }
 ```
 
@@ -168,17 +182,20 @@ pub enum Action {
 ```rust title="galactic-express/io/src/lib.rs"
 pub enum Event {
     AdminChanged(ActorId, ActorId),
-    NewSession(Session),
+    NewSessionCreated {
+        altitude: u16,
+        weather: Weather,
+        reward: u128,
+        bid: u128,
+    },
     Registered(ActorId, Participant),
+    RegistrationCanceled,
+    PlayerDeleted {
+        player_id: ActorId,
+    },
+    GameCanceled,
     GameFinished(Results),
-}
-```
-```rust title="galactic-express/io/src/lib.rs"
-pub struct Session {
-    pub session_id: u128,
-    pub altitude: u16,
-    pub weather: Weather,
-    pub reward: u128,
+    GameLeft,
 }
 ```
 
@@ -189,12 +206,25 @@ A new game session must be set up using `Action::CreateNewSession` to start the 
 Upon the inception of a new session, random values, encompassing aspects like weather conditions, altitude settings, fuel prices, and potential rewards, are dynamically generated.
 
 ```rust title="galactic-express/src/lib.rs"
-fn create_new_session(&mut self) -> Result<Event, Error> {
-    let stage = &mut self.stage;
+fn create_new_session(&mut self, name: String) -> Result<Event, Error> {
+    let msg_src = msg::source();
+    let msg_value = msg::value();
+
+    if self.player_to_game_id.contains_key(&msg_src) {
+        return Err(Error::SeveralRegistrations);
+    }
+
+    let game = self.games.entry(msg_src).or_insert_with(|| Game {
+        admin: msg_src,
+        admin_name: name,
+        bid: msg_value,
+        ..Default::default()
+    });
+
+    let stage = &mut game.stage;
 
     match stage {
         Stage::Registration(participants) => {
-            check_admin(self.admin)?;
             participants.clear();
         }
         Stage::Results { .. } => *stage = Stage::Registration(HashMap::new()),
@@ -202,7 +232,7 @@ fn create_new_session(&mut self) -> Result<Event, Error> {
 
     let mut random = Random::new()?;
 
-    self.weather = match random.next() % (Weather::Tornado as u8 + 1) {
+    game.weather = match random.next() % (Weather::Tornado as u8 + 1) {
         0 => Weather::Clear,
         1 => Weather::Cloudy,
         2 => Weather::Rainy,
@@ -211,41 +241,59 @@ fn create_new_session(&mut self) -> Result<Event, Error> {
         5 => Weather::Tornado,
         _ => unreachable!(),
     };
-    self.altitude = random.generate(TURN_ALTITUDE.0, TURN_ALTITUDE.1) * TURNS as u16;
-    self.reward = random.generate(REWARD.0, REWARD.1);
+    game.altitude = random.generate(TURN_ALTITUDE.0, TURN_ALTITUDE.1) * TURNS as u16;
+    game.reward = random.generate(REWARD.0, REWARD.1);
+    self.player_to_game_id.insert(msg_src, msg_src);
 
-    Ok(Event::NewSession(Session {
-        session_id: self.session_id,
-        altitude: self.altitude,
-        weather: self.weather,
-        reward: self.reward,
-    }))
+    Ok(Event::NewSessionCreated {
+        altitude: game.altitude,
+        weather: game.weather,
+        reward: game.reward,
+        bid: msg_value,
+    })
 }
 ```
 
 After successfully creating a new session, players can begin registration: `Action::Register(Participant)`
 
 ```rust title="galactic-express/src/lib.rs"
-fn register(&mut self, participant: Participant) -> Result<Event, Error> {
-    let msg_source = msg::source();
-
-    if msg_source == self.admin {
-        return Err(Error::AccessDenied);
-    }
-    if let Stage::Results(_) = self.stage {
-        return Err(Error::SessionEnded);
-    }
-
-    let participants = self.stage.mut_participants()?;
-
-    if participants.len() >= PARTICIPANTS - 1 {
-        return Err(Error::SessionFull);
+fn register(
+    &mut self,
+    creator: ActorId,
+    participant: Participant,
+    msg_source: ActorId,
+    msg_value: u128,
+) -> Result<Event, Error> {
+    if self.player_to_game_id.contains_key(&msg_source) {
+        return Err(Error::SeveralRegistrations);
     }
 
-    participant.check()?;
-    participants.insert(msg_source, participant);
+    if let Some(game) = self.games.get_mut(&creator) {
+        if msg_value != game.bid {
+            return Err(Error::WrongBid);
+        }
+        if let Stage::Results(_) = game.stage {
+            return Err(Error::SessionEnded);
+        }
 
-    Ok(Event::Registered(msg_source, participant))
+        let participants = game.stage.mut_participants()?;
+
+        if participants.contains_key(&msg_source) {
+            return Err(Error::AlreadyRegistered);
+        }
+
+        if participants.len() >= MAX_PARTICIPANTS - 1 {
+            return Err(Error::SessionFull);
+        }
+
+        participant.check()?;
+        participants.insert(msg_source, participant.clone());
+        self.player_to_game_id.insert(msg_source, creator);
+
+        Ok(Event::Registered(msg_source, participant))
+    } else {
+        Err(Error::NoSuchGame)
+    }
 }
 ```
 This function checks the game stage, the number of registered players and the participant's input data.
@@ -272,18 +320,28 @@ impl Participant {
 
 After players have successfully registered, the admin can initiate the game using the `Action::StartGame(Participant)` action. This action involves several checks on the admin, the number of participants, and their data.
 
-
 ```rust title="galactic-express/src/lib.rs"
-async fn start_game(&mut self, mut participant: Participant) -> Result<Event, Error> {
-    self.check_admin()?;
+async fn start_game(&mut self, fuel_amount: u8, payload_amount: u8) -> Result<Event, Error> {
+    let msg_source = msg::source();
 
-    let participants = self.stage.mut_participants()?;
+    let game = self.games.get_mut(&msg_source).ok_or(Error::NoSuchGame)?;
+
+    if fuel_amount > MAX_FUEL || payload_amount > MAX_PAYLOAD {
+        return Err(Error::FuelOrPayloadOverload);
+    }
+    let participant = Participant {
+        id: msg_source,
+        name: game.admin_name.clone(),
+        fuel_amount,
+        payload_amount,
+    };
+
+    let participants = game.stage.mut_participants()?;
 
     if participants.is_empty() {
         return Err(Error::NotEnoughParticipants);
     }
-
-    participant.check()?;
+    participants.insert(msg_source, participant);
 // ...
 ```
 
@@ -353,7 +411,7 @@ let mut scores: Vec<(ActorId, u128)> = turns
                 Turn::Alive {
                     fuel_left,
                     payload_amount,
-                } => (*payload_amount as u128 + *fuel_left as u128) * self.altitude as u128,
+                } => (*payload_amount as u128 + *fuel_left as u128) * game.altitude as u128,
                 Turn::Destroyed(_) => 0,
             },
         )
@@ -373,7 +431,7 @@ impl Metadata for ContractMetadata {
     type Reply = ();
     type Others = ();
     type Signal = ();
-    type State = Out<State>;
+    type State = InOut<StateQuery, StateReply>;
 }
 ```
 
@@ -383,10 +441,38 @@ To display the program state information, the `state()` function is used:
 #[no_mangle]
 extern fn state() {
     let (state, _tx_manager) = unsafe { STATE.take().expect("Unexpected error in taking state") };
-    msg::reply::<State>(state.into(), 0)
-        .expect("Failed to encode or reply with `State` from `state()`");
-}
+    let query: StateQuery = msg::load().expect("Unable to load the state query");
+    let reply = match query {
+        StateQuery::All => StateReply::All(state.into()),
+        StateQuery::GetGame { player_id } => {
+            let game_state = state
+                .player_to_game_id
+                .get(&player_id)
+                .and_then(|creator_id| state.games.get(creator_id))
+                .map(|game| {
+                    let stage = match &game.stage {
+                        Stage::Registration(participants_data) => StageState::Registration(
+                            participants_data.clone().into_iter().collect(),
+                        ),
+                        Stage::Results(results) => StageState::Results(results.clone()),
+                    };
 
+                    GameState {
+                        admin: game.admin,
+                        admin_name: game.admin_name.clone(),
+                        altitude: game.altitude,
+                        weather: game.weather,
+                        reward: game.reward,
+                        stage,
+                        bid: game.bid,
+                    }
+                });
+
+            StateReply::Game(game_state)
+        }
+    };
+    msg::reply(reply, 0).expect("Unable to share the state");
+}
 ```
 
 ## Source code
