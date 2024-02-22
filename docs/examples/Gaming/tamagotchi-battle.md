@@ -277,15 +277,13 @@ fn make_move(&mut self, pair_id: PairId, tmg_move: Move) {
 
     let current_turn = pair.moves.len();
     let owner = pair.owner_ids[current_turn];
-    assert_eq!(owner, msg::source(), "It is not your turn!");
+    assert_eq!(
+        owner,
+        msg::source(),
+        "It is not your turn or not your game!"
+    );
 
-    let pair_ids = self
-        .players_to_pairs
-        .get(&msg::source())
-        .expect("You have no games");
-    if !pair_ids.contains(&pair_id) {
-        panic!("It is not your game");
-    }
+    // ...
 
     let game_is_over = self.make_move_internal(pair_id, Some(tmg_move));
 
