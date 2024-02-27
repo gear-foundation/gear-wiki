@@ -14,41 +14,9 @@ Players' strategic decisions about fuel allocation and target gains significantl
 
 The article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. Anyone can easily create their own application and run it on the Vara Network. The source code is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/galactic-express).
 
-## How to run
-
-### The gameplay
-
 Everyone can play the game via this link - [Play Galactic Express](https://galactic-express.vara.network/).
 
-1. Download the pre-built program file of the game via [this link](https://github.com/gear-foundation/dapps/releases/download/nightly/galactic_express.opt.wasm).
-
-2. Go to [Gear Idea](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Frpc.vara.network) portal and Upload the program to the Vara Network:
-
-    a. Connect an account via any supported wallet (VARA tokens are required for gas fees if the program is uploaded to the Vara mainnet, for Vara Network Testent there is an option to request test tokens).
-
-    b. Select the downloaded `.wasm` file to upload, click the `Calculate gas` button, and then the `Upload Program` button, sign the transaction.
-
-![galactic-express](../img/galex_upload.png)
-
-3. Once the game program is uploaded to the network, navigate to `Programs`, copy the program's address and paste it into the [game](https://galactic-express.vara.network/).
-
-![galactic-express](../img/galex_address.png)
-
-4. Go to the program's interface, connect the wallet account, paste the address of your program and click `Continue`.
-
-5. Invite up to 3 more friends to play the game - share the program address with them for registration.
-
-6. Players should specify the game parameters for registration - VARA deposit, Payload and Fuel amount and click the `Launch Rocket` button.
-
-![galactic-express](../img/galex-registration.png)
-
-7. As soon as everyone registered, the game's admin clicks the `Launch rocket and start Game` button.
-
-![galactic-express](../img/galex-result.png)
-
-The game's program makes turns considering parameters specified by each player. Click the `Play again` and try another parameters to win, have fun :)
-
-### Run the app locally
+## How to run the app locally
 
 1. Build a program
 > Additional details regarding this matter can be located within the [README](https://github.com/gear-foundation/dapps/tree/master/contracts/galactic-express/README.md) directory of the program.
@@ -67,8 +35,20 @@ The program contains the following information
 
 ```rust title="galactic-express/src/lib.rs"
 struct Contract {
+    games: HashMap<ActorId, Game>,
+    player_to_game_id: HashMap<ActorId, ActorId>,
+}
+```
+* `games` - list of all games according to the address of the game's creator
+* `player_to_game_id` - list of players and the games in which they participate
+
+Where the `Game` is as follows:
+
+```rust title="galactic-express/src/lib.rs"
+pub struct Game {
     admin: ActorId,
-    session_id: u128,
+    admin_name: String,
+    bid: u128,
     altitude: u16,
     weather: Weather,
     reward: u128,
@@ -76,8 +56,9 @@ struct Contract {
 }
 ```
 
-* `admin` - game admin
-* `session_id` - session identifier (game counter)
+* `admin` - game administrator's address
+* `admin_name` - administrator name
+* `bid` - gaming bet 
 * `altitude` - flight altitude of the session
 * `weather` - session weather conditions
 * `reward` - session award
@@ -86,27 +67,30 @@ struct Contract {
 There are two possible states: one during the registration stage and the other when the final results are already available
 
 ```rust title="galactic-express/io/src/lib.rs"
-pub enum Stage {
-    Registration(Vec<(ActorId, Participant)>),
+enum Stage {
+    Registration(HashMap<ActorId, Participant>),
     Results(Results),
 }
 ```
 
-The `Participant` structure stores information about its fuel and payload
+The `Participant` structure stores information about its address, name, fuel and payload amount
 
 ```rust title="galactic-express/io/src/lib.rs"
 pub struct Participant {
+    pub id: ActorId,
+    pub name: String,
     pub fuel_amount: u8,
     pub payload_amount: u8,
 }
 ```
 
-The `Results` record all possible events during the players' turns and the number of scores they have earned
+The `Results` record all possible events during the players' turns, the number of scores they have earned and information about the participants
 
 ```rust title="galactic-express/io/src/lib.rs"
 pub struct Results {
     pub turns: Vec<Vec<(ActorId, Turn)>>,
     pub rankings: Vec<(ActorId, u128)>,
+    pub participants: Vec<(ActorId, Participant)>,
 }
 ```
 
@@ -137,7 +121,6 @@ fn process_init() -> Result<(), Error> {
     unsafe {
         STATE = Some((
             Contract {
-                admin: msg::source(),
                 ..Default::default()
             },
             TransactionManager::new(),
@@ -152,14 +135,23 @@ fn process_init() -> Result<(), Error> {
 
 ```rust title="galactic-express/io/src/lib.rs"
 pub enum Action {
-    // applies when you need to change admins
-    ChangeAdmin(ActorId),
-    // creates a new game session
-    CreateNewSession,
-    // action for player registration
-    Register(Participant),
-    // start the game (only available to admin)
-    StartGame(Participant),
+    CreateNewSession {
+        name: String,
+    },
+    Register {
+        creator: ActorId,
+        participant: Participant,
+    },
+    CancelRegistration,
+    DeletePlayer {
+        player_id: ActorId,
+    },
+    CancelGame,
+    LeaveGame,
+    StartGame {
+        fuel_amount: u8,
+        payload_amount: u8,
+    },
 }
 ```
 
@@ -168,17 +160,20 @@ pub enum Action {
 ```rust title="galactic-express/io/src/lib.rs"
 pub enum Event {
     AdminChanged(ActorId, ActorId),
-    NewSession(Session),
+    NewSession {
+        altitude: u16,
+        weather: Weather,
+        reward: u128,
+        bid: u128,
+    },
     Registered(ActorId, Participant),
+    CancelRegistration,
+    PlayerDeleted {
+        player_id: ActorId,
+    },
+    GameCanceled,
     GameFinished(Results),
-}
-```
-```rust title="galactic-express/io/src/lib.rs"
-pub struct Session {
-    pub session_id: u128,
-    pub altitude: u16,
-    pub weather: Weather,
-    pub reward: u128,
+    GameLeft,
 }
 ```
 
@@ -189,12 +184,29 @@ A new game session must be set up using `Action::CreateNewSession` to start the 
 Upon the inception of a new session, random values, encompassing aspects like weather conditions, altitude settings, fuel prices, and potential rewards, are dynamically generated.
 
 ```rust title="galactic-express/src/lib.rs"
-fn create_new_session(&mut self) -> Result<Event, Error> {
-    let stage = &mut self.stage;
+fn create_new_session(&mut self, name: String) -> Result<Event, Error> {
+    let msg_src = msg::source();
+    let msg_value = msg::value();
+
+    if self.player_to_game_id.contains_key(&msg_src) {
+        return Err(Error::SeveralRegistrations);
+    }
+
+    if !self.games.contains_key(&msg_src) {
+        let game = Game {
+            admin: msg_src,
+            admin_name: name,
+            bid: msg_value,
+            ..Default::default()
+        };
+        self.games.insert(msg_src, game);
+    }
+    let game = self.games.get_mut(&msg_src).expect("Critical error");
+
+    let stage = &mut game.stage;
 
     match stage {
         Stage::Registration(participants) => {
-            check_admin(self.admin)?;
             participants.clear();
         }
         Stage::Results { .. } => *stage = Stage::Registration(HashMap::new()),
@@ -202,7 +214,7 @@ fn create_new_session(&mut self) -> Result<Event, Error> {
 
     let mut random = Random::new()?;
 
-    self.weather = match random.next() % (Weather::Tornado as u8 + 1) {
+    game.weather = match random.next() % (Weather::Tornado as u8 + 1) {
         0 => Weather::Clear,
         1 => Weather::Cloudy,
         2 => Weather::Rainy,
@@ -211,41 +223,59 @@ fn create_new_session(&mut self) -> Result<Event, Error> {
         5 => Weather::Tornado,
         _ => unreachable!(),
     };
-    self.altitude = random.generate(TURN_ALTITUDE.0, TURN_ALTITUDE.1) * TURNS as u16;
-    self.reward = random.generate(REWARD.0, REWARD.1);
+    game.altitude = random.generate(TURN_ALTITUDE.0, TURN_ALTITUDE.1) * TURNS as u16;
+    game.reward = random.generate(REWARD.0, REWARD.1);
+    self.player_to_game_id.insert(msg_src, msg_src);
 
-    Ok(Event::NewSession(Session {
-        session_id: self.session_id,
-        altitude: self.altitude,
-        weather: self.weather,
-        reward: self.reward,
-    }))
+    Ok(Event::NewSession {
+        altitude: game.altitude,
+        weather: game.weather,
+        reward: game.reward,
+        bid: msg_value,
+    })
 }
 ```
 
 After successfully creating a new session, players can begin registration: `Action::Register(Participant)`
 
 ```rust title="galactic-express/src/lib.rs"
-fn register(&mut self, participant: Participant) -> Result<Event, Error> {
-    let msg_source = msg::source();
-
-    if msg_source == self.admin {
-        return Err(Error::AccessDenied);
-    }
-    if let Stage::Results(_) = self.stage {
-        return Err(Error::SessionEnded);
-    }
-
-    let participants = self.stage.mut_participants()?;
-
-    if participants.len() >= PARTICIPANTS - 1 {
-        return Err(Error::SessionFull);
+fn register(
+        &mut self,
+        creator: ActorId,
+        participant: Participant,
+        msg_source: ActorId,
+        msg_value: u128,
+) -> Result<Event, Error> {
+    if self.player_to_game_id.contains_key(&msg_source) {
+        return Err(Error::SeveralRegistrations);
     }
 
-    participant.check()?;
-    participants.insert(msg_source, participant);
+    if let Some(game) = self.games.get_mut(&creator) {
+        if msg_value != game.bid {
+            return Err(Error::WrongBid);
+        }
+        if let Stage::Results(_) = game.stage {
+            return Err(Error::SessionEnded);
+        }
 
-    Ok(Event::Registered(msg_source, participant))
+        let participants = game.stage.mut_participants()?;
+
+        if participants.contains_key(&msg_source) {
+            return Err(Error::AlreadyRegistered);
+        }
+
+        if participants.len() >= PARTICIPANTS - 1 {
+            return Err(Error::SessionFull);
+        }
+
+        participant.check()?;
+        participants.insert(msg_source, participant.clone());
+        self.player_to_game_id.insert(msg_source, creator);
+
+        Ok(Event::Registered(msg_source, participant))
+    } else {
+        Err(Error::NoSuchGame)
+    }
 }
 ```
 This function checks the game stage, the number of registered players and the participant's input data.
@@ -270,20 +300,29 @@ impl Participant {
 }
 ```
 
-After players have successfully registered, the admin can initiate the game using the `Action::StartGame(Participant)` action. This action involves several checks on the admin, the number of participants, and their data.
-
+After players have successfully registered, the admin can initiate the game using the `Action::StartGame` action.
 
 ```rust title="galactic-express/src/lib.rs"
-async fn start_game(&mut self, mut participant: Participant) -> Result<Event, Error> {
-    self.check_admin()?;
+async fn start_game(&mut self, fuel_amount: u8, payload_amount: u8) -> Result<Event, Error> {
+    let msg_source = msg::source();
 
-    let participants = self.stage.mut_participants()?;
+    let game = self.games.get_mut(&msg_source).ok_or(Error::NoSuchGame)?;
+    let participant = Participant {
+        id: msg_source,
+        name: game.admin_name.clone(),
+        fuel_amount,
+        payload_amount,
+    };
+    participant.check()?;
+    let participants = game.stage.mut_participants()?;
 
     if participants.is_empty() {
         return Err(Error::NotEnoughParticipants);
     }
+    participants.insert(msg_source, participant);
 
-    participant.check()?;
+    let mut random = Random::new()?;
+    let mut turns = HashMap::new();
 // ...
 ```
 
@@ -353,7 +392,7 @@ let mut scores: Vec<(ActorId, u128)> = turns
                 Turn::Alive {
                     fuel_left,
                     payload_amount,
-                } => (*payload_amount as u128 + *fuel_left as u128) * self.altitude as u128,
+                } => (*payload_amount as u128 + *fuel_left as u128) * game.altitude as u128,
                 Turn::Destroyed(_) => 0,
             },
         )
@@ -373,20 +412,63 @@ impl Metadata for ContractMetadata {
     type Reply = ();
     type Others = ();
     type Signal = ();
-    type State = Out<State>;
+    type State = InOut<StateQuery, StateReply>;
+}
+```
+One of Gear's features is reading partial states.
+
+```rust title="galactic-express/io/src/lib.rs"
+pub enum StateQuery {
+    All,
+    GetGame { player_id: ActorId },
+}
+```
+
+```rust title="galactic-express/io/src/lib.rs"
+pub enum StateReply {
+    All(State),
+    Game(Option<GameState>),
 }
 ```
 
 To display the program state information, the `state()` function is used:
 
-```rust title="galactic-express/src/lib.rs"
+```rust title="galactic-express/src/contract.rs"
 #[no_mangle]
 extern fn state() {
     let (state, _tx_manager) = unsafe { STATE.take().expect("Unexpected error in taking state") };
-    msg::reply::<State>(state.into(), 0)
-        .expect("Failed to encode or reply with `State` from `state()`");
-}
+    let query: StateQuery = msg::load().expect("Unable to load the state query");
+    let reply = match query {
+        StateQuery::All => StateReply::All(state.into()),
+        StateQuery::GetGame { player_id } => {
+            let game_state = state
+                .player_to_game_id
+                .get(&player_id)
+                .and_then(|creator_id| state.games.get(creator_id))
+                .map(|game| {
+                    let stage = match &game.stage {
+                        Stage::Registration(participants_data) => StageState::Registration(
+                            participants_data.clone().into_iter().collect(),
+                        ),
+                        Stage::Results(results) => StageState::Results(results.clone()),
+                    };
 
+                    GameState {
+                        admin: game.admin,
+                        admin_name: game.admin_name.clone(),
+                        altitude: game.altitude,
+                        weather: game.weather,
+                        reward: game.reward,
+                        stage,
+                        bid: game.bid,
+                    }
+                });
+
+            StateReply::Game(game_state)
+        }
+    };
+    msg::reply(reply, 0).expect("Unable to share the state");
+}
 ```
 
 ## Source code
