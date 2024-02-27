@@ -440,21 +440,6 @@ impl Metadata for ContractMetadata {
 }
 
 ```
-One of Gear's features is reading partial states.
-
-```rust title="tequila-train/io/src/lib.rs"
-pub enum StateQuery {
-    All,
-    GetGame { player_id: ActorId },
-}
-```
-
-```rust title="tequila-train/io/src/lib.rs"
-pub enum StateReply {
-    All(GameLauncherState),
-    Game(Option<(Game, Option<u64>)>),
-}
-```
 
 To display the program state information, the `state()` function is used:
 
