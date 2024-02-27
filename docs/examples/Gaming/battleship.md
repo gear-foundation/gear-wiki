@@ -45,6 +45,8 @@ struct Battleship {
     pub msg_id_to_game_id: BTreeMap<MessageId, ActorId>,
     pub bot_address: ActorId,
     pub admin: ActorId,
+    pub sessions: HashMap<ActorId, Session>,
+    pub config: Config,
 }
 ```
 * `games` - this field contains the addresses of the players and information about their games
@@ -99,6 +101,7 @@ To initialize the game program, it only needs to be passed the bot's program add
 ```rust title="battleship/io/src/lib.rs"
 pub struct BattleshipInit {
     pub bot_address: ActorId,
+    pub config: Config,
 }
 ```
 
@@ -107,16 +110,43 @@ pub struct BattleshipInit {
 ```rust title="battleship/io/src/lib.rs"
 pub enum BattleshipAction {
     // To start the game
-    StartGame { ships: Ships },
+    StartGame {
+        ships: Ships,
+        session_for_account: Option<ActorId>,
+    },
     // In order to make a move
-    Turn { step: u8 },
+    Turn {
+        step: u8,
+        session_for_account: Option<ActorId>,
+    },
     // Change the bot program (available only for admin)
-    ChangeBot { bot: ActorId },
+    ChangeBot {
+        bot: ActorId,
+    },
     // Clean the program state (available only for admin);
     // leave_active_games specifies how to clean it
-    ClearState { leave_active_games: bool },
+    ClearState {
+        leave_active_games: bool,
+    },
     // Deletion of a player's game
-    DeleteGame { player_address: ActorId },
+    DeleteGame {
+        player_address: ActorId,
+    },
+    CreateSession {
+        key: ActorId,
+        duration: u64,
+        allowed_actions: Vec<ActionsForSession>,
+    },
+    DeleteSessionFromProgram {
+        account: ActorId,
+    },
+    DeleteSessionFromAccount,
+    UpdateConfig {
+        gas_for_start: Option<u64>,
+        gas_for_move: Option<u64>,
+        gas_to_delete_session: Option<u64>,
+        block_duration_ms: Option<u64>,
+    },
 }
 ```
 
@@ -130,6 +160,9 @@ pub enum BattleshipReply {
     EndGame(BattleshipParticipants),
     // When the bot's program address changes
     BotChanged(ActorId),
+    SessionCreated,
+    SessionDeleted,
+    ConfigUpdated,
 }
 ```
 
@@ -138,18 +171,19 @@ pub enum BattleshipReply {
 Change to “After initialization of the program, the function to start the game will be available `BattleshipAction::StartGame { ships: Ships }`, where the location of the ships are transmitted. The program verifies the proper placement of ships and ensures the absence of any ongoing games for the user. Upon successful completion of these checks, the program initiates the game creation process and dispatches a message, `msg::send_with_gas`, to the bot program, prompting it to create the game.
 
 ```rust title="battleship/src/contract.rs"
-fn start_game(&mut self, mut ships: Ships) {
+fn start_game(&mut self, mut ships: Ships, session_for_account: Option<ActorId>) {
     // ...
     let msg_id = msg::send_with_gas(
         self.bot_address,
         BotBattleshipAction::Start,
-        GAS_FOR_START,
+        self.config.gas_for_start,
         0,
     )
     .expect("Error in sending a message");
 
-    self.msg_id_to_game_id.insert(msg_id, msg_source);
+    self.msg_id_to_game_id.insert(msg_id, player);
     msg::reply(BattleshipReply::MessageSentToBot, 0).expect("Error in sending a reply");
+}
 ```
 The `msg_id` is stored in the `msg_id_to_game_id` variable to use it in `handle_reply` (One of the message processing functions that Gear provides)
 
@@ -174,7 +208,7 @@ Using `handle_reply`, the bot retrieves response messages, while `msg_id_to_game
 After the game starts, the `BattleshipAction::Turn { step: u8 }` function becomes available for executing moves. This function requires the passage of the cell number at which the player intends to shoot. The program conducts thorough checks on the entered data and the game state to ensure a valid move can be made. If the checks pass successfully, the program updates the field states, shifts the turn to the bot and dispatches `msg::send_with_gas` to the bot program for it to make its move.
 
 ```rust title="battleship/src/contract.rs"
-fn player_move(&mut self, step: u8) {
+fn player_move(&mut self, step: u8, session_for_account: Option<ActorId>) {
     // ...
     game.turn = Some(BattleshipParticipants::Bot);
 
@@ -182,12 +216,12 @@ fn player_move(&mut self, step: u8) {
     let msg_id = msg::send_with_gas(
         self.bot_address,
         BotBattleshipAction::Turn(board),
-        GAS_FOR_MOVE,
+        self.config.gas_for_move,
         0,
     )
     .expect("Error in sending a message");
 
-    self.msg_id_to_game_id.insert(msg_id, msg_source);
+    self.msg_id_to_game_id.insert(msg_id, player);
     msg::reply(BattleshipReply::MessageSentToBot, 0).expect("Error in sending a reply");
 ```
 
@@ -212,14 +246,26 @@ extern fn handle_reply() {
     let action: BattleshipAction =
         msg::load().expect("Failed to decode `BattleshipAction` message.");
     match action {
-        BattleshipAction::StartGame { ships } => game.start_bot(ships),
-        BattleshipAction::Turn { step } => {
+        BattleshipAction::StartGame {
+            ships,
+            session_for_account: _,
+        } => game.start_bot(ships),
+        BattleshipAction::Turn {
+            step,
+            session_for_account: _,
+        } => {
             game.turn(step);
             game.turn = Some(BattleshipParticipants::Player);
             if game.player_ships.check_end_game() {
                 game.game_over = true;
                 game.game_result = Some(BattleshipParticipants::Bot);
                 game.end_time = exec::block_timestamp();
+                msg::send(
+                    game_id,
+                    BattleshipReply::EndGame(BattleshipParticipants::Bot),
+                    0,
+                )
+                .expect("Unable to send the message about game over");
             }
         }
         _ => (),
@@ -247,11 +293,25 @@ extern fn handle() {
     match action {
         BotBattleshipAction::Start => {
             let ships = generate_field();
-            msg::reply(BattleshipAction::StartGame { ships }, 0).expect("Error in sending a reply");
+            msg::reply(
+                BattleshipAction::StartGame {
+                    ships,
+                    session_for_account: None,
+                },
+                0,
+            )
+            .expect("Error in sending a reply");
         }
         BotBattleshipAction::Turn(board) => {
             let step = move_analysis(board);
-            msg::reply(BattleshipAction::Turn { step }, 0).expect("Error in sending a reply");
+            msg::reply(
+                BattleshipAction::Turn {
+                    step,
+                    session_for_account: None,
+                },
+                0,
+            )
+            .expect("Error in sending a reply");
         }
     }
 }
@@ -279,6 +339,7 @@ pub enum StateQuery {
     All,
     Game(ActorId),
     BotContractId,
+    SessionForTheAccount(ActorId),
 }
 ```
 
@@ -287,6 +348,7 @@ pub enum StateReply {
     All(BattleshipState),
     Game(Option<GameState>),
     BotContractId(ActorId),
+    SessionForTheAccount(Option<Session>),
 }
 ```
 
@@ -320,6 +382,13 @@ extern fn state() {
         StateQuery::BotContractId => {
             msg::reply(StateReply::BotContractId(battleship.bot_address), 0)
                 .expect("Unable to share the state");
+        }
+        StateQuery::SessionForTheAccount(account) => {
+            msg::reply(
+                StateReply::SessionForTheAccount(battleship.sessions.get(&account).cloned()),
+                0,
+            )
+            .expect("Unable to share the state");
         }
     }
 }

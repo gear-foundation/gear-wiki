@@ -34,6 +34,7 @@ Everyone can play the game via this link - [Play Galactic Express](https://galac
 The program contains the following information
 
 ```rust title="galactic-express/src/lib.rs"
+
 struct Contract {
     games: HashMap<ActorId, Game>,
     player_to_game_id: HashMap<ActorId, ActorId>,
@@ -135,6 +136,9 @@ fn process_init() -> Result<(), Error> {
 
 ```rust title="galactic-express/io/src/lib.rs"
 pub enum Action {
+    CreateNewSession {
+        name: String,
+    },
     CreateNewSession {
         name: String,
     },
@@ -296,7 +300,8 @@ impl Participant {
 }
 ```
 
-After players have successfully registered, the admin can initiate the game using the `Action::StartGame` action.
+After players have successfully registered, the admin can initiate the game using the `Action::StartGame(Participant)` action. This action involves several checks on the admin, the number of participants, and their data.
+
 
 ```rust title="galactic-express/src/lib.rs"
 async fn start_game(&mut self, fuel_amount: u8, payload_amount: u8) -> Result<Event, Error> {
@@ -413,22 +418,7 @@ impl Metadata for ContractMetadata {
     type Others = ();
     type Signal = ();
     type State = InOut<StateQuery, StateReply>;
-}
-```
-One of Gear's features is reading partial states.
 
-```rust title="galactic-express/io/src/lib.rs"
-pub enum StateQuery {
-    All,
-    GetGame { player_id: ActorId },
-}
-```
-
-```rust title="galactic-express/io/src/lib.rs"
-pub enum StateReply {
-    All(State),
-    Game(Option<GameState>),
-}
 ```
 
 To display the program state information, the `state()` function is used:
