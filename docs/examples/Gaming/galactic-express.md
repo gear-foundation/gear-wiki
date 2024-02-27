@@ -160,14 +160,14 @@ pub enum Action {
 ```rust title="galactic-express/io/src/lib.rs"
 pub enum Event {
     AdminChanged(ActorId, ActorId),
-    NewSession {
+    NewSessionCreated {
         altitude: u16,
         weather: Weather,
         reward: u128,
         bid: u128,
     },
     Registered(ActorId, Participant),
-    CancelRegistration,
+    RegistrationCanceled,
     PlayerDeleted {
         player_id: ActorId,
     },
@@ -192,16 +192,12 @@ fn create_new_session(&mut self, name: String) -> Result<Event, Error> {
         return Err(Error::SeveralRegistrations);
     }
 
-    if !self.games.contains_key(&msg_src) {
-        let game = Game {
-            admin: msg_src,
-            admin_name: name,
-            bid: msg_value,
-            ..Default::default()
-        };
-        self.games.insert(msg_src, game);
-    }
-    let game = self.games.get_mut(&msg_src).expect("Critical error");
+    let game = self.games.entry(msg_src).or_insert_with(|| Game {
+        admin: msg_src,
+        admin_name: name,
+        bid: msg_value,
+        ..Default::default()
+    });
 
     let stage = &mut game.stage;
 
@@ -227,7 +223,7 @@ fn create_new_session(&mut self, name: String) -> Result<Event, Error> {
     game.reward = random.generate(REWARD.0, REWARD.1);
     self.player_to_game_id.insert(msg_src, msg_src);
 
-    Ok(Event::NewSession {
+    Ok(Event::NewSessionCreated {
         altitude: game.altitude,
         weather: game.weather,
         reward: game.reward,
@@ -240,11 +236,11 @@ After successfully creating a new session, players can begin registration: `Acti
 
 ```rust title="galactic-express/src/lib.rs"
 fn register(
-        &mut self,
-        creator: ActorId,
-        participant: Participant,
-        msg_source: ActorId,
-        msg_value: u128,
+    &mut self,
+    creator: ActorId,
+    participant: Participant,
+    msg_source: ActorId,
+    msg_value: u128,
 ) -> Result<Event, Error> {
     if self.player_to_game_id.contains_key(&msg_source) {
         return Err(Error::SeveralRegistrations);
@@ -264,7 +260,7 @@ fn register(
             return Err(Error::AlreadyRegistered);
         }
 
-        if participants.len() >= PARTICIPANTS - 1 {
+        if participants.len() >= MAX_PARTICIPANTS - 1 {
             return Err(Error::SessionFull);
         }
 
@@ -307,13 +303,17 @@ async fn start_game(&mut self, fuel_amount: u8, payload_amount: u8) -> Result<Ev
     let msg_source = msg::source();
 
     let game = self.games.get_mut(&msg_source).ok_or(Error::NoSuchGame)?;
+
+    if fuel_amount > MAX_FUEL || payload_amount > MAX_PAYLOAD {
+        return Err(Error::FuelOrPayloadOverload);
+    }
     let participant = Participant {
         id: msg_source,
         name: game.admin_name.clone(),
         fuel_amount,
         payload_amount,
     };
-    participant.check()?;
+
     let participants = game.stage.mut_participants()?;
 
     if participants.is_empty() {
