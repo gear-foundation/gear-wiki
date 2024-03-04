@@ -33,19 +33,19 @@ This guide provides a general overview of running programs on the networks power
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
     ```
 
-3. Now, let's install a `nightly` version of the toolchain with `rustup`, since Gear uses the most up-to-date features `rustup` provides. We use `nightly-2023-09-18` as it is the latest version that is compatible with Gear.
+3. Install a `nightly` version of the toolchain with `rustup`, since Gear uses the most up-to-date features `rustup` provides. `nightly-2023-09-18` is the latest version compatible with Gear.
 
     ```bash
     rustup toolchain add nightly-2023-09-18
     ```
 
-4. As we will be compiling a Rust program to Wasm, we will need a Wasm compiler. Let's add it to the toolchain.
+4. Aa Wasm compiler is necessary for compiling a Rust program to Wasm, add it to the toolchain.
 
     ```bash
     rustup target add wasm32-unknown-unknown --toolchain nightly-2023-09-18
     ```
 
-5. Also, you need to install the `wasm-proc` utility that optimizes compiled Wasm to be more compact.
+5. Install the `wasm-proc` utility that optimizes compiled Wasm to be more compact.
 
     ```bash
     cargo install --locked --git https://github.com/gear-tech/gear.git wasm-proc
@@ -61,14 +61,14 @@ This guide provides a general overview of running programs on the networks power
     mkdir -p ~/gear
     ```
 
-2. Let's create a `contracts` directory inside `gear` and `cd` to it.
+2. Create a `contracts` directory inside `gear` and `cd` to it.
 
     ```bash
     mkdir -p ~/gear/contracts
     cd ~/gear/contracts
     ```
 
-3. The next step would be to build a Rust library for our program:
+3. Build a Rust library for the program:
 
     ```bash
     cargo new counter --lib
@@ -104,7 +104,7 @@ This guide provides a general overview of running programs on the networks power
 
     [dependencies]
     # highlight-next-line
-    gstd = { git = "https://github.com/gear-tech/gear.git", tag = "v1.0.2" }
+    gstd = { git = "https://github.com/gear-tech/gear.git", tag = "v1.1.1" }
     ```
 
 6. Replace the default contents of `lib.rs` in the `counter` folder with the code for our first program.
@@ -144,7 +144,7 @@ This guide provides a general overview of running programs on the networks power
         cargo +nightly-2023-09-18 build --release --target=wasm32-unknown-unknown
     ```
 
-    This command is quite verbose, so we can create cargo config and Rust toolchain override files to make it shorter. Create a `.cargo/config.toml` file in the `counter` directory with the following contents:
+    This command is quite verbose, so you can create cargo config and Rust toolchain override files to make it shorter. Create a `.cargo/config.toml` file in the `counter` directory with the following contents:
 
     ```toml
     [build]
@@ -164,7 +164,7 @@ This guide provides a general overview of running programs on the networks power
     profile = "default"
     ```
 
-    Now you can build your program with a single command:
+    Now build your program with a single command:
 
     ```bash
     cargo build --release
@@ -181,7 +181,7 @@ This guide provides a general overview of running programs on the networks power
             └── counter.wasm    <---- this is our built .wasm file
     ```
 
-8. The last preparation step is to optimize the Wasm binary using `wasm-proc`:
+8. The last step is to optimize the Wasm binary using `wasm-proc`:
 
     ```bash
     wasm-proc target/wasm32-unknown-unknown/release/counter.wasm

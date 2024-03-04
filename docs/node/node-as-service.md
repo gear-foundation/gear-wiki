@@ -100,7 +100,7 @@ After the node has been running for a while, you may need to update it to the la
 You just need to replace the node executable (`gear`) with the latest version and restart the execution. For example, if your Linux executable is located at `/usr/bin/gear` (as we've configured above) you are to run:
 
 ```
-curl https://get.gear.rs/gear-v1.0.2-x86_64-unknown-linux-gnu.tar.xz | sudo tar -xJC /usr/bin
+curl https://get.gear.rs/gear-v1.1.1-x86_64-unknown-linux-gnu.tar.xz | sudo tar -xJC /usr/bin
 sudo systemctl restart gear-node
 ```
 

@@ -26,8 +26,8 @@ Note: this will require two terminal sessions (one for each node).
 
   ```
   Gear Node
-  ✌️ version 1.0.2-d02d306f97c
-  ❤️ by Gear Technologies, 2021-2023
+  ✌️ version 1.1.1-d02d306f97c
+  ❤️ by Gear Technologies, 2021-2024
   📋 Chain specification: Vara Local Testnet
   🏷 Node name: Alice
   👤 Role: AUTHORITY
@@ -72,13 +72,13 @@ Note: this will require two terminal sessions (one for each node).
 
   ```
   Gear Node
-  ✌️ version 1.0.2-d02d306f97c
-  ❤️ by Gear Technologies, 2021-2023
+  ✌️ version 1.1.1-33ee05d5aab
+  ❤️ by Gear Technologies, 2021-2024
   📋 Chain specification: Vara Local Testnet
   🏷 Node name: Bob
   👤 Role: AUTHORITY
   💾 Database: RocksDb at /tmp/bob/chains/gear_local_testnet/db/full
-  ⛓ Native runtime: vara-1020 (vara-1.tx1.au1)
+  ⛓ Native runtime: vara-1110 (vara-1.tx1.au1)
   🔨 Initializing Genesis block/state (state: 0xf470…d2dc, header-hash: 0x22c7…6847)
   👴 Loading GRANDPA authority set from genesis on what appears to be first startup.
   👶 Creating empty BABE epoch changes on what appears to be first startup.

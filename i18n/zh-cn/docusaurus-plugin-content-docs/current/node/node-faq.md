@@ -44,7 +44,7 @@ sidebar_position: 6
 ### 将节点配置为服务后应该怎样更新节点？
 你只需要把节点的可执行文件（`gear`）替换成最新版本，然后重新执行。例如，如果你的 Linux 可执行文件位于`/usr/bin`，你将运行：
 ```bash
-curl https://get.gear.rs/gear-v1.0.2-x86_64-unknown-linux-gnu.tar.xz | sudo tar -xJC /usr/bin
+curl https://get.gear.rs/gear-v1.1.1-x86_64-unknown-linux-gnu.tar.xz | sudo tar -xJC /usr/bin
 sudo systemctl restart gear-node
 ```
 
