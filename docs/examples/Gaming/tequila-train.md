@@ -212,6 +212,7 @@ pub enum Command {
 pub enum Event {
     GameFinished {
         winners: Vec<ActorId>,
+        all_participants: Vec<ActorId>,
     },
     GameCreated,
     Skipped,
@@ -443,7 +444,7 @@ impl Metadata for ContractMetadata {
 
 To display the program state information, the `state()` function is used:
 
-```rust title="tequila-train/src/contract.rs"
+```rust title="tequila-train/src/lib.rs"
 #[no_mangle]
 extern fn state() {
     let game_launcher = unsafe {

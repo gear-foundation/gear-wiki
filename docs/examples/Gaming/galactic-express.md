@@ -67,7 +67,7 @@ pub struct Game {
 
 There are two possible states: one during the registration stage and the other when the final results are already available
 
-```rust title="galactic-express/io/src/lib.rs"
+```rust title="galactic-express/src/lib.rs"
 enum Stage {
     Registration(HashMap<ActorId, Participant>),
     Results(Results),
@@ -136,9 +136,6 @@ fn process_init() -> Result<(), Error> {
 
 ```rust title="galactic-express/io/src/lib.rs"
 pub enum Action {
-    CreateNewSession {
-        name: String,
-    },
     CreateNewSession {
         name: String,
     },
@@ -423,7 +420,7 @@ impl Metadata for ContractMetadata {
 
 To display the program state information, the `state()` function is used:
 
-```rust title="galactic-express/src/contract.rs"
+```rust title="galactic-express/src/lib.rs"
 #[no_mangle]
 extern fn state() {
     let (state, _tx_manager) = unsafe { STATE.take().expect("Unexpected error in taking state") };
