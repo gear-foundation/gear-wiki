@@ -14,7 +14,7 @@ Players' strategic decisions about fuel allocation and target gains significantl
 
 The article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. Anyone can easily create their own application and run it on the Vara Network. The source code is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/galactic-express).
 
-Everyone can play the game via this link - [Play Galactic Express](https://galactic-express.vara.network/).
+Everyone can play the game via this link - [Play Galactic Express](https://galactic-express.vara.network/). The game supports several simultaneous game sessions (lobbies). To start a new game, click the "Create game" button and share your account's public key with other players. To join your game, players need to click the "Find game" button and enter your account ID there.
 
 ## How to run the app locally
 

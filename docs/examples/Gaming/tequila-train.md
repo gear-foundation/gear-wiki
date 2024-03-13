@@ -34,7 +34,7 @@ Anyone who wants to get their train back after playing a domino to their track s
 
 The aim is to be the first player to get rid of all the dominoes in their hand. As soon as this happens, even if the last tile is a Double, the game ends.
 
-Everyone can play the game via this link - [Play Tequila Train](https://tequila-train.vara.network/).
+Everyone can play the game via this link - [Play Tequila Train](https://tequila-train.vara.network/). The game supports several simultaneous game sessions (lobbies). To start a new game, click the "Create game" button and share your account's public key with other players. To join your game, players need to click the "Find game" button and enter your account ID there.
 
 ## How to run
 
