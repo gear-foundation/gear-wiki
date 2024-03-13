@@ -14,41 +14,9 @@ Players' strategic decisions about fuel allocation and target gains significantl
 
 The article explains the programming interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. Anyone can easily create their own application and run it on the Vara Network. The source code is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/galactic-express).
 
-## How to run
+Everyone can play the game via this link - [Play Galactic Express](https://galactic-express.vara.network/). The game supports several simultaneous game sessions (lobbies). To start a new game, click the "Create game" button and share your account's public key with other players. To join your game, players need to click the "Find game" button and enter your account ID there.
 
-### The gameplay
-
-Everyone can play the game via this link - [Play Galactic Express](https://galactic-express.vara.network/).
-
-1. Download the pre-built program file of the game via [this link](https://github.com/gear-foundation/dapps/releases/download/nightly/galactic_express.opt.wasm).
-
-2. Go to [Gear Idea](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Frpc.vara.network) portal and Upload the program to the Vara Network:
-
-    a. Connect an account via any supported wallet (VARA tokens are required for gas fees if the program is uploaded to the Vara mainnet, for Vara Network Testent there is an option to request test tokens).
-
-    b. Select the downloaded `.wasm` file to upload, click the `Calculate gas` button, and then the `Upload Program` button, sign the transaction.
-
-![galactic-express](../img/galex_upload.png)
-
-3. Once the game program is uploaded to the network, navigate to `Programs`, copy the program's address and paste it into the [game](https://galactic-express.vara.network/).
-
-![galactic-express](../img/galex_address.png)
-
-4. Go to the program's interface, connect the wallet account, paste the address of your program and click `Continue`.
-
-5. Invite up to 3 more friends to play the game - share the program address with them for registration.
-
-6. Players should specify the game parameters for registration - VARA deposit, Payload and Fuel amount and click the `Launch Rocket` button.
-
-![galactic-express](../img/galex-registration.png)
-
-7. As soon as everyone registered, the game's admin clicks the `Launch rocket and start Game` button.
-
-![galactic-express](../img/galex-result.png)
-
-The game's program makes turns considering parameters specified by each player. Click the `Play again` and try another parameters to win, have fun :)
-
-### Run the app locally
+## How to run the app locally
 
 1. Build a program
 > Additional details regarding this matter can be located within the [README](https://github.com/gear-foundation/dapps/tree/master/contracts/galactic-express/README.md) directory of the program.
@@ -66,6 +34,18 @@ The game's program makes turns considering parameters specified by each player. 
 The program contains the following information
 
 ```rust title="galactic-express/src/lib.rs"
+
+struct Contract {
+    games: HashMap<ActorId, Game>,
+    player_to_game_id: HashMap<ActorId, ActorId>,
+}
+```
+* `games` - list of all games according to the address of the game's creator
+* `player_to_game_id` - list of players and the games in which they participate
+
+Where the `Game` is as follows:
+
+```rust title="galactic-express/src/lib.rs"
 pub struct Game {
     admin: ActorId,
     admin_name: String,
@@ -77,7 +57,9 @@ pub struct Game {
 }
 ```
 
-* `admin` - game admin
+* `admin` - game administrator's address
+* `admin_name` - administrator name
+* `bid` - gaming bet 
 * `altitude` - flight altitude of the session
 * `weather` - session weather conditions
 * `reward` - session award
@@ -85,14 +67,14 @@ pub struct Game {
 
 There are two possible states: one during the registration stage and the other when the final results are already available
 
-```rust title="galactic-express/io/src/lib.rs"
-pub enum StageState {
-    Registration(Vec<(ActorId, Participant)>),
+```rust title="galactic-express/src/lib.rs"
+enum Stage {
+    Registration(HashMap<ActorId, Participant>),
     Results(Results),
 }
 ```
 
-The `Participant` structure stores information about its fuel and payload
+The `Participant` structure stores information about its address, name, fuel and payload amount
 
 ```rust title="galactic-express/io/src/lib.rs"
 pub struct Participant {
@@ -103,7 +85,7 @@ pub struct Participant {
 }
 ```
 
-The `Results` record all possible events during the players' turns and the number of scores they have earned
+The `Results` record all possible events during the players' turns, the number of scores they have earned and information about the participants
 
 ```rust title="galactic-express/io/src/lib.rs"
 pub struct Results {
@@ -154,11 +136,9 @@ fn process_init() -> Result<(), Error> {
 
 ```rust title="galactic-express/io/src/lib.rs"
 pub enum Action {
-    // creates a new game session
     CreateNewSession {
         name: String,
     },
-    // action for player registration
     Register {
         creator: ActorId,
         participant: Participant,
@@ -169,7 +149,6 @@ pub enum Action {
     },
     CancelGame,
     LeaveGame,
-    // start the game (only available to admin)
     StartGame {
         fuel_amount: u8,
         payload_amount: u8,
@@ -320,6 +299,7 @@ impl Participant {
 
 After players have successfully registered, the admin can initiate the game using the `Action::StartGame(Participant)` action. This action involves several checks on the admin, the number of participants, and their data.
 
+
 ```rust title="galactic-express/src/lib.rs"
 async fn start_game(&mut self, fuel_amount: u8, payload_amount: u8) -> Result<Event, Error> {
     let msg_source = msg::source();
@@ -342,6 +322,9 @@ async fn start_game(&mut self, fuel_amount: u8, payload_amount: u8) -> Result<Ev
         return Err(Error::NotEnoughParticipants);
     }
     participants.insert(msg_source, participant);
+
+    let mut random = Random::new()?;
+    let mut turns = HashMap::new();
 // ...
 ```
 
@@ -432,7 +415,7 @@ impl Metadata for ContractMetadata {
     type Others = ();
     type Signal = ();
     type State = InOut<StateQuery, StateReply>;
-}
+
 ```
 
 To display the program state information, the `state()` function is used:
