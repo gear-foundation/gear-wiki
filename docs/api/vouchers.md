@@ -3,14 +3,15 @@ sidebar_position: 7
 sidebar_label: Vouchers
 ---
 
-# Gas vouchers
+# Gas Vouchers
 
 Vouchers empower users with gas-free interactions, allowing seamless messaging to specific programs from any actor.
 
 An example of using vouchers is shown in the [Battleship](/examples/Gaming/battleship.md) game. Users without tokens on their balance can make moves by sending messages to a program using a voucher.
 
-### Issue a voucher
-Use `api.voucher.issue` method to issue a new voucher for a user to be used to pay for sending messages to programs.
+### Issue a Voucher
+
+Use the `api.voucher.issue` method to issue a new voucher for a user, which can be used to pay for sending messages to programs.
 
 ```javascript
 import { VoucherIssued } from '@gear-js/api';
@@ -21,7 +22,7 @@ const validForOneHour = (60 * 60) / 3; // number of blocks in one hour
 
 const { extrinsic } = await api.voucher.issue(spenderAddress, 100 * 10 ** 12, validForOneHour, programs, true);
 
-// To allow the voucher to be used for code uploading, set the last argument of the `.issue` method to true
+// To enable the voucher for code uploading, set the last argument of the `.issue` method to true.
 
 extrinsic.signAndSend(account, ({ events }) => {
   const voucherIssuedEvent = events.find(({event: { method }}) => method === 'VoucherIssued')?.event as VoucherIssued;
@@ -32,14 +33,18 @@ extrinsic.signAndSend(account, ({ events }) => {
 })
 ```
 
-### Check that the voucher exists for a particular user and program
-The `api.voucher.exists` method returns a boolean value indicates whether the voucher exists or not.
+### Check Voucher Existence
+
+The `api.voucher.exists` method verifies the existence of a voucher for a specific user and program. It returns a boolean value indicating whether the voucher exists.
+
 ```javascript
 const voucherExists = await api.voucher.exists(accountId, programId)
 ```
 
-### Get all voucher for an account
-The `api.voucher.getAllForAccount` method returns an object whose key is the voucher id and value is an array of programs for which the voucher can be used.
+### Retrieve All Vouchers for an Account
+
+The `api.voucher.getAllForAccount` method retrieves an object in which the key is the voucher ID and the value is an array of programs for which the voucher can be utilized.
+
 ```javascript
 const allVouchers = await api.voucher.getAllForAccount(accountId);
 ```
@@ -53,8 +58,10 @@ console.log(`Voucher details:
   expiry: ${details.expiry}`);
 ```
 
-### Send a message with the issued voucher
-To send message with voucher you can use `api.voucher.call` method.
+### Send a Message Using the Issued Voucher
+
+To send a message with a voucher, you can use the `api.voucher.call` method.
+
 ```javascript
 const messageTx = api.message.send({
   destination: destination,
@@ -69,8 +76,10 @@ await voucherTx.signAndSend(account, (events) => {
 });
 ```
 
-### Send a reply with issued voucher
-It works in the same way as sending message with voucher
+### Send a Reply with an Issued Voucher
+
+Sending a reply with an issued voucher works in the same way as sending a message with a voucher.
+
 ```javascript
 const messageTx = api.message.sendReply(...);
 
@@ -80,7 +89,8 @@ await voucherTx.signAndSend(account, (events) => {
 });
 ```
 
-### Upload code with issued voucher
+### Upload Code with an Issued Voucher
+
 ```javascript
 const { extrinsic } = await api.code.upload(code);
 
@@ -90,8 +100,10 @@ await tx.signAndSend(account, (events) => {
 });
 ```
 
-### Update voucher
-The `api.voucher.update` can be used to update the voucher. All parameters in the 3rd argument are optional, but at least one parameter must be specified.
+### Update a Voucher
+
+The `api.voucher.update` method can be used to update a voucher. All parameters in the third argument are optional; however, at least one parameter must be specified.
+
 ```javascript
 const tx = await api.voucher.update(
   spenderAddress, 
@@ -105,21 +117,26 @@ const tx = await api.voucher.update(
 )
 ```
 
-### Revoke voucher
-The `api.voucher.revoke` is used to revoke an issued voucher. It's possible to revoke a voucher only after the validity period has expired.
+### Revoke a Voucher
+
+The `api.voucher.revoke` method is used to revoke an issued voucher. A voucher can only be revoked after its validity period has expired. Unused funds are returned to a voucher issuer.
+
 ```javascript
 const tx = api.voucher.revoke(spenderAddress, voucherId);
 tx.signAndSend(...);
 ```
 
-### Decline voucher
-The `api.voucher.decline` can be used to decline existing and not expired voucher. It will make the voucher expired
+### Decline a Voucher
+
+The `api.voucher.decline` method can be used to decline an existing voucher that has not yet expired. This action will mark the voucher as expired so you will be able to Revoke it.
+
 ```javascript
 const tx = api.voucher.decline(voucherId);
 tx.signAndSend(...);
 ```
 
-### Get the the voucher constants
+### Get Voucher Constants
+
 ```javascript
 // Minimum and maximum duration of the voucher in blocks
 const minBlocks = await api.voucher.minDuration();
