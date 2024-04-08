@@ -7,9 +7,9 @@ sidebar_label: Keystore Manager
 
 Command-line tools for developers remain an expansive subject. While these may not appeal to non-technical, modern browser users, command-line tools continue to play a pivotal role universally. This prevalence is partly because developing and maintaining user interfaces is time-consuming.
 
-For the [Vara Network](vara), the command-line tool, [`gcli`](gcli), has provided comprehensive functionality for interacting with the network. However, to simplify and manage growth, the keystore component has been separated and developed into a standalone, lightweight keyring implementation.
+For the [Vara Network](https://vara.network), the command-line tool, [`gcli`](https://crates.io/crates/gcli), has provided comprehensive functionality for interacting with the network. However, to simplify and manage growth, the keystore component has been separated and developed into a standalone, lightweight keyring implementation.
 
-[`Gring`](gring) is this command-line keyring implementation, designed specifically for managing Vara Network keypairs.
+[`Gring`](https://crates.io/crates/gring) is this command-line keyring implementation, designed specifically for managing Vara Network keypairs.
 
 ```text
 $ gring
@@ -63,15 +63,15 @@ $ gring new -p password my-first-wallet
 ```
 This command creates a keystore named `my-first-keystore` using the passphrase `password`. Delving into the details, the gring program performs the following actions:
 
-1. Generates a random [schnorrkel][schnorrkel] keypair.
+1. Generates a random [schnorrkel][https://github.com/w3f/schnorrkel] keypair.
 2. Encodes the keypair into a specific byte format termed **keypair-info**.
 
 ```text
 Keypair Info: [PAIR_HEADER, SECRET_KEY, DIVIDER, PUBLIC_KEY]
 ```
 
-3. Encrypt the `passphrase` with [scrypt][scrypt] to get a password for the secret box. 
-4. Pack the `keypair-info` in [NaCl Secretbox][nacl] with the passwored from `3.`
+3. Encrypt the `passphrase` with [scrypt][https://en.wikipedia.org/wiki/Scrypt] to get a password for the secret box. 
+4. Pack the `keypair-info` in [NaCl Secretbox][https://en.wikipedia.org/wiki/NaCl_(software)] with the passwored from `3.`
 
 After all, the encrypted keypair will be like:
 
@@ -111,11 +111,3 @@ This completes the process. Polkadot-JS adopts a similar approach, allowing keys
 ## And more ...
 
 Within the Polkadot ecosystem, there was no existing tool fulfilling this need, prompting the development of `gring`. `gring` serves as a command within `gcli`, sharing keystore paths. Ideally, `gring` can be utilized to manage Vara keys, and `gcli` can be used for interactions with the Vara network using stored keypairs.
-
-
-[vara]: https://vara.network
-[gcli]: https://crates.io/crates/gcli
-[gring]: https://crates.io/crates/gring
-[schnorrkel]: https://github.com/w3f/schnorrkel
-[scrypt]: https://en.wikipedia.org/wiki/Scrypt
-[nacl]: https://en.wikipedia.org/wiki/NaCl_(software)
