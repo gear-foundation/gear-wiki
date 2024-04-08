@@ -25,17 +25,19 @@ This opens up a wide range of possibilities for the implementation of functional
 
 Applications that use delayed messages in their business logic and their source code are shown in the [Program Examples](/examples/prerequisites.mdx) section. These include applications such as: [Tamagotchi battle](/examples/Gaming/tamagotchi-battle.md), [VaraTube](/examples/Infra/varatube.md), [Dynamic NFT](/examples/NFTs/dynamic-nft.md).
 
-## Payless Transactions
+## Gasless and Signlesss Transactions
 
-Gear Protocol's Payless Transactions feature introduces a groundbreaking concept to the world of Web3, revolutionizing communication within Gear-powered networks and increasing the adoption of decentralized applications, making their ease of use closer to Web2 services and applications.
+Gear Protocol's introduction of gasless transactions, along with signless user interactions, presents a groundbreaking concept in the Web3 sphere. This innovation is revolutionizing communication within Gear-powered networks and boosting the adoption of decentralized applications. By making their usability comparable to Web2 services and applications, Gear Protocol significantly enhances user experience in the decentralized space.
 
-This innovative feature empowers actors to issue [vouchers](/api/vouchers.md) that enable specific users to send messages to designated programs without incurring gas fees. This paradigm-shifting approach fosters a sponsorship-like environment for users, transforming the way interactions take place in the Web3 ecosystem. An example of using vouchers is shown in the [Battleship](/examples/Gaming/battleship.md) game. Users without tokens on their balance can make moves by sending messages to a program using a voucher.
+This innovative feature empowers actors to issue [vouchers](/api/vouchers.md) that enable specific users to send messages to designated programs without incurring gas fees. This paradigm-shifting approach fosters a sponsorship-like environment for users, transforming the way interactions take place in the Web3 ecosystem. 
 
-### Understanding Payless Transactions
+An example of using vouchers is shown in the [Battleship](/examples/Gaming/battleship.md) game. Users without tokens in their balance can interact with a program by sending messages using a voucher, freeing them from the need to sign every transaction when interacting with the blockchain.
 
-At the core of the Payless Transactions feature lies the concept of vouchers. These vouchers are crafted to grant users the ability to send messages to specific programs within the network, all without the burden of gas fees. Each voucher comes with a predetermined allocation of gas, empowering users to initiate interactions without worrying about transaction costs.
+### Understanding Gasless Transactions
 
-### How Payless Transactions Work
+At the core of the Gasless Transactions feature lies the concept of vouchers. These vouchers are crafted to grant users the ability to send messages to specific programs within the network, all without the burden of gas fees. Each voucher comes with a predetermined allocation of gas, empowering users to initiate interactions without worrying about transaction costs.
+
+### How Gasless Transactions Work
 
 1. **Voucher Issuance**: Actors within the Vara Network can issue vouchers, creating a sponsorship mechanism for users. These vouchers are tied to specific programs and include a designated gas allocation.
 
@@ -43,16 +45,18 @@ At the core of the Payless Transactions feature lies the concept of vouchers. Th
 
 3. **Gas-Free Interactions**: Users who has valid vouchers can enjoy gas-free interactions when sending messages. The allocated gas from the voucher covers the associated transaction costs.
 
-### Benefits of Payless Transactions
-
-- Encourages user participation by eliminating the gas fee barrier
-- Reduced сomplexity for dApps adoption
-- Fostering a more inclusive and vibrant network
-- More accessible and user-friendly (Web2-like approach)
-
-### How does it work?
-
 Learn how to create and use vouchers in [this article](/docs/api/vouchers.md).
+
+### Signless dApp Interactions
+
+The signless transaction introduces another feature: anyone can interact with the dApp without needing to sign in. The dApp transaction operates in a manner similar to the steps outlined above, with one difference — a voucher is issued not directly to a user, but to a temporarily created account (sub-account) to which the user grants temporary rights to sign transactions on their behalf in this application.
+
+Vara's signless transactions further enhance the user experience. These transactions allow users to interact with dApps for a certain period without the need to individually sign each transaction. By eliminating the repetitive signing process, this approach streamlines interactions and significantly improves the overall UX efficiency.
+
+### Benefits of Gasless and Signless Transactions
+
+- Improved User Experience: The signless and gasless features simplify the interaction process, making it more accessible and user-friendly, akin to Web2 experiences. This attracts new users who might be daunted by the complexities of token management.
+- Enhanced User Privacy: Users are not required to disclose their token balances when interacting with dApps, thus protecting their financial privacy. Individuals can contribute health data to research studies without revealing their identities. Additionally, signless dApps could facilitate anonymous voting systems, enhancing privacy and security for voters in elections.
 
 ## Use cases
 
@@ -75,7 +79,7 @@ Overall, the ability to update NFTs dynamically opens up a wide range of possibi
 
 Everyone knows that the most successful games are those that are exciting, that you play with pleasure.
 
-The success of such games depends on the right game mechanics established by the developers. The Gear Protocol offers a tool for developing such games and running them on a decentralized network, like [Vara](https://vara.network/). Features such as [delayed messages](/developing-contracts/delayed-messages.md), [payless transactions](/docs/api/vouchers.md), and [gas reservation](/developing-contracts/gas-reservation.md) become essential tools for developers aiming to create successful games on the Gear decentralized network.
+The success of such games depends on the right game mechanics established by the developers. The Gear Protocol offers a tool for developing such games and running them on a decentralized network, like [Vara](https://vara.network/). Features such as [delayed messages](/developing-contracts/delayed-messages.md), [gasless and signless transactions](/docs/api/vouchers.md), and [gas reservation](/developing-contracts/gas-reservation.md) become essential tools for developers aiming to create successful games on the Gear decentralized network.
 
 Here are a few of the many examples where such functionality would be useful:
 
