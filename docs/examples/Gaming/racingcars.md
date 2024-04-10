@@ -9,9 +9,11 @@ The Racing Cars game revolves around a competition of program algorithms. In ess
 
 ![Racing Cars](../img/racingcars.png)
 
-In a well-known Ethereum-based [0xMonaco](https://0xmonaco.ctf.paradigm.xyz/) game, central components were necessary to enable multi-block gameplay. However, in the case of Vara, the game operates <u>fully on-chain</u>, thanks to the asynchronous messaging paradigm. Various actors (programs) communicate with each other, and if a game round can't be accommodated within a single block, it carries over into subsequent ones.
+In a well-known Ethereum-based [0xMonaco](https://mirror.xyz/matchboxdao.eth/-xVvvo36y-LHvrW99heb4VJ-xAOWQ-BQAx6MCwHLWnk) game, participants upload their personalized program strategies, all managed by a central Master contract. Central components were necessary to enable multi-block gameplay.
 
-For this example version, the game was refined to enhance its appeal. The game entails a competition where a user races against two pre-uploaded programs on the blockchain. Three cars vie to be the first to cross the finish line in several moves. Both the user and the program algorithms decide their next move – whether to accelerate or sabotage another car to slow it down.
+However, in the case of Vara, the game operates **fully on-chain**, thanks to the asynchronous messaging paradigm. Various actors (programs) communicate with each other, and if a game round can't be accommodated within a single block, it carries over into subsequent ones.
+
+For this version of the game, improvements were made to increase its appeal. The game features a competition where a player races against two pre-loaded programs on the blockchain. Participants have three cars: the player's car is green, while the competitors' cars are white. Both the player and the program algorithms can choose to either accelerate, moving the car forward, or shoot at the nearest car to slow it down. The objective is to cross the finish line first to win the race.
 
 The source code for the game program and algorithm examples are available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/car-races).
 The [frontend application](https://github.com/gear-foundation/dapps/tree/master/frontend/apps/racing-car-game) facilitates gameplay and interacts with the programs.
