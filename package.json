@@ -16,15 +16,15 @@
     "check-code": "node script_checking_code.js"
   },
   "dependencies": {
-    "@docusaurus/core": "^3.1.1",
-    "@docusaurus/plugin-client-redirects": "^3.1.1",
-    "@docusaurus/plugin-content-docs": "^3.1.1",
-    "@docusaurus/plugin-google-analytics": "^3.1.1",
-    "@docusaurus/plugin-google-tag-manager": "^3.1.1",
-    "@docusaurus/preset-classic": "^3.1.1",
+    "@docusaurus/core": "^3.2.1",
+    "@docusaurus/plugin-client-redirects": "^3.2.1",
+    "@docusaurus/plugin-content-docs": "^3.2.1",
+    "@docusaurus/plugin-google-analytics": "^3.2.1",
+    "@docusaurus/plugin-google-tag-manager": "^3.2.1",
+    "@docusaurus/preset-classic": "^3.2.1",
     "@mdx-js/react": "^3.0.1",
     "@svgr/webpack": "^8.1.0",
-    "axios": "^1.6.7",
+    "axios": "^1.6.8",
     "clsx": "^2.1.0",
     "docusaurus-plugin-sass": "^0.2.5",
     "file-loader": "^6.2.0",
@@ -34,7 +34,7 @@
     "react-dom": "^18.2.0",
     "rehype-katex": "^7.0.0",
     "remark-math": "^6.0.0",
-    "sass": "^1.71.1",
+    "sass": "^1.74.1",
     "url-loader": "^4.1.1"
   },
   "browserslist": {
