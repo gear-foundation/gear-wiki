@@ -1,17 +1,17 @@
 ---
-sidebar_label: Battleship
+sidebar_label: Battleship Game
 sidebar_position: 1
 ---
 
 # Battleship Game
 
-![battleship](../img/battleship.png)
+![battleship](../../img/battleship.png)
 
 Battleship is a strategic board game in which two players compete to sink an opponent's fleet hidden from their view on the playing field. Players place their ships on a grid and then take turns shooting at squares on the opponent's field to locate and sink their ships. The goal of the game is to be the first to destroy all of your opponent's ships.
 
 The game of Battleship requires logical thinking, strategy, and luck. Players must position their ships to remain well hidden from the enemy, with each ship having a different length, adding variety to the tactics of the game.
 
-Battleship is a popular game that operates **entirely on-chain**. The primary game version does not have a backend or centralized components. However, there is an option to include [vouchers](../../api/vouchers.md) that allow users to play with a zero tokens on their balance (**gasless transactions**). This requires activation of the backend to issue vouchers (instructions for voucher integration will be detailed in the article).
+Battleship is a popular game that operates **entirely on-chain**. The primary game version does not have a backend or centralized components. However, there is an option to include [vouchers](../../../api/vouchers.md) that allow users to play with a zero tokens on their balance (**gasless transactions**). This requires activation of the backend to issue vouchers (instructions for voucher integration will be detailed in the article).
 
 Another feature of this example is an option that allos anyone to interact with the dApp without needing to sign in (**signless transactions**). The dApp transaction operates as usual with one difference — a voucher is issued not directly to a user, but to a temporarily created account (sub-account) to which the user grants temporary rights to sign transactions on their behalf in this application.
 
@@ -465,4 +465,4 @@ See also an example of the program testing implementation based on `gtest`: [gea
 For more details about testing programs written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.
 
 
-[def]: ../../api/vouchers.md
+[def]: ../../../api/vouchers.md
