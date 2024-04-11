@@ -11,7 +11,7 @@ Battleship is a strategic board game in which two players compete to sink an opp
 
 The game of Battleship requires logical thinking, strategy, and luck. Players must position their ships to remain well hidden from the enemy, with each ship having a different length, adding variety to the tactics of the game.
 
-Battleship is a popular game that operates **entirely on-chain**. The primary game version does not have a backend or centralized components. However, there is an option to include [vouchers](../../../api/vouchers.md) that allow users to play with a zero tokens on their balance (**gasless transactions**). This requires activation of the backend to issue vouchers (instructions for voucher integration will be detailed in the article).
+Battleship is a popular game that operates **entirely on-chain**. The primary game version does not have a backend or centralized components. However, there is an option to include [vouchers](docs/api/vouchers.md) that allow users to play with a zero tokens on their balance (**gasless transactions**). This requires activation of the backend to issue vouchers (instructions for voucher integration will be detailed in the article).
 
 Another feature of this example is an option that allos anyone to interact with the dApp without needing to sign in (**signless transactions**). The dApp transaction operates as usual with one difference — a voucher is issued not directly to a user, but to a temporarily created account (sub-account) to which the user grants temporary rights to sign transactions on their behalf in this application.
 

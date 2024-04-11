@@ -15,7 +15,7 @@ The frontend of a decentralized application (dApp) can interact seamlessly with 
 
 ### Creating Signless Sessions
 
-The process begins by generating a random [Keyring Pair](../../../api/keyring.md), which is stored in the browser's local storage as JSON. This pair is used for future signless sessions. A [voucher](../../../api/vouchers.md) is created for this keyring pair by the user's main account, with its balance being utilized for transactions on behalf of the pair. The cost for creating a voucher is currently set at 30 VARA.
+The process begins by generating a random [Keyring Pair](docs/api/keyring.md), which is stored in the browser's local storage as JSON. This pair is used for future signless sessions. A [voucher](docs/api/vouchers.md) is created for this keyring pair by the user's main account, with its balance being utilized for transactions on behalf of the pair. The cost for creating a voucher is currently set at 30 VARA.
 
 ```javascript
 const { extrinsic } = await api.voucher.issue(session.key, voucherValue, undefined, [programId]);
@@ -27,7 +27,7 @@ To establish a session, an array of the `CreateSession` message extrinsic and th
 
 ### Deleting Signless Sessions
 
-To delete a session, the `DeleteSessionFromAccount` message extrinsic is used. If a session's voucher needs to be revoked to return the balance to the account, it can only be done if the voucher is expired. A [decline](../../../api/vouchers#decline-a-voucher) transaction is required first to expire the voucher before revocation.
+To delete a session, the `DeleteSessionFromAccount` message extrinsic is used. If a session's voucher needs to be revoked to return the balance to the account, it can only be done if the voucher is expired. A [decline](docs/api/vouchers#decline-a-voucher) transaction is required first to expire the voucher before revocation.
 
 ### Simultanious Gasless and Signless Mode
 
