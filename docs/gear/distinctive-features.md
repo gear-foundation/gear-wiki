@@ -31,7 +31,7 @@ Gear Protocol's introduction of gasless transactions, along with signless user i
 
 This innovative feature empowers actors to issue [vouchers](/api/vouchers.md) that enable specific users to send messages to designated programs without incurring gas fees. This paradigm-shifting approach fosters a sponsorship-like environment for users, transforming the way interactions take place in the Web3 ecosystem. 
 
-An example of using vouchers is shown in the [Battleship](/examples/Gaming/battleship.md) game. Users without tokens in their balance can interact with a program by sending messages using a voucher, freeing them from the need to sign every transaction when interacting with the blockchain.
+An example of using vouchers is shown in the [Battleship](/examples/Gaming/Battleship/battleship.md) game. Users without tokens in their balance can interact with a program by sending messages using a voucher, freeing them from the need to sign every transaction when interacting with the blockchain.
 
 ### Understanding Gasless Transactions
 

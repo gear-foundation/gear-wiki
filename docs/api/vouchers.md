@@ -7,7 +7,7 @@ sidebar_label: Vouchers
 
 Vouchers empower users with gas-free interactions, allowing seamless messaging to specific programs from any actor.
 
-An example of using vouchers is shown in the [Battleship](/examples/Gaming/battleship.md) game. Users without tokens on their balance can make moves by sending messages to a program using a voucher.
+An example of using vouchers is shown in the [Battleship](docs/examples/Gaming/Battleship/battleship.md) game. Users without tokens on their balance can make moves by sending messages to a program using a voucher.
 
 ### Issue a Voucher
 
