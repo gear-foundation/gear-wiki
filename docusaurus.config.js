@@ -55,14 +55,14 @@ export default {
           label: 'Contribute',
           position: 'right',
         },
-        {
+        /*{
           type: 'docsVersionDropdown',
           position: 'right',
         },
         {
           type: 'localeDropdown',
           position: 'right',
-        },
+        },*/
       ],
     },
     prism: {
