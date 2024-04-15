@@ -33,19 +33,13 @@ This guide provides a general overview of running programs on the networks power
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
     ```
 
-3. Install a `stable` version of the toolchain with `rustup`, since Gear uses the most up-to-date features `rustup` provides. `stable` is the latest version compatible with Gear.
+3. Aa Wasm compiler is necessary for compiling a Rust program to Wasm, add it to the toolchain.
 
     ```bash
-    rustup toolchain install stable
+    rustup target add wasm32-unknown-unknown
     ```
 
-4. Aa Wasm compiler is necessary for compiling a Rust program to Wasm, add it to the toolchain.
-
-    ```bash
-    rustup target add wasm32-unknown-unknown --toolchain stable
-    ```
-
-5. Install the `wasm-proc` utility that optimizes compiled Wasm to be more compact.
+4. Install the `wasm-proc` utility that optimizes compiled Wasm to be more compact.
 
     ```bash
     cargo install --locked --git https://github.com/gear-tech/gear.git wasm-proc
@@ -141,7 +135,7 @@ This guide provides a general overview of running programs on the networks power
 
     ```bash
     RUSTFLAGS="-C link-args=--import-memory -C linker-plugin-lto" \
-        cargo +stable build --release --target=wasm32-unknown-unknown
+        cargo build --release --target=wasm32-unknown-unknown
     ```
 
     This command is quite verbose, so you can create cargo config and Rust toolchain override files to make it shorter. Create a `.cargo/config.toml` file in the `counter` directory with the following contents:

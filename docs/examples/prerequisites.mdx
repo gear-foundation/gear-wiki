@@ -56,8 +56,7 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
 Add Wasm target to your toolchain:
 ```bash
-rustup toolchain install stable
-rustup target add wasm32-unknown-unknown --toolchain stable
+rustup target add wasm32-unknown-unknown
 ```
 </td>
 </tr>
@@ -126,7 +125,7 @@ It is highly recommended to use Linux or macOS for compiling Gear node and progr
 | Gear node version | Runtime version | Gear libraries version | Rust toolchain version |
 | ----------------- | --------------- | ---------------------- | ---------------------- |
 | v1.2.1            | 1210            | tag = "v1.2.1"         | stable                 |
-| v1.1.1            | 1110            | tag = "v1.1.1"         | nightly-2023-09-18     |
+| v1.1.1            | 1110            | tag = "v1.1.1"         | stable                 |
 | v1.0.5            | 1050            | tag = "v1.0.5"         | nightly-2023-09-18     |
 | v1.0.2            | 1020            | tag = "v1.0.2"         | nightly-2023-10-14     |
 | v1.0.1            | 1010            | tag = "v1.0.1"         | nightly-2023-10-14     |
