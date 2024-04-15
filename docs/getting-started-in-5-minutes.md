@@ -33,7 +33,7 @@ This guide provides a general overview of running programs on the networks power
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
     ```
 
-3. Aa Wasm compiler is necessary for compiling a Rust program to Wasm, add it to the toolchain.
+3. A Wasm compiler is necessary for compiling a Rust program to Wasm, add it to the toolchain.
 
     ```bash
     rustup target add wasm32-unknown-unknown
