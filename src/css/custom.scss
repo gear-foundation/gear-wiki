@@ -73,6 +73,11 @@ div[class^="announcementBar"][role="banner"] {
 }
 
 [data-theme-vara=true] {
+  ::selection {
+    background-color: rgba(0, 0, 0, 0.07);
+    //background-color: rgba(0, 179, 135, 0.2);
+  }
+
   &:root {
     --ifm-background-color: #FFF;
     --ifm-color-content: #000;
