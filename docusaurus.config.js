@@ -152,4 +152,10 @@ export default {
       crossorigin: 'anonymous',
     },
   ],
+  scripts: [
+    {
+      src: 'https://raw.githubusercontent.com/davidjbradshaw/iframe-resizer/master/js/iframeResizer.contentWindow.min.js',
+      async: true,
+    },
+  ],
 };
