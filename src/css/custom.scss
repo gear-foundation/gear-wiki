@@ -1,10 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Anuphan:wght@100..700&display=swap');
+
 /* stylelint-disable docusaurus/copyright-header */
 /**
  * Any CSS included here will be global. The classic template
  * bundles Infima by default. Infima is a CSS framework designed to
  * work well for content-centric websites.
  */
-
 
 
 /* You can override the default Infima variables here. */
@@ -45,28 +46,98 @@ div[class^="announcementBar"][role="banner"] {
   font-size: 19px;
   font-weight: bold;
   padding: 7px 0px;
-  color: #00FFC4;
+  color: #00ffc4;
   background-color: #188269;
 
   a {
     text-decoration: none;
     color: #000000;
-    background-color: #03FFC4;
+    background-color: #03ffc4;
     padding: 2px 12px;
     border-radius: 4px;
     transition-duration: 1s;
 
     &:hover {
       /*color: var(--ifm-color-primary) !important; */
-      background-color: #00CDAD;
+      background-color: #00cdad;
     }
   }
 
   button.close {
-    color: #00FFC4;
+    color: #00ffc4;
   }
 }
 
 .hidden {
   display: none !important;
+}
+
+[data-theme-vara=true] {
+  &:root {
+    --ifm-background-color: #FFF;
+    --ifm-color-content: #000;
+    --ifm-color-primary: #0DA681;
+
+    --ifm-font-family-base: 'Anuphan';
+    --ifm-heading-font-family: 'Anuphan';
+    --ifm-font-family-monospace: 'Anuphan';
+
+    --ifm-heading-font-weight: 600;
+
+    --ifm-line-height-base: 1.625;
+    --ifm-font-size-base: 100%;
+
+    --ifm-heading-line-height: 1.3;
+
+    .markdown > h2 {
+      --ifm-h2-font-size: 1.25rem !important;
+    }
+    .markdown > h3 {
+      --ifm-h3-font-size: 1.25rem !important;
+    }
+
+    h1 {
+      --ifm-heading-line-height: 1.3;
+      font-size: 1.5rem;
+    }
+
+    @media screen and (min-width: 768px) {
+      --ifm-line-height-base: 1.3;
+      --ifm-font-size-base: 125%;
+
+      --ifm-h1-font-size: 28px !important;
+      --ifm-heading-line-height: 1.5;
+
+      .markdown > h2 {
+        --ifm-h2-font-size: 1.2rem !important;
+      }
+      .markdown > h3 {
+        --ifm-h3-font-size: 1.2rem !important;
+      }
+
+      h1 {
+        --ifm-heading-line-height: 1.5;
+        font-size: 28px;
+      }
+    }
+  }
+}
+
+[data-inner="true"] {
+  main {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  //.theme-doc-toc-desktop,
+  .theme-doc-toc-mobile,
+  .theme-doc-footer,
+  .theme-doc-breadcrumbs,
+  .pagination-nav,
+  .col.col--3,
+  .theme-doc-sidebar-container,
+  div[class^=announcementBar][role=banner],
+  .navbar {
+    display: none;
+  }
 }
