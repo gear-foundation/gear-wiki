@@ -4,7 +4,7 @@ sidebar_position: 8
 
 # Gas 预留
 
-Gas 预留是 Gear 协议的强大功能，它为智能合约编程和现代[用例](../gear/distinctive-features)提供了新方法。
+Gas 预留是 Gear 协议的强大功能，它为智能合约编程和现代[用例](/docs/gear/features/message-automation.md)提供了新方法。
 
 简单地说，程序可以使用之前预留的 gas 来发送消息，而不是使用当前处理的消息中的 gas。
 
