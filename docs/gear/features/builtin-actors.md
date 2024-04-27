@@ -6,7 +6,7 @@ sidebar_position: 4
 # Built-in Actors
 
 ## Overview
-[Built-In Actors](/docs/developing-contracts/builtinactors/builtinactors.md) are specialized entities within the Gear runtime that execute specific business logic when programs communicate with them via messages. This feature addresses a critical limitation: while users can directly interact with pallets through extrinsics like `bond`, `nominate`, `vote`, `transfer`, etc., programs within the Gear Protocol can only send messages, not extrinsics.
+[Built-In Actors](/docs/developing-contracts/builtinactors/builtinactors.md) are specialized entities within the Gear runtime that execute specific business logic when programs communicate with them via messages. This feature addresses a critical limitation: while users can directly interact with pallets through extrinsics like `bond`, `nominate`, `vote`, etc., programs within the Gear Protocol can only send messages, not extrinsics.
 
 ## Purpose and Operation of BIAs
 
