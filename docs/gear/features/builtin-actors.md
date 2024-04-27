@@ -29,7 +29,7 @@ BIAs allow programs to interact with existing Substrate pallets and others (like
 This provides dApp developers with a powerful mechanism for automating scenarios and implementing custom logic in programs. For instance, BIAs provides acceess to the `staking` pallet for programs, facilitating the creation of automated staking.
 
 ### Intensive Computations
-BIAs offload intensive computational tasks from the programs, efficiently handling them at the node level to minimize gas costs and execution time. This is crucial for operations that exceed the gas limit of a single block or require extensive computational resources, such as cryptographic verifications or neural network tasks.
+BIAs offload intensive computational tasks from the programs, efficiently handling them at the node level to minimize gas costs and execution time. This is crucial for operations that exceed the gas limit of a single block or require extensive computational resources, such as cryptographic verifications or neural network tasks. Some examples where BIAs can be theoretically used:
 - For instance, cryptographic computations like BLS signature verification. BIAs designed for such computations perform them efficiently and cost-effectively at the node level.
 - Simple operations like SHA-256 hashing are executed much faster through a BIA than in an on-chain program.
 - BIAs can also manage neural network operations, image generation, and pattern recognition from program inputs.
@@ -39,9 +39,6 @@ BIAs offload intensive computational tasks from the programs, efficiently handli
 A BIA pallet can implement a cross-chain bridge logic that receives messages from programs, queues them, and sends them to another network based on specific logic. After execution on the other side, the program receives a response indicating the success or failure of the operation. This eliminates the need for custom intermediary nodes or teleport programs.
 
 The BIA can also be used to accelerate primitives for verifying ZK proofs through ECC (Elliptic Curve Cryptography), performing these calculations efficiently at the node level because they are too intensive for on-chain execution within gas limits.
-
-### Arbitrary Storage
-If a dApp developer prefers not to write data directly into the on-chain program's memory, a BIA can serve as an efficient storage solution.
 
 ## Conclusion
 BIAs elevate the capabilities of programs (smart contracts) to the user level. Features typically implemented through pallets and accessible only through extrinsics are now available to programs. This includes using balances for governance voting, issuing vouchers, allowing other actors to perform operations on behalf of the program (proxying), conducting complex computations, and much more. This expansion significantly enhances the functionality and potential applications of blockchain programs.
