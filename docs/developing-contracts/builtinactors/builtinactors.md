@@ -22,5 +22,3 @@ Built-in actors each have a unique `BuiltinId`, similar to other actor addresses
 A set of unique `BuiltinActor`s is defined in the `pallet_gear_builtin_actor::Config` trait as an associated type — a tuple consisting of custom types, each of which must implement the `pallet_gear_builtin_actor::BuiltinActor` trait (similar to how migrations or signed extras are defined in the Runtime). These can be pallets (if access to on-chain storage is required) or any other custom types.
 
 The functionality provided by the `gear_builtin` pallet includes message routing to a specific built-in actor instead of stored programs. To achieve this, the actor must be registered with the `pallet_gear::Config::<T>::BuiltinRouter` associated type that implements the `pallet_gear::builtin::BuiltinRouter` trait and provides the `lookup()` function. This function is used to derive the respective `BuiltinId` based on the message's destination address (`ProgramId`).
-
-The pallet does not expose any dispatchable functions that can be called by users.
