@@ -7,11 +7,18 @@ sidebar_position: 11
 
 ![varaman](../img/vara-man.png)
 
-Vara-man is a classic arcade game, the main character is Vara mouse, who must collect all the coins in the allotted time. In the labyrinth, the main character will encounter cat enemies that must be avoided in order to survive and collect all the coins.
+Vara-Man is a classic arcade game where the player must collect all the coins in a maze within a set time and avoid enemies.
+
+The maze consists of three types of zones. The green zone is a rest area where enemies cannot enter, but it contains no coins. The blue zone is where players must collect available coins and avoid enemies. This zone offers many opportunities to evade enemies. The red zone, smaller in size, has fewer turns for escaping enemies, but it contains gold coins that provide more game points.
+
+The game has two modes: single-player, where a player can independently play and refine their skills.
+
+In the multiplayer mode, a tournament can be initiated where up to eight players can compete. The tournament winner receives the entire prize pool. One player creates a game lobby and sets the tournament properties - its duration, difficulty, and an entry fee that each player must pay upon entering the game, which constitutes the total prize fund. Other players join the game using the Vara address of the player who created the game.
+The entry fee can be set to zero, in which case the prize fund will also be empty.
 
 The source code is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/vara-man). This article describes the program interface, data structure, basic functions and explains their purpose. It can be used as is or modified to suit your own scenarios. The game has several reward modes, one of which requires connecting the fungible token program that needs to be uploaded separately.
 
-Also everyone can play the game via this link - [Play VaraMan](https://vara-man.vara.network/) (VARA tokens are requred for gas fees).
+Anyone can play the game via this link - [Play VaraMan](https://vara-man.vara.network/) (VARA tokens are requred for gas fees).
 
 ## How to run
 
