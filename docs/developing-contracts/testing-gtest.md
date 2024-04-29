@@ -79,32 +79,24 @@ gtest = { git = "https://github.com/gear-tech/gear.git", tag = "v1.1.1" }
     // String implementation means the input as hex (with or without "0x")
 
     // Numeric
-    let _ = Program::from_file_with_id(
-        &sys,
-        105,
-        "./target/wasm32-unknown-unknown/release/demo_ping.wasm",
-    );
-
+    let _ = ProgramBuilder::from_file("./target/wasm32-unknown-unknown/release/demo_ping.wasm")
+        .with_id(105)
+        .build(&sys);
+    
     // Hex with "0x"
-    let _ = Program::from_file_with_id(
-        &sys,
-        "0xe659a7a1628cdd93febc04a4e0646ea20e9f5f0ce097d9a05290d4a9e054df4e",
-        "./target/wasm32-unknown-unknown/release/demo_ping.wasm",
-    );
-
+    let _ = ProgramBuilder::from_file("./target/wasm32-unknown-unknown/release/demo_ping.wasm")
+        .with_id("0xe659a7a1628cdd93febc04a4e0646ea20e9f5f0ce097d9a05290d4a9e054df4e")
+        .build(&sys);
+    
     // Hex without "0x"
-    let _ = Program::from_file_with_id(
-        &sys,
-        "e659a7a1628cdd93febc04a4e0646ea20e9f5f0ce097d9a05290d4a9e054df5e",
-        "./target/wasm32-unknown-unknown/release/demo_ping.wasm",
-    );
-
+    let _ = ProgramBuilder::from_file("./target/wasm32-unknown-unknown/release/demo_ping.wasm")
+        .with_id("e659a7a1628cdd93febc04a4e0646ea20e9f5f0ce097d9a05290d4a9e054df5e")
+        .build(&sys);
+    
     // Array [u8; 32] (e.g. filled with 5)
-    let _ = Program::from_file_with_id(
-        &sys,
-        [5; 32],
-        "./target/wasm32-unknown-unknown/release/demo_ping.wasm",
-    );
+    let _ = ProgramBuilder::from_file("./target/wasm32-unknown-unknown/release/demo_ping.wasm")
+        .with_id([5; 32])
+        .build(&sys);
 
     // If you initialize program not in this scope, in cycle, in other conditions,
     // where you didn't save the structure, you may get the object from the system by id.
