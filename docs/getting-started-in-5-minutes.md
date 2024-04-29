@@ -8,7 +8,9 @@ sidebar_position: 4
 This guide provides a general overview of running programs on the networks powered by Gear Protocol (such as the [Vara Network](https://vara.network/)). It guides you through how to write a program, compile it to Wasm and deploy it to the Gear network.
 
 :::important
- Attention developers! Want to take your blockchain development skills to the next level? Join **[Gear Academy's](https://academy.gear.foundation/)** free course, "Gear Smart Contract Developer." In this comprehensive course, you'll learn the ins and outs of developing on the Gear Protocol, from deploying programs onto the blockchain and interacting with them, to testing your programs on the Gear Network. You'll also gain hands-on experience navigating the `@gear-js` library for interacting with program on the client side and developing real-world applications, including programs and frontends. Don't miss this opportunity to become a pro Gear blockchain developer. Enroll now in Gear Academy's **"[Gear Smart Contract Developer](https://academy.gear.foundation/course/tamagotchi)"** course!
+Want to take your blockchain development skills to the next level? Join **[Gear Academy's](https://academy.gear.foundation/)** free courses. Start from scratch with our [Beginner Course](https://academy.gear.foundation/courses/basic_course) or explore the implementation of programs using Gear technologies with the [Intermediate Course](https://academy.gear.foundation/courses/intermediate-course). More courses are being developed.
+
+Don't miss this opportunity to become a pro Gear blockchain developer. Enroll now in Gear Academy's courses!
 :::
 
 ## Prerequisites
