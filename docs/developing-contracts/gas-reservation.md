@@ -4,7 +4,7 @@ sidebar_position: 8
 
 # Gas Reservation
 
-Gas reservation is the powerful feature of Gear Protocol that enables the new approach programming and modern [use cases](../gear/distinctive-features).
+Gas reservation is the powerful feature of Gear Protocol that enables the new approach programming and modern [use cases](/docs/gear/features/message-automation.md).
 
 Briefly, a program can send a message using gas that was reserved before instead of using gas from the currently processing message.
 
