@@ -15,7 +15,9 @@ After the game starts, all moves in the game take place automatically, but the U
 
 ![img alt](../img/monopoly-1.png)
 
-To launch the game, you need to:
+Everyone can play the game via this link - [Play Syndote](https://syndote.vara.network/) (VARA tokens are required for gas fees).
+
+To launch the game locally, you need to:
 
 - ⚒️ Build Master and Player programs
 - 🏗️ Upload the programs to the network
