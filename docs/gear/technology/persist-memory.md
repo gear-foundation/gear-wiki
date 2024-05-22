@@ -4,6 +4,8 @@ sidebar_label: Persistent Memory
 sidebar_position: 4
 ---
 
+# Persistent Memory
+
 Another distinguished feature of the Gear Protocol is the Persistent memory approach. It is what makes development easier, removes a lot of complexity and makes protocol memory management match real-life hardware and operating systems.
 
 Programs running in Gear Networks don’t use storage but rather their full state is persisted which ensures much less API surface for blockchain context. It avoids domain-specific language features as well as allows using much more complex language constructs — persisted boxed closures, futures compositors, etc.
@@ -16,7 +18,7 @@ Gear instance holds individual memory space per program and guarantees its persi
 
 A program can allocate the required amount of memory in blocks of 64KB. Each memory block allocation requires a gas fee. Each page (64KB) is stored separately on the distributed database backend, but at the run time, Gear node constructs continuous runtime memory and allows programs to run on it without reloads.
 
-# Memory parallelism
+## Memory parallelism
 
 Individual isolated memory space per program allows parallelization of message processing on a Gear node. Number of parallel processing streams equals the number of CPU cores. Each stream processes messages intended for a defined set of programs. It relates to messages sent from other programs or from outside (user’s transactions).
 
