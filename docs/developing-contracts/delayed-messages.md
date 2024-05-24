@@ -5,7 +5,7 @@ sidebar_position: 9
 
 # Delayed messages for programs automation
 
-The usual way that smart contracts on other blockchains continue to function is by relying on external, centralized resources. This means that the code of these contracts will not run and make changes to the blockchain's state until it is triggered by an on-chain transaction.
+The usual way that smart contracts on other blockchains continue to function is by relying on external, centralized resources. This means that the code of these contracts will not run and make changes to the blockchain's state until it is triggered by an off-chain transaction.
 
 The external transaction serves as a "poke" to activate the smart contract and initiate its logic. For instance, someone can start an auction by sending a message to the auction contract. When the auction time has passed, the contract will need to process the result of the auction. However, this will not happen until someone sends the appropriate message to the contract to trigger this action.
 
