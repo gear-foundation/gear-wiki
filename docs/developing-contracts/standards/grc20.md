@@ -7,6 +7,8 @@ sidebar_position: 1
 
 The Gear Fungible Token Standard provides a unified API for smart contracts to implement token functionalities. It encompasses critical operations like token transfer and approvals for third-party spending on the blockchain. Below, we detail the contract state, its interface, and key methods to facilitate these operations.
 
+An example implementation of the GRC-20 standard is available on [GitHub](https://github.com/gear-foundation/standards/tree/master/gear-erc20).
+
 ## Contract State Definition
 
 ```rust
