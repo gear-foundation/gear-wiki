@@ -54,11 +54,13 @@ or
 
 **Linux x86-64**: [gear-v1.1.1-x86_64-unknown-linux-gnu.tar.xz](https://get.gear.rs/gear-v1.1.1-x86_64-unknown-linux-gnu.tar.xz)
 
-You can try to run the node:
+You can try to run the node, Run a local node in development mode for testing purposes:
 
 ```
 ❯ ./gear --version
 gear 1.1.1-33ee05d5aab
+
+❯ ./gear --dev
 ```
 
 </TabItem>
@@ -171,7 +173,6 @@ async fn test_example() -> Result<()> {
             vec![],
             0,
             true,
-            None,
         )
         .await?;
 
@@ -192,7 +193,7 @@ async fn test_example() -> Result<()> {
 
     // Calculate gas amount needed for handling the message
     let gas_info = api
-        .calculate_handle_gas(None, program_id, payload.clone(), 0, true, None)
+        .calculate_handle_gas(None, program_id, payload.clone(), 0, true)
         .await?;
 
     // Send the PING message
