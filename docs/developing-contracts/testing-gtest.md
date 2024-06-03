@@ -220,56 +220,56 @@ gtest = { git = "https://github.com/gear-tech/gear.git", tag = "v1.1.1" }
     // Same for the timestamp. Note, that for now 1 block in Gear network is 1 sec duration.
     sys.spend_blocks(150);
 ```
-<!--
-- Reading the program state:
-```rust
-    // To read the program state you need to call one of two program's functions:
-    // `meta_state()` or `meta_state_with_bytes()`.
-    //
-    // The methods require the payload as the input argument.
-    //
-    // The first one requires payload to be CODEC Encodable, while the second requires payload
-    // implement `AsRef<[u8]>`, that means to be able to represent as bytes.
-    //
-    // Let we have the following program state and `meta_state` function:
-    #[derive(Encode, Decode, TypeInfo)]
-    pub struct ContractState {
-        a: u128,
-        b: u128,
-    }
 
-    pub enum State {
-        A,
-        B,
-    }
+[//]: # (- Reading the program state:)
+[//]: # (```rust)
+[//]: # (    // To read the program state you need to call one of two program's functions:)
+[//]: # (    // `meta_state&#40;&#41;` or `meta_state_with_bytes&#40;&#41;`.)
+[//]: # (    //)
+[//]: # (    // The methods require the payload as the input argument.)
+[//]: # (    //)
+[//]: # (    // The first one requires payload to be CODEC Encodable, while the second requires payload)
+[//]: # (    // implement `AsRef<[u8]>`, that means to be able to represent as bytes.)
+[//]: # (    //)
+[//]: # (    // Let we have the following program state and `meta_state` function:)
+[//]: # (    #[derive&#40;Encode, Decode, TypeInfo&#41;])
+[//]: # (    pub struct ContractState {)
+[//]: # (        a: u128,)
+[//]: # (        b: u128,)
+[//]: # (    })
+[//]: # ()
+[//]: # (    pub enum State {)
+[//]: # (        A,)
+[//]: # (        B,)
+[//]: # (    })
+[//]: # ()
+[//]: # (    pub enum StateReply {)
+[//]: # (        A&#40;u128&#41;,)
+[//]: # (        B&#40;u128&#41;,)
+[//]: # (    })
+[//]: # ()
+[//]: # (    #[no_mangle])
+[//]: # (    unsafe extern "C" fn meta_state&#40;&#41; -> *mut [i32; 2] {)
+[//]: # (        let query: State = msg::load&#40;&#41;.expect&#40;"Unable to decode `State`"&#41;;)
+[//]: # (        let encoded = match query {)
+[//]: # (            State::A => StateReply::A&#40;STATE.a&#41;,)
+[//]: # (            State::B => StateReply::B&#40;STATE.b&#41;,)
+[//]: # (        }.encode&#40;&#41;;)
+[//]: # (        gstd::util::to_leak_ptr&#40;encoded&#41;)
+[//]: # (    })
+[//]: # ()
+[//]: # (    // Let's send a query from gtest:)
+[//]: # (    let reply: StateReply = self)
+[//]: # (            .meta_state&#40;&State::A&#41;)
+[//]: # (            .expect&#40;"Meta_state failed"&#41;;)
+[//]: # (    let expected_reply = StateReply::A&#40;10&#41;;)
+[//]: # (    assert_eq!&#40;reply,expected_reply&#41;;)
+[//]: # ()
+[//]: # (    // If your `meta_state` function doesn't require input payloads,)
+[//]: # (    // you can use `meta_state_empty` or `meta_state_empty_with_bytes` functions)
+[//]: # (    // without any arguments.)
+[//]: # (```)
 
-    pub enum StateReply {
-        A(u128),
-        B(u128),
-    }
-
-    #[no_mangle]
-    unsafe extern "C" fn meta_state() -> *mut [i32; 2] {
-        let query: State = msg::load().expect("Unable to decode `State`");
-        let encoded = match query {
-            State::A => StateReply::A(STATE.a),
-            State::B => StateReply::B(STATE.b),
-        }.encode();
-        gstd::util::to_leak_ptr(encoded)
-    }
-
-    // Let's send a query from gtest:
-    let reply: StateReply = self
-            .meta_state(&State::A)
-            .expect("Meta_state failed");
-    let expected_reply = StateReply::A(10);
-    assert_eq!(reply,expected_reply);
-
-    // If your `meta_state` function doesn't require input payloads,
-    // you can use `meta_state_empty` or `meta_state_empty_with_bytes` functions
-    // without any arguments.
-```
--->
 - Balance:
 ```rust
     // If you need to send a message with value you have to mint balance for the message sender:

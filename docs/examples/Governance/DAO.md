@@ -21,9 +21,6 @@ Anyone can easily create their own DAO application and run it on the Gear Networ
 
 This article explains the programming interface, data structure, basic functions, and their purposes. You can use it as-is or modify it to suit your own scenarios.
 
-<!-- In addition, Gear provides an example implementation of the DAO user interface to demonstrate its interaction with the program in the Gear Network. You can watch a video on how to get the DAO application up and running and its capabilities here: **https://youtu.be/6lxr7eojADw**. The source code for the DAO application is available on [GitHub](https://github.com/gear-foundation/dapps-dao-app).
--->
-
 ## Logic
 The program has the following structs:
 
@@ -213,50 +210,77 @@ ProcessProposal {
     did_pass: bool,
 },
 ```
-<!--
-## Consistency of program states
 
-The `DAO` program interacts with the `fungible token` program. Every transaction that alters the states of the DAO and the fungible token is recorded in the state until it is finalized. Users can complete a pending transaction by sending a `Continue` message along with the transaction ID. The idempotency feature of the fungible token program allows transactions to be restarted without duplicating changes, ensuring the state consistency of these two programs.
+[//]: # ()
+[//]: # (## Consistency of program states)
 
+[//]: # ()
+[//]: # (The `DAO` program interacts with the `fungible token` program. Every transaction that alters the states of the DAO and the fungible token is recorded in the state until it is finalized. Users can complete a pending transaction by sending a `Continue` message along with the transaction ID. The idempotency feature of the fungible token program allows transactions to be restarted without duplicating changes, ensuring the state consistency of these two programs.)
 
-## User interface
+[//]: # ()
+[//]: # ()
+[//]: # (## User interface)
 
-A [Ready-to-Use application](https://dao.gear-tech.io/) example provides a user interface that interacts with [DAO](https://github.com/gear-foundation/dapps-dao-light) and [gFT](https://github.com/gear-foundation/dapps-fungible-token) programs.
+[//]: # ()
+[//]: # (A [Ready-to-Use application]&#40;https://dao.gear-tech.io/&#41; example provides a user interface that interacts with [DAO]&#40;https://github.com/gear-foundation/dapps-dao-light&#41; and [gFT]&#40;https://github.com/gear-foundation/dapps-fungible-token&#41; programs.)
 
-Gear Fundible Token enables creation of utility token DAO, check [this article](../Standards/gft-20) for details.
+[//]: # ()
+[//]: # (Gear Fundible Token enables creation of utility token DAO, check [this article]&#40;../Standards/gft-20&#41; for details.)
 
-This video demonstrates the entire configuration and user interaction workflow: **https://youtu.be/6lxr7eojADw**
+[//]: # ()
+[//]: # (This video demonstrates the entire configuration and user interaction workflow: **https://youtu.be/6lxr7eojADw**)
 
-![img alt](./img/dao-1.jpg)
+[//]: # ()
+[//]: # (![img alt]&#40;./img/dao-1.jpg&#41;)
 
-A DAO application source code is available on [GitHub](https://github.com/gear-foundation/dapps-dao-app).
+[//]: # ()
+[//]: # (A DAO application source code is available on [GitHub]&#40;https://github.com/gear-foundation/dapps-dao-app&#41;.)
 
-### Configure basic dApp in .env:
+[//]: # ()
+[//]: # (### Configure basic dApp in .env:)
 
-```sh
-REACT_APP_NETWORK
-REACT_APP_CONTRACT_ERC
-REACT_APP_CONTRACT_DAO
-```
+[//]: # ()
+[//]: # (```sh)
 
-- `REACT_APP_NETWORK` is Gear network address (wss://rpc-node.gear-tech.io:443)
-- `REACT_APP_CONTRACT_ERC` is Fundible Token contract address
-- `REACT_APP_CONTRACT_DAO` is DAO program address
+[//]: # (REACT_APP_NETWORK)
 
-An example is available: [here](https://github.com/gear-foundation/dapps-dao-app/blob/master/.env.example)
+[//]: # (REACT_APP_CONTRACT_ERC)
 
-### How to run
+[//]: # (REACT_APP_CONTRACT_DAO)
 
-Install required dependencies:
-```sh
-yarn
-```
+[//]: # (```)
 
-Run:
-```sh
-yarn run start
-```
--->
+[//]: # ()
+[//]: # (- `REACT_APP_NETWORK` is Gear network address &#40;wss://rpc-node.gear-tech.io:443&#41;)
+
+[//]: # (- `REACT_APP_CONTRACT_ERC` is Fundible Token contract address)
+
+[//]: # (- `REACT_APP_CONTRACT_DAO` is DAO program address)
+
+[//]: # ()
+[//]: # (An example is available: [here]&#40;https://github.com/gear-foundation/dapps-dao-app/blob/master/.env.example&#41;)
+
+[//]: # ()
+[//]: # (### How to run)
+
+[//]: # ()
+[//]: # (Install required dependencies:)
+
+[//]: # (```sh)
+
+[//]: # (yarn)
+
+[//]: # (```)
+
+[//]: # ()
+[//]: # (Run:)
+
+[//]: # (```sh)
+
+[//]: # (yarn run start)
+
+[//]: # (```)
+
 
 ## Program metadata and state
 Metadata interface description:
@@ -318,7 +342,6 @@ The source code for this DAO program example and its testing implementation are 
 
 The extended version of DAO that includes admin, membership proposals and delegated voting can be found at [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/dao).
 
-<!--The application source code is available in: [https://github.com/gear-foundation/dapps-dao-app](https://github.com/gear-foundation/dapps-dao-app).
--->
+[//]: # (The application source code is available in: [https://github.com/gear-foundation/dapps-dao-app]&#40;https://github.com/gear-foundation/dapps-dao-app&#41;.)
 
 For more details about testing programs written on Gear, refer to the [Program Testing](/docs/developing-contracts/testing) article.
