@@ -114,9 +114,7 @@ Program deployment is a process of storing the program's Wasm code on the blockc
 
 If initialization fails (for example, the program panics in the `init()` function), the program is not deployed and the user gets an error.
 
-<!--
-Also, it is important to underline that someone should pay rent for keeping the program in the blockchain after a free period that is equal to 5 million blocks (it is about 2 months for networks with 1 block per second production). It is possible to add funds for rent using the [`pay_program_rent`](https://docs.gear.rs/pallet_gear/pallet/struct.Pallet.html#method.pay_program_rent) extrinsic (by the user) or with the [`gstd::exec::pay_program_rent`](https://docs.gear.rs/gstd/exec/fn.pay_program_rent.html) API function (by the program). If the rent is not paid, the program state changes to pause, its persistent memory is removed from the storage and the program can't be executed. The program can be resumed by uploading its memory pages to the blockchain and paying the rent. 
--->
+[//]: # (Also, it is important to underline that someone should pay rent for keeping the program in the blockchain after a free period that is equal to 5 million blocks &#40;it is about 2 months for networks with 1 block per second production&#41;. It is possible to add funds for rent using the [`pay_program_rent`]&#40;https://docs.gear.rs/pallet_gear/pallet/struct.Pallet.html#method.pay_program_rent&#41; extrinsic &#40;by the user&#41; or with the [`gstd::exec::pay_program_rent`]&#40;https://docs.gear.rs/gstd/exec/fn.pay_program_rent.html&#41; API function &#40;by the program&#41;. If the rent is not paid, the program state changes to pause, its persistent memory is removed from the storage and the program can't be executed. The program can be resumed by uploading its memory pages to the blockchain and paying the rent.)
 
 You can find more details about program deployment in the [Upload Program](./deploy.md) section.
 

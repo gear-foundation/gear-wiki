@@ -406,7 +406,7 @@ At the session's conclusion, whether it's the end of the indicated window or whe
 
 To initiate a session, a player sends a message to the program (assuming the program supports this message type):
 
-<!-- TODO: Uncomment `title` after adding the code to the master branch -->
+[//]: # ( TODO: Uncomment `title` after adding the code to the master branch )
 ```rust #title="battleship/src/contract.rs"
 CreateSession {
     key: ActorId,
@@ -421,7 +421,7 @@ where:
 
 A session is structured as follows, allowing a player to set it up before starting the game:
 
-<!-- TODO: Uncomment `title` after adding the code to the master branch -->
+[//]: # ( TODO: Uncomment `title` after adding the code to the master branch )
 ```rust #title="battleship/src/contract.rs"
 pub struct Session {
     // the address of the player who will play on behalf of the user
