@@ -1,8 +1,8 @@
-import {themes as prismThemes} from 'prism-react-renderer';
-import redirects from './redirects.json';
+import {themes as prismThemes} from 'prism-react-renderer'
+import redirects from './redirects.json'
 
-import remarkMath from 'remark-math';
-import rehypeKatex from 'rehype-katex';
+import remarkMath from 'remark-math'
+import rehypeKatex from 'rehype-katex'
 
 /** @type {import('@docusaurus/types').Config} */
 export default {
@@ -23,7 +23,7 @@ export default {
       isCloseable: false,
     },
     colorMode: {
-      defaultMode: 'dark'
+      defaultMode: 'dark',
     },
     image: 'img/ogimage.jpg',
     navbar: {
@@ -31,7 +31,7 @@ export default {
       logo: {
         alt: 'Gear documentation portal',
         src: 'img/logo-black.svg',
-        srcDark: "img/logo-white.svg"
+        srcDark: 'img/logo-white.svg',
       },
       items: [
         {
@@ -71,9 +71,9 @@ export default {
       additionalLanguages: ['rust', 'toml'],
     },
     algolia: {
-      appId: "OI5YH8L74V",
-      apiKey: "70e750fb6f98f28f089ca6f0c7cd86a6",
-      indexName: "gear-tech",
+      appId: 'OI5YH8L74V',
+      apiKey: '70e750fb6f98f28f089ca6f0c7cd86a6',
+      indexName: 'gear-tech',
       contextualSearch: true,
       searchParameters: {},
       searchPagePath: 'search',
@@ -89,8 +89,8 @@ export default {
     [
       '@docusaurus/plugin-client-redirects',
       {
-        redirects: redirects
-      }
+        redirects: redirects,
+      },
     ],
   ],
   presets: [
@@ -140,8 +140,8 @@ export default {
       },
       'zh-cn': {
         label: '简体中文',
-      }
-    }
+      },
+    },
   },
   stylesheets: [
     {
@@ -153,9 +153,13 @@ export default {
     },
   ],
   scripts: [
+    // {
+    //   src: 'https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.3.9/iframeResizer.contentWindow.min.js',
+    //   defer: true,
+    // },
     {
-      src: 'https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.3.9/iframeResizer.contentWindow.min.js',
+      src: 'https://cdn.jsdelivr.net/npm/@iframe-resizer/child',
       defer: true,
     },
   ],
-};
+}
