@@ -79,9 +79,9 @@ div[class^="announcementBar"][role="banner"] {
   }
 
   &:root {
-    --ifm-background-color: #FFF;
+    --ifm-background-color: #fff;
     --ifm-color-content: #000;
-    --ifm-color-primary: #0DA681;
+    --ifm-color-primary: #0da681;
 
     --ifm-font-family-base: 'Anuphan';
     --ifm-heading-font-family: 'Anuphan';
@@ -94,9 +94,24 @@ div[class^="announcementBar"][role="banner"] {
 
     --ifm-heading-line-height: 1.3;
 
+    main > .container.padding-top--md.padding-bottom--lg {
+      padding: 0 !important;
+      justify-content: center;
+
+      > .row {
+        margin: 0 !important;
+        justify-content: center;
+
+        > .col {
+          padding: 0 !important;
+        }
+      }
+    }
+
     .markdown > h2 {
       --ifm-h2-font-size: 1.25rem !important;
     }
+
     .markdown > h3 {
       --ifm-h3-font-size: 1.25rem !important;
     }
