@@ -2,25 +2,29 @@ document.addEventListener('DOMContentLoaded', () => {
   const params = new Proxy(new URLSearchParams(window.location.search), {
     get: (searchParams, prop) => searchParams.get(prop),
   })
-  const isVaraTheme = params['docusaurus-data-theme-vara'] // Get the value of "docusaurus-data-theme-vara"
+  const isVaraTheme = params['docusaurus-data-theme-vara']
+
+  const transformLinks = (links) => {
+    Array.from(links).forEach(a => {
+      a.setAttribute('target', '_blank')
+      a.addEventListener('click', (e) => {
+        e.preventDefault()
+        window.open(e.target.href, '_blank')
+      })
+    })
+  }
+
+  const checkLinks = (interval) => {
+    const anchors = document.body.querySelectorAll('main article a[href^="/docs"]')
+
+    if (anchors.length) {
+      transformLinks(anchors)
+      clearInterval(interval)
+    }
+  }
 
   if (isVaraTheme) {
     const anchors = document.body.querySelectorAll('main a[href^="/docs"]')
-
-    const transformLinks = (interval) => {
-      const anchors = document.body.querySelectorAll('main a[href^="/docs"]')
-
-      if (anchors.length) {
-        Array.from(anchors).forEach(a => {
-          a.setAttribute('target', '_blank')
-          a.addEventListener('click', (e) => {
-            e.preventDefault()
-            window.open(e.target.href, '_blank')
-          })
-        })
-        clearInterval(interval)
-      }
-    }
 
     if (!anchors.length) {
       let count = 0
@@ -30,9 +34,9 @@ document.addEventListener('DOMContentLoaded', () => {
           clearInterval(interval)
           return
         }
-        transformLinks(interval)
+        checkLinks(interval)
         count++
       }, 1000)
-    }
+    } else transformLinks(anchors)
   }
 })
