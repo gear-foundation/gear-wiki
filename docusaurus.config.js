@@ -157,6 +157,10 @@ export default {
       src: 'https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.3.11/iframeResizer.contentWindow.min.js',
       defer: true,
     },
+    {
+      src: '/js/with-iframe-resizer.js',
+      defer: true,
+    },
     // {
     //   src: 'https://cdn.jsdelivr.net/npm/@iframe-resizer/child',
     //   defer: true,
