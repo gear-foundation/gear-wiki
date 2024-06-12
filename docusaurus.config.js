@@ -153,13 +153,13 @@ export default {
     },
   ],
   scripts: [
-    // {
-    //   src: 'https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.3.9/iframeResizer.contentWindow.min.js',
-    //   defer: true,
-    // },
     {
-      src: 'https://cdn.jsdelivr.net/npm/@iframe-resizer/child',
+      src: 'https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.3.11/iframeResizer.contentWindow.min.js',
       defer: true,
     },
+    // {
+    //   src: 'https://cdn.jsdelivr.net/npm/@iframe-resizer/child',
+    //   defer: true,
+    // },
   ],
 }
