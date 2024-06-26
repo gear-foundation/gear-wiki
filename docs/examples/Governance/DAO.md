@@ -39,7 +39,7 @@ struct Dao {
 ```
 where:
 
-`approved_token_program_id` - the reference to the token contract ([gFT20](../Standards/gft-20.md)) that users use as pledge to get the share in the DAO.
+`approved_token_program_id` - the reference to the token contract ([VFT](../Standards/vft.md)) that users use as pledge to get the share in the DAO.
 
 `period_duration` - the smallest unit time interval for the DAO, in ms.
 
@@ -225,7 +225,7 @@ ProcessProposal {
 [//]: # (A [Ready-to-Use application]&#40;https://dao.gear-tech.io/&#41; example provides a user interface that interacts with [DAO]&#40;https://github.com/gear-foundation/dapps-dao-light&#41; and [gFT]&#40;https://github.com/gear-foundation/dapps-fungible-token&#41; programs.)
 
 [//]: # ()
-[//]: # (Gear Fundible Token enables creation of utility token DAO, check [this article]&#40;../Standards/gft-20&#41; for details.)
+[//]: # (Gear Fundible Token enables creation of utility token DAO, check [this article]&#40;../Standards/vft&#41; for details.)
 
 [//]: # ()
 [//]: # (This video demonstrates the entire configuration and user interaction workflow: **https://youtu.be/6lxr7eojADw**)

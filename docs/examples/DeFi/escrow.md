@@ -6,7 +6,7 @@ sidebar_position: 2
 
 ![escrow](../img/escrow.png)
 
-An escrow is a special wallet to which certain assets (e.g., money or stocks) are deposited and stored until specific conditions are met. In terms of programs, an escrow is a wallet stored on a blockchain that, like a traditional escrow, can receive assets (e.g., cryptocurrency or fungible tokens, such as [Gear fungible tokens - gFT](../Standards/gft-20.md) in this example) from one user and, when certain conditions are met, send them to another.
+An escrow is a special wallet to which certain assets (e.g., money or stocks) are deposited and stored until specific conditions are met. In terms of programs, an escrow is a wallet stored on a blockchain that, like a traditional escrow, can receive assets (e.g., cryptocurrency or fungible tokens, such as [Vara fungible tokens - VFT](../Standards/vft.md) in this example) from one user and, when certain conditions are met, send them to another.
 
 - Program source code is avalible on [Github](https://github.com/gear-foundation/dapps/tree/master/contracts/escrow)
 - dApp UI [Github](https://github.com/gear-foundation/dapps/tree/master/frontend/apps/escrow)

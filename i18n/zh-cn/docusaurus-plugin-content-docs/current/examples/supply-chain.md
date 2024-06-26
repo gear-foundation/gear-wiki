@@ -13,7 +13,7 @@ sidebar_position: 10
 
 * 每个新产生的项目会得到 NFT（在 Gear 的上下文中--[gNFT token](../Standards/gnft-721.md) 和 NFT 相关的 ID。然后，随着物品在供应链上的移动，物品的 NFT 在供应链程序、物品的生产商和未来的分销商、零售商和最终消费者之间转移。
 * 任何知道物品 ID 的人都可以获取物品信息
-* 销售、购买、交付使用 [gFT 代币](../Standards/gft-20)。
+* 销售、购买、交付使用 [VFT 代币](../Standards/vft)。
 
 ItemInfo 结构如下：
 

@@ -108,8 +108,8 @@
         "from": "/examples/ping"
     },
     {
-        "to": "/docs/examples/Standards/gft-20",
-        "from": "/examples/gft-20"
+        "to": "/docs/examples/Standards/vft",
+        "from": "/examples/vft"
     },
     {
         "to": "/docs/examples/Standards/gnft-721",
@@ -252,11 +252,11 @@
         "from": "/general/dao"
     },
     {
-        "to": "/docs/examples/Standards/gft-20",
+        "to": "/docs/examples/Standards/vft",
         "from": "/examples/erc20"
     },
     {
-        "to": "/docs/examples/Standards/gft-20",
+        "to": "/docs/examples/Standards/vft",
         "from": "/docs/examples/erc20"
     },
     {
@@ -264,8 +264,8 @@
         "from": "/ping"
     },
     {
-        "to": "/docs/examples/Standards/gft-20",
-        "from": "/gft-20"
+        "to": "/docs/examples/Standards/vft",
+        "from": "/vft"
     },
     {
         "to": "/docs/examples/Standards/gnft-721",

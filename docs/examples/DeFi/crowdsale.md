@@ -11,7 +11,7 @@ A public offering to help build brand-new cryptocurrency or other digital assets
 
 The example of a crowdsale program implementation described in this article is just one of many decentralized applications that can be implemented and launched on Gear. This article explains the programming interface, data structure, basic functions and their purposes. You can use it as-is or modify it to suit your scenarios. Anyone can easily create their crowdsale application and run it on a Gear-powered network.
 
-The initial resources used to acquire tokens are determined by the Gear fungible tokens contract - [gFT](../Standards/gft-20). The program's source code is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/crowdsale).
+The initial resources used to acquire tokens are determined by the Vara fungible tokens contract - [VFT](../Standards/vft). The program's source code is available on [GitHub](https://github.com/gear-foundation/dapps/tree/master/contracts/crowdsale).
 
 ## Interface
 ### Source files
