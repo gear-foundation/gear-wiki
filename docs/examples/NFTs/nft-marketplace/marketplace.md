@@ -116,7 +116,7 @@ The marketplace program is initialized with the following fields;
 - `items` - listed NFTs;
 - `approved_nft_contracts` - NFT contracts accounts that can be listed on the marketplace;
 - `approved_ft_contracts` - fungible token accounts for which it is possible to buy marketplace items;
-- `tx_id` - the id for tracking transactions in the fungible and non-fungible contracts (See the description of [fungible token](/examples/Standards/gft-20.md) and [non-fungible token](/examples/Standards/gnft-721.md)).
+- `tx_id` - the id for tracking transactions in the fungible and non-fungible contracts (See the description of [fungible token](/examples/Standards/vft.md) and [non-fungible token](/examples/Standards/gnft-721.md)).
 
 
 The marketplace item has the following struct:

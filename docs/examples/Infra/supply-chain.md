@@ -82,7 +82,7 @@ yarn start
 
 * Each newly produced item gets the NFT (in Gear's context - [Gear non-fungible token (gNFT)](../Standards/gnft-721.md) and its ID equals an ID of the item. Then, as an item moves along a supply chain, an item's NFT transfers between a supply chain program, item's producer, and future distributor, retailer and end consumer.
 * Anyone who knows an item's ID can get item info.
-* Sale, purchase, delivery is made in [Gear fungible tokens (gFT)](../Standards/gft-20).
+* Sale, purchase, delivery is made in [Vara fungible tokens (VFT)](../Standards/vft).
 
 Item info has the following struct:
 ```rust title="supply-chain/io/src/lib.rs"

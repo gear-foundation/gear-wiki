@@ -213,7 +213,7 @@ const filePaths = [
   'NFTs/nft-pixelboard.md',
   'NFTs/onchain-nft.md',
 
-  // 'Standards/gft-20.md',
+  // 'Standards/vft.md',
   // 'Standards/gmt-1155.md',
   // 'Standards/gnft-721.md',
   // 'Standards/rmrk.md',

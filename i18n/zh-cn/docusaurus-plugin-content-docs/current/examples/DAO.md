@@ -253,9 +253,9 @@ extern "C" fn meta_state() -> *mut [i32; 2] {
 
 ## 用户界面
 
-一个 [即用型应用](https://dao.gear-tech.io/)实例提供了一个与[DAO](https://github.com/gear-foundation/dapps-dao-light)和[GFT](https://github.com/gear-foundation/dapps-fungible-token)智能合约互动的用户界面。
+一个 [即用型应用](https://dao.gear-tech.io/)实例提供了一个与[DAO](https://github.com/gear-foundation/dapps-dao-light)和[VFT](https://github.com/gear-foundation/dapps-fungible-token)智能合约互动的用户界面。
 
-Gear 同质化代币可以创建基于实用代币的 DAO，详情请看[本文](../Standards/gft-20)。
+Gear 同质化代币可以创建基于实用代币的 DAO，详情请看[本文](../Standards/vft)。
 
 这个视频演示了整体配置和用户互动工作流程。
 
