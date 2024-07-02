@@ -41,8 +41,8 @@ The VaraMan program contains the following information:
 
 ```rust title="vara-man/src/lib.rs"
 struct VaraMan {
-    games: HashMap<ActorId, GameInstance>,
-    players: HashMap<ActorId, Player>,
+    tournaments: HashMap<ActorId, Tournament>,
+    players_to_game_id: HashMap<ActorId, ActorId>,
     status: Status,
     config: Config,
     admins: Vec<ActorId>,
@@ -54,14 +54,19 @@ struct VaraMan {
 * `config` - program configuration
 * `admins` - admins addresses
 
-Where the structure of the `GameInstance` and the `GameInstance` is defined as follows
+Where the structure of the `Tournament` is defined as follows
 
-```rust title="vara-man/io/src/lib.rs"
-pub struct GameInstance {
-    pub level: Level,
-    pub gold_coins: u64,
-    pub silver_coins: u64,
+```rust title="vara-man/src/lib.rs"
+pub struct Tournament {
+    tournament_name: String,
+    admin: ActorId,
+    level: Level,
+    participants: HashMap<ActorId, Player>,
+    bid: u128,
+    stage: Stage,
+    duration_ms: u32,
 }
+
 ```
 * `level` - level of difficulty (Easy/Medium/Hard)
 * `gold_coins` - number of gold coins collected
@@ -70,9 +75,8 @@ pub struct GameInstance {
 ```rust title="vara-man/io/src/lib.rs"
 pub struct Player {
     pub name: String,
-    pub lives: u64,
-    pub claimed_gold_coins: u64,
-    pub claimed_silver_coins: u64,
+    pub time: u128,
+    pub points: u128,
 }
 ```
 
@@ -110,16 +114,15 @@ pub struct VaraManInit {
 ```
 ```rust title="vara-man/io/src/lib.rs"
 pub struct Config {
-    pub one_coin_in_value: u64,
-    pub tokens_per_gold_coin_easy: u64,
-    pub tokens_per_silver_coin_easy: u64,
-    pub tokens_per_gold_coin_medium: u64,
-    pub tokens_per_silver_coin_medium: u64,
-    pub tokens_per_gold_coin_hard: u64,
-    pub tokens_per_silver_coin_hard: u64,
-    pub gold_coins: u64,
-    pub silver_coins: u64,
-    pub number_of_lives: u64,
+    pub one_point_in_value: u128,
+    pub points_per_gold_coin_easy: u128,
+    pub points_per_silver_coin_easy: u128,
+    pub points_per_gold_coin_medium: u128,
+    pub points_per_silver_coin_medium: u128,
+    pub points_per_gold_coin_hard: u128,
+    pub points_per_silver_coin_hard: u128,
+    pub gas_for_finish_tournament: u64,
+    pub time_for_single_round: u32,
 }
 ```
 
@@ -138,9 +141,37 @@ pub struct Config {
 
 ```rust title="vara-man/io/src/lib.rs"
 pub enum VaraManAction {
-    StartGame { level: Level },
-    RegisterPlayer { name: String },
-    ClaimReward { silver_coins: u64, gold_coins: u64 },
+    CreateNewTournament {
+        tournament_name: String,
+        name: String,
+        level: Level,
+        duration_ms: u32,
+    },
+    StartTournament,
+    RegisterForTournament {
+        admin_id: ActorId,
+        name: String,
+    },
+    CancelRegister,
+    CancelTournament,
+    DeletePlayer {
+        player_id: ActorId,
+    },
+    RecordTournamentResult {
+        time: u128,
+        gold_coins: u128,
+        silver_coins: u128,
+    },
+    FinishTournament {
+        admin_id: ActorId,
+        time_start: u64,
+    },
+    FinishSingleGame {
+        gold_coins: u128,
+        silver_coins: u128,
+        level: Level,
+    },
+    LeaveGame,
     ChangeStatus(Status),
     ChangeConfig(Config),
     AddAdmin(ActorId),
@@ -152,17 +183,38 @@ pub enum VaraManAction {
 
 ```rust title="vara-man/io/src/lib.rs"
 pub enum VaraManEvent {
-    GameStarted,
-    RewardClaimed {
-        player_address: ActorId,
-        silver_coins: u64,
-        gold_coins: u64,
+    GameFinished {
+        winners: Vec<ActorId>,
+        participants: Vec<ActorId>,
+        prize: u128,
     },
+    NewTournamentCreated {
+        tournament_name: String,
+        name: String,
+        level: Level,
+        bid: u128,
+    },
+    PlayerRegistered {
+        admin_id: ActorId,
+        name: String,
+        bid: u128,
+    },
+    RegisterCanceled,
+    TournamentCanceled {
+        admin_id: ActorId,
+    },
+    PlayerDeleted {
+        player_id: ActorId,
+    },
+    ResultTournamentRecorded {
+        time: u128,
+        points: u128,
+    },
+    GameStarted,
     AdminAdded(ActorId),
-    PlayerRegistered(ActorId),
     StatusChanged(Status),
     ConfigChanged(Config),
-    Error(String),
+    LeftGame,
 }
 ```
 
